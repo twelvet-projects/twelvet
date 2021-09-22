@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twelvet.server.dfs.mapper.DFSMapper">
+
+    <resultMap type="SysDfs" id="SysDfsResult">
+        <result property="fileId" column="file_id"/>
+        <result property="fileName" column="file_name"/>
+        <result property="originalFileName" column="original_file_name"/>
+        <result property="spaceName" column="space_name"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectSysDFSVo">
+        SELECT `file_id`,
+               `file_name`,
+               `original_file_name`,
+               `space_name`,
+               `path`,
+               `size`,
+               `type`,
+               `create_time`
+        FROM sys_dfs
+    </sql>
+
+    <insert id="batchSysDfs" parameterType="SysDfs">
+        insert into sys_dfs(file_name,original_file_name, space_name, path, size, type, create_time) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            (#{item.fileName},#{item.originalFileName},#{item.spaceName},#{item.path},#{item.size},#{item.type},sysdate())
+        </foreach>
+    </insert>
+
+    <insert id="insertSysDfs" parameterType="SysDfs">
+        insert into sys_dfs(file_name, original_file_name, space_name, path, size, type, create_time)
+        values (#{fileName}, #{originalFileName}, #{spaceName}, #{path}, #{size}, #{type},
+                sysdate())
+    </insert>
+
+    <delete id="deleteSysDfsByFileIds" parameterType="Long">
+        delete from sys_dfs where file_id in
+        <foreach collection="array" item="fileId" open="(" separator="," close=")">
+            #{fileId}
+        </foreach>
+    </delete>
+
+    <select id="selectDfsList" resultMap="SysDfsResult" parameterType="SysDfs">
+        <include refid="selectSysDFSVo"/>
+        <where>
+            <if test="originalFileName != null and originalFileName != ''">
+                AND original_file_name like concat('%', #{originalFileName}, '%')
+            </if>
+        </where>
+        order by file_id desc
+    </select>
+
+    <select id="selectDfsByFileIds" resultMap="SysDfsResult" parameterType="Long">
+        SELECT *
+        FROM `sys_dfs`
+        where file_id = #{fileId}
+    </select>
+
+    <select id="selectDfsListByFileIds" resultMap="SysDfsResult" parameterType="Long">
+        <include refid="selectSysDFSVo"/>
+        where file_id in
+        <foreach collection="array" item="fileId" open="(" separator="," close=")">
+            #{fileId}
+        </foreach>
+    </select>
+
+</mapper>

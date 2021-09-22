@@ -1,0 +1,62 @@
+import request, { download } from '@/utils/request'
+
+/**
+ * 查询${functionName}列表
+ * @param query 查询参数
+ */
+export function list${BusinessName}(query: { [key: string]: any }) {
+    return request(`/${moduleName}/${businessName}/list`, {
+        method: `get`,
+        params: query
+    })
+}
+
+/**
+ * 查询${functionName}详细
+ * @param 主键
+ */
+export function get${BusinessName}(${pkColumn.javaField}: string | number) {
+    return request(`/${moduleName}/${businessName}/${${pkColumn.javaField}}`, {
+        method: `get`
+    })
+}
+
+/**
+ * 新增${functionName}
+ * @param data 数据参数
+ */
+export function add${BusinessName}(data: { [key: string]: any }) {
+    return request(`/${moduleName}/${businessName}`, {
+        method: `post`,
+        data: data
+    })
+}
+
+/**
+ * 修改${functionName}
+ * @param data 数据参数
+ */
+export function update${BusinessName}(data: { [key: string]: any }) {
+    return request(`/${moduleName}/${businessName}`, {
+        method: `put`,
+        data: data
+    })
+}
+
+/**
+ * 删除${functionName}
+ * @param 主键
+ */
+export function del${BusinessName}(${pkColumn.javaField}: string | number) {
+    return request(`/${moduleName}/${businessName}/${${pkColumn.javaField}}`, {
+        method: `delete`
+    })
+}
+
+/**
+ * 导出数据
+ * @param params
+ */
+export async function exportDfs(params?: { [key: string]: any }) {
+    return download(`/${moduleName}/${businessName}/export`, params);
+}

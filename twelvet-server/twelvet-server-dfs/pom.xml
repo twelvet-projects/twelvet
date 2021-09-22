@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>twelvet-server</artifactId>
+        <groupId>com.twelvet</groupId>
+        <version>1.1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>twelvet-server-dfs</artifactId>
+    <description>分布式文件系统</description>
+
+    <dependencies>
+
+        <!-- FastDFS -->
+        <dependency>
+            <groupId>com.github.tobato</groupId>
+            <artifactId>fastdfs-client</artifactId>
+        </dependency>
+
+        <!-- twelvet Api System -->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-api-system</artifactId>
+        </dependency>
+
+        <!--DFS API-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-api-dfs</artifactId>
+        </dependency>
+
+        <!--默认采用多数据-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-datasource</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

@@ -1,0 +1,9 @@
+  ______              __         ______   __  _______
+ /_  __/      _____  / /   _____/_  __/  /  |/  / __ \
+  / / | | /| / / _ \/ / | / / _ \/ /    / /|_/ / / / /
+ / /  | |/ |/ /  __/ /| |/ /  __/ /    / /  / / /_/ /
+/_/   |__/|__/\___/_/ |___/\___/_/    /_/  /_/\___\_\
+
+
+${AnsiColor.GREEN} :: ${spring.application.name} :: ${AnsiColor.BRIGHT_WHITE} ${twelvet.version}
+${AnsiColor.GREEN} :: Spring Boot :: ${AnsiColor.BRIGHT_WHITE} ${spring-boot.version}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>twelvet</artifactId>
+        <groupId>com.twelvet</groupId>
+        <version>1.1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>twelvet-framework</artifactId>
+    <packaging>pom</packaging>
+
+    <description>核心模块</description>
+    <modules>
+        <module>twelvet-framework-security</module>
+        <module>twelvet-framework-redis</module>
+        <module>twelvet-framework-utils</module>
+        <module>twelvet-framework-core</module>
+        <module>twelvet-framework-log</module>
+        <module>twelvet-framework-datasource</module>
+        <module>twelvet-framework-swagger</module>
+        <module>twelvet-framework-datascope</module>
+    </modules>
+
+    <dependencies>
+
+        <!--日志工具-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

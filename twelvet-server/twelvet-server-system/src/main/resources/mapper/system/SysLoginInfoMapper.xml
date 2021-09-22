@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twelvet.server.system.mapper.SysLoginInfoMapper">
+
+    <resultMap type="SysLoginInfo" id="SysLoginInfoResult">
+        <id property="infoId" column="info_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="status" column="status"/>
+        <result property="ipaddr" column="ipaddr"/>
+        <result property="msg" column="msg"/>
+        <result property="accessTime" column="access_time"/>
+    </resultMap>
+
+    <!--查询日志列表-->
+    <select id="selectLoginInfoList" parameterType="SysLoginInfo" resultMap="SysLoginInfoResult">
+        select info_id, user_name, ipaddr, status, msg, access_time from sys_login_info
+        <where>
+            <if test="ipaddr != null and ipaddr != ''">
+                AND ipaddr like concat('%', #{ipaddr}, '%')
+            </if>
+            <if test="status != null and status != ''">
+                AND status = #{status}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND user_name like concat('%', #{userName}, '%')
+            </if>
+            <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+                and date_format(access_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+            </if>
+            <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+                and date_format(access_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+            </if>
+        </where>
+        order by info_id desc
+    </select>
+
+    <!--批量删除登录日志-->
+    <delete id="deleteLoginInfoByIds" parameterType="Long">
+        delete from sys_login_info where info_id in
+        <foreach collection="array" item="infoId" open="(" separator="," close=")">
+            #{infoId}
+        </foreach>
+    </delete>
+
+    <!--清空数据表-->
+    <update id="cleanLoginInfo">
+        truncate table sys_login_info
+    </update>
+
+    <!--插入日志-->
+    <insert id="insertLoginInfo" parameterType="SysLoginInfo">
+		insert into sys_login_info (user_name, status, ipaddr, msg, access_time, dept_id)
+		values (#{userName}, #{status}, #{ipaddr}, #{msg}, sysdate(), #{deptId})
+	</insert>
+
+</mapper>

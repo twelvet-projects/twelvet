@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.twelvet</groupId>
+    <artifactId>twelvet</artifactId>
+    <packaging>pom</packaging>
+    <version>1.1.0</version>
+
+    <name>twelvet</name>
+    <url>https://www.twelvet.cn</url>
+    <description>TwelveT Cloud System</description>
+
+    <organization>
+        <name>twelvet</name>
+        <url>https://www.twelvet.cn</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>L</id>
+            <name>twelvet</name>
+            <email>2471835953@qq.com</email>
+        </developer>
+    </developers>
+
+    <properties>
+        <twelvet.version>1.1.0</twelvet.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <spring.maven.plugin.version>2.3.0.RELEASE</spring.maven.plugin.version>
+
+        <spring-boot-dependencies.version>2.3.12.RELEASE</spring-boot-dependencies.version>
+        <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
+        <spring-cloud-alibaba.version>2.2.5.RELEASE</spring-cloud-alibaba.version>
+        <io.seata.version>1.4.1</io.seata.version>
+        <spring-boot-admin.version>2.4.3</spring-boot-admin.version>
+        <spring-boot.mybatis>2.2.0</spring-boot.mybatis>
+
+        <druid.version>1.2.6</druid.version>
+        <dynamic-datasource.version>3.4.0</dynamic-datasource.version>
+        <pagehelper.boot.version>1.2.12</pagehelper.boot.version>
+        <poi.version>3.17</poi.version>
+        <fast-dfs.version>1.27.2</fast-dfs.version>
+        <commons.io.version>2.11.0</commons.io.version>
+        <velocity.version>1.7</velocity.version>
+        <knife4j.version>3.0.3</knife4j.version>
+        <hutool.version>5.7.5</hutool.version>
+        <rabbitmq.version>2.5.4</rabbitmq.version>
+
+        <docker.image.prefix>springboot</docker.image.prefix>
+        <docker.plugin.version>0.32.0</docker.plugin.version>
+    </properties>
+
+    <!--依赖版本声明-->
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- SpringBoot 依赖配置 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- SpringCloud 微服务 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- SpringCloud Alibaba 微服务 -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- SpringBoot Admin -->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${spring-boot-admin.version}</version>
+            </dependency>
+
+            <!--druid-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
+            <!-- Dynamic DataSource -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${dynamic-datasource.version}</version>
+            </dependency>
+
+            <!-- FastDFS 分布式文件系统 -->
+            <dependency>
+                <groupId>com.github.tobato</groupId>
+                <artifactId>fastdfs-client</artifactId>
+                <version>${fast-dfs.version}</version>
+            </dependency>
+
+            <!-- 代码生成使用模板 -->
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity</artifactId>
+                <version>${velocity.version}</version>
+            </dependency>
+
+            <!--hutool-->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+
+            <!-- Mybatis 依赖配置 -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${spring-boot.mybatis}</version>
+            </dependency>
+
+            <!-- pageHelper 分页插件 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.boot.version}</version>
+            </dependency>
+
+            <!-- io常用工具类 -->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons.io.version}</version>
+            </dependency>
+
+            <!-- Swagger -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+
+            <!--rabbitmq-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-amqp</artifactId>
+                <version>${rabbitmq.version}</version>
+            </dependency>
+
+            <!-- excel工具 -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+
+            <!--多数据源-->
+            <dependency>
+                <groupId>com.twelvet</groupId>
+                <artifactId>twelvet-framework-datasource</artifactId>
+                <version>${twelvet.version}</version>
+            </dependency>
+
+            <!--公共安全配置模块-->
+            <dependency>
+                <groupId>com.twelvet</groupId>
+                <artifactId>twelvet-framework-security</artifactId>
+                <version>${twelvet.version}</version>
+            </dependency>
+
+            <!--twelvet通用核心-->
+            <dependency>
+                <groupId>com.twelvet</groupId>
+                <artifactId>twelvet-framework-core</artifactId>
+                <version>${twelvet.version}</version>
+            </dependency>
+
+            <!--Redis缓存模块-->
+            <dependency>
+                <groupId>com.twelvet</groupId>
+                <artifactId>twelvet-framework-redis</artifactId>
+                <version>${twelvet.version}</version>
+            </dependency>
+
+            <!--twelvet通用工具-->
+            <dependency>
+                <groupId>com.twelvet</groupId>
+                <artifactId>twelvet-framework-utils</artifactId>
+                <version>${twelvet.version}</version>
+            </dependency>
+
+            <!--日志模块-->
+            <dependency>
+                <groupId>com.twelvet</groupId>
+                <artifactId>twelvet-framework-log</artifactId>
+                <version>${twelvet.version}</version>
+            </dependency>
+
+            <!-- 数据权限 -->
+            <dependency>
+                <groupId>com.twelvet</groupId>
+                <artifactId>twelvet-framework-datascope</artifactId>
+                <version>${twelvet.version}</version>
+            </dependency>
+
+            <!-- 接口文档模块 -->
+            <dependency>
+                <groupId>com.twelvet</groupId>
+                <artifactId>twelvet-framework-swagger</artifactId>
+                <version>${twelvet.version}</version>
+            </dependency>
+
+            <!--system API-->
+            <dependency>
+                <groupId>com.twelvet</groupId>
+                <artifactId>twelvet-api-system</artifactId>
+                <version>${twelvet.version}</version>
+            </dependency>
+
+            <!--job API-->
+            <dependency>
+                <groupId>com.twelvet</groupId>
+                <artifactId>twelvet-api-job</artifactId>
+                <version>${twelvet.version}</version>
+            </dependency>
+
+            <!--DFS API-->
+            <dependency>
+                <groupId>com.twelvet</groupId>
+                <artifactId>twelvet-api-dfs</artifactId>
+                <version>${twelvet.version}</version>
+            </dependency>
+
+            <!--Gen API-->
+            <dependency>
+                <groupId>com.twelvet</groupId>
+                <artifactId>twelvet-api-gen</artifactId>
+                <version>${twelvet.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!--junit-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!--Spring Test-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+
+    <modules>
+        <module>twelvet-auth</module>
+        <module>twelvet-gateway</module>
+        <module>twelvet-framework</module>
+        <module>twelvet-api</module>
+        <module>twelvet-server</module>
+        <module>twelvet-visual</module>
+        <module>twelvet-server/twelvet-server-mq</module>
+    </modules>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>${docker.plugin.version}</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!--maven依赖远程仓库-->
+    <repositories>
+        <repository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+    <!--maven插件远程仓库-->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <profiles>
+        <!-- 开发环境 -->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <active>dev</active>
+                <nacos.namespace>eeb43899-8a88-4f5b-b0e0-d7c8fd09b86e</nacos.namespace>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+
+        <!-- 测试环境 -->
+        <profile>
+            <id>test</id>
+            <properties>
+                <active>test</active>
+            </properties>
+        </profile>
+
+        <!-- 预发布环境 -->
+        <profile>
+            <id>staging</id>
+            <properties>
+                <active>staging</active>
+
+            </properties>
+        </profile>
+
+        <!-- 生产环境 -->
+        <profile>
+            <id>product</id>
+            <properties>
+                <active>pro</active>
+                <nacos.namespace>94664454-62b0-415a-9392-7c0ce2d11b2f</nacos.namespace>
+            </properties>
+        </profile>
+    </profiles>
+
+</project>
