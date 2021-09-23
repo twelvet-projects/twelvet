@@ -1,5 +1,19 @@
 version: '3'
 services:
+  nacos:
+    image: nacos/nacos-server:latest
+    ports:
+      - "8848:8848"
+    restart: always
+    privileged: true
+    network_mode: twelvet-network
+    volumes:
+      - /data/docker/nacos/conf:/home/nacos/conf
+      - /data/docker/nacos/data:/home/nacos/data
+      - /data/docker/nacos/logs:/home/nacos/logs
+    environment:
+      - MODE=standalone
+      - TZ=Asia/Shanghai
   twelvet-gateway:
     image: docker.io/java:8
     restart: always
