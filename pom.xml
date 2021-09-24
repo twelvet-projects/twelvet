@@ -291,6 +291,7 @@
         <module>twelvet-server</module>
         <module>twelvet-visual</module>
         <module>twelvet-server/twelvet-server-mq</module>
+        <module>twelvet-api/twelvet-api-mq</module>
     </modules>
 
     <build>
