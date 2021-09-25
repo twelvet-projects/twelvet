@@ -6,8 +6,7 @@ package com.twelvet.framework.security.constans;
  * @WebSite www.twelvet.cn
  * @Description: 缓存key 常量
  */
-public class CacheConstants
-{
+public class CacheConstants {
     /**
      * oauth 缓存前缀
      */

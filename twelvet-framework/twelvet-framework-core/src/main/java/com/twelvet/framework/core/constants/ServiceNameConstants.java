@@ -22,4 +22,9 @@ public interface ServiceNameConstants {
      */
     String FILE_SERVICE = "twelvet-server-dfs";
 
+    /**
+     * MQ服务的serviceid
+     */
+    String MQ_SERVICE = "twelvet-server-mq";
+
 }
