@@ -1,7 +1,7 @@
 package com.twelvet.server.job.controller;
 
 import com.twelvet.api.job.domain.SysJobLog;
-import com.twelvet.framework.core.application.controller.TWTController;
+import com.twelvet.framework.jdbc.web.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;

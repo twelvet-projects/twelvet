@@ -38,6 +38,12 @@
             <artifactId>twelvet-framework-datasource</artifactId>
         </dependency>
 
+        <!-- jdbc -->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-jdbc</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

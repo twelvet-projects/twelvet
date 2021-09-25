@@ -2,9 +2,9 @@ package com.twelvet.server.gen.controller;
 
 import com.twelvet.api.gen.domain.GenTable;
 import com.twelvet.api.gen.domain.GenTableColumn;
-import com.twelvet.framework.core.application.controller.TWTController;
+import com.twelvet.framework.jdbc.web.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
-import com.twelvet.framework.core.web.page.TableDataInfo;
+import com.twelvet.framework.jdbc.web.page.TableDataInfo;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.utils.Convert;

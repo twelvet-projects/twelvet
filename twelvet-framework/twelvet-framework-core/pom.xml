@@ -14,12 +14,6 @@
 
     <dependencies>
 
-        <!--工具模块-->
-        <dependency>
-            <groupId>com.twelvet</groupId>
-            <artifactId>twelvet-framework-utils</artifactId>
-        </dependency>
-
         <!--Spring容器-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -50,10 +44,10 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
-        <!-- pageHelper 分页插件 -->
+        <!--工具模块-->
         <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-utils</artifactId>
         </dependency>
 
         <!-- Java Validation -->

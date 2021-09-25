@@ -1,4 +1,4 @@
-package com.twelvet.framework.core.web.page;
+package com.twelvet.framework.jdbc.web.page;
 
 import com.twelvet.framework.utils.http.ServletUtils;
 

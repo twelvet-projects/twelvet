@@ -6,7 +6,7 @@ import com.twelvet.api.dfs.feign.RemoteFileService;
 import com.twelvet.api.system.domain.SysUser;
 import com.twelvet.api.system.domain.params.UserPassword;
 import com.twelvet.api.system.domain.vo.UserInfoVo;
-import com.twelvet.framework.core.application.controller.TWTController;
+import com.twelvet.framework.jdbc.web.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.log.annotation.Log;
@@ -14,14 +14,10 @@ import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.StringUtils;
-import com.twelvet.framework.utils.TWTUtils;
 import com.twelvet.server.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.support.MissingServletRequestPartException;
-
-import java.io.IOException;
 
 /**
  * @author twelvet

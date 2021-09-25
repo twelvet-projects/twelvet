@@ -22,6 +22,7 @@
         <module>twelvet-framework-datasource</module>
         <module>twelvet-framework-swagger</module>
         <module>twelvet-framework-datascope</module>
+        <module>twelvet-framework-jdbc</module>
     </modules>
 
     <dependencies>

@@ -1,13 +1,11 @@
 package com.twelvet.server.system.controller;
 
 import com.twelvet.api.system.domain.SysLoginInfo;
-import com.twelvet.framework.security.annotation.AuthIgnore;
-import com.twelvet.framework.core.application.controller.TWTController;
+import com.twelvet.framework.jdbc.web.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.utils.poi.ExcelUtils;
-import com.twelvet.framework.utils.http.IpUtils;
 import com.twelvet.server.system.service.ISysLoginInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

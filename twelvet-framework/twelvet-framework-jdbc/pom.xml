@@ -3,39 +3,32 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>twelvet-server</artifactId>
+        <artifactId>twelvet-framework</artifactId>
         <groupId>com.twelvet</groupId>
         <version>1.1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>twelvet-server-gen</artifactId>
-    <description>代码生成</description>
+    <artifactId>twelvet-framework-jdbc</artifactId>
 
     <dependencies>
 
-        <!-- Gen -->
+        <!--核心-->
         <dependency>
             <groupId>com.twelvet</groupId>
-            <artifactId>twelvet-api-gen</artifactId>
+            <artifactId>twelvet-framework-core</artifactId>
         </dependency>
 
-        <!-- Apache Velocity -->
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity</artifactId>
-        </dependency>
-
-        <!--默认采用多数据-->
+        <!--工具模块-->
         <dependency>
             <groupId>com.twelvet</groupId>
-            <artifactId>twelvet-framework-datasource</artifactId>
+            <artifactId>twelvet-framework-utils</artifactId>
         </dependency>
 
-        <!-- jdbc -->
+        <!-- pageHelper 分页插件 -->
         <dependency>
-            <groupId>com.twelvet</groupId>
-            <artifactId>twelvet-framework-jdbc</artifactId>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
         </dependency>
 
     </dependencies>

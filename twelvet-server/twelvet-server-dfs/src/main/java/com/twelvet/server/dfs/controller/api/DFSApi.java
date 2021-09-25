@@ -2,21 +2,16 @@ package com.twelvet.server.dfs.controller.api;
 
 import com.twelvet.api.dfs.domain.SysDfs;
 import com.twelvet.api.dfs.domain.SysFile;
-import com.twelvet.framework.core.application.controller.TWTController;
-import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.jdbc.web.controller.TWTController;
 import com.twelvet.framework.core.domain.R;
-import com.twelvet.framework.log.annotation.Log;
-import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.utils.file.FileUtils;
 import com.twelvet.server.dfs.service.IDFSService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.util.List;
 
 /**
  * @author twelvet

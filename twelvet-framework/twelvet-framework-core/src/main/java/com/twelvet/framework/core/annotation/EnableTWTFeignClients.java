@@ -1,6 +1,10 @@
 package com.twelvet.framework.core.annotation;
 
+import com.twelvet.framework.core.config.ApplicationConfig;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.cloud.openfeign.FeignAutoConfiguration;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
 import java.lang.annotation.*;
 
@@ -12,6 +16,10 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+// 开启资源服务安全认证
+@EnableResourceServer
+// 自动加载类
+@Import({ ApplicationConfig.class, FeignAutoConfiguration.class })
 @EnableFeignClients
 public @interface EnableTWTFeignClients
 {

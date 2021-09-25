@@ -17,7 +17,7 @@ import com.twelvet.framework.log.enums.BusinessType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import ${packageName}.domain.${ClassName};
 import ${packageName}.service.I${ClassName}Service;
-import com.twelvet.framework.core.application.controller.TWTController;
+import com.twelvet.framework.jdbc.web.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.utils.poi.ExcelUtils;
 #if($table.crud || $table.sub)

@@ -1,7 +1,7 @@
 package com.twelvet;
 
 import com.twelvet.framework.core.annotation.EnableTWTFeignClients;
-import com.twelvet.framework.core.annotation.EnableTwelveTConfig;
+import com.twelvet.framework.jdbc.annotation.EnableTwelveTConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

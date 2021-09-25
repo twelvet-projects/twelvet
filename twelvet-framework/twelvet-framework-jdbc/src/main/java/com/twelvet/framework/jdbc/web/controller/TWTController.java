@@ -1,11 +1,11 @@
-package com.twelvet.framework.core.application.controller;
+package com.twelvet.framework.jdbc.web.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.twelvet.framework.core.application.domain.AjaxResult;
-import com.twelvet.framework.core.web.page.PageDomain;
-import com.twelvet.framework.core.web.page.TableDataInfo;
-import com.twelvet.framework.core.web.page.TableSupport;
+import com.twelvet.framework.jdbc.web.page.PageDomain;
+import com.twelvet.framework.jdbc.web.page.TableDataInfo;
+import com.twelvet.framework.jdbc.web.page.TableSupport;
 import com.twelvet.framework.utils.TWTUtils;
 import com.twelvet.framework.utils.sql.SqlUtils;
 import org.slf4j.Logger;

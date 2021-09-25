@@ -1,7 +1,7 @@
 package com.twelvet.server.system.controller;
 
 import com.twelvet.api.system.domain.SysPost;
-import com.twelvet.framework.core.application.controller.TWTController;
+import com.twelvet.framework.jdbc.web.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.log.annotation.Log;

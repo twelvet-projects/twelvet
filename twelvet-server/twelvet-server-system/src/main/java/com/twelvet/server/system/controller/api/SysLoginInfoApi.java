@@ -2,20 +2,13 @@ package com.twelvet.server.system.controller.api;
 
 import com.twelvet.api.system.domain.SysLoginInfo;
 import com.twelvet.framework.security.annotation.AuthIgnore;
-import com.twelvet.framework.core.application.controller.TWTController;
+import com.twelvet.framework.jdbc.web.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
-import com.twelvet.framework.log.annotation.Log;
-import com.twelvet.framework.log.enums.BusinessType;
-import com.twelvet.framework.utils.poi.ExcelUtils;
 import com.twelvet.framework.utils.http.IpUtils;
 import com.twelvet.server.system.service.ISysLoginInfoService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * @author twelvet
@@ -40,7 +33,7 @@ public class SysLoginInfoApi extends TWTController {
      */
     @AuthIgnore
     @PostMapping
-    public AjaxResult add(
+    public void add(
             @RequestParam("username") String username,
             @RequestParam("deptId") Long deptId,
             @RequestParam("status") Integer status,
@@ -57,7 +50,7 @@ public class SysLoginInfoApi extends TWTController {
         loginInfo.setStatus(status);
         loginInfo.setMsg(message);
 
-        return json(iSysLoginInfoService.insertLoginInfo(loginInfo));
+        iSysLoginInfoService.insertLoginInfo(loginInfo);
     }
 
 }
