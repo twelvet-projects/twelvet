@@ -2,7 +2,7 @@ package com.twelvet.server.dfs.controller.api;
 
 import com.twelvet.api.dfs.domain.SysDfs;
 import com.twelvet.api.dfs.domain.SysFile;
-import com.twelvet.framework.jdbc.web.controller.TWTController;
+import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.utils.file.FileUtils;
 import com.twelvet.server.dfs.service.IDFSService;

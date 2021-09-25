@@ -5,7 +5,7 @@ import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import com.twelvet.api.system.domain.SysUser;
 import com.twelvet.api.system.model.UserInfo;
 import com.twelvet.framework.security.annotation.AuthIgnore;
-import com.twelvet.framework.jdbc.web.controller.TWTController;
+import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.utils.TWTUtils;
 import com.twelvet.server.system.service.*;

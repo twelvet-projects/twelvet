@@ -1,8 +1,9 @@
 package com.twelvet.server.system.controller;
 
 import com.twelvet.api.system.domain.SysClientDetails;
-import com.twelvet.framework.jdbc.web.controller.TWTController;
+import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.utils.SecurityUtils;
@@ -36,9 +37,9 @@ public class SysClientDetailsController extends TWTController {
     @PreAuthorize("@role.hasPermi('system:client:list')")
     @GetMapping("/pageQuery")
     public AjaxResult pageQuery(SysClientDetails sysClientDetails) {
-        startPage();
+        PageUtils.startPage();
         List<SysClientDetails> list = sysClientDetailsService.selectSysClientDetailsList(sysClientDetails);
-        return AjaxResult.success(getDataTable(list));
+        return AjaxResult.success(PageUtils.getDataTable(list));
     }
 
     /**
@@ -60,7 +61,7 @@ public class SysClientDetailsController extends TWTController {
      * @return AjaxResult
      */
     @PreAuthorize("@role.hasPermi('system:client:insert')")
-    @Log(service = "终端配置", businessType = BusinessType.INSERT)
+    @Log(service = "终端配置" , businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult insert(@RequestBody SysClientDetails sysClientDetails) {
         String clientId = sysClientDetails.getClientId();
@@ -78,7 +79,7 @@ public class SysClientDetailsController extends TWTController {
      * @return AjaxResult
      */
     @PreAuthorize("@role.hasPermi('system:client:update')")
-    @Log(service = "终端配置", businessType = BusinessType.UPDATE)
+    @Log(service = "终端配置" , businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult update(@RequestBody SysClientDetails sysClientDetails) {
         // 重新设置密码
@@ -96,7 +97,7 @@ public class SysClientDetailsController extends TWTController {
      * @return 成功删除个数
      */
     @PreAuthorize("@role.hasPermi('system:client:remove')")
-    @Log(service = "终端配置", businessType = BusinessType.DELETE)
+    @Log(service = "终端配置" , businessType = BusinessType.DELETE)
     @DeleteMapping("/{clientIds}")
     public AjaxResult remove(@PathVariable String[] clientIds) {
         return json(sysClientDetailsService.deleteSysClientDetailsByIds(clientIds));

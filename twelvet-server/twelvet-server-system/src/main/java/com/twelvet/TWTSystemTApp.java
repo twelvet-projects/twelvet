@@ -1,7 +1,8 @@
 package com.twelvet;
 
 import com.twelvet.framework.core.annotation.EnableTWTFeignClients;
-import com.twelvet.framework.jdbc.annotation.EnableTwelveTConfig;
+import com.twelvet.framework.core.annotation.EnableTwelveTConfig;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @WebSite www.twelvet.cn
  * @Description: 启动程序
  */
+@MapperScan("com.twelvet.**.mapper")
 @EnableTwelveTConfig
 @EnableTWTFeignClients
 @SpringBootApplication

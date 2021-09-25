@@ -2,9 +2,10 @@ package com.twelvet.server.gen.controller;
 
 import com.twelvet.api.gen.domain.GenTable;
 import com.twelvet.api.gen.domain.GenTableColumn;
-import com.twelvet.framework.jdbc.web.controller.TWTController;
+import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.jdbc.web.page.TableDataInfo;
+import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.utils.Convert;
@@ -46,9 +47,9 @@ public class GenController extends TWTController {
     @GetMapping("/pageQuery")
     @PreAuthorize("@role.hasPermi('tool:gen:list')")
     public AjaxResult pageQuery(GenTable genTable) {
-        startPage();
+        PageUtils.startPage();
         List<GenTable> list = genTableService.selectGenTableList(genTable);
-        return AjaxResult.success(getDataTable(list));
+        return AjaxResult.success(PageUtils.getDataTable(list));
     }
 
     /**
@@ -78,9 +79,9 @@ public class GenController extends TWTController {
     @PreAuthorize("@role.hasPermi('tool:gen:list')")
     @GetMapping("/db/list")
     public AjaxResult dataList(GenTable genTable) {
-        startPage();
+        PageUtils.startPage();
         List<GenTable> list = genTableService.selectDbTableList(genTable);
-        return AjaxResult.success(getDataTable(list));
+        return AjaxResult.success(PageUtils.getDataTable(list));
     }
 
     /**

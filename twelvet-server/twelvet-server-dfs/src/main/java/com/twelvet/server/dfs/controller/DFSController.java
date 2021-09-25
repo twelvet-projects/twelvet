@@ -1,8 +1,9 @@
 package com.twelvet.server.dfs.controller;
 
 import com.twelvet.api.dfs.domain.SysDfs;
-import com.twelvet.framework.jdbc.web.controller.TWTController;
+import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.server.dfs.service.IDFSService;
@@ -96,9 +97,9 @@ public class DFSController extends TWTController {
     @PreAuthorize("@role.hasPermi('dfs:dfs:list')")
     @GetMapping("/pageQuery")
     public AjaxResult pageQuery(SysDfs sysDfs) {
-        startPage();
+        PageUtils.startPage();
         List<SysDfs> sysDfsList = sysFileService.selectUserList(sysDfs);
-        return AjaxResult.success(getDataTable(sysDfsList));
+        return AjaxResult.success(PageUtils.getDataTable(sysDfsList));
     }
 
 }

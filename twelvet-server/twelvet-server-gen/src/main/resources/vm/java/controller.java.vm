@@ -17,7 +17,7 @@ import com.twelvet.framework.log.enums.BusinessType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import ${packageName}.domain.${ClassName};
 import ${packageName}.service.I${ClassName}Service;
-import com.twelvet.framework.jdbc.web.controller.TWTController;
+import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.utils.poi.ExcelUtils;
 #if($table.crud || $table.sub)
@@ -45,9 +45,9 @@ public class ${ClassName}Controller extends TWTController {
     @GetMapping("/list")
 #if($table.crud || $table.sub)
     public AjaxResult list(${ClassName} ${className}) {
-        startPage();
+        PageUtils.startPage();
         List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
-        return AjaxResult.success(getDataTable(list));
+        return AjaxResult.success(PageUtils.getDataTable(list));
     }
 #elseif($table.tree)
     public AjaxResult list(${ClassName} ${className}) {

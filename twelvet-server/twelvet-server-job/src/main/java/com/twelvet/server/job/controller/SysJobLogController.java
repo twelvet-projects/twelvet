@@ -1,8 +1,9 @@
 package com.twelvet.server.job.controller;
 
 import com.twelvet.api.job.domain.SysJobLog;
-import com.twelvet.framework.jdbc.web.controller.TWTController;
+import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.utils.poi.ExcelUtils;
@@ -35,9 +36,9 @@ public class SysJobLogController extends TWTController {
     @GetMapping("/pageQuery")
     @PreAuthorize("@role.hasPermi('system:job:list')")
     public AjaxResult pageQuery(SysJobLog sysJobLog) {
-        startPage();
+        PageUtils.startPage();
         List<SysJobLog> list = jobLogService.selectJobLogList(sysJobLog);
-        return AjaxResult.success(getDataTable(list));
+        return AjaxResult.success(PageUtils.getDataTable(list));
     }
 
     /**

@@ -5,9 +5,10 @@ import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import com.twelvet.api.system.domain.SysMenu;
 import com.twelvet.api.system.domain.SysRole;
 import com.twelvet.api.system.domain.SysUser;
-import com.twelvet.framework.jdbc.web.controller.TWTController;
+import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.core.constants.UserConstants;
+import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.utils.SecurityUtils;
@@ -66,9 +67,9 @@ public class SysUserController extends TWTController {
     @GetMapping("/pageQuery")
     @PreAuthorize("@role.hasPermi('system:user:list')")
     public AjaxResult pageQuery(SysUser user) {
-        startPage();
+        PageUtils.startPage();
         List<SysUser> list = iSysUserService.selectUserList(user);
-        return AjaxResult.success(getDataTable(list));
+        return AjaxResult.success(PageUtils.getDataTable(list));
     }
 
     /**

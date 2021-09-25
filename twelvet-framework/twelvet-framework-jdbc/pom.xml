@@ -13,12 +13,6 @@
 
     <dependencies>
 
-        <!--核心-->
-        <dependency>
-            <groupId>com.twelvet</groupId>
-            <artifactId>twelvet-framework-core</artifactId>
-        </dependency>
-
         <!--工具模块-->
         <dependency>
             <groupId>com.twelvet</groupId>

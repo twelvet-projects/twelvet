@@ -2,8 +2,7 @@ package com.twelvet.server.system.controller.api;
 
 import com.twelvet.api.system.domain.SysOperationLog;
 import com.twelvet.framework.security.annotation.AuthIgnore;
-import com.twelvet.framework.jdbc.web.controller.TWTController;
-import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.server.system.service.ISysOperationLogService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;

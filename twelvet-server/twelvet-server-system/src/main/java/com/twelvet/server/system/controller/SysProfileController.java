@@ -6,7 +6,7 @@ import com.twelvet.api.dfs.feign.RemoteFileService;
 import com.twelvet.api.system.domain.SysUser;
 import com.twelvet.api.system.domain.params.UserPassword;
 import com.twelvet.api.system.domain.vo.UserInfoVo;
-import com.twelvet.framework.jdbc.web.controller.TWTController;
+import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.log.annotation.Log;

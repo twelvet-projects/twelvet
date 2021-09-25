@@ -1,8 +1,9 @@
 package com.twelvet.server.system.controller;
 
 import com.twelvet.api.system.domain.SysDictData;
-import com.twelvet.framework.jdbc.web.controller.TWTController;
+import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.utils.SecurityUtils;
@@ -41,9 +42,9 @@ public class SysDictDataController extends TWTController {
     @GetMapping("/pageQuery")
     @PreAuthorize("@role.hasPermi('system:dict:list')")
     public AjaxResult pageQuery(SysDictData sysDictData) {
-        startPage();
+        PageUtils.startPage();
         List<SysDictData> list = dictDataService.selectDictDataList(sysDictData);
-        return AjaxResult.success(getDataTable(list));
+        return AjaxResult.success(PageUtils.getDataTable(list));
     }
 
     /**

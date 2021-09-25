@@ -1,9 +1,10 @@
 package com.twelvet.server.system.controller;
 
 import com.twelvet.api.system.domain.SysPost;
-import com.twelvet.framework.jdbc.web.controller.TWTController;
+import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.core.constants.UserConstants;
+import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.utils.SecurityUtils;
@@ -113,9 +114,9 @@ public class SysPostController extends TWTController {
     @GetMapping("/pageQuery")
     @PreAuthorize("@role.hasPermi('system:post:list')")
     public AjaxResult pageQuery(SysPost post) {
-        startPage();
+        PageUtils.startPage();
         List<SysPost> list = iSysPostService.selectPostList(post);
-        return AjaxResult.success(getDataTable(list));
+        return AjaxResult.success(PageUtils.getDataTable(list));
     }
 
     /**
