@@ -23,8 +23,7 @@ public class MqMailApi {
      * 发送通用验证码
      */
     @PostMapping
-    public void sendCode(@RequestBody Mai
-                                     llMq maillMq) {
+    public void sendCode(@RequestBody MaillMq maillMq) {
 
         mqMailService.send();
 

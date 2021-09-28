@@ -10,7 +10,7 @@ import java.util.List;
  * <p>
  * 邮件MQ实体
  */
-public class MailMq extends BaseEntity {
+public class MaillMq extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
