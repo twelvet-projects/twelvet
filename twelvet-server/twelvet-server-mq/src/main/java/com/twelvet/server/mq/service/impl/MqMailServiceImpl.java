@@ -18,7 +18,7 @@ public class MqMailServiceImpl implements MqMailService {
     @Override
     public void send(MaillMq maillMq) {
 
-        
+
 
     }
 }

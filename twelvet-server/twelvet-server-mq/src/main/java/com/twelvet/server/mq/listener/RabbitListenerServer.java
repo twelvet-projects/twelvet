@@ -21,7 +21,7 @@ public class RabbitListenerServer {
      *
      * @param message Message
      */
-    @RabbitListener(queues = "${loader.rabbitMq.queue}")
+    @RabbitListener
     public void getMailMessage(Message message) {
         log.info("========监听到的消息：" + message);
         byte[] body = message.getBody();
