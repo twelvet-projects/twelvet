@@ -1,6 +1,7 @@
 package com.twelvet.server.mq.controller.api;
 
 import com.twelvet.api.mq.domain.MaillMq;
+import com.twelvet.framework.security.annotation.AuthIgnore;
 import com.twelvet.server.mq.service.MqMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,9 +24,9 @@ public class MqMailApi {
     /**
      * 发送通用验证码
      */
+    @AuthIgnore
     @PostMapping
     public void sendCode(@RequestBody MaillMq maillMq) {
-
         mqMailService.send(maillMq);
 
     }
