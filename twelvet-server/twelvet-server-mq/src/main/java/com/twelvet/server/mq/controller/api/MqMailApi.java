@@ -2,6 +2,8 @@ package com.twelvet.server.mq.controller.api;
 
 import com.twelvet.server.mq.service.MqMailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +22,9 @@ public class MqMailApi {
     /**
      * 发送通用验证码
      */
-    public void sendCode() {
+    @PostMapping
+    public void sendCode(@RequestBody Mai
+                                     llMq maillMq) {
 
         mqMailService.send();
 

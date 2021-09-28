@@ -20,6 +20,12 @@
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
 
+        <!--MQ API-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-api-mq</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>
