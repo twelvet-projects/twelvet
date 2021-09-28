@@ -6,4 +6,10 @@ package com.twelvet.server.mq.service;
  * 邮件业务层
  */
 public interface MqMailService {
+
+    /**
+     * 发送MQ消息
+     */
+    void send();
+
 }

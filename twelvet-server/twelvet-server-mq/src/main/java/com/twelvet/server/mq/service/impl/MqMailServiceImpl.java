@@ -10,4 +10,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class MqMailServiceImpl implements MqMailService {
+
+    /**
+     * 发送MQ消息
+     */
+    @Override
+    public void send() {
+
+        
+
+    }
 }
