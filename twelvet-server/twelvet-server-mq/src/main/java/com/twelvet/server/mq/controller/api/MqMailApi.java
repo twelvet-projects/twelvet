@@ -17,6 +17,13 @@ public class MqMailApi {
     @Autowired
     private MqMailService mqMailService;
 
+    /**
+     * 发送通用验证码
+     */
+    public void sendCode() {
 
+        mqMailService.send();
+
+    }
 
 }
