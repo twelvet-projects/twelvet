@@ -1,5 +1,6 @@
 package com.twelvet.server.mq.service.impl;
 
+import com.twelvet.api.mq.domain.MaillMq;
 import com.twelvet.server.mq.service.MqMailService;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class MqMailServiceImpl implements MqMailService {
      * 发送MQ消息
      */
     @Override
-    public void send() {
+    public void send(MaillMq maillMq) {
 
         
 

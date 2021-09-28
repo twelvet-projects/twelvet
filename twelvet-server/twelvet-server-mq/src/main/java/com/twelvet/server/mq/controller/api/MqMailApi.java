@@ -1,5 +1,6 @@
 package com.twelvet.server.mq.controller.api;
 
+import com.twelvet.api.mq.domain.MaillMq;
 import com.twelvet.server.mq.service.MqMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +26,7 @@ public class MqMailApi {
     @PostMapping
     public void sendCode(@RequestBody MaillMq maillMq) {
 
-        mqMailService.send();
+        mqMailService.send(maillMq);
 
     }
 

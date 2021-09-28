@@ -1,5 +1,7 @@
 package com.twelvet.server.mq.service;
 
+import com.twelvet.api.mq.domain.MaillMq;
+
 /**
  * @author twelvet
  * <p>
@@ -10,6 +12,6 @@ public interface MqMailService {
     /**
      * 发送MQ消息
      */
-    void send();
+    void send(MaillMq maillMq);
 
 }
