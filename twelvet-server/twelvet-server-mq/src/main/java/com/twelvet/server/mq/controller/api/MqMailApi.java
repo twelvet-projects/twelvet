@@ -28,7 +28,6 @@ public class MqMailApi {
     @PostMapping
     public void sendCode(@RequestBody MaillMq maillMq) {
         mqMailService.send(maillMq);
-
     }
 
 }

@@ -7,6 +7,6 @@ package com.twelvet.api.mq.constant;
  */
 public class RabbitMQConstants {
 
-    public static final String QUEUE_MAIL = "twelvet-mail";
+    public static final String QUEUE_MAIL = "twelvet.mail";
 
 }
