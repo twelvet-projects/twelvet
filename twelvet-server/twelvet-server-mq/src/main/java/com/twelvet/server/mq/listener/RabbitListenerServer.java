@@ -1,6 +1,9 @@
 package com.twelvet.server.mq.listener;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twelvet.api.mq.constant.RabbitMQConstants;
+import com.twelvet.api.mq.domain.MaillMq;
+import com.twelvet.framework.utils.JacksonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -8,6 +11,8 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 /**
  * @author twelvet
@@ -30,11 +35,10 @@ public class RabbitListenerServer {
     public void getMailMessage(Message message) {
         log.info("========监听到的消息：" + message);
         byte[] body = message.getBody();
-        //ObjectMapper objectMapper = new ObjectMapper();
-        //Info info = objectMapper.readValue(body, Info.class); //转化为对应的类
-        String msg = new String(body);
-        log.info("========监听到的消息body：" + msg);
+        MaillMq maillMq = JacksonUtils.readValue(body, MaillMq.class);
+        log.info("========监听到的消息body：" + maillMq.getToMail());
         log.info("========监message.getMessageProperties==：" + message.getMessageProperties());
+
     }
 
 }

@@ -35,7 +35,6 @@ public class JacksonUtils {
      * @param object javaBean
      * @return jsonString json字符串
      */
-    @Nullable
     public static String toJson(@Nullable Object object) {
         if (object == null) {
             return null;
