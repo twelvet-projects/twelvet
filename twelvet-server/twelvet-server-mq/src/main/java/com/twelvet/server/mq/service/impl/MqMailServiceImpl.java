@@ -1,5 +1,6 @@
 package com.twelvet.server.mq.service.impl;
 
+import com.twelvet.api.mq.constant.RabbitMQConstants;
 import com.twelvet.api.mq.domain.MaillMq;
 import com.twelvet.server.mq.service.MqMailService;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -24,10 +25,7 @@ public class MqMailServiceImpl implements MqMailService {
     @Override
     public void send(MaillMq maillMq) {
 
-        amqpTemplate.send(
-                "marketData.topic", "quotes.nasdaq.THING1",
-                new Message("12.34".getBytes())
-        );
+        amqpTemplate.convertAndSend(RabbitMQConstants.QUEUE_MAIL, "你好");
 
     }
 }

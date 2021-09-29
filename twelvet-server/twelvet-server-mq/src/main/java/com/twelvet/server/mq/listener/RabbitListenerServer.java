@@ -1,5 +1,6 @@
 package com.twelvet.server.mq.listener;
 
+import com.twelvet.api.mq.constant.RabbitMQConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -23,7 +24,9 @@ public class RabbitListenerServer {
      *
      * @param message Message
      */
-    @RabbitListener
+    @RabbitListener(queues = {
+            RabbitMQConstants.QUEUE_MAIL
+    })
     public void getMailMessage(Message message) {
         log.info("========监听到的消息：" + message);
         byte[] body = message.getBody();
