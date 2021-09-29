@@ -3,10 +3,12 @@ package com.twelvet.framework.security.config;
 import com.twelvet.framework.security.annotation.AuthIgnore;
 import com.twelvet.framework.security.config.properties.IgnoreUrlsProperties;
 import com.twelvet.framework.utils.TWTUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.web.context.WebApplicationContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
@@ -22,7 +24,7 @@ import java.util.Map;
  * @Description: 忽略服务间的认证
  */
 @Configurable
-public class AuthIgnoreConfig implements InitializingBean {
+public class AuthIgnoreConfig implements InitializingBean, ApplicationContextAware {
     /**
      * 注解urls
      */
@@ -30,7 +32,7 @@ public class AuthIgnoreConfig implements InitializingBean {
     private IgnoreUrlsProperties ignoreUrlsProperties;
 
     @Autowired
-    private WebApplicationContext applicationContext;
+    private ApplicationContext applicationContext;
 
     private List<String> ignoreUrls = new ArrayList<>();
 
@@ -68,5 +70,10 @@ public class AuthIgnoreConfig implements InitializingBean {
 
         // 合并放行路径
         ignoreUrls.addAll(ignoreUrlsProperties.getUrls());
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext context) throws BeansException {
+        this.applicationContext = context;
     }
 }
