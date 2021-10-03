@@ -29,7 +29,7 @@ public class UserConstants {
     /**
      * 部门正常状态
      */
-    public static final String DEPT_NORMAL = "0";
+    public static final String DEPT_NORMAL = "1";
 
     /**
      * 部门停用状态
