@@ -34,7 +34,7 @@ public class UserConstants {
     /**
      * 部门停用状态
      */
-    public static final String DEPT_DISABLE = "1";
+    public static final String DEPT_DISABLE = "0";
 
     /**
      * 字典正常状态
