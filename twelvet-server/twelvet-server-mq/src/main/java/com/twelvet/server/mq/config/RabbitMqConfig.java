@@ -15,13 +15,23 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMqConfig {
 
     /**
-     * 邮件队列
+     * 系统登录日志队列
      *
      * @return Queue
      */
     @Bean
-    public Queue mailQueue() {
-        return new Queue(RabbitMQConstants.QUEUE_MAIL);
+    public Queue loginLogQueue() {
+        return new Queue(RabbitMQConstants.QUEUE_LOG_LOGIN);
+    }
+
+    /**
+     * 系统操作日志队列
+     *
+     * @return Queue
+     */
+    @Bean
+    public Queue operationLogQueue() {
+        return new Queue(RabbitMQConstants.QUEUE_LOG_OPERATION);
     }
 
 }

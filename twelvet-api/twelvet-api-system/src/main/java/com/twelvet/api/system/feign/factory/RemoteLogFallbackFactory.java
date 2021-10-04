@@ -1,6 +1,7 @@
 package com.twelvet.api.system.feign.factory;
 
 
+import com.twelvet.api.system.domain.SysLoginInfo;
 import com.twelvet.api.system.feign.RemoteLogService;
 import com.twelvet.api.system.domain.SysOperationLog;
 import com.twelvet.framework.core.domain.R;
@@ -24,12 +25,12 @@ public class RemoteLogFallbackFactory implements FallbackFactory<RemoteLogServic
         return new RemoteLogService() {
             @Override
             public R<Boolean> saveLog(SysOperationLog sysOperationLog) {
-                return null;
+                return R.fail();
             }
 
             @Override
-            public R<Boolean> saveLoginInfo(String username, Long deptId, Integer status, String message) {
-                return null;
+            public R<Boolean> saveLoginInfo(SysLoginInfo sysLoginInfo) {
+                return R.fail();
             }
         };
     }

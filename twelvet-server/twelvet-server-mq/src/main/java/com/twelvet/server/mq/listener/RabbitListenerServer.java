@@ -3,6 +3,9 @@ package com.twelvet.server.mq.listener;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twelvet.api.mq.constant.RabbitMQConstants;
 import com.twelvet.api.mq.domain.MaillMq;
+import com.twelvet.api.system.domain.SysLoginInfo;
+import com.twelvet.api.system.domain.SysOperationLog;
+import com.twelvet.api.system.feign.RemoteLogService;
 import com.twelvet.framework.utils.JacksonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,21 +27,37 @@ public class RabbitListenerServer {
 
     private final static Logger log = LoggerFactory.getLogger(RabbitListenerServer.class);
 
+    @Autowired
+    private RemoteLogService remoteLogService;
+
     /**
-     * 监听邮件消息
+     * 监听系统登录日志消息
      *
      * @param message Message
      */
     @RabbitListener(queues = {
-            RabbitMQConstants.QUEUE_MAIL
+            RabbitMQConstants.QUEUE_LOG_LOGIN
     })
-    public void getMailMessage(Message message) {
-        log.info("========监听到的消息：" + message);
+    public void insertLoginLogMessage(Message message) {
+        log.info("收到系统登录MQ：{}", message);
         byte[] body = message.getBody();
-        MaillMq maillMq = JacksonUtils.readValue(body, MaillMq.class);
-        log.info("========监听到的消息body：" + maillMq.getToMail());
-        log.info("========监message.getMessageProperties==：" + message.getMessageProperties());
+        SysLoginInfo sysLoginInfo = JacksonUtils.readValue(body, SysLoginInfo.class);
+        remoteLogService.saveLoginInfo(sysLoginInfo);
+    }
 
+    /**
+     * 监听系统操作日志消息
+     *
+     * @param message Message
+     */
+    @RabbitListener(queues = {
+            RabbitMQConstants.QUEUE_LOG_OPERATION
+    })
+    public void insertOperationLogMessage(Message message) {
+        log.info("收到系统操作MQ：{}", message);
+        byte[] body = message.getBody();
+        SysOperationLog sysOperationLog = JacksonUtils.readValue(body, SysOperationLog.class);
+        remoteLogService.saveLog(sysOperationLog);
     }
 
 }

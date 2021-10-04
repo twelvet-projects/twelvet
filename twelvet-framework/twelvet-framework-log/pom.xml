@@ -21,6 +21,12 @@
             <artifactId>twelvet-framework-security</artifactId>
         </dependency>
 
+        <!--mq api-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-api-mq</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

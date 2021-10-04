@@ -111,7 +111,7 @@
     <update id="updateDept" parameterType="SysDept">
         update sys_dept
         <set>
-            <if test="parentId != null and parentId != 0">parent_id = #{parentId},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
             <if test="deptName != null and deptName != ''">dept_name = #{deptName},</if>
             <if test="ancestors != null and ancestors != ''">ancestors = #{ancestors},</if>
             <if test="orderNum != null and orderNum != ''">order_num = #{orderNum},</if>

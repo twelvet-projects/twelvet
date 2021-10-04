@@ -12,4 +12,14 @@
     <artifactId>twelvet-api-mq</artifactId>
     <description>MQ API</description>
 
+    <dependencies>
+
+        <!--MQ API-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-api-system</artifactId>
+        </dependency>
+
+    </dependencies>
+
 </project>

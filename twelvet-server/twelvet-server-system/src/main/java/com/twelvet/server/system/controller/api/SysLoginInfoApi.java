@@ -25,31 +25,12 @@ public class SysLoginInfoApi extends TWTController {
     /**
      * 记录登录信息
      *
-     * @param username 账号
-     * @param status   是否登录成功
-     * @param message  登录系统信息
-     * @return 记录结果
+     * @param sysLoginInfo SysLoginInfo
      */
     @AuthIgnore
     @PostMapping
-    public void add(
-            @RequestParam("username") String username,
-            @RequestParam("deptId") Long deptId,
-            @RequestParam("status") Integer status,
-            @RequestParam("message") String message
-    ) {
-        // 获取IP
-        String ip = IpUtils.getIpAddr();
-
-
-        SysLoginInfo loginInfo = new SysLoginInfo();
-        loginInfo.setUserName(username);
-        loginInfo.setIpaddr(ip);
-        loginInfo.setDeptId(deptId);
-        loginInfo.setStatus(status);
-        loginInfo.setMsg(message);
-
-        iSysLoginInfoService.insertLoginInfo(loginInfo);
+    public void insertLog(@RequestBody SysLoginInfo sysLoginInfo) {
+        iSysLoginInfoService.insertLoginInfo(sysLoginInfo);
     }
 
 }

@@ -1,9 +1,9 @@
 package com.twelvet.server.mq.service.impl;
 
 import com.twelvet.api.mq.constant.RabbitMQConstants;
-import com.twelvet.api.mq.domain.MaillMq;
+import com.twelvet.api.system.domain.SysLoginInfo;
 import com.twelvet.framework.utils.JacksonUtils;
-import com.twelvet.server.mq.service.MqMailService;
+import com.twelvet.server.mq.service.SysLoginLogService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,17 +14,18 @@ import org.springframework.stereotype.Service;
  * 邮件业务层实现
  */
 @Service
-public class MqMailServiceImpl implements MqMailService {
+public class SysLoginLogServiceImpl implements SysLoginLogService {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
     /**
-     * 发送MQ消息
+     * 发送系统登录日志MQ
+     *
+     * @param sysLoginInfo SysLoginInfo
      */
     @Override
-    public void send(MaillMq maillMq) {
-        rabbitTemplate.convertAndSend(RabbitMQConstants.QUEUE_MAIL, JacksonUtils.toJson(maillMq));
-
+    public void sendSysLoginLog(SysLoginInfo sysLoginInfo) {
+        rabbitTemplate.convertAndSend(RabbitMQConstants.QUEUE_LOG_LOGIN, JacksonUtils.toJson(sysLoginInfo));
     }
 }

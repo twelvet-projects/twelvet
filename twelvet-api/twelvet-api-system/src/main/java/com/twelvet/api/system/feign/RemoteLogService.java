@@ -1,6 +1,7 @@
 package com.twelvet.api.system.feign;
 
 
+import com.twelvet.api.system.domain.SysLoginInfo;
 import com.twelvet.api.system.domain.SysOperationLog;
 import com.twelvet.api.system.feign.factory.RemoteLogFallbackFactory;
 import com.twelvet.framework.core.constants.ServiceNameConstants;
@@ -31,21 +32,14 @@ public interface RemoteLogService {
     @PostMapping("/api/operationLog")
     R<Boolean> saveLog(@RequestBody SysOperationLog sysOperationLog);
 
+
     /**
      * 保存登录记录
      *
-     * @param username 用户名称
-     * @param deptId   部门ID
-     * @param status   状态
-     * @param message  消息
+     * @param sysLoginInfo 登录结果
      * @return 结果
      */
     @PostMapping("/api/loginInfo")
-    R<Boolean> saveLoginInfo(
-            @RequestParam("username") String username,
-            @RequestParam("deptId") Long deptId,
-            @RequestParam("status") Integer status,
-            @RequestParam("message") String message
-    );
+    R<Boolean> saveLoginInfo(@RequestBody SysLoginInfo sysLoginInfo);
 
 }

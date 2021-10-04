@@ -45,6 +45,18 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
+        <!--system api-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-api-system</artifactId>
+        </dependency>
+
+        <!--mq api-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-api-mq</artifactId>
+        </dependency>
+
         <!--默认采用多数据-->
         <dependency>
             <groupId>com.twelvet</groupId>

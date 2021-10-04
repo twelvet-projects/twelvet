@@ -1,7 +1,10 @@
 package com.twelvet.framework.log.aspect;
 
 
+import com.twelvet.api.mq.feign.RemoteMQSysLoginLogService;
+import com.twelvet.api.mq.feign.RemoteMQSysOperationLogService;
 import com.twelvet.api.system.domain.SysOperationLog;
+import com.twelvet.api.system.feign.RemoteLogService;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessStatus;
@@ -46,6 +49,9 @@ public class LogAspect {
 
     @Autowired
     private AsyncLogService asyncLogService;
+
+    @Autowired
+    private RemoteMQSysOperationLogService remoteMQSysOperationLogService;
 
     /**
      * 配置切入点
@@ -116,6 +122,8 @@ public class LogAspect {
             getControllerMethodDescription(joinPoint, controllerLog, operationLog);
             // 保存数据库
             asyncLogService.saveSysLog(operationLog);
+            // MQ队列日志
+            // remoteMQSysOperationLogService.sendSysLoginLog(operationLog);
         } catch (Exception exp) {
             // 记录本地异常日志
             log.error("==前置通知异常==");

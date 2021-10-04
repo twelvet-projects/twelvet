@@ -26,6 +26,12 @@
             <artifactId>twelvet-api-mq</artifactId>
         </dependency>
 
+        <!--system API-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-api-system</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>
