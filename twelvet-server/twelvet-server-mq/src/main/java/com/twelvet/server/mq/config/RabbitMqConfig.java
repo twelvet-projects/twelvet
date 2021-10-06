@@ -1,6 +1,10 @@
 package com.twelvet.server.mq.config;
 
-import com.twelvet.api.mq.constant.RabbitMQConstants;
+import com.twelvet.api.mq.constant.RabbitMQExchangeConstants;
+import com.twelvet.api.mq.constant.RabbitMQRoutingKeyConstants;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +25,44 @@ public class RabbitMqConfig {
      */
     @Bean
     public Queue loginLogQueue() {
-        return new Queue(RabbitMQConstants.QUEUE_LOG_LOGIN);
+        return new Queue(
+                RabbitMQRoutingKeyConstants.QUEUE_LOG_LOGIN,
+                // 是否持久化
+                true,
+                // 是否排他
+                false,
+                // 是否自动删除
+                false
+        );
+    }
+
+    /**
+     * 配置系统交换机
+     * @return DirectExchange
+     */
+    @Bean
+    public DirectExchange sysLoginLogDirectExchange() {
+        return new DirectExchange(
+                // 交换机名称
+                RabbitMQExchangeConstants.DIRECT_LOG_LOGIN,
+                // 是否持久化
+                true,
+                // 是否自动删除
+                false
+        );
+    }
+
+    /**
+     * 绑定默认交换机
+     *
+     * @return Binding
+     */
+    @Bean
+    public Binding bindingLoginLogExchange() {
+        return BindingBuilder
+                .bind(loginLogQueue())
+                .to(sysLoginLogDirectExchange())
+                .with(RabbitMQRoutingKeyConstants.QUEUE_LOG_LOGIN);
     }
 
     /**
@@ -31,7 +72,12 @@ public class RabbitMqConfig {
      */
     @Bean
     public Queue operationLogQueue() {
-        return new Queue(RabbitMQConstants.QUEUE_LOG_OPERATION);
+        return new Queue(
+                RabbitMQRoutingKeyConstants.QUEUE_LOG_OPERATION,
+                true,
+                false,
+                false
+        );
     }
 
 }

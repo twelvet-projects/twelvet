@@ -5,7 +5,7 @@ package com.twelvet.api.mq.constant;
  * <p>
  * rabbitmq队列常量
  */
-public class RabbitMQConstants {
+public class RabbitMQRoutingKeyConstants {
 
     /**
      * 系统登录日志队列

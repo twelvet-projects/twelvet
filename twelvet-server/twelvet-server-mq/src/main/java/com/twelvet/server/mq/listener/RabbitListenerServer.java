@@ -1,21 +1,16 @@
 package com.twelvet.server.mq.listener;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.twelvet.api.mq.constant.RabbitMQConstants;
-import com.twelvet.api.mq.domain.MaillMq;
+import com.twelvet.api.mq.constant.RabbitMQRoutingKeyConstants;
 import com.twelvet.api.system.domain.SysLoginInfo;
 import com.twelvet.api.system.domain.SysOperationLog;
 import com.twelvet.api.system.feign.RemoteLogService;
 import com.twelvet.framework.utils.JacksonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
 
 /**
  * @author twelvet
@@ -36,7 +31,7 @@ public class RabbitListenerServer {
      * @param message Message
      */
     @RabbitListener(queues = {
-            RabbitMQConstants.QUEUE_LOG_LOGIN
+            RabbitMQRoutingKeyConstants.QUEUE_LOG_LOGIN
     })
     public void insertLoginLogMessage(Message message) {
         log.info("收到系统登录MQ：{}", message);
@@ -51,7 +46,7 @@ public class RabbitListenerServer {
      * @param message Message
      */
     @RabbitListener(queues = {
-            RabbitMQConstants.QUEUE_LOG_OPERATION
+            RabbitMQRoutingKeyConstants.QUEUE_LOG_OPERATION
     })
     public void insertOperationLogMessage(Message message) {
         log.info("收到系统操作MQ：{}", message);

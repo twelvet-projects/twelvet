@@ -45,10 +45,10 @@ public class AuthenticationSuccessEventHandler implements ApplicationListener<Au
             sysLoginInfo.setMsg("登录成功");
 
             // 记录用户登录日志
-            remoteLogService.saveLoginInfo(sysLoginInfo);
+            //remoteLogService.saveLoginInfo(sysLoginInfo);
 
             // MQ队列日志
-            // remoteMQSysLoginLogService.sendSysLoginLog(sysLoginInfo);
+            remoteMQSysLoginLogService.sendSysLoginLog(sysLoginInfo);
 
         }
     }
