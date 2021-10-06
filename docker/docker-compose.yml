@@ -88,7 +88,6 @@ services:
     network_mode: twelvet-network
     # 可以接受外部输入
     tty: true
-    network_mode: twelvet-network
     volumes:
       - /data/docker/twelvet/logs/twelvet-visual-monitor:/logs
       - /data/docker/twelvet/twelvet-visual-monitor:/app
