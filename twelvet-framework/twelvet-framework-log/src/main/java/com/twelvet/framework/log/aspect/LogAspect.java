@@ -120,8 +120,9 @@ public class LogAspect {
             operationLog.setRequestMethod(ServletUtils.getRequest().getMethod());
             // 处理设置注解上的参数
             getControllerMethodDescription(joinPoint, controllerLog, operationLog);
-            // 保存数据库
+            // 异步保存数据库
             asyncLogService.saveSysLog(operationLog);
+
             // MQ队列日志
             // remoteMQSysOperationLogService.sendSysLoginLog(operationLog);
         } catch (Exception exp) {
