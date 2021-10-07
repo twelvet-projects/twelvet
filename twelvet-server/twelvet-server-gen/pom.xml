@@ -5,7 +5,7 @@
     <parent>
         <artifactId>twelvet-server</artifactId>
         <groupId>com.twelvet</groupId>
-        <version>1.1.0</version>
+        <version>2.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -39,5 +39,9 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+        <finalName>twelvet-server-gen</finalName>
+    </build>
 
 </project>

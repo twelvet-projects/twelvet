@@ -5,7 +5,7 @@
     <parent>
         <artifactId>twelvet-visual</artifactId>
         <groupId>com.twelvet</groupId>
-        <version>1.1.0</version>
+        <version>2.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -69,6 +69,7 @@
     </dependencies>
 
     <build>
+        <finalName>twelvet-visual-monitor</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

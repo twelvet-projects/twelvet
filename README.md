@@ -38,12 +38,17 @@ com.twelvet
 ├── twelvet-framework          // 核心模块
 │       └── twelvet-framework-core                         // 核心模块
 │       └── twelvet-framework-log                          // 日志记录
+│       └── twelvet-framework-datascope                    // 数据权限
+│       └── twelvet-framework-jdbc                         // jdbc
+│       └── twelvet-framework-swagger                      // swagger文档
 │       └── twelvet-framework-redis                        // 缓存服务
 │       └── twelvet-framework-security                     // 安全模块
 │       └── twelvet-framework-utils                        // 工具模块
 ├── twelvet-server         // 业务模块
 │       └── twelvet-server-system                          // 系统模块 [8081]
+│       └── twelvet-server-mq                              // 系统模块 [8085]
 │       └── twelvet-server-job                            // 定时任务 [8082]
+│       └── twelvet-server-gen                            // 代码生成 [8084]
 │       └── twelvet-server-dfs                            //  DFS服务 [8083]
 ├── twelvet-visual          // 图形化管理模块
 │       └── twelvet-visual-monitor                         // 监控中心 [8100]
@@ -59,8 +64,8 @@ com.twelvet
 5. 角色管理：角色菜单权限分配、设置角色按机构进行数据范围权限划分。
 6. 字典管理：对系统中经常使用的一些较为固定的数据进行维护。
 7. 参数管理：对系统动态配置常用参数。
-8. 操作日志：系统正常操作日志记录和查询；系统异常信息日志记录和查询。
-9. 登录日志：系统登录日志记录查询包含登录异常。
+8. 异步/MQ操作日志：系统正常操作日志记录和查询；系统异常信息日志记录和查询。
+9. 异步/MQ登录日志：系统登录日志记录查询包含登录异常。
 10. 定时任务：在线（添加、修改、删除)任务调度包含执行结果日志。
 11. 系统接口：根据业务代码自动生成相关的api接口文档。
 12. 服务监控：监视当前系统CPU、内存、磁盘、堆栈等相关信息。

@@ -36,7 +36,7 @@ node {
       remote.password = password
       remote.allowAnyHosts = true
       stage('push to twelvet') {
-        sshPut remote: remote, from: 'twelvet-server/twelvet-visual-monitor/target/twelvet-visual-monitor-1.1.0.jar', into: '/data/docker/twelvet/twelvet-visual-monitor/'
+        sshPut remote: remote, from: 'twelvet-server/twelvet-visual-monitor/target/twelvet-visual-monitor.jar', into: '/data/docker/twelvet/twelvet-visual-monitor/'
         sshCommand remote: remote, command: 'docker-compose -f /data/docker/twelvet/docker-compose.yml restart twelvet-visual-monitor'
       }
     }
