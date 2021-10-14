@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -32,22 +31,23 @@ public class WebLogFilter implements Filter {
     private final static List<String> IGNORES = Arrays.asList("/actuator/health");
 
     @Override
-    public void destroy() {
-        // TODO Auto-generated method stub
+    public void init(FilterConfig filterConfig) {
+        log.info("过滤器初始化");
 
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
+
         long startTime = System.currentTimeMillis();
         HttpServletResponse servletResponse = (HttpServletResponse) response;
         RequestWrapper requestWrapper = new RequestWrapper((HttpServletRequest) request);
         ResponseWrapper responseWrapper = new ResponseWrapper(servletResponse);
 
-        // 健康检查忽略
+        // 忽略列表日志输出
         if (IGNORES.contains(requestWrapper.getRequestURI())) {
-            chain.doFilter(requestWrapper, responseWrapper);
+            chain.doFilter(request, response);
             return;
         }
 
@@ -101,8 +101,8 @@ public class WebLogFilter implements Filter {
     }
 
     @Override
-    public void init(FilterConfig filterConfig) {
-        log.info("过滤器初始化");
+    public void destroy() {
+        // TODO Auto-generated method stub
 
     }
 

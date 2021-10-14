@@ -2,6 +2,7 @@ package com.twelvet.framework.utils.http;
 
 import com.twelvet.framework.utils.CharsetKit;
 import com.twelvet.framework.utils.Convert;
+import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.framework.utils.TWTUtils;
 import com.twelvet.framework.utils.exception.TWTUtilsException;
 import org.springframework.web.context.request.RequestAttributes;
@@ -13,10 +14,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -219,6 +218,66 @@ public class ServletUtils {
      */
     public static void download(byte[] file, String filename) {
         download(getResponse(), file, filename);
+    }
+
+    /**
+     * 是否是Ajax异步请求
+     */
+    public static boolean isAjax() {
+        HttpServletRequest request = getRequest();
+        String accept = getRequest().getHeader("accept");
+        if (accept != null && accept.contains("application/json")) {
+            return true;
+        }
+
+        String xRequestedWith = request.getHeader("X-Requested-With");
+        if (xRequestedWith != null && xRequestedWith.contains("XMLHttpRequest")) {
+            return true;
+        }
+
+        String uri = request.getRequestURI();
+        if (StringUtils.inStringIgnoreCase(uri, ".json", ".xml")) {
+            return true;
+        }
+
+        String ajax = request.getParameter("__ajax");
+
+        return StringUtils.inStringIgnoreCase(ajax, "json", "xml");
+    }
+
+    /**
+     * 不为Ajax异步请求
+     */
+    public static boolean isNotAjax() {
+        return !isAjax();
+    }
+
+    /**
+     * 内容编码
+     *
+     * @param str 内容
+     * @return 编码后的内容
+     */
+    public static String urlEncode(String str) {
+        try {
+            return URLEncoder.encode(str, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return "";
+        }
+    }
+
+    /**
+     * 内容解码
+     *
+     * @param str 内容
+     * @return 解码后的内容
+     */
+    public static String urlDecode(String str) {
+        try {
+            return URLDecoder.decode(str, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return "";
+        }
     }
 
 }
