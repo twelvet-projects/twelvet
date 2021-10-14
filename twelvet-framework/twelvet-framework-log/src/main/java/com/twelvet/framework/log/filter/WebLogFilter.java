@@ -15,12 +15,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @WebFilter(filterName = "BaseFilter", urlPatterns = "/*")
 @Component
 public class WebLogFilter implements Filter {
+
     private final static Logger log = LoggerFactory.getLogger(WebLogFilter.class);
+
+    /**
+     * 忽略日志输出地址
+     */
+    private final static List<String> IGNORES = Arrays.asList("/actuator/health");
 
     @Override
     public void destroy() {
@@ -36,8 +45,8 @@ public class WebLogFilter implements Filter {
         RequestWrapper requestWrapper = new RequestWrapper((HttpServletRequest) request);
         ResponseWrapper responseWrapper = new ResponseWrapper(servletResponse);
 
-        // 健康检查
-        if ("/actuator/health".equals(requestWrapper.getRequestURI())) {
+        // 健康检查忽略
+        if (IGNORES.contains(requestWrapper.getRequestURI())) {
             chain.doFilter(requestWrapper, responseWrapper);
             return;
         }

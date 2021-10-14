@@ -8,7 +8,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description: ResponseWrapper
+ */
 public class ResponseWrapper extends HttpServletResponseWrapper {
 
     private ByteArrayOutputStream buffer;
@@ -21,24 +27,22 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
         super(response);
         buffer = new ByteArrayOutputStream();
         out = new WapperedOutputStream(buffer);
-        writer = new PrintWriter(new OutputStreamWriter(buffer, "UTF-8"));
+        writer = new PrintWriter(new OutputStreamWriter(buffer, StandardCharsets.UTF_8));
     }
 
     /**
      * 重载父类获取outputstream的方法
      *
-     * @return
-     * @throws IOException
      * @author Jason
      * @date 2018年8月3日 下午3:04:13
      */
     @Override
-    public ServletOutputStream getOutputStream() throws IOException {
+    public ServletOutputStream getOutputStream() {
         return out;
     }
 
     @Override
-    public PrintWriter getWriter() throws IOException {
+    public PrintWriter getWriter() {
         return writer;
     }
 
@@ -70,15 +74,15 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
      */
     private class WapperedOutputStream extends ServletOutputStream {
 
-        private ByteArrayOutputStream bos = null;
+        private ByteArrayOutputStream bos;
 
-        public WapperedOutputStream(ByteArrayOutputStream stream) throws IOException {
+        public WapperedOutputStream(ByteArrayOutputStream stream) {
             bos = stream;
         }
 
         // 将指定字节写入输出流bos
         @Override
-        public void write(int b) throws IOException {
+        public void write(int b) {
             bos.write(b);
         }
 
