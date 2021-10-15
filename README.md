@@ -105,7 +105,11 @@ QQ群： [![加入QQ群](https://img.shields.io/badge/985830229-blue.svg)](https
 
 ## 捐赠与支持
 
-<img src="https://www.twelvet.cn/assets/images/pay.png"/>
+<img src="https://www.twelvet.cn/assets/images/pay.png" alt="捐赠"/>
 
+# 贡献者
 
-[![Stargazers over time](https://whnb.wang/stars/twelvet/twelvet)](https://whnb.wang)
+[![contributors](https://whnb.wang/contributors/twelvet/twelvet)](https://www.twelvet.cn)
+
+[![Stargazers over time](https://whnb.wang/stars/twelvet/twelvet)](https://www.twelvet.cn)
+

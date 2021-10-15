@@ -23,7 +23,7 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 
     private PrintWriter writer;
 
-    public ResponseWrapper(HttpServletResponse response) throws IOException {
+    public ResponseWrapper(HttpServletResponse response) {
         super(response);
         buffer = new ByteArrayOutputStream();
         out = new WapperedOutputStream(buffer);
@@ -68,9 +68,6 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
 
     /**
      * 内部类，对ServletOutputStream进行包装，指定输出流的输出端
-     *
-     * @author Jason
-     * @date 2018年8月3日 下午2:26:29
      */
     private class WapperedOutputStream extends ServletOutputStream {
 

@@ -40,7 +40,7 @@
             <if test="visible != null and visible != ''">
                 AND visible = #{visible}
             </if>
-            <if test="status != null and status != ''">
+            <if test="status != null">
                 AND status = #{status}
             </if>
         </where>
@@ -66,7 +66,7 @@
         <if test="visible != null and visible != ''">
             AND visible = #{visible}
         </if>
-        <if test="status != null and status != ''">
+        <if test="status != null">
             AND status = #{status}
         </if>
         order by m.parent_id, m.order_num

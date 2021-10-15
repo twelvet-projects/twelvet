@@ -3,10 +3,13 @@ package com.twelvet.framework.log.filter;
 
 import com.twelvet.framework.core.constants.Constants;
 import com.twelvet.framework.utils.DateUtils;
+import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.TWTUtils;
 import com.twelvet.framework.utils.http.ServletUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -33,23 +36,37 @@ public class WebLogFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {
         log.info("过滤器初始化");
-
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
-        long startTime = System.currentTimeMillis();
         HttpServletResponse servletResponse = (HttpServletResponse) response;
-        RequestWrapper requestWrapper = new RequestWrapper((HttpServletRequest) request);
-        ResponseWrapper responseWrapper = new ResponseWrapper(servletResponse);
+
+        HttpServletRequest servletRequest = (HttpServletRequest) request;
 
         // 忽略列表日志输出
-        if (IGNORES.contains(requestWrapper.getRequestURI())) {
+        if (IGNORES.contains(servletRequest.getRequestURI())) {
             chain.doFilter(request, response);
             return;
         }
+
+        String contentType = request.getContentType();
+        if (!TWTUtils.isEmpty(contentType)) {
+            if (
+                    contentType.startsWith(MediaType.MULTIPART_FORM_DATA_VALUE) ||
+                            contentType.startsWith(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+            ) {
+                chain.doFilter(request, response);
+                return;
+            }
+        }
+
+        long startTime = System.currentTimeMillis();
+
+        RequestWrapper requestWrapper = new RequestWrapper((HttpServletRequest) request);
+        ResponseWrapper responseWrapper = new ResponseWrapper(servletResponse);
 
         String reqJson = requestWrapper.getBody();
         Map<String, String[]> map = request.getParameterMap();
@@ -64,6 +81,14 @@ public class WebLogFilter implements Filter {
         byte[] bytes = responseWrapper.getResponseData();
         response.getOutputStream().write(bytes);
 
+        // 仅输出JSON
+        String responseData = new String(bytes, StandardCharsets.UTF_8);
+
+        // 判断是否为JSON响应
+        if (!JacksonUtils.isValidJson(responseData)) {
+            responseData = "IGNORES";
+        }
+
         log.info(String.format(
                 "\n===================Request================>\n时间：%s\n地址：%s\ntoken：%s\n参数：%s\n方式：%s"
                         + "\n<===================Response================\n状态：%s\n内容：%s\n时长：%s毫秒"
@@ -75,7 +100,7 @@ public class WebLogFilter implements Filter {
                 reqJson,
                 requestWrapper.getMethod(),
                 responseWrapper.getStatus(),
-                new String(bytes, StandardCharsets.UTF_8),
+                responseData,
                 endTime - startTime)
         );
 

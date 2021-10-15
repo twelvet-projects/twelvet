@@ -11,6 +11,14 @@ import java.io.Serializable;
  */
 @FunctionalInterface
 public interface CheckedConsumer<T> extends Serializable {
+
+    /**
+     * Run the Consumer
+     *
+     * @param var1 T
+     * @throws Throwable UncheckedException
+     */
+
     @Nullable
     void accept(@Nullable T var1) throws Throwable;
 }

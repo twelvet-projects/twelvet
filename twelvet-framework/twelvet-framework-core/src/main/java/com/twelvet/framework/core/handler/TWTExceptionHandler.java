@@ -85,7 +85,7 @@ public class TWTExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public AjaxResult bindExceptionHandler(BindException exception) {
         List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
-        log.warn("参数绑定异常,ex = {}", fieldErrors.get(0).getDefaultMessage());
+        log.error("参数绑定异常,ex = {}", fieldErrors.get(0).getDefaultMessage());
         return AjaxResult.error(fieldErrors.get(0).getDefaultMessage());
     }
 

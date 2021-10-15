@@ -13,6 +13,7 @@ import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.TWTUtils;
 import com.twelvet.framework.utils.http.IpUtils;
 import com.twelvet.framework.utils.http.ServletUtils;
 import org.aspectj.lang.JoinPoint;
@@ -26,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.HandlerMapping;
@@ -162,11 +164,17 @@ public class LogAspect {
         String requestMethod = operationLog.getRequestMethod();
         if (HttpMethod.PUT.name().equals(requestMethod) || HttpMethod.POST.name().equals(requestMethod)) {
             String params;
-            try {
-                params = argsArrayToString(joinPoint.getArgs());
-            } catch (IOException e) {
-                throw new TWTException("参数拼装失败");
+            String contentType = ServletUtils.getRequest().getContentType();
+            if (!TWTUtils.isEmpty(contentType) && contentType.startsWith(MediaType.MULTIPART_FORM_DATA_VALUE)) {
+                params = "FILE";
+            } else {
+                try {
+                    params = argsArrayToString(joinPoint.getArgs());
+                } catch (IOException e) {
+                    throw new TWTException("参数拼装失败");
+                }
             }
+
             operationLog.setOperParam(StringUtils.substring(params, 0, 2000));
         } else {
             Map<?, ?> paramsMap = (Map<?, ?>) ServletUtils.getRequest().getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
