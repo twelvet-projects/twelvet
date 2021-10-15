@@ -21,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @WebFilter(filterName = "BaseFilter", urlPatterns = "/*")
 @Component
@@ -96,12 +97,13 @@ public class WebLogFilter implements Filter {
                 DateUtils.getTime(),
                 requestWrapper.getRequestURL(),
                 // 认证Token
-                ServletUtils.getRequest().getHeader(Constants.AUTHORIZATION),
+                Objects.requireNonNull(ServletUtils.getRequest()).getHeader(Constants.AUTHORIZATION),
                 reqJson,
                 requestWrapper.getMethod(),
                 responseWrapper.getStatus(),
                 responseData,
-                endTime - startTime)
+                endTime - startTime
+                )
         );
 
     }
