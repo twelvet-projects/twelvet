@@ -46,7 +46,7 @@ com.twelvet
 │       └── twelvet-framework-utils                        // 工具模块
 ├── twelvet-server         // 业务模块
 │       └── twelvet-server-system                          // 系统模块 [8081]
-│       └── twelvet-server-mq                              // 系统模块 [8085]
+│       └── twelvet-server-mq                              // 消息队列 [8085]
 │       └── twelvet-server-job                            // 定时任务 [8082]
 │       └── twelvet-server-gen                            // 代码生成 [8084]
 │       └── twelvet-server-dfs                            //  DFS服务 [8083]
