@@ -2,6 +2,7 @@ package com.twelvet.framework.utils.html;
 
 
 import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.exception.TWTUtilsException;
 
 /**
  * @author twelvet
@@ -9,6 +10,11 @@ import com.twelvet.framework.utils.StringUtils;
  * @Description: 转义和反转义工具类
  */
 public class EscapeUtil {
+
+    public EscapeUtil() {
+        throw new TWTUtilsException("This is a utility class and cannot be instantiated");
+    }
+
     public static final String RE_HTML_MARK = "(<[^<]*?>)|(<[\\s]*?/[^<]*?>)|(<[^<]*?/[\\s]*?>)";
 
     private static final char[][] TEXT = new char[64][];

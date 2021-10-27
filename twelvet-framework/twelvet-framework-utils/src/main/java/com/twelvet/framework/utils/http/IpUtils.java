@@ -1,6 +1,7 @@
 package com.twelvet.framework.utils.http;
 
 import com.twelvet.framework.utils.TWTUtils;
+import com.twelvet.framework.utils.exception.TWTUtilsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +15,10 @@ import java.net.UnknownHostException;
  * @Description: IP工具类
  */
 public class IpUtils {
+
+    public IpUtils() {
+        throw new TWTUtilsException("This is a utility class and cannot be instantiated");
+    }
 
     private static final Logger log = LoggerFactory.getLogger(IpUtils.class);
 

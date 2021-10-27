@@ -29,6 +29,10 @@ import java.util.*;
  */
 public class JacksonUtils {
 
+    public JacksonUtils() {
+        throw new TWTUtilsException("This is a utility class and cannot be instantiated");
+    }
+
     /**
      * 将对象序列化成json字符串
      *

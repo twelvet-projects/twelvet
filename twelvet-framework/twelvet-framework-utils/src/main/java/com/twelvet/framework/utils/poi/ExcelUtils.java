@@ -40,6 +40,11 @@ import java.util.stream.Collectors;
  * @Description: Excel处理工具
  */
 public class ExcelUtils<T> {
+
+    public ExcelUtils() {
+        throw new TWTUtilsException("This is a utility class and cannot be instantiated");
+    }
+
     private static final Logger log = LoggerFactory.getLogger(ExcelUtils.class);
 
     private final static String XLS = "xls";

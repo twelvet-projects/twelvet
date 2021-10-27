@@ -246,7 +246,7 @@ INSERT INTO `sys_menu` VALUES (1, '系统管理', 0, 1, '/system', NULL, 0, 'M',
 INSERT INTO `sys_menu` VALUES (2, '人力管理', 0, 2, '/human', NULL, 0, 'M', 1, 1, '', 'icon-human-resources', 'admin', '2018-03-16 11:33:00', 'admin', '2021-08-01 09:58:21', '系统监控目录');
 INSERT INTO `sys_menu` VALUES (3, '工具箱', 0, 4, '/tool', NULL, 0, 'M', 1, 1, '', 'icon-tool-box', 'admin', '2018-03-16 11:33:00', 'admin', '2020-11-14 16:25:19', '系统工具目录');
 INSERT INTO `sys_menu` VALUES (4, '日志管理', 0, 3, '/log', '', 0, 'M', 1, 1, '', 'icon-log', 'admin', '2018-03-16 11:33:00', 'admin', '2021-04-30 18:05:49', '日志管理菜单');
-INSERT INTO `sys_menu` VALUES (5, 'TwelveT', 0, 5, 'https://www.twelvet.cn', NULL, 1, 'M', 0, 1, '', 'icon-system', 'admin', '2018-03-16 11:33:00', 'admin', '2021-04-09 15:41:25', '若依官网地址');
+INSERT INTO `sys_menu` VALUES (5, 'TwelveT', 0, 5, 'https://www.twelvet.cn', NULL, 1, 'M', 0, 1, '', 'icon-system', 'admin', '2018-03-16 11:33:00', 'admin', '2021-04-09 15:41:25', 'twelvet官网地址');
 INSERT INTO `sys_menu` VALUES (100, '职员管理', 2, 1, '/human/staff', './human/staff', 1, 'C', 1, 1, 'system:user:list', 'icon-team', 'admin', '2018-03-16 11:33:00', 'admin', '2021-08-01 10:42:25', '用户管理菜单');
 INSERT INTO `sys_menu` VALUES (101, '角色管理', 2, 2, '/human/role', './human/role', 0, 'C', 1, 1, 'system:role:list', 'icon-role', 'admin', '2018-03-16 11:33:00', 'admin', '2020-11-14 11:39:15', '角色管理菜单');
 INSERT INTO `sys_menu` VALUES (102, '菜单管理', 1, 2, '/system/menu', 'system/menu', 0, 'C', 1, 1, 'system:menu:list', 'icon-menu', 'admin', '2018-03-16 11:33:00', 'admin', '2021-06-14 16:57:47', '菜单管理菜单');

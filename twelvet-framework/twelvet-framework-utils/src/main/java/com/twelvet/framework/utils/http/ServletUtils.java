@@ -30,6 +30,10 @@ import java.util.Map;
  */
 public class ServletUtils {
 
+    public ServletUtils() {
+        throw new TWTUtilsException("This is a utility class and cannot be instantiated");
+    }
+
     public static final String METHOD_DELETE = "DELETE";
     public static final String METHOD_HEAD = "HEAD";
     public static final String METHOD_GET = "GET";

@@ -3,6 +3,7 @@ package com.twelvet.framework.utils.text;
 
 import com.twelvet.framework.utils.Convert;
 import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.exception.TWTUtilsException;
 
 /**
  * @author twelvet
@@ -10,6 +11,11 @@ import com.twelvet.framework.utils.StringUtils;
  * @Description: 字符串格式化
  */
 public class StrFormatter {
+
+    public StrFormatter() {
+        throw new TWTUtilsException("This is a utility class and cannot be instantiated");
+    }
+
     public static final String EMPTY_JSON = "{}";
     public static final char C_BACKSLASH = '\\';
     public static final char C_DELIM_START = '{';

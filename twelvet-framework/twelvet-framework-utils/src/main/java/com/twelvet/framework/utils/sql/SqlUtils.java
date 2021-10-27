@@ -9,6 +9,11 @@ import com.twelvet.framework.utils.exception.TWTUtilsException;
  * @Description: sql操作工具类
  */
 public class SqlUtils {
+
+    public SqlUtils() {
+        throw new TWTUtilsException("This is a utility class and cannot be instantiated");
+    }
+
     /**
      * 仅支持字母、数字、下划线、空格、逗号、小数点（支持多个字段排序）
      */

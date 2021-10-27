@@ -1,5 +1,6 @@
 package com.twelvet.framework.utils;
 
+import com.twelvet.framework.utils.exception.TWTUtilsException;
 import com.twelvet.framework.utils.text.UUID;
 
 /**
@@ -8,6 +9,11 @@ import com.twelvet.framework.utils.text.UUID;
  * @Description: ID生成器工具类
  */
 public class IdUtils {
+
+    public IdUtils() {
+        throw new TWTUtilsException("This is a utility class and cannot be instantiated");
+    }
+
     /**
      * 获取随机UUID
      *

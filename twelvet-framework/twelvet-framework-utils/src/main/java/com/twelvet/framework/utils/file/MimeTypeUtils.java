@@ -1,11 +1,17 @@
 package com.twelvet.framework.utils.file;
 
+import com.twelvet.framework.utils.exception.TWTUtilsException;
+
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
  * @Description: 媒体类型工具类
  */
 public class MimeTypeUtils {
+
+    public MimeTypeUtils() {
+        throw new TWTUtilsException("This is a utility class and cannot be instantiated");
+    }
 
     public static final String IMAGE_PNG = "image/png";
 

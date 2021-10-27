@@ -1,5 +1,6 @@
 package com.twelvet.framework.utils;
 
+import com.twelvet.framework.utils.exception.TWTUtilsException;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 import java.lang.management.ManagementFactory;
@@ -14,6 +15,10 @@ import java.util.Date;
  * @Description: 时间格式工具
  */
 public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
+
+    public DateUtils() {
+        throw new TWTUtilsException("This is a utility class and cannot be instantiated");
+    }
 
     public static String YYYY = "yyyy";
 

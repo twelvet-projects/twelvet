@@ -1,5 +1,6 @@
 package com.twelvet.framework.utils;
 
+import com.twelvet.framework.utils.exception.TWTUtilsException;
 import org.quartz.CronExpression;
 
 import java.text.ParseException;
@@ -11,6 +12,11 @@ import java.util.Date;
  * @Description: cron表达式工具类
  */
 public class CronUtils {
+
+    public CronUtils() {
+        throw new TWTUtilsException("This is a utility class and cannot be instantiated");
+    }
+
     /**
      * 返回一个布尔值代表一个给定的Cron表达式的有效性
      *

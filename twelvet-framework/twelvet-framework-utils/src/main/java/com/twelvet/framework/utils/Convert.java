@@ -1,5 +1,7 @@
 package com.twelvet.framework.utils;
 
+import com.twelvet.framework.utils.exception.TWTUtilsException;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
@@ -14,6 +16,10 @@ import java.util.Set;
  * @Description: 类型转换器
  */
 public class Convert {
+
+    public Convert() {
+        throw new TWTUtilsException("This is a utility class and cannot be instantiated");
+    }
 
     /**
      * 转换为字符串<br>

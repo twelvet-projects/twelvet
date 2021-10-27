@@ -1,11 +1,17 @@
 package com.twelvet.framework.utils;
 
+import com.twelvet.framework.utils.exception.TWTUtilsException;
+
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
  * @Description: twelvet工具类
  */
 public class TWTUtils {
+
+    public TWTUtils() {
+        throw new TWTUtilsException("This is a utility class and cannot be instantiated");
+    }
 
     /**
      * 判断一个对象是否为空

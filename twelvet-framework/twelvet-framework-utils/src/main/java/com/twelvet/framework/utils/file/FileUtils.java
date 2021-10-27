@@ -1,5 +1,6 @@
 package com.twelvet.framework.utils.file;
 
+import com.twelvet.framework.utils.exception.TWTUtilsException;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -15,6 +16,11 @@ import java.nio.charset.StandardCharsets;
  * @Description: 文件处理工具类
  */
 public class FileUtils extends org.apache.commons.io.FileUtils {
+
+    public FileUtils() {
+        throw new TWTUtilsException("This is a utility class and cannot be instantiated");
+    }
+
     /**
      * 字符常量：斜杠 {@code '/'}
      */

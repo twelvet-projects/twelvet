@@ -1,5 +1,6 @@
 package com.twelvet.framework.utils.file;
 
+import com.twelvet.framework.utils.exception.TWTUtilsException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -10,6 +11,10 @@ import java.io.File;
  * @Description: 文件类型工具类
  */
 public class FileTypeUtils {
+
+    public FileTypeUtils() {
+        throw new TWTUtilsException("This is a utility class and cannot be instantiated");
+    }
 
     /**
      * 获取文件类型

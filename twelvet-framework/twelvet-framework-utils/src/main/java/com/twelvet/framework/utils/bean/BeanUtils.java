@@ -1,5 +1,7 @@
 package com.twelvet.framework.utils.bean;
 
+import com.twelvet.framework.utils.exception.TWTUtilsException;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,11 @@ import java.util.regex.Pattern;
  * @Description: Bean 工具类
  */
 public class BeanUtils extends org.springframework.beans.BeanUtils {
+
+    public BeanUtils() {
+        throw new TWTUtilsException("This is a utility class and cannot be instantiated");
+    }
+
     /**
      * Bean方法名中属性名开始的下标
      */

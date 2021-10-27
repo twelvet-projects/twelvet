@@ -1,5 +1,6 @@
 package com.twelvet.framework.utils.file;
 
+import com.twelvet.framework.utils.exception.TWTUtilsException;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,11 @@ import java.util.Arrays;
  * @Description: 图片工具
  */
 public class ImageUtils {
+
+    public ImageUtils() {
+        throw new TWTUtilsException("This is a utility class and cannot be instantiated");
+    }
+
     private static final Logger log = LoggerFactory.getLogger(ImageUtils.class);
 
     public static byte[] getImage(String imagePath) {

@@ -1,5 +1,7 @@
 package com.twelvet.framework.utils;
 
+import com.twelvet.framework.utils.exception.TWTUtilsException;
+
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
@@ -9,6 +11,11 @@ import java.nio.charset.StandardCharsets;
  * @Description: 字符集工具类
  */
 public class CharsetKit {
+
+    public CharsetKit() {
+        throw new TWTUtilsException("This is a utility class and cannot be instantiated");
+    }
+
     /**
      * ISO-8859-1
      */

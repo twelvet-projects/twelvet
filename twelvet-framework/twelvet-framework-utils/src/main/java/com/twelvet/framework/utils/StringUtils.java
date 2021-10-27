@@ -1,5 +1,6 @@
 package com.twelvet.framework.utils;
 
+import com.twelvet.framework.utils.exception.TWTUtilsException;
 import com.twelvet.framework.utils.text.StrFormatter;
 import org.springframework.util.AntPathMatcher;
 
@@ -13,6 +14,10 @@ import java.util.Map;
  * @Description: 字符串工具类
  */
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
+
+    public StringUtils() {
+        throw new TWTUtilsException("This is a utility class and cannot be instantiated");
+    }
 
     /**
      * 空格字符串

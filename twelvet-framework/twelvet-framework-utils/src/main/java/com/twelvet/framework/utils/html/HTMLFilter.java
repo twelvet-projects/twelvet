@@ -1,5 +1,7 @@
 package com.twelvet.framework.utils.html;
 
+import com.twelvet.framework.utils.exception.TWTUtilsException;
+
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -12,6 +14,11 @@ import java.util.regex.Pattern;
  * @Description: HTML过滤器，XSS
  */
 public final class HTMLFilter {
+
+    public HTMLFilter() {
+        throw new TWTUtilsException("This is a utility class and cannot be instantiated");
+    }
+
     /**
      * regex flag union representing /si modifiers in php
      **/
