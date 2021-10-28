@@ -43,7 +43,7 @@ public class ImageUtils {
             result = Arrays.copyOf(result, result.length);
             return new ByteArrayInputStream(result);
         } catch (Exception e) {
-            log.error("获取图片异常 {}", e);
+            log.error("获取图片异常", e);
         }
         return null;
     }

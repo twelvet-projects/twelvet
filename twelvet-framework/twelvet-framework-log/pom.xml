@@ -27,6 +27,12 @@
             <artifactId>twelvet-api-mq</artifactId>
         </dependency>
 
+        <!--logback-->
+        <dependency>
+            <groupId>com.cwbase</groupId>
+            <artifactId>logback-redis-appender</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

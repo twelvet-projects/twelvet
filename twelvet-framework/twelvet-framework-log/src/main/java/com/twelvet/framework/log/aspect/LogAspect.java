@@ -1,10 +1,8 @@
 package com.twelvet.framework.log.aspect;
 
 
-import com.twelvet.api.mq.feign.RemoteMQSysLoginLogService;
 import com.twelvet.api.mq.feign.RemoteMQSysOperationLogService;
 import com.twelvet.api.system.domain.SysOperationLog;
-import com.twelvet.api.system.feign.RemoteLogService;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessStatus;

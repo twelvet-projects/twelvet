@@ -58,6 +58,7 @@
         <knife4j.version>3.0.3</knife4j.version>
         <hutool.version>5.7.5</hutool.version>
         <rabbitmq.version>2.5.4</rabbitmq.version>
+        <logback.redis.version>1.1.6</logback.redis.version>
 
         <docker.image.prefix>springboot</docker.image.prefix>
         <docker.plugin.version>0.32.0</docker.plugin.version>
@@ -120,6 +121,13 @@
                 <groupId>com.github.tobato</groupId>
                 <artifactId>fastdfs-client</artifactId>
                 <version>${fast-dfs.version}</version>
+            </dependency>
+
+            <!--logback-->
+            <dependency>
+                <groupId>com.cwbase</groupId>
+                <artifactId>logback-redis-appender</artifactId>
+                <version>${logback.redis.version}</version>
             </dependency>
 
             <!-- 代码生成使用模板 -->
@@ -368,6 +376,15 @@
             <properties>
                 <active>dev</active>
                 <nacos.namespace>eeb43899-8a88-4f5b-b0e0-d7c8fd09b86e</nacos.namespace>
+
+                <!-- elk/日志配置 -->
+                <log.dir>logs</log.dir>
+                <log.level>info</log.level>
+                <log.redis.host>127.0.0.1</log.redis.host>
+                <log.redis.password></log.redis.password>
+                <log.redis.port>6379</log.redis.port>
+                <log.redis.key>tw.log</log.redis.key>
+                <log.redis.db>1</log.redis.db>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -397,6 +414,15 @@
             <properties>
                 <active>pro</active>
                 <nacos.namespace>94664454-62b0-415a-9392-7c0ce2d11b2f</nacos.namespace>
+
+                <!-- elk/日志配置 -->
+                <log.dir>logs</log.dir>
+                <log.level>info</log.level>
+                <log.redis.host>127.0.0.1</log.redis.host>
+                <log.redis.password></log.redis.password>
+                <log.redis.port>6379</log.redis.port>
+                <log.redis.key>tw.log</log.redis.key>
+                <log.redis.db>1</log.redis.db>
             </properties>
         </profile>
     </profiles>
