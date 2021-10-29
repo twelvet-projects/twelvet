@@ -26,12 +26,6 @@
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
 
-        <!-- pool 对象池 -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-pool2</artifactId>
-        </dependency>
-
         <!-- Spring Security Oauth2 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
