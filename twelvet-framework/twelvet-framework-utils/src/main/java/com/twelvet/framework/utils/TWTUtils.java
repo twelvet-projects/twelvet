@@ -36,7 +36,7 @@ public class TWTUtils {
      * @param chineseNumber 中文数字
      * @return 阿拉伯数字
      */
-    public static int chineseNumberInt(String chineseNumber) {
+    public static int chineseNumberTransInt(String chineseNumber) {
         int result = 0;
         // 存放一个单位的数字如：十万
         int temp = 1;
