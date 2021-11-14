@@ -54,7 +54,6 @@ public class TWTUtils {
                     // 添加下一个单位之前，先把上一个单位值添加到结果中
                     if (0 != count) {
                         result += temp;
-                        temp = 1;
                         count = 0;
                     }
                     // 下标+1，就是对应的值
