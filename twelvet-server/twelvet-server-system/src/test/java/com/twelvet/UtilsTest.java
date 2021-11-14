@@ -12,7 +12,7 @@ public class UtilsTest {
 
     @Test
     public void util() {
-        System.out.println(TWTUtils.chineseNumberTransInt("十万八千七八九十一"));
+        System.out.println(TWTUtils.chineseNumberTransInt("十万八千七百九十一"));
     }
 
 }
