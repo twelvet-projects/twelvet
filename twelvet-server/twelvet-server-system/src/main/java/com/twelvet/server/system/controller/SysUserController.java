@@ -13,7 +13,7 @@ import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.poi.ExcelUtils;
-import com.twelvet.framework.utils.TWTUtils;
+import com.twelvet.framework.utils.$;
 import com.twelvet.server.system.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -166,7 +166,7 @@ public class SysUserController extends TWTController {
         List<SysRole> roles = iSysRoleService.selectRoleAll();
         res.put("roles", SysUser.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
         res.put("posts", iSysPostService.selectPostAll());
-        if (TWTUtils.isNotEmpty(userId)) {
+        if ($.isNotEmpty(userId)) {
             res.put("staff", iSysUserService.selectUserById(userId));
             res.put("postIds", iSysPostService.selectPostListByUserId(userId));
             res.put("roleIds", iSysRoleService.selectRoleListByUserId(userId));

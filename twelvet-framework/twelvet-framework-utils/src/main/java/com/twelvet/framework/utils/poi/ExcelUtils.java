@@ -3,7 +3,7 @@ package com.twelvet.framework.utils.poi;
 import com.twelvet.framework.utils.CharsetKit;
 import com.twelvet.framework.utils.Convert;
 import com.twelvet.framework.utils.DateUtils;
-import com.twelvet.framework.utils.TWTUtils;
+import com.twelvet.framework.utils.$;
 import com.twelvet.framework.utils.annotation.excel.Excel;
 import com.twelvet.framework.utils.annotation.excel.Excel.ColumnType;
 import com.twelvet.framework.utils.annotation.excel.Excel.Type;
@@ -135,7 +135,7 @@ public class ExcelUtils<T> {
         this.wb = WorkbookFactory.create(is);
         List<T> list = new ArrayList<>();
         Sheet sheet;
-        if (TWTUtils.isNotEmpty(sheetName)) {
+        if ($.isNotEmpty(sheetName)) {
             // 如果指定sheet名,则取指定sheet中的内容.
             sheet = wb.getSheet(sheetName);
         } else {
@@ -156,7 +156,7 @@ public class ExcelUtils<T> {
             Row heard = sheet.getRow(0);
             for (int i = 0; i < heard.getPhysicalNumberOfCells(); i++) {
                 Cell cell = heard.getCell(i);
-                if (TWTUtils.isNotEmpty(cell)) {
+                if ($.isNotEmpty(cell)) {
                     String value = this.getCellValue(heard, i).toString();
                     cellMap.put(value, i);
                 } else {
@@ -215,12 +215,12 @@ public class ExcelUtils<T> {
                             val = DateUtil.getJavaDate((Double) val);
                         }
                     }
-                    if (TWTUtils.isNotEmpty(fieldType)) {
+                    if ($.isNotEmpty(fieldType)) {
                         Excel attr = field.getAnnotation(Excel.class);
                         String propertyName = field.getName();
-                        if (TWTUtils.isNotEmpty(attr.targetAttr())) {
+                        if ($.isNotEmpty(attr.targetAttr())) {
                             propertyName = field.getName() + "." + attr.targetAttr();
-                        } else if (TWTUtils.isNotEmpty(attr.readConverterExp())) {
+                        } else if ($.isNotEmpty(attr.readConverterExp())) {
                             val = reverseByExp(Convert.toStr(val), attr.readConverterExp(), attr.separator());
                         }
                         ReflectUtils.invokeSetter(entity, propertyName, val);
@@ -248,7 +248,7 @@ public class ExcelUtils<T> {
             response.setCharacterEncoding(CharsetKit.UTF_8);
 
             // 文件名称为空将采用工作表名称
-            if (TWTUtils.isEmpty(filename)) {
+            if ($.isEmpty(filename)) {
                 filename = sheetName;
             }
 
@@ -421,9 +421,9 @@ public class ExcelUtils<T> {
      */
     public void setCellVo(Object value, Excel attr, Cell cell) {
         if (ColumnType.STRING == attr.cellType()) {
-            cell.setCellValue(TWTUtils.isEmpty(value) ? attr.defaultValue() : value + attr.suffix());
+            cell.setCellValue($.isEmpty(value) ? attr.defaultValue() : value + attr.suffix());
         } else if (ColumnType.NUMERIC == attr.cellType()) {
-            if (TWTUtils.isNotEmpty(value)) {
+            if ($.isNotEmpty(value)) {
                 cell.setCellValue(StringUtils.contains(Convert.toStr(value), ".") ? Convert.toDouble(value) : Convert.toInt(value));
             }
         } else if (ColumnType.IMAGE == attr.cellType()) {
@@ -476,7 +476,7 @@ public class ExcelUtils<T> {
             row.setHeight((short) (attr.height() * 20));
         }
         // 如果设置了提示信息则鼠标放上去提示.
-        if (TWTUtils.isNotEmpty(attr.prompt())) {
+        if ($.isNotEmpty(attr.prompt())) {
             // 这里默认设了2-101列提示.
             setXSSFPrompt(sheet, "", attr.prompt(), 1, 100, column, column);
         }
@@ -506,9 +506,9 @@ public class ExcelUtils<T> {
                 String dateFormat = attr.dateFormat();
                 String readConverterExp = attr.readConverterExp();
                 String separator = attr.separator();
-                if (TWTUtils.isNotEmpty(dateFormat) && TWTUtils.isNotEmpty(value)) {
+                if ($.isNotEmpty(dateFormat) && $.isNotEmpty(value)) {
                     cell.setCellValue(DateUtils.parseDateToStr(dateFormat, (Date) value));
-                } else if (TWTUtils.isNotEmpty(readConverterExp) && TWTUtils.isNotEmpty(value)) {
+                } else if ($.isNotEmpty(readConverterExp) && $.isNotEmpty(value)) {
                     cell.setCellValue(convertByExp(Convert.toStr(value), readConverterExp, separator));
                 } else {
                     // 设置列类型
@@ -647,7 +647,7 @@ public class ExcelUtils<T> {
      */
     private Object getTargetValue(T vo, Field field, Excel excel) throws Exception {
         Object o = field.get(vo);
-        if (TWTUtils.isNotEmpty(excel.targetAttr())) {
+        if ($.isNotEmpty(excel.targetAttr())) {
             String target = excel.targetAttr();
             if (".".contains(target)) {
                 String[] targets = target.split("[.]");
@@ -669,7 +669,7 @@ public class ExcelUtils<T> {
      * @return value
      */
     private Object getValue(Object o, String name) throws Exception {
-        if (TWTUtils.isNotEmpty(name)) {
+        if ($.isNotEmpty(name)) {
             Class<?> clazz = o.getClass();
             String methodName = "get" + name.substring(0, 1).toUpperCase() + name.substring(1);
             Method method = clazz.getMethod(methodName);
@@ -751,7 +751,7 @@ public class ExcelUtils<T> {
         Object val = "";
         try {
             Cell cell = row.getCell(column);
-            if (TWTUtils.isNotEmpty(cell)) {
+            if ($.isNotEmpty(cell)) {
                 if (cell.getCellTypeEnum() == CellType.NUMERIC || cell.getCellTypeEnum() == CellType.FORMULA) {
                     val = cell.getNumericCellValue();
                     if (HSSFDateUtil.isCellDateFormatted(cell)) {

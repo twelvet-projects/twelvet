@@ -11,7 +11,7 @@ import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.framework.utils.StringUtils;
-import com.twelvet.framework.utils.TWTUtils;
+import com.twelvet.framework.utils.$;
 import com.twelvet.framework.utils.http.IpUtils;
 import com.twelvet.framework.utils.http.ServletUtils;
 import org.aspectj.lang.JoinPoint;
@@ -163,7 +163,7 @@ public class LogAspect {
         if (HttpMethod.PUT.name().equals(requestMethod) || HttpMethod.POST.name().equals(requestMethod)) {
             String params;
             String contentType = ServletUtils.getRequest().getContentType();
-            if (!TWTUtils.isEmpty(contentType) && contentType.startsWith(MediaType.MULTIPART_FORM_DATA_VALUE)) {
+            if (!$.isEmpty(contentType) && contentType.startsWith(MediaType.MULTIPART_FORM_DATA_VALUE)) {
                 params = "FILE";
             } else {
                 try {

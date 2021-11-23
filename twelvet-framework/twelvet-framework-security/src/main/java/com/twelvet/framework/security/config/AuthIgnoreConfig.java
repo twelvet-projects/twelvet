@@ -2,7 +2,7 @@ package com.twelvet.framework.security.config;
 
 import com.twelvet.framework.security.annotation.AuthIgnore;
 import com.twelvet.framework.security.config.properties.IgnoreUrlsProperties;
-import com.twelvet.framework.utils.TWTUtils;
+import com.twelvet.framework.utils.$;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +62,7 @@ public class AuthIgnoreConfig implements InitializingBean, ApplicationContextAwa
             AuthIgnore controller = handlerMethod.getBeanType().getAnnotation(AuthIgnore.class);
 
             // 本方法或本Controller存在AuthIgnore注解将存进列表
-            if (TWTUtils.isNotEmpty(method) || TWTUtils.isNotEmpty(controller)) {
+            if ($.isNotEmpty(method) || $.isNotEmpty(controller)) {
                 ignoreUrls.addAll(mappingInfo.getPatternsCondition().getPatterns());
             }
 

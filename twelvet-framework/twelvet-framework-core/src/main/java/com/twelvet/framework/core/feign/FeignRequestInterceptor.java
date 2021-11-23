@@ -1,6 +1,6 @@
 package com.twelvet.framework.core.feign;
 
-import com.twelvet.framework.utils.TWTUtils;
+import com.twelvet.framework.utils.$;
 import com.twelvet.framework.utils.http.IpUtils;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
@@ -32,7 +32,7 @@ public class FeignRequestInterceptor implements RequestInterceptor {
 
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
-        if (TWTUtils.isNotEmpty(authentication) && authentication.getDetails() instanceof OAuth2AuthenticationDetails) {
+        if ($.isNotEmpty(authentication) && authentication.getDetails() instanceof OAuth2AuthenticationDetails) {
             OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) authentication.getDetails();
 
             requestTemplate.header(

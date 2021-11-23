@@ -8,7 +8,7 @@ import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.StringUtils;
-import com.twelvet.framework.utils.TWTUtils;
+import com.twelvet.framework.utils.$;
 import com.twelvet.server.system.service.ISysClientDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -83,7 +83,7 @@ public class SysClientDetailsController extends TWTController {
     @PutMapping
     public AjaxResult update(@RequestBody SysClientDetails sysClientDetails) {
         // 重新设置密码
-        if (TWTUtils.isNotEmpty(sysClientDetails.getClientSecret())) {
+        if ($.isNotEmpty(sysClientDetails.getClientSecret())) {
             sysClientDetails.setClientSecret(SecurityUtils.encryptPassword(sysClientDetails.getClientSecret()));
         }
 

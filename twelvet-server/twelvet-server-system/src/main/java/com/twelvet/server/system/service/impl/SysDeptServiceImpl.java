@@ -5,7 +5,7 @@ import com.twelvet.api.system.domain.vo.TreeSelect;
 import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.datascope.annotation.SysDataScope;
-import com.twelvet.framework.utils.TWTUtils;
+import com.twelvet.framework.utils.$;
 import com.twelvet.server.system.mapper.SysDeptMapper;
 import com.twelvet.server.system.service.ISysDeptService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,9 +141,9 @@ public class SysDeptServiceImpl implements ISysDeptService {
      */
     @Override
     public String checkDeptNameUnique(SysDept dept) {
-        Long deptId = TWTUtils.isEmpty(dept.getDeptId()) ? -1L : dept.getDeptId();
+        Long deptId = $.isEmpty(dept.getDeptId()) ? -1L : dept.getDeptId();
         SysDept info = deptMapper.checkDeptNameUnique(dept.getDeptName(), dept.getParentId());
-        if (TWTUtils.isNotEmpty(info) && info.getDeptId().longValue() != deptId.longValue()) {
+        if ($.isNotEmpty(info) && info.getDeptId().longValue() != deptId.longValue()) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
@@ -182,7 +182,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
     public int updateDept(SysDept dept) {
         SysDept newParentDept = deptMapper.selectDeptById(dept.getParentId());
         SysDept oldDept = deptMapper.selectDeptById(dept.getDeptId());
-        if (TWTUtils.isNotEmpty(newParentDept) && TWTUtils.isNotEmpty(oldDept)) {
+        if ($.isNotEmpty(newParentDept) && $.isNotEmpty(oldDept)) {
             String newAncestors = newParentDept.getAncestors() + "," + newParentDept.getDeptId();
             String oldAncestors = oldDept.getAncestors();
             dept.setAncestors(newAncestors);
@@ -259,7 +259,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
     private List<SysDept> getChildList(List<SysDept> list, SysDept t) {
         List<SysDept> tlist = new ArrayList<SysDept>();
         for (SysDept n : list) {
-            if (TWTUtils.isNotEmpty(n.getParentId()) && n.getParentId().longValue() == t.getDeptId().longValue()) {
+            if ($.isNotEmpty(n.getParentId()) && n.getParentId().longValue() == t.getDeptId().longValue()) {
                 tlist.add(n);
             }
         }

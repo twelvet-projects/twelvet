@@ -6,7 +6,7 @@ import com.twelvet.framework.datascope.annotation.SysDataScope;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.StringUtils;
-import com.twelvet.framework.utils.TWTUtils;
+import com.twelvet.framework.utils.$;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Aspect;
@@ -145,7 +145,7 @@ public class SysDataScopeAspect {
         MethodSignature methodSignature = (MethodSignature) signature;
         Method method = methodSignature.getMethod();
 
-        if (TWTUtils.isNotEmpty(method)) {
+        if ($.isNotEmpty(method)) {
             return method.getAnnotation(SysDataScope.class);
         }
         return null;

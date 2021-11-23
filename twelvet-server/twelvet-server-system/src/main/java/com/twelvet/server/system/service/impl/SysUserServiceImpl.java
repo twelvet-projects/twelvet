@@ -6,7 +6,7 @@ import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.StringUtils;
-import com.twelvet.framework.utils.TWTUtils;
+import com.twelvet.framework.utils.$;
 import com.twelvet.server.system.mapper.*;
 import com.twelvet.server.system.service.ISysUserService;
 import org.slf4j.Logger;
@@ -107,7 +107,7 @@ public class SysUserServiceImpl implements ISysUserService {
         for (SysRole role : list) {
             idsStr.append(role.getRoleName()).append(",");
         }
-        if (TWTUtils.isNotEmpty(idsStr.toString())) {
+        if ($.isNotEmpty(idsStr.toString())) {
             return idsStr.substring(0, idsStr.length() - 1);
         }
         return idsStr.toString();
@@ -126,7 +126,7 @@ public class SysUserServiceImpl implements ISysUserService {
         for (SysPost post : list) {
             idsStr.append(post.getPostName()).append(",");
         }
-        if (TWTUtils.isNotEmpty(idsStr.toString())) {
+        if ($.isNotEmpty(idsStr.toString())) {
             return idsStr.substring(0, idsStr.length() - 1);
         }
         return idsStr.toString();
@@ -155,9 +155,9 @@ public class SysUserServiceImpl implements ISysUserService {
      */
     @Override
     public String checkPhoneUnique(SysUser user) {
-        Long userId = TWTUtils.isEmpty(user.getUserId()) ? -1L : user.getUserId();
+        Long userId = $.isEmpty(user.getUserId()) ? -1L : user.getUserId();
         SysUser info = sysUserMapper.checkPhoneUnique(user.getPhonenumber());
-        if (TWTUtils.isNotEmpty(info) && info.getUserId().longValue() != userId.longValue()) {
+        if ($.isNotEmpty(info) && info.getUserId().longValue() != userId.longValue()) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
@@ -171,9 +171,9 @@ public class SysUserServiceImpl implements ISysUserService {
      */
     @Override
     public String checkEmailUnique(SysUser user) {
-        Long userId = TWTUtils.isEmpty(user.getUserId()) ? -1L : user.getUserId();
+        Long userId = $.isEmpty(user.getUserId()) ? -1L : user.getUserId();
         SysUser info = sysUserMapper.checkEmailUnique(user.getEmail());
-        if (TWTUtils.isNotEmpty(info) && info.getUserId().longValue() != userId.longValue()) {
+        if ($.isNotEmpty(info) && info.getUserId().longValue() != userId.longValue()) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
@@ -186,7 +186,7 @@ public class SysUserServiceImpl implements ISysUserService {
      */
     @Override
     public void checkUserAllowed(SysUser user) {
-        if (TWTUtils.isNotEmpty(user.getUserId()) && user.isAdmin()) {
+        if ($.isNotEmpty(user.getUserId()) && user.isAdmin()) {
             throw new TWTException("不允许操作超级管理员用户");
         }
     }
@@ -294,7 +294,7 @@ public class SysUserServiceImpl implements ISysUserService {
      */
     public void insertUserRole(SysUser user) {
         Long[] roles = user.getRoleIds();
-        if (TWTUtils.isNotEmpty(roles)) {
+        if ($.isNotEmpty(roles)) {
             // 新增用户与角色管理
             List<SysUserRole> list = new ArrayList<>();
             for (Long roleId : roles) {
@@ -316,7 +316,7 @@ public class SysUserServiceImpl implements ISysUserService {
      */
     public void insertUserPost(SysUser user) {
         Long[] posts = user.getPostIds();
-        if (TWTUtils.isNotEmpty(posts)) {
+        if ($.isNotEmpty(posts)) {
             // 新增用户与岗位管理
             List<SysUserPost> list = new ArrayList<SysUserPost>();
             for (Long postId : posts) {
@@ -370,7 +370,7 @@ public class SysUserServiceImpl implements ISysUserService {
      */
     @Override
     public String importUser(List<SysUser> userList, Boolean cover, String operName) {
-        if (TWTUtils.isEmpty(userList) || userList.size() == 0) {
+        if ($.isEmpty(userList) || userList.size() == 0) {
             throw new TWTException("导入用户数据不能为空！");
         }
         int successNum = 0;
@@ -381,7 +381,7 @@ public class SysUserServiceImpl implements ISysUserService {
             try {
                 // 验证是否存在这个用户
                 SysUser u = sysUserMapper.selectUserByUserName(user.getUsername());
-                if (TWTUtils.isEmpty(u)) {
+                if ($.isEmpty(u)) {
                     // 初始化密码为123456
                     user.setPassword(SecurityUtils.encryptPassword("123456"));
                     user.setCreateBy(operName);

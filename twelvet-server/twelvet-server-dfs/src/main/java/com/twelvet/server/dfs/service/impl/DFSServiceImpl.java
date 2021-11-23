@@ -6,7 +6,7 @@ import com.github.tobato.fastdfs.exception.FdfsUnsupportStorePathException;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.twelvet.api.dfs.domain.SysDfs;
 import com.twelvet.framework.core.exception.TWTException;
-import com.twelvet.framework.utils.TWTUtils;
+import com.twelvet.framework.utils.$;
 import com.twelvet.framework.utils.file.FileUtils;
 import com.twelvet.framework.utils.http.ServletUtils;
 import com.twelvet.server.dfs.mapper.DFSMapper;
@@ -170,13 +170,13 @@ public class DFSServiceImpl implements IDFSService {
         SysDfs sysDfs = dfsMapper.selectDfsByFileIds(fileId);
         DownloadByteArray downloadByteArray = new DownloadByteArray();
         byte[] bytes = null;
-        if (TWTUtils.isNotEmpty(sysDfs)) {
+        if ($.isNotEmpty(sysDfs)) {
             // 解析路径
             StorePath storePath = StorePath.parseFromUrl(sysDfs.getPath());
             bytes = storageClient.downloadFile(storePath.getGroup(), storePath.getPath(), downloadByteArray);
         }
 
-        if (TWTUtils.isEmpty(bytes)) {
+        if ($.isEmpty(bytes)) {
             throw new TWTException("无法获取文件");
         }
 

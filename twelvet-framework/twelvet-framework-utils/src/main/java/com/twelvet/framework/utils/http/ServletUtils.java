@@ -3,7 +3,7 @@ package com.twelvet.framework.utils.http;
 import com.twelvet.framework.utils.CharsetKit;
 import com.twelvet.framework.utils.Convert;
 import com.twelvet.framework.utils.StringUtils;
-import com.twelvet.framework.utils.TWTUtils;
+import com.twelvet.framework.utils.$;
 import com.twelvet.framework.utils.exception.TWTUtilsException;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;

@@ -1,7 +1,7 @@
 package com.twelvet.framework.jdbc.web.page;
 
 import com.twelvet.framework.utils.StringUtils;
-import com.twelvet.framework.utils.TWTUtils;
+import com.twelvet.framework.utils.$;
 
 /**
  * @author twelvet
@@ -30,7 +30,7 @@ public class PageDomain {
     private String isAsc;
 
     public String getOrderBy() {
-        if (TWTUtils.isEmpty(orderByColumn)) {
+        if ($.isEmpty(orderByColumn)) {
             return null;
         }
         return StringUtils.toUnderScoreCase(orderByColumn) + " " + isAsc;

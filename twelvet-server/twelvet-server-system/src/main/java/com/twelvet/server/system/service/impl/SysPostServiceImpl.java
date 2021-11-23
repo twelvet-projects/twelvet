@@ -3,7 +3,7 @@ package com.twelvet.server.system.service.impl;
 import com.twelvet.api.system.domain.SysPost;
 import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.core.exception.TWTException;
-import com.twelvet.framework.utils.TWTUtils;
+import com.twelvet.framework.utils.$;
 import com.twelvet.server.system.mapper.SysPostMapper;
 import com.twelvet.server.system.mapper.SysUserPostMapper;
 import com.twelvet.server.system.service.ISysPostService;
@@ -116,9 +116,9 @@ public class SysPostServiceImpl implements ISysPostService {
      */
     @Override
     public String checkPostNameUnique(SysPost post) {
-        Long postId = TWTUtils.isEmpty(post.getPostId()) ? -1L : post.getPostId();
+        Long postId = $.isEmpty(post.getPostId()) ? -1L : post.getPostId();
         SysPost info = postMapper.checkPostNameUnique(post.getPostName());
-        if (TWTUtils.isNotEmpty(info) && info.getPostId().longValue() != postId.longValue()) {
+        if ($.isNotEmpty(info) && info.getPostId().longValue() != postId.longValue()) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
@@ -132,9 +132,9 @@ public class SysPostServiceImpl implements ISysPostService {
      */
     @Override
     public String checkPostCodeUnique(SysPost post) {
-        Long postId = TWTUtils.isEmpty(post.getPostId()) ? -1L : post.getPostId();
+        Long postId = $.isEmpty(post.getPostId()) ? -1L : post.getPostId();
         SysPost info = postMapper.checkPostCodeUnique(post.getPostCode());
-        if (TWTUtils.isNotEmpty(info) && info.getPostId().longValue() != postId.longValue()) {
+        if ($.isNotEmpty(info) && info.getPostId().longValue() != postId.longValue()) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;

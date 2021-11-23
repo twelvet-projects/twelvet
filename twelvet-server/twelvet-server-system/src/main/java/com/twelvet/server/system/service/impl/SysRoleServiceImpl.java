@@ -6,7 +6,7 @@ import com.twelvet.api.system.domain.SysRoleMenu;
 import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.utils.SpringUtils;
-import com.twelvet.framework.utils.TWTUtils;
+import com.twelvet.framework.utils.$;
 import com.twelvet.server.system.mapper.SysRoleDeptMapper;
 import com.twelvet.server.system.mapper.SysRoleMapper;
 import com.twelvet.server.system.mapper.SysRoleMenuMapper;
@@ -61,7 +61,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
         List<SysRole> perms = sysRoleMapper.selectRolePermissionByUserId(userId);
         Set<String> permsSet = new HashSet<>();
         for (SysRole perm : perms) {
-            if (TWTUtils.isNotEmpty(perm)) {
+            if ($.isNotEmpty(perm)) {
                 permsSet.addAll(Arrays.asList(perm.getRoleKey().trim().split(",")));
             }
         }
@@ -108,9 +108,9 @@ public class SysRoleServiceImpl implements ISysRoleService {
      */
     @Override
     public String checkRoleNameUnique(SysRole role) {
-        Long roleId = TWTUtils.isEmpty(role.getRoleId()) ? -1L : role.getRoleId();
+        Long roleId = $.isEmpty(role.getRoleId()) ? -1L : role.getRoleId();
         SysRole info = sysRoleMapper.checkRoleNameUnique(role.getRoleName());
-        if (TWTUtils.isNotEmpty(info) && info.getRoleId().longValue() != roleId.longValue()) {
+        if ($.isNotEmpty(info) && info.getRoleId().longValue() != roleId.longValue()) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
@@ -124,9 +124,9 @@ public class SysRoleServiceImpl implements ISysRoleService {
      */
     @Override
     public String checkRoleKeyUnique(SysRole role) {
-        long roleId = TWTUtils.isEmpty(role.getRoleId()) ? -1L : role.getRoleId();
+        long roleId = $.isEmpty(role.getRoleId()) ? -1L : role.getRoleId();
         SysRole info = sysRoleMapper.checkRoleKeyUnique(role.getRoleKey());
-        if (TWTUtils.isNotEmpty(info) && info.getRoleId() != roleId) {
+        if ($.isNotEmpty(info) && info.getRoleId() != roleId) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
@@ -139,7 +139,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
      */
     @Override
     public void checkRoleAllowed(SysRole role) {
-        if (TWTUtils.isNotEmpty(role.getRoleId()) && role.isAdmin()) {
+        if ($.isNotEmpty(role.getRoleId()) && role.isAdmin()) {
             throw new TWTException("不允许操作超级管理员角色");
         }
     }

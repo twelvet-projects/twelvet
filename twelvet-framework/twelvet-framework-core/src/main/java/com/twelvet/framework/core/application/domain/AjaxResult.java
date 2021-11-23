@@ -1,7 +1,7 @@
 package com.twelvet.framework.core.application.domain;
 
 
-import com.twelvet.framework.utils.TWTUtils;
+import com.twelvet.framework.utils.$;
 import org.springframework.http.HttpStatus;
 
 import java.util.LinkedHashMap;
@@ -62,7 +62,7 @@ public class AjaxResult extends LinkedHashMap<String, Object> {
     public AjaxResult(int code, String msg, Object data) {
         super.put(CODE_TAG, code);
         super.put(MSG_TAG, msg);
-        if (!TWTUtils.isEmpty(data)) {
+        if (!$.isEmpty(data)) {
             super.put(DATA_TAG, data);
         }
     }

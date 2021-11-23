@@ -2,16 +2,14 @@ package com.twelvet.framework.utils;
 
 import com.twelvet.framework.utils.exception.TWTUtilsException;
 
-import java.math.BigDecimal;
-
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
  * @Description: twelvet工具类
  */
-public class TWTUtils {
+public class $ {
 
-    public TWTUtils() {
+    public $() {
         throw new TWTUtilsException("This is a utility class and cannot be instantiated");
     }
 

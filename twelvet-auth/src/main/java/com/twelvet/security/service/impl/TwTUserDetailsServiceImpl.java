@@ -7,7 +7,7 @@ import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.utils.StringUtils;
-import com.twelvet.framework.utils.TWTUtils;
+import com.twelvet.framework.utils.$;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +74,7 @@ public class TwTUserDetailsServiceImpl implements UserDetailsService {
      * @param username username
      */
     private void auth(R<UserInfo> userInfo, String username) {
-        if (TWTUtils.isEmpty(userInfo) || TWTUtils.isEmpty(userInfo.getData())) {
+        if ($.isEmpty(userInfo) || $.isEmpty(userInfo.getData())) {
             log.info("登录用户：{} 不存在.", username);
             throw new UsernameNotFoundException("登录用户：" + username + " 不存在");
         }
@@ -97,7 +97,7 @@ public class TwTUserDetailsServiceImpl implements UserDetailsService {
         UserInfo info = result.getData();
 
         Set<String> dbAuthsSet = new HashSet<>();
-        if (TWTUtils.isNotEmpty(info.getRoles())) {
+        if ($.isNotEmpty(info.getRoles())) {
             // 获取角色
             dbAuthsSet.addAll(info.getRoles());
             // 获取权限

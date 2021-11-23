@@ -4,7 +4,7 @@ import com.twelvet.api.mq.feign.RemoteMQSysLoginLogService;
 import com.twelvet.api.system.domain.SysLoginInfo;
 import com.twelvet.api.system.feign.RemoteLogService;
 import com.twelvet.framework.security.domain.LoginUser;
-import com.twelvet.framework.utils.TWTUtils;
+import com.twelvet.framework.utils.$;
 import com.twelvet.framework.utils.http.IpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -28,7 +28,7 @@ public class AuthenticationSuccessEventHandler implements ApplicationListener<Au
     @Override
     public void onApplicationEvent(AuthenticationSuccessEvent event) {
         Authentication authentication = (Authentication) event.getSource();
-        if (TWTUtils.isNotEmpty(authentication.getAuthorities())
+        if ($.isNotEmpty(authentication.getAuthorities())
                 && authentication.getPrincipal() instanceof LoginUser) {
             LoginUser user = (LoginUser) authentication.getPrincipal();
 
