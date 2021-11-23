@@ -1,11 +1,7 @@
 package com.twelvet;
 
-import com.twelvet.framework.utils.TWTUtils;
+import com.twelvet.framework.utils.ArabicNumeralsUtils;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * @author twelvet
@@ -16,7 +12,8 @@ public class UtilsTest {
 
     @Test
     public void util() {
-        System.out.println(TWTUtils.chineseNumberTransInt("十万八千七百九十一"));
+        System.out.println(ArabicNumeralsUtils.intTransIntChineseNumber(154564));
+        System.out.println(ArabicNumeralsUtils.chineseTransIntNumber("十万八千七百九十一"));
     }
 
 }
