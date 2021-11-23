@@ -4,10 +4,11 @@ import com.twelvet.framework.utils.exception.TWTUtilsException;
 
 import java.math.BigDecimal;
 
+
 /**
  * @author twelvet
- * <p>
- * 阿拉伯数字与中文之间的转换
+ * @WebSite www.twelvet.cn
+ * @Description: 阿拉伯数字与中文之间的转换
  */
 public class ArabicNumeralsUtils {
 

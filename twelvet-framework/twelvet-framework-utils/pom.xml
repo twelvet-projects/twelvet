@@ -56,6 +56,18 @@
             </exclusions>
         </dependency>
 
+        <!--QrCode-->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+        </dependency>
+
+        <!--QrCode-->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+        </dependency>
+
         <!-- Commons Io -->
         <dependency>
             <groupId>commons-io</groupId>
