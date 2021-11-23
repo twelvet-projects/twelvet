@@ -1,6 +1,5 @@
 package com.twelvet.server.es.controller;
 
-import com.twelvet.api.es.domain.vo.EsCommonVO;
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.server.es.service.EsCommonService;
 import org.springframework.beans.factory.annotation.Autowired;
