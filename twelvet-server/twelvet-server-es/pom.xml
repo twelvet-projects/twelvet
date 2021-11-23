@@ -20,6 +20,12 @@
             <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
         </dependency>
 
+        <!--ES api-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-api-es</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

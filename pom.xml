@@ -285,6 +285,13 @@
                 <version>${twelvet.version}</version>
             </dependency>
 
+            <!--MQ API-->
+            <dependency>
+                <groupId>com.twelvet</groupId>
+                <artifactId>twelvet-api-ES</artifactId>
+                <version>${twelvet.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
