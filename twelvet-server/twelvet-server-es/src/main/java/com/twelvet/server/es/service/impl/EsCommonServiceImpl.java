@@ -1,10 +1,12 @@
 package com.twelvet.server.es.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.twelvet.api.es.constant.EsConstants;
 import com.twelvet.api.es.domain.EsCommon;
 import com.twelvet.api.es.domain.dto.EsCommonDTO;
 import com.twelvet.api.es.domain.vo.EsCommonVO;
 import com.twelvet.framework.core.exception.TWTException;
+import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.server.es.service.EsCommonService;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -18,14 +20,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.document.Document;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.*;
 import org.springframework.stereotype.Service;
 import org.yaml.snakeyaml.events.Event;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author twelvet
@@ -124,7 +127,11 @@ public class EsCommonServiceImpl implements EsCommonService {
      */
     @Override
     public void insert(EsCommon esCommon) {
-
+        IndexQuery indexQuery = new IndexQueryBuilder()
+                .withObject(esCommon)
+                .withId(esCommon.getId())
+                .build();
+        elasticsearchRestTemplate.index(indexQuery, INDEX_COMMON);
     }
 
     /**
@@ -134,7 +141,7 @@ public class EsCommonServiceImpl implements EsCommonService {
      */
     @Override
     public void deleteById(String id) {
-
+        elasticsearchRestTemplate.delete(id, INDEX_COMMON);
     }
 
     /**
@@ -148,7 +155,12 @@ public class EsCommonServiceImpl implements EsCommonService {
         // 存在数据更新
         boolean exists = elasticsearchRestTemplate.exists(id, INDEX_COMMON);
         if (exists) {
-
+            String json = JacksonUtils.toJson(esCommon);
+            Map<String, Object> stringObjectMap = JacksonUtils.readMap(json);
+            Document document = Document.create();
+            document.putAll(stringObjectMap);
+            UpdateQuery build = UpdateQuery.builder(id).withDocument(document).build();
+            elasticsearchRestTemplate.update(build, INDEX_COMMON);
         }
     }
 
