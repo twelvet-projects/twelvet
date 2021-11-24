@@ -26,9 +26,13 @@ import org.springframework.data.elasticsearch.core.query.*;
 import org.springframework.stereotype.Service;
 import org.yaml.snakeyaml.events.Event;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * @author twelvet
@@ -127,11 +131,16 @@ public class EsCommonServiceImpl implements EsCommonService {
      */
     @Override
     public void insert(EsCommon esCommon) {
-        IndexQuery indexQuery = new IndexQueryBuilder()
-                .withObject(esCommon)
-                .withId(esCommon.getId())
-                .build();
-        elasticsearchRestTemplate.index(indexQuery, INDEX_COMMON);
+        String id = esCommon.getId();
+        // 不存在数据插入
+        boolean exists = elasticsearchRestTemplate.exists(id, INDEX_COMMON);
+        if (!exists) {
+            IndexQuery indexQuery = new IndexQueryBuilder()
+                    .withObject(esCommon)
+                    .withId(id)
+                    .build();
+            elasticsearchRestTemplate.index(indexQuery, INDEX_COMMON);
+        }
     }
 
     /**
@@ -152,16 +161,12 @@ public class EsCommonServiceImpl implements EsCommonService {
     @Override
     public void updateById(EsCommon esCommon) {
         String id = esCommon.getId();
-        // 存在数据更新
-        boolean exists = elasticsearchRestTemplate.exists(id, INDEX_COMMON);
-        if (exists) {
-            String json = JacksonUtils.toJson(esCommon);
-            Map<String, Object> stringObjectMap = JacksonUtils.readMap(json);
-            Document document = Document.create();
-            document.putAll(stringObjectMap);
-            UpdateQuery build = UpdateQuery.builder(id).withDocument(document).build();
-            elasticsearchRestTemplate.update(build, INDEX_COMMON);
-        }
+        byte[] bytes = JacksonUtils.toJsonAsBytes(esCommon);
+        Map<String, Object> stringObjectMap = JacksonUtils.readMap(bytes);
+        Document document = Document.create();
+        document.putAll(stringObjectMap);
+        UpdateQuery build = UpdateQuery.builder(id).withDocument(document).build();
+        elasticsearchRestTemplate.update(build, INDEX_COMMON);
     }
 
     /**
