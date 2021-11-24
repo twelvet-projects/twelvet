@@ -1,0 +1,97 @@
+put /twelvet_common
+{
+    "settings": {
+        "index.max_ngram_diff": 10,
+        "analysis": {
+            "analyzer": {
+                "find_in_set": {
+                    "type": "pattern",
+                    "pattern":","
+                },
+                "twelvet_index_analyzer": {
+                    "tokenizer": "code_index_tokenizer",
+                    "filter": [
+                      "lowercase"
+                    ]
+                },
+                "twelvet_search_analyzer": {
+                    "tokenizer": "keyword",
+                    "filter": [
+                      "lowercase"
+                    ]
+                }
+            },
+            "tokenizer": {
+                "code_index_tokenizer": {
+                    "type": "ngram",
+                    "min_gram": 1,
+                    "max_gram": 10,
+                    "token_chars": [
+                      "letter",
+                      "digit"
+                    ]
+                }
+            }
+        }
+    }
+  }
+}
+
+
+PUT /twelvet_common/_mapping/doc?include_type_name=true
+{
+    "dynamic_templates": [{
+            "strings": {
+                "match_mapping_type": "string",
+                "mapping": {
+                    "analyzer": "ik_max_word",
+                    "fields": {
+                        "raw": {
+                            "ignore_above": 256,
+                            "type": "keyword"
+                        }
+                    },
+                    "search_analyzer": "ik_max_word",
+                    "type": "text"
+                }
+            }
+        },
+        {
+            "integer": {
+                "match_mapping_type": "long",
+                "mapping": {
+                    "fields": {
+                        "raw": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "integer"
+                }
+            }
+        }
+    ],
+    "properties": {
+        "title": {
+            "type": "text",
+            "analyzer": "ik_max_word",
+            "search_analyzer": "ik_max_word",
+            "fields": {
+              "like": {
+                  "type": "text",
+                  "index": true,
+                  "analyzer": "twelvet_index_analyzer",
+                  "search_analyzer": "twelvet_search_analyzer"
+              }
+          }
+        },
+        "description": {
+            "type": "text",
+            "analyzer": "ik_max_word",
+            "search_analyzer": "ik_max_word"
+        },
+        "status": {
+            "type": "keyword"
+        }
+    }
+}
+
