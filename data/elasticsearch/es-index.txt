@@ -84,7 +84,7 @@ PUT /twelvet_common/_mapping/doc?include_type_name=true
               }
           }
         },
-        "description": {
+        "info": {
             "type": "text",
             "analyzer": "ik_max_word",
             "search_analyzer": "ik_max_word"

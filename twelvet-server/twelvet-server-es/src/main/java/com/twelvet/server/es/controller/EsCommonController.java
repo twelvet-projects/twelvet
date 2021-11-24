@@ -1,5 +1,7 @@
 package com.twelvet.server.es.controller;
 
+import com.twelvet.api.es.domain.EsCommon;
+import com.twelvet.api.es.domain.dto.EsCommonDTO;
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.server.es.service.EsCommonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +27,8 @@ public class EsCommonController {
      * @return AjaxResult
      */
     @GetMapping
-    public AjaxResult search() {
-        return AjaxResult.success(esCommonService.search());
+    public AjaxResult search(EsCommonDTO esCommonDTO) {
+        return AjaxResult.success(esCommonService.search(esCommonDTO));
     }
 
 }
