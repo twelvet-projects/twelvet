@@ -20,6 +20,8 @@
         <module>twelvet-api-dfs</module>
         <module>twelvet-api-gen</module>
         <module>twelvet-api-es</module>
+        <module>twelvet-api-mq</module>
+        <module>twelvet-api-es</module>
     </modules>
 
     <dependencies>
