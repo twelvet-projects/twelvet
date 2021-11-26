@@ -1,6 +1,5 @@
 package com.twelvet.server.es.controller;
 
-import com.twelvet.api.es.domain.EsCommon;
 import com.twelvet.api.es.domain.dto.EsCommonDTO;
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.server.es.service.EsCommonService;

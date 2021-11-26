@@ -1,6 +1,7 @@
 package com.twelvet.framework.utils;
 
 import cn.hutool.core.util.ObjectUtil;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -730,6 +731,8 @@ public class JacksonUtils {
             // 忽略无法转换的对象
             super.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
             super.setTimeZone(TimeZone.getTimeZone(ZoneId.systemDefault()));
+            // 默认不输出null
+            super.setSerializationInclusion(JsonInclude.Include.NON_NULL);
             super.findAndRegisterModules();
         }
 
