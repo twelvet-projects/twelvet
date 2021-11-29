@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 public class FeignRequestInterceptor implements RequestInterceptor {
 
     /**
-     * 配置请求体带上access_token
+     * 配置请求体带上access_token(feign默认不带任何信息)
      *
      * @param requestTemplate RequestTemplate
      */
@@ -35,6 +35,7 @@ public class FeignRequestInterceptor implements RequestInterceptor {
         if ($.isNotEmpty(authentication) && authentication.getDetails() instanceof OAuth2AuthenticationDetails) {
             OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) authentication.getDetails();
 
+            // 添加请求token
             requestTemplate.header(
                     HttpHeaders.AUTHORIZATION,
                     String.format("%s %s", "Bearer", details.getTokenValue())
