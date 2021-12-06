@@ -19,6 +19,7 @@
         <module>twelvet-server-job</module>
         <module>twelvet-server-dfs</module>
         <module>twelvet-server-gen</module>
+        <module>twelvet-server-mq</module>
         <module>twelvet-server-es</module>
     </modules>
 
