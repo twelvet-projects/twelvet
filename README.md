@@ -32,9 +32,9 @@ com.twelvet
 ├── twelvet-gateway         // 网关模块 [88]
 ├── twelvet-auth            // 认证中心 [8888]
 ├── twelvet-api             // 接口模块
-│       └── twelvet-api-system                          // 系统接口
-│       └── twelvet-api-dfs                             // DFS接口
-│       └── twelvet-api-job                             // 定时任务接口
+│       └── twelvet-api-system                             // 系统接口
+│       └── twelvet-api-dfs                                // DFS接口
+│       └── twelvet-api-job                                // 定时任务接口
 ├── twelvet-framework       // 核心模块
 │       └── twelvet-framework-core                         // 核心模块
 │       └── twelvet-framework-log                          // 日志记录
