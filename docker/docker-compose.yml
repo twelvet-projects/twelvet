@@ -80,6 +80,22 @@ services:
       - JAVA_OPTS=-Xmx256M
       - TZ=Asia/Shanghai
 
+  twelvet-server-netty:
+    image: docker.io/java:8
+    restart: always
+    container_name: twelvet-netty
+    privileged: true
+    network_mode: twelvet-network
+    # 可以接受外部输入
+    tty: true
+    volumes:
+      - /data/docker/twelvet/logs/twelvet-server-netty:/logs
+      - /data/docker/twelvet/twelvet-server-netty:/app
+    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST} -DNACOS_PORT=${NACOS_PORT} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-server-netty.jar'
+    environment:
+      - JAVA_OPTS=-Xmx256M
+      - TZ=Asia/Shanghai
+
   twelvet-server-mq:
     image: docker.io/java:8
     restart: always
