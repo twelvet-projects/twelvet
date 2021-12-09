@@ -21,6 +21,7 @@
         <module>twelvet-server-gen</module>
         <module>twelvet-server-mq</module>
         <module>twelvet-server-es</module>
+        <module>twelvet-server-netty</module>
     </modules>
 
     <dependencies>

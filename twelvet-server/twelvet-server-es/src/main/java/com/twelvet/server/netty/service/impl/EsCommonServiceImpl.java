@@ -1,6 +1,5 @@
-package com.twelvet.server.es.service.impl;
+package com.twelvet.server.netty.service.impl;
 
-import cn.hutool.core.util.ObjectUtil;
 import com.twelvet.api.es.constant.EsConstants;
 import com.twelvet.api.es.domain.EsCommon;
 import com.twelvet.api.es.domain.dto.EsCommonDTO;
@@ -8,7 +7,7 @@ import com.twelvet.api.es.domain.vo.EsCommonVO;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.framework.utils.StringUtils;
-import com.twelvet.server.es.service.EsCommonService;
+import com.twelvet.server.netty.service.EsCommonService;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
@@ -24,15 +23,10 @@ import org.springframework.data.elasticsearch.core.document.Document;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.elasticsearch.core.query.*;
 import org.springframework.stereotype.Service;
-import org.yaml.snakeyaml.events.Event;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 /**
  * @author twelvet
