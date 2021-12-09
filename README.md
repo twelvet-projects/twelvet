@@ -35,7 +35,7 @@ com.twelvet
 │       └── twelvet-api-system                          // 系统接口
 │       └── twelvet-api-dfs                             // DFS接口
 │       └── twelvet-api-job                             // 定时任务接口
-├── twelvet-framework          // 核心模块
+├── twelvet-framework       // 核心模块
 │       └── twelvet-framework-core                         // 核心模块
 │       └── twelvet-framework-log                          // 日志记录
 │       └── twelvet-framework-datascope                    // 数据权限
@@ -46,12 +46,13 @@ com.twelvet
 │       └── twelvet-framework-utils                        // 工具模块
 ├── twelvet-server         // 业务模块
 │       └── twelvet-server-system                          // 系统模块 [8081]
-│       └── twelvet-server-job                            // 定时任务 [8082]
-│       └── twelvet-server-dfs                            //  DFS服务 [8083]
-│       └── twelvet-server-gen                            // 代码生成 [8084]
-│       └── twelvet-server-mq                             // 消息队列 [8085]
-│       └── twelvet-server-es                            //  elasticsearch服务 [8086]
-├── twelvet-visual          // 图形化管理模块
+│       └── twelvet-server-job                             // 定时任务 [8082]
+│       └── twelvet-server-dfs                             //  DFS服务 [8083]
+│       └── twelvet-server-gen                             // 代码生成 [8084]
+│       └── twelvet-server-mq                              // 消息队列 [8085]
+│       └── twelvet-server-es                              //  elasticsearch服务 [8086]
+│       └── twelvet-server-netty                           //  netty服务 [8087]
+├── twelvet-visual        // 图形化管理模块
 │       └── twelvet-visual-monitor                         // 监控中心 [8100]
 ├──pom.xml                // 公共依赖
 ~~~
