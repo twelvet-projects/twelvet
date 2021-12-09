@@ -25,6 +25,3 @@ spring:
         namespace: @nacos.namespace@
         # 配置组
         group: DEFAULT_GROUP
-        # 共享配置
-        shared-configs:
-          - data-id: twelvet-app-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
