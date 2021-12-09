@@ -2,21 +2,21 @@ package com.twelvet;
 
 import com.twelvet.framework.core.annotation.EnableTWTFeignClients;
 import com.twelvet.framework.core.annotation.EnableTwelveTConfig;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description: 启动器
+ * @Description: 启动程序
  */
-@MapperScan("com.twelvet.**.mapper")
 @EnableTwelveTConfig
 @EnableTWTFeignClients
 @SpringBootApplication
-public class TWTGenApp {
+public class MqApplication {
+
     public static void main(String[] args) {
-        SpringApplication.run(TWTGenApp.class, args);
+        SpringApplication.run(MqApplication.class, args);
     }
+
 }

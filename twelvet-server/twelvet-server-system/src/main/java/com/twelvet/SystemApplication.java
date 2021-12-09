@@ -10,16 +10,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author twelvet
  * @WebSite www.twelvet.cn
  * @Description: 启动程序
- * @EnableFeignClients 开启服务扫描
  */
 @MapperScan("com.twelvet.**.mapper")
 @EnableTwelveTConfig
 @EnableTWTFeignClients
 @SpringBootApplication
-public class TWTDFSApp {
+public class SystemApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TWTDFSApp.class, args);
+        SpringApplication.run(SystemApplication.class, args);
     }
 
 }

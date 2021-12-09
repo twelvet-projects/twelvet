@@ -9,17 +9,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description: 启动程序
- * @EnableFeignClients 开启服务扫描
+ * @Description: 启动器
  */
 @MapperScan("com.twelvet.**.mapper")
 @EnableTwelveTConfig
 @EnableTWTFeignClients
 @SpringBootApplication
-public class TWTJobApp {
-
+public class GenApplication {
     public static void main(String[] args) {
-        SpringApplication.run(TWTJobApp.class, args);
+        SpringApplication.run(GenApplication.class, args);
     }
-
 }

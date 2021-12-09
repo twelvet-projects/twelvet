@@ -11,8 +11,8 @@ import org.springframework.cloud.client.SpringCloudApplication;
  */
 @EnableAdminServer
 @SpringCloudApplication
-public class TWTMonitorApp {
+public class MonitorApplication {
     public static void main(String[] args) {
-        SpringApplication.run(TWTMonitorApp.class, args);
+        SpringApplication.run(MonitorApplication.class, args);
     }
 }
