@@ -99,7 +99,7 @@ services:
   twelvet-server-mq:
     image: docker.io/java:8
     restart: always
-    container_name: twelvet-es
+    container_name: twelvet-mq
     privileged: true
     network_mode: twelvet-network
     # 可以接受外部输入
