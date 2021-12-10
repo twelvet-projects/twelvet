@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 /**
  * @author twelvet
  * <p>
- * 系统登录日志业务层实现
+ * 系统操作日志业务层实现
  */
 @Service
 public class SysOperationLogServiceImpl implements SysOperationLogService {
@@ -20,7 +20,7 @@ public class SysOperationLogServiceImpl implements SysOperationLogService {
     private RabbitTemplate rabbitTemplate;
 
     /**
-     * 发送系统登录日志MQ
+     * 发送系统操作日志MQ
      *
      * @param sysOperationLog SysLoginInfo
      */

@@ -20,6 +20,7 @@ import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.stereotype.Component;
 
 import java.net.InetSocketAddress;
+import java.util.HashMap;
 
 /**
  * @author twelvet
@@ -50,14 +51,14 @@ public class NettyApplication implements ApplicationRunner, ApplicationListener<
                     pipeline.addLast(new ChannelInboundHandlerAdapter() {
                         @Override
                         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-                            if(msg instanceof FullHttpRequest) {
+                            if (msg instanceof FullHttpRequest) {
                                 FullHttpRequest fullHttpRequest = (FullHttpRequest) msg;
                                 String uri = fullHttpRequest.uri();
                                 if (!"/channel".equals(uri)) {
                                     // 访问的路径不是 websocket的端点地址，响应404
                                     ctx.channel().writeAndFlush(new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.NOT_FOUND))
                                             .addListener(ChannelFutureListener.CLOSE);
-                                    return ;
+                                    return;
                                 }
                             }
                             super.channelRead(ctx, msg);
@@ -68,13 +69,12 @@ public class NettyApplication implements ApplicationRunner, ApplicationListener<
                 }
             });
             Channel channel = serverBootstrap.bind().sync().channel();
-
             log.info("websocket 服务启动");
             channel.closeFuture().sync();
         } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
-        }   
+        }
     }
 
     @Override
