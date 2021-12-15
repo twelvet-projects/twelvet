@@ -308,7 +308,7 @@
                 <version>${twelvet.version}</version>
             </dependency>
 
-            <!--MQ API-->
+            <!--ES API-->
             <dependency>
                 <groupId>com.twelvet</groupId>
                 <artifactId>twelvet-api-es</artifactId>
