@@ -75,7 +75,7 @@ public abstract class AbstractQuartzJob implements Job {
         sysJobLog.setJobMessage(sysJobLog.getJobName() + " 总共耗时：" + runMs + "毫秒");
         if ($.isNotEmpty(e)) {
             sysJobLog.setStatus(0);
-            String errorMsg = StringUtils.substring($Exception.getExceptionMessage(e), 0, 2000);
+            String errorMsg = StringUtils.substring(TWTUtilsException.getExceptionMessage(e), 0, 2000);
             sysJobLog.setExceptionInfo(errorMsg);
         } else {
             sysJobLog.setStatus(1);
