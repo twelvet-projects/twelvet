@@ -32,7 +32,7 @@ public class $ {
             // 以分钟计算
             TimeUnit.SECONDS,
             // 队列
-            new LinkedBlockingQueue<>(300),
+            new LinkedBlockingQueue<>(30),
             // 线程工厂
             Executors.defaultThreadFactory(),
             // 拒绝策略

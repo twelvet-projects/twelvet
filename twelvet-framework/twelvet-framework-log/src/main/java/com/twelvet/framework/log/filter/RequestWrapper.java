@@ -1,8 +1,5 @@
 package com.twelvet.framework.log.filter;
 
-import com.twelvet.framework.utils.$;
-import org.springframework.http.MediaType;
-
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
