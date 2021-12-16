@@ -90,9 +90,9 @@ public class WebLogFilter implements Filter {
             responseData = "IGNORES";
         }
 
-        log.info(String.format(
-                "\n===================Request================>\n时间：%s\n地址：%s\ntoken：%s\n参数：%s\n方式：%s"
-                        + "\n<===================Response================\n状态：%s\n内容：%s\n时长：%s毫秒"
+        log.info(
+                "\n===================Request================>\n时间：{}\n地址：{}\ntoken：{}\n参数：{}\n方式：{}"
+                        + "\n<===================Response================\n状态：{}\n内容：{}\n时长：{}毫秒"
                         + "\n============================================",
                 DateUtils.getTime(),
                 requestWrapper.getRequestURL(),
@@ -103,7 +103,7 @@ public class WebLogFilter implements Filter {
                 responseWrapper.getStatus(),
                 responseData,
                 endTime - startTime
-                )
+
         );
 
     }
