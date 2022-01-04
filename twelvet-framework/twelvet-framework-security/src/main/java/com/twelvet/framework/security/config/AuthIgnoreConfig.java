@@ -10,12 +10,15 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+import org.springframework.web.util.pattern.PathPattern;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -63,9 +66,12 @@ public class AuthIgnoreConfig implements InitializingBean, ApplicationContextAwa
 
             // 本方法或本Controller存在AuthIgnore注解将存进列表
             if ($.isNotEmpty(method) || $.isNotEmpty(controller)) {
-                ignoreUrls.addAll(mappingInfo.getPatternsCondition().getPatterns());
+                Set<PathPattern> patterns = mappingInfo.getPathPatternsCondition().getPatterns();
+                for (PathPattern pattern : patterns) {
+                    String patternString = pattern.getPatternString();
+                    ignoreUrls.add(patternString);
+                }
             }
-
         });
 
         // 合并放行路径
