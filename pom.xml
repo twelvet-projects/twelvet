@@ -48,7 +48,7 @@
         <spring-boot-admin.version>2.4.3</spring-boot-admin.version>
         <spring-boot.mybatis>2.2.0</spring-boot.mybatis>
 
-        <druid.version>1.2.6</druid.version>
+        <druid.version>1.2.8</druid.version>
         <dynamic-datasource.version>3.4.0</dynamic-datasource.version>
         <pagehelper.boot.version>1.2.12</pagehelper.boot.version>
         <poi.version>3.17</poi.version>

@@ -5,9 +5,9 @@ import com.twelvet.api.system.domain.SysLoginInfo;
 import com.twelvet.api.system.feign.RemoteLogService;
 import com.twelvet.api.system.domain.SysOperationLog;
 import com.twelvet.framework.core.domain.R;
-import feign.hystrix.FallbackFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 
 /**

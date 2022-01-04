@@ -2,7 +2,7 @@ package com.twelvet.api.dfs.feign.factory;
 
 import com.twelvet.api.dfs.feign.RemoteFileService;
 import com.twelvet.framework.core.domain.R;
-import feign.hystrix.FallbackFactory;
+import org.springframework.cloud.openfeign.FallbackFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
