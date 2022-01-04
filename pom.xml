@@ -50,7 +50,7 @@
 
         <druid.version>1.2.8</druid.version>
         <dynamic-datasource.version>3.4.0</dynamic-datasource.version>
-        <pagehelper.boot.version>1.2.12</pagehelper.boot.version>
+        <pagehelper.boot.version>1.4.1</pagehelper.boot.version>
         <poi.version>3.17</poi.version>
         <fast-dfs.version>1.27.2</fast-dfs.version>
         <commons.io.version>2.11.0</commons.io.version>
