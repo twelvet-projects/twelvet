@@ -45,7 +45,7 @@
         <spring-cloud.version>2021.0.0</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
         <io.seata.version>1.4.1</io.seata.version>
-        <spring-boot-admin.version>2.4.3</spring-boot-admin.version>
+        <spring-boot-admin.version>2.5.5</spring-boot-admin.version>
         <spring-boot.mybatis>2.2.0</spring-boot.mybatis>
 
         <druid.version>1.2.8</druid.version>
@@ -323,6 +323,12 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+
+        <!--loadbalancer-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
 
         <!--junit-->
