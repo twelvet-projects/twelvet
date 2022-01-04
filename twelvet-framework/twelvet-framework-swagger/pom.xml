@@ -27,6 +27,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- 解决springboot2.6.x无法使用swagger3.x重写包 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
 </project>
