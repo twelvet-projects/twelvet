@@ -146,11 +146,7 @@ public class TWTTokenEndpoint {
 			cursor.next();
 		}
 
-		try {
-			cursor.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		cursor.close();
 		return result;
 	}
 

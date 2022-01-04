@@ -319,6 +319,12 @@
     </dependencyManagement>
 
     <dependencies>
+        <!--bootstrap 启动器-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+
         <!--junit-->
         <dependency>
             <groupId>junit</groupId>
