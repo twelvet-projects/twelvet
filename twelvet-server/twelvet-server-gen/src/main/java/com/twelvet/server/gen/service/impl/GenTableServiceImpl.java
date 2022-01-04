@@ -1,25 +1,15 @@
 package com.twelvet.server.gen.service.impl;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-
+import com.twelvet.api.gen.constant.GenConstants;
 import com.twelvet.api.gen.domain.GenTable;
 import com.twelvet.api.gen.domain.GenTableColumn;
 import com.twelvet.framework.core.constants.Constants;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.CharsetKit;
+import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.framework.utils.file.FileUtils;
-import com.twelvet.api.gen.constant.GenConstants;
 import com.twelvet.server.gen.mapper.GenTableColumnMapper;
 import com.twelvet.server.gen.mapper.GenTableMapper;
 import com.twelvet.server.gen.service.IGenTableService;
@@ -35,8 +25,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * @author twelvet
@@ -118,7 +117,7 @@ public class GenTableServiceImpl implements IGenTableService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateGenTable(GenTable genTable) {
-        String options = JSON.toJSONString(genTable.getParams());
+        String options = JacksonUtils.toJson(genTable.getParams());
         genTable.setOptions(options);
         int row = genTableMapper.updateGenTable(genTable);
         if (row > 0) {
@@ -129,7 +128,7 @@ public class GenTableServiceImpl implements IGenTableService {
     }
 
     /**
-     * 删除业务对象
+     * 删除业务对象2
      *
      * @param tableIds 需要删除的数据ID
      */
@@ -341,13 +340,13 @@ public class GenTableServiceImpl implements IGenTableService {
     @Override
     public void validateEdit(GenTable genTable) {
         if (GenConstants.TPL_TREE.equals(genTable.getTplCategory())) {
-            String options = JSON.toJSONString(genTable.getParams());
-            JSONObject paramsObj = JSONObject.parseObject(options);
-            if (StringUtils.isEmpty(paramsObj.getString(GenConstants.TREE_CODE))) {
+            String options = JacksonUtils.toJson(genTable.getParams());
+            Map<String, String> paramsObj = JacksonUtils.readValue(options, Map.class);
+            if (StringUtils.isEmpty(paramsObj.get(GenConstants.TREE_CODE))) {
                 throw new TWTException("树编码字段不能为空");
-            } else if (StringUtils.isEmpty(paramsObj.getString(GenConstants.TREE_PARENT_CODE))) {
+            } else if (StringUtils.isEmpty(paramsObj.get(GenConstants.TREE_PARENT_CODE))) {
                 throw new TWTException("树父编码字段不能为空");
-            } else if (StringUtils.isEmpty(paramsObj.getString(GenConstants.TREE_NAME))) {
+            } else if (StringUtils.isEmpty(paramsObj.get(GenConstants.TREE_NAME))) {
                 throw new TWTException("树名称字段不能为空");
             } else if (GenConstants.TPL_SUB.equals(genTable.getTplCategory())) {
                 if (StringUtils.isEmpty(genTable.getSubTableName())) {
@@ -405,13 +404,13 @@ public class GenTableServiceImpl implements IGenTableService {
      * @param genTable 设置后的生成对象
      */
     public void setTableFromOptions(GenTable genTable) {
-        JSONObject paramsObj = JSONObject.parseObject(genTable.getOptions());
+        Map<String, String> paramsObj = JacksonUtils.readValue(genTable.getOptions(), Map.class);
         if (StringUtils.isNotNull(paramsObj)) {
-            String treeCode = paramsObj.getString(GenConstants.TREE_CODE);
-            String treeParentCode = paramsObj.getString(GenConstants.TREE_PARENT_CODE);
-            String treeName = paramsObj.getString(GenConstants.TREE_NAME);
-            Long parentMenuId = paramsObj.getLong(GenConstants.PARENT_MENU_ID);
-            String parentMenuName = paramsObj.getString(GenConstants.PARENT_MENU_NAME);
+            String treeCode = paramsObj.get(GenConstants.TREE_CODE);
+            String treeParentCode = paramsObj.get(GenConstants.TREE_PARENT_CODE);
+            String treeName = paramsObj.get(GenConstants.TREE_NAME);
+            Long parentMenuId = Long.parseLong(paramsObj.get(GenConstants.PARENT_MENU_ID));
+            String parentMenuName = paramsObj.get(GenConstants.PARENT_MENU_NAME);
 
             genTable.setTreeCode(treeCode);
             genTable.setTreeParentCode(treeParentCode);
