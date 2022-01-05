@@ -1,5 +1,6 @@
 package com.twelvet;
 
+import com.twelvet.framework.core.annotation.EnableTwelveTConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -10,6 +11,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @Description: 认证中心启动器
  * @EnableFeignClients 开启扫描服务
  */
+@EnableTwelveTConfig
 @EnableFeignClients
 @SpringBootApplication
 public class AuthApplication {
