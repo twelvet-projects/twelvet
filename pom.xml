@@ -133,7 +133,7 @@
                 <version>${fast-dfs.version}</version>
             </dependency>
 
-            <!--logback-->
+            <!--logback日志-->
             <dependency>
                 <groupId>com.cwbase</groupId>
                 <artifactId>logback-redis-appender</artifactId>
