@@ -90,7 +90,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/token/login")
                 .loginProcessingUrl("/token/form")
                 .failureHandler(authenticationFailureHandler()).and().logout()
-                .and().authorizeRequests().antMatchers("/token/**", "/actuator/**").permitAll()
+                .and().authorizeRequests().antMatchers("/token/**", "/actuator/**", "/v2/api-docs").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable();
     }

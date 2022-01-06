@@ -48,7 +48,7 @@ public class TWTTokenEndpoint {
 
 	/**
 	 * 认证页面
-	 * @param modelAndView
+	 * @param modelAndView ModelAndView
 	 * @param error 表单登录失败处理回调的错误信息
 	 * @return ModelAndView
 	 */
@@ -61,10 +61,10 @@ public class TWTTokenEndpoint {
 
 	/**
 	 * 确认授权页面
-	 * @param request
-	 * @param session
-	 * @param modelAndView
-	 * @return
+	 * @param request HttpServletRequest
+	 * @param session HttpSession
+	 * @param modelAndView ModelAndView
+	 * @return ModelAndView
 	 */
 	@GetMapping("/confirm_access")
 	public ModelAndView confirm(HttpServletRequest request, HttpSession session, ModelAndView modelAndView) {
