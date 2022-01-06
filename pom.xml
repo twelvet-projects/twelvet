@@ -50,7 +50,7 @@
         <spring-boot.mybatis>2.2.0</spring-boot.mybatis>
 
         <druid.version>1.2.8</druid.version>
-        <dynamic-datasource.version>3.4.0</dynamic-datasource.version>
+        <dynamic-datasource.version>3.4.1</dynamic-datasource.version>
         <pagehelper.boot.version>1.4.1</pagehelper.boot.version>
         <poi.version>3.17</poi.version>
         <fast-dfs.version>1.27.2</fast-dfs.version>

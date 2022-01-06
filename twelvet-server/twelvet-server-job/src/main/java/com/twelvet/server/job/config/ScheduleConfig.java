@@ -2,6 +2,7 @@ package com.twelvet.server.job.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 
@@ -14,11 +15,9 @@ import java.util.Properties;
  * @Description: 定时任务配置
  */
 @Configuration
-public class ScheduleConfig
-{
-    @Bean
-    public SchedulerFactoryBean schedulerFactoryBean(DataSource dataSource)
-    {
+public class ScheduleConfig {
+    @Primary
+    public SchedulerFactoryBean schedulerFactoryBean(DataSource dataSource) {
         SchedulerFactoryBean factory = new SchedulerFactoryBean();
         factory.setDataSource(dataSource);
 
