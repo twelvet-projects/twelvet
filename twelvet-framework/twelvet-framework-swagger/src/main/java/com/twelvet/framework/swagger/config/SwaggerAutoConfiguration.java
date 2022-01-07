@@ -1,6 +1,7 @@
 package com.twelvet.framework.swagger.config;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
@@ -44,11 +45,8 @@ public class SwaggerAutoConfiguration {
 
     private static final String BASE_PATH = "/**";
 
-    @Bean
-    @ConditionalOnMissingBean
-    public SwaggerProperties swaggerProperties() {
-        return new SwaggerProperties();
-    }
+    @Autowired
+    private SwaggerProperties swaggerProperties;
 
     @Bean
     public Docket api(SwaggerProperties swaggerProperties) {
@@ -90,7 +88,7 @@ public class SwaggerAutoConfiguration {
      * @return SecurityContext
      */
     private SecurityContext securityContext() {
-        return SecurityContext.builder().securityReferences(defaultAuth()).build();
+        return SecurityContext.builder().securityReferences(defaultAuth(swaggerProperties)).build();
     }
 
     /**
@@ -98,20 +96,20 @@ public class SwaggerAutoConfiguration {
      *
      * @return List<SecurityReference>
      */
-    private List<SecurityReference> defaultAuth() {
+    private List<SecurityReference> defaultAuth(SwaggerProperties swaggerProperties) {
         ArrayList<AuthorizationScope> authorizationScopeList = new ArrayList<>();
-        swaggerProperties().getAuthorization().getAuthorizationScopeList()
+        swaggerProperties.getAuthorization().getAuthorizationScopeList()
                 .forEach(authorizationScope -> authorizationScopeList.add(
                         new AuthorizationScope(authorizationScope.getScope(), authorizationScope.getDescription())));
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[authorizationScopeList.size()];
         return Collections
-                .singletonList(SecurityReference.builder().reference(swaggerProperties().getAuthorization().getName())
+                .singletonList(SecurityReference.builder().reference(swaggerProperties.getAuthorization().getName())
                         .scopes(authorizationScopeList.toArray(authorizationScopes)).build());
     }
 
     private OAuth securitySchema() {
         ArrayList<GrantType> grantTypes = new ArrayList<>();
-        swaggerProperties().getAuthorization().getTokenUrlList()
+        swaggerProperties.getAuthorization().getTokenUrlList()
                 .forEach(tokenUrl -> grantTypes.add(
                         new ResourceOwnerPasswordCredentialsGrant(tokenUrl)
                         )
