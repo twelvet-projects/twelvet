@@ -66,11 +66,7 @@ public class AuthIgnoreConfig implements InitializingBean, ApplicationContextAwa
 
             // 本方法或本Controller存在AuthIgnore注解将存进列表
             if ($.isNotEmpty(method) || $.isNotEmpty(controller)) {
-                Set<PathPattern> patterns = mappingInfo.getPathPatternsCondition().getPatterns();
-                for (PathPattern pattern : patterns) {
-                    String patternString = pattern.getPatternString();
-                    ignoreUrls.add(patternString);
-                }
+                ignoreUrls.addAll(mappingInfo.getPatternsCondition().getPatterns());
             }
         });
 

@@ -35,7 +35,6 @@ import java.util.stream.Collectors;
  */
 @EnableSwagger2
 @ConditionalOnProperty(name = "swagger.enabled", matchIfMissing = true)
-@ConditionalOnMissingClass("org.springframework.cloud.gateway.config.GatewayAutoConfiguration")
 public class SwaggerAutoConfiguration {
 
     /**
@@ -44,9 +43,6 @@ public class SwaggerAutoConfiguration {
     private static final List<String> DEFAULT_EXCLUDE_PATH = Arrays.asList("/error", "/actuator/**");
 
     private static final String BASE_PATH = "/**";
-
-    @Autowired
-    private SwaggerProperties swaggerProperties;
 
     @Bean
     public Docket api(SwaggerProperties swaggerProperties) {
@@ -78,8 +74,8 @@ public class SwaggerAutoConfiguration {
         swaggerProperties.getBasePath().forEach(p -> builder.paths(PathSelectors.ant(p)));
         swaggerProperties.getExcludePath().forEach(p -> builder.paths(PathSelectors.ant(p).negate()));
 
-        return builder.build().securitySchemes(Collections.singletonList(securitySchema()))
-                .securityContexts(Collections.singletonList(securityContext())).pathMapping("/");
+        return builder.build().securitySchemes(Collections.singletonList(securitySchema(swaggerProperties)))
+                .securityContexts(Collections.singletonList(securityContext(swaggerProperties))).pathMapping("/");
     }
 
     /**
@@ -87,7 +83,7 @@ public class SwaggerAutoConfiguration {
      *
      * @return SecurityContext
      */
-    private SecurityContext securityContext() {
+    private SecurityContext securityContext(SwaggerProperties swaggerProperties) {
         return SecurityContext.builder().securityReferences(defaultAuth(swaggerProperties)).build();
     }
 
@@ -107,7 +103,7 @@ public class SwaggerAutoConfiguration {
                         .scopes(authorizationScopeList.toArray(authorizationScopes)).build());
     }
 
-    private OAuth securitySchema() {
+    private OAuth securitySchema(SwaggerProperties swaggerProperties) {
         ArrayList<GrantType> grantTypes = new ArrayList<>();
         swaggerProperties.getAuthorization().getTokenUrlList()
                 .forEach(tokenUrl -> grantTypes.add(
@@ -144,7 +140,8 @@ public class SwaggerAutoConfiguration {
             @Override
             public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
                 if (bean instanceof WebMvcRequestHandlerProvider) {
-                    customizeSpringfoxHandlerMappings(getHandlerMappings(bean));
+                    List<RequestMappingInfoHandlerMapping> handlerMappings = getHandlerMappings(bean);
+                    customizeSpringfoxHandlerMappings(handlerMappings);
                 }
                 return bean;
             }
