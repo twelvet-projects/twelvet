@@ -1,17 +1,20 @@
 package com.twelvet.server.netty.server;
 
+import com.twelvet.server.netty.properties.NettyProperties;
 import com.twelvet.server.netty.server.handler.NettyServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.http.*;
+import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.ApplicationContext;
@@ -20,8 +23,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.stereotype.Component;
 
-import java.net.InetSocketAddress;
-
 /**
  * @author twelvet
  */
@@ -29,6 +30,9 @@ import java.net.InetSocketAddress;
 public class NettyServer implements ApplicationRunner, ApplicationListener<ContextClosedEvent>, ApplicationContextAware {
 
     private final static Logger log = LoggerFactory.getLogger(NettyServer.class);
+
+    @Autowired
+    private NettyProperties nettyProperties;
 
     @Override
     public void run(ApplicationArguments args) throws InterruptedException {
@@ -63,7 +67,10 @@ public class NettyServer implements ApplicationRunner, ApplicationListener<Conte
                         }
                     });
 
-            Channel channel = serverBootstrap.bind(8989).sync().channel();
+            Channel channel = serverBootstrap
+                    .bind(nettyProperties.getPort())
+                    .sync()
+                    .channel();
             // 对关闭通道进行监听
             channel.closeFuture().sync();
             log.info("netty 服务启动");
