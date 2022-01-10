@@ -9,6 +9,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
+import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import org.slf4j.Logger;
@@ -60,20 +61,26 @@ public class NettyServer implements ApplicationRunner, ApplicationListener<Conte
                             // 自定义处理事件
                             pipeline.addLast(new NettyServerHandler());
 
+                            // http解码器
                             pipeline.addLast(new HttpServerCodec());
+                            // 支持写大数据流
                             pipeline.addLast(new ChunkedWriteHandler());
-                            pipeline.addLast(new HttpObjectAggregator(65536));
-                            pipeline.addLast(new WebSocketServerCompressionHandler());
+                            // http聚合器
+                            pipeline.addLast(new HttpObjectAggregator(1024*62));
+                            // websocket支持,设置路由
+                            pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
                         }
                     });
 
+            int port = nettyProperties.getPort();
+            log.info("Netty 服务启动，服务端口：{}", port);
+
             Channel channel = serverBootstrap
-                    .bind(nettyProperties.getPort())
+                    .bind(port)
                     .sync()
                     .channel();
             // 对关闭通道进行监听
             channel.closeFuture().sync();
-            log.info("netty 服务启动");
 
         } finally {
             // 关闭线程池
