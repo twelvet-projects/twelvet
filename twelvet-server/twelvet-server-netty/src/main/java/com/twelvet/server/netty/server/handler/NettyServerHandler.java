@@ -1,6 +1,5 @@
 package com.twelvet.server.netty.server.handler;
 
-import com.twelvet.server.netty.client.handler.NettyClientHandler;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;

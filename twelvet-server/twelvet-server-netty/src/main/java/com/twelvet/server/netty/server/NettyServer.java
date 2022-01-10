@@ -66,7 +66,7 @@ public class NettyServer implements ApplicationRunner, ApplicationListener<Conte
             Channel channel = serverBootstrap.bind(8989).sync().channel();
             // 对关闭通道进行监听
             channel.closeFuture().sync();
-            log.info("websocket 服务启动");
+            log.info("netty 服务启动");
 
         } finally {
             // 关闭线程池

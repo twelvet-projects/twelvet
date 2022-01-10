@@ -19,8 +19,6 @@ import org.slf4j.LoggerFactory;
  */
 public class Client {
 
-    private final static Logger log = LoggerFactory.getLogger(NettyServer.class);
-
     public static void main(String[] args) {
         // 客户端NIO
         EventLoopGroup eventExecutors = new NioEventLoopGroup();
@@ -37,7 +35,7 @@ public class Client {
                     .handler(new ChannelInitializer<SocketChannel>() {
 
                         @Override
-                        protected void initChannel(SocketChannel ch) throws Exception {
+                        protected void initChannel(SocketChannel ch) {
                             // 加入自定义处理器
                             ch.pipeline().addLast(new NettyClientHandler());
                         }
