@@ -24,14 +24,14 @@ public class WebSocketServerInitializer extends ChannelInitializer<SocketChannel
         socketChannel.pipeline()
                 // http解码器
                 .addLast(new HttpServerCodec())
+                // 自定义处理事件
+                .addLast(new SocketServerHandler())
                 // 支持写大数据流
                 .addLast(new ChunkedWriteHandler())
                 // http聚合器
                 .addLast(new HttpObjectAggregator(1024 * 62))
                 //ws://localhost:8989/ws
-                .addLast(new WebSocketServerProtocolHandler("/ws"))
-                // 自定义处理事件
-                .addLast(new WebSocketServerHandler());
+                .addLast(new WebSocketServerProtocolHandler("/socket"));
     }
 
 }

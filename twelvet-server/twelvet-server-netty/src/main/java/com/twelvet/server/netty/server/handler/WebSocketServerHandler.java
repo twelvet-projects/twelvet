@@ -1,6 +1,5 @@
 package com.twelvet.server.netty.server.handler;
 
-import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -25,8 +24,7 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        ByteBuf buf = (ByteBuf) msg;
-        log.info("客户端发送的消息是：{}", buf.toString(CharsetUtil.UTF_8));
+        log.info("客户端发送的消息是：{}", msg);
     }
 
     /**
