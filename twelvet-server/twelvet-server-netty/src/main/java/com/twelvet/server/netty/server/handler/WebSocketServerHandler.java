@@ -1,6 +1,5 @@
 package com.twelvet.server.netty.server.handler;
 
-import com.twelvet.server.netty.client.handler.NettyClientHandler;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -14,9 +13,9 @@ import org.slf4j.LoggerFactory;
  * @WebSite www.twelvet.cn
  * @Description: Netty服务端自定义事件处理
  */
-public class NettyServerHandler extends ChannelInboundHandlerAdapter {
+public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 
-    private final static Logger log = LoggerFactory.getLogger(NettyServerHandler.class);
+    private final static Logger log = LoggerFactory.getLogger(WebSocketServerHandler.class);
 
     /**
      * 读取客户端发送数据
