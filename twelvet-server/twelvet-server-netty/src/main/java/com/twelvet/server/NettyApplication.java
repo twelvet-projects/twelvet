@@ -9,8 +9,8 @@ import javax.websocket.OnOpen;
 
 /**
  * @author twelvet
- * <p>
- * 启动入口
+ * @WebSite www.twelvet.cn
+ * @Description: 启动入口
  */
 @EnableTwelveTConfig
 @EnableTWTFeignClients

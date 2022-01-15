@@ -9,8 +9,8 @@ import io.netty.handler.stream.ChunkedWriteHandler;
 
 /**
  * @author twelvet
- * <p>
- * 自定义处理器
+ * @WebSite www.twelvet.cn
+ * @Description: 自定义处理器
  */
 public class WebSocketServerInitializer extends ChannelInitializer<SocketChannel> {
 

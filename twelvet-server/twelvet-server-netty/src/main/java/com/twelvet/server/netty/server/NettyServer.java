@@ -23,8 +23,9 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description: 启动Netty
  */
-@Component
 public class NettyServer implements ApplicationRunner, ApplicationListener<ContextClosedEvent>, ApplicationContextAware {
 
     private final static Logger log = LoggerFactory.getLogger(NettyServer.class);
