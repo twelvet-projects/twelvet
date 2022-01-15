@@ -38,7 +38,7 @@ public class NettyServer implements ApplicationRunner, ApplicationListener<Conte
     /**
      * Netty跟随springboot启动
      *
-     * @param args
+     * @param args ApplicationArguments
      */
     @Override
     public void run(ApplicationArguments args) {
@@ -87,11 +87,22 @@ public class NettyServer implements ApplicationRunner, ApplicationListener<Conte
 
     }
 
+    /**
+     * 启动时触发
+     *
+     * @param applicationContext ApplicationContext
+     * @throws BeansException BeansException
+     */
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         log.info("websocket 服务启动");
     }
 
+    /**
+     * 关闭时触发
+     *
+     * @param contextClosedEvent ContextClosedEvent
+     */
     @Override
     public void onApplicationEvent(ContextClosedEvent contextClosedEvent) {
         log.info("Netty 安全关闭");
