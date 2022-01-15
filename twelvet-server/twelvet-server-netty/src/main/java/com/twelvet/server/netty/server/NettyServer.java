@@ -1,5 +1,6 @@
 package com.twelvet.server.netty.server;
 
+import com.twelvet.framework.utils.$;
 import com.twelvet.server.netty.properties.NettyProperties;
 import com.twelvet.server.netty.server.handler.WebSocketServerInitializer;
 import io.netty.bootstrap.ServerBootstrap;
@@ -34,43 +35,48 @@ public class NettyServer implements ApplicationRunner, ApplicationListener<Conte
     @Override
     public void run(ApplicationArguments args) throws InterruptedException {
 
-        log.info("正在启动websocket服务器");
+        $.threadPoolExecutor.execute(() -> {
+            log.info("正在启动websocket服务器");
 
-        // 主线程池（接受客户端请求链接）
-        EventLoopGroup bossGroup = new NioEventLoopGroup();
-        // 从线程池：主要处理主线程给予的任务
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
-        try {
-            // 创建服务启动类
-            ServerBootstrap serverBootstrap = new ServerBootstrap();
-            // 设置主从线程组
-            serverBootstrap.group(bossGroup, workerGroup);
+            // 主线程池（接受客户端请求链接）
+            EventLoopGroup bossGroup = new NioEventLoopGroup();
+            // 从线程池：主要处理主线程给予的任务
+            EventLoopGroup workerGroup = new NioEventLoopGroup();
+            try {
+                // 创建服务启动类
+                ServerBootstrap serverBootstrap = new ServerBootstrap();
+                // 设置主从线程组
+                serverBootstrap.group(bossGroup, workerGroup);
 
-            serverBootstrap
-                    // 使用NIO通道作为实现
-                    .channel(NioServerSocketChannel.class)
-                    // 设置保持活动链接状态，心跳包
-                    .childOption(ChannelOption.SO_KEEPALIVE, true)
-                    // 设置处理器
-                    .childHandler(new WebSocketServerInitializer());
+                serverBootstrap
+                        // 使用NIO通道作为实现
+                        .channel(NioServerSocketChannel.class)
+                        // 设置保持活动链接状态，心跳包
+                        .childOption(ChannelOption.SO_KEEPALIVE, true)
+                        // 设置处理器
+                        .childHandler(new WebSocketServerInitializer());
 
-            int port = nettyProperties.getPort();
+                int port = nettyProperties.getPort();
 
-            Channel channel = serverBootstrap
-                    .bind(port)
-                    .sync()
-                    .channel();
+                Channel channel = serverBootstrap
+                        .bind(port)
+                        .sync()
+                        .channel();
 
-            log.info("Websocket 成功启动，服务端口：{}", port);
+                log.info("Websocket 成功启动，服务端口：{}", port);
 
-            // 对关闭通道进行监听
-            channel.closeFuture().sync();
+                // 对关闭通道进行监听
+                channel.closeFuture().sync();
 
-        } finally {
-            // 关闭线程池
-            bossGroup.shutdownGracefully();
-            workerGroup.shutdownGracefully();
-        }
+            } catch (InterruptedException e) {
+                log.info("Netty发生不可逆错误：", e);
+            } finally {
+                // 关闭线程池
+                bossGroup.shutdownGracefully();
+                workerGroup.shutdownGracefully();
+            }
+        });
+
     }
 
     @Override
