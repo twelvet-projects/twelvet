@@ -20,12 +20,14 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
  * @Description: 启动Netty
  */
+@Service
 public class NettyServer implements ApplicationRunner, ApplicationListener<ContextClosedEvent>, ApplicationContextAware {
 
     private final static Logger log = LoggerFactory.getLogger(NettyServer.class);
