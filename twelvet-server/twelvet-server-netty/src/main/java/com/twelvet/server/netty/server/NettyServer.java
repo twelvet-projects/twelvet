@@ -32,8 +32,13 @@ public class NettyServer implements ApplicationRunner, ApplicationListener<Conte
     @Autowired
     private NettyProperties nettyProperties;
 
+    /**
+     * Netty跟随springboot启动
+     *
+     * @param args
+     */
     @Override
-    public void run(ApplicationArguments args) throws InterruptedException {
+    public void run(ApplicationArguments args) {
 
         $.threadPoolExecutor.execute(() -> {
             log.info("正在启动websocket服务器");
