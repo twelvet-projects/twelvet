@@ -162,6 +162,7 @@ public class SysUserController extends TWTController {
     @PreAuthorize("@role.hasPermi('system:user:query')")
     @GetMapping({"/", "/{userId}"})
     public AjaxResult getInfo(@PathVariable(value = "userId", required = false) Long userId) {
+        iSysUserService.checkUserDataScope(userId);
         Map<String, Object> res = new HashMap<>(6);
         List<SysRole> roles = iSysRoleService.selectRoleAll();
         res.put("roles", SysUser.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
@@ -211,6 +212,7 @@ public class SysUserController extends TWTController {
     @PreAuthorize("@role.hasPermi('system:user:edit')")
     public AjaxResult edit(@Validated @RequestBody SysUser user) {
         iSysUserService.checkUserAllowed(user);
+        iSysUserService.checkUserDataScope(user.getUserId());
         if (UserConstants.NOT_UNIQUE.equals(iSysUserService.checkPhoneUnique(user))) {
             return AjaxResult.error("修改用户信息失败，手机号码已存在");
         } else if (UserConstants.NOT_UNIQUE.equals(iSysUserService.checkEmailUnique(user))) {
@@ -248,6 +250,7 @@ public class SysUserController extends TWTController {
     @PreAuthorize("@role.hasPermi('system:user:resetPwd')")
     public AjaxResult resetPwd(@RequestBody SysUser user) {
         iSysUserService.checkUserAllowed(user);
+        iSysUserService.checkUserDataScope(user.getUserId());
         user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
         user.setUpdateBy(SecurityUtils.getUsername());
         return json(iSysUserService.resetPwd(user));
@@ -266,6 +269,7 @@ public class SysUserController extends TWTController {
     @PreAuthorize("@role.hasPermi('system:user:update')")
     public AjaxResult changeStatus(@RequestBody SysUser user) {
         iSysUserService.checkUserAllowed(user);
+        iSysUserService.checkUserDataScope(user.getUserId());
         user.setUpdateBy(SecurityUtils.getUsername());
         return json(iSysUserService.updateUserStatus(user));
     }

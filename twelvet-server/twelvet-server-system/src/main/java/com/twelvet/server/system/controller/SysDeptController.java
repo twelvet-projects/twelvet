@@ -68,6 +68,7 @@ public class SysDeptController extends TWTController {
     @GetMapping(value = "/{deptId}")
     @PreAuthorize("@role.hasPermi('system:dept:query')")
     public AjaxResult getInfo(@PathVariable Long deptId) {
+        deptService.checkDeptDataScope(deptId);
         return AjaxResult.success(deptService.selectDeptById(deptId));
     }
 
@@ -126,6 +127,8 @@ public class SysDeptController extends TWTController {
     @PutMapping
     @PreAuthorize("@role.hasPermi('system:dept:update')")
     public AjaxResult update(@Validated @RequestBody SysDept dept) {
+        Long deptId = dept.getDeptId();
+        deptService.checkDeptDataScope(deptId);
         if (UserConstants.NOT_UNIQUE.equals(deptService.checkDeptNameUnique(dept))) {
             return AjaxResult.error("修改部门'" + dept.getDeptName() + "'失败，部门名称已存在");
         } else if (dept.getParentId().equals(dept.getDeptId())) {
@@ -154,6 +157,7 @@ public class SysDeptController extends TWTController {
         if (deptService.checkDeptExistUser(deptId)) {
             return AjaxResult.error("部门存在用户,不允许删除");
         }
+        deptService.checkDeptDataScope(deptId);
         return json(deptService.deleteDeptById(deptId));
     }
 

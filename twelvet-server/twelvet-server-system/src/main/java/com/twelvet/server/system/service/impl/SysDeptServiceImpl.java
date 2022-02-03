@@ -1,11 +1,15 @@
 package com.twelvet.server.system.service.impl;
 
 import com.twelvet.api.system.domain.SysDept;
+import com.twelvet.api.system.domain.SysUser;
 import com.twelvet.api.system.domain.vo.TreeSelect;
 import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.datascope.annotation.SysDataScope;
+import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.$;
+import com.twelvet.framework.utils.SpringUtils;
+import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.server.system.mapper.SysDeptMapper;
 import com.twelvet.server.system.service.ISysDeptService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -147,6 +151,23 @@ public class SysDeptServiceImpl implements ISysDeptService {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
+    }
+
+    /**
+     * 校验部门是否有数据权限
+     *
+     * @param deptId 部门id
+     */
+    @Override
+    public void checkDeptDataScope(Long deptId) {
+        if (!SysUser.isAdmin(SecurityUtils.getLoginUser().getUserId())) {
+            SysDept dept = new SysDept();
+            dept.setDeptId(deptId);
+            List<SysDept> depts = SpringUtils.getAopProxy(this).selectDeptList(dept);
+            if (StringUtils.isEmpty(depts)) {
+                throw new TWTException("没有权限访问部门数据！");
+            }
+        }
     }
 
     /**

@@ -68,6 +68,7 @@ public class SysRoleController extends TWTController {
     @GetMapping("/{roleId}")
     @PreAuthorize("@role.hasPermi('system:role:query')")
     public AjaxResult getInfo(@PathVariable Long roleId) {
+        iSysRoleService.checkRoleDataScope(roleId);
         return AjaxResult.success(iSysRoleService.selectRoleById(roleId));
     }
 
@@ -109,6 +110,7 @@ public class SysRoleController extends TWTController {
     @PreAuthorize("@role.hasPermi('system:role:update')")
     public AjaxResult update(@Validated @RequestBody SysRole role) {
         iSysRoleService.checkRoleAllowed(role);
+        iSysRoleService.checkRoleDataScope(role.getRoleId());
         if (
                 UserConstants.NOT_UNIQUE.equals(iSysRoleService.checkRoleNameUnique(role))
         ) {

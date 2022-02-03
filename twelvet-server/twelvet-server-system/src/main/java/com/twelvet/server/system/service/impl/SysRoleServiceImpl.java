@@ -3,10 +3,13 @@ package com.twelvet.server.system.service.impl;
 import com.twelvet.api.system.domain.SysRole;
 import com.twelvet.api.system.domain.SysRoleDept;
 import com.twelvet.api.system.domain.SysRoleMenu;
+import com.twelvet.api.system.domain.SysUser;
 import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.core.exception.TWTException;
+import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.SpringUtils;
 import com.twelvet.framework.utils.$;
+import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.server.system.mapper.SysRoleDeptMapper;
 import com.twelvet.server.system.mapper.SysRoleMapper;
 import com.twelvet.server.system.mapper.SysRoleMenuMapper;
@@ -141,6 +144,23 @@ public class SysRoleServiceImpl implements ISysRoleService {
     public void checkRoleAllowed(SysRole role) {
         if ($.isNotEmpty(role.getRoleId()) && role.isAdmin()) {
             throw new TWTException("不允许操作超级管理员角色");
+        }
+    }
+
+    /**
+     * 校验角色是否有数据权限
+     *
+     * @param roleId 角色id
+     */
+    @Override
+    public void checkRoleDataScope(Long roleId) {
+        if (!SysUser.isAdmin(SecurityUtils.getLoginUser().getUserId())) {
+            SysRole role = new SysRole();
+            role.setRoleId(roleId);
+            List<SysRole> roles = SpringUtils.getAopProxy(this).selectRoleList(role);
+            if (StringUtils.isEmpty(roles)) {
+                throw new TWTException("没有权限访问角色数据！");
+            }
         }
     }
 
@@ -282,6 +302,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     public int deleteRoleByIds(Long[] roleIds) {
         for (Long roleId : roleIds) {
             checkRoleAllowed(new SysRole(roleId));
+            checkRoleDataScope(roleId);
             SysRole role = selectRoleById(roleId);
             if (countUserRoleByRoleId(roleId) > 0) {
                 throw new TWTException(String.format("%1$s已分配,不能删除", role.getRoleName()));
