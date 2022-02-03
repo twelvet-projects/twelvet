@@ -50,6 +50,8 @@ public class ExcelUtils<T> {
     private final static String XLS = "xls";
     private final static String XLSX = "xlsx";
 
+    public static final String[] FORMULA_STR = {"=", "-", "+", "@"};
+
     private final static String XLS_RESPONSE_HEAD = "application/vnd.ms-excel";
     private final static String XLSX_RESPONSE_HEAD = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
@@ -421,7 +423,12 @@ public class ExcelUtils<T> {
      */
     public void setCellVo(Object value, Excel attr, Cell cell) {
         if (ColumnType.STRING == attr.cellType()) {
-            cell.setCellValue($.isEmpty(value) ? attr.defaultValue() : value + attr.suffix());
+            String cellValue = Convert.toStr(value);
+            // 对于任何以表达式触发字符 =-+@开头的单元格，直接使用tab字符作为前缀，防止CSV注入。
+            if (StringUtils.containsAny(cellValue, FORMULA_STR)) {
+                cellValue = StringUtils.replaceEach(cellValue, FORMULA_STR, new String[]{"\t=", "\t-", "\t+", "\t@"});
+            }
+            cell.setCellValue(StringUtils.isEmpty(cellValue) ? attr.defaultValue() : cellValue + attr.suffix());
         } else if (ColumnType.NUMERIC == attr.cellType()) {
             if ($.isNotEmpty(value)) {
                 cell.setCellValue(StringUtils.contains(Convert.toStr(value), ".") ? Convert.toDouble(value) : Convert.toInt(value));
@@ -450,15 +457,11 @@ public class ExcelUtils<T> {
     /**
      * 获取图片类型,设置图片插入类型
      */
-    public int getImageType(byte[] value)
-    {
+    public int getImageType(byte[] value) {
         String type = FileTypeUtils.getFileExtendName(value);
-        if ("JPG".equalsIgnoreCase(type))
-        {
+        if ("JPG".equalsIgnoreCase(type)) {
             return Workbook.PICTURE_TYPE_JPEG;
-        }
-        else if ("PNG".equalsIgnoreCase(type))
-        {
+        } else if ("PNG".equalsIgnoreCase(type)) {
             return Workbook.PICTURE_TYPE_PNG;
         }
         return Workbook.PICTURE_TYPE_JPEG;
