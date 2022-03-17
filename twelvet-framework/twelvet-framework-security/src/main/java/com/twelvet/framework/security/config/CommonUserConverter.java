@@ -40,6 +40,7 @@ public class CommonUserConverter implements UserAuthenticationConverter {
     /**
      * 获取用户认证信息
      */
+    @SuppressWarnings("unchecked")
     @Override
     public Authentication extractAuthentication(Map<String, ?> map) {
         if (map.containsKey(USERNAME)) {
