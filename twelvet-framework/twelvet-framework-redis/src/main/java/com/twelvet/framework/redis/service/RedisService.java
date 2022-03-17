@@ -264,4 +264,15 @@ public class RedisService {
             return (T) obj;
         });
     }
+
+    /**
+     * 获取列表长度
+     *
+     * @param key 查询key
+     * @return Long
+     */
+    public Long lSize(String key) {
+        return redisTemplate.opsForList().size(key);
+    }
+
 }
