@@ -220,24 +220,7 @@ public class RedisService {
      * @param <T>
      */
     public <T> void rPush(final String key, final T... values) {
-        redisTemplate.execute((RedisCallback<Boolean>) connection -> {
-            for (T v : values) {
-                byte[] bytes;
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                try {
-                    ObjectOutputStream oos = new ObjectOutputStream(bos);
-                    oos.writeObject(v);
-                    oos.flush();
-                    bytes = bos.toByteArray();
-                    oos.close();
-                    bos.close();
-                } catch (IOException e) {
-                    return false;
-                }
-                connection.rPush(key.getBytes(), bytes);
-            }
-            return true;
-        });
+        redisTemplate.opsForList().rightPushAll(key, values);
     }
 
     /**
@@ -247,22 +230,7 @@ public class RedisService {
      * @return 数组中的最左数据
      */
     public <T> T lPop(final String key) {
-        return (T) redisTemplate.execute((RedisCallback<T>) connection -> {
-            byte[] result = connection.lPop(key.getBytes());
-            Object obj = null;
-            if (result != null) {
-                try {
-                    ByteArrayInputStream bis = new ByteArrayInputStream(result);
-                    ObjectInputStream ois = new ObjectInputStream(bis);
-                    obj = ois.readObject();
-                    ois.close();
-                    bis.close();
-                } catch (IOException | ClassNotFoundException ex) {
-
-                }
-            }
-            return (T) obj;
-        });
+        return (T) redisTemplate.opsForList().leftPop(key);
     }
 
     /**
