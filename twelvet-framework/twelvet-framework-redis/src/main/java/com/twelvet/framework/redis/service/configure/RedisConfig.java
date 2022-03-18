@@ -12,10 +12,11 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
+
 /**
- * redis配置
- *
- * @author ruoyi
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description: redis使用jackson序列化
  */
 @Configuration
 @EnableCaching
