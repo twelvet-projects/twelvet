@@ -1,6 +1,7 @@
 package com.twelvet.server.system.service.impl;
 
 import com.twelvet.api.system.domain.SysClientDetails;
+import com.twelvet.framework.redis.service.annotation.TwSynchronized;
 import com.twelvet.framework.security.constans.CacheConstants;
 import com.twelvet.server.system.mapper.SysClientDetailsMapper;
 import com.twelvet.server.system.service.ISysClientDetailsService;
@@ -9,6 +10,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author twelvet
@@ -26,6 +28,7 @@ public class SysClientDetailsServiceImpl implements ISysClientDetailsService {
      * @param clientId 终端配置ID
      * @return 终端配置
      */
+    // @TwSynchronized("anyLock")
     @Override
     public SysClientDetails selectSysClientDetailsById(String clientId) {
         return sysClientDetailsMapper.selectSysClientDetailsById(clientId);
