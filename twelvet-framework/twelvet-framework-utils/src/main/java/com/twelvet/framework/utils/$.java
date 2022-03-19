@@ -23,7 +23,7 @@ public class $ {
      */
     public static ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
             // 核心数量
-            10,
+            3,
             // 最大线程数量
             // 最大核心*2,获取cpu数量
             Runtime.getRuntime().availableProcessors() * 2,
