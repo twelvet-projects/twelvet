@@ -30,7 +30,7 @@ public class $ {
             // 保持一定连接时间
             10,
             // 以分钟计算
-            TimeUnit.SECONDS,
+            TimeUnit.MINUTES,
             // 队列
             new LinkedBlockingQueue<>(30),
             // 线程工厂
