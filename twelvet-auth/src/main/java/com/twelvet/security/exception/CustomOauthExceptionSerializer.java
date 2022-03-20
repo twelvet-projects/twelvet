@@ -35,7 +35,7 @@ public class CustomOauthExceptionSerializer extends StdSerializer<CustomOauth2Ex
         if (StringUtils.equals(e.getMessage(), BAD_CREDENTIALS)) {
             jsonGenerator.writeStringField(AjaxResult.MSG_TAG, "用户名或密码错误");
         } else {
-            log.warn("oauth2 认证异常 {} ", e.getMessage());
+            log.error("oauth2 认证异常 {} ", e.getMessage());
             jsonGenerator.writeStringField(AjaxResult.MSG_TAG, e.getMessage());
         }
         jsonGenerator.writeEndObject();

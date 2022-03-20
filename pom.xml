@@ -41,12 +41,12 @@
         <java.version>1.8</java.version>
         <spring.maven.plugin.version>2.3.0.RELEASE</spring.maven.plugin.version>
 
-        <spring-boot-dependencies.version>2.6.2</spring-boot-dependencies.version>
+        <spring-boot-dependencies.version>2.6.4</spring-boot-dependencies.version>
         <spring-cloud.version>2021.0.1</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
         <caffeine.version>3.0.5</caffeine.version>
         <io.seata.version>1.4.2</io.seata.version>
-        <spring-boot-admin.version>2.5.5</spring-boot-admin.version>
+        <spring-boot-admin.version>2.6.2</spring-boot-admin.version>
         <spring-boot.mybatis>2.2.0</spring-boot.mybatis>
 
         <druid.version>1.2.8</druid.version>
