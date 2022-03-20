@@ -22,7 +22,7 @@ import java.lang.reflect.Method;
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description: 系统数据过滤AOP
+ * @Description: 注解分布式锁
  */
 @Aspect
 @Component
