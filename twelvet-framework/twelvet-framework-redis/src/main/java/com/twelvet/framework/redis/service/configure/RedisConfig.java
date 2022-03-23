@@ -8,10 +8,17 @@ import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import java.time.Duration;
 
 
 /**
@@ -19,12 +26,12 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @WebSite www.twelvet.cn
  * @Description: redis使用jackson序列化
  */
-//@Configuration
+@SuppressWarnings(value = { "unchecked", "rawtypes" })
+@Configuration
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
 
     @Bean
-    @SuppressWarnings(value = { "unchecked", "rawtypes" })
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory)
     {
         RedisTemplate<Object, Object> template = new RedisTemplate<>();
@@ -49,5 +56,20 @@ public class RedisConfig extends CachingConfigurerSupport {
         return template;
     }
 
+    /**
+     * 修改 Cacheable 默认序列化方式 使用Redis配置的序列化
+     * 解决 @Cacheable 序列化失败 而 RedisUtil可以成功 问题
+     * @param redisTemplate RedisTemplate
+     * @return RedisCacheManager
+     */
+    @Bean
+    public RedisCacheManager redisCacheManager(RedisTemplate redisTemplate) {
+        RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisTemplate.getConnectionFactory());
+        RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisTemplate.getValueSerializer()));
+        // 默认过期时间
+        redisCacheConfiguration.entryTtl(Duration.ofDays( 30));
+        return new RedisCacheManager(redisCacheWriter, redisCacheConfiguration);
+    }
 
 }

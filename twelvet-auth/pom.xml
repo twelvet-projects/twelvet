@@ -69,7 +69,7 @@
             <artifactId>twelvet-framework-security</artifactId>
         </dependency>
 
-        <!--公共安全配置模块-->
+        <!--Redis-->
         <dependency>
             <groupId>com.twelvet</groupId>
             <artifactId>twelvet-framework-redis</artifactId>
