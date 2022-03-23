@@ -69,12 +69,6 @@
             <artifactId>twelvet-framework-security</artifactId>
         </dependency>
 
-        <!--Redis-->
-        <dependency>
-            <groupId>com.twelvet</groupId>
-            <artifactId>twelvet-framework-redis</artifactId>
-        </dependency>
-
         <!--核心模块-->
         <dependency>
             <groupId>com.twelvet</groupId>
