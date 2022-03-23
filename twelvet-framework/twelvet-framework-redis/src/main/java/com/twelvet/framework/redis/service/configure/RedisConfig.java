@@ -71,21 +71,19 @@ public class RedisConfig extends CachingConfigurerSupport {
      * @return CacheManager
      */
     @Bean
-    @Primary
-    public CacheManager cacheManager(ObjectMapper objectMapper, RedisConnectionFactory redisConnectionFactory) {
-        //设置序列化
-        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
-
-        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-
-        jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
-
-        RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-                .disableCachingNullValues()
-                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(jackson2JsonRedisSerializer));
-
-        return RedisCacheManager.builder(redisConnectionFactory).cacheDefaults(cacheConfiguration).build();
+    public RedisCacheManager redisCacheManager(RedisTemplate redisTemplate) {
+        RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisTemplate.getConnectionFactory());
+        RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration
+                .defaultCacheConfig()
+                .serializeValuesWith(
+                        RedisSerializationContext
+                                .SerializationPair.fromSerializer(
+                                        redisTemplate.getValueSerializer()
+                        )
+                );
+        // 默认过期时间
+        redisCacheConfiguration.entryTtl(Duration.ofDays( 30));
+        return new RedisCacheManager(redisCacheWriter, redisCacheConfiguration);
     }
 
 }
