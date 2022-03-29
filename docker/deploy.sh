@@ -2,8 +2,27 @@
 
 # 使用说明，用来提示输入参数
 usage() {
-  echo "Usage: sh 执行脚本.sh [port|base|server|stop|rm]"
+  echo "Usage: sh 执行脚本.sh [init|port|base|server|stop|rm]"
   exit 1
+}
+
+# 初始化
+init() {
+  # copy sql
+  echo "begin copy sql "
+  cp ../data/sql/twelvet.sql ./mysql/db
+  cp ../data/sql/twelvet_nacos.sql ./mysql/db
+
+  # copy jar
+  echo "begin copy twelvet-gateway "
+  cp ../twelvet-gateway/target/twelvet-gateway.jar ./twelvet/gateway/jar
+
+  echo "begin copy twelvet-auth "
+  cp ../twelvet-auth/target/twelvet-auth.jar ./twelvet/auth/jar
+
+  echo "begin copy twelvet-server-system "
+  cp ../twelvet-server/twelvet-server-system/target/twelvet-server-system.jar ./twelvet/server/system/jar
+
 }
 
 # 检查是否存在网络组
@@ -51,6 +70,9 @@ rm() {
 
 # 根据输入参数，选择执行对应方法，不输入则执行使用说明
 case "$1" in
+"init")
+  init
+  ;;
 "port")
   port
   ;;
