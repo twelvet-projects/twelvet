@@ -77,7 +77,7 @@ case "$1" in
   port
   ;;
 "base")
-  check_network
+  #check_network
   base
   ;;
 "server")
