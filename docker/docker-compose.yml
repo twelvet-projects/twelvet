@@ -1,6 +1,6 @@
 version: '3'
 services:
-  nacos:
+  twelvet-nacos:
     image: nacos/nacos-server:latest
     ports:
       - "8848:8848"
@@ -23,7 +23,7 @@ services:
     # 可以接受外部输入
     tty: true
     ports:
-      - 88:88
+      - 8080:8080
     volumes:
       - /data/docker/twelvet/logs/twelvet-gateway:/logs
       - /data/docker/twelvet/twelvet-gateway:/app
