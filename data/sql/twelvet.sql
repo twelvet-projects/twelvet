@@ -1,21 +1,11 @@
-/*
- Navicat Premium Data Transfer
+DROP DATABASE IF EXISTS `twelvet`;
 
- Source Server         : twelvet
- Source Server Type    : MySQL
- Source Server Version : 50735
- Source Host           : rm-twelvet.mysql.rds.aliyuncs.com:12306
- Source Schema         : twelvet-dev
-
- Target Server Type    : MySQL
- Target Server Version : 50735
- File Encoding         : 65001
-
- Date: 22/03/2022 09:49:54
-*/
+CREATE DATABASE  `twelvet` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+USE `twelvet`;
 
 -- ----------------------------
 -- Table structure for gen_table

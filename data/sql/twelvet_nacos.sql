@@ -1,21 +1,12 @@
-/*
- Navicat Premium Data Transfer
+DROP DATABASE IF EXISTS `twelvet_nacos`;
 
- Source Server         : 127.0.0.1
- Source Server Type    : MySQL
- Source Server Version : 50726
- Source Host           : 127.0.0.1:3306
- Source Schema         : twelvet_nacos
-
- Target Server Type    : MySQL
- Target Server Version : 50726
- File Encoding         : 65001
-
- Date: 02/03/2022 22:12:00
-*/
+CREATE DATABASE  `twelvet_nacos` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+USE `twelvet_nacos`;
+
 
 -- ----------------------------
 -- Table structure for config_info

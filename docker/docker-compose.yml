@@ -1,5 +1,38 @@
 version: '3'
 services:
+  twelvet-mysql:
+    container_name: twelvet-mysql
+    image: mysql:8.0
+    build:
+      context: ./mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/conf:/etc/mysql/conf.d
+      - ./mysql/logs:/logs
+      - ./mysql/data:/var/lib/mysql
+    command: [
+        'mysqld',
+        '--innodb-buffer-pool-size=80M',
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_ci',
+        '--default-time-zone=+8:00',
+        '--lower-case-table-names=1'
+    ]
+    environment:
+      MYSQL_DATABASE: 'twelvet'
+      MYSQL_ROOT_PASSWORD: 123456
+  twelvet-redis:
+    container_name: twelvet-redis
+    image: redis
+    build:
+      context: ./redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis/conf/redis.conf:/home/twelvet/redis/redis.conf
+      - ./redis/data:/data
+    command: redis-server /home/twelvet/redis/redis.conf
   twelvet-nacos:
     image: nacos/nacos-server:latest
     ports:

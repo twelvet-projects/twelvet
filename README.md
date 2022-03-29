@@ -100,6 +100,15 @@ com.twelvet
 
 演示地址：[http://cloud.twelvet.cn](http://cloud.twelvet.cn)
 
+## 支持Linux一件Docker启动(最小化启动服务)
+```shell
+cd ./docker
+./init.sh
+./deploy.sh
+```
+
+
+
 ## TwelveT微服务交流群
 
 QQ群： [![加入QQ群](https://img.shields.io/badge/985830229-blue.svg)](https://jq.qq.com/?_wv=1027&k=cznM6Q00) 点击按钮入群。
