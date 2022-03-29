@@ -6,6 +6,24 @@ usage() {
   exit 1
 }
 
+# 检查是否存在网络组
+check_network() {
+  # 获取docker网络组
+  need_create_network=false
+
+  # 遍历网络组
+  for twelvet_network in $(docker network list); do
+    if $twelvet_network -eq "twelvet-network"; then
+      need_create_network=true
+    fi
+  done
+
+  if $need_create_network; then
+    docker network create twelvet-network
+    echo "create twelvet-network"
+  fi
+}
+
 # 开启所需端口
 port() {
   firewall-cmd --add-port=8080/tcp --permanent
@@ -41,9 +59,11 @@ case "$1" in
   port
   ;;
 "base")
+  check_network
   base
   ;;
 "server")
+  check_network
   server
   ;;
 "stop")
