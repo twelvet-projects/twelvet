@@ -46,6 +46,8 @@ services:
     restart: always
     privileged: true
     network_mode: twelvet-network
+    build:
+      context: ./nacos
     volumes:
       - /data/docker/nacos/conf:/home/nacos/conf
       - /data/docker/nacos/data:/home/nacos/data
