@@ -187,9 +187,6 @@ services:
       - TZ=Asia/Shanghai
 
 networks:
-  # 一个具体网络的条目名称
   twelvet-network:
-    # 网络名称，默认为"工程名称_网络条目名称"
-    name: twelvet-network
-    # 网络模式，默认为 bridge
-    driver: bridge
+    external:
+      name: twelvet-network
