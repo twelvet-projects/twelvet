@@ -103,10 +103,17 @@ com.twelvet
 ## 支持Linux一件Docker启动(最小化启动服务)
 需要自行安装maven、docker
 ```shell
+# mvn
 mvn clean && mvn install
+# 进入脚本目录
 cd ./docker
+# 可执行
 chmod 751 init.sh deploy.sh
+# 初始化
 ./init.sh
+# 创建网络组
+docker network create twelvet-network
+# 执行启动（按需执行）
 ./deploy.sh
 ```
 

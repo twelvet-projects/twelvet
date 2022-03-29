@@ -4,7 +4,7 @@ services:
     container_name: twelvet-mysql
     image: mysql:8.0
     privileged: true
-      network_mode: twelvet-network
+    network_mode: twelvet-network
     build:
       context: ./mysql
     ports:
@@ -29,7 +29,7 @@ services:
     container_name: twelvet-redis
     image: redis
     privileged: true
-      network_mode: twelvet-network
+    network_mode: twelvet-network
     build:
       context: ./redis
     ports:
