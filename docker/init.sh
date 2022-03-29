@@ -12,8 +12,6 @@ echo "begin copy sql "
 cp ../data/sql/twelvet.sql ./mysql/db
 cp ../data/sql/twelvet_nacos.sql ./mysql/db
 
-mvn clean && mvn install
-
 # copy jar
 echo "begin copy twelvet-gateway "
 cp ../twelvet-gateway/target/twelvet-gateway.jar ./twelvet/gateway/jar
