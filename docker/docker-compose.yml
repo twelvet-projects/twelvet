@@ -3,6 +3,8 @@ services:
   twelvet-mysql:
     container_name: twelvet-mysql
     image: mysql:8.0
+    privileged: true
+      network_mode: twelvet-network
     build:
       context: ./mysql
     ports:
@@ -22,9 +24,12 @@ services:
     environment:
       MYSQL_DATABASE: 'twelvet'
       MYSQL_ROOT_PASSWORD: 123456
+
   twelvet-redis:
     container_name: twelvet-redis
     image: redis
+    privileged: true
+      network_mode: twelvet-network
     build:
       context: ./redis
     ports:
@@ -33,6 +38,7 @@ services:
       - ./redis/conf/redis.conf:/home/twelvet/redis/redis.conf
       - ./redis/data:/data
     command: redis-server /home/twelvet/redis/redis.conf
+
   twelvet-nacos:
     image: nacos/nacos-server:latest
     ports:
@@ -47,6 +53,7 @@ services:
     environment:
       - MODE=standalone
       - TZ=Asia/Shanghai
+
   twelvet-gateway:
     image: docker.io/java:8
     restart: always
