@@ -12,7 +12,7 @@ check_network() {
   need_create_network=false
 
   # 遍历网络组
-  for twelvet_network in $(docker network list); do
+  for twelvet_network in `docker network list`; do
     if "$twelvet_network"['NAME'] -eq "twelvet-network"; then
       need_create_network=true
     fi
