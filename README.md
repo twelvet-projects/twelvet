@@ -103,6 +103,7 @@ com.twelvet
 ## 支持Linux一件Docker启动(最小化启动服务)
 ```shell
 cd ./docker
+chmod 751 init.sh deploy.sh
 ./init.sh
 ./deploy.sh
 ```

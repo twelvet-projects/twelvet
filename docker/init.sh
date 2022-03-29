@@ -9,7 +9,7 @@ usage() {
 
 # copy sql
 echo "begin copy sql "
-cp ../data/sql/ywelvet.sql ./mysql/db
+cp ../data/sql/twelvet.sql ./mysql/db
 cp ../data/sql/twelvet_nacos.sql ./mysql/db
 
 mvn clean && mvn install
