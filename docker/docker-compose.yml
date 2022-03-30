@@ -4,7 +4,6 @@ services:
     container_name: twelvet-mysql
     image: mysql:8.0
     privileged: true
-    network_mode: twelvet-network
     build:
       context: ./mysql
     ports:
@@ -29,7 +28,6 @@ services:
     container_name: twelvet-redis
     image: redis
     privileged: true
-    network_mode: twelvet-network
     build:
       context: ./redis
     ports:
@@ -43,11 +41,14 @@ services:
     image: nacos/nacos-server:latest
     ports:
       - "8848:8848"
+      - "9848:9848"
+      - "9849:9849"
     restart: always
     privileged: true
-    network_mode: twelvet-network
     build:
       context: ./nacos
+    depends_on:
+      - twelvet-mysql
     volumes:
       - /data/docker/nacos/conf:/home/nacos/conf
       - /data/docker/nacos/data:/home/nacos/data
@@ -56,12 +57,28 @@ services:
       - MODE=standalone
       - TZ=Asia/Shanghai
 
+  twelvet-nginx:
+    container_name: twelvet-nginx
+    image: nginx
+    build:
+      context: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/html/dist:/home/twelvet/projects/twelvet-ui
+      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/logs:/var/log/nginx
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - twelvet-gateway
+    links:
+      - twelvet-gateway
+
   twelvet-gateway:
     image: docker.io/java:8
     restart: always
     container_name: twelvet-gateway
     privileged: true
-    network_mode: twelvet-network
     # 可以接受外部输入
     tty: true
     ports:
@@ -79,7 +96,12 @@ services:
     restart: always
     container_name: twelvet-auth
     privileged: true
-    network_mode: twelvet-network
+    depends_on:
+      - twelvet-redis
+      - twelvet-mysql
+    links:
+      - twelvet-redis
+      - twelvet-mysql
     # 可以接受外部输入
     tty: true
     volumes:
@@ -95,7 +117,12 @@ services:
     restart: always
     container_name: twelvet-system
     privileged: true
-    network_mode: twelvet-network
+    depends_on:
+      - twelvet-redis
+      - twelvet-mysql
+    links:
+      - twelvet-redis
+      - twelvet-mysql
     # 可以接受外部输入
     tty: true
     volumes:
@@ -111,7 +138,6 @@ services:
     restart: always
     container_name: twelvet-es
     privileged: true
-    network_mode: twelvet-network
     # 可以接受外部输入
     tty: true
     volumes:
@@ -127,7 +153,6 @@ services:
     restart: always
     container_name: twelvet-netty
     privileged: true
-    network_mode: twelvet-network
     # 可以接受外部输入
     tty: true
     volumes:
@@ -143,7 +168,6 @@ services:
     restart: always
     container_name: twelvet-mq
     privileged: true
-    network_mode: twelvet-network
     # 可以接受外部输入
     tty: true
     volumes:
@@ -159,7 +183,10 @@ services:
     restart: always
     container_name: twelvet-job
     privileged: true
-    network_mode: twelvet-network
+    depends_on:
+      - twelvet-mysql
+    links:
+      - twelvet-mysql
     # 可以接受外部输入
     tty: true
     volumes:
@@ -175,7 +202,6 @@ services:
     restart: always
     container_name: twelvet-monitor
     privileged: true
-    network_mode: twelvet-network
     # 可以接受外部输入
     tty: true
     volumes:
@@ -185,8 +211,3 @@ services:
     environment:
       - JAVA_OPTS=-Xmx256M
       - TZ=Asia/Shanghai
-
-networks:
-  twelvet-network:
-    external:
-      name: twelvet-network
