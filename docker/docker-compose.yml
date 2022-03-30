@@ -1,5 +1,25 @@
 version: '3'
 services:
+  twelvet-nacos:
+    image: nacos/nacos-server
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+      - "9849:9849"
+    restart: always
+    privileged: true
+    build:
+      context: ./nacos
+    depends_on:
+      - twelvet-mysql
+    volumes:
+      - /data/docker/nacos/conf:/home/nacos/conf
+      - /data/docker/nacos/data:/home/nacos/data
+      - /data/docker/nacos/logs:/home/nacos/logs
+    environment:
+      - MODE=standalone
+      - TZ=Asia/Shanghai
+
   twelvet-mysql:
     container_name: twelvet-mysql
     image: mysql:8.0
@@ -36,26 +56,6 @@ services:
       - ./redis/conf/redis.conf:/home/twelvet/redis/redis.conf
       - ./redis/data:/data
     command: redis-server /home/twelvet/redis/redis.conf
-
-  twelvet-nacos:
-    image: nacos/nacos-server:latest
-    ports:
-      - "8848:8848"
-      - "9848:9848"
-      - "9849:9849"
-    restart: always
-    privileged: true
-    build:
-      context: ./nacos
-    depends_on:
-      - twelvet-mysql
-    volumes:
-      - /data/docker/nacos/conf:/home/nacos/conf
-      - /data/docker/nacos/data:/home/nacos/data
-      - /data/docker/nacos/logs:/home/nacos/logs
-    environment:
-      - MODE=standalone
-      - TZ=Asia/Shanghai
 
   twelvet-nginx:
     container_name: twelvet-nginx
