@@ -87,7 +87,7 @@ services:
     volumes:
       - /data/docker/twelvet/logs/twelvet-gateway:/logs
       - /data/docker/twelvet/twelvet-gateway:/app
-    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:127.0.0.1} -DNACOS_PORT=${NACOS_PORT:8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-gateway.jar'
+    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:-127.0.0.1} -DNACOS_PORT=${NACOS_PORT:-8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-gateway.jar'
     environment:
       - JAVA_OPTS=-Xmx256M
       - TZ=Asia/Shanghai
@@ -108,7 +108,7 @@ services:
     volumes:
       - /data/docker/twelvet/logs/twelvet-auth:/logs
       - /data/docker/twelvet/twelvet-auth:/app
-    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:127.0.0.1} -DNACOS_PORT=${NACOS_PORT:8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-auth.jar'
+    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:-127.0.0.1} -DNACOS_PORT=${NACOS_PORT:-8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-auth.jar'
     environment:
       - JAVA_OPTS=-Xmx256M
       - TZ=Asia/Shanghai
@@ -129,7 +129,7 @@ services:
     volumes:
       - /data/docker/twelvet/logs/twelvet-server-system:/logs
       - /data/docker/twelvet/twelvet-server-system:/app
-    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:127.0.0.1} -DNACOS_PORT=${NACOS_PORT:8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-server-system.jar'
+    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:-127.0.0.1} -DNACOS_PORT=${NACOS_PORT:-8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-server-system.jar'
     environment:
       - JAVA_OPTS=-Xmx256M
       - TZ=Asia/Shanghai
@@ -144,7 +144,7 @@ services:
     volumes:
       - /data/docker/twelvet/logs/twelvet-server-es:/logs
       - /data/docker/twelvet/twelvet-server-es:/app
-    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:127.0.0.1} -DNACOS_PORT=${NACOS_PORT:8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-server-es.jar'
+    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:-127.0.0.1} -DNACOS_PORT=${NACOS_PORT:-8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-server-es.jar'
     environment:
       - JAVA_OPTS=-Xmx256M
       - TZ=Asia/Shanghai
@@ -159,7 +159,7 @@ services:
     volumes:
       - /data/docker/twelvet/logs/twelvet-server-netty:/logs
       - /data/docker/twelvet/twelvet-server-netty:/app
-    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:127.0.0.1} -DNACOS_PORT=${NACOS_PORT:8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-server-netty.jar'
+    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:-127.0.0.1} -DNACOS_PORT=${NACOS_PORT:-8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-server-netty.jar'
     environment:
       - JAVA_OPTS=-Xmx256M
       - TZ=Asia/Shanghai
@@ -174,7 +174,7 @@ services:
     volumes:
       - /data/docker/twelvet/logs/twelvet-server-mq:/logs
       - /data/docker/twelvet/twelvet-server-mq:/app
-    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:127.0.0.1} -DNACOS_PORT=${NACOS_PORT:8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-server-mq.jar'
+    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:-127.0.0.1} -DNACOS_PORT=${NACOS_PORT:-8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-server-mq.jar'
     environment:
       - JAVA_OPTS=-Xmx256M
       - TZ=Asia/Shanghai
@@ -193,7 +193,7 @@ services:
     volumes:
       - /data/docker/twelvet/logs/twelvet-server-job:/logs
       - /data/docker/twelvet/twelvet-server-job:/app
-    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:127.0.0.1} -DNACOS_PORT=${NACOS_PORT:8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-server-job.jar'
+    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:-127.0.0.1} -DNACOS_PORT=${NACOS_PORT:-8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-server-job.jar'
     environment:
       - JAVA_OPTS=-Xmx256M
       - TZ=Asia/Shanghai
@@ -208,7 +208,7 @@ services:
     volumes:
       - /data/docker/twelvet/logs/twelvet-visual-monitor:/logs
       - /data/docker/twelvet/twelvet-visual-monitor:/app
-    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:127.0.0.1} -DNACOS_PORT=${NACOS_PORT:8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-monitor.jar'
+    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:-127.0.0.1} -DNACOS_PORT=${NACOS_PORT:-8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-monitor.jar'
     environment:
       - JAVA_OPTS=-Xmx256M
       - TZ=Asia/Shanghai
