@@ -14,9 +14,8 @@ services:
     depends_on:
       - twelvet-mysql
     volumes:
-      - /data/docker/nacos/conf:/home/nacos/conf
-      - /data/docker/nacos/data:/home/nacos/data
-      - /data/docker/nacos/logs:/home/nacos/logs
+      - ./nacos/logs/:/home/nacos/logs
+      - ./nacos/conf/application.properties:/home/nacos/conf/application.properties
     environment:
       - MODE=standalone
       - TZ=Asia/Shanghai
