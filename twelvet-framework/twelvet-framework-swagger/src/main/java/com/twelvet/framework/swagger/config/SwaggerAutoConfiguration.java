@@ -32,6 +32,14 @@ import java.util.stream.Collectors;
  * @author twelvet
  * @WebSite www.twelvet.cn
  * @Description: Swagger配置
+ *
+ * <p>
+ * 禁用方法1：使用注解@Profile({"dev","test"})
+ * <p>
+ * 表示在开发或测试环境开启，而在生产关闭。（推荐使用） 禁用方法2：使用注解@ConditionalOnProperty(name = "swagger.enable", havingValue = "true")
+ * <p>
+ * 然后在测试配置或者开发配置中添加swagger.enable=true即可开启，生产环境不填则默认关闭Swagger.
+ * </p>
  */
 @EnableSwagger2
 @ConditionalOnProperty(name = "swagger.enabled", matchIfMissing = true)
@@ -131,6 +139,7 @@ public class SwaggerAutoConfiguration {
 
     /**
      * 重写swagger配置（解决springboot2.6.x无法使用swagger3.x）
+     *
      * @return BeanPostProcessor
      */
     @Bean
@@ -160,8 +169,7 @@ public class SwaggerAutoConfiguration {
                     Field field = ReflectionUtils.findField(bean.getClass(), "handlerMappings");
                     field.setAccessible(true);
                     return (List<RequestMappingInfoHandlerMapping>) field.get(bean);
-                }
-                catch (IllegalArgumentException | IllegalAccessException e) {
+                } catch (IllegalArgumentException | IllegalAccessException e) {
                     throw new IllegalStateException(e);
                 }
             }

@@ -22,8 +22,7 @@ services:
 
   twelvet-mysql:
     container_name: twelvet-mysql
-    image: mysql:5.7
-    privileged: true
+    image: mysql:8.0
     build:
       context: ./mysql
     ports:
@@ -43,6 +42,7 @@ services:
     environment:
       MYSQL_DATABASE: 'twelvet'
       MYSQL_ROOT_PASSWORD: 123456
+
 
   twelvet-redis:
     container_name: twelvet-redis
