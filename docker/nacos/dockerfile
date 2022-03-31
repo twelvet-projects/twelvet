@@ -5,3 +5,6 @@ MAINTAINER twelvet
 
 # 复制conf文件到路径
 COPY ./conf/application.properties /home/nacos/conf/application.properties
+
+# 等待30秒（Mysql初始化数据需要时间）
+CMD sleep 30
