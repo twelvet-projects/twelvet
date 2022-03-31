@@ -6,6 +6,15 @@ usage() {
   exit 1
 }
 
+makeSleep() {
+  while [ $var1 -gt 0 ]; do
+    echo -ne $var1
+    ((var1--))
+    sleep 1
+    echo -ne "\r   \r" #清空行
+  done
+}
+
 # 初始化
 init() {
   # copy sql
@@ -36,18 +45,12 @@ port() {
 
 # 启动程序模块
 start() {
-  echo "正在启动redis、mysql，请等待..."
-  docker-compose up -d twelvet-mysql twelvet-redis
+  docker-compose up -d twelvet-mysql twelvet-redis twelvet-nacos
 
-  echo "正在等待Mysql初始化数据30秒，请等待..."
-  sleep 30
+  echo "正在启动redis、mysql、nacos，请等待..."
+  makeSleep 15
 
-  docker-compose up -d twelvet-nacos
-
-  echo "正在启动nacos，请等待..."
-  sleep 15
-
-  echo "启动twelvet服务"
+  echo "正在启动twelvet服务"
   docker-compose up -d twelvet-gateway
 }
 
