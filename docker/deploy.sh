@@ -41,7 +41,7 @@ base() {
 
 # 启动程序模块（必须）
 server() {
-  docker-compose up -d twelvet-gateway twelvet-auth twelvet-server-system
+  docker-compose up -d twelvet-gateway
 }
 
 # 关闭所有环境/模块

@@ -78,6 +78,9 @@ services:
     image: docker.io/java:8
     restart: always
     container_name: twelvet-gateway
+    build:
+      context: ./twelvet/gateway
+      dockerfile: dockerfile
     privileged: true
     # 可以接受外部输入
     tty: true
@@ -86,15 +89,14 @@ services:
     volumes:
       - /data/docker/twelvet/logs/twelvet-gateway:/logs
       - /data/docker/twelvet/twelvet-gateway:/app
-    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:-127.0.0.1} -DNACOS_PORT=${NACOS_PORT:-8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-gateway.jar'
-    environment:
-      - JAVA_OPTS=-Xmx256M
-      - TZ=Asia/Shanghai
 
   twelvet-auth:
     image: docker.io/java:8
     restart: always
     container_name: twelvet-auth
+    build:
+      context: ./twelvet/auth
+      dockerfile: dockerfile
     privileged: true
     depends_on:
       - twelvet-redis
@@ -107,15 +109,14 @@ services:
     volumes:
       - /data/docker/twelvet/logs/twelvet-auth:/logs
       - /data/docker/twelvet/twelvet-auth:/app
-    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:-127.0.0.1} -DNACOS_PORT=${NACOS_PORT:-8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-auth.jar'
-    environment:
-      - JAVA_OPTS=-Xmx256M
-      - TZ=Asia/Shanghai
 
   twelvet-server-system:
     image: docker.io/java:8
     restart: always
     container_name: twelvet-system
+    build:
+      context: ./twelvet/server/system
+      dockerfile: dockerfile
     privileged: true
     depends_on:
       - twelvet-redis
@@ -128,60 +129,56 @@ services:
     volumes:
       - /data/docker/twelvet/logs/twelvet-server-system:/logs
       - /data/docker/twelvet/twelvet-server-system:/app
-    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:-127.0.0.1} -DNACOS_PORT=${NACOS_PORT:-8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-server-system.jar'
-    environment:
-      - JAVA_OPTS=-Xmx256M
-      - TZ=Asia/Shanghai
 
   twelvet-server-es:
     image: docker.io/java:8
     restart: always
     container_name: twelvet-es
+    build:
+      context: ./twelvet/server/es
+      dockerfile: dockerfile
     privileged: true
     # 可以接受外部输入
     tty: true
     volumes:
       - /data/docker/twelvet/logs/twelvet-server-es:/logs
       - /data/docker/twelvet/twelvet-server-es:/app
-    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:-127.0.0.1} -DNACOS_PORT=${NACOS_PORT:-8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-server-es.jar'
-    environment:
-      - JAVA_OPTS=-Xmx256M
-      - TZ=Asia/Shanghai
 
   twelvet-server-netty:
     image: docker.io/java:8
     restart: always
     container_name: twelvet-netty
+    build:
+      context: ./twelvet/server/netty
+      dockerfile: dockerfile
     privileged: true
     # 可以接受外部输入
     tty: true
     volumes:
       - /data/docker/twelvet/logs/twelvet-server-netty:/logs
       - /data/docker/twelvet/twelvet-server-netty:/app
-    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:-127.0.0.1} -DNACOS_PORT=${NACOS_PORT:-8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-server-netty.jar'
-    environment:
-      - JAVA_OPTS=-Xmx256M
-      - TZ=Asia/Shanghai
 
   twelvet-server-mq:
     image: docker.io/java:8
     restart: always
     container_name: twelvet-mq
+    build:
+      context: ./twelvet/server/mq
+      dockerfile: dockerfile
     privileged: true
     # 可以接受外部输入
     tty: true
     volumes:
       - /data/docker/twelvet/logs/twelvet-server-mq:/logs
       - /data/docker/twelvet/twelvet-server-mq:/app
-    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:-127.0.0.1} -DNACOS_PORT=${NACOS_PORT:-8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-server-mq.jar'
-    environment:
-      - JAVA_OPTS=-Xmx256M
-      - TZ=Asia/Shanghai
 
   twelvet-server-job:
     image: docker.io/java:8
     restart: always
     container_name: twelvet-job
+    build:
+      context: ./twelvet/server/job
+      dockerfile: dockerfile
     privileged: true
     depends_on:
       - twelvet-mysql
@@ -192,22 +189,35 @@ services:
     volumes:
       - /data/docker/twelvet/logs/twelvet-server-job:/logs
       - /data/docker/twelvet/twelvet-server-job:/app
-    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:-127.0.0.1} -DNACOS_PORT=${NACOS_PORT:-8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-server-job.jar'
-    environment:
-      - JAVA_OPTS=-Xmx256M
-      - TZ=Asia/Shanghai
+
+  twelvet-server-dfs:
+    image: docker.io/java:8
+    restart: always
+    container_name: twelvet-dfs
+    build:
+      context: ./twelvet/server/dfs
+      dockerfile: dockerfile
+    privileged: true
+    depends_on:
+      - twelvet-mysql
+    links:
+      - twelvet-mysql
+    # 可以接受外部输入
+    tty: true
+    volumes:
+      - /data/docker/twelvet/logs/twelvet-server-fds:/logs
+      - /data/docker/twelvet/twelvet-server-fds:/app
 
   twelvet-visual-monitor:
     image: docker.io/java:8
     restart: always
     container_name: twelvet-monitor
+    build:
+      context: ./twelvet/visual/monitor
+      dockerfile: dockerfile
     privileged: true
     # 可以接受外部输入
     tty: true
     volumes:
       - /data/docker/twelvet/logs/twelvet-visual-monitor:/logs
       - /data/docker/twelvet/twelvet-visual-monitor:/app
-    entrypoint: 'java -DNACOS_HOST=${NACOS_HOST:-127.0.0.1} -DNACOS_PORT=${NACOS_PORT:-8848} -Djava.security.egd=file:/dev/.urandom -jar -Xms128m -Xmx256m /app/twelvet-monitor.jar'
-    environment:
-      - JAVA_OPTS=-Xmx256M
-      - TZ=Asia/Shanghai
