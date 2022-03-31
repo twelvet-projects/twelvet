@@ -2,7 +2,7 @@
 
 # 使用说明，用来提示输入参数
 usage() {
-  echo "Usage: sh 执行脚本.sh [init|port|base|server|stop|rm]"
+  echo "Usage: sh 执行脚本.sh [init|port|start|stop|rm]"
   exit 1
 }
 
@@ -34,14 +34,14 @@ port() {
   service firewalld restart
 }
 
-# 启动基础环境（必须）
-base() {
-  docker-compose up -d twelvet-mysql twelvet-redis twelvet-nacos
-}
+# 启动程序模块
+start() {
+  docker-compose up -d twelvet-mysql twelvet-redis
 
-# 启动程序模块（必须）
-server() {
-  docker-compose up -d twelvet-gateway twelvet-auth twelvet-server-system
+  echo "正在等待Mysql初始化数据60秒，请等待..."
+  sleep 60
+
+  docker-compose up -d twelvet-nacos twelvet-gateway
 }
 
 # 关闭所有环境/模块
@@ -62,11 +62,8 @@ case "$1" in
 "port")
   port
   ;;
-"base")
-  base
-  ;;
-"server")
-  server
+"start")
+  start
   ;;
 "stop")
   stop
