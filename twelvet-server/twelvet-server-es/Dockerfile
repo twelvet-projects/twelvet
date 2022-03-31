@@ -8,7 +8,7 @@ ADD twelvet-server-es.jar twelvet-server-es.jar
 # 端口号
 EXPOSE 8086
 # 启动容器时执行的命令
-ENTRYPOINT ["java", "-DNACOS_HOST=http://localhost", "-DNACOS_PORT=8848", "-jar","/twelvet-server-es.jar"]
+ENTRYPOINT ["java", "-DNACOS_HOST=127.0.0.1", "-DNACOS_PORT=8848", "-jar","/twelvet-server-es.jar"]
 CMD ["java", "-Dfile.encoding=UTF-8","-Duser.timezone=GMT+8"]
 RUN apk add -U tzdata && \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime

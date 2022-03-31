@@ -8,7 +8,7 @@ ADD twelvet-visual-monitor.jar twelvet-visual-monitor.jar
 # 端口号
 EXPOSE 8100
 # 启动容器时执行的命令
-ENTRYPOINT ["java", "-DNACOS_HOST=http://localhost", "-DNACOS_PORT=8848", "-jar","/twelvet-visual-monitor.jar"]
+ENTRYPOINT ["java", "-DNACOS_HOST=127.0.0.1", "-DNACOS_PORT=8848", "-jar","/twelvet-visual-monitor.jar"]
 CMD ["java", "-Dfile.encoding=UTF-8","-Duser.timezone=GMT+8"]
 RUN apk add -U tzdata && \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
