@@ -22,7 +22,7 @@ services:
 
   twelvet-mysql:
     container_name: twelvet-mysql
-    image: mysql:8.0
+    image: mysql:5.7
     build:
       context: ./mysql
     ports:
