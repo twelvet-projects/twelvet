@@ -76,6 +76,9 @@ services:
 
   twelvet-gateway:
     container_name: twelvet-gateway
+    environment:
+      - MODE=standalone
+      - TZ=Asia/Shanghai
     build:
       context: ./twelvet/gateway
       dockerfile: dockerfile
@@ -84,6 +87,9 @@ services:
 
   twelvet-auth:
     container_name: twelvet-auth
+    environment:
+      - MODE=standalone
+      - TZ=Asia/Shanghai
     build:
       context: ./twelvet/auth
       dockerfile: dockerfile
@@ -96,6 +102,9 @@ services:
 
   twelvet-server-system:
     container_name: twelvet-system
+    environment:
+      - MODE=standalone
+      - TZ=Asia/Shanghai
     build:
       context: ./twelvet/server/system
       dockerfile: dockerfile
@@ -108,24 +117,36 @@ services:
 
   twelvet-server-es:
     container_name: twelvet-es
+    environment:
+      - MODE=standalone
+      - TZ=Asia/Shanghai
     build:
       context: ./twelvet/server/es
       dockerfile: dockerfile
 
   twelvet-server-netty:
     container_name: twelvet-netty
+    environment:
+      - MODE=standalone
+      - TZ=Asia/Shanghai
     build:
       context: ./twelvet/server/netty
       dockerfile: dockerfile
 
   twelvet-server-mq:
     container_name: twelvet-mq
+    environment:
+      - MODE=standalone
+      - TZ=Asia/Shanghai
     build:
       context: ./twelvet/server/mq
       dockerfile: dockerfile
 
   twelvet-server-job:
     container_name: twelvet-job
+    environment:
+      - MODE=standalone
+      - TZ=Asia/Shanghai
     build:
       context: ./twelvet/server/job
       dockerfile: dockerfile
@@ -136,6 +157,9 @@ services:
 
   twelvet-server-dfs:
     container_name: twelvet-dfs
+    environment:
+      - MODE=standalone
+      - TZ=Asia/Shanghai
     build:
       context: ./twelvet/server/dfs
       dockerfile: dockerfile
@@ -146,6 +170,9 @@ services:
 
   twelvet-visual-monitor:
     container_name: twelvet-monitor
+    environment:
+      - MODE=standalone
+      - TZ=Asia/Shanghai
     build:
       context: ./twelvet/visual/monitor
       dockerfile: dockerfile
