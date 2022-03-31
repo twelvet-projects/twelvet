@@ -36,12 +36,19 @@ port() {
 
 # 启动程序模块
 start() {
+  echo "正在启动redis、mysql，请等待..."
   docker-compose up -d twelvet-mysql twelvet-redis
 
-  echo "正在等待Mysql初始化数据60秒，请等待..."
-  sleep 60
+  echo "正在等待Mysql初始化数据30秒，请等待..."
+  sleep 30
 
-  docker-compose up -d twelvet-nacos twelvet-gateway
+  docker-compose up -d twelvet-nacos
+
+  echo "正在启动nacos，请等待..."
+  sleep 15
+
+  echo "启动twelvet服务"
+  docker-compose up -d twelvet-gateway
 }
 
 # 关闭所有环境/模块
