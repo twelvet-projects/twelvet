@@ -43,6 +43,7 @@ import java.util.stream.Collectors;
  */
 @EnableSwagger2
 @ConditionalOnProperty(name = "swagger.enabled", matchIfMissing = true)
+@ConditionalOnMissingClass("org.springframework.cloud.gateway.config.GatewayAutoConfiguration")
 public class SwaggerAutoConfiguration {
 
     /**
