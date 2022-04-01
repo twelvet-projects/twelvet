@@ -41,7 +41,7 @@
         <java.version>1.8</java.version>
         <spring.maven.plugin.version>2.3.0.RELEASE</spring.maven.plugin.version>
 
-        <spring-boot-dependencies.version>2.6.4</spring-boot-dependencies.version>
+        <spring-boot-dependencies.version>2.6.6</spring-boot-dependencies.version>
         <spring-cloud.version>2021.0.1</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
         <caffeine.version>3.0.5</caffeine.version>
