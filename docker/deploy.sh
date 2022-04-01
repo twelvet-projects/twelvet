@@ -29,7 +29,7 @@ init() {
   git clone https://gitee.com/twelvet/twelvet-ui-react twelvet-ui
 
   # 执行打包
-  cd ./twelvet-ui && npm run build
+  cd ./twelvet-ui && npm install && npm run build
 
   # 移动打包文件
   cp ./dist/* ../nginx/html/dist
