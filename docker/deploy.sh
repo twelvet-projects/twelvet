@@ -54,7 +54,7 @@ nginx() {
   cd ./twelvet-ui && yarn install && yarn run build
 
   # 移动打包文件
-  cp ./dist/* ../nginx/html/
+  \cp -rf ./dist/* ../nginx/html/
 
   docker-compose up -d twelvet-nginx
 }
