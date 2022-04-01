@@ -43,7 +43,6 @@ services:
       MYSQL_DATABASE: 'twelvet'
       MYSQL_ROOT_PASSWORD: 123456
 
-
   twelvet-redis:
     container_name: twelvet-redis
     image: redis
