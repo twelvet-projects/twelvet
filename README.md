@@ -101,7 +101,8 @@ com.twelvet
 演示地址：[http://cloud.twelvet.cn](http://cloud.twelvet.cn)
 
 ## 支持Linux一件Docker启动(最小化启动服务)
-需要自行安装maven、docker
+内存 > 8
+需要自行安装maven、docker、docker-compose、node
 ```shell
 # mvn
 mvn clean && mvn install
