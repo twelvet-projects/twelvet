@@ -107,12 +107,15 @@ com.twelvet
 mvn clean && mvn install
 # 进入脚本目录
 cd ./docker
-# 可执行
+# 可执行权限
 chmod 751 deploy.sh
-# 创建网络组
-docker network create twelvet-network
 # 执行启动（按需执行参数，[init|port|base|server|stop|rm]）
-./deploy.sh
+# 初始化
+./deploy.sh init
+# 基础服务
+./deploy.sh base
+# 启动twelvet
+./deploy.sh server
 ```
 
 

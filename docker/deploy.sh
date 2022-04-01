@@ -23,6 +23,14 @@ init() {
   echo "begin copy twelvet-server-system "
   cp ../twelvet-server/twelvet-server-system/target/twelvet-server-system.jar ./twelvet/server/system/jar
 
+  # 获取前端UI
+  git clone https://gitee.com/twelvet/twelvet-ui-react twelvet-ui
+
+  # 执行打包
+  cd ./twelvet-ui && npm run build
+
+  # 移动打包文件
+  cp ./dist/* ../nginx/html/dist
 }
 
 # 开启所需端口
@@ -41,7 +49,7 @@ base() {
 
 # 启动程序模块（必须）
 server() {
-  docker-compose up -d twelvet-gateway twelvet-auth twelvet-server-system
+  docker-compose up -d twelvet-gateway twelvet-auth twelvet-server-system twelvet-nginx
 }
 
 # 关闭所有环境/模块
