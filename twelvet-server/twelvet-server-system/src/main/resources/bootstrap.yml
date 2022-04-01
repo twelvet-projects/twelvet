@@ -14,7 +14,7 @@ spring:
         # 解决获取IP为内网，一般微服务采用内网安全性、可用性高
         # ip: 127.0.0.1
         # 服务注册地址
-        server-addr: ${NACOS_HOST:127.0.0.1}:${NACOS_PORT:8848}
+        server-addr: ${NACOS_HOST:twelvet-nacos}:${NACOS_PORT:8848}
         namespace: @nacos.namespace@
       config:
         # 配置中心地址
