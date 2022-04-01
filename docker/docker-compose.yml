@@ -59,6 +59,8 @@ services:
   twelvet-nginx:
     container_name: twelvet-nginx
     image: nginx
+    environment:
+      - TZ=Asia/Shanghai
     build:
       context: ./nginx
     ports:

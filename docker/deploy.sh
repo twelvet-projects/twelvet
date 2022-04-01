@@ -45,17 +45,21 @@ server() {
 
 # 启动nginx（必须）
 nginx() {
-  rm -rf ./twelvet-ui
+  if [ ! -d "./twelvet-ui" ];then
+    rm -rf ./twelvet-ui
 
-  # 获取前端UI
-  git clone https://gitee.com/twelvet/twelvet-ui-react twelvet-ui
+    # 获取前端UI
+    git clone https://gitee.com/twelvet/twelvet-ui-react twelvet-ui
 
-  # 执行打包
-  cd ./twelvet-ui && yarn install && yarn run build
+    # 执行打包
+    cd ./twelvet-ui && yarn install && yarn run build
 
-  # 移动打包文件
-  \cp -rf ./dist/* ../nginx/html/
-
+    # 移动打包文件
+    \cp -rf ./dist/* ../nginx/html/
+  else
+    echo "前端已初始化"
+  fi
+  
   docker-compose up -d twelvet-nginx
 }
 
