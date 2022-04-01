@@ -32,7 +32,7 @@ init() {
   cd ./twelvet-ui && yarn install && yarn run build
 
   # 移动打包文件
-  cp ./dist/* ../nginx/html/dist
+  cp ./dist/* ../nginx/html/
 }
 
 # 开启所需端口
