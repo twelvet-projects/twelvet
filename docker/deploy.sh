@@ -23,6 +23,8 @@ init() {
   echo "begin copy twelvet-server-system "
   cp ../twelvet-server/twelvet-server-system/target/twelvet-server-system.jar ./twelvet/server/system/jar
 
+  rm -rf ./twelvet-ui
+
   # 获取前端UI
   git clone https://gitee.com/twelvet/twelvet-ui-react twelvet-ui
 
