@@ -117,6 +117,8 @@ chmod 751 deploy.sh
 ./deploy.sh base
 # 启动twelvet
 ./deploy.sh server
+# 启动UI
+./deploy.sh nginx
 ```
 
 
