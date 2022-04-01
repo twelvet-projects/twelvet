@@ -2,7 +2,7 @@
 
 # 使用说明，用来提示输入参数
 usage() {
-  echo "Usage: sh 执行脚本.sh [init|port|base|server|stop|rm]"
+  echo "Usage: sh 执行脚本.sh [init|port|base|server|nginx|stop|rm]"
   exit 1
 }
 
@@ -22,17 +22,6 @@ init() {
 
   echo "begin copy twelvet-server-system "
   cp ../twelvet-server/twelvet-server-system/target/twelvet-server-system.jar ./twelvet/server/system/jar
-
-  rm -rf ./twelvet-ui
-
-  # 获取前端UI
-  git clone https://gitee.com/twelvet/twelvet-ui-react twelvet-ui
-
-  # 执行打包
-  cd ./twelvet-ui && yarn install && yarn run build
-
-  # 移动打包文件
-  cp ./dist/* ../nginx/html/
 }
 
 # 开启所需端口
@@ -51,7 +40,23 @@ base() {
 
 # 启动程序模块（必须）
 server() {
-  docker-compose up -d twelvet-gateway twelvet-auth twelvet-server-system twelvet-nginx
+  docker-compose up -d twelvet-gateway twelvet-auth twelvet-server-system
+}
+
+# 启动nginx（必须）
+nginx() {
+  rm -rf ./twelvet-ui
+
+  # 获取前端UI
+  git clone https://gitee.com/twelvet/twelvet-ui-react twelvet-ui
+
+  # 执行打包
+  cd ./twelvet-ui && yarn install && yarn run build
+
+  # 移动打包文件
+  cp ./dist/* ../nginx/html/
+
+  docker-compose up -d twelvet-nginx
 }
 
 # 关闭所有环境/模块
@@ -77,6 +82,9 @@ case "$1" in
   ;;
 "server")
   server
+  ;;
+"nginx")
+  nginx
   ;;
 "stop")
   stop
