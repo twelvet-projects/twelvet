@@ -15,11 +15,7 @@ spring:
         # 服务注册地址
         server-addr: ${NACOS_HOST:twelvet-nacos}:${NACOS_PORT:8848}
         namespace: @nacos.namespace@
-        username: nacos
-        password: nacos
       config:
-        username: nacos
-        password: nacos
         # 配置中心地址
         server-addr: ${spring.cloud.nacos.discovery.server-addr}
         # 配置文件格式
