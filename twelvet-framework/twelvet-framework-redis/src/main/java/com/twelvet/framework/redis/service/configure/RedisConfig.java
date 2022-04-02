@@ -1,3 +1,4 @@
+/*
 package com.twelvet.framework.redis.service.configure;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -23,22 +24,26 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.time.Duration;
 
 
+*/
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
  * @Description: redis使用jackson序列化
- */
+ *//*
+
 @SuppressWarnings("all")
 @Configuration
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
 
-    /**
+    */
+/**
      * 配置RedisTemplate序列化
      *
      * @param connectionFactory RedisConnectionFactory
      * @return RedisTemplate<Object, Object>
-     */
+     *//*
+
     @Bean
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<Object, Object> template = new RedisTemplate<Object, Object>();
@@ -63,13 +68,15 @@ public class RedisConfig extends CachingConfigurerSupport {
         return template;
     }
 
-    /**
+    */
+/**
      * 修改 @Cacheable 默认序列化方式 使用Redis配置的序列化
      * 解决 @Cacheable 序列化失败 而 RedisService可以成功 问题
      * @param objectMapper ObjectMapper
      * @param redisConnectionFactory RedisConnectionFactory
      * @return CacheManager
-     */
+     *//*
+
     @Bean
     public RedisCacheManager redisCacheManager(RedisTemplate redisTemplate) {
         RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisTemplate.getConnectionFactory());
@@ -87,3 +94,4 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
 
 }
+*/

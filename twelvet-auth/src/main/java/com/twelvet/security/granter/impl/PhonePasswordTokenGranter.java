@@ -1,7 +1,7 @@
 package com.twelvet.security.granter.impl;
 
+import com.twelvet.framework.security.service.impl.TwTUserDetailsServiceImpl;
 import com.twelvet.security.granter.AbstractCustomTokenGranter;
-import com.twelvet.security.service.impl.TwTUserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
