@@ -4,16 +4,17 @@ import com.twelvet.api.system.domain.SysDictData;
 import com.twelvet.api.system.domain.SysDictType;
 import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.core.exception.TWTException;
+import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.server.system.mapper.SysDictDataMapper;
 import com.twelvet.server.system.mapper.SysDictTypeMapper;
 import com.twelvet.server.system.service.ISysDictTypeService;
 import com.twelvet.server.system.utils.DictUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
 /**
@@ -29,18 +30,6 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 
     @Autowired
     private SysDictDataMapper dictDataMapper;
-
-    /**
-     * 项目启动时，初始化字典到缓存
-     */
-    @PostConstruct
-    public void init() {
-        List<SysDictType> dictTypeList = dictTypeMapper.selectDictTypeAll();
-        for (SysDictType dictType : dictTypeList) {
-            List<SysDictData> dictDatas = dictDataMapper.selectDictDataByType(dictType.getDictType());
-            DictUtils.setDictCache(dictType.getDictType(), dictDatas);
-        }
-    }
 
     /**
      * 根据条件分页查询字典类型
@@ -70,17 +59,9 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
      * @return 字典数据集合信息
      */
     @Override
+    @Cacheable(value = CacheConstants.SYS_DICT_KEY, key = "#dictType", unless = "#result == null")
     public List<SysDictData> selectDictDataByType(String dictType) {
-        List<SysDictData> dictDatas = DictUtils.getDictCache(dictType);
-        if (StringUtils.isNotNull(dictDatas)) {
-            return dictDatas;
-        }
-        dictDatas = dictDataMapper.selectDictDataByType(dictType);
-        if (StringUtils.isNotNull(dictDatas)) {
-            DictUtils.setDictCache(dictType, dictDatas);
-            return dictDatas;
-        }
-        return null;
+        return dictDataMapper.selectDictDataByType(dictType);
     }
 
     /**

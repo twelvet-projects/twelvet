@@ -1,6 +1,7 @@
 package com.twelvet.framework.security.service;
 
-import com.twelvet.framework.security.constans.CacheConstants;
+
+import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.security.constans.SecurityConstants;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.oauth2.provider.ClientDetails;

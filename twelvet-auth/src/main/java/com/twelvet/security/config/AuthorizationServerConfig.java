@@ -1,6 +1,6 @@
 package com.twelvet.security.config;
 
-import com.twelvet.framework.security.constans.CacheConstants;
+import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.security.constans.SecurityConstants;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.service.RedisClientDetailsService;

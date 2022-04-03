@@ -1,4 +1,4 @@
-package com.twelvet.framework.security.constans;
+package com.twelvet.framework.redis.service.constants;
 
 
 /**
@@ -16,4 +16,9 @@ public class CacheConstants {
      * oauth 客户端信息
      */
     public static final String CLIENT_DETAILS_KEY = "oauth:client:details";
+
+    /**
+     * 字典管理（默认缓存十分钟） cache key
+     */
+    public static final String SYS_DICT_KEY = "sys_dict";
 }

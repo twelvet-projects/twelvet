@@ -27,6 +27,11 @@
             <artifactId>twelvet-api-system</artifactId>
         </dependency>
 
+        <!--twelvet Redis-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-redis</artifactId>
+        </dependency>
 
     </dependencies>
 

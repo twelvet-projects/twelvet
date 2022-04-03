@@ -1,8 +1,7 @@
 package com.twelvet.server.system.service.impl;
 
 import com.twelvet.api.system.domain.SysClientDetails;
-import com.twelvet.framework.redis.service.annotation.TwSynchronized;
-import com.twelvet.framework.security.constans.CacheConstants;
+import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.server.system.mapper.SysClientDetailsMapper;
 import com.twelvet.server.system.service.ISysClientDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author twelvet
