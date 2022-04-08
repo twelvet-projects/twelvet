@@ -28,5 +28,3 @@ spring:
         # 共享配置
         shared-configs:
           - data-id: twelvet-app-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
-  redis:
-    database: 1
