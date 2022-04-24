@@ -1,4 +1,4 @@
-package com.twelvet.server.netty.service.impl;
+package com.twelvet.server.es.service.impl;
 
 import com.twelvet.api.es.constant.EsConstants;
 import com.twelvet.api.es.domain.EsCommon;
@@ -7,7 +7,7 @@ import com.twelvet.api.es.domain.vo.EsCommonVO;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.framework.utils.StringUtils;
-import com.twelvet.server.netty.service.EsCommonService;
+import com.twelvet.server.es.service.EsCommonService;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;

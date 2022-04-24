@@ -1,4 +1,4 @@
-package com.twelvet.server.netty.service;
+package com.twelvet.server.es.service;
 
 import com.twelvet.api.es.domain.EsCommon;
 import com.twelvet.api.es.domain.dto.EsCommonDTO;

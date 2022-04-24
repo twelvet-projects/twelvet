@@ -1,8 +1,8 @@
-package com.twelvet.server.netty.controller;
+package com.twelvet.server.es.controller;
 
 import com.twelvet.api.es.domain.dto.EsCommonDTO;
 import com.twelvet.framework.core.application.domain.AjaxResult;
-import com.twelvet.server.netty.service.EsCommonService;
+import com.twelvet.server.es.service.EsCommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
