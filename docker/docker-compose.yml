@@ -83,9 +83,6 @@ services:
     build:
       context: ./twelvet/gateway
       dockerfile: dockerfile
-    # 按需禁止端口的暴露，使用nginx反射出去
-    ports:
-      - 8080:8080
 
   twelvet-auth:
     container_name: twelvet-auth
