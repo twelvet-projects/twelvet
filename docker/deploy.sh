@@ -49,7 +49,7 @@ nginx() {
     rm -rf ./twelvet-ui
 
     # 获取前端UI
-    git clone https://gitee.com/twelvet/twelvet-ui-react twelvet-ui
+    git clone https://gitee.com/twelvet/twelvet-ui twelvet-ui
 
     # 执行打包
     cd ./twelvet-ui && yarn install && yarn run build
