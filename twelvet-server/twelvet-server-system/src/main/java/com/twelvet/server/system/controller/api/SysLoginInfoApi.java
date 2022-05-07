@@ -30,6 +30,7 @@ public class SysLoginInfoApi extends TWTController {
     @AuthIgnore
     @PostMapping
     public void insertLog(@RequestBody SysLoginInfo sysLoginInfo) {
+        
         iSysLoginInfoService.insertLoginInfo(sysLoginInfo);
     }
 
