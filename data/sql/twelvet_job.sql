@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS QRTZ_BLOB_TRIGGERS;
 DROP TABLE IF EXISTS QRTZ_TRIGGERS;
 DROP TABLE IF EXISTS QRTZ_JOB_DETAILS;
 DROP TABLE IF EXISTS QRTZ_CALENDARS;
+DROP TABLE IF EXISTS `sys_job`;
 
 -- ----------------------------
 -- 1、存储每一个已配置的 jobDetail 的详细信息
@@ -184,5 +185,28 @@ create table QRTZ_SIMPROP_TRIGGERS
     primary key (sched_name, trigger_name, trigger_group),
     foreign key (sched_name, trigger_name, trigger_group) references QRTZ_TRIGGERS (sched_name, trigger_name, trigger_group)
 ) engine=innodb comment = '同步机制的行锁表';
+
+CREATE TABLE `sys_job`  (
+    `job_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '任务ID',
+    `job_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '任务名称',
+    `job_group` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'DEFAULT' COMMENT '任务组名',
+    `invoke_target` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '调用目标字符串',
+    `cron_expression` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT 'cron执行表达式',
+    `misfire_policy` tinyint(1) NULL DEFAULT NULL COMMENT '计划执行错误策略（1立即执行 2执行一次 3放弃执行）',
+    `concurrent` tinyint(1) NULL DEFAULT NULL COMMENT '是否并发执行（1允许 0禁止）',
+    `status` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '状态（1正常 0暂停）',
+    `create_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '创建者',
+    `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+    `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '更新者',
+    `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+    `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '备注信息',
+    PRIMARY KEY (`job_id`, `job_name`, `job_group`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 107 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '定时任务调度表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_job
+-- ----------------------------
+INSERT INTO `sys_job` VALUES (1, '系统默认（无参）', 'DEFAULT', 'twtTask.twtNoParams', '0 */15 * * * ?', 3, 1, '0', 'admin', '2018-03-16 11:33:00', 'admin', '2021-08-06 23:02:47', '');
+INSERT INTO `sys_job` VALUES (106, '系统默认（有参）', 'DEFAULT', 'twtTask.twtParams(\'twt\')', '0/5 * * * * ?', 1, NULL, '0', 'admin', '2020-12-10 23:37:38', 'admin', '2021-08-06 23:02:45', '');
 
 commit;
