@@ -9,7 +9,6 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 
 ######################################################################
-# IDE
 
 ### STS ###
 .apt_generated
