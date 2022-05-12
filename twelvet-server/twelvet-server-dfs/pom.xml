@@ -14,6 +14,12 @@
 
     <dependencies>
 
+        <!-- Minio -->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+        </dependency>
+
         <!-- FastDFS -->
         <dependency>
             <groupId>com.github.tobato</groupId>
