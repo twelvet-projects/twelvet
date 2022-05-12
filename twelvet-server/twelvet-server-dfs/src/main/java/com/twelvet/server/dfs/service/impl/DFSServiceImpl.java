@@ -11,6 +11,7 @@ import com.twelvet.framework.utils.file.FileUtils;
 import com.twelvet.framework.utils.http.ServletUtils;
 import com.twelvet.server.dfs.mapper.DFSMapper;
 import com.twelvet.server.dfs.service.IDFSService;
+import io.minio.MinioClient;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,9 @@ public class DFSServiceImpl implements IDFSService {
 
     @Autowired
     private FastFileStorageClient storageClient;
+
+    @Autowired
+    private MinioClient minioClient;
 
     /**
      * FastDfs多文件文件上传接口
