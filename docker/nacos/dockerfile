@@ -1,5 +1,5 @@
 # 基础镜像
-FROM nacos/nacos-server
+FROM nacos/nacos-server:2.0.3
 # author
 MAINTAINER twelvet
 

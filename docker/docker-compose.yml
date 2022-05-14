@@ -2,7 +2,7 @@ version: '3'
 services:
   twelvet-nacos:
     container_name: twelvet-nacos
-    image: nacos/nacos-server
+    image: nacos/nacos-server:2.0.3
     ports:
       - "8848:8848"
       - "9848:9848"
