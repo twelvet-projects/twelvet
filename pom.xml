@@ -58,7 +58,6 @@
         <velocity.version>1.7</velocity.version>
         <knife4j.version>3.0.3</knife4j.version>
         <hutool.version>5.7.5</hutool.version>
-        <rabbitmq.version>2.5.4</rabbitmq.version>
         <rocketmq.version>2.2.2</rocketmq.version>
         <qrcode.version>3.3.1</qrcode.version>
         <redisson.version>3.16.8</redisson.version>
@@ -183,13 +182,6 @@
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
-            </dependency>
-
-            <!--rabbitmq-->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-amqp</artifactId>
-                <version>${rabbitmq.version}</version>
             </dependency>
 
             <!--rocketmq-->

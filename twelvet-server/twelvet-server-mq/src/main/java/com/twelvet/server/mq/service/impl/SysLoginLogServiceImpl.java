@@ -1,7 +1,7 @@
 package com.twelvet.server.mq.service.impl;
 
-import com.twelvet.api.mq.constant.RabbitMQExchangeConstants;
-import com.twelvet.api.mq.constant.RabbitMQRoutingKeyConstants;
+import com.twelvet.api.mq.constant.MQExchangeConstants;
+import com.twelvet.api.mq.constant.MQRoutingKeyConstants;
 import com.twelvet.api.system.domain.SysLoginInfo;
 import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.server.mq.service.SysLoginLogService;
@@ -29,9 +29,9 @@ public class SysLoginLogServiceImpl implements SysLoginLogService {
     public void sendSysLoginLog(SysLoginInfo sysLoginInfo) {
         rabbitTemplate.convertAndSend(
                 // 交换机名称
-                RabbitMQExchangeConstants.DIRECT_LOG_LOGIN,
+                MQExchangeConstants.DIRECT_LOG_LOGIN,
                 // 路由
-                RabbitMQRoutingKeyConstants.QUEUE_LOG_LOGIN,
+                MQRoutingKeyConstants.QUEUE_LOG_LOGIN,
                 JacksonUtils.toJson(sysLoginInfo)
         );
     }

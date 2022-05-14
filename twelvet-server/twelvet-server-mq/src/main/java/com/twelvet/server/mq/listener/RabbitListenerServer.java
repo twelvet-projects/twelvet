@@ -1,6 +1,6 @@
 package com.twelvet.server.mq.listener;
 
-import com.twelvet.api.mq.constant.RabbitMQRoutingKeyConstants;
+import com.twelvet.api.mq.constant.MQRoutingKeyConstants;
 import com.twelvet.api.system.domain.SysLoginInfo;
 import com.twelvet.api.system.domain.SysOperationLog;
 import com.twelvet.api.system.feign.RemoteLogService;
@@ -31,7 +31,7 @@ public class RabbitListenerServer {
      * @param message Message
      */
     @RabbitListener(queues = {
-            RabbitMQRoutingKeyConstants.QUEUE_LOG_LOGIN
+            MQRoutingKeyConstants.QUEUE_LOG_LOGIN
     })
     public void insertLoginLogMessage(Message message) {
         log.info("收到系统登录MQ：{}", message);
@@ -46,7 +46,7 @@ public class RabbitListenerServer {
      * @param message Message
      */
     @RabbitListener(queues = {
-            RabbitMQRoutingKeyConstants.QUEUE_LOG_OPERATION
+            MQRoutingKeyConstants.QUEUE_LOG_OPERATION
     })
     public void insertOperationLogMessage(Message message) {
         log.info("收到系统操作MQ：{}", message);

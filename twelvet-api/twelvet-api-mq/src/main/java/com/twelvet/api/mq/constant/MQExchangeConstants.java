@@ -5,7 +5,7 @@ package com.twelvet.api.mq.constant;
  * @WebSite www.twelvet.cn
  * @Description: 交换机常量
  */
-public class RabbitMQExchangeConstants {
+public class MQExchangeConstants {
 
     /**
      * 系统登录日志队列

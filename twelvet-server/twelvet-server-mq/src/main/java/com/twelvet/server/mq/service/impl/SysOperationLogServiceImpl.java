@@ -1,6 +1,6 @@
 package com.twelvet.server.mq.service.impl;
 
-import com.twelvet.api.mq.constant.RabbitMQRoutingKeyConstants;
+import com.twelvet.api.mq.constant.MQRoutingKeyConstants;
 import com.twelvet.api.system.domain.SysOperationLog;
 import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.server.mq.service.SysOperationLogService;
@@ -27,7 +27,7 @@ public class SysOperationLogServiceImpl implements SysOperationLogService {
     @Override
     public void sendSysOperationLog(SysOperationLog sysOperationLog) {
         rabbitTemplate.convertAndSend(
-                RabbitMQRoutingKeyConstants.QUEUE_LOG_OPERATION,
+                MQRoutingKeyConstants.QUEUE_LOG_OPERATION,
                 JacksonUtils.toJson(sysOperationLog)
         );
     }
