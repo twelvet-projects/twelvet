@@ -28,7 +28,7 @@ public class DFSUploadUtils {
     /**
      * 默认的文件名最大长度 100
      */
-    private static int DEFAULT_FILE_NAME_LENGTH = 100;
+    public static final int DEFAULT_FILE_NAME_LENGTH = 100;
 
     /**
      * 根据文件路径上传
@@ -106,7 +106,7 @@ public class DFSUploadUtils {
      * @throws FileSizeLimitExceededException 如果超出最大大小
      * @throws InvalidExtensionException
      */
-    public static void assertAllowed(MultipartFile file, String[] allowedExtension)
+    public static final void assertAllowed(MultipartFile file, String[] allowedExtension)
             throws FileSizeLimitExceededException, InvalidExtensionException {
         long size = file.getSize();
         if (DEFAULT_MAX_SIZE != -1 && size > DEFAULT_MAX_SIZE) {
