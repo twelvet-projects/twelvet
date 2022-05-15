@@ -1,3 +1,4 @@
+/*
 package com.twelvet.server.mq.listener;
 
 import com.twelvet.api.mq.constant.MQRoutingKeyConstants;
@@ -12,11 +13,13 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+*/
 /**
  * @author twelvet
  * <p>
  * 监听消息
- */
+ *//*
+
 @Component
 public class RabbitListenerServer {
 
@@ -25,11 +28,13 @@ public class RabbitListenerServer {
     @Autowired
     private RemoteLogService remoteLogService;
 
-    /**
+    */
+/**
      * 监听系统登录日志消息
      *
      * @param message Message
-     */
+     *//*
+
     @RabbitListener(queues = {
             MQRoutingKeyConstants.QUEUE_LOG_LOGIN
     })
@@ -40,11 +45,13 @@ public class RabbitListenerServer {
         remoteLogService.saveLoginInfo(sysLoginInfo);
     }
 
-    /**
+    */
+/**
      * 监听系统操作日志消息
      *
      * @param message Message
-     */
+     *//*
+
     @RabbitListener(queues = {
             MQRoutingKeyConstants.QUEUE_LOG_OPERATION
     })
@@ -56,3 +63,4 @@ public class RabbitListenerServer {
     }
 
 }
+*/
