@@ -19,18 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/system/loginInfo")
 public class SysLoginInfoApi {
 
-    @Autowired
+    /*@Autowired
     private SysLoginLogService sysLoginLogService;
 
-    /**
+    *//**
      * 新增登录日志log MQ
      * @return R<Boolean>
-     */
+     *//*
     @AuthIgnore
     @PostMapping
     public R<Boolean> sendSysLoginLog(@RequestBody SysLoginInfo sysLoginInfo) {
         sysLoginLogService.sendSysLoginLog(sysLoginInfo);
         return R.ok(true);
-    }
+    }*/
 
 }
