@@ -1,20 +1,20 @@
 package com.twelvet.server.dfs.service.impl;
 
-import com.github.pagehelper.util.StringUtil;
+import cn.hutool.extra.spring.SpringUtil;
+import com.twelvet.framework.utils.SpringUtils;
 import com.twelvet.server.dfs.config.MinioConfig;
 import com.twelvet.server.dfs.exception.InvalidExtensionException;
 import com.twelvet.server.dfs.service.ISysFileService;
-import cn.hutool.extra.spring.SpringUtil;
 import io.minio.*;
 import io.minio.errors.*;
 import io.minio.http.Method;
 import io.minio.messages.Item;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeUnit;
@@ -41,17 +41,18 @@ public class MinioSysFileServiceImpl implements ISysFileService {
      */
     @Override
     public String uploadFile(MultipartFile file) throws InvalidExtensionException, ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
-       return this.uploadFile(file,null);
+        return this.uploadFile(file, null);
     }
 
     @Override
     public String uploadFile(MultipartFile file, String modules) throws InvalidExtensionException, ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
-        validateModule(file,modules);
-        String fileName = StringUtils.defaultString(modules,"defult") + "/" +  extractFileName(file);;
+        validateModule(file, modules);
+        String fileName = StringUtils.defaultString(modules, "defult") + "/" + extractFileName(file);
+
         boolean isProd = "prod".equalsIgnoreCase(SpringUtil.getActiveProfile());
 
-        if(!isProd){
-            fileName = SpringUtil.getActiveProfile()+ "/" + fileName;
+        if (!isProd) {
+            fileName = SpringUtils.getActiveProfile() + "/" + fileName;
         }
 
         PutObjectArgs args = PutObjectArgs.builder()
@@ -59,12 +60,12 @@ public class MinioSysFileServiceImpl implements ISysFileService {
                 .object(fileName)
 
                 //file.getInputStam() 没有这个方法
-                .stream(file.getInputStream(),file.getSize(),-1)
+                .stream(file.getInputStream(), file.getSize(), -1)
                 .contentType(file.getContentType())
                 .build();
         minioClient.putObject(args);
 
-        return minioConfig.getDomain() + "/" +minioConfig.getBucketName() + "/" +fileName;
+        return minioConfig.getDomain() + "/" + minioConfig.getBucketName() + "/" + fileName;
 
     }
 
@@ -92,7 +93,7 @@ public class MinioSysFileServiceImpl implements ISysFileService {
         return false;
     }
 
-    
+
     @Override
     public String objectsCapacityStr() {
 
@@ -112,13 +113,13 @@ public class MinioSysFileServiceImpl implements ISysFileService {
                         }
                     }
                 });
-        
+
         long size = atomicLong.get();
-        if(size > (1024 * 1024)){
-            result = (BigDecimal.valueOf((double) size / 1024 / 1024)).setScale(2, BigDecimal.ROUND_HALF_UP) + "GB";
-        }else if(size > 1024){
-            result = (BigDecimal.valueOf((double) size / 1024).setScale(2, BigDecimal.ROUND_HALF_UP)) + "MB";
-        }else{
+        if (size > (1024 * 1024)) {
+            result = (BigDecimal.valueOf((double) size / 1024 / 1024)).setScale(2, RoundingMode.HALF_UP) + "GB";
+        } else if (size > 1024) {
+            result = (BigDecimal.valueOf((double) size / 1024).setScale(2, RoundingMode.HALF_UP)) + "MB";
+        } else {
             result = size + "KB";
         }
         return result;
@@ -127,11 +128,11 @@ public class MinioSysFileServiceImpl implements ISysFileService {
 
     @Override
     public String presignedUrl(String fileUrl) {
-        if(minioConfig.getExpiryDuration() == -1){
+        if (minioConfig.getExpiryDuration() == -1) {
             return fileUrl;
         }
         String signKey = "?X-Amz-Algorithm=";
-        if(fileUrl.contains(signKey)){
+        if (fileUrl.contains(signKey)) {
             return fileUrl;
         }
         String objectName = this.getStorePath(fileUrl);
@@ -154,12 +155,10 @@ public class MinioSysFileServiceImpl implements ISysFileService {
     }
 
 
-
-
     /**
      * 转换url，为原始的key
      *
-     * @param filePath https://yq666.bj.gov.cn/appt-file/dev/default/2021/07/18/f4243eb2-06a1-4304-bdfc-e2964b8721bb.jpeg
+     * @param filePath https://cloud.twelvet.cn/dfs/dev/default/2021/07/18/f4243eb2-06a1-4304-bdfc-e2964b8721bb.jpeg
      * @return dev/default/2021/07/18/f4243eb2-06a1-4304-bdfc-e2964b8721bb.jpeg
      */
     private String getStorePath(String filePath) {

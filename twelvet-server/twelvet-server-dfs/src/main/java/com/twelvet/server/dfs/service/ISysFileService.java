@@ -26,7 +26,7 @@ import static com.twelvet.server.dfs.utils.DFSUploadUtils.getExtension;
  * 4: minio 轻量级分布式文件系统； 类似一个阿里云oss、腾讯COS的一个开源、轻量级别的对象存储付;
  * 5: aliyun oss；  aliyun oss  https://help.aliyun.com/learn/learningpath/oss.html ,需要购买
  * 6: CEPH 分布式大数据文件存储系统 http://docs.ceph.org.cn/
- * @author ruoyi
+ * @author twelvet
  */
 public interface ISysFileService {
 
@@ -147,8 +147,8 @@ public interface ISysFileService {
         Objects.requireNonNull(file,"文件不能为空");
         modules = StringUtils.defaultString(modules,"defaule");
 
-        int fileNamelength = file.getOriginalFilename().length();
-        if(fileNamelength > DFSUploadUtils.DEFAULT_FILE_NAME_LENGTH){
+        int fileNameLength = file.getOriginalFilename().length();
+        if(fileNameLength > DFSUploadUtils.DEFAULT_FILE_NAME_LENGTH){
             throw new FileNameLengthLimitExceededException(DFSUploadUtils.DEFAULT_FILE_NAME_LENGTH);
         }
 

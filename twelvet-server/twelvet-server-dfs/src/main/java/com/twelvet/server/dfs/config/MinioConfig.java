@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 /**
  * Minio 配置信息
  *
- * @author ruoyi
+ * @author twelvet
  * @see MinioSysFileServiceImpl 实现
  */
 @RefreshScope
@@ -53,7 +53,7 @@ public class MinioConfig {
 
     /**
      * 访问域名; url经常是内网地址，外部访问用域名或者外网ip
-     * eg: https://yq666.bj.gov.cn/appt-file
+     * eg: https://cloud.twelvet.cn/dfs
      *
      *  注意！！：minio要配置 Bucket Policy： Bucket ==> Edit Bucket
      *  1、Read Only
