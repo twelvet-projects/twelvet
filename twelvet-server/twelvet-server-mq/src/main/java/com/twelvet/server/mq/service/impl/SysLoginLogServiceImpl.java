@@ -37,10 +37,10 @@ public class SysLoginLogServiceImpl implements SysLoginLogService {
      */
     @Override
     public void sendSysLoginLog(SysLoginInfo sysLoginInfo) {
-
+        sysLoginInfo.setInfoId(1L);
         rocketMQTemplate.asyncSend(
                 MQGroupConstants.QUEUE_LOG_LOGIN,
-                "测试",
+                sysLoginInfo,
                 new SendCallback() {
 
                     @Override

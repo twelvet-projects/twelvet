@@ -18,13 +18,15 @@ import org.springframework.stereotype.Component;
  * 监听系统登录日志消息
  */
 @RocketMQMessageListener(
-        consumerGroup = "springBootGroup",
+        // 订阅组
+        consumerGroup = "twelvet-test",
+        // 主题
         topic = MQGroupConstants.QUEUE_LOG_LOGIN,
         // 消费类型(并发，不保证顺序)
         consumeMode = ConsumeMode.CONCURRENTLY
 )
 @Component
-public class LoginLogListenerServer implements RocketMQListener {
+public class LoginLogListenerServer implements RocketMQListener<SysLoginInfo> {
 
     private final static Logger log = LoggerFactory.getLogger(LoginLogListenerServer.class);
 
@@ -32,10 +34,9 @@ public class LoginLogListenerServer implements RocketMQListener {
     private RemoteLogService remoteLogService;
 
     @Override
-    public void onMessage(Object o) {
-        SysLoginInfo sysLoginInfo = (SysLoginInfo) o;
+    public void onMessage(SysLoginInfo sysLoginInfo) {
         log.info("收到系统登录MQ：{}", sysLoginInfo);
-        remoteLogService.saveLoginInfo(sysLoginInfo);
+        /*remoteLogService.saveLoginInfo(sysLoginInfo);*/
     }
 
 
