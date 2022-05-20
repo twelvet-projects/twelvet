@@ -1,16 +1,19 @@
 
 package com.twelvet.server.mq.service.impl;
 
-import com.twelvet.api.mq.constant.MQGroupConstants;
+import com.twelvet.api.mq.constant.MQTagConstants;
+import com.twelvet.api.mq.constant.MQTopicConstants;
 import com.twelvet.api.system.domain.SysLoginInfo;
 import com.twelvet.server.mq.service.SysLoginLogService;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
+import org.apache.rocketmq.spring.support.RocketMQHeaders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -37,10 +40,14 @@ public class SysLoginLogServiceImpl implements SysLoginLogService {
      */
     @Override
     public void sendSysLoginLog(SysLoginInfo sysLoginInfo) {
+        Message<String> message = MessageBuilder.withPayload("info:tag-test")
+                .setHeader(RocketMQHeaders.TAGS, "login-log")
+                .setHeader(RocketMQHeaders.KEYS, "test")
+                .build();
         sysLoginInfo.setInfoId(1L);
         rocketMQTemplate.asyncSend(
-                MQGroupConstants.QUEUE_LOG_LOGIN,
-                sysLoginInfo,
+                MQTopicConstants.QUEUE_LOG_LOGIN,
+                message,
                 new SendCallback() {
 
                     @Override

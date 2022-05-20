@@ -29,3 +29,9 @@ spring:
         shared-configs:
           - data-id: twelvet-app-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
           - data-id: twelvet-mail-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+
+    stream:
+      rocketmq:
+        binder:
+          # 多个用;隔开
+          name-server: twelvet-rocketmq:9876

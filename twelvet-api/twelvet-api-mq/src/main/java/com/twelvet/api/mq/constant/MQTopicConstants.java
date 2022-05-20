@@ -2,14 +2,19 @@ package com.twelvet.api.mq.constant;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
- * @Description: topic常量
+ * <p>
+ * 主题topic
  */
 public class MQTopicConstants {
 
     /**
-     * 系统登录日志主题
+     * 系统登录日志队列
      */
-    public static final String DIRECT_LOG_LOGIN = "login-log";
+    public static final String QUEUE_LOG_LOGIN = "twelvet-log-login";
+
+    /**
+     * 系统操作日志队列
+     */
+    public static final String QUEUE_LOG_OPERATION = "twelvet-log-operation";
 
 }

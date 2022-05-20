@@ -1,7 +1,7 @@
 
 package com.twelvet.server.mq.listener;
 
-import com.twelvet.api.mq.constant.MQGroupConstants;
+import com.twelvet.api.mq.constant.MQTopicConstants;
 import com.twelvet.api.system.domain.SysLoginInfo;
 import com.twelvet.api.system.feign.RemoteLogService;
 import org.apache.rocketmq.spring.annotation.ConsumeMode;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
         // 订阅组
         consumerGroup = "twelvet-test",
         // 主题
-        topic = MQGroupConstants.QUEUE_LOG_LOGIN,
+        topic = MQTopicConstants.QUEUE_LOG_LOGIN,
         // 消费类型(并发，不保证顺序)
         consumeMode = ConsumeMode.CONCURRENTLY
 )

@@ -5,7 +5,7 @@ package com.twelvet.server.mq.service.impl;
  * <p>
  * 系统操作日志业务层实现
  */
-import com.twelvet.api.mq.constant.MQGroupConstants;
+import com.twelvet.api.mq.constant.MQTopicConstants;
 import com.twelvet.api.system.domain.SysOperationLog;
 import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.server.mq.service.SysOperationLogService;
@@ -28,7 +28,7 @@ public class SysOperationLogServiceImpl implements SysOperationLogService {
     @Override
     public void sendSysOperationLog(SysOperationLog sysOperationLog) {
         rocketMQTemplate.convertAndSend(
-                MQGroupConstants.QUEUE_LOG_OPERATION,
+                MQTopicConstants.QUEUE_LOG_OPERATION,
                 JacksonUtils.toJson(sysOperationLog)
         );
     }
