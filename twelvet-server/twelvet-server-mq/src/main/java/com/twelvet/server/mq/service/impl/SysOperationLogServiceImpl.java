@@ -5,19 +5,21 @@ package com.twelvet.server.mq.service.impl;
  * <p>
  * 系统操作日志业务层实现
  */
-import com.twelvet.api.mq.constant.MQTopicConstants;
+
 import com.twelvet.api.system.domain.SysOperationLog;
-import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.server.mq.service.SysOperationLogService;
-import org.apache.rocketmq.spring.core.RocketMQTemplate;
+import org.apache.rocketmq.spring.support.RocketMQHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.stream.function.StreamBridge;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SysOperationLogServiceImpl implements SysOperationLogService {
 
     @Autowired
-    private RocketMQTemplate rocketMQTemplate;
+    private StreamBridge streamBridge;
 
 
     /**
@@ -27,10 +29,12 @@ public class SysOperationLogServiceImpl implements SysOperationLogService {
      */
     @Override
     public void sendSysOperationLog(SysOperationLog sysOperationLog) {
-        rocketMQTemplate.convertAndSend(
-                MQTopicConstants.QUEUE_LOG_OPERATION,
-                JacksonUtils.toJson(sysOperationLog)
-        );
+        Message<SysOperationLog> message = MessageBuilder.withPayload(sysOperationLog)
+                .setHeader(RocketMQHeaders.TAGS, "system-login")
+                .setHeader(RocketMQHeaders.KEYS, "test")
+                .build();
+        sysOperationLog.setOperId(1L);
+        streamBridge.send("loginLog-out-0", message);
     }
 }
 
