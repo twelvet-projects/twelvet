@@ -1,6 +1,8 @@
 server:
   port: 8083
 
+
+
 spring:
   application:
     # 应用名称
@@ -27,3 +29,4 @@ spring:
         group: DEFAULT_GROUP
         shared-configs:
           - data-id: twelvet-app-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+
