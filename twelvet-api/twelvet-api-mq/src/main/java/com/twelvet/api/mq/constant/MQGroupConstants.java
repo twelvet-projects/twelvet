@@ -10,6 +10,6 @@ public class MQGroupConstants {
     /**
      * 系统登录日志tag
      */
-    public static final String LOG_LOGIN = "login-log";
+    public static final String SYS_LOG_LOGIN = "sys_login-log";
 
 }
