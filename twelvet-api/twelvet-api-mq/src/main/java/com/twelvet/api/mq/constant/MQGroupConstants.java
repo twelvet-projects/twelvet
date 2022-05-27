@@ -5,7 +5,7 @@ package com.twelvet.api.mq.constant;
  * @WebSite www.twelvet.cn
  * @Description: topic常量
  */
-public class MQTagConstants {
+public class MQGroupConstants {
 
     /**
      * 系统登录日志tag
