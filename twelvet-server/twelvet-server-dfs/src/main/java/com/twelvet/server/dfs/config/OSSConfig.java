@@ -14,6 +14,16 @@ public class OSSConfig {
 
     private String bucketName;
 
+    private String youUrl = "http://rc4aqzxrn.hn-bkt.clouddn.com/";
+
+
+    public String getYouUrl() {
+        return youUrl;
+    }
+
+    public void setYouUrl(String youUrl) {
+        this.youUrl = youUrl;
+    }
 
     public String getAccessKey() {
         return accessKey;

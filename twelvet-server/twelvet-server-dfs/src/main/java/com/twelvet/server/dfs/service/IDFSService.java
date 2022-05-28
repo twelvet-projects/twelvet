@@ -48,6 +48,6 @@ public interface IDFSService {
      *
      * @param fileId 文件id
      */
-    void download(Long fileId);
+//    void download(Long fileId);
 
 }

@@ -1,10 +1,5 @@
 package com.twelvet.server.dfs.service.impl;
 
-import com.github.tobato.fastdfs.domain.fdfs.StorePath;
-import com.github.tobato.fastdfs.domain.proto.storage.DownloadByteArray;
-import com.github.tobato.fastdfs.exception.FdfsUnsupportStorePathException;
-import com.github.tobato.fastdfs.service.FastFileStorageClient;
-import com.google.gson.Gson;
 import com.mysql.cj.protocol.WatchableOutputStream;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
@@ -17,6 +12,7 @@ import com.qiniu.util.Auth;
 import com.twelvet.api.dfs.domain.SysDfs;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.utils.$;
+import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.framework.utils.file.FileUtils;
 import com.twelvet.framework.utils.http.ServletUtils;
 import com.twelvet.server.dfs.Util.StringUtil;
@@ -26,7 +22,6 @@ import com.twelvet.server.dfs.service.IDFSService;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
-import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +32,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +47,7 @@ import java.util.List;
 
 public class DFSServiceImpl implements IDFSService {
 
-    private final Logger logger = LoggerFactory.getLogger(DFSServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(DFSServiceImpl.class);
 
     @Autowired
     private OSSConfig ossConfig;
@@ -69,9 +62,6 @@ public class DFSServiceImpl implements IDFSService {
 
     @Autowired
     private DFSMapper dfsMapper;
-
-    @Autowired
-    private FastFileStorageClient storageClient;
 
     @PostConstruct
     public void init() {
@@ -113,7 +103,7 @@ public class DFSServiceImpl implements IDFSService {
                     throw new RuntimeException("出错啦：" + res.toString());
                 }
 
-                DefaultPutRet putRet = new Gson().fromJson(res.bodyString(), DefaultPutRet.class);
+                DefaultPutRet putRet = JacksonUtils.readValue(res.bodyString(), DefaultPutRet.class);
 
 
                 SysDfs sysDfs = new SysDfs();
@@ -129,17 +119,22 @@ public class DFSServiceImpl implements IDFSService {
 
 
                 fileDfs.add(sysDfs);
+                // 插入数据库
+
             }
+            dfsMapper.batchSysDfs(fileDfs);
+
+            return fileDfs;
+
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
+
         } catch (IOException e) {
-            e.printStackTrace();
+
+            throw new TWTException("文件上传异常");
         }
 
-        // 插入数据库
-        dfsMapper.batchSysDfs(fileDfs);
-
-        return fileDfs;
+        return null;
 
     }
 
@@ -169,7 +164,7 @@ public class DFSServiceImpl implements IDFSService {
                 throw new RuntimeException("出错啦：" + res.toString());
             }
 
-            DefaultPutRet putRet = new Gson().fromJson(res.bodyString(), DefaultPutRet.class);
+            DefaultPutRet putRet = JacksonUtils.readValue(res.bodyString(), DefaultPutRet.class);
 
 
             SysDfs sysDfs = new SysDfs();
@@ -190,7 +185,8 @@ public class DFSServiceImpl implements IDFSService {
         } catch (IOException e) {
             throw new TWTException("文件上传异常");
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
+
         }
         return null;
 
@@ -212,11 +208,9 @@ public class DFSServiceImpl implements IDFSService {
             }
             // 删除数据库信息
             dfsMapper.deleteSysDfsByFileIds(fileIds);
-        } catch (FdfsUnsupportStorePathException e) {
+        } catch (QiniuException e) {
             logger.error(e.getMessage());
             throw new TWTException("删除文件出错");
-        } catch (QiniuException e) {
-            e.printStackTrace();
         }
     }
 
@@ -236,35 +230,35 @@ public class DFSServiceImpl implements IDFSService {
      *
      * @param fileId 文件id
      */
-    @Override
-    public void download(Long fileId) {
-        SysDfs sysDfs = dfsMapper.selectDfsByFileIds(fileId);
-        String fileUrl = "http://rc4aqzxrn.hn-bkt.clouddn.com/" + sysDfs.getFileName();
-
-        OkHttpClient client = new OkHttpClient();
-
-        Request req = new Request.Builder().url(fileUrl).build();
-
-        okhttp3.Response resp = null;
-        byte[] bytes = null;
-        try {
-            resp = client.newCall(req).execute();
-            System.out.println(resp.isSuccessful());
-            if (resp.isSuccessful()) {
-                ResponseBody body = resp.body();
-                InputStream is = body.byteStream();
-                bytes = readInputStream(is);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if ($.isEmpty(bytes)) {
-            throw new TWTException("无法获取文件");
-        }
-
-        ServletUtils.download(bytes, sysDfs.getFileName());
-
-    }
+//    @Override
+//    public void download(Long fileId) {
+//        try {
+//            SysDfs sysDfs = dfsMapper.selectDfsByFileIds(fileId);
+//            String fileUrl = ossConfig.getYouUrl() + sysDfs.getFileName();
+//
+//            OkHttpClient client = new OkHttpClient();
+//
+//            Request req = new Request.Builder().url(fileUrl).build();
+//
+//            okhttp3.Response resp = null;
+//            byte[] bytes = null;
+//            resp = client.newCall(req).execute();
+//            System.out.println(resp.isSuccessful());
+//            if (resp.isSuccessful()) {
+//                ResponseBody body = resp.body();
+//                InputStream is = body.byteStream();
+//                bytes = readInputStream(is);
+//            }
+//            if ($.isEmpty(bytes)) {
+//                throw new TWTException("无法获取文件");
+//            }
+//
+//            ServletUtils.download(bytes, sysDfs.getFileName());
+//        } catch (IOException e) {
+//            logger.error("获取文件流失败", e);
+//            throw new TWTException("获取文件流失败");
+//        }
+//    }
 
 
     private static byte[] readInputStream(InputStream is) {
@@ -275,13 +269,17 @@ public class DFSServiceImpl implements IDFSService {
             while ((len = is.read(buff)) != -1) {
                 writer.write(buff, 0, len);
             }
-            is.close();
+            return writer.toByteArray();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("写入流失败", e);
+            throw new TWTException("获取失败");
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                logger.error("关闭流失败", e);
+            }
         }
-        return writer.toByteArray();
-
     }
-
 
 }

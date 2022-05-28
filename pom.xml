@@ -53,15 +53,15 @@
         <dynamic-datasource.version>3.5.1</dynamic-datasource.version>
         <pagehelper.boot.version>1.4.1</pagehelper.boot.version>
         <poi.version>3.17</poi.version>
-        <fast-dfs.version>1.27.2</fast-dfs.version>
         <commons.io.version>2.11.0</commons.io.version>
         <velocity.version>1.7</velocity.version>
         <knife4j.version>3.0.3</knife4j.version>
         <hutool.version>5.7.5</hutool.version>
         <qrcode.version>3.3.1</qrcode.version>
         <redisson.version>3.16.8</redisson.version>
-        <minio.version>8.2.2</minio.version>
         <logback.redis.version>1.1.6</logback.redis.version>
+        <qiniu.version>7.10.3</qiniu.version>
+        <okhttp.version>4.9.3</okhttp.version>
 
         <docker.image.prefix>springboot</docker.image.prefix>
         <docker.plugin.version>0.32.0</docker.plugin.version>
@@ -126,13 +126,6 @@
                 <version>${dynamic-datasource.version}</version>
             </dependency>
 
-            <!-- FastDFS 分布式文件系统 -->
-            <dependency>
-                <groupId>com.github.tobato</groupId>
-                <artifactId>fastdfs-client</artifactId>
-                <version>${fast-dfs.version}</version>
-            </dependency>
-
             <!--logback日志-->
             <dependency>
                 <groupId>com.cwbase</groupId>
@@ -181,13 +174,6 @@
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
-            </dependency>
-
-            <!-- Minio -->
-            <dependency>
-                <groupId>io.minio</groupId>
-                <artifactId>minio</artifactId>
-                <version>${minio.version}</version>
             </dependency>
 
             <!-- excel工具 -->
@@ -314,6 +300,21 @@
                 <groupId>com.twelvet</groupId>
                 <artifactId>twelvet-api-es</artifactId>
                 <version>${twelvet.version}</version>
+            </dependency>
+
+
+            <!--七牛云oss-->
+            <dependency>
+                <groupId>com.qiniu</groupId>
+                <artifactId>qiniu-java-sdk</artifactId>
+                <version>${qiniu.version}</version>
+            </dependency>
+
+            <!--okhttp-->
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp.version}</version>
             </dependency>
 
         </dependencies>

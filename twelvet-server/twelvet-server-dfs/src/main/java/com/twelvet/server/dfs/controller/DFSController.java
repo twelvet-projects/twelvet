@@ -68,11 +68,11 @@ public class DFSController extends TWTController {
      *
      * @param fileId 文件ID
      */
-    @Log(service = "下载文件", businessType = BusinessType.EXPORT)
-    @PostMapping("/download/{fileId}")
-    public void download(@PathVariable Long fileId) {
-        sysFileService.download(fileId);
-    }
+//    @Log(service = "下载文件", businessType = BusinessType.EXPORT)
+//    @PostMapping("/download/{fileId}")
+//    public void download(@PathVariable Long fileId) {
+//        sysFileService.download(fileId);
+//    }
 
     /**
      * 删除文件
