@@ -1,6 +1,7 @@
 package com.twelvet.security.config;
 
-import com.twelvet.framework.security.handler.FormAuthenticationFailureHandler;
+import com.twelvet.security.handler.FormAuthenticationFailureHandler;
+import com.twelvet.security.handler.SsoLogoutSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 /**
  * @author twelvet
@@ -90,9 +92,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/token/login")
                 .loginProcessingUrl("/token/form")
                 .failureHandler(authenticationFailureHandler()).and().logout()
+                .logoutSuccessHandler(logoutSuccessHandler()).deleteCookies("JSESSIONID").invalidateHttpSession(true)
                 .and().authorizeRequests().antMatchers("/token/**", "/actuator/**", "/v2/api-docs").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable();
+                /*.sessionManagement()
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(true);*/
+    }
+
+    /**
+     * SSO 退出逻辑处理
+     * @return LogoutSuccessHandler
+     */
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return new SsoLogoutSuccessHandler();
     }
 
 }

@@ -6,7 +6,7 @@ import java.lang.annotation.*;
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description: 分布式可重入锁
+ * @Description: 分布式锁（不支持重入）
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

@@ -13,7 +13,8 @@ public interface SysLoginLogService {
      * 发送系统登录日志MQ
      *
      * @param sysLoginInfo SysLoginInfo
+     * @return
      */
-    void sendSysLoginLog(SysLoginInfo sysLoginInfo);
+    boolean sendSysLoginLog(SysLoginInfo sysLoginInfo);
 
 }
