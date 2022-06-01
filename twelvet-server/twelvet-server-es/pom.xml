@@ -26,6 +26,12 @@
             <artifactId>twelvet-api-es</artifactId>
         </dependency>
 
+        <!--canal-->
+        <dependency>
+            <groupId>com.alibaba.otter</groupId>
+            <artifactId>canal.client</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
