@@ -1,12 +1,11 @@
 package com.twelvet.server.dfs.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties("oss.qiniu")
-public class OSSConfig {
+public class QiNiuConfig {
 
     private String accessKey;
 
@@ -14,15 +13,14 @@ public class OSSConfig {
 
     private String bucketName;
 
-    private String youUrl = "http://rc4aqzxrn.hn-bkt.clouddn.com/";
+    private String domain;
 
-
-    public String getYouUrl() {
-        return youUrl;
+    public String getDomain() {
+        return domain;
     }
 
-    public void setYouUrl(String youUrl) {
-        this.youUrl = youUrl;
+    public void setDomain(String domain) {
+        this.domain = domain;
     }
 
     public String getAccessKey() {

@@ -9,7 +9,7 @@ import com.qiniu.util.Auth;
 import com.twelvet.api.dfs.domain.SysDfs;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.utils.file.FileUtils;
-import com.twelvet.server.dfs.config.OSSConfig;
+import com.twelvet.server.dfs.config.QiNiuConfig;
 import com.twelvet.server.dfs.mapper.DFSMapper;
 import com.twelvet.server.dfs.service.IDFSService;
 import org.slf4j.Logger;
@@ -38,7 +38,7 @@ public class DFSServiceImpl implements IDFSService {
     private static final Logger logger = LoggerFactory.getLogger(DFSServiceImpl.class);
 
     @Autowired
-    private OSSConfig ossConfig;
+    private QiNiuConfig qiNiuConfig;
 
     @Autowired
     private DFSMapper dfsMapper;
@@ -55,11 +55,11 @@ public class DFSServiceImpl implements IDFSService {
         // 如果可以明确 区域 的话，最好指定固定区域，这样可以少一步网络请求，少一步出错的可能。
         uploadManager = new UploadManager(new Configuration(Region.autoRegion()));
 
-        Auth auth = Auth.create(ossConfig.getAccessKey(), ossConfig.getSecretKey());
+        Auth auth = Auth.create(qiNiuConfig.getAccessKey(), qiNiuConfig.getSecretKey());
 
         bucketManager = new BucketManager(auth, new Configuration(Region.autoRegion()));
 
-        token = auth.uploadToken(ossConfig.getBucketName());
+        token = auth.uploadToken(qiNiuConfig.getBucketName());
     }
 
     /**
@@ -156,7 +156,7 @@ public class DFSServiceImpl implements IDFSService {
             List<SysDfs> sysDfsList = dfsMapper.selectDfsListByFileIds(fileIds);
             for (SysDfs sysDfs : sysDfsList) {
                 String fileName = sysDfs.getFileName();
-                bucketManager.delete(ossConfig.getBucketName(), fileName);
+                bucketManager.delete(qiNiuConfig.getBucketName(), fileName);
             }
             // 删除数据库信息
             dfsMapper.deleteSysDfsByFileIds(fileIds);
