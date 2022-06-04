@@ -98,7 +98,7 @@ public class DFSController extends TWTController {
     @GetMapping("/pageQuery")
     public AjaxResult pageQuery(SysDfs sysDfs) {
         PageUtils.startPage();
-        List<SysDfs> sysDfsList = sysFileService.selectUserList(sysDfs);
+        List<SysDfs> sysDfsList = sysFileService.selectSysDfsList(sysDfs);
         return AjaxResult.success(PageUtils.getDataTable(sysDfsList));
     }
 

@@ -41,13 +41,6 @@ public interface IDFSService {
      * @param sysDfs SysDfs
      * @return List<SysDfs>
      */
-    List<SysDfs> selectUserList(SysDfs sysDfs);
-
-    /**
-     * 下载文件导出给予前端
-     *
-     * @param fileId 文件id
-     */
-//    void download(Long fileId);
+    List<SysDfs> selectSysDfsList(SysDfs sysDfs);
 
 }

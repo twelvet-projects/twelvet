@@ -1,5 +1,7 @@
 package com.twelvet.framework.utils.file;
 
+import com.twelvet.framework.utils.$;
+import com.twelvet.framework.utils.DateUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -33,7 +35,6 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
      *
      * @param filePath 文件路径
      * @param os       输出流
-     * @return
      */
     public static void writeBytes(String filePath, OutputStream os) throws IOException {
         FileInputStream fis = null;
@@ -72,7 +73,6 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
      * 删除文件
      *
      * @param filePath 文件
-     * @return
      */
     public static boolean deleteFile(String filePath) {
         boolean flag = false;
@@ -183,6 +183,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
      * @return 后缀
      */
     public static String getSuffix(String path) {
+        if ($.isEmpty(path)) {
+            return "";
+        }
         return path.substring(path.lastIndexOf(".") + 1);
     }
 
@@ -226,4 +229,14 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         String encode = URLEncoder.encode(s, StandardCharsets.UTF_8.toString());
         return encode.replaceAll("\\+", "%20");
     }
+
+    /**
+     * 生成默认使用的上传路径
+     *
+     * @return 上传路径
+     */
+    public static String defaultUploadPath(String originalFilename) {
+        return "/" + DateUtils.datePath() + "/" + System.currentTimeMillis() + "." + getSuffix(originalFilename);
+    }
+
 }
