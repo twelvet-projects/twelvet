@@ -33,6 +33,11 @@ import java.util.List;
 @Primary
 @Service
 
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description: 文件上传实现类
+ */
 public class DFSServiceImpl implements IDFSService {
 
     private static final Logger logger = LoggerFactory.getLogger(DFSServiceImpl.class);

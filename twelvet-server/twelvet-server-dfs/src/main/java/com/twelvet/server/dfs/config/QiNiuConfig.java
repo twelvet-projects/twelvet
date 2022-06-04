@@ -3,6 +3,11 @@ package com.twelvet.server.dfs.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description: 七牛云配置
+ */
 @Component
 @ConfigurationProperties("oss.qiniu")
 public class QiNiuConfig {
