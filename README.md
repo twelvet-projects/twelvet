@@ -24,6 +24,8 @@
 
 前端源码：https://gitee.com/twelvet/twelvet-ui-react
 
+技术文档：https://www.twelvet.cn/docs/
+
 ## 系统模块
 
 ~~~
@@ -130,10 +132,3 @@ QQ群： [![加入QQ群](https://img.shields.io/badge/985830229-blue.svg)](https
 ## 捐赠与支持
 
 <img src="https://www.twelvet.cn/assets/images/pay.png" alt="捐赠"/>
-
-# 贡献者
-
-[![contributors](https://whnb.wang/contributors/twelvet/twelvet)](https://www.twelvet.cn)
-
-[![Stargazers over time](https://whnb.wang/stars/twelvet/twelvet)](https://www.twelvet.cn)
-
