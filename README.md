@@ -76,8 +76,8 @@ com.twelvet
 13. 连接池监视：监视当前系统数据库连接池状态，可进行分析SQL找出系统性能瓶颈。
 14. 分布式文件储存。
 15. Swagger网关聚合文档。
-16. elasticsearch全文搜索基础服务
-17. netty高性能网络服务
+16. Elasticsearch全文搜索基础服务
+17. Netty高性能网络服务
 
 ## 演示图
 
