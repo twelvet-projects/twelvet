@@ -140,7 +140,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         // 获取默认支持的模式
         List<TokenGranter> tokenGranters = new ArrayList<>(Collections.singletonList(endpoints.getTokenGranter()));
 
-
+        // 获取自定义授权模式
         List<TokenGranter> customTokenGranters = getTokenGranters(
                 endpoints.getAuthorizationCodeServices(),
                 endpoints.getTokenServices(),
