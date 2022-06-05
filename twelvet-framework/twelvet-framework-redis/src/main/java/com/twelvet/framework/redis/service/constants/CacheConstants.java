@@ -18,6 +18,11 @@ public class CacheConstants {
     public static final String CLIENT_DETAILS_KEY = "oauth:client:details";
 
     /**
+     * 用户信息缓存
+     */
+    public static final String USER_DETAILS = "user_details";
+
+    /**
      * 字典管理（默认缓存十分钟） cache key
      */
     public static final String SYS_DICT_KEY = "sys_dict";

@@ -20,7 +20,7 @@ public class PhonePasswordTokenGranter extends AbstractCustomTokenGranter {
     private static final String GRANT_TYPE = "phone_password";
 
     @Autowired
-    private final TwTUserDetailsServiceImpl userDetailsService;
+    private TwTUserDetailsServiceImpl userDetailsService;
 
     public PhonePasswordTokenGranter(
             AuthorizationServerTokenServices tokenServices,

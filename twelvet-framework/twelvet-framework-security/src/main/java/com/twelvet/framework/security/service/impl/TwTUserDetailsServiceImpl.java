@@ -5,6 +5,7 @@ import com.twelvet.api.system.feign.RemoteUserService;
 import com.twelvet.api.system.model.UserInfo;
 import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.core.exception.TWTException;
+import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.service.TwUserDetailsService;
 import com.twelvet.framework.utils.$;
@@ -12,6 +13,8 @@ import com.twelvet.framework.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,6 +38,9 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 
     @Autowired
     private RemoteUserService remoteUserService;
+
+    @Autowired
+    private CacheManager cacheManager;
 
     /**
      * 通过手机号密码模式进行登录
@@ -61,9 +67,18 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) {
+        Cache cache = cacheManager.getCache(CacheConstants.USER_DETAILS);
+        if (cache != null && cache.get(username) != null) {
+            return (LoginUser) cache.get(username).get();
+        }
         R<UserInfo> userResult = remoteUserService.getUserInfo(username);
         auth(userResult, username);
-        return getUserDetails(userResult);
+        UserDetails userDetails = getUserDetails(userResult);
+
+        if (cache != null) {
+            cache.put(username, userDetails);
+        }
+        return userDetails;
     }
 
     /**
@@ -121,6 +136,11 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
                 true,
                 authorities
         );
+    }
+
+    @Override
+    public int getOrder() {
+        return Integer.MIN_VALUE;
     }
 
 }
