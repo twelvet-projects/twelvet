@@ -1,8 +1,8 @@
 package com.twelvet.security.config;
 
+import com.twelvet.framework.security.config.TwDaoAuthenticationProvider;
 import com.twelvet.security.handler.FormAuthenticationFailureHandler;
 import com.twelvet.security.handler.SsoLogoutSuccessHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -26,9 +25,6 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 @Order(99)
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    private UserDetailsService userDetailsService;
 
     /**
      * 加密编码模式
@@ -58,14 +54,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * 编码模式
+     * 自定义处理授权模式逻辑
      *
      * @param auth auth
      * @throws Exception Exception
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        TwDaoAuthenticationProvider daoAuthenticationProvider = new TwDaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+
+        // 处理默认的密码模式认证
+        auth.authenticationProvider(daoAuthenticationProvider);
     }
 
     /**

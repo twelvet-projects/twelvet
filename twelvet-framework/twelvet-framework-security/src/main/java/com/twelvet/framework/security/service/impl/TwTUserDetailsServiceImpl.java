@@ -6,6 +6,7 @@ import com.twelvet.api.system.model.UserInfo;
 import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.security.domain.LoginUser;
+import com.twelvet.framework.security.service.TwUserDetailsService;
 import com.twelvet.framework.utils.$;
 import com.twelvet.framework.utils.StringUtils;
 import org.slf4j.Logger;
@@ -14,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ import java.util.Set;
  * @Description: 自定义用户信息处理
  */
 @Service("TWTUserDetails")
-public class TwTUserDetailsServiceImpl implements UserDetailsService {
+public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 
     private static final Logger log = LoggerFactory.getLogger(TwTUserDetailsServiceImpl.class);
 
@@ -92,7 +92,7 @@ public class TwTUserDetailsServiceImpl implements UserDetailsService {
      * @param result result
      * @return UserDetails
      */
-    private UserDetails getUserDetails(R<UserInfo> result) {
+    public UserDetails getUserDetails(R<UserInfo> result) {
         UserInfo info = result.getData();
 
         Set<String> dbAuthsSet = new HashSet<>();
