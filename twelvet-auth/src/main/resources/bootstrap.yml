@@ -2,6 +2,10 @@ server:
   port: 8888
 
 spring:
+  # 接入第三方OAuth2登录
+  security:
+    oauth2:
+      client:
   application:
     # 应用名称
     name: @artifactId@

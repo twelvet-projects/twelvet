@@ -99,6 +99,12 @@
             <artifactId>logback-redis-appender</artifactId>
         </dependency>
 
+        <!--OAuth2 Client-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-client</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
