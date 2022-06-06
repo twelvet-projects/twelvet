@@ -1,12 +1,13 @@
 package com.twelvet.security.config;
 
-import com.twelvet.framework.security.config.TwDaoAuthenticationProvider;
+import com.twelvet.framework.security.handler.TwDaoAuthenticationProvider;
 import com.twelvet.security.handler.FormAuthenticationFailureHandler;
 import com.twelvet.security.handler.SsoLogoutSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -87,14 +88,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http
-                .formLogin()
+        /*.authorizeHttpRequests(
+                request -> request
+                        .mvcMatchers("/callback", "/getToken")
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated()
+        )*/
+        http.authorizeRequests((requests) -> requests.anyRequest().authenticated())
+                .oauth2Login(Customizer.withDefaults())
+                .oauth2Client()
+                .and().formLogin()
                 .loginPage("/token/login")
                 .loginProcessingUrl("/token/form")
                 .failureHandler(authenticationFailureHandler()).and().logout()
                 .logoutSuccessHandler(logoutSuccessHandler()).deleteCookies("JSESSIONID").invalidateHttpSession(true)
-                .and().authorizeRequests().antMatchers("/token/**", "/actuator/**", "/v2/api-docs").permitAll()
-                .anyRequest().authenticated()
+                //.and().authorizeRequests().antMatchers("/token/**", "/actuator/**", "/v2/api-docs").permitAll().anyRequest().authenticated()
                 .and().csrf().disable();
                 /*.sessionManagement()
                 .maximumSessions(1)

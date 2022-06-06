@@ -8,20 +8,27 @@ spring:
       client:
         registration:
           gitee:
-            client-id: 123
-            client-secret: 123
+            client-id: 3050796d8930eec5b8ab62deb82ef3a85c0c8b611d3abf6a0c424f35164658c9
+            client-secret: 22ccdf736338be96bd1ff6d9b9e9543256cb7f3ff70e8a100279bf2d0337dcb2
+            # 授权类型
             authorization-grant-type: authorization_code
-            provider: gitee
-            client-name: Gitee
-            scope: server
+            # 授权范围
+            scope: user_info
             # 默认的重定向模板是 {baseUrl}/login/oauth2/code/{registrationId}
             # registrationId 在此处就是 gitee
-            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            # 回调地址
+            redirect-uri: "http://localhost:8888/{action}/oauth2/code/{registrationId}"
+            provider: gitee
+            client-name: Gitee
         provider:
           gitee:
+            # 登录地址
             authorization-uri: https://gitee.com/oauth/authorize
+            # 换取token
             token-uri: https://gitee.com/oauth/token
-            user-name-attribute: name
+            # 取得的user详情中的属性id的值作为Client的已认证的用户的用户名
+            user-name-attribute: id
+            # 获取用户信息
             user-info-uri: https://gitee.com/api/v5/user
   application:
     # 应用名称
