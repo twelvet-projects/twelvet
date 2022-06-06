@@ -4,6 +4,7 @@ import com.twelvet.framework.core.annotation.EnableTwelveTConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 
 /**
  * @author twelvet
@@ -14,6 +15,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableTwelveTConfig
 @EnableFeignClients
 @SpringBootApplication
+@EnableOAuth2Client
 public class AuthApplication {
 
     public static void main(String[] args) {

@@ -6,6 +6,23 @@ spring:
   security:
     oauth2:
       client:
+        registration:
+          gitee:
+            client-id: 123
+            client-secret: 123
+            authorization-grant-type: authorization_code
+            provider: gitee
+            client-name: Gitee
+            scope: server
+            # 默认的重定向模板是 {baseUrl}/login/oauth2/code/{registrationId}
+            # registrationId 在此处就是 gitee
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+        provider:
+          gitee:
+            authorization-uri: https://gitee.com/oauth/authorize
+            token-uri: https://gitee.com/oauth/token
+            user-name-attribute: name
+            user-info-uri: https://gitee.com/api/v5/user
   application:
     # 应用名称
     name: @artifactId@
