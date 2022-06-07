@@ -1,6 +1,7 @@
 package com.twelvet.security.endpoint;
 
 import com.github.xiaoymin.knife4j.core.util.StrUtil;
+import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.security.annotation.AuthIgnore;
 import com.twelvet.framework.security.utils.SecurityUtils;
@@ -11,6 +12,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 import org.springframework.security.oauth2.provider.AuthorizationRequest;
@@ -23,7 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +46,11 @@ public class TWTTokenEndpoint {
 
 	@Autowired
 	private RedisTemplate redisTemplate;
+
+	@GetMapping("/callback")
+	public AjaxResult main(OAuth2AuthenticationToken token) {
+		return AjaxResult.success(token.getPrincipal().getName());
+	}
 
 	/**
 	 * 认证页面

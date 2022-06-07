@@ -8,17 +8,16 @@ spring:
       client:
         registration:
           gitee:
+            # 关联OAuth2 Server
+            provider: gitee
             client-id: 3050796d8930eec5b8ab62deb82ef3a85c0c8b611d3abf6a0c424f35164658c9
             client-secret: 22ccdf736338be96bd1ff6d9b9e9543256cb7f3ff70e8a100279bf2d0337dcb2
             # 授权类型
             authorization-grant-type: authorization_code
             # 授权范围
             scope: user_info
-            # 默认的重定向模板是 {baseUrl}/login/oauth2/code/{registrationId}
-            # registrationId 在此处就是 gitee
             # 回调地址
-            redirect-uri: "http://localhost:8888/{action}/oauth2/code/{registrationId}"
-            provider: gitee
+            redirect-uri: http://localhost:8888/{action}/oauth2/code/{registrationId}
             client-name: Gitee
         provider:
           gitee:
