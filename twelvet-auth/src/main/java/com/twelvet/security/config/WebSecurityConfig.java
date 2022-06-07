@@ -14,10 +14,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
@@ -100,9 +96,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         .authenticated()
         )*/
         http.authorizeRequests((requests) -> requests.anyRequest().authenticated())
-                .oauth2Login(Customizer.withDefaults())
+                // 只是获取token需要自行实授权
                 .oauth2Client()
-                .and().formLogin()
+                .and()// 自动完成认证OAuth2AuthenticationToken
+                .oauth2Login(Customizer.withDefaults())
+                .formLogin()
                 .loginPage("/token/login")
                 .loginProcessingUrl("/token/form")
                 .failureHandler(authenticationFailureHandler()).and().logout()
