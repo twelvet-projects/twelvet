@@ -17,21 +17,14 @@ spring:
         server-addr: ${NACOS_HOST:twelvet-nacos}:${NACOS_PORT:8848}
         namespace: @nacos.namespace@
       config:
-        #配置中心地址
+        # 配置中心地址
         server-addr: ${spring.cloud.nacos.discovery.server-addr}
-  config:
-    import:
-      - nacos:twelvet-app-@active@.yml
-      - nacos:${spring.application.name}-@active@.yml
-#      config:
-#        # 配置中心地址
-#        server-addr: ${spring.cloud.nacos.discovery.server-addr}
-#        # 配置文件格式
-#        file-extension: yml
-#        # 命名空间
-#        namespace: @nacos.namespace@
-#        # 配置组
-#        group: DEFAULT_GROUP
-#        # 共享配置
-#        shared-configs:
-#          - data-id: twelvet-app-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+        # 配置文件格式
+        file-extension: yml
+        # 命名空间
+        namespace: @nacos.namespace@
+        # 配置组
+        group: DEFAULT_GROUP
+        # 共享配置
+        shared-configs:
+          - data-id: twelvet-app-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
