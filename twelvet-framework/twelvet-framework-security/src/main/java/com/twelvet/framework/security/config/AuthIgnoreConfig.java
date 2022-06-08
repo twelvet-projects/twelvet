@@ -1,5 +1,6 @@
 package com.twelvet.framework.security.config;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.twelvet.framework.security.annotation.AuthIgnore;
 import com.twelvet.framework.security.config.properties.IgnoreUrlsProperties;
 import com.twelvet.framework.utils.$;
@@ -52,7 +53,7 @@ public class AuthIgnoreConfig implements InitializingBean, ApplicationContextAwa
      */
     @Override
     public void afterPropertiesSet() {
-        RequestMappingHandlerMapping mapping = applicationContext.getBean(RequestMappingHandlerMapping.class);
+        RequestMappingHandlerMapping mapping = SpringUtil.getBean("requestMappingHandlerMapping");
         Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
 
         // 遍历所有mapping
