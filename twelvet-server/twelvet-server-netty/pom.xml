@@ -22,8 +22,4 @@
 
     </dependencies>
 
-    <build>
-        <finalName>twelvet-server-netty</finalName>
-    </build>
-
 </project>

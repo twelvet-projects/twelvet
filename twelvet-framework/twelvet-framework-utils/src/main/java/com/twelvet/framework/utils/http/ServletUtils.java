@@ -30,258 +30,255 @@ import java.util.Map;
  */
 public class ServletUtils {
 
-    public ServletUtils() {
-        throw new TWTUtilsException("This is a utility class and cannot be instantiated");
-    }
+	public ServletUtils() {
+		throw new TWTUtilsException("This is a utility class and cannot be instantiated");
+	}
 
-    public static final String METHOD_DELETE = "DELETE";
-    public static final String METHOD_HEAD = "HEAD";
-    public static final String METHOD_GET = "GET";
-    public static final String METHOD_OPTIONS = "OPTIONS";
-    public static final String METHOD_POST = "POST";
-    public static final String METHOD_PUT = "PUT";
-    public static final String METHOD_TRACE = "TRACE";
+	public static final String METHOD_DELETE = "DELETE";
 
-    /**
-     * 渲染json数据
-     *
-     * @param code 客户端状态码
-     * @param json json字符串
-     */
-    public static void render(int code, String json) {
-        HttpServletResponse response = getResponse();
-        try {
-            response.setStatus(code);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("utf-8");
-            response.getWriter().print(json);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	public static final String METHOD_HEAD = "HEAD";
 
-    /**
-     * 获取request
-     *
-     * @return HttpServletRequest
-     */
-    public static HttpServletRequest getRequest() {
-        try {
-            return getRequestAttributes().getRequest();
-        } catch (NullPointerException e) {
-            return null;
-        }
-    }
+	public static final String METHOD_GET = "GET";
 
-    /**
-     * 获取当前地址完整URI(注意是服务器的IP,便于查找出错机器)
-     *
-     * @return 当前完整访问地址
-     */
-    public static String getHostRequestURI() {
-        HttpServletRequest request = getRequest();
-        return IpUtils.getHostIp() + ":" + request.getServerPort() + request.getRequestURI();
-    }
+	public static final String METHOD_OPTIONS = "OPTIONS";
 
-    /**
-     * 获取getResponse
-     *
-     * @return HttpServletResponse
-     */
-    public static HttpServletResponse getResponse() {
-        return getRequestAttributes().getResponse();
-    }
+	public static final String METHOD_POST = "POST";
 
-    /**
-     * 获取RequestAttributes
-     *
-     * @return ServletRequestAttributes
-     */
-    public static ServletRequestAttributes getRequestAttributes() {
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        return requestAttributes;
-    }
+	public static final String METHOD_PUT = "PUT";
 
-    /**
-     * 获取session
-     *
-     * @return HttpSession
-     */
-    public static HttpSession getSession() {
-        return getRequest().getSession();
-    }
+	public static final String METHOD_TRACE = "TRACE";
 
-    /**
-     * 获取json格式参数
-     *
-     * @return Map
-     */
-    public static Map<String, String> getMapParam() {
-        return getMapParam(getRequest());
-    }
+	/**
+	 * 渲染json数据
+	 * @param code 客户端状态码
+	 * @param json json字符串
+	 */
+	public static void render(int code, String json) {
+		HttpServletResponse response = getResponse();
+		try {
+			response.setStatus(code);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("utf-8");
+			response.getWriter().print(json);
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-    /**
-     * 获取json格式参数
-     *
-     * @param httpServletRequest HttpServletRequest
-     * @return Map
-     */
-    public static Map<String, String> getMapParam(HttpServletRequest httpServletRequest) {
-        Map<String, String> map = new HashMap<>(6);
-        // 获取所有参数名称
-        Enumeration enu = httpServletRequest.getParameterNames();
-        // 遍历hash
-        while (enu.hasMoreElements()) {
-            String paramName = (String) enu.nextElement();
-            // 获取参数值
-            String[] paramValues = httpServletRequest.getParameterValues(paramName);
-            // 是否存在参数
-            if (paramValues.length == 1) {
-                String paramValue = paramValues[0];
-                if (paramValue.length() != 0) {
-                    map.put(paramName, paramValue);
-                }
-            }
-        }
-        return map;
-    }
+	/**
+	 * 获取request
+	 * @return HttpServletRequest
+	 */
+	public static HttpServletRequest getRequest() {
+		try {
+			return getRequestAttributes().getRequest();
+		}
+		catch (NullPointerException e) {
+			return null;
+		}
+	}
 
-    /**
-     * 获取body数据
-     *
-     * @return String
-     */
-    public static String getStrFromStream(HttpServletRequest req) {
-        StringBuilder sb = new StringBuilder();
-        try (
-                ServletInputStream inputStream = req.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))
-        ) {
-            StringBuilder stringBuilder = new StringBuilder();
-            char[] charBuffer = new char[128];
-            int bytesRead;
-            while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
-                stringBuilder.append(charBuffer, 0, bytesRead);
-            }
+	/**
+	 * 获取当前地址完整URI(注意是服务器的IP,便于查找出错机器)
+	 * @return 当前完整访问地址
+	 */
+	public static String getHostRequestURI() {
+		HttpServletRequest request = getRequest();
+		return IpUtils.getHostIp() + ":" + request.getServerPort() + request.getRequestURI();
+	}
 
-            return stringBuilder.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "";
-        }
-    }
+	/**
+	 * 获取getResponse
+	 * @return HttpServletResponse
+	 */
+	public static HttpServletResponse getResponse() {
+		return getRequestAttributes().getResponse();
+	}
 
-    /**
-     * 获取Integer参数
-     *
-     * @param name 参数名称
-     * @return 返回参数数据
-     */
-    public static Integer getParameterToInt(String name) {
-        return Convert.toInt(getRequest().getParameter(name));
-    }
+	/**
+	 * 获取RequestAttributes
+	 * @return ServletRequestAttributes
+	 */
+	public static ServletRequestAttributes getRequestAttributes() {
+		ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
+				.getRequestAttributes();
+		return requestAttributes;
+	}
 
-    /**
-     * 获取String参数
-     */
-    public static String getParameter(String name) {
-        return getRequest().getParameter(name);
-    }
+	/**
+	 * 获取session
+	 * @return HttpSession
+	 */
+	public static HttpSession getSession() {
+		return getRequest().getSession();
+	}
 
-    /**
-     * 导出文件给予前端
-     *
-     * @param httpServletResponse HttpServletResponse
-     * @param file                文件
-     * @param filename            文件名称
-     */
-    public static void download(HttpServletResponse httpServletResponse, byte[] file, String filename) {
+	/**
+	 * 获取json格式参数
+	 * @return Map
+	 */
+	public static Map<String, String> getMapParam() {
+		return getMapParam(getRequest());
+	}
 
-        try {
+	/**
+	 * 获取json格式参数
+	 * @param httpServletRequest HttpServletRequest
+	 * @return Map
+	 */
+	public static Map<String, String> getMapParam(HttpServletRequest httpServletRequest) {
+		Map<String, String> map = new HashMap<>(6);
+		// 获取所有参数名称
+		Enumeration enu = httpServletRequest.getParameterNames();
+		// 遍历hash
+		while (enu.hasMoreElements()) {
+			String paramName = (String) enu.nextElement();
+			// 获取参数值
+			String[] paramValues = httpServletRequest.getParameterValues(paramName);
+			// 是否存在参数
+			if (paramValues.length == 1) {
+				String paramValue = paramValues[0];
+				if (paramValue.length() != 0) {
+					map.put(paramName, paramValue);
+				}
+			}
+		}
+		return map;
+	}
 
-            httpServletResponse.setCharacterEncoding(CharsetKit.UTF_8);
-            filename = URLEncoder.encode(filename, CharsetKit.UTF_8);
-            // Url编码，前台需自行还原
-            filename = "attachment; filename=" + filename;
-            // 设置Excel导出的名称
-            httpServletResponse.setHeader("Content-Disposition", filename);
-            ServletOutputStream outputStream = httpServletResponse.getOutputStream();
-            outputStream.write(file);
+	/**
+	 * 获取body数据
+	 * @return String
+	 */
+	public static String getStrFromStream(HttpServletRequest req) {
+		StringBuilder sb = new StringBuilder();
+		try (ServletInputStream inputStream = req.getInputStream();
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
+			StringBuilder stringBuilder = new StringBuilder();
+			char[] charBuffer = new char[128];
+			int bytesRead;
+			while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
+				stringBuilder.append(charBuffer, 0, bytesRead);
+			}
 
-        } catch (IOException e) {
-            throw new TWTUtilsException("文件导出出错");
-        }
+			return stringBuilder.toString();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
 
-    }
+	/**
+	 * 获取Integer参数
+	 * @param name 参数名称
+	 * @return 返回参数数据
+	 */
+	public static Integer getParameterToInt(String name) {
+		return Convert.toInt(getRequest().getParameter(name));
+	}
 
-    /**
-     * 导出文件给予前端
-     *
-     * @param file     文件
-     * @param filename 文件名称
-     */
-    public static void download(byte[] file, String filename) {
-        download(getResponse(), file, filename);
-    }
+	/**
+	 * 获取String参数
+	 */
+	public static String getParameter(String name) {
+		return getRequest().getParameter(name);
+	}
 
-    /**
-     * 是否是Ajax异步请求
-     */
-    public static boolean isAjax() {
-        HttpServletRequest request = getRequest();
-        String accept = getRequest().getHeader("accept");
-        if (accept != null && accept.contains("application/json")) {
-            return true;
-        }
+	/**
+	 * 导出文件给予前端
+	 * @param httpServletResponse HttpServletResponse
+	 * @param file 文件
+	 * @param filename 文件名称
+	 */
+	public static void download(HttpServletResponse httpServletResponse, byte[] file, String filename) {
 
-        String xRequestedWith = request.getHeader("X-Requested-With");
-        if (xRequestedWith != null && xRequestedWith.contains("XMLHttpRequest")) {
-            return true;
-        }
+		try {
 
-        String uri = request.getRequestURI();
-        if (StringUtils.inStringIgnoreCase(uri, ".json", ".xml")) {
-            return true;
-        }
+			httpServletResponse.setCharacterEncoding(CharsetKit.UTF_8);
+			filename = URLEncoder.encode(filename, CharsetKit.UTF_8);
+			// Url编码，前台需自行还原
+			filename = "attachment; filename=" + filename;
+			// 设置Excel导出的名称
+			httpServletResponse.setHeader("Content-Disposition", filename);
+			ServletOutputStream outputStream = httpServletResponse.getOutputStream();
+			outputStream.write(file);
 
-        String ajax = request.getParameter("__ajax");
+		}
+		catch (IOException e) {
+			throw new TWTUtilsException("文件导出出错");
+		}
 
-        return StringUtils.inStringIgnoreCase(ajax, "json", "xml");
-    }
+	}
 
-    /**
-     * 不为Ajax异步请求
-     */
-    public static boolean isNotAjax() {
-        return !isAjax();
-    }
+	/**
+	 * 导出文件给予前端
+	 * @param file 文件
+	 * @param filename 文件名称
+	 */
+	public static void download(byte[] file, String filename) {
+		download(getResponse(), file, filename);
+	}
 
-    /**
-     * 内容编码
-     *
-     * @param str 内容
-     * @return 编码后的内容
-     */
-    public static String urlEncode(String str) {
-        try {
-            return URLEncoder.encode(str, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            return "";
-        }
-    }
+	/**
+	 * 是否是Ajax异步请求
+	 */
+	public static boolean isAjax() {
+		HttpServletRequest request = getRequest();
+		String accept = getRequest().getHeader("accept");
+		if (accept != null && accept.contains("application/json")) {
+			return true;
+		}
 
-    /**
-     * 内容解码
-     *
-     * @param str 内容
-     * @return 解码后的内容
-     */
-    public static String urlDecode(String str) {
-        try {
-            return URLDecoder.decode(str, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            return "";
-        }
-    }
+		String xRequestedWith = request.getHeader("X-Requested-With");
+		if (xRequestedWith != null && xRequestedWith.contains("XMLHttpRequest")) {
+			return true;
+		}
+
+		String uri = request.getRequestURI();
+		if (StringUtils.inStringIgnoreCase(uri, ".json", ".xml")) {
+			return true;
+		}
+
+		String ajax = request.getParameter("__ajax");
+
+		return StringUtils.inStringIgnoreCase(ajax, "json", "xml");
+	}
+
+	/**
+	 * 不为Ajax异步请求
+	 */
+	public static boolean isNotAjax() {
+		return !isAjax();
+	}
+
+	/**
+	 * 内容编码
+	 * @param str 内容
+	 * @return 编码后的内容
+	 */
+	public static String urlEncode(String str) {
+		try {
+			return URLEncoder.encode(str, "UTF-8");
+		}
+		catch (UnsupportedEncodingException e) {
+			return "";
+		}
+	}
+
+	/**
+	 * 内容解码
+	 * @param str 内容
+	 * @return 解码后的内容
+	 */
+	public static String urlDecode(String str) {
+		try {
+			return URLDecoder.decode(str, "UTF-8");
+		}
+		catch (UnsupportedEncodingException e) {
+			return "";
+		}
+	}
 
 }

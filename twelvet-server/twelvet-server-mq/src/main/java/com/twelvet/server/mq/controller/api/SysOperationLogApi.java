@@ -19,18 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/system/operationLog")
 public class SysOperationLogApi {
 
-    @Autowired
-    private SysOperationLogService sysOperationLogService;
+	@Autowired
+	private SysOperationLogService sysOperationLogService;
 
-    /**
-     * 新增登录日志log MQ
-     * @return R<Boolean>
-     */
-    @AuthIgnore
-    @PostMapping
-    public R<Boolean> sendSysOperationLog(@RequestBody SysOperationLog sysOperationLog) {
-        sysOperationLogService.sendSysOperationLog(sysOperationLog);
-        return R.ok(true);
-    }
+	/**
+	 * 新增登录日志log MQ
+	 * @return R<Boolean>
+	 */
+	@AuthIgnore
+	@PostMapping
+	public R<Boolean> sendSysOperationLog(@RequestBody SysOperationLog sysOperationLog) {
+		sysOperationLogService.sendSysOperationLog(sysOperationLog);
+		return R.ok(true);
+	}
 
 }

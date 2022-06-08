@@ -15,40 +15,38 @@ import org.slf4j.LoggerFactory;
  */
 public class NettyClientHandler extends ChannelInboundHandlerAdapter {
 
-    private final static Logger log = LoggerFactory.getLogger(NettyClientHandler.class);
+	private final static Logger log = LoggerFactory.getLogger(NettyClientHandler.class);
 
-    /**
-     * 读取服务端发送的信息
-     *
-     * @param ctx ChannelHandlerContext
-     */
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) {
-        ctx.writeAndFlush(Unpooled.copiedBuffer("hello server", CharsetUtil.UTF_8));
-    }
+	/**
+	 * 读取服务端发送的信息
+	 * @param ctx ChannelHandlerContext
+	 */
+	@Override
+	public void channelActive(ChannelHandlerContext ctx) {
+		ctx.writeAndFlush(Unpooled.copiedBuffer("hello server", CharsetUtil.UTF_8));
+	}
 
-    /**
-     * 通道有读取事件时，会触发
-     *
-     * @param ctx ChannelHandlerContext
-     * @param msg Object
-     */
-    @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        ByteBuf buf = (ByteBuf) msg;
-        log.info("服务器回复的消息：{}", buf.toString(CharsetUtil.UTF_8));
-        log.info("服务器地址：{}", ctx.channel().remoteAddress());
-    }
+	/**
+	 * 通道有读取事件时，会触发
+	 * @param ctx ChannelHandlerContext
+	 * @param msg Object
+	 */
+	@Override
+	public void channelRead(ChannelHandlerContext ctx, Object msg) {
+		ByteBuf buf = (ByteBuf) msg;
+		log.info("服务器回复的消息：{}", buf.toString(CharsetUtil.UTF_8));
+		log.info("服务器地址：{}", ctx.channel().remoteAddress());
+	}
 
-    /**
-     * 捕获异常
-     *
-     * @param ctx   ChannelHandlerContext
-     * @param cause Throwable
-     */
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        log.error("netty服务链接异常：", cause);
-        ctx.close();
-    }
+	/**
+	 * 捕获异常
+	 * @param ctx ChannelHandlerContext
+	 * @param cause Throwable
+	 */
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+		log.error("netty服务链接异常：", cause);
+		ctx.close();
+	}
+
 }

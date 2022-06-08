@@ -15,13 +15,14 @@ import java.util.List;
 @ConfigurationProperties(prefix = "security.oauth2.ignore")
 public class IgnoreUrlsProperties {
 
-    private List<String> urls = new ArrayList<>();
+	private List<String> urls = new ArrayList<>();
 
-    public List<String> getUrls() {
-        return urls;
-    }
+	public List<String> getUrls() {
+		return urls;
+	}
 
-    public void setUrls(List<String> urls) {
-        this.urls = urls;
-    }
+	public void setUrls(List<String> urls) {
+		this.urls = urls;
+	}
+
 }

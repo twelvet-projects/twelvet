@@ -19,37 +19,38 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class AuthenticationSuccessEventHandler implements ApplicationListener<AuthenticationSuccessEvent> {
-    @Autowired
-    private RemoteLogService remoteLogService;
-    
-    @Autowired
-    private RemoteMQSysLoginLogService remoteMQSysLoginLogService;
 
-    @Override
-    public void onApplicationEvent(AuthenticationSuccessEvent event) {
-        Authentication authentication = (Authentication) event.getSource();
-        if ($.isNotEmpty(authentication.getAuthorities())
-                && authentication.getPrincipal() instanceof LoginUser) {
-            LoginUser user = (LoginUser) authentication.getPrincipal();
+	@Autowired
+	private RemoteLogService remoteLogService;
 
-            String username = user.getUsername();
-            Long deptId = user.getDeptId();
+	@Autowired
+	private RemoteMQSysLoginLogService remoteMQSysLoginLogService;
 
-            String ip = IpUtils.getIpAddr();
+	@Override
+	public void onApplicationEvent(AuthenticationSuccessEvent event) {
+		Authentication authentication = (Authentication) event.getSource();
+		if ($.isNotEmpty(authentication.getAuthorities()) && authentication.getPrincipal() instanceof LoginUser) {
+			LoginUser user = (LoginUser) authentication.getPrincipal();
 
-            SysLoginInfo sysLoginInfo = new SysLoginInfo();
-            sysLoginInfo.setUserName(username);
-            sysLoginInfo.setIpaddr(ip);
-            sysLoginInfo.setDeptId(deptId);
-            sysLoginInfo.setStatus(1);
-            sysLoginInfo.setMsg("登录成功");
+			String username = user.getUsername();
+			Long deptId = user.getDeptId();
 
-            // 异步记录用户登录日志
-            remoteLogService.saveLoginInfo(sysLoginInfo);
+			String ip = IpUtils.getIpAddr();
 
-            // MQ队列日志
-            // remoteMQSysLoginLogService.sendSysLoginLog(sysLoginInfo);
+			SysLoginInfo sysLoginInfo = new SysLoginInfo();
+			sysLoginInfo.setUserName(username);
+			sysLoginInfo.setIpaddr(ip);
+			sysLoginInfo.setDeptId(deptId);
+			sysLoginInfo.setStatus(1);
+			sysLoginInfo.setMsg("登录成功");
 
-        }
-    }
+			// 异步记录用户登录日志
+			remoteLogService.saveLoginInfo(sysLoginInfo);
+
+			// MQ队列日志
+			// remoteMQSysLoginLogService.sendSysLoginLog(sysLoginInfo);
+
+		}
+	}
+
 }

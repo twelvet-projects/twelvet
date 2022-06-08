@@ -9,7 +9,7 @@ import java.lang.annotation.*;
  * @WebSite www.twelvet.cn
  * @Description: 从库数据源
  */
-@Target({ElementType.TYPE, ElementType.METHOD})
+@Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @DS("slave")

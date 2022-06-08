@@ -6,6 +6,7 @@ package com.twelvet.framework.utils.constants;
  * @Description: char 常量池
  */
 public interface CharConstants {
+
 	// @formatter:off
 	char UPPER_A          = 'A';
 	char LOWER_A          = 'a';
@@ -53,4 +54,5 @@ public interface CharConstants {
 	char ONE              = '1';
 	char ZERO             = '0';
 	// @formatter:on
+
 }

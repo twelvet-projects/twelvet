@@ -19,18 +19,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/loginInfo")
 public class SysLoginInfoApi extends TWTController {
 
-    @Autowired
-    private ISysLoginInfoService iSysLoginInfoService;
+	@Autowired
+	private ISysLoginInfoService iSysLoginInfoService;
 
-    /**
-     * 记录登录信息
-     *
-     * @param sysLoginInfo SysLoginInfo
-     */
-    @AuthIgnore
-    @PostMapping
-    public void insertLog(@RequestBody SysLoginInfo sysLoginInfo) {
-        iSysLoginInfoService.insertLoginInfo(sysLoginInfo);
-    }
+	/**
+	 * 记录登录信息
+	 * @param sysLoginInfo SysLoginInfo
+	 */
+	@AuthIgnore
+	@PostMapping
+	public void insertLog(@RequestBody SysLoginInfo sysLoginInfo) {
+		iSysLoginInfoService.insertLoginInfo(sysLoginInfo);
+	}
 
 }

@@ -8,11 +8,11 @@ import org.quartz.JobExecutionContext;
  * @WebSite www.twelvet.cn
  * @Description: 定时任务工具类
  */
-public class QuartzJobExecution extends AbstractQuartzJob
-{
-    @Override
-    protected void doExecute(JobExecutionContext context, SysJob sysJob) throws Exception
-    {
-        JobInvokeUtil.invokeMethod(sysJob);
-    }
+public class QuartzJobExecution extends AbstractQuartzJob {
+
+	@Override
+	protected void doExecute(JobExecutionContext context, SysJob sysJob) throws Exception {
+		JobInvokeUtil.invokeMethod(sysJob);
+	}
+
 }

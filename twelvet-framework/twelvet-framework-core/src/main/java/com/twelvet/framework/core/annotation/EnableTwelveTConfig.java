@@ -1,6 +1,5 @@
 package com.twelvet.framework.core.annotation;
 
-
 import com.twelvet.framework.swagger.annotation.EnableTwelveTSwagger2;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -22,4 +21,5 @@ import java.lang.annotation.*;
 // 开启线程异步执行
 @EnableAsync
 public @interface EnableTwelveTConfig {
+
 }

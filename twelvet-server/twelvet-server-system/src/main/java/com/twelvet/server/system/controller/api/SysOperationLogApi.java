@@ -18,19 +18,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/operationLog")
 public class SysOperationLogApi extends TWTController {
 
-    @Autowired
-    private ISysOperationLogService iSysOperationLogService;
+	@Autowired
+	private ISysOperationLogService iSysOperationLogService;
 
-    /**
-     * 新增操作日志
-     *
-     * @param operationLog SysOperationLog
-     * @return AjaxResult
-     */
-    @AuthIgnore
-    @PostMapping
-    public void saveLog(@RequestBody SysOperationLog operationLog) {
-        iSysOperationLogService.insertOperationLog(operationLog);
-    }
+	/**
+	 * 新增操作日志
+	 * @param operationLog SysOperationLog
+	 * @return AjaxResult
+	 */
+	@AuthIgnore
+	@PostMapping
+	public void saveLog(@RequestBody SysOperationLog operationLog) {
+		iSysOperationLogService.insertOperationLog(operationLog);
+	}
 
 }

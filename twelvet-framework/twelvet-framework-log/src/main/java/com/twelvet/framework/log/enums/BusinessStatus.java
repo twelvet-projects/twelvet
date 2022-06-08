@@ -6,37 +6,38 @@ package com.twelvet.framework.log.enums;
  * @Description: 操作状态
  */
 public enum BusinessStatus {
-    /**
-     * 成功
-     */
-    SUCCESS(1, "SUCCESS"),
 
-    /**
-     * 失败
-     */
-    FAIL(0, "FAIL");
+	/**
+	 * 成功
+	 */
+	SUCCESS(1, "SUCCESS"),
 
-    private final int value;
+	/**
+	 * 失败
+	 */
+	FAIL(0, "FAIL");
 
-    private final String reasonPhrase;
+	private final int value;
 
-    BusinessStatus(int value, String reasonPhrase) {
-        this.value = value;
-        this.reasonPhrase = reasonPhrase;
-    }
+	private final String reasonPhrase;
 
-    /**
-     * Return the integer value of this status code.
-     */
-    public int value() {
-        return this.value;
-    }
+	BusinessStatus(int value, String reasonPhrase) {
+		this.value = value;
+		this.reasonPhrase = reasonPhrase;
+	}
 
-    /**
-     * Return the reason phrase of this status code.
-     */
-    public String getReasonPhrase() {
-        return this.reasonPhrase;
-    }
+	/**
+	 * Return the integer value of this status code.
+	 */
+	public int value() {
+		return this.value;
+	}
+
+	/**
+	 * Return the reason phrase of this status code.
+	 */
+	public String getReasonPhrase() {
+		return this.reasonPhrase;
+	}
 
 }

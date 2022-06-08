@@ -14,24 +14,23 @@ import io.netty.handler.stream.ChunkedWriteHandler;
  */
 public class WebSocketServerInitializer extends ChannelInitializer<SocketChannel> {
 
-    /**
-     * 初始化设置
-     *
-     * @param socketChannel SocketChannel
-     */
-    @Override
-    protected void initChannel(SocketChannel socketChannel) {
-        socketChannel.pipeline()
-                // http解码器
-                .addLast(new HttpServerCodec())
-                // 自定义处理事件
-                .addLast(new SocketServerHandler())
-                // 支持写大数据流
-                .addLast(new ChunkedWriteHandler())
-                // http聚合器
-                .addLast(new HttpObjectAggregator(1024 * 62))
-                //ws://localhost:8989/ws
-                .addLast(new WebSocketServerProtocolHandler("/socket"));
-    }
+	/**
+	 * 初始化设置
+	 * @param socketChannel SocketChannel
+	 */
+	@Override
+	protected void initChannel(SocketChannel socketChannel) {
+		socketChannel.pipeline()
+				// http解码器
+				.addLast(new HttpServerCodec())
+				// 自定义处理事件
+				.addLast(new SocketServerHandler())
+				// 支持写大数据流
+				.addLast(new ChunkedWriteHandler())
+				// http聚合器
+				.addLast(new HttpObjectAggregator(1024 * 62))
+				// ws://localhost:8989/ws
+				.addLast(new WebSocketServerProtocolHandler("/socket"));
+	}
 
 }

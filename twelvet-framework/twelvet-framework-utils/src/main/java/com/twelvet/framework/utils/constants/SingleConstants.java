@@ -19,4 +19,5 @@ public class SingleConstants {
 	 * SECURE_RANDOM
 	 */
 	public final static SecureRandom SECURE_RANDOM = new SecureRandom();
+
 }

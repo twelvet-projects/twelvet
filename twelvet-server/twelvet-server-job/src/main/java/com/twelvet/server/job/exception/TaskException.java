@@ -6,24 +6,28 @@ package com.twelvet.server.job.exception;
  * @Description: 计划策略异常
  */
 public class TaskException extends Exception {
-    private static final long serialVersionUID = 1L;
 
-    private Code code;
+	private static final long serialVersionUID = 1L;
 
-    public TaskException(String msg, Code code) {
-        this(msg, code, null);
-    }
+	private Code code;
 
-    public TaskException(String msg, Code code, Exception nestedEx) {
-        super(msg, nestedEx);
-        this.code = code;
-    }
+	public TaskException(String msg, Code code) {
+		this(msg, code, null);
+	}
 
-    public Code getCode() {
-        return code;
-    }
+	public TaskException(String msg, Code code, Exception nestedEx) {
+		super(msg, nestedEx);
+		this.code = code;
+	}
 
-    public enum Code {
-        TASK_EXISTS, NO_TASK_EXISTS, TASK_ALREADY_STARTED, UNKNOWN, CONFIG_ERROR, TASK_NODE_NOT_AVAILABLE
-    }
+	public Code getCode() {
+		return code;
+	}
+
+	public enum Code {
+
+		TASK_EXISTS, NO_TASK_EXISTS, TASK_ALREADY_STARTED, UNKNOWN, CONFIG_ERROR, TASK_NODE_NOT_AVAILABLE
+
+	}
+
 }

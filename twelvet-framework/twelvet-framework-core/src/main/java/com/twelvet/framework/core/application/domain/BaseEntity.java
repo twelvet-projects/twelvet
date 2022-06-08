@@ -15,135 +15,137 @@ import java.util.Map;
  */
 public class BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    /**
-     * 搜索值
-     */
-    @ApiModelProperty("搜索值")
-    private String searchValue;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 创建者
-     */
-    @ApiModelProperty("创建者")
-    private String createBy;
+	/**
+	 * 搜索值
+	 */
+	@ApiModelProperty("搜索值")
+	private String searchValue;
 
-    /**
-     * 创建时间
-     */
-    @ApiModelProperty("创建时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createTime;
+	/**
+	 * 创建者
+	 */
+	@ApiModelProperty("创建者")
+	private String createBy;
 
-    /**
-     * 更新者
-     */
-    @ApiModelProperty("更新者")
-    private String updateBy;
+	/**
+	 * 创建时间
+	 */
+	@ApiModelProperty("创建时间")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date createTime;
 
-    /**
-     * 更新时间
-     */
-    @ApiModelProperty("更新时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date updateTime;
+	/**
+	 * 更新者
+	 */
+	@ApiModelProperty("更新者")
+	private String updateBy;
 
-    /**
-     * 备注
-     */
-    @ApiModelProperty("备注")
-    private String remark;
+	/**
+	 * 更新时间
+	 */
+	@ApiModelProperty("更新时间")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date updateTime;
 
-    /**
-     * 开始时间
-     */
-    @ApiModelProperty("开始时间")
-    private String beginTime;
+	/**
+	 * 备注
+	 */
+	@ApiModelProperty("备注")
+	private String remark;
 
-    /**
-     * 结束时间
-     */
-    @ApiModelProperty("结束时间")
-    private String endTime;
+	/**
+	 * 开始时间
+	 */
+	@ApiModelProperty("开始时间")
+	private String beginTime;
 
-    /**
-     * 请求参数
-     */
-    @ApiModelProperty("请求参数")
-    private Map<String, Object> params;
+	/**
+	 * 结束时间
+	 */
+	@ApiModelProperty("结束时间")
+	private String endTime;
 
-    public String getSearchValue() {
-        return searchValue;
-    }
+	/**
+	 * 请求参数
+	 */
+	@ApiModelProperty("请求参数")
+	private Map<String, Object> params;
 
-    public void setSearchValue(String searchValue) {
-        this.searchValue = searchValue;
-    }
+	public String getSearchValue() {
+		return searchValue;
+	}
 
-    public String getCreateBy() {
-        return createBy;
-    }
+	public void setSearchValue(String searchValue) {
+		this.searchValue = searchValue;
+	}
 
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
-    }
+	public String getCreateBy() {
+		return createBy;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public String getUpdateBy() {
-        return updateBy;
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
-    }
+	public String getUpdateBy() {
+		return updateBy;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+	public Date getUpdateTime() {
+		return updateTime;
+	}
 
-    public String getRemark() {
-        return remark;
-    }
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
+	public String getRemark() {
+		return remark;
+	}
 
-    public String getBeginTime() {
-        return beginTime;
-    }
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 
-    public void setBeginTime(String beginTime) {
-        this.beginTime = beginTime;
-    }
+	public String getBeginTime() {
+		return beginTime;
+	}
 
-    public String getEndTime() {
-        return endTime;
-    }
+	public void setBeginTime(String beginTime) {
+		this.beginTime = beginTime;
+	}
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
+	public String getEndTime() {
+		return endTime;
+	}
 
-    public Map<String, Object> getParams() {
-        if (params == null) {
-            params = new HashMap<>(0);
-        }
-        return params;
-    }
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
 
-    public void setParams(Map<String, Object> params) {
-        this.params = params;
-    }
+	public Map<String, Object> getParams() {
+		if (params == null) {
+			params = new HashMap<>(0);
+		}
+		return params;
+	}
+
+	public void setParams(Map<String, Object> params) {
+		this.params = params;
+	}
+
 }

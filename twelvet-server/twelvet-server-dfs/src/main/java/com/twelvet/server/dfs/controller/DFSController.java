@@ -24,71 +24,67 @@ import java.util.List;
 @RestController
 public class DFSController extends TWTController {
 
-    @Autowired
-    private IDFSService sysFileService;
+	@Autowired
+	private IDFSService sysFileService;
 
-    /**
-     * 域名或本机访问地址
-     */
-    @Value("${fdfs.domain}")
-    public String domain;
+	/**
+	 * 域名或本机访问地址
+	 */
+	@Value("${fdfs.domain}")
+	public String domain;
 
-    /**
-     * 多文件上传
-     *
-     * @param files MultipartFile[]
-     * @return R<SysFile>
-     */
-    @Log(service = "多文件上传", businessType = BusinessType.IMPORT)
-    @PostMapping("/batchUpload")
-    public AjaxResult batchUpload(MultipartFile[] files) {
-        // 上传并返回访问地址
-        List<SysDfs> sysDfsList = sysFileService.uploadFiles(files);
+	/**
+	 * 多文件上传
+	 * @param files MultipartFile[]
+	 * @return R<SysFile>
+	 */
+	@Log(service = "多文件上传", businessType = BusinessType.IMPORT)
+	@PostMapping("/batchUpload")
+	public AjaxResult batchUpload(MultipartFile[] files) {
+		// 上传并返回访问地址
+		List<SysDfs> sysDfsList = sysFileService.uploadFiles(files);
 
-        return AjaxResult.success(sysDfsList);
-    }
+		return AjaxResult.success(sysDfsList);
+	}
 
-    /**
-     * 单文件上传
-     *
-     * @param file MultipartFile
-     * @return R<SysFile>
-     */
-    @PostMapping("/commonUpload")
-    @Log(service = "单文件上传", businessType = BusinessType.IMPORT)
-    public AjaxResult commonUpload(MultipartFile file) {
-        // 上传并返回访问地址
-        SysDfs sysDfs = sysFileService.uploadFile(file);
-        String url = domain + File.separator + sysDfs.getPath();
-        return AjaxResult.success("上传成功", url);
-    }
+	/**
+	 * 单文件上传
+	 * @param file MultipartFile
+	 * @return R<SysFile>
+	 */
+	@PostMapping("/commonUpload")
+	@Log(service = "单文件上传", businessType = BusinessType.IMPORT)
+	public AjaxResult commonUpload(MultipartFile file) {
+		// 上传并返回访问地址
+		SysDfs sysDfs = sysFileService.uploadFile(file);
+		String url = domain + File.separator + sysDfs.getPath();
+		return AjaxResult.success("上传成功", url);
+	}
 
-    /**
-     * 删除文件
-     *
-     * @param fileIds 文件地址
-     * @return AjaxResult
-     */
-    @PreAuthorize("@role.hasPermi('dfs:dfs:remove')")
-    @Log(service = "删除文件", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{fileIds}")
-    public AjaxResult deleteFile(@PathVariable Long[] fileIds) {
-        sysFileService.deleteFile(fileIds);
-        return AjaxResult.success();
-    }
+	/**
+	 * 删除文件
+	 * @param fileIds 文件地址
+	 * @return AjaxResult
+	 */
+	@PreAuthorize("@role.hasPermi('dfs:dfs:remove')")
+	@Log(service = "删除文件", businessType = BusinessType.DELETE)
+	@DeleteMapping("/{fileIds}")
+	public AjaxResult deleteFile(@PathVariable Long[] fileIds) {
+		sysFileService.deleteFile(fileIds);
+		return AjaxResult.success();
+	}
 
-    /**
-     * 分页查询
-     *
-     * @param sysDfs SysDfs
-     * @return AjaxResult
-     */
-    @PreAuthorize("@role.hasPermi('dfs:dfs:list')")
-    @GetMapping("/pageQuery")
-    public AjaxResult pageQuery(SysDfs sysDfs) {
-        PageUtils.startPage();
-        List<SysDfs> sysDfsList = sysFileService.selectSysDfsList(sysDfs);
-        return AjaxResult.success(PageUtils.getDataTable(sysDfsList));
-    }
+	/**
+	 * 分页查询
+	 * @param sysDfs SysDfs
+	 * @return AjaxResult
+	 */
+	@PreAuthorize("@role.hasPermi('dfs:dfs:list')")
+	@GetMapping("/pageQuery")
+	public AjaxResult pageQuery(SysDfs sysDfs) {
+		PageUtils.startPage();
+		List<SysDfs> sysDfsList = sysFileService.selectSysDfsList(sysDfs);
+		return AjaxResult.success(PageUtils.getDataTable(sysDfsList));
+	}
 
 }

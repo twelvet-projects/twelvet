@@ -21,27 +21,26 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api")
 public class DFSApi extends TWTController {
 
-    @Autowired
-    private IDFSService sysFileService;
+	@Autowired
+	private IDFSService sysFileService;
 
-    /**
-     * 系统单文件上传API
-     *
-     * @param file MultipartFile
-     * @return R<SysFile>
-     */
-    @PostMapping("/upload")
-    public R<SysFile> upload(MultipartFile file) {
-        // 上传并返回访问地址
-        SysDfs sysDfs = sysFileService.uploadFile(file);
+	/**
+	 * 系统单文件上传API
+	 * @param file MultipartFile
+	 * @return R<SysFile>
+	 */
+	@PostMapping("/upload")
+	public R<SysFile> upload(MultipartFile file) {
+		// 上传并返回访问地址
+		SysDfs sysDfs = sysFileService.uploadFile(file);
 
-        String path = sysDfs.getPath();
+		String path = sysDfs.getPath();
 
-        SysFile sysFile = new SysFile();
-        sysFile.setName(FileUtils.getName(path));
-        sysFile.setUrl(path);
+		SysFile sysFile = new SysFile();
+		sysFile.setName(FileUtils.getName(path));
+		sysFile.setUrl(path);
 
-        return R.ok(sysFile);
-    }
+		return R.ok(sysFile);
+	}
 
 }

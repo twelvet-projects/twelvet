@@ -17,62 +17,60 @@ import java.util.List;
  */
 public class LoginUser extends User {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 用户ID
-     */
-    private Long userId;
+	/**
+	 * 用户ID
+	 */
+	private Long userId;
 
-    /**
-     * 角色对象
-     */
-    private List<SysRole> roles;
+	/**
+	 * 角色对象
+	 */
+	private List<SysRole> roles;
 
-    /**
-     * 部门ID
-     */
-    private Long deptId;
+	/**
+	 * 部门ID
+	 */
+	private Long deptId;
 
-    public LoginUser(Long userId, Long deptId, List<SysRole> roles, String username, String password, boolean enabled, boolean accountNonExpired,
-                     boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-        this.userId = userId;
-        this.deptId = deptId;
-        this.roles = roles;
-    }
+	public LoginUser(Long userId, Long deptId, List<SysRole> roles, String username, String password, boolean enabled,
+			boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked,
+			Collection<? extends GrantedAuthority> authorities) {
+		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+		this.userId = userId;
+		this.deptId = deptId;
+		this.roles = roles;
+	}
 
-    public Long getUserId() {
-        return userId;
-    }
+	public Long getUserId() {
+		return userId;
+	}
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 
-    public List<SysRole> getRoles() {
-        return roles;
-    }
+	public List<SysRole> getRoles() {
+		return roles;
+	}
 
-    public void setRoles(List<SysRole> roles) {
-        this.roles = roles;
-    }
+	public void setRoles(List<SysRole> roles) {
+		this.roles = roles;
+	}
 
-    public Long getDeptId() {
-        return deptId;
-    }
+	public Long getDeptId() {
+		return deptId;
+	}
 
-    public void setDeptId(Long deptId) {
-        this.deptId = deptId;
-    }
+	public void setDeptId(Long deptId) {
+		this.deptId = deptId;
+	}
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("deptId", getDeptId())
-                .append("roles", getRoles())
-                .append("userId", getUserId())
-                .toString();
-    }
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("deptId", getDeptId())
+				.append("roles", getRoles()).append("userId", getUserId()).toString();
+	}
 
 }

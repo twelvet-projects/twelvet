@@ -1,6 +1,5 @@
 package com.twelvet.framework.utils;
 
-
 import com.twelvet.framework.utils.constants.CharConstants;
 import org.springframework.lang.Nullable;
 
@@ -15,7 +14,6 @@ public class DesensitizationUtil {
 
 	/**
 	 * [中文姓名] 只显示第一个汉字，其他隐藏为2个星号<例子：李**>
-	 *
 	 * @param fullName 全名
 	 * @return 脱敏后的字符串
 	 */
@@ -26,7 +24,6 @@ public class DesensitizationUtil {
 
 	/**
 	 * [身份证号] 显示最后四位，其他隐藏。共计18位或者15位。<例子：*************5762>
-	 *
 	 * @param id 身份证号
 	 * @return 脱敏后的字符串
 	 */
@@ -37,7 +34,6 @@ public class DesensitizationUtil {
 
 	/**
 	 * [固定电话] 后四位，其他隐藏<例子：****1234>
-	 *
 	 * @param num 固定电话号
 	 * @return 脱敏后的字符串
 	 */
@@ -48,7 +44,6 @@ public class DesensitizationUtil {
 
 	/**
 	 * [手机号码] 前三位，后四位，其他隐藏<例子:138****1234>
-	 *
 	 * @param num 手机号
 	 * @return 脱敏后的字符串
 	 */
@@ -59,8 +54,7 @@ public class DesensitizationUtil {
 
 	/**
 	 * [地址] 只显示到地区，不显示详细地址；我们要对个人信息增强保护<例子：北京市海淀区****>
-	 *
-	 * @param address       地区
+	 * @param address 地区
 	 * @param sensitiveSize 敏感信息长度
 	 * @return 脱敏后的字符串
 	 */
@@ -71,7 +65,6 @@ public class DesensitizationUtil {
 
 	/**
 	 * [电子邮箱] 邮箱前缀仅显示第一个字母，前缀其他隐藏，用星号代替，@及后面的地址显示<例子:g**@163.com>
-	 *
 	 * @param email 邮箱
 	 * @return 脱敏后的字符串
 	 */
@@ -83,14 +76,14 @@ public class DesensitizationUtil {
 		final int index = email.indexOf(CharConstants.AT);
 		if (index <= 1) {
 			return email;
-		} else {
+		}
+		else {
 			return sensitive(email, 1, email.length() - index);
 		}
 	}
 
 	/**
 	 * [银行卡号] 前六位，后四位，其他用星号隐藏每位1个星号<例子:622260***********1234>
-	 *
 	 * @param cardNum 银行卡号
 	 * @return 脱敏后的字符串
 	 */
@@ -101,7 +94,6 @@ public class DesensitizationUtil {
 
 	/**
 	 * [公司开户银行联号] 公司开户银行联行号,显示前两位，其他用星号隐藏，每位1个星号<例子:12********>
-	 *
 	 * @param code 银行联行号
 	 * @return 脱敏后的字符串
 	 */
@@ -112,7 +104,6 @@ public class DesensitizationUtil {
 
 	/**
 	 * 右边脱敏
-	 *
 	 * @param sensitiveStr 待脱敏的字符串
 	 * @return 脱敏后的字符串
 	 */
@@ -127,7 +118,6 @@ public class DesensitizationUtil {
 
 	/**
 	 * 左边脱敏
-	 *
 	 * @param sensitiveStr 待脱敏的字符串
 	 * @return 脱敏后的字符串
 	 */
@@ -142,7 +132,6 @@ public class DesensitizationUtil {
 
 	/**
 	 * 中间脱敏，保留两端
-	 *
 	 * @param sensitiveStr 待脱敏的字符串
 	 * @return 脱敏后的字符串
 	 */
@@ -165,7 +154,6 @@ public class DesensitizationUtil {
 
 	/**
 	 * 全部脱敏
-	 *
 	 * @param sensitiveStr 待脱敏的字符串
 	 * @return 脱敏后的字符串
 	 */
@@ -176,10 +164,9 @@ public class DesensitizationUtil {
 
 	/**
 	 * 文本脱敏
-	 *
-	 * @param str       字符串
+	 * @param str 字符串
 	 * @param fromIndex 开始的索引
-	 * @param lastSize  尾部长度
+	 * @param lastSize 尾部长度
 	 * @return 脱敏后的字符串
 	 */
 	@Nullable
@@ -189,11 +176,10 @@ public class DesensitizationUtil {
 
 	/**
 	 * 文本脱敏
-	 *
-	 * @param str       字符串
+	 * @param str 字符串
 	 * @param fromIndex 开始的索引
-	 * @param lastSize  尾部长度
-	 * @param padSize   填充的长度
+	 * @param lastSize 尾部长度
+	 * @param padSize 填充的长度
 	 * @return 脱敏后的字符串
 	 */
 	@Nullable
@@ -203,11 +189,10 @@ public class DesensitizationUtil {
 
 	/**
 	 * 文本脱敏
-	 *
-	 * @param str       字符串
+	 * @param str 字符串
 	 * @param fromIndex 开始的索引
-	 * @param lastSize  尾部长度
-	 * @param padChar   填充的字符
+	 * @param lastSize 尾部长度
+	 * @param padChar 填充的字符
 	 * @return 脱敏后的字符串
 	 */
 	@Nullable
@@ -217,12 +202,11 @@ public class DesensitizationUtil {
 
 	/**
 	 * 文本脱敏
-	 *
-	 * @param str       字符串
+	 * @param str 字符串
 	 * @param fromIndex 开始的索引
-	 * @param lastSize  尾部长度
-	 * @param padChar   填充的字符
-	 * @param padSize   填充的长度
+	 * @param lastSize 尾部长度
+	 * @param padChar 填充的字符
+	 * @param padSize 填充的长度
 	 * @return 脱敏后的字符串
 	 */
 	@Nullable

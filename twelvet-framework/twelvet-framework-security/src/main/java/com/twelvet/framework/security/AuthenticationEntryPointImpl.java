@@ -1,6 +1,5 @@
 package com.twelvet.framework.security;
 
-
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.utils.http.ServletUtils;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -22,34 +21,32 @@ import java.io.Serializable;
  */
 @Component
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint, Serializable {
-    @Override
-    public void commence(
-            HttpServletRequest httpServletRequest,
-            HttpServletResponse httpServletResponse,
-            AuthenticationException authenticationException) throws IOException {
 
-        // 获取异常主体
-        Throwable cause = authenticationException.getCause();
+	@Override
+	public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+			AuthenticationException authenticationException) throws IOException {
 
-        // 异常代码401,用户没有权限（令牌、用户名、密码错误）
-        int code = HttpStatus.UNAUTHORIZED.value();
-        // 异常信息
-        String msg;
+		// 获取异常主体
+		Throwable cause = authenticationException.getCause();
 
-        // 判断异常类型(token失效)
-        if (cause instanceof InvalidTokenException) {
-            msg = "Invalid token";
-        } else {
-            msg = "Sorry, You don't have access";
-        }
+		// 异常代码401,用户没有权限（令牌、用户名、密码错误）
+		int code = HttpStatus.UNAUTHORIZED.value();
+		// 异常信息
+		String msg;
 
-        ObjectMapper objectMapper = new ObjectMapper();
+		// 判断异常类型(token失效)
+		if (cause instanceof InvalidTokenException) {
+			msg = "Invalid token";
+		}
+		else {
+			msg = "Sorry, You don't have access";
+		}
 
-        // 发送json数据
-        ServletUtils.render(
-                code,
-                objectMapper.writeValueAsString(AjaxResult.error(code, msg))
-        );
+		ObjectMapper objectMapper = new ObjectMapper();
 
-    }
+		// 发送json数据
+		ServletUtils.render(code, objectMapper.writeValueAsString(AjaxResult.error(code, msg)));
+
+	}
+
 }

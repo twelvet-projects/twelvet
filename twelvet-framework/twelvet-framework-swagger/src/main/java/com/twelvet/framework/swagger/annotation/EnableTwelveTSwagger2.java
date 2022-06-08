@@ -12,12 +12,12 @@ import java.lang.annotation.*;
  * @WebSite www.twelvet.cn
  * @Description: 开启 swagger
  */
-@Target({ElementType.TYPE})
+@Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
 @EnableConfigurationProperties(SwaggerProperties.class)
-@Import({SwaggerAutoConfiguration.class})
+@Import({ SwaggerAutoConfiguration.class })
 public @interface EnableTwelveTSwagger2 {
 
 }

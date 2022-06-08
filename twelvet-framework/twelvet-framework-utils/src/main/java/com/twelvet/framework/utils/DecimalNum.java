@@ -10,7 +10,6 @@ import java.math.RoundingMode;
  */
 public class DecimalNum extends Number {
 
-
 	private BigDecimal value;
 
 	public BigDecimal getValue() {
@@ -27,7 +26,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 构造 DecimalNum
-	 *
 	 * @param decimal decimal
 	 * @return DecimalNum
 	 */
@@ -37,7 +35,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 构造 DecimalNum
-	 *
 	 * @param decimal decimal
 	 * @return DecimalNum
 	 */
@@ -47,7 +44,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 构造 DecimalNum
-	 *
 	 * @param decimal decimal
 	 * @return DecimalNum
 	 */
@@ -57,7 +53,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 构造 DecimalNum
-	 *
 	 * @param decimal decimal
 	 * @return DecimalNum
 	 */
@@ -67,7 +62,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 加
-	 *
 	 * @param decimal 小数
 	 * @return DecimalNum
 	 */
@@ -77,7 +71,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 加
-	 *
 	 * @param decimal 小数
 	 * @return DecimalNum
 	 */
@@ -87,7 +80,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 加
-	 *
 	 * @param decimal 小数
 	 * @return DecimalNum
 	 */
@@ -97,7 +89,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 加
-	 *
 	 * @param decimal 小数
 	 * @return DecimalNum
 	 */
@@ -108,7 +99,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 减
-	 *
 	 * @param decimal 小数
 	 * @return DecimalNum
 	 */
@@ -118,7 +108,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 减
-	 *
 	 * @param decimal 小数
 	 * @return DecimalNum
 	 */
@@ -128,7 +117,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 减
-	 *
 	 * @param decimal 小数
 	 * @return DecimalNum
 	 */
@@ -138,7 +126,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 减
-	 *
 	 * @param decimal 小数
 	 * @return DecimalNum
 	 */
@@ -149,7 +136,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 乘
-	 *
 	 * @param decimal 小数
 	 * @return DecimalNum
 	 */
@@ -159,7 +145,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 乘
-	 *
 	 * @param decimal 小数
 	 * @return DecimalNum
 	 */
@@ -169,7 +154,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 乘
-	 *
 	 * @param decimal 小数
 	 * @return DecimalNum
 	 */
@@ -179,7 +163,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 乘
-	 *
 	 * @param decimal 小数
 	 * @return DecimalNum
 	 */
@@ -190,7 +173,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 除
-	 *
 	 * @param decimal 小数
 	 * @return DecimalNum
 	 */
@@ -200,8 +182,7 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 除
-	 *
-	 * @param decimal      小数
+	 * @param decimal 小数
 	 * @param roundingMode 随机模型
 	 * @return DecimalNum
 	 */
@@ -211,7 +192,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 除
-	 *
 	 * @param decimal 小数
 	 * @return DecimalNum
 	 */
@@ -221,8 +201,7 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 除
-	 *
-	 * @param decimal      小数
+	 * @param decimal 小数
 	 * @param roundingMode 随机模型
 	 * @return DecimalNum
 	 */
@@ -232,7 +211,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 除
-	 *
 	 * @param decimal 小数
 	 * @return DecimalNum
 	 */
@@ -242,8 +220,7 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 除
-	 *
-	 * @param decimal      小数
+	 * @param decimal 小数
 	 * @param roundingMode 随机模型
 	 * @return DecimalNum
 	 */
@@ -253,7 +230,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 除
-	 *
 	 * @param decimal 小数
 	 * @return DecimalNum
 	 */
@@ -264,8 +240,7 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 除
-	 *
-	 * @param decimal      小数
+	 * @param decimal 小数
 	 * @param roundingMode 随机模型
 	 * @return DecimalNum
 	 */
@@ -276,7 +251,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 设置小数位数
-	 *
 	 * @param scale 小数位数
 	 * @return DecimalNum
 	 */
@@ -286,8 +260,7 @@ public class DecimalNum extends Number {
 
 	/**
 	 * 设置小数位数
-	 *
-	 * @param scale        小数位数
+	 * @param scale 小数位数
 	 * @param roundingMode 模式
 	 * @return DecimalNum
 	 */
@@ -298,7 +271,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * intValue
-	 *
 	 * @return 转为 int 值
 	 */
 	@Override
@@ -308,7 +280,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * longValue
-	 *
 	 * @return 转为 long 值
 	 */
 	@Override
@@ -318,7 +289,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * floatValue
-	 *
 	 * @return 转为 float 值
 	 */
 	@Override
@@ -328,7 +298,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * doubleValue
-	 *
 	 * @return 转为 double 值
 	 */
 	@Override
@@ -338,7 +307,6 @@ public class DecimalNum extends Number {
 
 	/**
 	 * toString
-	 *
 	 * @return 转为字符串
 	 */
 	@Override

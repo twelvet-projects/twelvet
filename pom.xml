@@ -42,7 +42,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <spring-boot-dependencies.version>2.6.6</spring-boot-dependencies.version>
+        <spring-boot-dependencies.version>2.7.0</spring-boot-dependencies.version>
         <spring-cloud.version>2021.0.2</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
         <caffeine.version>3.0.5</caffeine.version>
@@ -65,8 +65,9 @@
         <okhttp.version>4.9.3</okhttp.version>
         <canal.version>1.1.6</canal.version>
 
-        <docker.image.prefix>springboot</docker.image.prefix>
         <docker.plugin.version>0.32.0</docker.plugin.version>
+        <spring.checkstyle.plugin>0.0.32</spring.checkstyle.plugin>
+        <git.commit.plugin>4.9.9</git.commit.plugin>
     </properties>
 
     <!--依赖版本声明-->
@@ -331,12 +332,6 @@
 
     <dependencies>
 
-        <!--bootstrap 启动器-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
-        </dependency>
-
         <!--loadbalancer-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -376,36 +371,55 @@
     </modules>
 
     <build>
+        <finalName>${project.name}</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot-dependencies.version}</version>
-                <configuration>
-                    <finalName>${project.build.finalName}</finalName>
-                    <layers>
-                        <enabled>true</enabled>
-                    </layers>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
 
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot-dependencies.version}</version>
+                    <configuration>
+                        <finalName>${project.build.finalName}</finalName>
+                        <layers>
+                            <enabled>true</enabled>
+                        </layers>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>${docker.plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <!--打包jar 与git commit 关联插件-->
             <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>${docker.plugin.version}</version>
+                <groupId>io.github.git-commit-id</groupId>
+                <artifactId>git-commit-id-maven-plugin</artifactId>
+                <version>${git.commit.plugin}</version>
+            </plugin>
+            <!--代码格式插件，默认使用spring 规则-->
+            <plugin>
+                <groupId>io.spring.javaformat</groupId>
+                <artifactId>spring-javaformat-maven-plugin</artifactId>
+                <version>${spring.checkstyle.plugin}</version>
             </plugin>
         </plugins>
     </build>

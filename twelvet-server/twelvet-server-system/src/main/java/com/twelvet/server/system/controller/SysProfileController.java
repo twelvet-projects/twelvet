@@ -1,6 +1,5 @@
 package com.twelvet.server.system.controller;
 
-
 import com.twelvet.api.dfs.domain.SysFile;
 import com.twelvet.api.dfs.feign.RemoteFileService;
 import com.twelvet.api.system.domain.SysUser;
@@ -27,111 +26,109 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/user/profile")
 public class SysProfileController extends TWTController {
-    @Autowired
-    private ISysUserService userService;
 
-    @Autowired
-    private RemoteFileService remoteFileService;
+	@Autowired
+	private ISysUserService userService;
 
-    /**
-     * 个人信息
-     *
-     * @return AjaxResult
-     */
-    @GetMapping
-    public AjaxResult profile() {
-        String username = SecurityUtils.getUsername();
-        SysUser user = userService.selectUserByUserName(username, true);
+	@Autowired
+	private RemoteFileService remoteFileService;
 
-        UserInfoVo userInfoVo = new UserInfoVo();
+	/**
+	 * 个人信息
+	 * @return AjaxResult
+	 */
+	@GetMapping
+	public AjaxResult profile() {
+		String username = SecurityUtils.getUsername();
+		SysUser user = userService.selectUserByUserName(username, true);
 
-        userInfoVo.setUser(user);
-        userInfoVo.setPostGroup(userService.selectUserPostGroup(username));
-        userInfoVo.setRoleGroup(userService.selectUserRoleGroup(username));
+		UserInfoVo userInfoVo = new UserInfoVo();
 
-        return AjaxResult.success(userInfoVo);
-    }
+		userInfoVo.setUser(user);
+		userInfoVo.setPostGroup(userService.selectUserPostGroup(username));
+		userInfoVo.setRoleGroup(userService.selectUserRoleGroup(username));
 
-    /**
-     * 修改当前用户信息
-     *
-     * @param user SysUser
-     * @return 修改结果
-     */
-    @Log(service = "个人信息", businessType = BusinessType.UPDATE)
-    @PutMapping
-    public AjaxResult updateProfile(@RequestBody SysUser user) {
-        Long userId = SecurityUtils.getLoginUser().getUserId();
-        user.setUserId(userId);
-        if (userService.updateUserProfile(user) > 0) {
-            return AjaxResult.success();
-        }
-        return AjaxResult.error("修改个人信息异常，请联系管理员");
-    }
+		return AjaxResult.success(userInfoVo);
+	}
 
-    /**
-     * 修改用户头像
-     *
-     * @param file
-     * @return 上传信息
-     */
-    @Log(service = "用户头像", businessType = BusinessType.UPDATE)
-    @PostMapping("/avatar")
-    public AjaxResult avatar(@RequestParam("avatarFile") MultipartFile file) {
+	/**
+	 * 修改当前用户信息
+	 * @param user SysUser
+	 * @return 修改结果
+	 */
+	@Log(service = "个人信息", businessType = BusinessType.UPDATE)
+	@PutMapping
+	public AjaxResult updateProfile(@RequestBody SysUser user) {
+		Long userId = SecurityUtils.getLoginUser().getUserId();
+		user.setUserId(userId);
+		if (userService.updateUserProfile(user) > 0) {
+			return AjaxResult.success();
+		}
+		return AjaxResult.error("修改个人信息异常，请联系管理员");
+	}
 
-        try {
-            R<SysFile> fileResult = remoteFileService.upload(file);
+	/**
+	 * 修改用户头像
+	 * @param file
+	 * @return 上传信息
+	 */
+	@Log(service = "用户头像", businessType = BusinessType.UPDATE)
+	@PostMapping("/avatar")
+	public AjaxResult avatar(@RequestParam("avatarFile") MultipartFile file) {
 
-            if (StringUtils.isNull(fileResult) || StringUtils.isNull(fileResult.getData())) {
-                return AjaxResult.error("文件服务异常，请联系管理员");
-            }
+		try {
+			R<SysFile> fileResult = remoteFileService.upload(file);
 
-            String url = fileResult.getData().getUrl();
+			if (StringUtils.isNull(fileResult) || StringUtils.isNull(fileResult.getData())) {
+				return AjaxResult.error("文件服务异常，请联系管理员");
+			}
 
-            LoginUser user = SecurityUtils.getLoginUser();
+			String url = fileResult.getData().getUrl();
 
-            if (userService.updateUserAvatar(user.getUsername(), url)) {
-                AjaxResult ajax = AjaxResult.success("设置成功");
-                ajax.put("imgUrl", url);
-                return ajax;
-            }
-        } catch (Exception e) {
-            return AjaxResult.error("发生未知错误");
-        }
-        return AjaxResult.error("上传失败");
-    }
+			LoginUser user = SecurityUtils.getLoginUser();
 
-    /**
-     * 重置密码
-     *
-     * @param userPassword 用户修改密码参数
-     * @return 重置结果
-     */
-    @Log(service = "个人信息", businessType = BusinessType.UPDATE)
-    @PutMapping("/updatePwd")
-    public AjaxResult updatePwd(@RequestBody UserPassword userPassword) {
+			if (userService.updateUserAvatar(user.getUsername(), url)) {
+				AjaxResult ajax = AjaxResult.success("设置成功");
+				ajax.put("imgUrl", url);
+				return ajax;
+			}
+		}
+		catch (Exception e) {
+			return AjaxResult.error("发生未知错误");
+		}
+		return AjaxResult.error("上传失败");
+	}
 
-        if (!userPassword.getNewPassword().equals(userPassword.getConfirmPassword())) {
-            return AjaxResult.error("确认密码不一致");
-        }
+	/**
+	 * 重置密码
+	 * @param userPassword 用户修改密码参数
+	 * @return 重置结果
+	 */
+	@Log(service = "个人信息", businessType = BusinessType.UPDATE)
+	@PutMapping("/updatePwd")
+	public AjaxResult updatePwd(@RequestBody UserPassword userPassword) {
 
-        String username = SecurityUtils.getUsername();
-        SysUser user = userService.selectUserByUserName(username, true);
-        String password = user.getPassword();
+		if (!userPassword.getNewPassword().equals(userPassword.getConfirmPassword())) {
+			return AjaxResult.error("确认密码不一致");
+		}
 
-        if (!SecurityUtils.matchesPassword(userPassword.getOldPassword(), password)) {
-            return AjaxResult.error("修改密码失败，旧密码错误");
-        }
+		String username = SecurityUtils.getUsername();
+		SysUser user = userService.selectUserByUserName(username, true);
+		String password = user.getPassword();
 
-        if (SecurityUtils.matchesPassword(userPassword.getNewPassword(), password)) {
-            return AjaxResult.error("新密码不能与旧密码相同");
-        }
+		if (!SecurityUtils.matchesPassword(userPassword.getOldPassword(), password)) {
+			return AjaxResult.error("修改密码失败，旧密码错误");
+		}
 
-        if (userService.resetUserPwd(username, SecurityUtils.encryptPassword(userPassword.getNewPassword())) > 0) {
-            return AjaxResult.success();
-        }
+		if (SecurityUtils.matchesPassword(userPassword.getNewPassword(), password)) {
+			return AjaxResult.error("新密码不能与旧密码相同");
+		}
 
-        return AjaxResult.error("修改密码异常，请联系管理员");
-    }
+		if (userService.resetUserPwd(username, SecurityUtils.encryptPassword(userPassword.getNewPassword())) > 0) {
+			return AjaxResult.success();
+		}
+
+		return AjaxResult.error("修改密码异常，请联系管理员");
+	}
 
 }

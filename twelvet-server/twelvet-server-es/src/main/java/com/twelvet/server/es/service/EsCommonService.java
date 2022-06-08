@@ -11,30 +11,29 @@ import com.twelvet.api.es.domain.vo.EsCommonVO;
  */
 public interface EsCommonService {
 
-    /**
-     * 搜索
-     *
-     * @param esCommonDTO EsCommonDTO
-     * @return EsCommonVO
-     */
-    EsCommonVO search(EsCommonDTO esCommonDTO);
+	/**
+	 * 搜索
+	 * @param esCommonDTO EsCommonDTO
+	 * @return EsCommonVO
+	 */
+	EsCommonVO search(EsCommonDTO esCommonDTO);
 
-    /**
-     * 插入文档
-     * @param esCommon EsCommon
-     */
-    void insert(EsCommon esCommon);
+	/**
+	 * 插入文档
+	 * @param esCommon EsCommon
+	 */
+	void insert(EsCommon esCommon);
 
-    /**
-     * 删除文档
-     * @param id id
-     */
-    void deleteById(String id);
+	/**
+	 * 删除文档
+	 * @param id id
+	 */
+	void deleteById(String id);
 
-    /**
-     * 更新文档
-     * @param esCommon EsCommon
-     */
-    void updateById(EsCommon esCommon);
+	/**
+	 * 更新文档
+	 * @param esCommon EsCommon
+	 */
+	void updateById(EsCommon esCommon);
 
 }

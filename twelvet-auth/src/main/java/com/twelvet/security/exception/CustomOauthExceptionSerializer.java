@@ -17,28 +17,31 @@ import java.io.IOException;
  */
 public class CustomOauthExceptionSerializer extends StdSerializer<CustomOauth2Exception> {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private static final Logger log = LoggerFactory.getLogger(CustomOauthExceptionSerializer.class);
+	private static final Logger log = LoggerFactory.getLogger(CustomOauthExceptionSerializer.class);
 
-    public static final String BAD_CREDENTIALS = "Bad credentials";
+	public static final String BAD_CREDENTIALS = "Bad credentials";
 
-    protected CustomOauthExceptionSerializer() {
-        super(CustomOauth2Exception.class);
-    }
+	protected CustomOauthExceptionSerializer() {
+		super(CustomOauth2Exception.class);
+	}
 
-    @Override
-    public void serialize(CustomOauth2Exception e, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+	@Override
+	public void serialize(CustomOauth2Exception e, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
+			throws IOException {
 
-        jsonGenerator.writeStartObject();
-        jsonGenerator.writeNumberField(AjaxResult.CODE_TAG, e.getHttpErrorCode());
-        if (StringUtils.equals(e.getMessage(), BAD_CREDENTIALS)) {
-            jsonGenerator.writeStringField(AjaxResult.MSG_TAG, "用户名或密码错误");
-        } else {
-            log.error("oauth2 认证异常 {} ", e.getMessage());
-            jsonGenerator.writeStringField(AjaxResult.MSG_TAG, e.getMessage());
-        }
-        jsonGenerator.writeEndObject();
+		jsonGenerator.writeStartObject();
+		jsonGenerator.writeNumberField(AjaxResult.CODE_TAG, e.getHttpErrorCode());
+		if (StringUtils.equals(e.getMessage(), BAD_CREDENTIALS)) {
+			jsonGenerator.writeStringField(AjaxResult.MSG_TAG, "用户名或密码错误");
+		}
+		else {
+			log.error("oauth2 认证异常 {} ", e.getMessage());
+			jsonGenerator.writeStringField(AjaxResult.MSG_TAG, e.getMessage());
+		}
+		jsonGenerator.writeEndObject();
 
-    }
+	}
+
 }

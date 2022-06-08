@@ -1,6 +1,5 @@
 package com.twelvet.framework.security.service;
 
-
 import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.security.constans.SecurityConstants;
 import org.springframework.cache.annotation.Cacheable;
@@ -16,16 +15,16 @@ import javax.sql.DataSource;
  */
 public class RedisClientDetailsService extends JdbcClientDetailsService {
 
-    public RedisClientDetailsService(DataSource dataSource) {
-        super(dataSource);
-        super.setSelectClientDetailsSql(SecurityConstants.DEFAULT_SELECT_STATEMENT);
-        super.setFindClientDetailsSql(SecurityConstants.DEFAULT_FIND_STATEMENT);
-    }
+	public RedisClientDetailsService(DataSource dataSource) {
+		super(dataSource);
+		super.setSelectClientDetailsSql(SecurityConstants.DEFAULT_SELECT_STATEMENT);
+		super.setFindClientDetailsSql(SecurityConstants.DEFAULT_FIND_STATEMENT);
+	}
 
-    @Override
-    @Cacheable(value = CacheConstants.CLIENT_DETAILS_KEY, key = "#clientId", unless = "#result == null")
-    public ClientDetails loadClientByClientId(String clientId) {
-        return super.loadClientByClientId(clientId);
-    }
+	@Override
+	@Cacheable(value = CacheConstants.CLIENT_DETAILS_KEY, key = "#clientId", unless = "#result == null")
+	public ClientDetails loadClientByClientId(String clientId) {
+		return super.loadClientByClientId(clientId);
+	}
 
 }

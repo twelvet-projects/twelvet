@@ -13,20 +13,16 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @WebSite www.twelvet.cn
  * @Description: 系统登录日志
  */
-@FeignClient(
-        contextId = "sysMQLoginLogService",
-        value = ServiceNameConstants.MQ_SERVICE,
-        fallbackFactory = RemoteMQSysLoginLogFallbackFactory.class
-)
+@FeignClient(contextId = "sysMQLoginLogService", value = ServiceNameConstants.MQ_SERVICE,
+		fallbackFactory = RemoteMQSysLoginLogFallbackFactory.class)
 public interface RemoteMQSysLoginLogService {
 
-    /**
-     * 新增登录日志log MQ
-     *
-     * @param sysLoginInfo 发送系统登录MQ
-     * @return R<Boolean>
-     */
-    @PostMapping("/api/system/loginInfo")
-    R<Boolean> sendSysLoginLog(@RequestBody SysLoginInfo sysLoginInfo);
+	/**
+	 * 新增登录日志log MQ
+	 * @param sysLoginInfo 发送系统登录MQ
+	 * @return R<Boolean>
+	 */
+	@PostMapping("/api/system/loginInfo")
+	R<Boolean> sendSysLoginLog(@RequestBody SysLoginInfo sysLoginInfo);
 
 }

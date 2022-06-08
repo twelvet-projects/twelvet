@@ -46,8 +46,4 @@
 
     </dependencies>
 
-    <build>
-        <finalName>twelvet-server-job</finalName>
-    </build>
-
 </project>

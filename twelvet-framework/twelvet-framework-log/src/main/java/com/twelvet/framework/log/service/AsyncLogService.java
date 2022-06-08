@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
@@ -15,16 +14,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class AsyncLogService {
 
-    @Autowired
-    private RemoteLogService remoteLogService;
+	@Autowired
+	private RemoteLogService remoteLogService;
 
-    /**
-     * 保存系统日志记录
-     *
-     * @param sysOperationLog 操作信息
-     */
-    @Async
-    public void saveSysLog(SysOperationLog sysOperationLog) {
-        remoteLogService.saveLog(sysOperationLog);
-    }
+	/**
+	 * 保存系统日志记录
+	 * @param sysOperationLog 操作信息
+	 */
+	@Async
+	public void saveSysLog(SysOperationLog sysOperationLog) {
+		remoteLogService.saveLog(sysOperationLog);
+	}
+
 }

@@ -11,55 +11,57 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "gen")
 public class GenConfig {
-    /**
-     * 作者
-     */
-    public static String author;
 
-    /**
-     * 生成包路径
-     */
-    public static String packageName;
+	/**
+	 * 作者
+	 */
+	public static String author;
 
-    /**
-     * 自动去除表前缀，默认是false
-     */
-    public static boolean autoRemovePre;
+	/**
+	 * 生成包路径
+	 */
+	public static String packageName;
 
-    /**
-     * 表前缀(类名不会包含表前缀)
-     */
-    public static String tablePrefix;
+	/**
+	 * 自动去除表前缀，默认是false
+	 */
+	public static boolean autoRemovePre;
 
-    public static String getAuthor() {
-        return author;
-    }
+	/**
+	 * 表前缀(类名不会包含表前缀)
+	 */
+	public static String tablePrefix;
 
-    public void setAuthor(String author) {
-        GenConfig.author = author;
-    }
+	public static String getAuthor() {
+		return author;
+	}
 
-    public static String getPackageName() {
-        return packageName;
-    }
+	public void setAuthor(String author) {
+		GenConfig.author = author;
+	}
 
-    public void setPackageName(String packageName) {
-        GenConfig.packageName = packageName;
-    }
+	public static String getPackageName() {
+		return packageName;
+	}
 
-    public static boolean getAutoRemovePre() {
-        return autoRemovePre;
-    }
+	public void setPackageName(String packageName) {
+		GenConfig.packageName = packageName;
+	}
 
-    public void setAutoRemovePre(boolean autoRemovePre) {
-        GenConfig.autoRemovePre = autoRemovePre;
-    }
+	public static boolean getAutoRemovePre() {
+		return autoRemovePre;
+	}
 
-    public static String getTablePrefix() {
-        return tablePrefix;
-    }
+	public void setAutoRemovePre(boolean autoRemovePre) {
+		GenConfig.autoRemovePre = autoRemovePre;
+	}
 
-    public void setTablePrefix(String tablePrefix) {
-        GenConfig.tablePrefix = tablePrefix;
-    }
+	public static String getTablePrefix() {
+		return tablePrefix;
+	}
+
+	public void setTablePrefix(String tablePrefix) {
+		GenConfig.tablePrefix = tablePrefix;
+	}
+
 }

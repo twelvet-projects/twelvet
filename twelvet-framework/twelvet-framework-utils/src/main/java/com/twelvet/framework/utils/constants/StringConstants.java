@@ -6,6 +6,7 @@ package com.twelvet.framework.utils.constants;
  * @Description: String 常量
  */
 public interface StringConstants {
+
 	// @formatter:off
 	String AMPERSAND        = "&";
 	String AND              = "and";
@@ -66,4 +67,5 @@ public interface StringConstants {
 	String OK               = "ok";
 
 	// @formatter:on
+
 }

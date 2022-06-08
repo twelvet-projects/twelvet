@@ -28,84 +28,81 @@ import org.springframework.stereotype.Service;
  * @Description: 启动Netty
  */
 @Service
-public class NettyServer implements ApplicationRunner, ApplicationListener<ContextClosedEvent>, ApplicationContextAware {
+public class NettyServer
+		implements ApplicationRunner, ApplicationListener<ContextClosedEvent>, ApplicationContextAware {
 
-    private final static Logger log = LoggerFactory.getLogger(NettyServer.class);
+	private final static Logger log = LoggerFactory.getLogger(NettyServer.class);
 
-    @Autowired
-    private NettyProperties nettyProperties;
+	@Autowired
+	private NettyProperties nettyProperties;
 
-    /**
-     * Netty跟随springboot启动
-     *
-     * @param args ApplicationArguments
-     */
-    @Override
-    public void run(ApplicationArguments args) {
+	/**
+	 * Netty跟随springboot启动
+	 * @param args ApplicationArguments
+	 */
+	@Override
+	public void run(ApplicationArguments args) {
 
-        $.threadPoolExecutor.execute(() -> {
-            log.info("正在启动websocket服务器");
+		$.threadPoolExecutor.execute(() -> {
+			log.info("正在启动websocket服务器");
 
-            // 主线程池（接受客户端请求链接）
-            EventLoopGroup bossGroup = new NioEventLoopGroup();
-            // 从线程池：主要处理主线程给予的任务
-            EventLoopGroup workerGroup = new NioEventLoopGroup();
-            try {
-                // 创建服务启动类
-                ServerBootstrap serverBootstrap = new ServerBootstrap();
-                // 设置主从线程组
-                serverBootstrap.group(bossGroup, workerGroup);
+			// 主线程池（接受客户端请求链接）
+			EventLoopGroup bossGroup = new NioEventLoopGroup();
+			// 从线程池：主要处理主线程给予的任务
+			EventLoopGroup workerGroup = new NioEventLoopGroup();
+			try {
+				// 创建服务启动类
+				ServerBootstrap serverBootstrap = new ServerBootstrap();
+				// 设置主从线程组
+				serverBootstrap.group(bossGroup, workerGroup);
 
-                serverBootstrap
-                        // 使用NIO通道作为实现
-                        .channel(NioServerSocketChannel.class)
-                        // 设置保持活动链接状态，心跳包
-                        .childOption(ChannelOption.SO_KEEPALIVE, true)
-                        // 设置处理器
-                        .childHandler(new WebSocketServerInitializer());
+				serverBootstrap
+						// 使用NIO通道作为实现
+						.channel(NioServerSocketChannel.class)
+						// 设置保持活动链接状态，心跳包
+						.childOption(ChannelOption.SO_KEEPALIVE, true)
+						// 设置处理器
+						.childHandler(new WebSocketServerInitializer());
 
-                int port = nettyProperties.getPort();
+				int port = nettyProperties.getPort();
 
-                Channel channel = serverBootstrap
-                        .bind(port)
-                        .sync()
-                        .channel();
+				Channel channel = serverBootstrap.bind(port).sync().channel();
 
-                log.info("Websocket 成功启动，服务端口：{}", port);
+				log.info("Websocket 成功启动，服务端口：{}", port);
 
-                // 对关闭通道进行监听
-                channel.closeFuture().sync();
+				// 对关闭通道进行监听
+				channel.closeFuture().sync();
 
-            } catch (InterruptedException e) {
-                log.info("Netty发生不可逆错误：", e);
-            } finally {
-                // 关闭线程池
-                bossGroup.shutdownGracefully();
-                workerGroup.shutdownGracefully();
-            }
-        });
+			}
+			catch (InterruptedException e) {
+				log.info("Netty发生不可逆错误：", e);
+			}
+			finally {
+				// 关闭线程池
+				bossGroup.shutdownGracefully();
+				workerGroup.shutdownGracefully();
+			}
+		});
 
-    }
+	}
 
-    /**
-     * 启动时触发
-     *
-     * @param applicationContext ApplicationContext
-     * @throws BeansException BeansException
-     */
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        log.info("websocket 服务启动");
-    }
+	/**
+	 * 启动时触发
+	 * @param applicationContext ApplicationContext
+	 * @throws BeansException BeansException
+	 */
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		log.info("websocket 服务启动");
+	}
 
-    /**
-     * 关闭时触发
-     *
-     * @param contextClosedEvent ContextClosedEvent
-     */
-    @Override
-    public void onApplicationEvent(ContextClosedEvent contextClosedEvent) {
-        log.info("Netty 安全关闭");
-    }
+	/**
+	 * 关闭时触发
+	 * @param contextClosedEvent ContextClosedEvent
+	 */
+	@Override
+	public void onApplicationEvent(ContextClosedEvent contextClosedEvent) {
+		log.info("Netty 安全关闭");
+	}
 
 }

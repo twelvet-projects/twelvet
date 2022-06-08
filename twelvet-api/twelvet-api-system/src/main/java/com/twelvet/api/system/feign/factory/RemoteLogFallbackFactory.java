@@ -1,6 +1,5 @@
 package com.twelvet.api.system.feign.factory;
 
-
 import com.twelvet.api.system.domain.SysLoginInfo;
 import com.twelvet.api.system.feign.RemoteLogService;
 import com.twelvet.api.system.domain.SysOperationLog;
@@ -17,21 +16,23 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class RemoteLogFallbackFactory implements FallbackFactory<RemoteLogService> {
-    private static final Logger log = LoggerFactory.getLogger(RemoteLogFallbackFactory.class);
 
-    @Override
-    public RemoteLogService create(Throwable throwable) {
-        log.error("日志服务调用失败:{}", throwable.getMessage());
-        return new RemoteLogService() {
-            @Override
-            public R<Boolean> saveLog(SysOperationLog sysOperationLog) {
-                return R.fail();
-            }
+	private static final Logger log = LoggerFactory.getLogger(RemoteLogFallbackFactory.class);
 
-            @Override
-            public R<Boolean> saveLoginInfo(SysLoginInfo sysLoginInfo) {
-                return R.fail();
-            }
-        };
-    }
+	@Override
+	public RemoteLogService create(Throwable throwable) {
+		log.error("日志服务调用失败:{}", throwable.getMessage());
+		return new RemoteLogService() {
+			@Override
+			public R<Boolean> saveLog(SysOperationLog sysOperationLog) {
+				return R.fail();
+			}
+
+			@Override
+			public R<Boolean> saveLoginInfo(SysLoginInfo sysLoginInfo) {
+				return R.fail();
+			}
+		};
+	}
+
 }

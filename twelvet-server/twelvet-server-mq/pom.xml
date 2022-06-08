@@ -34,8 +34,4 @@
 
     </dependencies>
 
-    <build>
-        <finalName>twelvet-server-mq</finalName>
-    </build>
-
 </project>

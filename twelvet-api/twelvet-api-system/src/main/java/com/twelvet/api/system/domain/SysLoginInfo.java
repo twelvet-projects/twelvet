@@ -13,117 +13,113 @@ import java.util.Date;
  * @Description: 系统访问记录表 sys_login_info
  */
 public class SysLoginInfo extends BaseEntity {
-    private static final long serialVersionUID = 1L;
 
-    /**
-     * ID
-     */
-    @Excel(name = "序号", cellType = ColumnType.NUMERIC)
-    private Long infoId;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 用户账号
-     */
-    @Excel(name = "用户账号")
-    private String userName;
+	/**
+	 * ID
+	 */
+	@Excel(name = "序号", cellType = ColumnType.NUMERIC)
+	private Long infoId;
 
-    /**
-     * 状态 0成功 1失败
-     */
-    @Excel(name = "状态", readConverterExp = "1=成功,0=失败")
-    private Integer status;
+	/**
+	 * 用户账号
+	 */
+	@Excel(name = "用户账号")
+	private String userName;
 
-    /**
-     * 地址
-     */
-    @Excel(name = "地址")
-    private String ipaddr;
+	/**
+	 * 状态 0成功 1失败
+	 */
+	@Excel(name = "状态", readConverterExp = "1=成功,0=失败")
+	private Integer status;
 
-    /**
-     * 描述
-     */
-    @Excel(name = "描述")
-    private String msg;
+	/**
+	 * 地址
+	 */
+	@Excel(name = "地址")
+	private String ipaddr;
 
-    /**
-     * 访问时间
-     */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Excel(name = "访问时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
-    private Date accessTime;
+	/**
+	 * 描述
+	 */
+	@Excel(name = "描述")
+	private String msg;
 
-    /**
-     * 部门ID
-     */
-    @Excel(name = "部门ID")
-    private Long deptId;
+	/**
+	 * 访问时间
+	 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@Excel(name = "访问时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+	private Date accessTime;
 
-    public Long getDeptId() {
-        return deptId;
-    }
+	/**
+	 * 部门ID
+	 */
+	@Excel(name = "部门ID")
+	private Long deptId;
 
-    public void setDeptId(Long deptId) {
-        this.deptId = deptId;
-    }
+	public Long getDeptId() {
+		return deptId;
+	}
 
-    public Long getInfoId() {
-        return infoId;
-    }
+	public void setDeptId(Long deptId) {
+		this.deptId = deptId;
+	}
 
-    public void setInfoId(Long infoId) {
-        this.infoId = infoId;
-    }
+	public Long getInfoId() {
+		return infoId;
+	}
 
-    public String getUserName() {
-        return userName;
-    }
+	public void setInfoId(Long infoId) {
+		this.infoId = infoId;
+	}
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+	public String getUserName() {
+		return userName;
+	}
 
-    public Integer getStatus() {
-        return status;
-    }
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+	public Integer getStatus() {
+		return status;
+	}
 
-    public String getIpaddr() {
-        return ipaddr;
-    }
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
-    public void setIpaddr(String ipaddr) {
-        this.ipaddr = ipaddr;
-    }
+	public String getIpaddr() {
+		return ipaddr;
+	}
 
-    public String getMsg() {
-        return msg;
-    }
+	public void setIpaddr(String ipaddr) {
+		this.ipaddr = ipaddr;
+	}
 
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
+	public String getMsg() {
+		return msg;
+	}
 
-    public Date getAccessTime() {
-        return accessTime;
-    }
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
 
-    public void setAccessTime(Date accessTime) {
-        this.accessTime = accessTime;
-    }
+	public Date getAccessTime() {
+		return accessTime;
+	}
 
-    @Override
-    public String toString() {
-        return "SysLoginInfo{" +
-                "infoId=" + infoId +
-                ", userName='" + userName + '\'' +
-                ", status=" + status +
-                ", ipaddr='" + ipaddr + '\'' +
-                ", msg='" + msg + '\'' +
-                ", accessTime=" + accessTime +
-                ", deptId='" + deptId + '\'' +
-                '}';
-    }
+	public void setAccessTime(Date accessTime) {
+		this.accessTime = accessTime;
+	}
+
+	@Override
+	public String toString() {
+		return "SysLoginInfo{" + "infoId=" + infoId + ", userName='" + userName + '\'' + ", status=" + status
+				+ ", ipaddr='" + ipaddr + '\'' + ", msg='" + msg + '\'' + ", accessTime=" + accessTime + ", deptId='"
+				+ deptId + '\'' + '}';
+	}
+
 }

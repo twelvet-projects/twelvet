@@ -52,8 +52,4 @@
 
     </dependencies>
 
-    <build>
-        <finalName>twelvet-server-system</finalName>
-    </build>
-
 </project>

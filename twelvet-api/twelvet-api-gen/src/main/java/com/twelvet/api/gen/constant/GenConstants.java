@@ -6,176 +6,178 @@ package com.twelvet.api.gen.constant;
  * @Description: 代码生成通用常量
  */
 public class GenConstants {
-    /**
-     * 单表（增删改查）
-     */
-    public static final String TPL_CRUD = "crud";
 
-    /**
-     * 树表（增删改查）
-     */
-    public static final String TPL_TREE = "tree";
+	/**
+	 * 单表（增删改查）
+	 */
+	public static final String TPL_CRUD = "crud";
 
-    /**
-     * 主子表（增删改查）
-     */
-    public static final String TPL_SUB = "sub";
+	/**
+	 * 树表（增删改查）
+	 */
+	public static final String TPL_TREE = "tree";
 
-    /**
-     * 树编码字段
-     */
-    public static final String TREE_CODE = "treeCode";
+	/**
+	 * 主子表（增删改查）
+	 */
+	public static final String TPL_SUB = "sub";
 
-    /**
-     * 树父编码字段
-     */
-    public static final String TREE_PARENT_CODE = "treeParentCode";
+	/**
+	 * 树编码字段
+	 */
+	public static final String TREE_CODE = "treeCode";
 
-    /**
-     * 树名称字段
-     */
-    public static final String TREE_NAME = "treeName";
+	/**
+	 * 树父编码字段
+	 */
+	public static final String TREE_PARENT_CODE = "treeParentCode";
 
-    /**
-     * 上级菜单ID字段
-     */
-    public static final String PARENT_MENU_ID = "parentMenuId";
+	/**
+	 * 树名称字段
+	 */
+	public static final String TREE_NAME = "treeName";
 
-    /**
-     * 上级菜单名称字段
-     */
-    public static final String PARENT_MENU_NAME = "parentMenuName";
+	/**
+	 * 上级菜单ID字段
+	 */
+	public static final String PARENT_MENU_ID = "parentMenuId";
 
-    /**
-     * 数据库字符串类型
-     */
-    public static final String[] COLUMNTYPE_STR = {"char", "varchar", "nvarchar", "varchar2"};
+	/**
+	 * 上级菜单名称字段
+	 */
+	public static final String PARENT_MENU_NAME = "parentMenuName";
 
-    /**
-     * 数据库文本类型
-     */
-    public static final String[] COLUMNTYPE_TEXT = {"tinytext", "text", "mediumtext", "longtext"};
+	/**
+	 * 数据库字符串类型
+	 */
+	public static final String[] COLUMNTYPE_STR = { "char", "varchar", "nvarchar", "varchar2" };
 
-    /**
-     * 数据库时间类型
-     */
-    public static final String[] COLUMNTYPE_TIME = {"datetime", "time", "date", "timestamp"};
+	/**
+	 * 数据库文本类型
+	 */
+	public static final String[] COLUMNTYPE_TEXT = { "tinytext", "text", "mediumtext", "longtext" };
 
-    /**
-     * 数据库数字类型
-     */
-    public static final String[] COLUMNTYPE_NUMBER = {"tinyint", "smallint", "mediumint", "int", "number", "integer",
-            "bigint", "float", "double", "decimal"};
+	/**
+	 * 数据库时间类型
+	 */
+	public static final String[] COLUMNTYPE_TIME = { "datetime", "time", "date", "timestamp" };
 
-    /**
-     * 页面不需要编辑字段
-     */
-    public static final String[] COLUMNNAME_NOT_EDIT = {"id", "create_by", "create_time", "del_flag"};
+	/**
+	 * 数据库数字类型
+	 */
+	public static final String[] COLUMNTYPE_NUMBER = { "tinyint", "smallint", "mediumint", "int", "number", "integer",
+			"bigint", "float", "double", "decimal" };
 
-    /**
-     * 页面不需要显示的列表字段
-     */
-    public static final String[] COLUMNNAME_NOT_LIST = {"id", "create_by", "create_time", "del_flag", "update_by",
-            "update_time"};
+	/**
+	 * 页面不需要编辑字段
+	 */
+	public static final String[] COLUMNNAME_NOT_EDIT = { "id", "create_by", "create_time", "del_flag" };
 
-    /**
-     * 页面不需要查询字段
-     */
-    public static final String[] COLUMNNAME_NOT_QUERY = {"id", "create_by", "create_time", "del_flag", "update_by",
-            "update_time", "remark"};
+	/**
+	 * 页面不需要显示的列表字段
+	 */
+	public static final String[] COLUMNNAME_NOT_LIST = { "id", "create_by", "create_time", "del_flag", "update_by",
+			"update_time" };
 
-    /**
-     * Entity基类字段
-     */
-    public static final String[] BASE_ENTITY = {"createBy", "createTime", "updateBy", "updateTime", "remark"};
+	/**
+	 * 页面不需要查询字段
+	 */
+	public static final String[] COLUMNNAME_NOT_QUERY = { "id", "create_by", "create_time", "del_flag", "update_by",
+			"update_time", "remark" };
 
-    /**
-     * Tree基类字段
-     */
-    public static final String[] TREE_ENTITY = {"parentName", "parentId", "orderNum", "ancestors"};
+	/**
+	 * Entity基类字段
+	 */
+	public static final String[] BASE_ENTITY = { "createBy", "createTime", "updateBy", "updateTime", "remark" };
 
-    /**
-     * 文本框
-     */
-    public static final String HTML_INPUT = "input";
+	/**
+	 * Tree基类字段
+	 */
+	public static final String[] TREE_ENTITY = { "parentName", "parentId", "orderNum", "ancestors" };
 
-    /**
-     * 文本域
-     */
-    public static final String HTML_TEXTAREA = "textarea";
+	/**
+	 * 文本框
+	 */
+	public static final String HTML_INPUT = "input";
 
-    /**
-     * 下拉框
-     */
-    public static final String HTML_SELECT = "select";
+	/**
+	 * 文本域
+	 */
+	public static final String HTML_TEXTAREA = "textarea";
 
-    /**
-     * 单选框
-     */
-    public static final String HTML_RADIO = "radio";
+	/**
+	 * 下拉框
+	 */
+	public static final String HTML_SELECT = "select";
 
-    /**
-     * 复选框
-     */
-    public static final String HTML_CHECKBOX = "checkbox";
+	/**
+	 * 单选框
+	 */
+	public static final String HTML_RADIO = "radio";
 
-    /**
-     * 日期控件
-     */
-    public static final String HTML_DATETIME = "datetime";
+	/**
+	 * 复选框
+	 */
+	public static final String HTML_CHECKBOX = "checkbox";
 
-    /**
-     * 图片上传控件
-     */
-    public static final String HTML_IMAGE_UPLOAD = "imageUpload";
+	/**
+	 * 日期控件
+	 */
+	public static final String HTML_DATETIME = "datetime";
 
-    /**
-     * 文件上传控件
-     */
-    public static final String HTML_FILE_UPLOAD = "fileUpload";
+	/**
+	 * 图片上传控件
+	 */
+	public static final String HTML_IMAGE_UPLOAD = "imageUpload";
 
-    /**
-     * 富文本控件
-     */
-    public static final String HTML_EDITOR = "editor";
+	/**
+	 * 文件上传控件
+	 */
+	public static final String HTML_FILE_UPLOAD = "fileUpload";
 
-    /**
-     * 字符串类型
-     */
-    public static final String TYPE_STRING = "String";
+	/**
+	 * 富文本控件
+	 */
+	public static final String HTML_EDITOR = "editor";
 
-    /**
-     * 整型
-     */
-    public static final String TYPE_INTEGER = "Integer";
+	/**
+	 * 字符串类型
+	 */
+	public static final String TYPE_STRING = "String";
 
-    /**
-     * 长整型
-     */
-    public static final String TYPE_LONG = "Long";
+	/**
+	 * 整型
+	 */
+	public static final String TYPE_INTEGER = "Integer";
 
-    /**
-     * 浮点型
-     */
-    public static final String TYPE_DOUBLE = "Double";
+	/**
+	 * 长整型
+	 */
+	public static final String TYPE_LONG = "Long";
 
-    /**
-     * 高精度计算类型
-     */
-    public static final String TYPE_BIGDECIMAL = "BigDecimal";
+	/**
+	 * 浮点型
+	 */
+	public static final String TYPE_DOUBLE = "Double";
 
-    /**
-     * 时间类型
-     */
-    public static final String TYPE_DATE = "Date";
+	/**
+	 * 高精度计算类型
+	 */
+	public static final String TYPE_BIGDECIMAL = "BigDecimal";
 
-    /**
-     * 模糊查询
-     */
-    public static final String QUERY_LIKE = "LIKE";
+	/**
+	 * 时间类型
+	 */
+	public static final String TYPE_DATE = "Date";
 
-    /**
-     * 需要
-     */
-    public static final String REQUIRE = "1";
+	/**
+	 * 模糊查询
+	 */
+	public static final String QUERY_LIKE = "LIKE";
+
+	/**
+	 * 需要
+	 */
+	public static final String REQUIRE = "1";
+
 }

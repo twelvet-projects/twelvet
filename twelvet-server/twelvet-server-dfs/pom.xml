@@ -46,8 +46,4 @@
 
     </dependencies>
 
-    <build>
-        <finalName>twelvet-server-dfs</finalName>
-    </build>
-
 </project>

@@ -10,11 +10,10 @@ import com.twelvet.api.system.domain.SysOperationLog;
  */
 public interface SysOperationLogService {
 
-    /**
-     * 发送系统登录日志MQ
-     *
-     * @param sysOperationLog SysLoginInfo
-     */
-    void sendSysOperationLog(SysOperationLog sysOperationLog);
+	/**
+	 * 发送系统登录日志MQ
+	 * @param sysOperationLog SysLoginInfo
+	 */
+	void sendSysOperationLog(SysOperationLog sysOperationLog);
 
 }

@@ -7,7 +7,7 @@ import java.lang.annotation.*;
  * @WebSite www.twelvet.cn
  * @Description: 开放服务间认证权限
  */
-@Target({ElementType.TYPE,ElementType.METHOD})
+@Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface AuthIgnore {

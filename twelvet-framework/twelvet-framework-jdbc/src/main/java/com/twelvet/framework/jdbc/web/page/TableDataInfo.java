@@ -9,48 +9,49 @@ import java.util.List;
  * @Description: 表格分页数据对象
  */
 public class TableDataInfo implements Serializable {
-    private static final long serialVersionUID = 1L;
 
-    /**
-     * 总记录数
-     */
-    private long total;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 列表数据
-     */
-    private List<?> records;
+	/**
+	 * 总记录数
+	 */
+	private long total;
 
-    /**
-     * 表格数据对象
-     */
-    public TableDataInfo() {
-    }
+	/**
+	 * 列表数据
+	 */
+	private List<?> records;
 
-    /**
-     * 分页
-     *
-     * @param list  列表数据
-     * @param total 总记录数
-     */
-    public TableDataInfo(List<?> list, int total) {
-        this.records = list;
-        this.total = total;
-    }
+	/**
+	 * 表格数据对象
+	 */
+	public TableDataInfo() {
+	}
 
-    public long getTotal() {
-        return total;
-    }
+	/**
+	 * 分页
+	 * @param list 列表数据
+	 * @param total 总记录数
+	 */
+	public TableDataInfo(List<?> list, int total) {
+		this.records = list;
+		this.total = total;
+	}
 
-    public void setTotal(long total) {
-        this.total = total;
-    }
+	public long getTotal() {
+		return total;
+	}
 
-    public List<?> getRecords() {
-        return records;
-    }
+	public void setTotal(long total) {
+		this.total = total;
+	}
 
-    public void setRecords(List<?> records) {
-        this.records = records;
-    }
+	public List<?> getRecords() {
+		return records;
+	}
+
+	public void setRecords(List<?> records) {
+		this.records = records;
+	}
+
 }

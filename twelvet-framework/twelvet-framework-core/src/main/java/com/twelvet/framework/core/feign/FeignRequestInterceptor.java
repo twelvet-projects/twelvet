@@ -19,27 +19,25 @@ import org.springframework.stereotype.Component;
 @Component
 public class FeignRequestInterceptor implements RequestInterceptor {
 
-    /**
-     * 配置请求体带上access_token(feign默认不带任何信息)
-     *
-     * @param requestTemplate RequestTemplate
-     */
-    @Override
-    public void apply(RequestTemplate requestTemplate) {
+	/**
+	 * 配置请求体带上access_token(feign默认不带任何信息)
+	 * @param requestTemplate RequestTemplate
+	 */
+	@Override
+	public void apply(RequestTemplate requestTemplate) {
 
-        // 配置客户端IP
-        requestTemplate.header("X-Forwarded-For", IpUtils.getIpAddr());
+		// 配置客户端IP
+		requestTemplate.header("X-Forwarded-For", IpUtils.getIpAddr());
 
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        Authentication authentication = securityContext.getAuthentication();
-        if ($.isNotEmpty(authentication) && authentication.getDetails() instanceof OAuth2AuthenticationDetails) {
-            OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) authentication.getDetails();
+		SecurityContext securityContext = SecurityContextHolder.getContext();
+		Authentication authentication = securityContext.getAuthentication();
+		if ($.isNotEmpty(authentication) && authentication.getDetails() instanceof OAuth2AuthenticationDetails) {
+			OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) authentication.getDetails();
 
-            // 添加请求token
-            requestTemplate.header(
-                    HttpHeaders.AUTHORIZATION,
-                    String.format("%s %s", "Bearer", details.getTokenValue())
-            );
-        }
-    }
+			// 添加请求token
+			requestTemplate.header(HttpHeaders.AUTHORIZATION,
+					String.format("%s %s", "Bearer", details.getTokenValue()));
+		}
+	}
+
 }

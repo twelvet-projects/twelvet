@@ -21,15 +21,16 @@ import java.lang.annotation.*;
 // 自动加载类
 @Import({ ApplicationConfig.class, FeignAutoConfiguration.class })
 @EnableFeignClients
-public @interface EnableTWTFeignClients
-{
-    String[] value() default {};
+public @interface EnableTWTFeignClients {
 
-    String[] basePackages() default { "com.twelvet" };
+	String[] value() default {};
 
-    Class<?>[] basePackageClasses() default {};
+	String[] basePackages() default { "com.twelvet" };
 
-    Class<?>[] defaultConfiguration() default {};
+	Class<?>[] basePackageClasses() default {};
 
-    Class<?>[] clients() default {};
+	Class<?>[] defaultConfiguration() default {};
+
+	Class<?>[] clients() default {};
+
 }

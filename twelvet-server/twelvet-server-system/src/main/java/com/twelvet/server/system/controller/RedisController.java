@@ -23,36 +23,37 @@ import java.util.*;
 @RequestMapping("/monitor/redis")
 public class RedisController {
 
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate;
+	@Autowired
+	private RedisTemplate<String, String> redisTemplate;
 
-    @PreAuthorize("@role.hasPermi('monitor:redis:query')")
-    @GetMapping()
-    public AjaxResult getInfo() {
-        Properties info = (Properties) redisTemplate.execute((RedisCallback<Object>) RedisServerCommands::info);
-        Properties commandStats = (Properties) redisTemplate.execute((RedisCallback<Object>) connection -> connection.info("commandstats"));
-        Object dbSize = redisTemplate.execute((RedisCallback<Object>) RedisServerCommands::dbSize);
+	@PreAuthorize("@role.hasPermi('monitor:redis:query')")
+	@GetMapping()
+	public AjaxResult getInfo() {
+		Properties info = (Properties) redisTemplate.execute((RedisCallback<Object>) RedisServerCommands::info);
+		Properties commandStats = (Properties) redisTemplate
+				.execute((RedisCallback<Object>) connection -> connection.info("commandstats"));
+		Object dbSize = redisTemplate.execute((RedisCallback<Object>) RedisServerCommands::dbSize);
 
-        Map<String, Object> result = new HashMap<>(4);
-        result.put("info", info);
-        result.put("dbSize", dbSize);
+		Map<String, Object> result = new HashMap<>(4);
+		result.put("info", info);
+		result.put("dbSize", dbSize);
 
-        List<Map<String, String>> pieList = new ArrayList<>();
-        if (commandStats != null) {
-            commandStats.stringPropertyNames().forEach(key -> {
-                Map<String, String> data = new HashMap<>(2);
-                String property = commandStats.getProperty(key);
-                data.put("name", StringUtils.removeStart(key, "cmdstat_"));
-                data.put("value", StringUtils.substringBetween(property, "calls=", ",usec"));
-                pieList.add(data);
-            });
-        }
-        result.put("commandStats", pieList);
+		List<Map<String, String>> pieList = new ArrayList<>();
+		if (commandStats != null) {
+			commandStats.stringPropertyNames().forEach(key -> {
+				Map<String, String> data = new HashMap<>(2);
+				String property = commandStats.getProperty(key);
+				data.put("name", StringUtils.removeStart(key, "cmdstat_"));
+				data.put("value", StringUtils.substringBetween(property, "calls=", ",usec"));
+				pieList.add(data);
+			});
+		}
+		result.put("commandStats", pieList);
 
-        // 插入时间
-        String time = DateUtils.dateTimeNow("HH:mm:ss");
-        result.put("time", time);
-        return AjaxResult.success(result);
-    }
+		// 插入时间
+		String time = DateUtils.dateTimeNow("HH:mm:ss");
+		result.put("time", time);
+		return AjaxResult.success(result);
+	}
 
 }

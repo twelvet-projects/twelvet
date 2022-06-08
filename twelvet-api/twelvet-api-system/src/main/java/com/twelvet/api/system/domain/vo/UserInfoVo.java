@@ -11,57 +11,55 @@ import java.io.Serializable;
  */
 public class UserInfoVo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 用户信息
-     */
-    private SysUser user;
+	/**
+	 * 用户信息
+	 */
+	private SysUser user;
 
-    /**
-     * 权限组
-     */
-    private String roleGroup;
+	/**
+	 * 权限组
+	 */
+	private String roleGroup;
 
-    /**
-     * 角色岗位
-     */
-    private String postGroup;
+	/**
+	 * 角色岗位
+	 */
+	private String postGroup;
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
 
-    public SysUser getUser() {
-        return user;
-    }
+	public SysUser getUser() {
+		return user;
+	}
 
-    public void setUser(SysUser user) {
-        this.user = user;
-    }
+	public void setUser(SysUser user) {
+		this.user = user;
+	}
 
-    public String getRoleGroup() {
-        return roleGroup;
-    }
+	public String getRoleGroup() {
+		return roleGroup;
+	}
 
-    public void setRoleGroup(String roleGroup) {
-        this.roleGroup = roleGroup;
-    }
+	public void setRoleGroup(String roleGroup) {
+		this.roleGroup = roleGroup;
+	}
 
-    public String getPostGroup() {
-        return postGroup;
-    }
+	public String getPostGroup() {
+		return postGroup;
+	}
 
-    public void setPostGroup(String postGroup) {
-        this.postGroup = postGroup;
-    }
+	public void setPostGroup(String postGroup) {
+		this.postGroup = postGroup;
+	}
 
-    @Override
-    public String toString() {
-        return "UserInfoVo{" +
-                "user=" + user +
-                ", roleGroup='" + roleGroup + '\'' +
-                ", postGroup='" + postGroup + '\'' +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "UserInfoVo{" + "user=" + user + ", roleGroup='" + roleGroup + '\'' + ", postGroup='" + postGroup + '\''
+				+ '}';
+	}
+
 }

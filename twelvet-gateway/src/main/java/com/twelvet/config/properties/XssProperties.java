@@ -16,29 +16,31 @@ import java.util.List;
 @RefreshScope
 @ConfigurationProperties(prefix = "security.xss")
 public class XssProperties {
-    /**
-     * Xss开关
-     */
-    private Boolean enabled;
 
-    /**
-     * 排除路径
-     */
-    private List<String> excludeUrls = new ArrayList<>();
+	/**
+	 * Xss开关
+	 */
+	private Boolean enabled;
 
-    public Boolean getEnabled() {
-        return enabled;
-    }
+	/**
+	 * 排除路径
+	 */
+	private List<String> excludeUrls = new ArrayList<>();
 
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
+	public Boolean getEnabled() {
+		return enabled;
+	}
 
-    public List<String> getExcludeUrls() {
-        return excludeUrls;
-    }
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
 
-    public void setExcludeUrls(List<String> excludeUrls) {
-        this.excludeUrls = excludeUrls;
-    }
+	public List<String> getExcludeUrls() {
+		return excludeUrls;
+	}
+
+	public void setExcludeUrls(List<String> excludeUrls) {
+		this.excludeUrls = excludeUrls;
+	}
+
 }

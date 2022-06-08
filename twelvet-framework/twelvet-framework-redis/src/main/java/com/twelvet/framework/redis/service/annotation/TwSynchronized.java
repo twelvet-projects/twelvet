@@ -1,6 +1,5 @@
 package com.twelvet.framework.redis.service.annotation;
 
-
 import java.lang.annotation.*;
 
 /**
@@ -14,9 +13,9 @@ import java.lang.annotation.*;
 @Inherited
 public @interface TwSynchronized {
 
-    /**
-     * 唯一锁名称
-     */
-    String value();
+	/**
+	 * 唯一锁名称
+	 */
+	String value();
 
 }

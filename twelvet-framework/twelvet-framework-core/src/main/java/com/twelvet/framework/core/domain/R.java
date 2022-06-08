@@ -10,91 +10,79 @@ import java.io.Serializable;
  * @Description: 响应信息实体
  */
 public class R<T> implements Serializable {
-    private static final long serialVersionUID = 1L;
 
-    /** 成功 */
-    public static final int SUCCESS = HttpStatus.OK.value();
+	private static final long serialVersionUID = 1L;
 
-    /** 失败 */
-    public static final int FAIL = HttpStatus.INTERNAL_SERVER_ERROR.value();
+	/** 成功 */
+	public static final int SUCCESS = HttpStatus.OK.value();
 
-    private int code;
+	/** 失败 */
+	public static final int FAIL = HttpStatus.INTERNAL_SERVER_ERROR.value();
 
-    private String msg;
+	private int code;
 
-    private T data;
+	private String msg;
 
-    public static <T> R<T> ok(T data)
-    {
-        return restResult(data, SUCCESS, null);
-    }
+	private T data;
 
-    public static <T> R<T> ok(T data, String msg)
-    {
-        return restResult(data, SUCCESS, msg);
-    }
+	public static <T> R<T> ok(T data) {
+		return restResult(data, SUCCESS, null);
+	}
 
-    public static <T> R<T> fail()
-    {
-        return restResult(null, FAIL, null);
-    }
+	public static <T> R<T> ok(T data, String msg) {
+		return restResult(data, SUCCESS, msg);
+	}
 
-    public static <T> R<T> fail(String msg)
-    {
-        return restResult(null, FAIL, msg);
-    }
+	public static <T> R<T> fail() {
+		return restResult(null, FAIL, null);
+	}
 
-    public static <T> R<T> fail(T data)
-    {
-        return restResult(data, FAIL, null);
-    }
+	public static <T> R<T> fail(String msg) {
+		return restResult(null, FAIL, msg);
+	}
 
-    public static <T> R<T> fail(T data, String msg)
-    {
-        return restResult(data, FAIL, msg);
-    }
+	public static <T> R<T> fail(T data) {
+		return restResult(data, FAIL, null);
+	}
 
-    public static <T> R<T> fail(int code, String msg)
-    {
-        return restResult(null, code, msg);
-    }
+	public static <T> R<T> fail(T data, String msg) {
+		return restResult(data, FAIL, msg);
+	}
 
-    private static <T> R<T> restResult(T data, int code, String msg)
-    {
-        R<T> apiResult = new R<>();
-        apiResult.setCode(code);
-        apiResult.setData(data);
-        apiResult.setMsg(msg);
-        return apiResult;
-    }
+	public static <T> R<T> fail(int code, String msg) {
+		return restResult(null, code, msg);
+	}
 
-    public int getCode()
-    {
-        return code;
-    }
+	private static <T> R<T> restResult(T data, int code, String msg) {
+		R<T> apiResult = new R<>();
+		apiResult.setCode(code);
+		apiResult.setData(data);
+		apiResult.setMsg(msg);
+		return apiResult;
+	}
 
-    public void setCode(int code)
-    {
-        this.code = code;
-    }
+	public int getCode() {
+		return code;
+	}
 
-    public String getMsg()
-    {
-        return msg;
-    }
+	public void setCode(int code) {
+		this.code = code;
+	}
 
-    public void setMsg(String msg)
-    {
-        this.msg = msg;
-    }
+	public String getMsg() {
+		return msg;
+	}
 
-    public T getData()
-    {
-        return data;
-    }
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
 
-    public void setData(T data)
-    {
-        this.data = data;
-    }
+	public T getData() {
+		return data;
+	}
+
+	public void setData(T data) {
+		this.data = data;
+	}
+
 }

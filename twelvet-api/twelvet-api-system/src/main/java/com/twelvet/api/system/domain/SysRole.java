@@ -11,169 +11,160 @@ import java.util.Arrays;
  */
 public class SysRole extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 角色ID
-     */
-    private Long roleId;
+	/**
+	 * 角色ID
+	 */
+	private Long roleId;
 
-    /**
-     * 角色名称
-     */
-    private String roleName;
+	/**
+	 * 角色名称
+	 */
+	private String roleName;
 
-    /**
-     * 角色权限
-     */
-    private String roleKey;
+	/**
+	 * 角色权限
+	 */
+	private String roleKey;
 
-    /**
-     * 角色排序
-     */
-    private String roleSort;
+	/**
+	 * 角色排序
+	 */
+	private String roleSort;
 
-    /**
-     * 数据范围（1：所有数据权限；2：自定义数据权限；3：本部门数据权限；4：本部门及以下数据权限）
-     */
-    private String dataScope;
+	/**
+	 * 数据范围（1：所有数据权限；2：自定义数据权限；3：本部门数据权限；4：本部门及以下数据权限）
+	 */
+	private String dataScope;
 
-    /**
-     * 角色状态（0正常 1停用）
-     */
-    private Integer status;
+	/**
+	 * 角色状态（0正常 1停用）
+	 */
+	private Integer status;
 
-    /**
-     * 删除标志（0代表存在 2代表删除）
-     */
-    private String delFlag;
+	/**
+	 * 删除标志（0代表存在 2代表删除）
+	 */
+	private String delFlag;
 
-    /**
-     * 用户是否存在此角色标识 默认不存在
-     */
-    private boolean flag = false;
+	/**
+	 * 用户是否存在此角色标识 默认不存在
+	 */
+	private boolean flag = false;
 
-    /**
-     * 菜单组
-     */
-    private Long[] menuIds;
+	/**
+	 * 菜单组
+	 */
+	private Long[] menuIds;
 
-    /**
-     * 部门组（数据权限）
-     */
-    private Long[] deptIds;
+	/**
+	 * 部门组（数据权限）
+	 */
+	private Long[] deptIds;
 
-    public SysRole() {
+	public SysRole() {
 
-    }
+	}
 
-    public SysRole(Long roleId) {
-        this.roleId = roleId;
-    }
+	public SysRole(Long roleId) {
+		this.roleId = roleId;
+	}
 
-    public Long getRoleId() {
-        return roleId;
-    }
+	public Long getRoleId() {
+		return roleId;
+	}
 
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
+	}
 
-    public boolean isAdmin() {
-        return isAdmin(this.roleId);
-    }
+	public boolean isAdmin() {
+		return isAdmin(this.roleId);
+	}
 
-    public static boolean isAdmin(Long roleId) {
-        return roleId != null && 1L == roleId;
-    }
+	public static boolean isAdmin(Long roleId) {
+		return roleId != null && 1L == roleId;
+	}
 
-    public String getRoleName() {
-        return roleName;
-    }
+	public String getRoleName() {
+		return roleName;
+	}
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
 
-    public String getRoleKey() {
-        return roleKey;
-    }
+	public String getRoleKey() {
+		return roleKey;
+	}
 
-    public void setRoleKey(String roleKey) {
-        this.roleKey = roleKey;
-    }
+	public void setRoleKey(String roleKey) {
+		this.roleKey = roleKey;
+	}
 
+	public String getRoleSort() {
+		return roleSort;
+	}
 
-    public String getRoleSort() {
-        return roleSort;
-    }
+	public void setRoleSort(String roleSort) {
+		this.roleSort = roleSort;
+	}
 
-    public void setRoleSort(String roleSort) {
-        this.roleSort = roleSort;
-    }
+	public String getDataScope() {
+		return dataScope;
+	}
 
-    public String getDataScope() {
-        return dataScope;
-    }
+	public void setDataScope(String dataScope) {
+		this.dataScope = dataScope;
+	}
 
-    public void setDataScope(String dataScope) {
-        this.dataScope = dataScope;
-    }
+	public Integer getStatus() {
+		return status;
+	}
 
-    public Integer getStatus() {
-        return status;
-    }
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+	public String getDelFlag() {
+		return delFlag;
+	}
 
-    public String getDelFlag() {
-        return delFlag;
-    }
+	public void setDelFlag(String delFlag) {
+		this.delFlag = delFlag;
+	}
 
-    public void setDelFlag(String delFlag) {
-        this.delFlag = delFlag;
-    }
+	public boolean isFlag() {
+		return flag;
+	}
 
-    public boolean isFlag() {
-        return flag;
-    }
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
 
-    public void setFlag(boolean flag) {
-        this.flag = flag;
-    }
+	public Long[] getMenuIds() {
+		return menuIds;
+	}
 
-    public Long[] getMenuIds() {
-        return menuIds;
-    }
+	public void setMenuIds(Long[] menuIds) {
+		this.menuIds = menuIds;
+	}
 
-    public void setMenuIds(Long[] menuIds) {
-        this.menuIds = menuIds;
-    }
+	public Long[] getDeptIds() {
+		return deptIds;
+	}
 
-    public Long[] getDeptIds() {
-        return deptIds;
-    }
+	public void setDeptIds(Long[] deptIds) {
+		this.deptIds = deptIds;
+	}
 
-    public void setDeptIds(Long[] deptIds) {
-        this.deptIds = deptIds;
-    }
-
-    @Override
-    public String toString() {
-        return "SysRole{" +
-                "roleId=" + roleId +
-                ", roleName='" + roleName + '\'' +
-                ", roleKey='" + roleKey + '\'' +
-                ", roleSort='" + roleSort + '\'' +
-                ", dataScope='" + dataScope + '\'' +
-                ", status='" + status + '\'' +
-                ", delFlag='" + delFlag + '\'' +
-                ", flag=" + flag +
-                ", menuIds=" + Arrays.toString(menuIds) +
-                ", deptIds=" + Arrays.toString(deptIds) +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "SysRole{" + "roleId=" + roleId + ", roleName='" + roleName + '\'' + ", roleKey='" + roleKey + '\''
+				+ ", roleSort='" + roleSort + '\'' + ", dataScope='" + dataScope + '\'' + ", status='" + status + '\''
+				+ ", delFlag='" + delFlag + '\'' + ", flag=" + flag + ", menuIds=" + Arrays.toString(menuIds)
+				+ ", deptIds=" + Arrays.toString(deptIds) + '}';
+	}
 
 }

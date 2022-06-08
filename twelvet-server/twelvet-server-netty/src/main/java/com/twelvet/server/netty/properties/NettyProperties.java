@@ -15,13 +15,14 @@ import java.util.List;
 @ConfigurationProperties(prefix = "netty.socket")
 public class NettyProperties {
 
-    private int port;
+	private int port;
 
-    public int getPort() {
-        return port;
-    }
+	public int getPort() {
+		return port;
+	}
 
-    public void setPort(int port) {
-        this.port = port;
-    }
+	public void setPort(int port) {
+		this.port = port;
+	}
+
 }

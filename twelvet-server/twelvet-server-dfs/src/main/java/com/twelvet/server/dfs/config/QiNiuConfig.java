@@ -12,43 +12,44 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("oss.qiniu")
 public class QiNiuConfig {
 
-    private String accessKey;
+	private String accessKey;
 
-    private String secretKey;
+	private String secretKey;
 
-    private String bucketName;
+	private String bucketName;
 
-    private String domain;
+	private String domain;
 
-    public String getDomain() {
-        return domain;
-    }
+	public String getDomain() {
+		return domain;
+	}
 
-    public void setDomain(String domain) {
-        this.domain = domain;
-    }
+	public void setDomain(String domain) {
+		this.domain = domain;
+	}
 
-    public String getAccessKey() {
-        return accessKey;
-    }
+	public String getAccessKey() {
+		return accessKey;
+	}
 
-    public void setAccessKey(String accessKey) {
-        this.accessKey = accessKey;
-    }
+	public void setAccessKey(String accessKey) {
+		this.accessKey = accessKey;
+	}
 
-    public String getSecretKey() {
-        return secretKey;
-    }
+	public String getSecretKey() {
+		return secretKey;
+	}
 
-    public void setSecretKey(String secretKey) {
-        this.secretKey = secretKey;
-    }
+	public void setSecretKey(String secretKey) {
+		this.secretKey = secretKey;
+	}
 
-    public String getBucketName() {
-        return bucketName;
-    }
+	public String getBucketName() {
+		return bucketName;
+	}
 
-    public void setBucketName(String bucketName) {
-        this.bucketName = bucketName;
-    }
+	public void setBucketName(String bucketName) {
+		this.bucketName = bucketName;
+	}
+
 }

@@ -9,12 +9,11 @@ import com.twelvet.api.system.domain.SysLoginInfo;
  */
 public interface SysLoginLogService {
 
-    /**
-     * 发送系统登录日志MQ
-     *
-     * @param sysLoginInfo SysLoginInfo
-     * @return
-     */
-    boolean sendSysLoginLog(SysLoginInfo sysLoginInfo);
+	/**
+	 * 发送系统登录日志MQ
+	 * @param sysLoginInfo SysLoginInfo
+	 * @return
+	 */
+	boolean sendSysLoginLog(SysLoginInfo sysLoginInfo);
 
 }

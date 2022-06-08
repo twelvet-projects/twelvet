@@ -1,6 +1,5 @@
 package com.twelvet.api.mq.feign.factory;
 
-
 import com.twelvet.api.mq.feign.RemoteMQSysLoginLogService;
 import com.twelvet.framework.core.domain.R;
 import org.springframework.cloud.openfeign.FallbackFactory;
@@ -15,12 +14,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class RemoteMQSysLoginLogFallbackFactory implements FallbackFactory<RemoteMQSysLoginLogService> {
-    private static final Logger log = LoggerFactory.getLogger(RemoteMQSysLoginLogFallbackFactory.class);
 
-    @Override
-    public RemoteMQSysLoginLogService create(Throwable throwable) {
-        log.error("系统登录日志服务调用失败:{}", throwable.getMessage());
-        return sysLoginInfo -> R.fail();
-    }
+	private static final Logger log = LoggerFactory.getLogger(RemoteMQSysLoginLogFallbackFactory.class);
+
+	@Override
+	public RemoteMQSysLoginLogService create(Throwable throwable) {
+		log.error("系统登录日志服务调用失败:{}", throwable.getMessage());
+		return sysLoginInfo -> R.fail();
+	}
 
 }

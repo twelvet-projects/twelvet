@@ -16,7 +16,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableTWTFeignClients
 @SpringBootApplication
 public class GenApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(GenApplication.class, args);
-    }
+
+	public static void main(String[] args) {
+		SpringApplication.run(GenApplication.class, args);
+	}
+
 }

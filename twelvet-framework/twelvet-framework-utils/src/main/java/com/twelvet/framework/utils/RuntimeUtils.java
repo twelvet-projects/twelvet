@@ -17,13 +17,13 @@ import java.util.List;
 public class RuntimeUtils {
 
 	private static volatile int pId = -1;
+
 	private static final int CPU_NUM = Runtime.getRuntime().availableProcessors();
 
 	/**
 	 * 获得当前进程的PID
 	 * <p>
 	 * 当失败时返回-1
-	 *
 	 * @return pid
 	 */
 	public static int getPId() {
@@ -42,7 +42,6 @@ public class RuntimeUtils {
 
 	/**
 	 * 返回应用启动的时间
-	 *
 	 * @return {Instant}
 	 */
 	public static Instant getStartTime() {
@@ -51,7 +50,6 @@ public class RuntimeUtils {
 
 	/**
 	 * 返回应用启动到现在的时间
-	 *
 	 * @return {Duration}
 	 */
 	public static Duration getUpTime() {
@@ -60,7 +58,6 @@ public class RuntimeUtils {
 
 	/**
 	 * 返回输入的JVM参数列表
-	 *
 	 * @return jvm参数
 	 */
 	public static String getJvmArguments() {
@@ -70,7 +67,6 @@ public class RuntimeUtils {
 
 	/**
 	 * 获取CPU核数
-	 *
 	 * @return cpu count
 	 */
 	public static int getCpuNum() {

@@ -1,6 +1,5 @@
 package com.twelvet.framework.security.handler;
 
-
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.framework.utils.http.ServletUtils;
@@ -24,17 +23,17 @@ import java.io.IOException;
 @Component
 @EnableAutoConfiguration
 public class CustomAccessDeniedHandler extends OAuth2AccessDeniedHandler {
-    private final Logger logger = LoggerFactory.getLogger(CustomAccessDeniedHandler.class);
 
-    @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException authException) throws IOException {
-        logger.info("权限不足，请联系管理员 {}", request.getRequestURI());
+	private final Logger logger = LoggerFactory.getLogger(CustomAccessDeniedHandler.class);
 
-        int code = HttpStatus.FORBIDDEN.value();
+	@Override
+	public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException authException)
+			throws IOException {
+		logger.info("权限不足，请联系管理员 {}", request.getRequestURI());
 
-        ServletUtils.render(
-                code,
-                JacksonUtils.toJson(AjaxResult.error(code, authException.getMessage()))
-        );
-    }
+		int code = HttpStatus.FORBIDDEN.value();
+
+		ServletUtils.render(code, JacksonUtils.toJson(AjaxResult.error(code, authException.getMessage())));
+	}
+
 }

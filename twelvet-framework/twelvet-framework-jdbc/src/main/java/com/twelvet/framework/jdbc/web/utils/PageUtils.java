@@ -17,33 +17,32 @@ import java.util.List;
  */
 public class PageUtils {
 
-    /**
-     * 注入分页信息
-     */
-    public static void startPage() {
-        // 清除分页bug
-        PageHelper.clearPage();
-        PageDomain pageDomain = TableSupport.buildPageRequest();
-        Integer page = pageDomain.getCurrent();
-        Integer pageSize = pageDomain.getPageSize();
-        if ($.isNotEmpty(page) && $.isNotEmpty(pageSize)) {
-            String orderBy = SqlUtils.escapeOrderBySql(pageDomain.getOrderBy());
-            PageHelper.startPage(page, pageSize, orderBy);
-        }
-    }
+	/**
+	 * 注入分页信息
+	 */
+	public static void startPage() {
+		// 清除分页bug
+		PageHelper.clearPage();
+		PageDomain pageDomain = TableSupport.buildPageRequest();
+		Integer page = pageDomain.getCurrent();
+		Integer pageSize = pageDomain.getPageSize();
+		if ($.isNotEmpty(page) && $.isNotEmpty(pageSize)) {
+			String orderBy = SqlUtils.escapeOrderBySql(pageDomain.getOrderBy());
+			PageHelper.startPage(page, pageSize, orderBy);
+		}
+	}
 
-    /**
-     * 响应请求分页数据
-     *
-     * @param list 数据列表
-     * @return 适应Json
-     */
-    public static TableDataInfo getDataTable(List<?> list) {
-        TableDataInfo rspData = new TableDataInfo();
-        rspData.setRecords(list);
-        PageInfo<?> pageInfo = new PageInfo<>(list);
-        rspData.setTotal(pageInfo.getTotal());
-        return rspData;
-    }
+	/**
+	 * 响应请求分页数据
+	 * @param list 数据列表
+	 * @return 适应Json
+	 */
+	public static TableDataInfo getDataTable(List<?> list) {
+		TableDataInfo rspData = new TableDataInfo();
+		rspData.setRecords(list);
+		PageInfo<?> pageInfo = new PageInfo<>(list);
+		rspData.setTotal(pageInfo.getTotal());
+		return rspData;
+	}
 
 }

@@ -9,62 +9,65 @@ import com.twelvet.framework.utils.$;
  * @Description: 分页数据
  */
 public class PageDomain {
-    /**
-     * 当前记录起始索引
-     */
-    private Integer current;
 
-    /**
-     * 每页显示记录数
-     */
-    private Integer pageSize;
+	/**
+	 * 当前记录起始索引
+	 */
+	private Integer current;
 
-    /**
-     * 排序列
-     */
-    private String orderByColumn;
-    /**
-     * 排序的方向 "desc" 或者 "asc".
-     */
+	/**
+	 * 每页显示记录数
+	 */
+	private Integer pageSize;
 
-    private String isAsc;
+	/**
+	 * 排序列
+	 */
+	private String orderByColumn;
 
-    public String getOrderBy() {
-        if ($.isEmpty(orderByColumn)) {
-            return null;
-        }
-        return StringUtils.toUnderScoreCase(orderByColumn) + " " + isAsc;
-    }
+	/**
+	 * 排序的方向 "desc" 或者 "asc".
+	 */
 
-    public Integer getCurrent() {
-        return current;
-    }
+	private String isAsc;
 
-    public void setCurrent(Integer page) {
-        this.current = page;
-    }
+	public String getOrderBy() {
+		if ($.isEmpty(orderByColumn)) {
+			return null;
+		}
+		return StringUtils.toUnderScoreCase(orderByColumn) + " " + isAsc;
+	}
 
-    public Integer getPageSize() {
-        return pageSize;
-    }
+	public Integer getCurrent() {
+		return current;
+	}
 
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
+	public void setCurrent(Integer page) {
+		this.current = page;
+	}
 
-    public String getOrderByColumn() {
-        return orderByColumn;
-    }
+	public Integer getPageSize() {
+		return pageSize;
+	}
 
-    public void setOrderByColumn(String orderByColumn) {
-        this.orderByColumn = orderByColumn;
-    }
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
 
-    public String getIsAsc() {
-        return isAsc;
-    }
+	public String getOrderByColumn() {
+		return orderByColumn;
+	}
 
-    public void setIsAsc(String isAsc) {
-        this.isAsc = isAsc;
-    }
+	public void setOrderByColumn(String orderByColumn) {
+		this.orderByColumn = orderByColumn;
+	}
+
+	public String getIsAsc() {
+		return isAsc;
+	}
+
+	public void setIsAsc(String isAsc) {
+		this.isAsc = isAsc;
+	}
+
 }

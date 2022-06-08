@@ -1,5 +1,6 @@
 
 package com.twelvet.server.mq.service.impl;
+
 /**
  * @author twelvet
  * <p>
@@ -18,23 +19,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysOperationLogServiceImpl implements SysOperationLogService {
 
-    @Autowired
-    private StreamBridge streamBridge;
+	@Autowired
+	private StreamBridge streamBridge;
 
+	/**
+	 * 发送系统操作日志MQ
+	 * @param sysOperationLog SysLoginInfo
+	 */
+	@Override
+	public void sendSysOperationLog(SysOperationLog sysOperationLog) {
+		Message<SysOperationLog> message = MessageBuilder.withPayload(sysOperationLog)
+				.setHeader(RocketMQHeaders.TAGS, "system-login").setHeader(RocketMQHeaders.KEYS, "test").build();
+		sysOperationLog.setOperId(1L);
+		streamBridge.send("loginLog-out-0", message);
+	}
 
-    /**
-     * 发送系统操作日志MQ
-     *
-     * @param sysOperationLog SysLoginInfo
-     */
-    @Override
-    public void sendSysOperationLog(SysOperationLog sysOperationLog) {
-        Message<SysOperationLog> message = MessageBuilder.withPayload(sysOperationLog)
-                .setHeader(RocketMQHeaders.TAGS, "system-login")
-                .setHeader(RocketMQHeaders.KEYS, "test")
-                .build();
-        sysOperationLog.setOperId(1L);
-        streamBridge.send("loginLog-out-0", message);
-    }
 }
-

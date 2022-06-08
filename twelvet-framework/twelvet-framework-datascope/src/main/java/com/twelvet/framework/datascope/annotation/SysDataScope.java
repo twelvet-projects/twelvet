@@ -12,14 +12,14 @@ import java.lang.annotation.*;
 @Documented
 public @interface SysDataScope {
 
-    /**
-     * 部门表的别名
-     */
-    String deptAlias() default "";
+	/**
+	 * 部门表的别名
+	 */
+	String deptAlias() default "";
 
-    /**
-     * 用户表的别名
-     */
-    String userAlias() default "";
+	/**
+	 * 用户表的别名
+	 */
+	String userAlias() default "";
 
 }

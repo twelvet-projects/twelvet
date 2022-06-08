@@ -10,9 +10,11 @@ import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
  */
 @JsonSerialize(using = CustomOauthExceptionSerializer.class)
 public class CustomOauth2Exception extends OAuth2Exception {
-    private static final long serialVersionUID = 1L;
 
-    public CustomOauth2Exception(String msg) {
-        super(msg);
-    }
+	private static final long serialVersionUID = 1L;
+
+	public CustomOauth2Exception(String msg) {
+		super(msg);
+	}
+
 }

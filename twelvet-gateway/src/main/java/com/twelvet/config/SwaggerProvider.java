@@ -21,37 +21,32 @@ import java.util.List;
 @Component
 public class SwaggerProvider implements SwaggerResourcesProvider {
 
-    @Autowired
-    private RouteLocator routeLocator;
+	@Autowired
+	private RouteLocator routeLocator;
 
-    @Autowired
-    private GatewayProperties gatewayProperties;
+	@Autowired
+	private GatewayProperties gatewayProperties;
 
+	@Override
+	public List<SwaggerResource> get() {
+		List<SwaggerResource> resources = new ArrayList<>();
+		List<String> routes = new ArrayList<>();
+		routeLocator.getRoutes().subscribe(route -> routes.add(route.getId()));
+		gatewayProperties.getRoutes().stream().filter(routeDefinition -> routes.contains(routeDefinition.getId()))
+				.forEach(route -> route.getPredicates().stream()
+						.filter(predicateDefinition -> ("Path").equalsIgnoreCase(predicateDefinition.getName()))
+						.forEach(predicateDefinition -> resources.add(swaggerResource(route.getId(), predicateDefinition
+								.getArgs().get(NameUtils.GENERATED_NAME_PREFIX + "0").replace("**", "v2/api-docs")))));
 
-    @Override
-    public List<SwaggerResource> get() {
-        List<SwaggerResource> resources = new ArrayList<>();
-        List<String> routes = new ArrayList<>();
-        routeLocator.getRoutes().subscribe(route -> routes.add(route.getId()));
-        gatewayProperties
-                .getRoutes()
-                .stream()
-                .filter(routeDefinition -> routes.contains(routeDefinition.getId()))
-                .forEach(route -> route.getPredicates().stream()
-                        .filter(predicateDefinition -> ("Path").equalsIgnoreCase(predicateDefinition.getName()))
-                        .forEach(predicateDefinition -> resources.add(swaggerResource(route.getId(),
-                                predicateDefinition.getArgs().get(NameUtils.GENERATED_NAME_PREFIX + "0")
-                                        .replace("**", "v2/api-docs")))));
+		return resources;
+	}
 
-        return resources;
-    }
-
-    private SwaggerResource swaggerResource(String name, String location) {
-        SwaggerResource swaggerResource = new SwaggerResource();
-        swaggerResource.setName(name);
-        swaggerResource.setLocation(location);
-        swaggerResource.setSwaggerVersion("2.0");
-        return swaggerResource;
-    }
+	private SwaggerResource swaggerResource(String name, String location) {
+		SwaggerResource swaggerResource = new SwaggerResource();
+		swaggerResource.setName(name);
+		swaggerResource.setLocation(location);
+		swaggerResource.setSwaggerVersion("2.0");
+		return swaggerResource;
+	}
 
 }

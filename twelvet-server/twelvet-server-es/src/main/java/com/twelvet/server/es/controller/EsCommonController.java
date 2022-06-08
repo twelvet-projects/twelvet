@@ -17,17 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/common")
 public class EsCommonController {
 
-    @Autowired
-    private EsCommonService esCommonService;
+	@Autowired
+	private EsCommonService esCommonService;
 
-    /**
-     * 公共搜素
-     *
-     * @return AjaxResult
-     */
-    @GetMapping
-    public AjaxResult search(EsCommonDTO esCommonDTO) {
-        return AjaxResult.success(esCommonService.search(esCommonDTO));
-    }
+	/**
+	 * 公共搜素
+	 * @return AjaxResult
+	 */
+	@GetMapping
+	public AjaxResult search(EsCommonDTO esCommonDTO) {
+		return AjaxResult.success(esCommonService.search(esCommonDTO));
+	}
 
 }

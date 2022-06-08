@@ -40,8 +40,4 @@
 
     </dependencies>
 
-    <build>
-        <finalName>twelvet-server-gen</finalName>
-    </build>
-
 </project>

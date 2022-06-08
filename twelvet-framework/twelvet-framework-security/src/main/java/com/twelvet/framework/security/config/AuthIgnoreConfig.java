@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
@@ -29,54 +28,56 @@ import java.util.Set;
  */
 @Configurable
 public class AuthIgnoreConfig implements InitializingBean, ApplicationContextAware {
-    /**
-     * 注解urls
-     */
-    @Autowired
-    private IgnoreUrlsProperties ignoreUrlsProperties;
 
-    @Autowired
-    private ApplicationContext applicationContext;
+	/**
+	 * 注解urls
+	 */
+	@Autowired
+	private IgnoreUrlsProperties ignoreUrlsProperties;
 
-    private List<String> ignoreUrls = new ArrayList<>();
+	@Autowired
+	private ApplicationContext applicationContext;
 
-    public List<String> getIgnoreUrls() {
-        return ignoreUrls;
-    }
+	private List<String> ignoreUrls = new ArrayList<>();
 
-    public void setIgnoreUrls(List<String> ignoreUrls) {
-        this.ignoreUrls = ignoreUrls;
-    }
+	public List<String> getIgnoreUrls() {
+		return ignoreUrls;
+	}
 
-    /**
-     * 重写bean注入后
-     */
-    @Override
-    public void afterPropertiesSet() {
-        RequestMappingHandlerMapping mapping = SpringUtil.getBean("requestMappingHandlerMapping");
-        Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
+	public void setIgnoreUrls(List<String> ignoreUrls) {
+		this.ignoreUrls = ignoreUrls;
+	}
 
-        // 遍历所有mapping
-        map.keySet().forEach(mappingInfo -> {
+	/**
+	 * 重写bean注入后
+	 */
+	@Override
+	public void afterPropertiesSet() {
+		RequestMappingHandlerMapping mapping = SpringUtil.getBean("requestMappingHandlerMapping");
+		Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
 
-            HandlerMethod handlerMethod = map.get(mappingInfo);
-            // 检测方法是否存在注解
-            AuthIgnore method = handlerMethod.getMethod().getAnnotation(AuthIgnore.class);
-            // 检测Controller是否在注解
-            AuthIgnore controller = handlerMethod.getBeanType().getAnnotation(AuthIgnore.class);
+		// 遍历所有mapping
+		map.keySet().forEach(mappingInfo -> {
 
-            // 本方法或本Controller存在AuthIgnore注解将存进列表
-            if ($.isNotEmpty(method) || $.isNotEmpty(controller)) {
-                ignoreUrls.addAll(mappingInfo.getPatternsCondition().getPatterns());
-            }
-        });
+			HandlerMethod handlerMethod = map.get(mappingInfo);
+			// 检测方法是否存在注解
+			AuthIgnore method = handlerMethod.getMethod().getAnnotation(AuthIgnore.class);
+			// 检测Controller是否在注解
+			AuthIgnore controller = handlerMethod.getBeanType().getAnnotation(AuthIgnore.class);
 
-        // 合并放行路径
-        ignoreUrls.addAll(ignoreUrlsProperties.getUrls());
-    }
+			// 本方法或本Controller存在AuthIgnore注解将存进列表
+			if ($.isNotEmpty(method) || $.isNotEmpty(controller)) {
+				ignoreUrls.addAll(mappingInfo.getPatternsCondition().getPatterns());
+			}
+		});
 
-    @Override
-    public void setApplicationContext(ApplicationContext context) throws BeansException {
-        this.applicationContext = context;
-    }
+		// 合并放行路径
+		ignoreUrls.addAll(ignoreUrlsProperties.getUrls());
+	}
+
+	@Override
+	public void setApplicationContext(ApplicationContext context) throws BeansException {
+		this.applicationContext = context;
+	}
+
 }

@@ -25,28 +25,25 @@ import java.util.function.Function;
 @Component
 public class MqListenerServer {
 
-    private final static Logger log = LoggerFactory.getLogger(MqListenerServer.class);
+	private final static Logger log = LoggerFactory.getLogger(MqListenerServer.class);
 
-    @Autowired
-    private RemoteLogService remoteLogService;
+	@Autowired
+	private RemoteLogService remoteLogService;
 
+	/**
+	 * 监听系统操作日志消息
+	 * @return Function
+	 */
+	public Function<Flux<Message<SysOperationLog>>, Mono<Void>> operationLog() {
+		return flux -> flux.map(sysOperationLogMessage -> {
+			{
+				MessageHeaders headers = sysOperationLogMessage.getHeaders();
+				SysOperationLog payload = sysOperationLogMessage.getPayload();
+				log.error("收到操作消息：{}", payload.getOperId());
 
-    /**
-     * 监听系统操作日志消息
-     *
-     * @return Function
-     */
-    public Function<Flux<Message<SysOperationLog>>, Mono<Void>> operationLog() {
-        return flux -> flux.map(sysOperationLogMessage -> {
-            {
-                MessageHeaders headers = sysOperationLogMessage.getHeaders();
-                SysOperationLog payload = sysOperationLogMessage.getPayload();
-                log.error("收到操作消息：{}", payload.getOperId());
-
-                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
-            }
-        }).then();
-    }
+				return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+			}
+		}).then();
+	}
 
 }
-

