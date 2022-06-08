@@ -39,9 +39,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <spring.maven.plugin.version>2.3.0.RELEASE</spring.maven.plugin.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
 
-        <spring-boot-dependencies.version>2.6.6</spring-boot-dependencies.version>
+        <spring-boot-dependencies.version>2.7.0</spring-boot-dependencies.version>
         <spring-cloud.version>2021.0.2</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
         <caffeine.version>3.0.5</caffeine.version>
@@ -329,11 +330,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <!--bootstrap 启动器-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
-        </dependency>
 
         <!--loadbalancer-->
         <dependency>
@@ -382,14 +378,22 @@
         </resources>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot-dependencies.version}</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <finalName>${project.build.finalName}</finalName>
+                    <layers>
+                        <enabled>true</enabled>
+                    </layers>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -444,6 +448,7 @@
                 <log.redis.db>1</log.redis.db>
             </properties>
             <activation>
+                <!-- 默认环境 -->
                 <activeByDefault>true</activeByDefault>
             </activation>
         </profile>

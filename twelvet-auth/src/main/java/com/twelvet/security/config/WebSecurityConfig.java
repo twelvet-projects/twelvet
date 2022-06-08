@@ -1,6 +1,6 @@
 package com.twelvet.security.config;
 
-import com.twelvet.framework.security.config.TwDaoAuthenticationProvider;
+import com.twelvet.framework.security.handler.TwDaoAuthenticationProvider;
 import com.twelvet.security.handler.FormAuthenticationFailureHandler;
 import com.twelvet.security.handler.SsoLogoutSuccessHandler;
 import org.springframework.context.annotation.Bean;
