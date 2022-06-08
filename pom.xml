@@ -7,7 +7,7 @@
     <groupId>com.twelvet</groupId>
     <artifactId>twelvet</artifactId>
     <packaging>pom</packaging>
-    <version>2.5.0</version>
+    <version>2.6.0</version>
 
     <name>twelvet</name>
     <url>https://www.twelvet.cn</url>
@@ -35,7 +35,7 @@
     </developers>
 
     <properties>
-        <twelvet.version>2.5.0</twelvet.version>
+        <twelvet.version>2.6.0</twelvet.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -149,7 +149,6 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
-
 
             <!-- Mybatis 依赖配置 -->
             <dependency>
@@ -331,6 +330,11 @@
     </dependencyManagement>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
 
         <!--loadbalancer-->
         <dependency>
