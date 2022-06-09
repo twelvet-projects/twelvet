@@ -23,7 +23,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/client")
-public class SysClientDetailsController extends TWTController {
+public class Oauth2ClientDetailsController extends TWTController {
 
 	@Autowired
 	private ISysClientDetailsService sysClientDetailsService;

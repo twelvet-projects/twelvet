@@ -15,8 +15,6 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-// 开启资源服务安全认证
-@EnableResourceServer
 // 自动加载类
 @Import({ ApplicationConfig.class, FeignAutoConfiguration.class })
 @EnableFeignClients
