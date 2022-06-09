@@ -15,10 +15,10 @@
 
     <dependencies>
 
-        <!-- Spring Security Oauth2 -->
+        <!-- Spring Authorization Server -->
         <dependency>
-            <groupId>org.springframework.security.oauth.boot</groupId>
-            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+            <groupId>io.springboot.security</groupId>
+            <artifactId>spring-security-oauth2-authorization-server</artifactId>
         </dependency>
 
         <!--System API-->

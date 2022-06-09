@@ -48,6 +48,7 @@
         <io.seata.version>1.4.2</io.seata.version>
         <spring-boot-admin.version>2.6.3</spring-boot-admin.version>
         <spring-boot.mybatis>2.2.0</spring-boot.mybatis>
+        <spring.authorization.version>0.3.0</spring.authorization.version>
 
         <druid.version>1.2.8</druid.version>
         <dynamic-datasource.version>3.5.1</dynamic-datasource.version>
@@ -98,6 +99,13 @@
                 <version>${spring-cloud-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!-- Spring Authorization Server -->
+            <dependency>
+                <groupId>io.springboot.security</groupId>
+                <artifactId>spring-security-oauth2-authorization-server</artifactId>
+                <version>${spring.authorization.version}</version>
             </dependency>
 
             <!-- SpringBoot Admin -->
