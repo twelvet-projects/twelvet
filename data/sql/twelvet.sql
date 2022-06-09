@@ -110,7 +110,7 @@ CREATE TABLE `sys_dfs`  (
   `file_id` int(8) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `file_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文件名称',
   `original_file_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文件原名称',
-  `space_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文件分组',
+  `space_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '文件分组',
   `path` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文件路径',
   `size` int(11) NOT NULL COMMENT '文件大小',
   `type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文件类型',

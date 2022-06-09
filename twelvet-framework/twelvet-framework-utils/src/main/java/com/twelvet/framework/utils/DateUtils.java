@@ -79,11 +79,11 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	}
 
 	/**
-	 * 日期路径 即年/月/日 如2018/08/08
+	 * 日期路径 即年/月/日 如2018-08-08
 	 */
 	public static String datePath() {
 		Date now = new Date();
-		return DateFormatUtils.format(now, "yyyy/MM/dd");
+		return DateFormatUtils.format(now, YYYY_MM_DD);
 	}
 
 	/**

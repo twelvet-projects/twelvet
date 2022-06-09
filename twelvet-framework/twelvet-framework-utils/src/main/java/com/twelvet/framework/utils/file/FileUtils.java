@@ -230,7 +230,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 * @return 上传路径 2022/06/05/1654356928000.jpg
 	 */
 	public static String defaultUploadPath(String originalFilename) {
-		return "/" + DateUtils.datePath() + "/" + System.currentTimeMillis() + "." + getSuffix(originalFilename);
+		return DateUtils.datePath() + "/" + System.currentTimeMillis() + "." + getSuffix(originalFilename);
 	}
 
 }
