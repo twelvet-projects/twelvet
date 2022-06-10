@@ -56,8 +56,9 @@ public class ServletUtils {
 	public static void render(int code, String json) {
 		HttpServletResponse response = getResponse();
 		try {
+			response.setCharacterEncoding(CharsetKit.UTF_8);
 			response.setStatus(code);
-			response.setContentType("application/json");
+			response.setContentType("application/json; charset=utf-8");
 			response.setCharacterEncoding("utf-8");
 			response.getWriter().print(json);
 		}

@@ -6,16 +6,19 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
  * @Description: 登录用户身份
  */
-public class LoginUser extends User {
+public class LoginUser extends User implements OAuth2AuthenticatedPrincipal {
 
 	private static final long serialVersionUID = 1L;
 
@@ -73,4 +76,17 @@ public class LoginUser extends User {
 				.append("roles", getRoles()).append("userId", getUserId()).toString();
 	}
 
+	/**
+	 * Get the OAuth 2.0 token attributes
+	 * @return the OAuth 2.0 token attributes
+	 */
+	@Override
+	public Map<String, Object> getAttributes() {
+		return new HashMap<>();
+	}
+
+	@Override
+	public String getName() {
+		return this.getUsername();
+	}
 }
