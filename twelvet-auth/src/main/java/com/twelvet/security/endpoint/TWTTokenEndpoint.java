@@ -14,6 +14,10 @@ import com.TWT.common.core.util.SpringContextHolder;
 import com.TWT.common.security.annotation.Inner;
 import com.TWT.common.security.util.OAuth2EndpointUtils;
 import com.TWT.common.security.util.OAuth2ErrorCodesExpand;
+import com.twelvet.api.system.domain.SysClientDetails;
+import com.twelvet.api.system.feign.RemoteOauth2ClientDetailsService;
+import com.twelvet.framework.core.domain.R;
+import com.twelvet.framework.security.utils.OAuth2ErrorCodesExpand;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -62,7 +66,7 @@ public class TWTTokenEndpoint {
 
 	private final OAuth2AuthorizationService authorizationService;
 
-	private final RemoteClientDetailsService clientDetailsService;
+	private final RemoteOauth2ClientDetailsService remoteOauth2ClientDetailsService;
 
 	private final RedisTemplate<String, Object> redisTemplate;
 
@@ -87,8 +91,8 @@ public class TWTTokenEndpoint {
 			@RequestParam(OAuth2ParameterNames.SCOPE) String scope,
 			@RequestParam(OAuth2ParameterNames.STATE) String state) {
 
-		R<SysOauthClientDetails> r = clientDetailsService.getClientDetailsById(clientId, SecurityConstants.FROM_IN);
-		SysOauthClientDetails clientDetails = r.getData();
+		R<SysClientDetails> r = remoteOauth2ClientDetailsService.getClientDetailsById(clientId);
+		SysClientDetails clientDetails = r.getData();
 		Set<String> authorizedScopes = StringUtils.commaDelimitedListToSet(clientDetails.getScope());
 		modelAndView.addObject("clientId", clientId);
 		modelAndView.addObject("state", state);
@@ -116,7 +120,6 @@ public class TWTTokenEndpoint {
 	 * 校验token
 	 * @param token 令牌
 	 */
-	@SneakyThrows
 	@GetMapping("/check_token")
 	public void checkToken(String token, HttpServletResponse response) {
 		ServletServerHttpResponse httpResponse = new ServletServerHttpResponse(response);
