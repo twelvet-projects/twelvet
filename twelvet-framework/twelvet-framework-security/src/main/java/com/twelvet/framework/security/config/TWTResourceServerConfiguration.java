@@ -17,7 +17,7 @@ public class TWTResourceServerConfiguration {
 	protected ResourceAuthExceptionEntryPoint resourceAuthExceptionEntryPoint;
 
 	@Autowired
-	private PermitAllUrlProperties permitAllUrl;
+	private AuthIgnoreConfig permitAllUrl;
 
 	@Autowired
 	private TWTBearerTokenExtractor twtBearerTokenExtractor;
@@ -30,7 +30,7 @@ public class TWTResourceServerConfiguration {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests(authorizeRequests -> authorizeRequests
-				.antMatchers(ArrayUtil.toArray(permitAllUrl.getUrls(), String.class)).permitAll().anyRequest()
+				.antMatchers(ArrayUtil.toArray(permitAllUrl.getIgnoreUrls(), String.class)).permitAll().anyRequest()
 				.authenticated())
 				.oauth2ResourceServer(
 						oauth2 -> oauth2.opaqueToken(token -> token.introspector(customOpaqueTokenIntrospector))

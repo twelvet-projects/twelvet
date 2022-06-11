@@ -23,23 +23,21 @@ public class TWTResourceServerAutoConfiguration {
     /**
      * 资源服务器异常处理
      *
-     * @param objectMapper jackson 输出对象
      * @return ResourceAuthExceptionEntryPoint
      */
     @Bean
-    public ResourceAuthExceptionEntryPoint resourceAuthExceptionEntryPoint(ObjectMapper objectMapper) {
-        return new ResourceAuthExceptionEntryPoint(objectMapper);
+    public ResourceAuthExceptionEntryPoint resourceAuthExceptionEntryPoint() {
+        return new ResourceAuthExceptionEntryPoint();
     }
 
     /**
      * 资源服务器toke内省处理器
      *
-     * @param authorizationService token 存储实现
      * @return TokenIntrospector
      */
     @Bean
-    public OpaqueTokenIntrospector opaqueTokenIntrospector(OAuth2AuthorizationService authorizationService) {
-        return new TWTCustomOpaqueTokenIntrospector(authorizationService);
+    public OpaqueTokenIntrospector opaqueTokenIntrospector() {
+        return new TWTCustomOpaqueTokenIntrospect();
     }
 
 }

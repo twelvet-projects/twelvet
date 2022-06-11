@@ -1,5 +1,6 @@
 package com.twelvet.framework.utils.http;
 
+import cn.hutool.http.HttpStatus;
 import com.twelvet.framework.utils.CharsetKit;
 import com.twelvet.framework.utils.Convert;
 import com.twelvet.framework.utils.StringUtils;

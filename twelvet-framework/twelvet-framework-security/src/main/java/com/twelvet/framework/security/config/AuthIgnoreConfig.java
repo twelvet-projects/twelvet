@@ -21,7 +21,6 @@ import java.util.Map;
  * @WebSite www.twelvet.cn
  * @Description: 忽略服务间的认证
  */
-@Configurable
 public class AuthIgnoreConfig implements InitializingBean {
 
     /**

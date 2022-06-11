@@ -19,18 +19,15 @@ import java.io.PrintWriter;
 
 public class ResourceAuthExceptionEntryPoint implements AuthenticationEntryPoint {
 
-    private final Logger log = LoggerFactory.getLogger(ResourceAuthExceptionEntryPoint.class)''
-
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final Logger log = LoggerFactory.getLogger(ResourceAuthExceptionEntryPoint.class);
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) {
         try {
             response.setCharacterEncoding(CharsetKit.UTF_8);
             R<String> result = new R<>();
-            result.setCode(CommonConstants.FAIL);
-            response.setStatus(HttpStatus.HTTP_UNAUTHORIZED);
+            result.setCode(HttpStatus.HTTP_UNAUTHORIZED);
+            int code = HttpStatus.HTTP_UNAUTHORIZED;
             if (authException != null) {
                 result.setMsg("error");
                 result.setData(authException.getMessage());
@@ -38,12 +35,16 @@ public class ResourceAuthExceptionEntryPoint implements AuthenticationEntryPoint
 
             // 针对令牌过期返回特殊的 424
             if (authException instanceof InsufficientAuthenticationException) {
-                int code = org.springframework.http.HttpStatus.FAILED_DEPENDENCY.value();
+                code = org.springframework.http.HttpStatus.FAILED_DEPENDENCY.value();
                 result.setMsg("token expire");
             }
-            ServletUtils.render(JacksonUtils.getInstance().writeValueAsString(result));
-        } catch (Exception e) {
 
+            ServletUtils.render(
+                    code,
+                    JacksonUtils.getInstance().writeValueAsString(result)
+            );
+        } catch (Exception e) {
+            log.error("鉴权返回错误失败");
         }
     }
 
