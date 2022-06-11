@@ -44,6 +44,12 @@
             <artifactId>qiniu-java-sdk</artifactId>
         </dependency>
 
+        <!-- 安全模块 -->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-security</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>
