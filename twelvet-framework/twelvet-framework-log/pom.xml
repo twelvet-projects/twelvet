@@ -16,6 +16,13 @@
 
     <dependencies>
 
+        <!-- twelvet安全模块 -->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-security</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <!--mq api-->
         <dependency>
             <groupId>com.twelvet</groupId>
