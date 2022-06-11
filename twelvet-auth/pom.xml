@@ -69,6 +69,12 @@
             <artifactId>twelvet-framework-security</artifactId>
         </dependency>
 
+        <!--OAuth2-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
         <!--twelvet redis-->
         <dependency>
             <groupId>com.twelvet</groupId>

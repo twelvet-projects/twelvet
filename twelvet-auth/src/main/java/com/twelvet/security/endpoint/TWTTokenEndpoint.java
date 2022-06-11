@@ -1,85 +1,100 @@
 package com.twelvet.security.endpoint;
 
-import com.github.xiaoymin.knife4j.core.util.StrUtil;
-import com.twelvet.framework.core.domain.R;
-import com.twelvet.framework.security.annotation.AuthIgnore;
-import com.twelvet.framework.security.utils.SecurityUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.ConvertingCursor;
-import org.springframework.data.redis.core.Cursor;
+import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.TWT.admin.api.entity.SysOauthClientDetails;
+import com.TWT.admin.api.feign.RemoteClientDetailsService;
+import com.TWT.admin.api.vo.TokenVo;
+import com.TWT.common.core.constant.CacheConstants;
+import com.TWT.common.core.constant.CommonConstants;
+import com.TWT.common.core.constant.SecurityConstants;
+import com.TWT.common.core.util.R;
+import com.TWT.common.core.util.SpringContextHolder;
+import com.TWT.common.security.annotation.Inner;
+import com.TWT.common.security.util.OAuth2EndpointUtils;
+import com.TWT.common.security.util.OAuth2ErrorCodesExpand;
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.CacheManager;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ScanOptions;
-import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.common.OAuth2RefreshToken;
-import org.springframework.security.oauth2.provider.AuthorizationRequest;
-import org.springframework.security.oauth2.provider.ClientDetails;
-import org.springframework.security.oauth2.provider.ClientDetailsService;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.server.ServletServerHttpResponse;
+import org.springframework.security.authentication.event.LogoutSuccessEvent;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.oauth2.core.OAuth2Error;
+import org.springframework.security.oauth2.core.OAuth2TokenType;
+import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
+import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
+import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter;
+import org.springframework.security.oauth2.core.http.converter.OAuth2ErrorHttpMessageConverter;
+import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
+import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.ArrayList;
+import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
- * @author twelvet
- * @WebSite www.twelvet.cn
- * @Description: 自定义认证异常
+ * 
+ * @date 2019/2/1 删除token端点
  */
 @RestController
+
 @RequestMapping("/token")
 public class TWTTokenEndpoint {
 
-	@Autowired
-	private ClientDetailsService clientDetailsService;
+	private final HttpMessageConverter<OAuth2AccessTokenResponse> accessTokenHttpResponseConverter = new OAuth2AccessTokenResponseHttpMessageConverter();
 
-	@Autowired
-	private TokenStore tokenStore;
+	private final HttpMessageConverter<OAuth2Error> errorHttpResponseConverter = new OAuth2ErrorHttpMessageConverter();
 
-	@Autowired
-	private RedisTemplate redisTemplate;
+	private final OAuth2AuthorizationService authorizationService;
+
+	private final RemoteClientDetailsService clientDetailsService;
+
+	private final RedisTemplate<String, Object> redisTemplate;
+
+	private final CacheManager cacheManager;
 
 	/**
 	 * 认证页面
-	 * @param modelAndView ModelAndView
+	 * @param modelAndView
 	 * @param error 表单登录失败处理回调的错误信息
 	 * @return ModelAndView
 	 */
 	@GetMapping("/login")
 	public ModelAndView require(ModelAndView modelAndView, @RequestParam(required = false) String error) {
-		modelAndView.setViewName("/login");
+		modelAndView.setViewName("ftl/login");
 		modelAndView.addObject("error", error);
 		return modelAndView;
 	}
 
-	/**
-	 * 确认授权页面
-	 * @param request HttpServletRequest
-	 * @param session HttpSession
-	 * @param modelAndView ModelAndView
-	 * @return ModelAndView
-	 */
 	@GetMapping("/confirm_access")
-	public ModelAndView confirm(HttpServletRequest request, HttpSession session, ModelAndView modelAndView) {
-		Map<String, Object> scopeList = (Map<String, Object>) request.getAttribute("scopes");
-		modelAndView.addObject("scopeList", scopeList.keySet());
+	public ModelAndView confirm(Principal principal, ModelAndView modelAndView,
+			@RequestParam(OAuth2ParameterNames.CLIENT_ID) String clientId,
+			@RequestParam(OAuth2ParameterNames.SCOPE) String scope,
+			@RequestParam(OAuth2ParameterNames.STATE) String state) {
 
-		Object auth = session.getAttribute("authorizationRequest");
-		if (auth != null) {
-			AuthorizationRequest authorizationRequest = (AuthorizationRequest) auth;
-			ClientDetails clientDetails = clientDetailsService.loadClientByClientId(authorizationRequest.getClientId());
-			modelAndView.addObject("app", clientDetails.getAdditionalInformation());
-			modelAndView.addObject("user", SecurityUtils.getLoginUser());
-		}
-
-		modelAndView.setViewName("/confirm");
+		R<SysOauthClientDetails> r = clientDetailsService.getClientDetailsById(clientId, SecurityConstants.FROM_IN);
+		SysOauthClientDetails clientDetails = r.getData();
+		Set<String> authorizedScopes = StringUtils.commaDelimitedListToSet(clientDetails.getScope());
+		modelAndView.addObject("clientId", clientId);
+		modelAndView.addObject("state", state);
+		modelAndView.addObject("scopeList", authorizedScopes);
+		modelAndView.addObject("principalName", principal.getName());
+		modelAndView.setViewName("ftl/confirm");
 		return modelAndView;
 	}
 
@@ -90,64 +105,95 @@ public class TWTTokenEndpoint {
 	@DeleteMapping("/logout")
 	public R<Boolean> logout(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authHeader) {
 		if (StrUtil.isBlank(authHeader)) {
-			return R.ok(false);
+			return R.ok();
 		}
 
-		String tokenValue = authHeader.replace(OAuth2AccessToken.BEARER_TYPE, "").trim();
+		String tokenValue = authHeader.replace(OAuth2AccessToken.TokenType.BEARER.getValue(), StrUtil.EMPTY).trim();
 		return removeToken(tokenValue);
+	}
+
+	/**
+	 * 校验token
+	 * @param token 令牌
+	 */
+	@SneakyThrows
+	@GetMapping("/check_token")
+	public void checkToken(String token, HttpServletResponse response) {
+		ServletServerHttpResponse httpResponse = new ServletServerHttpResponse(response);
+
+		if (StrUtil.isBlank(token)) {
+			httpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
+			this.errorHttpResponseConverter.write(new OAuth2Error(OAuth2ErrorCodesExpand.TOKEN_MISSING), null,
+					httpResponse);
+		}
+		OAuth2Authorization authorization = authorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
+
+		// 如果令牌不存在 返回401
+		if (authorization == null) {
+			httpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
+			this.errorHttpResponseConverter.write(new OAuth2Error(OAuth2ErrorCodesExpand.TOKEN_MISSING), null,
+					httpResponse);
+		}
+
+		Map<String, Object> claims = authorization.getAccessToken().getClaims();
+		OAuth2AccessTokenResponse sendAccessTokenResponse = OAuth2EndpointUtils.sendAccessTokenResponse(authorization,
+				claims);
+		this.accessTokenHttpResponseConverter.write(sendAccessTokenResponse, MediaType.APPLICATION_JSON, httpResponse);
 	}
 
 	/**
 	 * 令牌管理调用
 	 * @param token token
 	 */
-	@AuthIgnore
+	@Inner
 	@DeleteMapping("/{token}")
 	public R<Boolean> removeToken(@PathVariable("token") String token) {
-		OAuth2AccessToken accessToken = tokenStore.readAccessToken(token);
-		if (accessToken == null || StrUtil.isBlank(accessToken.getValue())) {
-			return R.ok(false);
+		OAuth2Authorization authorization = authorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
+		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
+		if (accessToken == null || StrUtil.isBlank(accessToken.getToken().getTokenValue())) {
+			return R.ok();
 		}
-
-		OAuth2Authentication auth2Authentication = tokenStore.readAuthentication(accessToken);
 		// 清空用户信息
-		// cacheManager.getCache(CacheConstants.USER_DETAILS).evict(auth2Authentication.getName());
-
+		cacheManager.getCache(CacheConstants.USER_DETAILS).evict(authorization.getPrincipalName());
 		// 清空access token
-		tokenStore.removeAccessToken(accessToken);
-
-		// 清空 refresh token
-		OAuth2RefreshToken refreshToken = accessToken.getRefreshToken();
-		tokenStore.removeRefreshToken(refreshToken);
-		return R.ok(true);
+		authorizationService.remove(authorization);
+		// 处理自定义退出事件，保存相关日志
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		SpringContextHolder.publishEvent(new LogoutSuccessEvent(authentication));
+		return R.ok();
 	}
 
-	private List<String> findKeysForPage(String patternKey, int pageNum, int pageSize) {
-		ScanOptions options = ScanOptions.scanOptions().count(1000L).match(patternKey).build();
-		RedisSerializer<String> redisSerializer = (RedisSerializer<String>) redisTemplate.getKeySerializer();
-		Cursor cursor = (Cursor) redisTemplate.executeWithStickyConnection(
-				redisConnection -> new ConvertingCursor<>(redisConnection.scan(options), redisSerializer::deserialize));
-		List<String> result = new ArrayList<>();
-		int tmpIndex = 0;
-		int startIndex = (pageNum - 1) * pageSize;
-		int end = pageNum * pageSize;
+	/**
+	 * 查询token
+	 * @param params 分页参数
+	 * @return
+	 */
+	@Inner
+	@PostMapping("/page")
+	public R<Page> tokenList(@RequestBody Map<String, Object> params) {
+		// 根据分页参数获取对应数据
+		String key = String.format("%s::*", CacheConstants.PROJECT_OAUTH_ACCESS);
+		int current = MapUtil.getInt(params, CommonConstants.CURRENT);
+		int size = MapUtil.getInt(params, CommonConstants.SIZE);
+		Set<String> keys = redisTemplate.keys(key);
+		List<String> pages = keys.stream().skip((current - 1) * size).limit(size).collect(Collectors.toList());
+		Page result = new Page(current, size);
 
-		assert cursor != null;
-		while (cursor.hasNext()) {
-			if (tmpIndex >= startIndex && tmpIndex < end) {
-				result.add(cursor.next().toString());
-				tmpIndex++;
-				continue;
-			}
-			if (tmpIndex >= end) {
-				break;
-			}
-			tmpIndex++;
-			cursor.next();
-		}
-
-		cursor.close();
-		return result;
+		List<TokenVo> tokenVoList = redisTemplate.opsForValue().multiGet(pages).stream().map(obj -> {
+			OAuth2Authorization authorization = (OAuth2Authorization) obj;
+			TokenVo tokenVo = new TokenVo();
+			tokenVo.setClientId(authorization.getRegisteredClientId());
+			tokenVo.setId(authorization.getId());
+			tokenVo.setUsername(authorization.getPrincipalName());
+			OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
+			tokenVo.setAccessToken(accessToken.getToken().getTokenValue());
+			tokenVo.setExpiresAt(accessToken.getToken().getExpiresAt());
+			tokenVo.setIssuedAt(accessToken.getToken().getIssuedAt());
+			return tokenVo;
+		}).collect(Collectors.toList());
+		result.setRecords(tokenVoList);
+		result.setTotal(keys.size());
+		return R.ok(result);
 	}
 
 }

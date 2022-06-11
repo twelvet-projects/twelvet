@@ -8,18 +8,13 @@
         <version>2.6.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+    <packaging>jar</packaging>
 
     <artifactId>twelvet-framework-log</artifactId>
 
     <description>日志模块</description>
 
     <dependencies>
-
-        <!-- twelvet安全模块 -->
-        <dependency>
-            <groupId>com.twelvet</groupId>
-            <artifactId>twelvet-framework-security</artifactId>
-        </dependency>
 
         <!--mq api-->
         <dependency>

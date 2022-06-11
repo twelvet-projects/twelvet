@@ -26,8 +26,11 @@ public class TWTCustomOpaqueTokenIntrospect implements OpaqueTokenIntrospector {
 
     private static final Logger log = LoggerFactory.getLogger(TWTCustomOpaqueTokenIntrospect.class);
 
-    @Autowired
-    private OAuth2AuthorizationService authorizationService;
+    private final OAuth2AuthorizationService authorizationService;
+
+    public TWTCustomOpaqueTokenIntrospect(OAuth2AuthorizationService authorizationService) {
+        this.authorizationService = authorizationService;
+    }
 
     @Override
     public OAuth2AuthenticatedPrincipal introspect(String token) {
@@ -43,8 +46,8 @@ public class TWTCustomOpaqueTokenIntrospect implements OpaqueTokenIntrospector {
 
         UserDetails userDetails = null;
         try {
-			UsernamePasswordAuthenticationToken principal = (UsernamePasswordAuthenticationToken) Objects.requireNonNull(oldAuthorization).getAttributes().get(Principal.class.getName());
-			Object tokenPrincipal = principal.getPrincipal();
+            UsernamePasswordAuthenticationToken principal = (UsernamePasswordAuthenticationToken) Objects.requireNonNull(oldAuthorization).getAttributes().get(Principal.class.getName());
+            Object tokenPrincipal = principal.getPrincipal();
             userDetails = optional.get().loadUserByUser((LoginUser) tokenPrincipal);
         } catch (UsernameNotFoundException usernameNotFoundException) {
             log.warn("用户不不存在 {}", usernameNotFoundException.getLocalizedMessage());

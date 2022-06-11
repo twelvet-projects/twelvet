@@ -1,0 +1,4 @@
+com.twelvet.framework.security.service.impl.TWTRedisOAuth2AuthorizationService
+com.twelvet.framework.security.service.impl.TWTRedisOAuth2AuthorizationConsentService
+com.twelvet.framework.security.service.impl.TWTRemoteRegisteredClientRepository
+com.twelvet.framework.security.service.impl.TwTUserDetailsServiceImpl

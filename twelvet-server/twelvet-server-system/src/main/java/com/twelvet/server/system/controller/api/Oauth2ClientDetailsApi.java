@@ -2,20 +2,13 @@ package com.twelvet.server.system.controller.api;
 
 import com.twelvet.api.system.domain.SysClientDetails;
 import com.twelvet.framework.core.application.controller.TWTController;
-import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.core.domain.R;
-import com.twelvet.framework.jdbc.web.utils.PageUtils;
-import com.twelvet.framework.log.annotation.Log;
-import com.twelvet.framework.log.enums.BusinessType;
-import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.framework.utils.$;
-import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.server.system.service.ISysClientDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author twelvet
@@ -23,7 +16,7 @@ import java.util.List;
  * @Description: 终端配置 信息操作处理
  */
 @RestController
-@RequestMapping("/client")
+@RequestMapping("/api/client")
 public class Oauth2ClientDetailsApi extends TWTController {
 
 	@Autowired

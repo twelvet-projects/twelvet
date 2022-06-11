@@ -29,13 +29,13 @@ public class TWTBearerTokenExtractor implements BearerTokenResolver {
 
     private final AuthIgnoreConfig authIgnoreConfig;
 
-    public TWTBearerTokenExtractor(AuthIgnoreConfig urlProperties) {
-        this.authIgnoreConfig = urlProperties;
+    public TWTBearerTokenExtractor(AuthIgnoreConfig authIgnoreConfig) {
+        this.authIgnoreConfig = authIgnoreConfig;
     }
 
     @Override
     public String resolve(HttpServletRequest request) {
-        boolean match = authIgnoreConfig.getIgnoreUrls().stream()
+        boolean match = authIgnoreConfig.getUrls().stream()
                 .anyMatch(url -> pathMatcher.match(url, request.getRequestURI()));
 
         if (match) {

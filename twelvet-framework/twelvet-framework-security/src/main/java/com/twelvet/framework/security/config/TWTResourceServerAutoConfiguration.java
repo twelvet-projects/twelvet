@@ -1,6 +1,5 @@
 package com.twelvet.framework.security.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
@@ -36,8 +35,8 @@ public class TWTResourceServerAutoConfiguration {
      * @return TokenIntrospector
      */
     @Bean
-    public OpaqueTokenIntrospector opaqueTokenIntrospector() {
-        return new TWTCustomOpaqueTokenIntrospect();
+    public OpaqueTokenIntrospector opaqueTokenIntrospector(OAuth2AuthorizationService oAuth2AuthorizationService) {
+        return new TWTCustomOpaqueTokenIntrospect(oAuth2AuthorizationService);
     }
 
 }

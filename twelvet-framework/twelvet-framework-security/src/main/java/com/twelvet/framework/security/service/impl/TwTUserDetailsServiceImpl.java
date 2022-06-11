@@ -30,7 +30,6 @@ import java.util.Set;
  * @WebSite www.twelvet.cn
  * @Description: 自定义用户信息处理
  */
-@Service("TWTUserDetails")
 public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 
 	private static final Logger log = LoggerFactory.getLogger(TwTUserDetailsServiceImpl.class);

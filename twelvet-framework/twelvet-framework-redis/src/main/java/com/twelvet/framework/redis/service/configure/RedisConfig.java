@@ -26,7 +26,6 @@ import java.util.Map;
  */
 @SuppressWarnings("all")
 @Configuration
-@EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
 
 	/**
