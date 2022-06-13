@@ -21,9 +21,9 @@ import java.util.Map;
 
 public class OAuth2EndpointUtils {
 
-    public final String ACCESS_TOKEN_REQUEST_ERROR_URI = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
+    public final static String ACCESS_TOKEN_REQUEST_ERROR_URI = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
 
-    public MultiValueMap<String, String> getParameters(HttpServletRequest request) {
+    public static MultiValueMap<String, String> getParameters(HttpServletRequest request) {
         Map<String, String[]> parameterMap = request.getParameterMap();
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>(parameterMap.size());
         parameterMap.forEach((key, values) -> {
@@ -36,14 +36,14 @@ public class OAuth2EndpointUtils {
         return parameters;
     }
 
-    public boolean matchesPkceTokenRequest(HttpServletRequest request) {
+    public static boolean matchesPkceTokenRequest(HttpServletRequest request) {
         return AuthorizationGrantType.AUTHORIZATION_CODE.getValue()
                 .equals(request.getParameter(OAuth2ParameterNames.GRANT_TYPE))
                 && request.getParameter(OAuth2ParameterNames.CODE) != null
                 && request.getParameter(PkceParameterNames.CODE_VERIFIER) != null;
     }
 
-    public void throwError(String errorCode, String parameterName, String errorUri) {
+    public static void throwError(String errorCode, String parameterName, String errorUri) {
         OAuth2Error error = new OAuth2Error(errorCode, "OAuth 2.0 Parameter: " + parameterName, errorUri);
         throw new OAuth2AuthenticationException(error);
     }
@@ -56,7 +56,7 @@ public class OAuth2EndpointUtils {
      * @return
      * @throws IOException
      */
-    public OAuth2AccessTokenResponse sendAccessTokenResponse(OAuth2Authorization authentication,
+    public static OAuth2AccessTokenResponse sendAccessTokenResponse(OAuth2Authorization authentication,
                                                              Map<String, Object> claims) {
 
         OAuth2AccessToken accessToken = authentication.getAccessToken().getToken();

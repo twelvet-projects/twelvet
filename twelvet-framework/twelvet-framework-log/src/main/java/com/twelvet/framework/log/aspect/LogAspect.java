@@ -93,13 +93,13 @@ public class LogAspect {
 			SysOperationLog operationLog = new SysOperationLog();
 			operationLog.setStatus(BusinessStatus.SUCCESS.value());
 			// 请求的地址
-			String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
+			String ip = IpUtils.getIpAddr(ServletUtils.getRequest().get());
 			operationLog.setOperIp(ip);
 
 			// 返回参数
 			operationLog.setJsonResult(JacksonUtils.toJson(jsonResult));
 
-			operationLog.setOperUrl(ServletUtils.getRequest().getRequestURI());
+			operationLog.setOperUrl(ServletUtils.getRequest().get().getRequestURI());
 			if (loginUser != null) {
 				operationLog.setOperName(loginUser.getUsername());
 				operationLog.setDeptId(loginUser.getDeptId());
@@ -114,7 +114,7 @@ public class LogAspect {
 			String methodName = joinPoint.getSignature().getName();
 			operationLog.setMethod(className + "." + methodName + "()");
 			// 设置请求方式
-			operationLog.setRequestMethod(ServletUtils.getRequest().getMethod());
+			operationLog.setRequestMethod(ServletUtils.getRequest().get().getMethod());
 			// 处理设置注解上的参数
 			getControllerMethodDescription(joinPoint, controllerLog, operationLog);
 			// 异步保存数据库
@@ -158,7 +158,7 @@ public class LogAspect {
 		String requestMethod = operationLog.getRequestMethod();
 		if (HttpMethod.PUT.name().equals(requestMethod) || HttpMethod.POST.name().equals(requestMethod)) {
 			String params;
-			String contentType = ServletUtils.getRequest().getContentType();
+			String contentType = ServletUtils.getRequest().get().getContentType();
 			if (!$.isEmpty(contentType) && contentType.startsWith(MediaType.MULTIPART_FORM_DATA_VALUE)) {
 				params = "FILE";
 			}
@@ -174,7 +174,7 @@ public class LogAspect {
 			operationLog.setOperParam(StringUtils.substring(params, 0, 2000));
 		}
 		else {
-			Map<?, ?> paramsMap = (Map<?, ?>) ServletUtils.getRequest()
+			Map<?, ?> paramsMap = (Map<?, ?>) ServletUtils.getRequest().get()
 					.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
 			operationLog.setOperParam(StringUtils.substring(paramsMap.toString(), 0, 1000));
 		}

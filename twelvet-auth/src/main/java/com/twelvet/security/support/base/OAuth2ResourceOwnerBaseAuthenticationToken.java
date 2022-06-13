@@ -1,6 +1,6 @@
 package com.twelvet.security.support.base;
 
-import lombok.Getter;
+import jdk.nashorn.internal.objects.annotations.Getter;
 import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,21 +17,34 @@ import java.util.*;
  */
 public abstract class OAuth2ResourceOwnerBaseAuthenticationToken extends AbstractAuthenticationToken {
 
-	@Getter
+
 	private final AuthorizationGrantType authorizationGrantType;
 
-	@Getter
 	private final Authentication clientPrincipal;
 
-	@Getter
 	private final Set<String> scopes;
 
-	@Getter
 	private final Map<String, Object> additionalParameters;
 
+	public AuthorizationGrantType getAuthorizationGrantType() {
+		return authorizationGrantType;
+	}
+
+	public Authentication getClientPrincipal() {
+		return clientPrincipal;
+	}
+
+	public Set<String> getScopes() {
+		return scopes;
+	}
+
+	public Map<String, Object> getAdditionalParameters() {
+		return additionalParameters;
+	}
+
 	public OAuth2ResourceOwnerBaseAuthenticationToken(AuthorizationGrantType authorizationGrantType,
-			Authentication clientPrincipal, @Nullable Set<String> scopes,
-			@Nullable Map<String, Object> additionalParameters) {
+													  Authentication clientPrincipal, @Nullable Set<String> scopes,
+													  @Nullable Map<String, Object> additionalParameters) {
 		super(Collections.emptyList());
 		Assert.notNull(authorizationGrantType, "authorizationGrantType cannot be null");
 		Assert.notNull(clientPrincipal, "clientPrincipal cannot be null");

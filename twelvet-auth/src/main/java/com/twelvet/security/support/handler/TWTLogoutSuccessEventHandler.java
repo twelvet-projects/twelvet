@@ -1,12 +1,8 @@
 package com.twelvet.security.support.handler;
 
 import cn.hutool.core.collection.CollUtil;
-import com.TWT.admin.api.entity.SysLog;
-import com.TWT.common.core.util.SpringContextHolder;
-import com.TWT.common.core.util.WebUtils;
-import com.TWT.common.log.event.SysLogEvent;
-import com.TWT.common.log.util.SysLogUtils;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.event.LogoutSuccessEvent;
@@ -14,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.WebUtils;
 
 /**
  * 

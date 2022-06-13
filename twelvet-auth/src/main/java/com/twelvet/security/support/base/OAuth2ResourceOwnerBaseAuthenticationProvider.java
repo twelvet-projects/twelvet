@@ -1,8 +1,8 @@
 package com.twelvet.security.support.base;
 
 import cn.hutool.extra.spring.SpringUtil;
-import com.TWT.common.security.util.OAuth2ErrorCodesExpand;
-import com.TWT.common.security.util.ScopeException;
+import com.twelvet.framework.security.utils.OAuth2ErrorCodesExpand;
+import com.twelvet.framework.security.utils.ScopeException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -108,29 +108,29 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
-		T resouceOwnerBaseAuthentication = (T) authentication;
+		T resouceOwnerBaseAuthenticationScopes = (T) authentication;
 
 		OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(
-				resouceOwnerBaseAuthentication);
+				resouceOwnerBaseAuthenticationScopes);
 
 		RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
 		checkClient(registeredClient);
 
 		Set<String> authorizedScopes;
 		// Default to configured scopes
-		if (!CollectionUtils.isEmpty(resouceOwnerBaseAuthentication.getScopes())) {
-			for (String requestedScope : resouceOwnerBaseAuthentication.getScopes()) {
+		if (!CollectionUtils.isEmpty(resouceOwnerBaseAuthenticationScopes.getScopes())) {
+			for (String requestedScope : resouceOwnerBaseAuthenticationScopes.getScopes()) {
 				if (!registeredClient.getScopes().contains(requestedScope)) {
 					throw new OAuth2AuthenticationException(OAuth2ErrorCodes.INVALID_SCOPE);
 				}
 			}
-			authorizedScopes = new LinkedHashSet<>(resouceOwnerBaseAuthentication.getScopes());
+			authorizedScopes = new LinkedHashSet<>(resouceOwnerBaseAuthenticationScopes.getScopes());
 		}
 		else {
 			throw new ScopeException(OAuth2ErrorCodesExpand.SCOPE_IS_EMPTY);
 		}
 
-		Map<String, Object> reqParameters = resouceOwnerBaseAuthentication.getAdditionalParameters();
+		Map<String, Object> reqParameters = resouceOwnerBaseAuthenticationScopes.getAdditionalParameters();
 		try {
 
 			UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = buildToken(reqParameters);
@@ -147,7 +147,7 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 					.providerContext(ProviderContextHolder.getProviderContext())
 					.authorizedScopes(authorizedScopes)
 					.authorizationGrantType(AuthorizationGrantType.PASSWORD)
-					.authorizationGrant(resouceOwnerBaseAuthentication);
+					.authorizationGrant(resouceOwnerBaseAuthenticationScopes);
 			// @formatter:on
 
 			OAuth2Authorization.Builder authorizationBuilder = OAuth2Authorization

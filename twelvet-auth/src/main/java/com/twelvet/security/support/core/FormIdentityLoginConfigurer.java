@@ -1,7 +1,7 @@
 package com.twelvet.security.support.core;
 
-import com.TWT.auth.support.handler.FormAuthenticationFailureHandler;
-import com.TWT.auth.support.handler.SsoLogoutSuccessHandler;
+import com.twelvet.security.support.handler.FormAuthenticationFailureHandler;
+import com.twelvet.security.support.handler.SsoLogoutSuccessHandler;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 

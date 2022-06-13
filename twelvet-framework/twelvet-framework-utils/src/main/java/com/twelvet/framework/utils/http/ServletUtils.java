@@ -23,6 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author twelvet
@@ -72,13 +73,9 @@ public class ServletUtils {
 	 * 获取request
 	 * @return HttpServletRequest
 	 */
-	public static HttpServletRequest getRequest() {
-		try {
-			return getRequestAttributes().getRequest();
-		}
-		catch (NullPointerException e) {
-			return null;
-		}
+	public static Optional<HttpServletRequest> getRequest() {
+		return Optional
+				.ofNullable(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
 	}
 
 	/**
@@ -86,7 +83,7 @@ public class ServletUtils {
 	 * @return 当前完整访问地址
 	 */
 	public static String getHostRequestURI() {
-		HttpServletRequest request = getRequest();
+		HttpServletRequest request = getRequest().get();
 		return IpUtils.getHostIp() + ":" + request.getServerPort() + request.getRequestURI();
 	}
 
@@ -113,7 +110,7 @@ public class ServletUtils {
 	 * @return HttpSession
 	 */
 	public static HttpSession getSession() {
-		return getRequest().getSession();
+		return getRequest().get().getSession();
 	}
 
 	/**
@@ -121,7 +118,7 @@ public class ServletUtils {
 	 * @return Map
 	 */
 	public static Map<String, String> getMapParam() {
-		return getMapParam(getRequest());
+		return getMapParam(getRequest().get());
 	}
 
 	/**
@@ -178,14 +175,14 @@ public class ServletUtils {
 	 * @return 返回参数数据
 	 */
 	public static Integer getParameterToInt(String name) {
-		return Convert.toInt(getRequest().getParameter(name));
+		return Convert.toInt(getRequest().get().getParameter(name));
 	}
 
 	/**
 	 * 获取String参数
 	 */
 	public static String getParameter(String name) {
-		return getRequest().getParameter(name);
+		return getRequest().get().getParameter(name);
 	}
 
 	/**
@@ -227,8 +224,8 @@ public class ServletUtils {
 	 * 是否是Ajax异步请求
 	 */
 	public static boolean isAjax() {
-		HttpServletRequest request = getRequest();
-		String accept = getRequest().getHeader("accept");
+		HttpServletRequest request = getRequest().get();
+		String accept = getRequest().get().getHeader("accept");
 		if (accept != null && accept.contains("application/json")) {
 			return true;
 		}

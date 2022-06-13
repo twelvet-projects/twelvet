@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Component;
 
 /**
@@ -116,6 +117,17 @@ public final class SpringUtils implements BeanFactoryPostProcessor {
 	public static String getActiveProfile() {
 		final String[] activeProfiles = getActiveProfiles();
 		return ArrayUtil.isNotEmpty(activeProfiles) ? activeProfiles[0] : null;
+	}
+
+	/**
+	 * 发布事件
+	 * @param event
+	 */
+	public static void publishEvent(ApplicationEvent event) {
+		if (applicationContext == null) {
+			return;
+		}
+		applicationContext.publishEvent(event);
 	}
 
 }

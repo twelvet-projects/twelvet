@@ -1,11 +1,7 @@
 package com.twelvet.security.support.handler;
 
-import com.TWT.admin.api.entity.SysLog;
-import com.TWT.common.core.util.SpringContextHolder;
-import com.TWT.common.log.event.SysLogEvent;
-import com.TWT.common.log.util.SysLogUtils;
-import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.security.core.Authentication;
@@ -31,6 +27,8 @@ import java.util.Map;
 
 public class TWTAuthenticationSuccessEventHandler implements AuthenticationSuccessHandler {
 
+	private static final Logger log = LoggerFactory.getLogger(TWTAuthenticationSuccessEventHandler.class);
+
 	private final HttpMessageConverter<OAuth2AccessTokenResponse> accessTokenHttpResponseConverter = new OAuth2AccessTokenResponseHttpMessageConverter();
 
 	/**
@@ -40,7 +38,6 @@ public class TWTAuthenticationSuccessEventHandler implements AuthenticationSucce
 	 * @param authentication the <tt>Authentication</tt> object which was created during
 	 * the authentication process.
 	 */
-	@SneakyThrows
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) {

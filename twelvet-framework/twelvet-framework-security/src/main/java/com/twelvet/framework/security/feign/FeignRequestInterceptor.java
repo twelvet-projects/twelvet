@@ -39,10 +39,10 @@ public class FeignRequestInterceptor implements RequestInterceptor {
         requestTemplate.header("X-Forwarded-For", IpUtils.getIpAddr());
 
         // 非web 请求直接跳过
-        if ($.isEmpty(ServletUtils.getRequest())) {
+        if (ServletUtils.getRequest().isPresent()) {
             return;
         }
-        HttpServletRequest request = ServletUtils.getRequest();
+        HttpServletRequest request = ServletUtils.getRequest().get();
         Enumeration<String> headerNames = request.getHeaderNames();
         // 装载web请求所有头部
         if (headerNames != null) {

@@ -1,7 +1,8 @@
 package com.twelvet.security.support.password;
 
-import com.TWT.auth.support.base.OAuth2ResourceOwnerBaseAuthenticationConverter;
-import com.TWT.common.security.util.OAuth2EndpointUtils;
+
+import com.twelvet.framework.security.utils.OAuth2EndpointUtils;
+import com.twelvet.security.support.base.OAuth2ResourceOwnerBaseAuthenticationConverter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
@@ -33,7 +34,7 @@ public class OAuth2ResourceOwnerPasswordAuthenticationConverter
 
 	@Override
 	public OAuth2ResourceOwnerPasswordAuthenticationToken buildToken(Authentication clientPrincipal,
-			Set requestedScopes, Map additionalParameters) {
+																	 Set requestedScopes, Map additionalParameters) {
 		return new OAuth2ResourceOwnerPasswordAuthenticationToken(AuthorizationGrantType.PASSWORD, clientPrincipal,
 				requestedScopes, additionalParameters);
 	}

@@ -1,5 +1,6 @@
 package com.twelvet.security.config;
 
+import com.twelvet.framework.security.constans.SecurityConstants;
 import com.twelvet.security.support.CustomeOAuth2AccessTokenGenerator;
 import com.twelvet.security.support.core.CustomeOAuth2TokenCustomizer;
 import com.twelvet.security.support.core.FormIdentityLoginConfigurer;
@@ -10,6 +11,7 @@ import com.twelvet.security.support.password.OAuth2ResourceOwnerPasswordAuthenti
 import com.twelvet.security.support.password.OAuth2ResourceOwnerPasswordAuthenticationProvider;
 import com.twelvet.security.support.sms.OAuth2ResourceOwnerSmsAuthenticationConverter;
 import com.twelvet.security.support.sms.OAuth2ResourceOwnerSmsAuthenticationProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -34,7 +36,8 @@ import java.util.Arrays;
 
 public class AuthorizationServerConfiguration {
 
-	private final OAuth2AuthorizationService authorizationService;
+	@Autowired
+	private OAuth2AuthorizationService authorizationService;
 
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE)

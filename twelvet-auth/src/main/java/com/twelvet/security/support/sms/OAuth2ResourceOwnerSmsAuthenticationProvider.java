@@ -1,7 +1,7 @@
 package com.twelvet.security.support.sms;
 
-import com.TWT.auth.support.base.OAuth2ResourceOwnerBaseAuthenticationProvider;
-import com.TWT.common.core.constant.SecurityConstants;
+import com.twelvet.framework.security.constans.SecurityConstants;
+import com.twelvet.security.support.base.OAuth2ResourceOwnerBaseAuthenticationProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.security.authentication.AuthenticationManager;

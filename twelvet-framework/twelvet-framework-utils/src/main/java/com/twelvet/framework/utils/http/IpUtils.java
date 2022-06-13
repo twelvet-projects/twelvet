@@ -29,7 +29,7 @@ public class IpUtils {
 	 * @return IP
 	 */
 	public static String getIpAddr() {
-		return getIpAddr(ServletUtils.getRequest());
+		return getIpAddr(ServletUtils.getRequest().get());
 	}
 
 	/**

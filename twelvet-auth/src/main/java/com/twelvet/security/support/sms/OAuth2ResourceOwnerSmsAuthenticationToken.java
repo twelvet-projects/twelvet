@@ -1,6 +1,6 @@
 package com.twelvet.security.support.sms;
 
-import com.TWT.auth.support.base.OAuth2ResourceOwnerBaseAuthenticationToken;
+import com.twelvet.security.support.base.OAuth2ResourceOwnerBaseAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 

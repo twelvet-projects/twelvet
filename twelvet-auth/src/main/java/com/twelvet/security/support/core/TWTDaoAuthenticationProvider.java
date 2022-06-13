@@ -3,10 +3,9 @@ package com.twelvet.security.support.core;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import com.TWT.common.core.constant.SecurityConstants;
-import com.TWT.common.core.util.WebUtils;
-import com.TWT.common.security.service.TWTUserDetailsService;
-import lombok.SneakyThrows;
+import com.twelvet.framework.security.constans.SecurityConstants;
+import com.twelvet.framework.security.service.impl.TwTUserDetailsServiceImpl;
+import com.twelvet.framework.utils.http.ServletUtils;
 import org.springframework.core.Ordered;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -23,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.web.authentication.www.BasicAuthenticationConverter;
 import org.springframework.util.Assert;
+import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Comparator;
@@ -64,12 +64,11 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	protected void additionalAuthenticationChecks(UserDetails userDetails,
 			UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
 
 		// app 模式不用校验密码
-		String grantType = WebUtils.getRequest().get().getParameter(OAuth2ParameterNames.GRANT_TYPE);
+		String grantType = ServletUtils.getRequest().get().getParameter(OAuth2ParameterNames.GRANT_TYPE);
 		if (StrUtil.equals(SecurityConstants.APP, grantType)) {
 			return;
 		}
@@ -87,13 +86,17 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 		}
 	}
 
-	@SneakyThrows
-	@Override
 
+	@Override
 	protected final UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication) {
 		prepareTimingAttackProtection();
-		HttpServletRequest request = WebUtils.getRequest().orElseThrow(
-				(Supplier<Throwable>) () -> new InternalAuthenticationServiceException("web request is empty"));
+		HttpServletRequest request = null;
+		try {
+			request = ServletUtils.getRequest().orElseThrow(
+					(Supplier<Throwable>) () -> new InternalAuthenticationServiceException("web request is empty"));
+		} catch (Throwable e) {
+			throw new InternalAuthenticationServiceException("web request is empty");
+		}
 
 		Map<String, String> paramMap = ServletUtil.getParamMap(request);
 		String grantType = paramMap.get(OAuth2ParameterNames.GRANT_TYPE);
@@ -103,11 +106,11 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 			clientId = basicConvert.convert(request).getName();
 		}
 
-		Map<String, TWTUserDetailsService> userDetailsServiceMap = SpringUtil
-				.getBeansOfType(TWTUserDetailsService.class);
+		Map<String, TwTUserDetailsServiceImpl> userDetailsServiceMap = SpringUtil
+				.getBeansOfType(TwTUserDetailsServiceImpl.class);
 
 		String finalClientId = clientId;
-		Optional<TWTUserDetailsService> optional = userDetailsServiceMap.values().stream()
+		Optional<TwTUserDetailsServiceImpl> optional = userDetailsServiceMap.values().stream()
 				.filter(service -> service.support(finalClientId, grantType))
 				.max(Comparator.comparingInt(Ordered::getOrder));
 

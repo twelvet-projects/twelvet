@@ -1,7 +1,7 @@
 package com.twelvet.security.support.core;
 
-import com.TWT.common.core.constant.SecurityConstants;
-import com.TWT.common.security.service.TWTUser;
+import com.twelvet.api.system.domain.SysLoginInfo;
+import com.twelvet.framework.security.constans.SecurityConstants;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenClaimsContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenClaimsSet;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
@@ -29,7 +29,7 @@ public class CustomeOAuth2TokenCustomizer implements OAuth2TokenCustomizer<OAuth
 			return;
 		}
 
-		TWTUser TWTUser = (TWTUser) context.getPrincipal().getPrincipal();
+		SysLoginInfo TWTUser = (SysLoginInfo) context.getPrincipal().getPrincipal();
 		claims.claim(SecurityConstants.DETAILS_USER, TWTUser);
 	}
 
