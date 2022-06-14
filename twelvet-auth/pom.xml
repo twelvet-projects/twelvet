@@ -75,6 +75,12 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
+        <!-- twelvet日志 -->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-log</artifactId>
+        </dependency>
+
         <!--twelvet redis-->
         <dependency>
             <groupId>com.twelvet</groupId>

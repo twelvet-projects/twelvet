@@ -8,6 +8,11 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 
 import java.lang.annotation.*;
 
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description: 资源服务注解
+ */
 @Documented
 @Inherited
 @Target({ElementType.TYPE})

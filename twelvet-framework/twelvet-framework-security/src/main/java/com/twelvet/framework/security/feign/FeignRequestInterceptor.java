@@ -21,7 +21,6 @@ import java.util.Enumeration;
  * @WebSite www.twelvet.cn
  * @Description: Feign 请求拦截器
  */
-@Component
 public class FeignRequestInterceptor implements RequestInterceptor {
 
     @Autowired

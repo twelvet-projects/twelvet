@@ -8,6 +8,16 @@ package com.twelvet.framework.security.constans;
 public interface SecurityConstants {
 
     /**
+     * 登录成功
+     */
+    Integer LOGIN_SUCCESS = 1;
+
+    /**
+     * 登录失败
+     */
+    Integer LOGIN_FAIL = 0;
+
+    /**
      * {bcrypt} 加密的特征码
      */
     String BCRYPT = "{bcrypt}";

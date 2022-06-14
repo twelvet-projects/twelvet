@@ -1,6 +1,7 @@
 package com.twelvet.security.support.handler;
 
 import cn.hutool.core.collection.CollUtil;
+import com.twelvet.framework.log.utils.SysLogUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
@@ -18,9 +19,10 @@ import org.springframework.web.util.WebUtils;
  *
  * 事件机制处理退出相关
  */
-
 @Component
 public class TWTLogoutSuccessEventHandler implements ApplicationListener<LogoutSuccessEvent> {
+
+	private static final Logger log = LoggerFactory.getLogger(TWTLogoutSuccessEventHandler.class);
 
 	@Override
 	public void onApplicationEvent(LogoutSuccessEvent event) {
@@ -38,26 +40,6 @@ public class TWTLogoutSuccessEventHandler implements ApplicationListener<LogoutS
 	 */
 	public void handle(Authentication authentication) {
 		log.info("用户：{} 退出成功", authentication.getPrincipal());
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-
-		SysLog logVo = SysLogUtils.getSysLog();
-		logVo.setTitle("退出成功");
-		// 发送异步日志事件
-		Long startTime = System.currentTimeMillis();
-		Long endTime = System.currentTimeMillis();
-		logVo.setTime(endTime - startTime);
-
-		// 设置对应的token
-		WebUtils.getRequest().ifPresent(request -> logVo.setParams(request.getHeader(HttpHeaders.AUTHORIZATION)));
-
-		// 这边设置ServiceId
-		if (authentication instanceof OAuth2Authorization) {
-			OAuth2Authorization auth2Authentication = (OAuth2Authorization) authentication;
-			logVo.setServiceId(auth2Authentication.getRegisteredClientId());
-		}
-		logVo.setCreateBy(authentication.getName());
-		logVo.setUpdateBy(authentication.getName());
-		SpringContextHolder.publishEvent(new SysLogEvent(logVo));
 	}
 
 }

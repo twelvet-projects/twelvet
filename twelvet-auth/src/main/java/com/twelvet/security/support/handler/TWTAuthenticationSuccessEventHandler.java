@@ -1,5 +1,12 @@
 package com.twelvet.security.support.handler;
 
+import com.twelvet.api.system.domain.SysLoginInfo;
+import com.twelvet.framework.log.event.SysLoginLogEvent;
+import com.twelvet.framework.log.utils.SysLogUtils;
+import com.twelvet.framework.log.vo.SysLogVO;
+import com.twelvet.framework.security.constans.SecurityConstants;
+import com.twelvet.framework.utils.DateUtils;
+import com.twelvet.framework.utils.SpringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -24,7 +31,6 @@ import java.util.Map;
  * 
  * @date 2022-06-02
  */
-
 public class TWTAuthenticationSuccessEventHandler implements AuthenticationSuccessHandler {
 
 	private static final Logger log = LoggerFactory.getLogger(TWTAuthenticationSuccessEventHandler.class);
@@ -43,18 +49,22 @@ public class TWTAuthenticationSuccessEventHandler implements AuthenticationSucce
 			Authentication authentication) {
 		log.info("用户：{} 登录成功", authentication.getPrincipal());
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		SysLog logVo = SysLogUtils.getSysLog();
-		logVo.setTitle("登录成功");
+		String username = authentication.getName();
+		SysLoginInfo sysLoginInfo = new SysLoginInfo();
+		SysLogVO sysLog = SysLogUtils.getSysLog();
+		sysLoginInfo.setStatus(SecurityConstants.LOGIN_SUCCESS);
 		// 发送异步日志事件
-		Long startTime = System.currentTimeMillis();
-		Long endTime = System.currentTimeMillis();
-		logVo.setTime(endTime - startTime);
-		logVo.setCreateBy(authentication.getName());
-		logVo.setUpdateBy(authentication.getName());
-		SpringContextHolder.publishEvent(new SysLogEvent(logVo));
+		sysLoginInfo.setCreateTime(DateUtils.getNowDate());
+		sysLoginInfo.setCreateBy(username);
+		sysLoginInfo.setUpdateBy(username);
+		SpringUtils.publishEvent(new SysLoginLogEvent(sysLoginInfo));
 
 		// 输出token
-		sendAccessTokenResponse(request, response, authentication);
+		try {
+			sendAccessTokenResponse(request, response, authentication);
+		} catch (IOException e) {
+			log.error("返回消息失败", e);
+		}
 	}
 
 	private void sendAccessTokenResponse(HttpServletRequest request, HttpServletResponse response,
