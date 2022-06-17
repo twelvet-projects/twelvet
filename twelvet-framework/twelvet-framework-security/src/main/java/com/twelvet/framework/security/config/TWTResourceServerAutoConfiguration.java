@@ -2,9 +2,11 @@ package com.twelvet.framework.security.config;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 
+@Configuration
 @EnableConfigurationProperties(AuthIgnoreConfig.class)
 public class TWTResourceServerAutoConfiguration {
 

@@ -19,7 +19,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Import({
-        TWTResourceServerAutoConfiguration.class,
         TWTResourceServerConfiguration.class,
         FeignConfig.class
 })
