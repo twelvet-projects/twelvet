@@ -1,5 +1,6 @@
 package com.twelvet.auth.support.base;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,14 +17,13 @@ import java.util.*;
  */
 public abstract class OAuth2ResourceOwnerBaseAuthenticationToken extends AbstractAuthenticationToken {
 
+	private AuthorizationGrantType authorizationGrantType;
 
-	private final AuthorizationGrantType authorizationGrantType;
+	private Authentication clientPrincipal;
 
-	private final Authentication clientPrincipal;
+	private Set<String> scopes;
 
-	private final Set<String> scopes;
-
-	private final Map<String, Object> additionalParameters;
+	private Map<String, Object> additionalParameters;
 
 	public AuthorizationGrantType getAuthorizationGrantType() {
 		return authorizationGrantType;

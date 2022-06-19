@@ -33,7 +33,6 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import java.util.Arrays;
 
 @Configuration
-
 public class AuthorizationServerConfiguration {
 
 	@Autowired

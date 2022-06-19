@@ -5,6 +5,7 @@ import com.twelvet.framework.security.utils.OAuth2ErrorCodesExpand;
 import com.twelvet.framework.security.utils.ScopeException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -41,13 +42,17 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 
 	private static final String ERROR_URI = "https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.2.1";
 
-	private final OAuth2AuthorizationService authorizationService;
+	@Autowired
+	private OAuth2AuthorizationService authorizationService;
 
-	private final OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
+	@Autowired
+	private OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
 
-	private final AuthenticationManager authenticationManager;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
-	private final MessageSourceAccessor messages;
+	@Autowired
+	private MessageSourceAccessor messages;
 
 	@Deprecated
 	private Supplier<String> refreshTokenGenerator;
