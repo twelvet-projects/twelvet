@@ -1,6 +1,6 @@
 package com.twelvet.auth.support.sms;
 
-import com.twelvet.framework.security.constans.SecurityConstants;
+import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.security.utils.OAuth2EndpointUtils;
 import com.twelvet.auth.support.base.OAuth2ResourceOwnerBaseAuthenticationConverter;
 import org.springframework.security.core.Authentication;
@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 
  * @date 2022-05-31
  *
  * 短信登录转换器

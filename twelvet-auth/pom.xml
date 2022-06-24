@@ -39,28 +39,10 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
-        <!--Mysql-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-
         <!--system api-->
         <dependency>
             <groupId>com.twelvet</groupId>
             <artifactId>twelvet-api-system</artifactId>
-        </dependency>
-
-        <!--mq api-->
-        <dependency>
-            <groupId>com.twelvet</groupId>
-            <artifactId>twelvet-api-mq</artifactId>
-        </dependency>
-
-        <!--默认采用多数据-->
-        <dependency>
-            <groupId>com.twelvet</groupId>
-            <artifactId>twelvet-framework-datasource</artifactId>
         </dependency>
 
         <!--公共安全配置模块-->
@@ -81,18 +63,6 @@
             <artifactId>twelvet-framework-log</artifactId>
         </dependency>
 
-        <!--twelvet redis-->
-        <dependency>
-            <groupId>com.twelvet</groupId>
-            <artifactId>twelvet-framework-redis</artifactId>
-        </dependency>
-
-        <!--核心模块-->
-        <dependency>
-            <groupId>com.twelvet</groupId>
-            <artifactId>twelvet-framework-core</artifactId>
-        </dependency>
-
         <!--Swagger接口文档-->
         <dependency>
             <groupId>com.twelvet</groupId>
@@ -103,12 +73,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
-        </dependency>
-
-        <!--logback-redis-->
-        <dependency>
-            <groupId>com.cwbase</groupId>
-            <artifactId>logback-redis-appender</artifactId>
         </dependency>
 
     </dependencies>

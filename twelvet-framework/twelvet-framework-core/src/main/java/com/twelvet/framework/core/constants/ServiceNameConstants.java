@@ -18,12 +18,12 @@ public interface ServiceNameConstants {
 	String SYSTEM_SERVICE = "twelvet-server-system";
 
 	/**
-	 * 文件服务的serviceid
+	 * 文件服务的serviceId
 	 */
 	String FILE_SERVICE = "twelvet-server-dfs";
 
 	/**
-	 * MQ服务的serviceid
+	 * MQ服务的serviceId
 	 */
 	String MQ_SERVICE = "twelvet-server-mq";
 

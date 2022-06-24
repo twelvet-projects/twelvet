@@ -16,7 +16,6 @@ import java.util.Collection;
  * @WebSite www.twelvet.cn
  * @Description: 自定义权限实现
  */
-@Service("role")
 public class PermissionService {
 
 	/**

@@ -9,27 +9,21 @@ import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.service.TwUserDetailsService;
 import com.twelvet.framework.utils.$;
-import com.twelvet.framework.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
  * @Description: 自定义用户信息处理
  */
+@Primary
 public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 
 	private static final Logger log = LoggerFactory.getLogger(TwTUserDetailsServiceImpl.class);
@@ -78,31 +72,6 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 			log.info("{}： 用户已被冻结.", username);
 			throw new TWTException("账号已被冻结");
 		}
-	}
-
-	/**
-	 * 得到UserDetails
-	 * @param result result
-	 * @return UserDetails
-	 */
-	public UserDetails getUserDetails(R<UserInfo> result) {
-		UserInfo info = result.getData();
-
-		Set<String> dbAuthsSet = new HashSet<>();
-		if ($.isNotEmpty(info.getRoles())) {
-			// 获取角色
-			dbAuthsSet.addAll(info.getRoles());
-			// 获取权限
-			dbAuthsSet.addAll(info.getPermissions());
-		}
-
-		Collection<? extends GrantedAuthority> authorities = AuthorityUtils
-				.createAuthorityList(dbAuthsSet.toArray(new String[0]));
-
-		SysUser user = info.getSysUser();
-
-		return new LoginUser(user.getUserId(), user.getDeptId(), user.getRoles(), user.getUsername(),
-				user.getPassword(), true, true, true, true, authorities);
 	}
 
 	@Override

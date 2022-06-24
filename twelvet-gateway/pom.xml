@@ -70,10 +70,10 @@
             <artifactId>twelvet-framework-utils</artifactId>
         </dependency>
 
-        <!--logback-redis-->
+        <!--twelvet core-->
         <dependency>
-            <groupId>com.cwbase</groupId>
-            <artifactId>logback-redis-appender</artifactId>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-core</artifactId>
         </dependency>
 
     </dependencies>

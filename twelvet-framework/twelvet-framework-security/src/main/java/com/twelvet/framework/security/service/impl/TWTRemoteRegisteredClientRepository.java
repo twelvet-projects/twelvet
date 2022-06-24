@@ -5,8 +5,7 @@ import com.twelvet.api.system.domain.SysClientDetails;
 import com.twelvet.api.system.feign.RemoteOauth2ClientDetailsService;
 import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
-import com.twelvet.framework.security.constans.SecurityConstants;
-import com.twelvet.framework.security.domain.LoginUser;
+import com.twelvet.framework.core.constants.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -82,7 +81,7 @@ public class TWTRemoteRegisteredClientRepository implements RegisteredClientRepo
         SysClientDetails clientDetails = detailsR.getData();
 
         RegisteredClient.Builder builder = RegisteredClient.withId(clientDetails.getClientId())
-                .clientId(clientDetails.getClientSecret())
+                .clientId(clientDetails.getClientId())
                 .clientSecret(SecurityConstants.NOOP + clientDetails.getClientSecret())
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC);
 

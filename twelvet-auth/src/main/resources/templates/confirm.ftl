@@ -8,6 +8,7 @@
     <meta name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <title>TwelveT 第三方授权</title>
+    <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/assets/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css"/>
 </head>
 <body>

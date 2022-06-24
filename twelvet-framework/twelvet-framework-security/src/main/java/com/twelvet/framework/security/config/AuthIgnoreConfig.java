@@ -25,38 +25,38 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "security.oauth2.ignore")
 public class AuthIgnoreConfig implements InitializingBean {
 
-    private List<String> urls = new ArrayList<>();
+	private List<String> urls = new ArrayList<>();
 
-    public List<String> getUrls() {
-        return urls;
-    }
+	public List<String> getUrls() {
+		return urls;
+	}
 
-    public void setUrls(List<String> urls) {
-        this.urls = urls;
-    }
+	public void setUrls(List<String> urls) {
+		this.urls = urls;
+	}
 
-    /**
-     * 重写bean注入后
-     */
-    @Override
-    public void afterPropertiesSet() {
-        RequestMappingHandlerMapping mapping = SpringUtil.getBean("requestMappingHandlerMapping");
-        Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
+	/**
+	 * 重写bean注入后
+	 */
+	@Override
+	public void afterPropertiesSet() {
+		RequestMappingHandlerMapping mapping = SpringUtil.getBean("requestMappingHandlerMapping");
+		Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
 
-        // 遍历所有mapping
-        map.keySet().forEach(mappingInfo -> {
+		// 遍历所有mapping
+		map.keySet().forEach(mappingInfo -> {
 
-            HandlerMethod handlerMethod = map.get(mappingInfo);
-            // 检测方法是否存在注解
-            AuthIgnore method = handlerMethod.getMethod().getAnnotation(AuthIgnore.class);
-            // 检测Controller是否在注解
-            AuthIgnore controller = handlerMethod.getBeanType().getAnnotation(AuthIgnore.class);
+			HandlerMethod handlerMethod = map.get(mappingInfo);
+			// 检测方法是否存在注解
+			AuthIgnore method = handlerMethod.getMethod().getAnnotation(AuthIgnore.class);
+			// 检测Controller是否在注解
+			AuthIgnore controller = handlerMethod.getBeanType().getAnnotation(AuthIgnore.class);
 
-            // 本方法或本Controller存在AuthIgnore注解将存进列表
-            if ($.isNotEmpty(method) || $.isNotEmpty(controller)) {
-                urls.addAll(mappingInfo.getPatternsCondition().getPatterns());
-            }
-        });
-    }
+			// 本方法或本Controller存在AuthIgnore注解将存进列表
+			if ($.isNotEmpty(method) || $.isNotEmpty(controller)) {
+				urls.addAll(mappingInfo.getPatternsCondition().getPatterns());
+			}
+		});
+	}
 
 }

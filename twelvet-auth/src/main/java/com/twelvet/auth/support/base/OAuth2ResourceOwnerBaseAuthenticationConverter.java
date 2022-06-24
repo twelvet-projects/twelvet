@@ -17,7 +17,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * 
  * @date 2022-06-02
  *
  * 自定义模式认证转换器

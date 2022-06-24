@@ -21,60 +21,59 @@ import java.util.Map;
 
 public class OAuth2EndpointUtils {
 
-    public final static String ACCESS_TOKEN_REQUEST_ERROR_URI = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
+	public final static String ACCESS_TOKEN_REQUEST_ERROR_URI = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
 
-    public static MultiValueMap<String, String> getParameters(HttpServletRequest request) {
-        Map<String, String[]> parameterMap = request.getParameterMap();
-        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>(parameterMap.size());
-        parameterMap.forEach((key, values) -> {
-            if (values.length > 0) {
-                for (String value : values) {
-                    parameters.add(key, value);
-                }
-            }
-        });
-        return parameters;
-    }
+	public static MultiValueMap<String, String> getParameters(HttpServletRequest request) {
+		Map<String, String[]> parameterMap = request.getParameterMap();
+		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>(parameterMap.size());
+		parameterMap.forEach((key, values) -> {
+			if (values.length > 0) {
+				for (String value : values) {
+					parameters.add(key, value);
+				}
+			}
+		});
+		return parameters;
+	}
 
-    public static boolean matchesPkceTokenRequest(HttpServletRequest request) {
-        return AuthorizationGrantType.AUTHORIZATION_CODE.getValue()
-                .equals(request.getParameter(OAuth2ParameterNames.GRANT_TYPE))
-                && request.getParameter(OAuth2ParameterNames.CODE) != null
-                && request.getParameter(PkceParameterNames.CODE_VERIFIER) != null;
-    }
+	public static boolean matchesPkceTokenRequest(HttpServletRequest request) {
+		return AuthorizationGrantType.AUTHORIZATION_CODE.getValue()
+				.equals(request.getParameter(OAuth2ParameterNames.GRANT_TYPE))
+				&& request.getParameter(OAuth2ParameterNames.CODE) != null
+				&& request.getParameter(PkceParameterNames.CODE_VERIFIER) != null;
+	}
 
-    public static void throwError(String errorCode, String parameterName, String errorUri) {
-        OAuth2Error error = new OAuth2Error(errorCode, "OAuth 2.0 Parameter: " + parameterName, errorUri);
-        throw new OAuth2AuthenticationException(error);
-    }
+	public static void throwError(String errorCode, String parameterName, String errorUri) {
+		OAuth2Error error = new OAuth2Error(errorCode, "OAuth 2.0 Parameter: " + parameterName, errorUri);
+		throw new OAuth2AuthenticationException(error);
+	}
 
-    /**
-     * 格式化输出token 信息
-     *
-     * @param authentication 用户认证信息
-     * @param claims         扩展信息
-     * @return
-     * @throws IOException
-     */
-    public static OAuth2AccessTokenResponse sendAccessTokenResponse(OAuth2Authorization authentication,
-                                                             Map<String, Object> claims) {
+	/**
+	 * 格式化输出token 信息
+	 * @param authentication 用户认证信息
+	 * @param claims 扩展信息
+	 * @return
+	 * @throws IOException
+	 */
+	public static OAuth2AccessTokenResponse sendAccessTokenResponse(OAuth2Authorization authentication,
+			Map<String, Object> claims) {
 
-        OAuth2AccessToken accessToken = authentication.getAccessToken().getToken();
-        OAuth2RefreshToken refreshToken = authentication.getRefreshToken().getToken();
+		OAuth2AccessToken accessToken = authentication.getAccessToken().getToken();
+		OAuth2RefreshToken refreshToken = authentication.getRefreshToken().getToken();
 
-        OAuth2AccessTokenResponse.Builder builder = OAuth2AccessTokenResponse.withToken(accessToken.getTokenValue())
-                .tokenType(accessToken.getTokenType()).scopes(accessToken.getScopes());
-        if (accessToken.getIssuedAt() != null && accessToken.getExpiresAt() != null) {
-            builder.expiresIn(ChronoUnit.SECONDS.between(accessToken.getIssuedAt(), accessToken.getExpiresAt()));
-        }
-        if (refreshToken != null) {
-            builder.refreshToken(refreshToken.getTokenValue());
-        }
+		OAuth2AccessTokenResponse.Builder builder = OAuth2AccessTokenResponse.withToken(accessToken.getTokenValue())
+				.tokenType(accessToken.getTokenType()).scopes(accessToken.getScopes());
+		if (accessToken.getIssuedAt() != null && accessToken.getExpiresAt() != null) {
+			builder.expiresIn(ChronoUnit.SECONDS.between(accessToken.getIssuedAt(), accessToken.getExpiresAt()));
+		}
+		if (refreshToken != null) {
+			builder.refreshToken(refreshToken.getTokenValue());
+		}
 
-        if (MapUtil.isNotEmpty(claims)) {
-            builder.additionalParameters(claims);
-        }
-        return builder.build();
-    }
+		if (MapUtil.isNotEmpty(claims)) {
+			builder.additionalParameters(claims);
+		}
+		return builder.build();
+	}
 
 }

@@ -18,7 +18,7 @@
 
         <!-- Spring Authorization Server -->
         <dependency>
-            <groupId>io.springboot.security</groupId>
+            <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-oauth2-authorization-server</artifactId>
         </dependency>
 

@@ -30,7 +30,6 @@ import java.util.*;
 import java.util.function.Supplier;
 
 /**
- * 
  * @description
  *
  * 处理自定义授权

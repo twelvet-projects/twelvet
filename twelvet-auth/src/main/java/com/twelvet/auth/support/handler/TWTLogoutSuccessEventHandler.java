@@ -9,7 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 /**
- * 
  * @date 2022-06-02
  *
  * 事件机制处理退出相关

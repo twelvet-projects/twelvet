@@ -5,6 +5,7 @@ import com.twelvet.framework.utils.annotation.excel.Excel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.SpringSecurityCoreVersion;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
@@ -20,7 +21,7 @@ import java.util.Map;
  */
 public class LoginUser extends User implements OAuth2AuthenticatedPrincipal {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
 	/**
 	 * 用户ID
@@ -89,4 +90,5 @@ public class LoginUser extends User implements OAuth2AuthenticatedPrincipal {
 	public String getName() {
 		return this.getUsername();
 	}
+
 }

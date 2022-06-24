@@ -1,10 +1,9 @@
 package com.twelvet.framework.security.service;
 
-import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.StrUtil;
 import com.twelvet.api.system.domain.SysUser;
 import com.twelvet.api.system.model.UserInfo;
 import com.twelvet.framework.core.domain.R;
+import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.utils.$;
 import org.springframework.core.Ordered;
@@ -12,9 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -65,7 +62,7 @@ public interface TwUserDetailsService extends UserDetailsService, Ordered {
 		SysUser user = info.getSysUser();
 
 		return new LoginUser(user.getUserId(), user.getDeptId(), user.getRoles(), user.getUsername(),
-				user.getPassword(), true, true, true, true, authorities);
+				SecurityConstants.BCRYPT + user.getPassword(), true, true, true, true, authorities);
 	}
 
 	/**

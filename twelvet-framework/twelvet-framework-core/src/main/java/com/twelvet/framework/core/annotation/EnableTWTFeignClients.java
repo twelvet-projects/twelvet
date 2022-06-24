@@ -1,6 +1,6 @@
 package com.twelvet.framework.core.annotation;
 
-import com.twelvet.framework.core.config.ApplicationConfig;
+import com.twelvet.framework.core.config.JavaTimeModule;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.context.annotation.Import;
@@ -16,7 +16,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 // 自动加载类
-@Import({ ApplicationConfig.class, FeignAutoConfiguration.class })
+@Import({ JavaTimeModule.class, FeignAutoConfiguration.class })
 @EnableFeignClients
 public @interface EnableTWTFeignClients {
 

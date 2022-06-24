@@ -23,43 +23,43 @@ import java.util.Enumeration;
  */
 public class FeignRequestInterceptor implements RequestInterceptor {
 
-    @Autowired
-    private BearerTokenResolver tokenResolver;
+	@Autowired
+	private BearerTokenResolver tokenResolver;
 
-    /**
-     * 配置请求体带上access_token(feign默认不带任何信息)
-     *
-     * @param requestTemplate RequestTemplate
-     */
-    @Override
-    public void apply(RequestTemplate requestTemplate) {
+	/**
+	 * 配置请求体带上access_token(feign默认不带任何信息)
+	 * @param requestTemplate RequestTemplate
+	 */
+	@Override
+	public void apply(RequestTemplate requestTemplate) {
 
-        // 配置客户端IP
-        requestTemplate.header("X-Forwarded-For", IpUtils.getIpAddr());
+		// 配置客户端IP
+		requestTemplate.header("X-Forwarded-For", IpUtils.getIpAddr());
 
-        // 非web 请求直接跳过
-        if (ServletUtils.getRequest().isPresent()) {
-            return;
-        }
-        HttpServletRequest request = ServletUtils.getRequest().get();
-        Enumeration<String> headerNames = request.getHeaderNames();
-        // 装载web请求所有头部
-        if (headerNames != null) {
-            while (headerNames.hasMoreElements()) {
-                String name = headerNames.nextElement();
-                String values = request.getHeader(name);
-                requestTemplate.header(name, values);
+		// 非web 请求直接跳过
+		if (ServletUtils.getRequest().isPresent()) {
+			return;
+		}
+		HttpServletRequest request = ServletUtils.getRequest().get();
+		Enumeration<String> headerNames = request.getHeaderNames();
+		// 装载web请求所有头部
+		if (headerNames != null) {
+			while (headerNames.hasMoreElements()) {
+				String name = headerNames.nextElement();
+				String values = request.getHeader(name);
+				requestTemplate.header(name, values);
 
-            }
-        }
+			}
+		}
 
-        // 避免请求参数的 query token 无法传递
-        String token = tokenResolver.resolve(request);
-        if (StrUtil.isBlank(token)) {
-            return;
-        }
+		// 避免请求参数的 query token 无法传递
+		String token = tokenResolver.resolve(request);
+		if (StrUtil.isBlank(token)) {
+			return;
+		}
 
-        requestTemplate.header(HttpHeaders.AUTHORIZATION, String.format("%s %s", OAuth2AccessToken.TokenType.BEARER, token));
-    }
+		requestTemplate.header(HttpHeaders.AUTHORIZATION,
+				String.format("%s %s", OAuth2AccessToken.TokenType.BEARER, token));
+	}
 
 }

@@ -1,3 +1,4 @@
+/*
 
 package com.twelvet.server.mq.service.impl;
 
@@ -14,11 +15,13 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
+*/
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
  * @Description: 邮件业务层实现
- */
+ *//*
+
 @Service
 public class SysLoginLogServiceImpl implements SysLoginLogService {
 
@@ -27,7 +30,8 @@ public class SysLoginLogServiceImpl implements SysLoginLogService {
 	@Autowired
 	private RocketMQTemplate rocketMQTemplate;
 
-	/**
+	*/
+/**
 	 * 发送系统登录日志MQ 同步发送：syncSend，可靠性同步地发送方式使用的比较广泛，比如：重要的消息通知，短信通知，影响响应时间
 	 * 异步发送：asyncSend，通常用在对响应时间敏感的业务场景，即发送端不能容忍长时间地等待Broker的响应
 	 * 不影响响应时间的同时需要保证消息不丢失的情况下需要自行处理异步回调，重试机制
@@ -35,7 +39,8 @@ public class SysLoginLogServiceImpl implements SysLoginLogService {
 	 * https://docs.spring.io/spring-cloud-stream/docs/3.1.0/reference/html/spring-cloud-stream.html#_binding_and_binding_names
 	 * @param sysLoginInfo SysLoginInfo
 	 * @return 是否发送成功
-	 */
+	 *//*
+
 	@Override
 	public boolean sendSysLoginLog(SysLoginInfo sysLoginInfo) {
 		try {
@@ -57,3 +62,4 @@ public class SysLoginLogServiceImpl implements SysLoginLogService {
 	}
 
 }
+*/

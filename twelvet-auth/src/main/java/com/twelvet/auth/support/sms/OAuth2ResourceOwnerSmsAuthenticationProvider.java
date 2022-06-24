@@ -1,6 +1,6 @@
 package com.twelvet.auth.support.sms;
 
-import com.twelvet.framework.security.constans.SecurityConstants;
+import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.auth.support.base.OAuth2ResourceOwnerBaseAuthenticationProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,7 +17,6 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import java.util.Map;
 
 /**
- * 
  * @date date
  *
  * 短信登录的核心处理

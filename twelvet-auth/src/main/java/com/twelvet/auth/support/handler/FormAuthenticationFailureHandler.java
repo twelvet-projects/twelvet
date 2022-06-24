@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 
  * @date 2022-06-02
  * <p>
  * 表单登录失败处理逻辑
@@ -37,7 +36,8 @@ public class FormAuthenticationFailureHandler implements AuthenticationFailureHa
 				CharsetUtil.CHARSET_UTF_8);
 		try {
 			ServletUtils.getResponse().sendRedirect(url);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			throw new RuntimeException("重定向失败");
 		}
 	}

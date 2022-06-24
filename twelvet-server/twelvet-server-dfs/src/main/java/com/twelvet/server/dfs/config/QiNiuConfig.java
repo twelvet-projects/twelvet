@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * @Description: 七牛云配置
  */
 @Component
-@ConfigurationProperties("oss.qiniu")
+@ConfigurationProperties(prefix = "oss.qiniu")
 public class QiNiuConfig {
 
 	private String accessKey;

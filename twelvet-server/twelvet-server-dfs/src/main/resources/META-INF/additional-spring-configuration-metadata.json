@@ -1,0 +1,36 @@
+{
+  "groups": [
+    {
+      "name": "qiniu",
+      "type": "com.twelvet.server.dfs.config.QiNiuConfig"
+    }
+  ],
+  "hints": [],
+  "properties": [
+    {
+      "name": "oss.qiniu.access-key",
+      "type": "java.lang.String",
+      "sourceType": "com.twelvet.server.dfs.config.QiNiuConfig",
+      "description": "accessKey."
+    },
+    {
+      "name": "oss.qiniu.secret-key",
+      "type": "java.lang.String",
+      "sourceType": "com.twelvet.server.dfs.config.QiNiuConfig",
+      "description": "secretKey."
+    },
+    {
+      "name": "oss.qiniu.bucket-name",
+      "type": "java.lang.String",
+      "sourceType": "com.twelvet.server.dfs.config.QiNiuConfig",
+      "description": "bucketName."
+    },
+    {
+      "name": "oss.qiniu.domain",
+      "type": "java.lang.String",
+      "sourceType": "com.twelvet.server.dfs.config.QiNiuConfig",
+      "description": "图片访问域名.",
+      "defaultValue": "static.twelvet.cn"
+    }
+  ]
+}

@@ -17,16 +17,15 @@ import org.springframework.web.bind.annotation.*;
  * @Description: Oauth2服务
  */
 @FeignClient(contextId = "RemoteOauth2ClientDetailsService", value = ServiceNameConstants.SYSTEM_SERVICE,
-        fallbackFactory = RemoteOauth2ClientDetailsFallbackFactory.class)
+		fallbackFactory = RemoteOauth2ClientDetailsFallbackFactory.class)
 public interface RemoteOauth2ClientDetailsService {
 
-    /**
-     * 获取终端配置详细信息
-     *
-     * @param clientId 终端ID
-     * @return AjaxResult
-     */
-    @GetMapping(value = "/{clientId}")
-    R<SysClientDetails> getClientDetailsById(@PathVariable("clientId") String clientId);
+	/**
+	 * 获取终端配置详细信息
+	 * @param clientId 终端ID
+	 * @return AjaxResult
+	 */
+	@GetMapping(value = "/api/client/{clientId}")
+	R<SysClientDetails> getClientDetailsById(@PathVariable("clientId") String clientId);
 
 }

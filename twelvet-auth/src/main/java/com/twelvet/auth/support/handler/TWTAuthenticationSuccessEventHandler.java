@@ -4,7 +4,7 @@ import com.twelvet.api.system.domain.SysLoginInfo;
 import com.twelvet.framework.log.event.SysLoginLogEvent;
 import com.twelvet.framework.log.utils.SysLogUtils;
 import com.twelvet.framework.log.vo.SysLogVO;
-import com.twelvet.framework.security.constans.SecurityConstants;
+import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.utils.DateUtils;
 import com.twelvet.framework.utils.SpringUtils;
 import org.slf4j.Logger;
@@ -28,7 +28,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.Map;
 
 /**
- * 
  * @date 2022-06-02
  */
 public class TWTAuthenticationSuccessEventHandler implements AuthenticationSuccessHandler {
@@ -62,7 +61,8 @@ public class TWTAuthenticationSuccessEventHandler implements AuthenticationSucce
 		// 输出token
 		try {
 			sendAccessTokenResponse(request, response, authentication);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			log.error("返回消息失败", e);
 		}
 	}

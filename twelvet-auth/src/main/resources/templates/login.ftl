@@ -7,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="description" content="oauth2">
     <meta name="author" content="授权中心">
-
     <title>twelvet 微服务统一认证</title>
+    <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/favicon.ico" />
 
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -31,6 +31,8 @@
                 统一登录 - OAuth2
             </p>
             <form action='/token/form' method="POST">
+                <input type="hidden" name="client_id" class="form-control" value="twelvet" placeholder="所属客户端">
+                <input type="hidden" name="grant_type" class="form-control" value="password" placeholder="登录模式">
                 <div class='form-group'>
                     <input type="text" class='form-control' name='username' placeholder='账号' id='username'>
                 </div>
@@ -38,8 +40,11 @@
                     <input type="password" class='form-control' name='password' placeholder='密码' id='password'>
                 </div>
                 <div class='form-group'>
-                    <input type="submit" class='btn btn-primary' style='width:100%' value='登录'>
+                    <input type="submit" class='btn btn-primary' style='width:100%' value='Sign In'>
                 </div>
+                <#if error??>
+                    <p style="color: red;text-align: center ">${error}</p>
+                </#if>
             </form>
             <footer class='copyright'>
                 <a href="https://www.twelvet.cn" target="_blank">Powered By TwelveT</a>

@@ -93,8 +93,8 @@ public class WebLogFilter implements Filter {
 						+ "\n============================================",
 				DateUtils.getTime(), requestWrapper.getRequestURL(),
 				// 认证Token
-				ServletUtils.getRequest().get().getHeader(Constants.AUTHORIZATION), reqJson,
-				requestWrapper.getMethod(), responseWrapper.getStatus(), responseData, endTime - startTime
+				ServletUtils.getRequest().get().getHeader(Constants.AUTHORIZATION), reqJson, requestWrapper.getMethod(),
+				responseWrapper.getStatus(), responseData, endTime - startTime
 
 		);
 

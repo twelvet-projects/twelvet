@@ -24,38 +24,40 @@ import java.util.Optional;
 
 public class TWTCustomOpaqueTokenIntrospect implements OpaqueTokenIntrospector {
 
-    private static final Logger log = LoggerFactory.getLogger(TWTCustomOpaqueTokenIntrospect.class);
+	private static final Logger log = LoggerFactory.getLogger(TWTCustomOpaqueTokenIntrospect.class);
 
-    private final OAuth2AuthorizationService authorizationService;
+	private final OAuth2AuthorizationService authorizationService;
 
-    public TWTCustomOpaqueTokenIntrospect(OAuth2AuthorizationService authorizationService) {
-        this.authorizationService = authorizationService;
-    }
+	public TWTCustomOpaqueTokenIntrospect(OAuth2AuthorizationService authorizationService) {
+		this.authorizationService = authorizationService;
+	}
 
-    @Override
-    public OAuth2AuthenticatedPrincipal introspect(String token) {
-        OAuth2Authorization oldAuthorization = authorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
+	@Override
+	public OAuth2AuthenticatedPrincipal introspect(String token) {
+		OAuth2Authorization oldAuthorization = authorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
 
-        Map<String, TwUserDetailsService> userDetailsServiceMap = SpringUtil
-                .getBeansOfType(TwUserDetailsService.class);
+		Map<String, TwUserDetailsService> userDetailsServiceMap = SpringUtil.getBeansOfType(TwUserDetailsService.class);
 
-        Optional<TwUserDetailsService> optional = userDetailsServiceMap.values().stream()
-                .filter(service -> service.support(Objects.requireNonNull(oldAuthorization).getRegisteredClientId(),
-                        oldAuthorization.getAuthorizationGrantType().getValue()))
-                .max(Comparator.comparingInt(Ordered::getOrder));
+		Optional<TwUserDetailsService> optional = userDetailsServiceMap.values().stream()
+				.filter(service -> service.support(Objects.requireNonNull(oldAuthorization).getRegisteredClientId(),
+						oldAuthorization.getAuthorizationGrantType().getValue()))
+				.max(Comparator.comparingInt(Ordered::getOrder));
 
-        UserDetails userDetails = null;
-        try {
-            UsernamePasswordAuthenticationToken principal = (UsernamePasswordAuthenticationToken) Objects.requireNonNull(oldAuthorization).getAttributes().get(Principal.class.getName());
-            Object tokenPrincipal = principal.getPrincipal();
-            userDetails = optional.get().loadUserByUser((LoginUser) tokenPrincipal);
-        } catch (UsernameNotFoundException usernameNotFoundException) {
-            log.warn("用户不不存在 {}", usernameNotFoundException.getLocalizedMessage());
-            throw usernameNotFoundException;
-        } catch (Exception ex) {
-            log.error("资源服务器 introspect Token error {}", ex.getLocalizedMessage());
-        }
-        return (LoginUser) userDetails;
-    }
+		UserDetails userDetails = null;
+		try {
+			UsernamePasswordAuthenticationToken principal = (UsernamePasswordAuthenticationToken) Objects
+					.requireNonNull(oldAuthorization).getAttributes().get(Principal.class.getName());
+			Object tokenPrincipal = principal.getPrincipal();
+			userDetails = optional.get().loadUserByUser((LoginUser) tokenPrincipal);
+		}
+		catch (UsernameNotFoundException usernameNotFoundException) {
+			log.warn("用户不不存在 {}", usernameNotFoundException.getLocalizedMessage());
+			throw usernameNotFoundException;
+		}
+		catch (Exception ex) {
+			log.error("资源服务器 introspect Token error {}", ex.getLocalizedMessage());
+		}
+		return (LoginUser) userDetails;
+	}
 
 }

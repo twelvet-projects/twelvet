@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.twelvet.api.mq.feign.factory.RemoteMQSysLoginLogFallbackFactory,\
+  com.twelvet.api.mq.feign.factory.RemotMQSysOperationLogFallbackFactory

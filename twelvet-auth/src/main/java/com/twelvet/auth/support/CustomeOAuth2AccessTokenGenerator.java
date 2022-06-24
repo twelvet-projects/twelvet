@@ -20,7 +20,6 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * 
  * @date 2022/5/29
  */
 public class CustomeOAuth2AccessTokenGenerator implements OAuth2TokenGenerator<OAuth2AccessToken> {
@@ -88,9 +87,8 @@ public class CustomeOAuth2AccessTokenGenerator implements OAuth2TokenGenerator<O
 		String key = String.format("%s::%s::%s", SecurityContextHolder.getContext().getAuthentication().getPrincipal(),
 				context.getPrincipal().getName(), UUID.randomUUID());
 
-		return new OAuth2AccessTokenClaims(OAuth2AccessToken.TokenType.BEARER, key,
-				accessTokenClaimsSet.getIssuedAt(), accessTokenClaimsSet.getExpiresAt(), context.getAuthorizedScopes(),
-				accessTokenClaimsSet.getClaims());
+		return new OAuth2AccessTokenClaims(OAuth2AccessToken.TokenType.BEARER, key, accessTokenClaimsSet.getIssuedAt(),
+				accessTokenClaimsSet.getExpiresAt(), context.getAuthorizedScopes(), accessTokenClaimsSet.getClaims());
 	}
 
 	/**

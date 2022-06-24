@@ -43,12 +43,12 @@
         <maven.compiler.target>1.8</maven.compiler.target>
 
         <spring-boot-dependencies.version>2.7.0</spring-boot-dependencies.version>
-        <spring-cloud.version>2021.0.2</spring-cloud.version>
-        <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
+        <spring-cloud.version>2021.0.3</spring-cloud.version>
+        <spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
         <io.seata.version>1.4.2</io.seata.version>
         <spring-boot-admin.version>2.6.3</spring-boot-admin.version>
         <spring-boot.mybatis>2.2.0</spring-boot.mybatis>
-        <spring.authorization.version>0.3.0</spring.authorization.version>
+        <spring.authorization.version>0.3.1</spring.authorization.version>
 
         <druid.version>1.2.8</druid.version>
         <dynamic-datasource.version>3.5.1</dynamic-datasource.version>
@@ -57,12 +57,10 @@
         <commons.io.version>2.11.0</commons.io.version>
         <velocity.version>1.7</velocity.version>
         <knife4j.version>3.0.3</knife4j.version>
-        <hutool.version>5.7.5</hutool.version>
+        <hutool.version>5.8.3</hutool.version>
         <qrcode.version>3.3.1</qrcode.version>
         <redisson.version>3.16.8</redisson.version>
-        <logback.redis.version>1.1.6</logback.redis.version>
         <qiniu.version>7.10.3</qiniu.version>
-        <okhttp.version>4.9.3</okhttp.version>
         <canal.version>1.1.6</canal.version>
 
         <docker.plugin.version>0.32.0</docker.plugin.version>
@@ -103,7 +101,7 @@
 
             <!-- Spring Authorization Server -->
             <dependency>
-                <groupId>io.springboot.security</groupId>
+                <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-oauth2-authorization-server</artifactId>
                 <version>${spring.authorization.version}</version>
             </dependency>
@@ -134,13 +132,6 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
                 <version>${dynamic-datasource.version}</version>
-            </dependency>
-
-            <!--logback日志-->
-            <dependency>
-                <groupId>com.cwbase</groupId>
-                <artifactId>logback-redis-appender</artifactId>
-                <version>${logback.redis.version}</version>
             </dependency>
 
             <!-- 代码生成使用模板 -->
@@ -319,13 +310,6 @@
                 <version>${qiniu.version}</version>
             </dependency>
 
-            <!--okhttp-->
-            <dependency>
-                <groupId>com.squareup.okhttp3</groupId>
-                <artifactId>okhttp</artifactId>
-                <version>${okhttp.version}</version>
-            </dependency>
-
             <!--canal-->
             <dependency>
                 <groupId>com.alibaba.otter</groupId>
@@ -338,9 +322,11 @@
 
     <dependencies>
 
+        <!--配置文件处理器元数据提示-->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
 
         <!--loadbalancer-->
@@ -378,6 +364,7 @@
         <module>twelvet-api</module>
         <module>twelvet-server</module>
         <module>twelvet-visual</module>
+        <module>twelvet-nacos</module>
     </modules>
 
     <build>
