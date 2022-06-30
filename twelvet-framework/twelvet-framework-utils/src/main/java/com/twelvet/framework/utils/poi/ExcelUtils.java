@@ -1,9 +1,6 @@
 package com.twelvet.framework.utils.poi;
 
-import com.twelvet.framework.utils.$;
-import com.twelvet.framework.utils.Convert;
-import com.twelvet.framework.utils.DateUtils;
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.*;
 import com.twelvet.framework.utils.annotation.excel.Excel;
 import com.twelvet.framework.utils.annotation.excel.Excel.ColumnType;
 import com.twelvet.framework.utils.annotation.excel.Excel.Type;
@@ -29,11 +26,14 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static org.apache.poi.xssf.usermodel.XSSFWorkbookType.XLSX;
 
 /**
  * @author twelvet
@@ -47,6 +47,10 @@ public class ExcelUtils<T> {
     }
 
     private static final Logger log = LoggerFactory.getLogger(ExcelUtils.class);
+
+    private final static String XLS = "xls";
+
+    private final static String XLSX = "xlsx";
 
     private final static String XLS_RESPONSE_HEAD = "application/vnd.ms-excel";
 
@@ -327,10 +331,28 @@ public class ExcelUtils<T> {
      * @throws IOException
      */
     public void exportExcel(HttpServletResponse response, List<T> list, String sheetName, String title) {
-        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.setCharacterEncoding("utf-8");
-        this.init(list, sheetName, title, Type.EXPORT);
-        exportExcel(response);
+        try {
+            response.setContentType(XLSX_RESPONSE_HEAD);
+            response.setCharacterEncoding(CharsetKit.UTF_8);
+            // 文件名称为空将采用工作表名称
+            if ($.isEmpty(title)) {
+                title = sheetName;
+            }
+
+            title = URLEncoder.encode(title, CharsetKit.UTF_8);
+
+            // Url编码，前台需自行还原
+            title = "attachment; filename=" + title + "." + XLSX;
+
+            // 设置Excel导出的名称
+            response.setHeader("Content-Disposition", title);
+
+            this.init(list, sheetName, title, Type.EXPORT);
+            exportExcel(response);
+        } catch (Exception e) {
+            log.error("数据导出异常:", e);
+            throw new TWTUtilsException("数据导出异常");
+        }
     }
 
     /**
