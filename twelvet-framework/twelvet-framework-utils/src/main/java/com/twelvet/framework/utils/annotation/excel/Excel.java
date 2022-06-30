@@ -1,9 +1,14 @@
 package com.twelvet.framework.utils.annotation.excel;
 
+import com.twelvet.framework.utils.poi.ExcelHandlerAdapter;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.math.BigDecimal;
 
 /**
  * @author twelvet
@@ -16,138 +21,144 @@ public @interface Excel {
 
 	/**
 	 * 导出时在excel中排序
-	 * @return Integer.MAX_VALUE
 	 */
-	int sort() default Integer.MAX_VALUE;
+	public int sort() default Integer.MAX_VALUE;
 
 	/**
 	 * 导出到Excel中的名字.
-	 * @return 名称
 	 */
-	String name() default "";
+	public String name() default "";
 
 	/**
 	 * 日期格式, 如: yyyy-MM-dd
-	 * @return 时间
 	 */
-	String dateFormat() default "";
+	public String dateFormat() default "";
 
 	/**
 	 * 读取内容转表达式 (如: 0=男,1=女,2=未知)
 	 */
-	String readConverterExp() default "";
+	public String readConverterExp() default "";
 
 	/**
 	 * 分隔符，读取字符串组内容
 	 */
-	String separator() default ",";
+	public String separator() default ",";
 
 	/**
-	 * 导出类型（0数字 1字符串）
+	 * BigDecimal 精度 默认:-1(默认不开启BigDecimal格式化)
 	 */
-	ColumnType cellType() default ColumnType.STRING;
+	public int scale() default -1;
+
+	/**
+	 * BigDecimal 舍入规则 默认:BigDecimal.ROUND_HALF_EVEN
+	 */
+	public int roundingMode() default BigDecimal.ROUND_HALF_EVEN;
 
 	/**
 	 * 导出时在excel中每个列的高度 单位为字符
 	 */
-	double height() default 14;
+	public double height() default 14;
 
 	/**
 	 * 导出时在excel中每个列的宽 单位为字符
 	 */
-	double width() default 16;
+	public double width() default 16;
 
 	/**
 	 * 文字后缀,如% 90 变成90%
 	 */
-	String suffix() default "";
+	public String suffix() default "";
 
 	/**
 	 * 当值为空时,字段的默认值
 	 */
-	String defaultValue() default "";
+	public String defaultValue() default "";
 
 	/**
 	 * 提示信息
 	 */
-	String prompt() default "";
+	public String prompt() default "";
 
 	/**
 	 * 设置只能选择不能输入的列内容.
 	 */
-	String[] combo() default {};
+	public String[] combo() default {};
 
 	/**
 	 * 是否导出数据,应对需求:有时我们需要导出一份模板,这是标题需要但内容需要用户手工填写.
 	 */
-	boolean isExport() default true;
+	public boolean isExport() default true;
 
 	/**
 	 * 另一个类中的属性名称,支持多级获取,以小数点隔开
 	 */
-	String targetAttr() default "";
+	public String targetAttr() default "";
+
+	/**
+	 * 是否自动统计数据,在最后追加一行统计数据总和
+	 */
+	public boolean isStatistics() default false;
+
+	/**
+	 * 导出类型（0数字 1字符串）
+	 */
+	public ColumnType cellType() default ColumnType.STRING;
+
+	/**
+	 * 导出字体颜色
+	 */
+	public IndexedColors color() default IndexedColors.BLACK;
+
+	/**
+	 * 导出字段对齐方式
+	 */
+	public HorizontalAlignment align() default HorizontalAlignment.CENTER;
+
+	/**
+	 * 自定义数据处理器
+	 */
+	public Class<?> handler() default ExcelHandlerAdapter.class;
+
+	/**
+	 * 自定义数据处理器参数
+	 */
+	public String[] args() default {};
 
 	/**
 	 * 字段类型（0：导出导入；1：仅导出；2：仅导入）
 	 */
 	Type type() default Type.ALL;
 
-	enum Type {
-
-		/**
-		 * 所有
-		 */
-		ALL(0),
-
-		/**
-		 * 导出
-		 */
-		EXPORT(1),
-
-		/**
-		 * 导入
-		 */
-		IMPORT(2);
-
+	public enum Type
+	{
+		ALL(0), EXPORT(1), IMPORT(2);
 		private final int value;
 
-		Type(int value) {
+		Type(int value)
+		{
 			this.value = value;
 		}
 
-		public int value() {
+		public int value()
+		{
 			return this.value;
 		}
-
 	}
 
-	enum ColumnType {
-
-		/**
-		 * NUMERIC
-		 */
-		NUMERIC(0),
-
-		/**
-		 * String
-		 */
-		STRING(1),
-
-		/**
-		 * image
-		 */
-		IMAGE(2);
-
+	public enum ColumnType
+	{
+		NUMERIC(0), STRING(1), IMAGE(2);
 		private final int value;
 
-		ColumnType(int value) {
+		ColumnType(int value)
+		{
 			this.value = value;
 		}
 
-		public int value() {
+		public int value()
+		{
 			return this.value;
 		}
-
 	}
 
 }

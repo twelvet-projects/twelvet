@@ -6,6 +6,7 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import java.lang.management.ManagementFactory;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.*;
 import java.util.Date;
 
 /**
@@ -107,6 +108,25 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		catch (ParseException e) {
 			return null;
 		}
+	}
+
+	/**
+	 * 增加 LocalDateTime ==> Date
+	 */
+	public static Date toDate(LocalDateTime temporalAccessor)
+	{
+		ZonedDateTime zdt = temporalAccessor.atZone(ZoneId.systemDefault());
+		return Date.from(zdt.toInstant());
+	}
+
+	/**
+	 * 增加 LocalDate ==> Date
+	 */
+	public static Date toDate(LocalDate temporalAccessor)
+	{
+		LocalDateTime localDateTime = LocalDateTime.of(temporalAccessor, LocalTime.of(0, 0, 0));
+		ZonedDateTime zdt = localDateTime.atZone(ZoneId.systemDefault());
+		return Date.from(zdt.toInstant());
 	}
 
 	/**
