@@ -332,6 +332,8 @@ public class ExcelUtils<T> {
      */
     public void exportExcel(HttpServletResponse response, List<T> list, String sheetName, String title) {
         try {
+            this.init(list, sheetName, title, Type.EXPORT);
+
             response.setContentType(XLSX_RESPONSE_HEAD);
             response.setCharacterEncoding(CharsetKit.UTF_8);
             // 文件名称为空将采用工作表名称
@@ -346,8 +348,6 @@ public class ExcelUtils<T> {
 
             // 设置Excel导出的名称
             response.setHeader("Content-Disposition", title);
-
-            this.init(list, sheetName, title, Type.EXPORT);
             exportExcel(response);
         } catch (Exception e) {
             log.error("数据导出异常:", e);
