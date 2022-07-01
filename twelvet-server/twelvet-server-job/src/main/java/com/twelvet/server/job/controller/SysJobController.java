@@ -3,14 +3,17 @@ package com.twelvet.server.job.controller;
 import com.twelvet.api.job.domain.SysJob;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.core.constants.Constants;
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.utils.SecurityUtils;
+import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.framework.utils.poi.ExcelUtils;
 import com.twelvet.server.job.exception.TaskException;
 import com.twelvet.server.job.service.ISysJobService;
 import com.twelvet.server.job.util.CronUtils;
+import com.twelvet.server.job.util.ScheduleUtils;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -80,9 +83,31 @@ public class SysJobController extends TWTController {
 	@PostMapping
 	@PreAuthorize("@role.hasPermi('monitor:job:insert')")
 	public AjaxResult insert(@RequestBody SysJob sysJob) throws SchedulerException, TaskException {
-		if (!CronUtils.isValid(sysJob.getCronExpression())) {
-			return AjaxResult.error("cron表达式不正确");
+		if (!CronUtils.isValid(sysJob.getCronExpression()))
+		{
+			return error("新增任务'" + sysJob.getJobName() + "'失败，Cron表达式不正确");
 		}
+		else if (StringUtils.containsIgnoreCase(sysJob.getInvokeTarget(), Constants.LOOKUP_RMI))
+		{
+			return error("新增任务'" + sysJob.getJobName() + "'失败，目标字符串不允许'rmi'调用");
+		}
+		else if (StringUtils.containsAnyIgnoreCase(sysJob.getInvokeTarget(), new String[] { Constants.LOOKUP_LDAP, Constants.LOOKUP_LDAPS }))
+		{
+			return error("新增任务'" + sysJob.getJobName() + "'失败，目标字符串不允许'ldap(s)'调用");
+		}
+		else if (StringUtils.containsAnyIgnoreCase(sysJob.getInvokeTarget(), new String[] { Constants.HTTP, Constants.HTTPS }))
+		{
+			return error("新增任务'" + sysJob.getJobName() + "'失败，目标字符串不允许'http(s)'调用");
+		}
+		else if (StringUtils.containsAnyIgnoreCase(sysJob.getInvokeTarget(), Constants.JOB_ERROR_STR))
+		{
+			return error("新增任务'" + sysJob.getJobName() + "'失败，目标字符串存在违规");
+		}
+		else if (!ScheduleUtils.whiteList(sysJob.getInvokeTarget()))
+		{
+			return error("新增任务'" + sysJob.getJobName() + "'失败，目标字符串不在白名单内");
+		}
+		sysJob.setCreateBy(SecurityUtils.getUsername());
 		sysJob.setCreateBy(SecurityUtils.getUsername());
 		return json(jobService.insertJob(sysJob));
 	}

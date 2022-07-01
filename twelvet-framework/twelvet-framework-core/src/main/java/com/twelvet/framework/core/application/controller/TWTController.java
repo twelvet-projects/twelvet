@@ -41,4 +41,12 @@ public class TWTController {
 		return rows > 0 ? AjaxResult.success() : AjaxResult.error();
 	}
 
+	/**
+	 * 返回失败消息
+	 */
+	public AjaxResult error(String message)
+	{
+		return AjaxResult.error(message);
+	}
+
 }

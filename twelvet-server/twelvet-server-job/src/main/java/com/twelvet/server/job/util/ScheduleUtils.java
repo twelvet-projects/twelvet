@@ -1,7 +1,10 @@
 package com.twelvet.server.job.util;
 
 import com.twelvet.api.job.domain.SysJob;
+import com.twelvet.framework.core.constants.Constants;
 import com.twelvet.framework.core.constants.ScheduleConstants;
+import com.twelvet.framework.utils.SpringUtils;
+import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.server.job.exception.TaskException;
 import com.twelvet.server.job.exception.TaskException.Code;
 import org.quartz.CronScheduleBuilder;
@@ -100,6 +103,24 @@ public class ScheduleUtils {
 					"The task misfire policy '" + job.getMisfirePolicy() + "' cannot be used in cron schedule tasks",
 					Code.CONFIG_ERROR);
 		}
+	}
+
+	/**
+	 * 检查包名是否为白名单配置
+	 *
+	 * @param invokeTarget 目标字符串
+	 * @return 结果
+	 */
+	public static boolean whiteList(String invokeTarget)
+	{
+		String packageName = StringUtils.substringBefore(invokeTarget, "(");
+		int count = StringUtils.countMatches(packageName, ".");
+		if (count > 1)
+		{
+			return StringUtils.containsAnyIgnoreCase(invokeTarget, Constants.JOB_WHITELIST_STR);
+		}
+		Object obj = SpringUtils.getBean(StringUtils.split(invokeTarget, ".")[0]);
+		return StringUtils.containsAnyIgnoreCase(obj.getClass().getPackage().getName(), Constants.JOB_WHITELIST_STR);
 	}
 
 }
