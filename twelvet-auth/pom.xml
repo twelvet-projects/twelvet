@@ -33,12 +33,6 @@
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
 
-        <!-- SpringBoot Actuator -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-
         <!--system api-->
         <dependency>
             <groupId>com.twelvet</groupId>

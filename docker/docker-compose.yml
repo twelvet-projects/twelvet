@@ -114,33 +114,6 @@ services:
       - twelvet-redis
       - twelvet-mysql
 
-  twelvet-server-es:
-    container_name: twelvet-es
-    environment:
-      - MODE=standalone
-      - TZ=Asia/Shanghai
-    build:
-      context: ./twelvet/server/es
-      dockerfile: dockerfile
-
-  twelvet-server-netty:
-    container_name: twelvet-netty
-    environment:
-      - MODE=standalone
-      - TZ=Asia/Shanghai
-    build:
-      context: ./twelvet/server/netty
-      dockerfile: dockerfile
-
-  twelvet-server-mq:
-    container_name: twelvet-mq
-    environment:
-      - MODE=standalone
-      - TZ=Asia/Shanghai
-    build:
-      context: ./twelvet/server/mq
-      dockerfile: dockerfile
-
   twelvet-server-job:
     container_name: twelvet-job
     environment:
