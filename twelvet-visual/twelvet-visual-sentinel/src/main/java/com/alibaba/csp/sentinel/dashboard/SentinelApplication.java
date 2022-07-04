@@ -33,7 +33,7 @@ public class SentinelApplication {
 	}
 
 	private static void triggerSentinelInit() {
-		new Thread(InitExecutor::doInit).start();
+		new Thread(() -> InitExecutor.doInit()).start();
 	}
 
 }
