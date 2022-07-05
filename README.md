@@ -1,6 +1,6 @@
 # twelvet
 
-[![AUR](https://img.shields.io/badge/license-MIT-blue)](https://gitee.com/twelvet/twelvet/blob/master/LICENSE)
+[![AUR](https://img.shields.io/github/license/twelvet-s/twelvet)](https://gitee.com/twelvet/twelvet/blob/master/LICENSE)
 [![](https://img.shields.io/badge/Author-TwelveT-orange.svg)](https://www.twelvet.cn)
 [![](https://img.shields.io/badge/version-2.0.0-success)](https://gitee.com/twelvet/twelvet)
 [![star](https://gitee.com/twelvet/twelvet/badge/star.svg?theme=white)](https://gitee.com/twelvet/twelvet/stargazers)
