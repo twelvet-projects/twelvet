@@ -32,6 +32,7 @@
 com.twelvet     
 ├── twelvet-ui              // 前端框架 [80]
 ├── twelvet-gateway         // 网关模块 [88]
+├── twelvet-nacos           // nacos [8848]
 ├── twelvet-auth            // 认证中心 [8888]
 ├── twelvet-api             // 接口模块
 │       └── twelvet-api-system                             // 系统接口
@@ -51,11 +52,9 @@ com.twelvet
 │       └── twelvet-server-job                             // 定时任务 [8082]
 │       └── twelvet-server-dfs                             //  DFS服务 [8083]
 │       └── twelvet-server-gen                             // 代码生成 [8084]
-│       └── twelvet-server-mq                              // 消息队列 [8085]
-│       └── twelvet-server-es                              // elasticsearch服务 [8086]
-│       └── twelvet-server-netty                           // netty服务 [8087]
 ├── twelvet-visual        // 图形化管理模块
-│       └── twelvet-visual-monitor                         // 监控中心 [8100]
+|       └── twelvet-visual-sentinel                        // sentinel [8101]
+│       └── twelvet-visual-monitor                         // 监控中心 [8102]
 ├──pom.xml                // 公共依赖
 ~~~
 
