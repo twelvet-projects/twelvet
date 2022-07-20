@@ -20,7 +20,6 @@
         <dependency>
             <groupId>com.twelvet</groupId>
             <artifactId>twelvet-framework-security</artifactId>
-            <scope>provided</scope>
         </dependency>
 
     </dependencies>
