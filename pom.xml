@@ -288,21 +288,6 @@
                 <version>${twelvet.version}</version>
             </dependency>
 
-            <!--MQ API-->
-            <dependency>
-                <groupId>com.twelvet</groupId>
-                <artifactId>twelvet-api-mq</artifactId>
-                <version>${twelvet.version}</version>
-            </dependency>
-
-            <!--ES API-->
-            <dependency>
-                <groupId>com.twelvet</groupId>
-                <artifactId>twelvet-api-es</artifactId>
-                <version>${twelvet.version}</version>
-            </dependency>
-
-
             <!--七牛云oss-->
             <dependency>
                 <groupId>com.qiniu</groupId>
