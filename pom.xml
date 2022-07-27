@@ -42,11 +42,11 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <spring-boot-dependencies.version>2.7.1</spring-boot-dependencies.version>
+        <spring-boot-dependencies.version>2.7.2</spring-boot-dependencies.version>
         <spring-cloud.version>2021.0.3</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
         <io.seata.version>1.4.2</io.seata.version>
-        <spring-boot-admin.version>2.6.3</spring-boot-admin.version>
+        <spring-boot-admin.version>2.7.3</spring-boot-admin.version>
         <spring-boot.mybatis>2.2.0</spring-boot.mybatis>
         <spring.authorization.version>0.3.1</spring.authorization.version>
 
