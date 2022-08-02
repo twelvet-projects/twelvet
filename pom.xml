@@ -7,7 +7,7 @@
     <groupId>com.twelvet</groupId>
     <artifactId>twelvet</artifactId>
     <packaging>pom</packaging>
-    <version>2.6.0</version>
+    <version>2.7.2</version>
 
     <name>twelvet</name>
     <url>https://www.twelvet.cn</url>
