@@ -52,14 +52,13 @@
 
         <druid.version>1.2.11</druid.version>
         <dynamic-datasource.version>3.5.1</dynamic-datasource.version>
-        <pagehelper.boot.version>1.4.1</pagehelper.boot.version>
-        <poi.version>4.1.2</poi.version>
+        <pagehelper.boot.version>1.4.3</pagehelper.boot.version>
+        <poi.version>5.2.2</poi.version>
         <commons.io.version>2.11.0</commons.io.version>
         <velocity.version>2.3</velocity.version>
         <knife4j.version>3.0.3</knife4j.version>
         <hutool.version>5.8.4</hutool.version>
-        <qrcode.version>3.3.1</qrcode.version>
-        <redisson.version>3.16.8</redisson.version>
+        <redisson.version>3.17.5</redisson.version>
         <qiniu.version>7.10.3</qiniu.version>
 
         <docker.plugin.version>0.32.0</docker.plugin.version>
@@ -243,20 +242,6 @@
                 <groupId>com.twelvet</groupId>
                 <artifactId>twelvet-framework-jdbc</artifactId>
                 <version>${twelvet.version}</version>
-            </dependency>
-
-            <!--QrCode-->
-            <dependency>
-                <groupId>com.google.zxing</groupId>
-                <artifactId>core</artifactId>
-                <version>${qrcode.version}</version>
-            </dependency>
-
-            <!--QrCode-->
-            <dependency>
-                <groupId>com.google.zxing</groupId>
-                <artifactId>javase</artifactId>
-                <version>${qrcode.version}</version>
             </dependency>
 
             <!--system API-->
