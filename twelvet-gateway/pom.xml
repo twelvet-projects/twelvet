@@ -64,12 +64,6 @@
             <artifactId>twelvet-framework-utils</artifactId>
         </dependency>
 
-        <!--twelvet core-->
-        <dependency>
-            <groupId>com.twelvet</groupId>
-            <artifactId>twelvet-framework-core</artifactId>
-        </dependency>
-
     </dependencies>
 
     <build>
