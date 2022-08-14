@@ -3,6 +3,7 @@ package com.twelvet.framework.security.service.impl;
 import com.twelvet.api.system.domain.SysUser;
 import com.twelvet.api.system.feign.RemoteUserService;
 import com.twelvet.api.system.model.UserInfo;
+import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
@@ -45,7 +46,7 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 		if (cache != null && cache.get(username) != null) {
 			return (LoginUser) cache.get(username).get();
 		}
-		R<UserInfo> userResult = remoteUserService.getUserInfo(username);
+		R<UserInfo> userResult = remoteUserService.getUserInfo(username, SecurityConstants.INNER);
 		auth(userResult, username);
 		UserDetails userDetails = getUserDetails(userResult);
 

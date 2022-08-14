@@ -53,6 +53,16 @@ public interface SecurityConstants {
 	String PROJECT_LICENSE = "https://www.twelvet.cn/docs/";
 
 	/**
+	 * 内部请求标志
+	 */
+	String REQUEST_SOURCE = "request-source";
+
+	/**
+	 * 内部请求
+	 */
+	String INNER = "inner";
+
+	/**
 	 * 协议字段
 	 */
 	String DETAILS_LICENSE = "license";

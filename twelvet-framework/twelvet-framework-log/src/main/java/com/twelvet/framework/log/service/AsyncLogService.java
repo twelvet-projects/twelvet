@@ -2,6 +2,7 @@ package com.twelvet.framework.log.service;
 
 import com.twelvet.api.system.feign.RemoteLogService;
 import com.twelvet.api.system.domain.SysOperationLog;
+import com.twelvet.framework.core.constants.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class AsyncLogService {
 	 */
 	@Async
 	public void saveSysLog(SysOperationLog sysOperationLog) {
-		remoteLogService.saveLog(sysOperationLog);
+		remoteLogService.saveLog(sysOperationLog, SecurityConstants.INNER);
 	}
 
 }

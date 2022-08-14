@@ -7,6 +7,7 @@ import com.twelvet.api.system.domain.params.UserPassword;
 import com.twelvet.api.system.domain.vo.UserInfoVo;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
@@ -77,7 +78,7 @@ public class SysProfileController extends TWTController {
 	public AjaxResult avatar(@RequestParam("avatarFile") MultipartFile file) {
 
 		try {
-			R<SysFile> fileResult = remoteFileService.upload(file);
+			R<SysFile> fileResult = remoteFileService.upload(file, SecurityConstants.INNER);
 
 			if (StringUtils.isNull(fileResult) || StringUtils.isNull(fileResult.getData())) {
 				return AjaxResult.error("文件服务异常，请联系管理员");

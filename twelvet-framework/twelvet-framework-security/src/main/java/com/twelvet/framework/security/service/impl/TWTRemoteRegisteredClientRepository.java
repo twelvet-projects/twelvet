@@ -77,7 +77,7 @@ public class TWTRemoteRegisteredClientRepository implements RegisteredClientRepo
     @Override
     @Cacheable(value = CacheConstants.CLIENT_DETAILS_KEY, key = "#clientId", unless = "#result == null")
     public RegisteredClient findByClientId(String clientId) {
-        R<SysClientDetails> detailsR = remoteOauth2ClientDetailsService.getClientDetailsById(clientId);
+        R<SysClientDetails> detailsR = remoteOauth2ClientDetailsService.getClientDetailsById(clientId, SecurityConstants.INNER);
         SysClientDetails clientDetails = detailsR.getData();
 
         RegisteredClient.Builder builder = RegisteredClient.withId(clientDetails.getClientId())

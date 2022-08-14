@@ -3,11 +3,13 @@ package com.twelvet.api.system.feign;
 import com.twelvet.api.system.domain.SysLoginInfo;
 import com.twelvet.api.system.domain.SysOperationLog;
 import com.twelvet.api.system.feign.factory.RemoteLogFallbackFactory;
+import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.core.constants.ServiceNameConstants;
 import com.twelvet.framework.core.domain.R;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -25,7 +27,7 @@ public interface RemoteLogService {
 	 * @return 结果
 	 */
 	@PostMapping("/api/operationLog")
-	R<Boolean> saveLog(@RequestBody SysOperationLog sysOperationLog);
+	R<Boolean> saveLog(@RequestBody SysOperationLog sysOperationLog, @RequestHeader(SecurityConstants.REQUEST_SOURCE) String requestSource);
 
 	/**
 	 * 保存登录记录
@@ -33,6 +35,6 @@ public interface RemoteLogService {
 	 * @return 结果
 	 */
 	@PostMapping("/api/loginInfo")
-	R<Boolean> saveLoginInfo(@RequestBody SysLoginInfo sysLoginInfo);
+	R<Boolean> saveLoginInfo(@RequestBody SysLoginInfo sysLoginInfo, @RequestHeader(SecurityConstants.REQUEST_SOURCE) String requestSource);
 
 }

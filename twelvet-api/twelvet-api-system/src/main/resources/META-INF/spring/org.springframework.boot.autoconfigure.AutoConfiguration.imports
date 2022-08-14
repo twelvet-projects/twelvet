@@ -1,0 +1,3 @@
+com.twelvet.api.system.feign.factory.RemoteLogFallbackFactory
+com.twelvet.api.system.feign.factory.RemoteOauth2ClientDetailsFallbackFactory
+com.twelvet.api.system.feign.factory.RemoteUserFallbackFactory

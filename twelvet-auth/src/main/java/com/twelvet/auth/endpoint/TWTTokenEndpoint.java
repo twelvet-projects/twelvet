@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.twelvet.api.system.domain.SysClientDetails;
 import com.twelvet.api.system.feign.RemoteOauth2ClientDetailsService;
 import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.security.utils.OAuth2EndpointUtils;
@@ -80,7 +81,7 @@ public class TWTTokenEndpoint {
 			@RequestParam(OAuth2ParameterNames.SCOPE) String scope,
 			@RequestParam(OAuth2ParameterNames.STATE) String state) {
 
-		R<SysClientDetails> r = remoteOauth2ClientDetailsService.getClientDetailsById(clientId);
+		R<SysClientDetails> r = remoteOauth2ClientDetailsService.getClientDetailsById(clientId, SecurityConstants.INNER);
 		SysClientDetails clientDetails = r.getData();
 		Set<String> authorizedScopes = StringUtils.commaDelimitedListToSet(clientDetails.getScope());
 		modelAndView.addObject("clientId", clientId);

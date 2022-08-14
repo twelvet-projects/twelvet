@@ -6,6 +6,7 @@ import com.twelvet.api.system.domain.SysOperationLog;
 import com.twelvet.api.system.feign.factory.RemoteLogFallbackFactory;
 import com.twelvet.api.system.feign.factory.RemoteOauth2ClientDetailsFallbackFactory;
 import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.core.constants.ServiceNameConstants;
 import com.twelvet.framework.core.domain.R;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -26,6 +27,6 @@ public interface RemoteOauth2ClientDetailsService {
 	 * @return AjaxResult
 	 */
 	@GetMapping(value = "/api/client/{clientId}")
-	R<SysClientDetails> getClientDetailsById(@PathVariable("clientId") String clientId);
+	R<SysClientDetails> getClientDetailsById(@PathVariable("clientId") String clientId, @RequestHeader(SecurityConstants.REQUEST_SOURCE) String requestSource);
 
 }

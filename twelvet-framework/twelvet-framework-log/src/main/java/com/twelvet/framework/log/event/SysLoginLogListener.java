@@ -2,6 +2,7 @@ package com.twelvet.framework.log.event;
 
 import com.twelvet.api.system.domain.SysLoginInfo;
 import com.twelvet.api.system.feign.RemoteLogService;
+import com.twelvet.framework.core.constants.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
@@ -22,7 +23,7 @@ public class SysLoginLogListener {
 	@EventListener(SysLoginLogEvent.class)
 	public void saveSysLog(SysLoginLogEvent event) {
 		SysLoginInfo sysLog = (SysLoginInfo) event.getSource();
-		remoteLogService.saveLoginInfo(sysLog);
+		remoteLogService.saveLoginInfo(sysLog, SecurityConstants.INNER);
 	}
 
 }

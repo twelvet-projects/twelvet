@@ -2,11 +2,13 @@ package com.twelvet.api.dfs.feign;
 
 import com.twelvet.api.dfs.domain.SysFile;
 import com.twelvet.api.dfs.feign.factory.RemoteFileFallbackFactory;
+import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.core.constants.ServiceNameConstants;
 import com.twelvet.framework.core.domain.R;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +27,6 @@ public interface RemoteFileService {
 	 * @return 结果
 	 */
 	@PostMapping(value = "/api/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	R<SysFile> upload(@RequestPart(value = "file") MultipartFile file);
+	R<SysFile> upload(@RequestPart(value = "file") MultipartFile file, @RequestHeader(SecurityConstants.REQUEST_SOURCE) String requestSource);
 
 }
