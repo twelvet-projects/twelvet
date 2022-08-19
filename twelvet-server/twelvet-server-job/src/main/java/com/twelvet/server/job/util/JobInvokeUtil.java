@@ -1,9 +1,9 @@
 package com.twelvet.server.job.util;
 
 import com.twelvet.api.job.domain.SysJob;
+import com.twelvet.framework.utils.$;
 import com.twelvet.framework.utils.SpringUtils;
 import com.twelvet.framework.utils.StringUtils;
-import com.twelvet.framework.utils.$;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
