@@ -87,8 +87,8 @@ public class SysLogAspect {
 			SysOperationLog operationLog = new SysOperationLog();
 			operationLog.setStatus(BusinessStatus.SUCCESS.value());
 			// 请求的地址
-			//String ip = IpUtils.getIpAddr(ServletUtils.getRequest().get());
-			//operationLog.setOperIp(ip);
+			String ip = IpUtils.getIpAddr(ServletUtils.getRequest().get());
+			operationLog.setOperIp(ip);
 
 			// 返回参数
 			operationLog.setJsonResult(JacksonUtils.toJson(jsonResult));

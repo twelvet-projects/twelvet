@@ -34,7 +34,7 @@ public class FeignRequestInterceptor implements RequestInterceptor {
 	public void apply(RequestTemplate requestTemplate) {
 
 		// 配置客户端IP
-		requestTemplate.header("X-Forwarded-For", IpUtils.getIpAddr(ServletUtils.getRequest().get()));
+		//requestTemplate.header("X-Forwarded-For", IpUtils.getIpAddr());
 
 		// 非web 请求直接跳过
 		if (ServletUtils.getRequest().isPresent()) {
