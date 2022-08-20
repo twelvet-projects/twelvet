@@ -1,5 +1,6 @@
 package com.twelvet.auth.support.handler;
 
+import cn.hutool.core.map.MapUtil;
 import com.twelvet.api.system.domain.SysLoginInfo;
 import com.twelvet.framework.log.event.event.SysLoginLogEvent;
 import com.twelvet.framework.log.utils.SysLogUtils;
@@ -54,7 +55,7 @@ public class TWTAuthenticationSuccessEventHandler implements AuthenticationSucce
         SecurityContextHolder.getContext().setAuthentication(authentication);
         OAuth2AccessTokenAuthenticationToken accessTokenAuthentication = (OAuth2AccessTokenAuthenticationToken) authentication;
         Map<String, Object> map = accessTokenAuthentication.getAdditionalParameters();
-        if ($.isNotEmpty(map)) {
+        if (MapUtil.isNotEmpty(map)) {
             // 发送异步日志事件
             LoginUser userInfo = (LoginUser) map.get(SecurityConstants.DETAILS_USER);
             String username = userInfo.getName();
