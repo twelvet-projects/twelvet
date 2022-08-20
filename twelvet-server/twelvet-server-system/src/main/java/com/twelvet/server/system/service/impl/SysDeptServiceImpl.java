@@ -8,7 +8,7 @@ import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.datascope.annotation.SysDataScope;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.$;
-import com.twelvet.framework.utils.SpringUtils;
+import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.server.system.mapper.SysDeptMapper;
 import com.twelvet.server.system.service.ISysDeptService;
@@ -153,7 +153,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
 		if (!SysUser.isAdmin(SecurityUtils.getLoginUser().getUserId())) {
 			SysDept dept = new SysDept();
 			dept.setDeptId(deptId);
-			List<SysDept> depts = SpringUtils.getAopProxy(this).selectDeptList(dept);
+			List<SysDept> depts = SpringContextHolder.getAopProxy(this).selectDeptList(dept);
 			if (StringUtils.isEmpty(depts)) {
 				throw new TWTException("没有权限访问部门数据！");
 			}

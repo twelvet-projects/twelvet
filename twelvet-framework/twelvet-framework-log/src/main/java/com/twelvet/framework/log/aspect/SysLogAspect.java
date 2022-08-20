@@ -4,11 +4,13 @@ import com.twelvet.api.system.domain.SysOperationLog;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessStatus;
+import com.twelvet.framework.log.event.event.SysOperationLogEvent;
 import com.twelvet.framework.log.service.AsyncLogService;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.$;
 import com.twelvet.framework.utils.JacksonUtils;
+import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.framework.utils.http.IpUtils;
 import com.twelvet.framework.utils.http.ServletUtils;
@@ -40,13 +42,9 @@ import java.util.Map;
  * @Description: 操作日志记录处理
  */
 @Aspect
-@Component
-public class LogAspect {
+public class SysLogAspect {
 
-	private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
-
-	@Autowired
-	private AsyncLogService asyncLogService;
+	private static final Logger log = LoggerFactory.getLogger(SysLogAspect.class);
 
 	/**
 	 * 配置切入点
@@ -89,8 +87,8 @@ public class LogAspect {
 			SysOperationLog operationLog = new SysOperationLog();
 			operationLog.setStatus(BusinessStatus.SUCCESS.value());
 			// 请求的地址
-			String ip = IpUtils.getIpAddr(ServletUtils.getRequest().get());
-			operationLog.setOperIp(ip);
+			//String ip = IpUtils.getIpAddr(ServletUtils.getRequest().get());
+			//operationLog.setOperIp(ip);
 
 			// 返回参数
 			operationLog.setJsonResult(JacksonUtils.toJson(jsonResult));
@@ -113,8 +111,8 @@ public class LogAspect {
 			operationLog.setRequestMethod(ServletUtils.getRequest().get().getMethod());
 			// 处理设置注解上的参数
 			getControllerMethodDescription(joinPoint, controllerLog, operationLog);
-			// 异步保存数据库
-			asyncLogService.saveSysLog(operationLog);
+			// 发送Spring事件保存数据库
+			SpringContextHolder.publishEvent(new SysOperationLogEvent(operationLog));
 		}
 		catch (Exception exp) {
 			// 记录本地异常日志

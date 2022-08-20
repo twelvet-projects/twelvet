@@ -1,9 +1,9 @@
-package com.twelvet.framework.log.event;
+package com.twelvet.framework.log.event.listener;
 
 import com.twelvet.api.system.domain.SysLoginInfo;
 import com.twelvet.api.system.feign.RemoteLogService;
 import com.twelvet.framework.core.constants.SecurityConstants;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.twelvet.framework.log.event.event.SysLoginLogEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
@@ -15,15 +15,18 @@ import org.springframework.scheduling.annotation.Async;
  */
 public class SysLoginLogListener {
 
-	@Autowired
-	private RemoteLogService remoteLogService;
+	private final RemoteLogService remoteLogService;
+
+	public SysLoginLogListener(RemoteLogService remoteLogService) {
+		this.remoteLogService = remoteLogService;
+	}
 
 	@Async
 	@Order
 	@EventListener(SysLoginLogEvent.class)
 	public void saveSysLog(SysLoginLogEvent event) {
-		SysLoginInfo sysLog = (SysLoginInfo) event.getSource();
-		remoteLogService.saveLoginInfo(sysLog, SecurityConstants.INNER);
+		SysLoginInfo sysLoginInfo = (SysLoginInfo) event.getSource();
+		remoteLogService.saveLoginInfo(sysLoginInfo, SecurityConstants.INNER);
 	}
 
 }

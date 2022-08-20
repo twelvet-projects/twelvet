@@ -22,6 +22,12 @@
             <artifactId>twelvet-framework-security</artifactId>
         </dependency>
 
+        <!-- twelvet system -->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-api-system</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

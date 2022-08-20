@@ -2,7 +2,7 @@ package com.twelvet.server.system.utils;
 
 import com.twelvet.framework.redis.service.RedisService;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
-import com.twelvet.framework.utils.SpringUtils;
+import com.twelvet.framework.utils.SpringContextHolder;
 
 import java.util.Collection;
 
@@ -17,8 +17,8 @@ public class DictUtils {
 	 * 清空字典缓存
 	 */
 	public static void clearDictCache() {
-		Collection<String> keys = SpringUtils.getBean(RedisService.class).keys(CacheConstants.SYS_DICT_KEY + "*");
-		SpringUtils.getBean(RedisService.class).deleteObject(keys);
+		Collection<String> keys = SpringContextHolder.getBean(RedisService.class).keys(CacheConstants.SYS_DICT_KEY + "*");
+		SpringContextHolder.getBean(RedisService.class).deleteObject(keys);
 	}
 
 	/**

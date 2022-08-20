@@ -1,7 +1,10 @@
 package com.twelvet.server.system.service.impl;
 
 import com.twelvet.api.system.domain.SysLoginInfo;
+import com.twelvet.api.system.domain.SysUser;
+import com.twelvet.framework.utils.$;
 import com.twelvet.server.system.mapper.SysLoginInfoMapper;
+import com.twelvet.server.system.mapper.SysUserMapper;
 import com.twelvet.server.system.service.ISysLoginInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,9 @@ public class ISysLoginInfoServiceImpl implements ISysLoginInfoService {
 
 	@Autowired
 	private SysLoginInfoMapper SysLoginInfoMapper;
+
+	@Autowired
+	private SysUserMapper sysUserMapper;
 
 	/**
 	 * 查询系统登录日志集合
@@ -53,6 +59,15 @@ public class ISysLoginInfoServiceImpl implements ISysLoginInfoService {
 	 */
 	@Override
 	public int insertLoginInfo(SysLoginInfo loginInfo) {
+		if($.isEmpty(loginInfo.getDeptId())){
+			String userName = loginInfo.getUserName();
+			SysUser sysUser = sysUserMapper.selectUserByUserName(userName);
+			if($.isNotEmpty(sysUser)){
+				Long deptId = sysUser.getDeptId();
+				loginInfo.setDeptId(deptId);
+			}
+		}
+
 		return SysLoginInfoMapper.insertLoginInfo(loginInfo);
 	}
 

@@ -3,7 +3,7 @@ package com.twelvet.server.job.util;
 import com.twelvet.api.job.domain.SysJob;
 import com.twelvet.api.job.domain.SysJobLog;
 import com.twelvet.framework.core.constants.ScheduleConstants;
-import com.twelvet.framework.utils.SpringUtils;
+import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.framework.utils.$;
 import com.twelvet.framework.utils.bean.BeanUtils;
@@ -81,7 +81,7 @@ public abstract class AbstractQuartzJob implements Job {
 		}
 
 		// 写入数据库当中
-		SpringUtils.getBean(ISysJobLogService.class).addJobLog(sysJobLog);
+		SpringContextHolder.getBean(ISysJobLogService.class).addJobLog(sysJobLog);
 	}
 
 	/**

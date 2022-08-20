@@ -1,23 +1,30 @@
 package com.twelvet.framework.utils;
 
 import cn.hutool.core.util.ArrayUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Service;
 
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
  * @Description: spring工具类 方便在非spring管理环境中获取bean
  */
-@Component
-public final class SpringUtils implements BeanFactoryPostProcessor {
+@Service
+@Lazy(false)
+public final class SpringContextHolder implements ApplicationContextAware, DisposableBean, BeanFactoryPostProcessor {
+
+	private final static Logger log = LoggerFactory.getLogger(SpringContextHolder.class);
 
 	/**
 	 * Spring应用上下文环境
@@ -26,9 +33,24 @@ public final class SpringUtils implements BeanFactoryPostProcessor {
 
 	private static ApplicationContext applicationContext;
 
+	/**
+	 * 取得存储在静态变量中的ApplicationContext.
+	 */
+	public static ApplicationContext getApplicationContext() {
+		return applicationContext;
+	}
+
+	/**
+	 * 实现ApplicationContextAware接口, 注入Context到静态变量中.
+	 */
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		SpringContextHolder.applicationContext = applicationContext;
+	}
+
 	@Override
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-		SpringUtils.beanFactory = beanFactory;
+		SpringContextHolder.beanFactory = beanFactory;
 	}
 
 	/**
@@ -130,4 +152,21 @@ public final class SpringUtils implements BeanFactoryPostProcessor {
 		applicationContext.publishEvent(event);
 	}
 
+	/**
+	 * 清除SpringContextHolder中的ApplicationContext为Null.
+	 */
+	public static void clearHolder() {
+		if (log.isDebugEnabled()) {
+			log.debug("清除SpringContextHolder中的ApplicationContext:" + applicationContext);
+		}
+		applicationContext = null;
+	}
+
+	/**
+	 * 实现DisposableBean接口, 在Context关闭时清理静态变量.
+	 */
+	@Override
+	public void destroy() {
+		SpringContextHolder.clearHolder();
+	}
 }

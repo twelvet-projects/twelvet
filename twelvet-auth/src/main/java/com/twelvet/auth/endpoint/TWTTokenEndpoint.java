@@ -9,7 +9,7 @@ import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.security.utils.OAuth2EndpointUtils;
 import com.twelvet.framework.security.utils.OAuth2ErrorCodesExpand;
-import com.twelvet.framework.utils.SpringUtils;
+import com.twelvet.framework.utils.SpringContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -158,7 +158,7 @@ public class TWTTokenEndpoint {
 		authorizationService.remove(authorization);
 		// 处理自定义退出事件，保存相关日志
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		SpringUtils.publishEvent(new LogoutSuccessEvent(authentication));
+		SpringContextHolder.publishEvent(new LogoutSuccessEvent(authentication));
 		return AjaxResult.success();
 	}
 

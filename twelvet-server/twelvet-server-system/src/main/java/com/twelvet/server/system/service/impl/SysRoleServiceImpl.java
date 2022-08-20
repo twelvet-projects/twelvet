@@ -7,7 +7,7 @@ import com.twelvet.api.system.domain.SysUser;
 import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.framework.utils.SpringUtils;
+import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.$;
 import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.server.system.mapper.SysRoleDeptMapper;
@@ -75,7 +75,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	 */
 	@Override
 	public List<SysRole> selectRoleAll() {
-		return SpringUtils.getAopProxy(this).selectRoleList(new SysRole());
+		return SpringContextHolder.getAopProxy(this).selectRoleList(new SysRole());
 	}
 
 	/**
@@ -148,7 +148,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
 		if (!SysUser.isAdmin(SecurityUtils.getLoginUser().getUserId())) {
 			SysRole role = new SysRole();
 			role.setRoleId(roleId);
-			List<SysRole> roles = SpringUtils.getAopProxy(this).selectRoleList(role);
+			List<SysRole> roles = SpringContextHolder.getAopProxy(this).selectRoleList(role);
 			if (StringUtils.isEmpty(roles)) {
 				throw new TWTException("没有权限访问角色数据！");
 			}

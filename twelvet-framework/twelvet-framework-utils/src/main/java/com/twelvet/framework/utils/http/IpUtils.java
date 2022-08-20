@@ -40,7 +40,7 @@ public class IpUtils {
 	public static String getIpAddr(HttpServletRequest request) {
 
 		if (request == null) {
-			return null;
+			return "unknown";
 		}
 
 		String ip = null;

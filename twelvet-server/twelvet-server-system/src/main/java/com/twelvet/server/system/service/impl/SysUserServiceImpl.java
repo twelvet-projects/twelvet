@@ -5,7 +5,7 @@ import com.twelvet.api.system.domain.*;
 import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.framework.utils.SpringUtils;
+import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.framework.utils.$;
 import com.twelvet.server.system.mapper.*;
@@ -192,7 +192,7 @@ public class SysUserServiceImpl implements ISysUserService {
 		if (!SysUser.isAdmin(SecurityUtils.getLoginUser().getUserId())) {
 			SysUser user = new SysUser();
 			user.setUserId(userId);
-			List<SysUser> users = SpringUtils.getAopProxy(this).selectUserList(user);
+			List<SysUser> users = SpringContextHolder.getAopProxy(this).selectUserList(user);
 			if (StringUtils.isEmpty(users)) {
 				throw new TWTException("没有权限访问用户数据！");
 			}

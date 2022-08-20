@@ -3,7 +3,7 @@ package com.twelvet.server.job.util;
 import com.twelvet.api.job.domain.SysJob;
 import com.twelvet.framework.core.constants.Constants;
 import com.twelvet.framework.core.constants.ScheduleConstants;
-import com.twelvet.framework.utils.SpringUtils;
+import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.server.job.exception.TaskException;
 import com.twelvet.server.job.exception.TaskException.Code;
@@ -119,7 +119,7 @@ public class ScheduleUtils {
 		{
 			return StringUtils.containsAnyIgnoreCase(invokeTarget, Constants.JOB_WHITELIST_STR);
 		}
-		Object obj = SpringUtils.getBean(StringUtils.split(invokeTarget, ".")[0]);
+		Object obj = SpringContextHolder.getBean(StringUtils.split(invokeTarget, ".")[0]);
 		return StringUtils.containsAnyIgnoreCase(obj.getClass().getPackage().getName(), Constants.JOB_WHITELIST_STR);
 	}
 

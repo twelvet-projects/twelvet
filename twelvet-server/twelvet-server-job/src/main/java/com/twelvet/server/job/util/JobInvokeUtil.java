@@ -2,7 +2,7 @@ package com.twelvet.server.job.util;
 
 import com.twelvet.api.job.domain.SysJob;
 import com.twelvet.framework.utils.$;
-import com.twelvet.framework.utils.SpringUtils;
+import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.StringUtils;
 
 import java.lang.reflect.InvocationTargetException;
@@ -28,7 +28,7 @@ public class JobInvokeUtil {
 		List<Object[]> methodParams = getMethodParams(invokeTarget);
 
 		if (!isValidClassName(beanName)) {
-			Object bean = SpringUtils.getBean(beanName);
+			Object bean = SpringContextHolder.getBean(beanName);
 			invokeMethod(bean, methodName, methodParams);
 		}
 		else {
