@@ -2,7 +2,7 @@ DROP DATABASE IF EXISTS `twelvet_nacos`;
 
 CREATE DATABASE  `twelvet_nacos` DEFAULT CHARACTER SET utf8 COLLATE utf8mb4_general_ci;
 
-SET NAMES utf8mb4;
+SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
 
 USE `twelvet_nacos`;
