@@ -1,6 +1,8 @@
 package com.twelvet.framework.security.feign;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.utils.$;
 import com.twelvet.framework.utils.http.IpUtils;
 import com.twelvet.framework.utils.http.ServletUtils;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collection;
 import java.util.Enumeration;
 
 /**
@@ -33,11 +36,17 @@ public class FeignRequestInterceptor implements RequestInterceptor {
 	@Override
 	public void apply(RequestTemplate requestTemplate) {
 
+		Collection<String> fromHeader = requestTemplate.headers().get(SecurityConstants.REQUEST_SOURCE);
+		// 带from 请求直接跳过
+		if (CollUtil.isNotEmpty(fromHeader) && fromHeader.contains(SecurityConstants.INNER)) {
+			return;
+		}
+
 		// 配置客户端IP
-		//requestTemplate.header("X-Forwarded-For", IpUtils.getIpAddr());
+		requestTemplate.header("X-Forwarded-For", IpUtils.getIpAddr());
 
 		// 非web 请求直接跳过
-		if (ServletUtils.getRequest().isPresent()) {
+		if (!ServletUtils.getRequest().isPresent()) {
 			return;
 		}
 		HttpServletRequest request = ServletUtils.getRequest().get();
