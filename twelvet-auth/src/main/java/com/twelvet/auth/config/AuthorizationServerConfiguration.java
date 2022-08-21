@@ -42,15 +42,14 @@ public class AuthorizationServerConfiguration {
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
         OAuth2AuthorizationServerConfigurer<HttpSecurity> authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer<>();
-
+        // 个性化认证授权端点
         http.apply(authorizationServerConfigurer.tokenEndpoint((tokenEndpoint) -> {
-                    // 个性化认证授权端点
+                    // 注入自定义的授权认证Converter
                     tokenEndpoint.accessTokenRequestConverter(accessTokenRequestConverter())
-                            // 注入自定义的授权认证Converter
-                            .accessTokenResponseHandler(new TWTAuthenticationSuccessEventHandler())
                             // 登录成功处理器
+                            .accessTokenResponseHandler(new TWTAuthenticationSuccessEventHandler())
+                            // 登录失败处理器
                             .errorResponseHandler(new TWTAuthenticationFailureEventHandler());
-                    // 登录失败处理器
                 }).clientAuthentication(oAuth2ClientAuthenticationConfigurer ->
                         // 个性化客户端认证
                         oAuth2ClientAuthenticationConfigurer.errorResponseHandler(new TWTAuthenticationFailureEventHandler()))
