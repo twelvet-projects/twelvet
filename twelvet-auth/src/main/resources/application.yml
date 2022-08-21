@@ -33,3 +33,32 @@ spring:
     import:
       - nacos:twelvet-app-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
       - nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+
+
+  # 接入第三方OAuth2登录（开放功能-dev）
+  security:
+    oauth2:
+      client:
+        registration:
+          gitee:
+            # 关联OAuth2 Server
+            provider: gitee
+            client-id: ae3e66546a8ff8cd67050a5558dcd6b4b25a474cb6607b9b1a09bf921d1f10ae
+            client-secret: 1dd8a3e087a2c3ea54232f8a160f018b8ec28fbc23d06a876340c12e561681c2
+            # 授权类型
+            authorization-grant-type: authorization_code
+            # 授权范围
+            scope: user_info
+            # 回调地址
+            redirect-uri: http://localhost:8888/{action}/oauth2/code/{registrationId}
+            client-name: Gitee
+        provider:
+          gitee:
+            # 登录地址
+            authorization-uri: https://gitee.com/oauth/authorize
+            # 换取token
+            token-uri: https://gitee.com/oauth/token
+            # 取得的user详情中的属性id的值作为Client的已认证的用户的用户名
+            user-name-attribute: id
+            # 获取用户信息
+            user-info-uri: https://gitee.com/api/v5/user

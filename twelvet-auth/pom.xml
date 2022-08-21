@@ -45,6 +45,12 @@
             <artifactId>twelvet-framework-security</artifactId>
         </dependency>
 
+        <!--OAuth2 Client-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-client</artifactId>
+        </dependency>
+
         <!--OAuth2-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

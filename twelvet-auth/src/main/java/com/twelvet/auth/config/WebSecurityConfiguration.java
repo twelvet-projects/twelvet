@@ -7,7 +7,13 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @EnableWebSecurity(debug = true)
 public class WebSecurityConfiguration {
@@ -20,9 +26,17 @@ public class WebSecurityConfiguration {
 	 */
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+		// 增加自定义第三方换取信息方式
+		Map<String, OAuth2UserService<OAuth2UserRequest, OAuth2User>> oAuth2UserServiceMap = new HashMap<>();
+
 		http.authorizeRequests(authorizeRequests -> authorizeRequests.antMatchers("/token/*").permitAll()// 开放自定义的部分端点
 						.anyRequest().authenticated()).headers().frameOptions().sameOrigin()// 避免iframe同源无法登录
-				.and().apply(new FormIdentityLoginConfigurer()); // 表单登录个性化
+				// 表单登录个性化
+				.and().apply(new FormIdentityLoginConfigurer())
+				// 接入第三方登录
+				.and().oauth2Login()
+				// 自定义获取授权信息方式
+				.userInfoEndpoint().userService(new CustomOAuth2UserService(oAuth2UserServiceMap));
 		// 处理 UsernamePasswordAuthenticationToken
 		http.authenticationProvider(new TWTDaoAuthenticationProvider());
 		return http.build();
