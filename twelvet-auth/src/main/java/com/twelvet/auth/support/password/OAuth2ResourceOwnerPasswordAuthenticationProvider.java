@@ -17,12 +17,9 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import java.util.Map;
 
 /**
- * @description 处理用户名密码授权
- */
-/**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description:
+ * @Description: 处理用户名密码授权
  */
 public class OAuth2ResourceOwnerPasswordAuthenticationProvider
 		extends OAuth2ResourceOwnerBaseAuthenticationProvider<OAuth2ResourceOwnerPasswordAuthenticationToken> {

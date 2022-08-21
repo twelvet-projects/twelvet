@@ -24,14 +24,9 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
- * @date 2022-06-02
- *
- * 事件机制处理退出相关
- */
-/**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description:
+ * @Description: 事件机制处理退出相关
  */
 @Component
 public class TWTLogoutSuccessEventHandler implements ApplicationListener<LogoutSuccessEvent> {

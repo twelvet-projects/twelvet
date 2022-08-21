@@ -17,14 +17,9 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import java.util.Map;
 
 /**
- * @date date
- *
- * 短信登录的核心处理
- */
-/**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description:
+ * @Description: 短信登录的核心处理
  */
 public class OAuth2ResourceOwnerSmsAuthenticationProvider
 		extends OAuth2ResourceOwnerBaseAuthenticationProvider<OAuth2ResourceOwnerSmsAuthenticationToken> {

@@ -43,7 +43,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @date 2019/2/1 删除token端点
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description: 统一登录管理
  */
 @RestController
 @RequestMapping("/token")

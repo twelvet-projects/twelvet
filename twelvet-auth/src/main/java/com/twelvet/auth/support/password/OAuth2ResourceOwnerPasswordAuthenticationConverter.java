@@ -18,14 +18,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @date 2022-06-02
- * <p>
- * 密码认证转换器
- */
-/**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description:
+ * @Description: 密码认证转换器
  */
 public class OAuth2ResourceOwnerPasswordAuthenticationConverter
         extends OAuth2ResourceOwnerBaseAuthenticationConverter<OAuth2ResourceOwnerPasswordAuthenticationToken> {

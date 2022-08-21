@@ -8,14 +8,9 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 
 /**
- * token 输出增强
- *
- * @date 2022/6/3
- */
-/**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description:
+ * @Description: token 输出增强
  */
 public class CustomOAuth2TokenCustomizer implements OAuth2TokenCustomizer<OAuth2TokenClaimsContext> {
 

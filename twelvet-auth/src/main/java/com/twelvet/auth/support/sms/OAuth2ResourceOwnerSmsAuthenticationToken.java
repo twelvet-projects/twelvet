@@ -8,12 +8,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @description 短信登录token信息
- */
-/**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description:
+ * @Description: 短信登录token信息
  */
 public class OAuth2ResourceOwnerSmsAuthenticationToken extends OAuth2ResourceOwnerBaseAuthenticationToken {
 

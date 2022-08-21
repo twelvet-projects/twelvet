@@ -8,12 +8,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @description 密码授权token信息
- */
-/**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description:
+ * @Description: 密码授权token信息
  */
 public class OAuth2ResourceOwnerPasswordAuthenticationToken extends OAuth2ResourceOwnerBaseAuthenticationToken {
 

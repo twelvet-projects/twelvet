@@ -14,14 +14,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @date 2022-05-31
- *
- * 短信登录转换器
- */
-/**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description:
+ * @Description: 短信登录转换器
  */
 public class OAuth2ResourceOwnerSmsAuthenticationConverter
 		extends OAuth2ResourceOwnerBaseAuthenticationConverter<OAuth2ResourceOwnerSmsAuthenticationToken> {

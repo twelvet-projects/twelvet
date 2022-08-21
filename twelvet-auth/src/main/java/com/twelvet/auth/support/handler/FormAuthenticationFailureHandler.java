@@ -13,14 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @date 2022-06-02
- * <p>
- * 表单登录失败处理逻辑
- */
-/**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description:
+ * @Description: 表单登录失败处理逻辑
  */
 
 public class FormAuthenticationFailureHandler implements AuthenticationFailureHandler {

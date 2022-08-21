@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author twelvet
- * <p>
- * 测试第三方登录
+ * @WebSite www.twelvet.cn
+ * @Description: 测试第三方登录
  */
 @RestController
 public class IndexController {

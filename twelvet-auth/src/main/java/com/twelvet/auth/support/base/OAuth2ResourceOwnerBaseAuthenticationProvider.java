@@ -30,14 +30,9 @@ import java.util.*;
 import java.util.function.Supplier;
 
 /**
- * @description
- *
- * 处理自定义授权
- */
-/**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description:
+ * @Description: 处理自定义授权
  */
 public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OAuth2ResourceOwnerBaseAuthenticationToken>
 		implements AuthenticationProvider {
