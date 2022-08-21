@@ -10,17 +10,17 @@ public interface SecurityConstants {
 	/**
 	 * 登录成功
 	 */
-	Integer LOGIN_SUCCESS = 1;
+	String LOGIN_SUCCESS = "1";
 
 	/**
 	 * 退出成功
 	 */
-	Integer LOGOUT_SUCCESS = 2;
+	String LOGOUT_SUCCESS = "2";
 
 	/**
 	 * 登录失败
 	 */
-	Integer LOGIN_FAIL = 0;
+	String LOGIN_FAIL = "0";
 
 	/**
 	 * {bcrypt} 加密的特征码

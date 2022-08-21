@@ -38,7 +38,7 @@ public class SysJobLog extends BaseEntity {
 
 	/** 执行状态（0正常 1失败） */
 	@Excel(name = "执行状态", readConverterExp = "1=正常,0=失败")
-	private Integer status;
+	private String status;
 
 	/** 异常信息 */
 	@Excel(name = "异常信息")
@@ -90,11 +90,11 @@ public class SysJobLog extends BaseEntity {
 		this.jobMessage = jobMessage;
 	}
 
-	public Integer getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

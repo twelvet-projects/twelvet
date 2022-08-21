@@ -32,7 +32,7 @@ public class SysLoginInfo extends BaseEntity {
 	 * 状态 0成功 1失败
 	 */
 	@Excel(name = "状态", readConverterExp = "1=登录成功,2=退出成功,0=登录失败")
-	private Integer status;
+	private String status;
 
 	/**
 	 * 地址
@@ -83,11 +83,11 @@ public class SysLoginInfo extends BaseEntity {
 		this.userName = userName;
 	}
 
-	public Integer getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
