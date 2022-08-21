@@ -3,6 +3,11 @@ package com.twelvet.framework.security.utils;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
 
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 public class ScopeException extends OAuth2AuthenticationException {
 
 	/**

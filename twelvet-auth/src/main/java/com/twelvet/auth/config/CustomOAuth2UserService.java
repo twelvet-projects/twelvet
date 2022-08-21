@@ -12,7 +12,9 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * 自定义获取第三方code换信息
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description: 自定义获取第三方code换信息
  */
 public class CustomOAuth2UserService<R extends OAuth2UserRequest, U extends OAuth2User>
         implements OAuth2UserService<R, U> {

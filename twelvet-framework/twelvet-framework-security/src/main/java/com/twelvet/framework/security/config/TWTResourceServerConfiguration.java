@@ -10,6 +10,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 @EnableWebSecurity
 public class TWTResourceServerConfiguration {
 

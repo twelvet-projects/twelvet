@@ -22,6 +22,11 @@ import java.util.UUID;
 /**
  * @date 2022/5/29
  */
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 public class CustomeOAuth2AccessTokenGenerator implements OAuth2TokenGenerator<OAuth2AccessToken> {
 
 	private OAuth2TokenCustomizer<OAuth2TokenClaimsContext> accessTokenCustomizer;

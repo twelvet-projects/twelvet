@@ -18,6 +18,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 public class TWTRedisOAuth2AuthorizationService implements OAuth2AuthorizationService {
 
 	private final static Long TIMEOUT = 10L;

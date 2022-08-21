@@ -29,6 +29,11 @@ import java.io.IOException;
 /**
  * @date 2022-06-02
  */
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 public class TWTAuthenticationFailureEventHandler implements AuthenticationFailureHandler {
 
     private static final Logger log = LoggerFactory.getLogger(TWTAuthenticationFailureEventHandler.class);

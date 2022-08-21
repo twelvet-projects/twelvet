@@ -28,6 +28,11 @@ import java.util.Map;
  *
  * 事件机制处理退出相关
  */
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 @Component
 public class TWTLogoutSuccessEventHandler implements ApplicationListener<LogoutSuccessEvent> {
 

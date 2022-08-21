@@ -22,6 +22,11 @@ import java.util.Set;
  * <p>
  * 密码认证转换器
  */
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 public class OAuth2ResourceOwnerPasswordAuthenticationConverter
         extends OAuth2ResourceOwnerBaseAuthenticationConverter<OAuth2ResourceOwnerPasswordAuthenticationToken> {
 

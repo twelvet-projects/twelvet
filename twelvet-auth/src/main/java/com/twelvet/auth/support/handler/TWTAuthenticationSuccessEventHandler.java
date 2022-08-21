@@ -34,6 +34,11 @@ import java.util.Map;
 /**
  * @date 2022-06-02
  */
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 public class TWTAuthenticationSuccessEventHandler implements AuthenticationSuccessHandler {
 
     private static final Logger log = LoggerFactory.getLogger(TWTAuthenticationSuccessEventHandler.class);

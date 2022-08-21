@@ -20,6 +20,11 @@ import org.springframework.util.StringUtils;
 import java.time.Duration;
 import java.util.Optional;
 
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 public class TWTRemoteRegisteredClientRepository implements RegisteredClientRepository {
 
     /**

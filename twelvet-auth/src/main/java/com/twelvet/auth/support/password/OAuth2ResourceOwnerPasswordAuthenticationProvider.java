@@ -19,6 +19,11 @@ import java.util.Map;
 /**
  * @description 处理用户名密码授权
  */
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 public class OAuth2ResourceOwnerPasswordAuthenticationProvider
 		extends OAuth2ResourceOwnerBaseAuthenticationProvider<OAuth2ResourceOwnerPasswordAuthenticationToken> {
 

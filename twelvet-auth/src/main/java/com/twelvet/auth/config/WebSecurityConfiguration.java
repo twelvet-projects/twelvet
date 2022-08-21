@@ -15,6 +15,11 @@ import org.springframework.security.web.SecurityFilterChain;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description: 自定义获取第三方code换信息
+ */
 @EnableWebSecurity(debug = true)
 public class WebSecurityConfiguration {
 

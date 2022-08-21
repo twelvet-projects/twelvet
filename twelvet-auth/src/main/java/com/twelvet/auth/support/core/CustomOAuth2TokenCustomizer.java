@@ -12,6 +12,11 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
  *
  * @date 2022/6/3
  */
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 public class CustomOAuth2TokenCustomizer implements OAuth2TokenCustomizer<OAuth2TokenClaimsContext> {
 
 	/**

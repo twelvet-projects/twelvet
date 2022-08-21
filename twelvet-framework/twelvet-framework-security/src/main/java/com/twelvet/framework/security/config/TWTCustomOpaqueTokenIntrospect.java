@@ -22,6 +22,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 public class TWTCustomOpaqueTokenIntrospect implements OpaqueTokenIntrospector {
 
 	private static final Logger log = LoggerFactory.getLogger(TWTCustomOpaqueTokenIntrospect.class);

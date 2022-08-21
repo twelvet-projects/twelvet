@@ -18,6 +18,11 @@ import java.util.Set;
  *
  * 短信登录转换器
  */
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 public class OAuth2ResourceOwnerSmsAuthenticationConverter
 		extends OAuth2ResourceOwnerBaseAuthenticationConverter<OAuth2ResourceOwnerSmsAuthenticationToken> {
 

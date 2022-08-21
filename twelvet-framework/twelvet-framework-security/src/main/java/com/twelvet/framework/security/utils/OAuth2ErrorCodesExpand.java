@@ -1,5 +1,10 @@
 package com.twelvet.framework.security.utils;
 
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 public interface OAuth2ErrorCodesExpand {
 
 	/** 用户名未找到 */

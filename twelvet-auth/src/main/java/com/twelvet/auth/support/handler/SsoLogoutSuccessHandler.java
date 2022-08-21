@@ -14,6 +14,11 @@ import java.io.IOException;
  * <p>
  * sso 退出功能 ，根据客户端传入跳转
  */
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 public class SsoLogoutSuccessHandler implements LogoutSuccessHandler {
 
 	private static final String REDIRECT_URL = "redirect_url";

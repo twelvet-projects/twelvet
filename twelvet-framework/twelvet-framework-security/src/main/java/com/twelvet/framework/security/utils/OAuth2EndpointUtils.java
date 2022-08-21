@@ -19,6 +19,11 @@ import java.io.IOException;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
 
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 public class OAuth2EndpointUtils {
 
 	public final static String ACCESS_TOKEN_REQUEST_ERROR_URI = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";

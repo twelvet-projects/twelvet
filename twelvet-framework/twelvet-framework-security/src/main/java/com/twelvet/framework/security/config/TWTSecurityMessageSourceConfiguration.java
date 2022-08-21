@@ -9,6 +9,11 @@ import static org.springframework.boot.autoconfigure.condition.ConditionalOnWebA
 
 import java.util.Locale;
 
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 @ConditionalOnWebApplication(type = SERVLET)
 public class TWTSecurityMessageSourceConfiguration implements WebMvcConfigurer {
 

@@ -8,6 +8,11 @@ import org.springframework.util.Assert;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 public class TWTRedisOAuth2AuthorizationConsentService implements OAuth2AuthorizationConsentService {
 
 	@Autowired

@@ -17,6 +17,11 @@ import java.io.IOException;
  * <p>
  * 表单登录失败处理逻辑
  */
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 
 public class FormAuthenticationFailureHandler implements AuthenticationFailureHandler {
 

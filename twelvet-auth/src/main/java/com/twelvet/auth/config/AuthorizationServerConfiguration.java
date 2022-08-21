@@ -32,6 +32,11 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import java.util.Arrays;
 
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 @Configuration
 public class AuthorizationServerConfiguration {
 

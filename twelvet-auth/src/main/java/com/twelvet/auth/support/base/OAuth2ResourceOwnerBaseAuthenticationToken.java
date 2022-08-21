@@ -14,6 +14,11 @@ import java.util.*;
  *
  * 自定义授权模式抽象
  */
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 public abstract class OAuth2ResourceOwnerBaseAuthenticationToken extends AbstractAuthenticationToken {
 
 	private AuthorizationGrantType authorizationGrantType;

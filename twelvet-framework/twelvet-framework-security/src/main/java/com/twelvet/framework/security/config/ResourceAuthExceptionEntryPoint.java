@@ -14,6 +14,11 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 public class ResourceAuthExceptionEntryPoint implements AuthenticationEntryPoint {
 
 	private static final Logger log = LoggerFactory.getLogger(ResourceAuthExceptionEntryPoint.class);

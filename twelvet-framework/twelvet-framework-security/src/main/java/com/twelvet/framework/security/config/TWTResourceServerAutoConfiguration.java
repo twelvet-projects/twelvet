@@ -7,6 +7,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 
+/**
+ * @author twelvet
+ * @WebSite www.twelvet.cn
+ * @Description:
+ */
 @EnableConfigurationProperties(AuthIgnoreConfig.class)
 public class TWTResourceServerAutoConfiguration {
 
