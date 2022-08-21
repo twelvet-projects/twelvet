@@ -31,7 +31,7 @@ public class SysLoginInfo extends BaseEntity {
 	/**
 	 * 状态 0成功 1失败
 	 */
-	@Excel(name = "状态", readConverterExp = "1=成功,0=失败")
+	@Excel(name = "状态", readConverterExp = "1=登录成功,2=退出成功,0=登录失败")
 	private Integer status;
 
 	/**

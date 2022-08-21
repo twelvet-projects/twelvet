@@ -13,6 +13,11 @@ public interface SecurityConstants {
 	Integer LOGIN_SUCCESS = 1;
 
 	/**
+	 * 退出成功
+	 */
+	Integer LOGOUT_SUCCESS = 2;
+
+	/**
 	 * 登录失败
 	 */
 	Integer LOGIN_FAIL = 0;

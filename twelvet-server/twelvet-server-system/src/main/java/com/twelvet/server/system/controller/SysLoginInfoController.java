@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description: 系统操作/访问日志
+ * @Description: 系统登录日志
  */
 @RestController
 @RequestMapping("/loginInfo")
