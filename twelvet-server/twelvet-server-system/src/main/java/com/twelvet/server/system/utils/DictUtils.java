@@ -17,7 +17,8 @@ public class DictUtils {
 	 * 清空字典缓存
 	 */
 	public static void clearDictCache() {
-		Collection<String> keys = SpringContextHolder.getBean(RedisService.class).keys(CacheConstants.SYS_DICT_KEY + "*");
+		Collection<String> keys = SpringContextHolder.getBean(RedisService.class)
+				.keys(CacheConstants.SYS_DICT_KEY + "*");
 		SpringContextHolder.getBean(RedisService.class).deleteObject(keys);
 	}
 

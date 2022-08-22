@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description:
+ * @Description: 资源服务器异常处理
  */
 public class ResourceAuthExceptionEntryPoint implements AuthenticationEntryPoint {
 

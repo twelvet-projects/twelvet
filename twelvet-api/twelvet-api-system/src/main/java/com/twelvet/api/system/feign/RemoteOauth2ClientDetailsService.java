@@ -27,6 +27,7 @@ public interface RemoteOauth2ClientDetailsService {
 	 * @return AjaxResult
 	 */
 	@GetMapping(value = "/api/client/{clientId}")
-	R<SysClientDetails> getClientDetailsById(@PathVariable("clientId") String clientId, @RequestHeader(SecurityConstants.REQUEST_SOURCE) String requestSource);
+	R<SysClientDetails> getClientDetailsById(@PathVariable("clientId") String clientId,
+			@RequestHeader(SecurityConstants.REQUEST_SOURCE) String requestSource);
 
 }

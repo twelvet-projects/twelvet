@@ -35,7 +35,7 @@ public class WebSecurityConfiguration {
 		Map<String, OAuth2UserService<OAuth2UserRequest, OAuth2User>> oAuth2UserServiceMap = new HashMap<>();
 
 		http.authorizeRequests(authorizeRequests -> authorizeRequests.antMatchers("/token/*").permitAll()// 开放自定义的部分端点
-						.anyRequest().authenticated()).headers().frameOptions().sameOrigin()// 避免iframe同源无法登录
+				.anyRequest().authenticated()).headers().frameOptions().sameOrigin()// 避免iframe同源无法登录
 				// 表单登录个性化
 				.and().apply(new FormIdentityLoginConfigurer())
 				// 接入第三方登录

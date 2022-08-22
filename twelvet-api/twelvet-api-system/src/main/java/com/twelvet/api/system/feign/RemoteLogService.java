@@ -27,7 +27,8 @@ public interface RemoteLogService {
 	 * @return 结果
 	 */
 	@PostMapping("/api/operationLog")
-	R<Boolean> saveLog(@RequestBody SysOperationLog sysOperationLog, @RequestHeader(SecurityConstants.REQUEST_SOURCE) String requestSource);
+	R<Boolean> saveLog(@RequestBody SysOperationLog sysOperationLog,
+			@RequestHeader(SecurityConstants.REQUEST_SOURCE) String requestSource);
 
 	/**
 	 * 保存登录记录
@@ -35,6 +36,7 @@ public interface RemoteLogService {
 	 * @return 结果
 	 */
 	@PostMapping("/api/loginInfo")
-	R<Boolean> saveLoginInfo(@RequestBody SysLoginInfo sysLoginInfo, @RequestHeader(SecurityConstants.REQUEST_SOURCE) String requestSource);
+	R<Boolean> saveLoginInfo(@RequestBody SysLoginInfo sysLoginInfo,
+			@RequestHeader(SecurityConstants.REQUEST_SOURCE) String requestSource);
 
 }

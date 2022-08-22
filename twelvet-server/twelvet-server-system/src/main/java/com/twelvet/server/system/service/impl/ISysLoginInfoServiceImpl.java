@@ -59,10 +59,10 @@ public class ISysLoginInfoServiceImpl implements ISysLoginInfoService {
 	 */
 	@Override
 	public int insertLoginInfo(SysLoginInfo loginInfo) {
-		if($.isEmpty(loginInfo.getDeptId())){
+		if ($.isEmpty(loginInfo.getDeptId())) {
 			String userName = loginInfo.getUserName();
 			SysUser sysUser = sysUserMapper.selectUserByUserName(userName);
-			if($.isNotEmpty(sysUser)){
+			if ($.isNotEmpty(sysUser)) {
 				Long deptId = sysUser.getDeptId();
 				loginInfo.setDeptId(deptId);
 			}

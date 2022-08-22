@@ -25,6 +25,7 @@ public interface RemoteUserService {
 	 * @return R<UserInfo>
 	 */
 	@GetMapping("/api/user/info/{username}")
-	R<UserInfo> getUserInfo(@PathVariable("username") String username, @RequestHeader(SecurityConstants.REQUEST_SOURCE) String requestSource);
+	R<UserInfo> getUserInfo(@PathVariable("username") String username,
+			@RequestHeader(SecurityConstants.REQUEST_SOURCE) String requestSource);
 
 }

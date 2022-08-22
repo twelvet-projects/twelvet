@@ -86,7 +86,8 @@ public class TWTTokenEndpoint {
 			@RequestParam(OAuth2ParameterNames.SCOPE) String scope,
 			@RequestParam(OAuth2ParameterNames.STATE) String state) {
 
-		R<SysClientDetails> r = remoteOauth2ClientDetailsService.getClientDetailsById(clientId, SecurityConstants.INNER);
+		R<SysClientDetails> r = remoteOauth2ClientDetailsService.getClientDetailsById(clientId,
+				SecurityConstants.INNER);
 		SysClientDetails clientDetails = r.getData();
 		Set<String> authorizedScopes = StringUtils.commaDelimitedListToSet(clientDetails.getScope());
 		modelAndView.addObject("clientId", clientId);

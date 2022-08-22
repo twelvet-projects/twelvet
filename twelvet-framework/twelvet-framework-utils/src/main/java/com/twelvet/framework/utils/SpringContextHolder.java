@@ -169,4 +169,5 @@ public final class SpringContextHolder implements ApplicationContextAware, Dispo
 	public void destroy() {
 		SpringContextHolder.clearHolder();
 	}
+
 }

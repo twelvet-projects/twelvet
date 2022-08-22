@@ -13,7 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description:
+ * @Description: 安全配置
  */
 @EnableWebSecurity
 public class TWTResourceServerConfiguration {

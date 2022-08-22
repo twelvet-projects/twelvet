@@ -44,8 +44,7 @@ public class TWTController {
 	/**
 	 * 返回失败消息
 	 */
-	public AjaxResult error(String message)
-	{
+	public AjaxResult error(String message) {
 		return AjaxResult.error(message);
 	}
 

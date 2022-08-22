@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.server.resource.introspection.OpaqueT
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description:
+ * @Description: 注入Bean配置
  */
 @EnableConfigurationProperties(AuthIgnoreConfig.class)
 public class TWTResourceServerAutoConfiguration {

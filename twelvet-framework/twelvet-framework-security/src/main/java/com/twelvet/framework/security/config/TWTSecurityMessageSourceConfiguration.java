@@ -12,7 +12,7 @@ import java.util.Locale;
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description:
+ * @Description: 配置国际化
  */
 @ConditionalOnWebApplication(type = SERVLET)
 public class TWTSecurityMessageSourceConfiguration implements WebMvcConfigurer {

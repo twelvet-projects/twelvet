@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description:
+ * @Description: 请求令牌的抽取逻辑
  */
 public class TWTBearerTokenExtractor implements BearerTokenResolver {
 

@@ -20,22 +20,22 @@ import org.springframework.security.access.AccessDeniedException;
 @Aspect
 public class TWTSecurityInnerAspect implements Ordered {
 
-    private final static Logger log = LoggerFactory.getLogger(TWTSecurityInnerAspect.class);
+	private final static Logger log = LoggerFactory.getLogger(TWTSecurityInnerAspect.class);
 
-    @Around("@annotation(authIgnore)")
-    public Object around(ProceedingJoinPoint point, AuthIgnore authIgnore) throws Throwable {
-        String header = ServletUtils.getRequest().get().getHeader(SecurityConstants.REQUEST_SOURCE);
+	@Around("@annotation(authIgnore)")
+	public Object around(ProceedingJoinPoint point, AuthIgnore authIgnore) throws Throwable {
+		String header = ServletUtils.getRequest().get().getHeader(SecurityConstants.REQUEST_SOURCE);
 
-        if (authIgnore.value() && !StringUtils.equals(SecurityConstants.INNER, header)) {
-            log.warn("访问接口 {} 没有权限", point.getSignature().getName());
-            throw new AccessDeniedException("Access is denied");
-        }
-        return point.proceed();
-    }
+		if (authIgnore.value() && !StringUtils.equals(SecurityConstants.INNER, header)) {
+			log.warn("访问接口 {} 没有权限", point.getSignature().getName());
+			throw new AccessDeniedException("Access is denied");
+		}
+		return point.proceed();
+	}
 
-    @Override
-    public int getOrder() {
-        return Ordered.HIGHEST_PRECEDENCE + 1;
-    }
+	@Override
+	public int getOrder() {
+		return Ordered.HIGHEST_PRECEDENCE + 1;
+	}
 
 }

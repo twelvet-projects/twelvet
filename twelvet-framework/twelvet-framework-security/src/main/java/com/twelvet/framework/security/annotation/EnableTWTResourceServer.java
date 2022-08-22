@@ -15,14 +15,10 @@ import java.lang.annotation.*;
  */
 @Documented
 @Inherited
-@Target({ElementType.TYPE})
+@Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Import({
-        TWTResourceServerAutoConfiguration.class,
-        TWTResourceServerConfiguration.class,
-        FeignConfig.class
-})
+@Import({ TWTResourceServerAutoConfiguration.class, TWTResourceServerConfiguration.class, FeignConfig.class })
 public @interface EnableTWTResourceServer {
 
 }

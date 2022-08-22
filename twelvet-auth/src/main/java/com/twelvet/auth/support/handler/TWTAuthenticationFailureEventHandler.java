@@ -33,51 +33,52 @@ import java.io.IOException;
  */
 public class TWTAuthenticationFailureEventHandler implements AuthenticationFailureHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(TWTAuthenticationFailureEventHandler.class);
+	private static final Logger log = LoggerFactory.getLogger(TWTAuthenticationFailureEventHandler.class);
 
-    private final MappingJackson2HttpMessageConverter errorHttpResponseConverter = new MappingJackson2HttpMessageConverter();
+	private final MappingJackson2HttpMessageConverter errorHttpResponseConverter = new MappingJackson2HttpMessageConverter();
 
-    /**
-     * Called when an authentication attempt fails.
-     *
-     * @param request   the request during which the authentication attempt occurred.
-     * @param response  the response.
-     * @param exception the exception which was thrown to reject the authentication
-     *                  request.
-     */
-    @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-                                        AuthenticationException exception) {
-        String username = request.getParameter(OAuth2ParameterNames.USERNAME);
+	/**
+	 * Called when an authentication attempt fails.
+	 * @param request the request during which the authentication attempt occurred.
+	 * @param response the response.
+	 * @param exception the exception which was thrown to reject the authentication
+	 * request.
+	 */
+	@Override
+	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+			AuthenticationException exception) {
+		String username = request.getParameter(OAuth2ParameterNames.USERNAME);
 
-        log.error("用户：{} 登录失败，异常：{}", username, exception.getLocalizedMessage());
-        if ($.isNotEmpty(username)) {
-            SysLoginInfo sysLoginInfo = new SysLoginInfo();
-            SysLogVO sysLog = SysLogUtils.getSysLog();
-            sysLoginInfo.setUserName(username);
-            sysLoginInfo.setIpaddr(IpUtils.getIpAddr());
-            sysLoginInfo.setStatus(SecurityConstants.LOGIN_FAIL);
-            sysLoginInfo.setMsg(exception.getLocalizedMessage());
-            // 发送异步日志事件
-            sysLoginInfo.setCreateTime(DateUtils.getNowDate());
-            sysLoginInfo.setCreateBy(username);
-            sysLoginInfo.setUpdateBy(username);
-            SpringContextHolder.publishEvent(new SysLoginLogEvent(sysLoginInfo));
-        }
-        // 写出错误信息
-        try {
-            sendErrorResponse(request, response, exception);
-        } catch (IOException e) {
-            log.error("返回错误信息失败", e);
-        }
-    }
+		log.error("用户：{} 登录失败，异常：{}", username, exception.getLocalizedMessage());
+		if ($.isNotEmpty(username)) {
+			SysLoginInfo sysLoginInfo = new SysLoginInfo();
+			SysLogVO sysLog = SysLogUtils.getSysLog();
+			sysLoginInfo.setUserName(username);
+			sysLoginInfo.setIpaddr(IpUtils.getIpAddr());
+			sysLoginInfo.setStatus(SecurityConstants.LOGIN_FAIL);
+			sysLoginInfo.setMsg(exception.getLocalizedMessage());
+			// 发送异步日志事件
+			sysLoginInfo.setCreateTime(DateUtils.getNowDate());
+			sysLoginInfo.setCreateBy(username);
+			sysLoginInfo.setUpdateBy(username);
+			SpringContextHolder.publishEvent(new SysLoginLogEvent(sysLoginInfo));
+		}
+		// 写出错误信息
+		try {
+			sendErrorResponse(request, response, exception);
+		}
+		catch (IOException e) {
+			log.error("返回错误信息失败", e);
+		}
+	}
 
-    private void sendErrorResponse(HttpServletRequest request, HttpServletResponse response,
-                                   AuthenticationException exception) throws IOException {
-        OAuth2Error error = ((OAuth2AuthenticationException) exception).getError();
-        ServletServerHttpResponse httpResponse = new ServletServerHttpResponse(response);
-        httpResponse.setStatusCode(HttpStatus.OK);
-        this.errorHttpResponseConverter.write(R.fail(HttpStatus.BAD_REQUEST.value(), error.getDescription()), MediaType.APPLICATION_JSON, httpResponse);
-    }
+	private void sendErrorResponse(HttpServletRequest request, HttpServletResponse response,
+			AuthenticationException exception) throws IOException {
+		OAuth2Error error = ((OAuth2AuthenticationException) exception).getError();
+		ServletServerHttpResponse httpResponse = new ServletServerHttpResponse(response);
+		httpResponse.setStatusCode(HttpStatus.OK);
+		this.errorHttpResponseConverter.write(R.fail(HttpStatus.BAD_REQUEST.value(), error.getDescription()),
+				MediaType.APPLICATION_JSON, httpResponse);
+	}
 
 }

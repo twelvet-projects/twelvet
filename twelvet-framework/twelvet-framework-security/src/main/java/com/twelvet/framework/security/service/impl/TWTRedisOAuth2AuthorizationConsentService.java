@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description:
+ * @Description: 实现储存redis个性化
  */
 public class TWTRedisOAuth2AuthorizationConsentService implements OAuth2AuthorizationConsentService {
 

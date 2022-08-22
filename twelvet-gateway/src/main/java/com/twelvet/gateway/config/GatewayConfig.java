@@ -19,23 +19,23 @@ import java.util.TimeZone;
 @Configuration
 public class GatewayConfig {
 
-    /**
-     * 时区配置
-     */
-    @Bean
-    public Jackson2ObjectMapperBuilderCustomizer jacksonObjectMapperCustomization() {
-        return jacksonObjectMapperBuilder -> jacksonObjectMapperBuilder.timeZone(TimeZone.getDefault());
-    }
+	/**
+	 * 时区配置
+	 */
+	@Bean
+	public Jackson2ObjectMapperBuilderCustomizer jacksonObjectMapperCustomization() {
+		return jacksonObjectMapperBuilder -> jacksonObjectMapperBuilder.timeZone(TimeZone.getDefault());
+	}
 
-    @Bean
-    @Order(Ordered.HIGHEST_PRECEDENCE)
-    public SentinelFallbackHandler sentinelGatewayExceptionHandler() {
-        return new SentinelFallbackHandler();
-    }
+	@Bean
+	@Order(Ordered.HIGHEST_PRECEDENCE)
+	public SentinelFallbackHandler sentinelGatewayExceptionHandler() {
+		return new SentinelFallbackHandler();
+	}
 
-    @Order(-1)
-    public GlobalFilter sentinelGatewayFilter() {
-        return new SentinelGatewayFilter();
-    }
+	@Order(-1)
+	public GlobalFilter sentinelGatewayFilter() {
+		return new SentinelGatewayFilter();
+	}
 
 }

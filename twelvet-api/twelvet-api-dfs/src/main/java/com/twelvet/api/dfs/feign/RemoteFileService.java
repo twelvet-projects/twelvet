@@ -27,6 +27,7 @@ public interface RemoteFileService {
 	 * @return 结果
 	 */
 	@PostMapping(value = "/api/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	R<SysFile> upload(@RequestPart(value = "file") MultipartFile file, @RequestHeader(SecurityConstants.REQUEST_SOURCE) String requestSource);
+	R<SysFile> upload(@RequestPart(value = "file") MultipartFile file,
+			@RequestHeader(SecurityConstants.REQUEST_SOURCE) String requestSource);
 
 }
