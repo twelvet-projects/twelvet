@@ -55,11 +55,13 @@ public class AuthorizationServerConfiguration {
 					.accessTokenResponseHandler(new TWTAuthenticationSuccessEventHandler())
 					// 登录失败处理器
 					.errorResponseHandler(new TWTAuthenticationFailureEventHandler());
-		}).clientAuthentication(oAuth2ClientAuthenticationConfigurer -> {
+		})
+                // 个性化客户端认证
+                .clientAuthentication(oAuth2ClientAuthenticationConfigurer -> {
 			AuthenticationConverter authenticationConverter = new DelegatingAuthenticationConverter(Arrays.asList(
 					new JwtClientAssertionAuthenticationConverter(), new ClientSecretBasicAuthenticationConverter(),
 					new ClientSecretPostAuthenticationConverter(), new PublicClientAuthenticationConverter()));
-			// 个性化客户端认证
+
 			oAuth2ClientAuthenticationConfigurer.authenticationConverter(authenticationConverter)
 					// 处理客户端认证异常
 					.errorResponseHandler(new TWTAuthenticationFailureEventHandler());

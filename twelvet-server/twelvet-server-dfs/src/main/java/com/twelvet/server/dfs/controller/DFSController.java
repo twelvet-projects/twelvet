@@ -28,12 +28,6 @@ public class DFSController extends TWTController {
 	private IDFSService sysFileService;
 
 	/**
-	 * 域名或本机访问地址
-	 */
-	@Value("${fdfs.domain}")
-	public String domain;
-
-	/**
 	 * 多文件上传
 	 * @param files MultipartFile[]
 	 * @return R<SysFile>
@@ -57,8 +51,7 @@ public class DFSController extends TWTController {
 	public AjaxResult commonUpload(MultipartFile file) {
 		// 上传并返回访问地址
 		SysDfs sysDfs = sysFileService.uploadFile(file);
-		String url = domain + File.separator + sysDfs.getPath();
-		return AjaxResult.success("上传成功", url);
+		return AjaxResult.success("上传成功", sysDfs.getPath());
 	}
 
 	/**
