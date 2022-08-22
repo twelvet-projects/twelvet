@@ -8,6 +8,7 @@ import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.security.domain.LoginUser;
+import com.twelvet.framework.security.exception.UserFrozenException;
 import com.twelvet.framework.security.service.TwUserDetailsService;
 import com.twelvet.framework.utils.$;
 import org.slf4j.Logger;
@@ -71,7 +72,7 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 		SysUser sysUser = userInfo.getData().getSysUser();
 		if (sysUser.getStatus().equals("1")) {
 			log.info("{}： 用户已被冻结.", username);
-			throw new TWTException("账号已被冻结");
+			throw new UserFrozenException("账号已被冻结");
 		}
 	}
 

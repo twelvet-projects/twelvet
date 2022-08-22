@@ -63,6 +63,12 @@
             <artifactId>twelvet-framework-log</artifactId>
         </dependency>
 
+        <!-- twelvet core -->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-core</artifactId>
+        </dependency>
+
         <!--Swagger接口文档-->
         <dependency>
             <groupId>com.twelvet</groupId>
