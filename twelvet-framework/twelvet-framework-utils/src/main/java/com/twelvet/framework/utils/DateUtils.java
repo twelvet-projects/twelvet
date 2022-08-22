@@ -26,6 +26,8 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
 	public static String YYYY_MM_DD = "yyyy-MM-dd";
 
+	public static String PATH_YYYY_MM_DD = "yyyy/MM/dd";
+
 	public static String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
 
 	public static String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
@@ -84,7 +86,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	 */
 	public static String datePath() {
 		Date now = new Date();
-		return DateFormatUtils.format(now, YYYY_MM_DD);
+		return DateFormatUtils.format(now, PATH_YYYY_MM_DD);
 	}
 
 	/**

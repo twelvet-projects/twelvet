@@ -95,6 +95,7 @@ public class SysProfileController extends TWTController {
 			}
 		}
 		catch (Exception e) {
+			logger.error("上传头像失败：", e);
 			return AjaxResult.error("发生未知错误");
 		}
 		return AjaxResult.error("上传失败");

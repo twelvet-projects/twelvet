@@ -4,6 +4,7 @@ import com.twelvet.api.dfs.domain.SysDfs;
 import com.twelvet.api.dfs.domain.SysFile;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.domain.R;
+import com.twelvet.framework.security.annotation.AuthIgnore;
 import com.twelvet.framework.utils.file.FileUtils;
 import com.twelvet.server.dfs.service.IDFSService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @WebSite www.twelvet.cn
  * @Description: 文件请求处理API
  */
+@AuthIgnore
 @RestController
 @RequestMapping("/api")
 public class DFSApi extends TWTController {
