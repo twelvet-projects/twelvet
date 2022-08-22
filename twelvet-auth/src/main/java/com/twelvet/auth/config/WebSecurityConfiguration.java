@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description: 自定义获取第三方code换信息
+ * @Description: WEB安全配置
  */
 @EnableWebSecurity(debug = true)
 public class WebSecurityConfiguration {
@@ -27,7 +27,6 @@ public class WebSecurityConfiguration {
 	 * spring security 默认的安全策略
 	 * @param http security注入点
 	 * @return SecurityFilterChain
-	 * @throws Exception
 	 */
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {

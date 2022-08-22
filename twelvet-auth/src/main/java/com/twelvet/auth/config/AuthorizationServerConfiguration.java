@@ -35,7 +35,7 @@ import java.util.Arrays;
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description:
+ * @Description: 授权配置
  */
 @Configuration
 public class AuthorizationServerConfiguration {
@@ -57,8 +57,9 @@ public class AuthorizationServerConfiguration {
 					.errorResponseHandler(new TWTAuthenticationFailureEventHandler());
 		}).clientAuthentication(oAuth2ClientAuthenticationConfigurer ->
 		// 个性化客户端认证
-		oAuth2ClientAuthenticationConfigurer.errorResponseHandler(new TWTAuthenticationFailureEventHandler()))
+		oAuth2ClientAuthenticationConfigurer
 				// 处理客户端认证异常
+				.errorResponseHandler(new TWTAuthenticationFailureEventHandler()))
 				.authorizationEndpoint(authorizationEndpoint -> authorizationEndpoint
 						// 授权码端点个性化confirm页面
 						.consentPage(SecurityConstants.CUSTOM_CONSENT_PAGE_URI)));

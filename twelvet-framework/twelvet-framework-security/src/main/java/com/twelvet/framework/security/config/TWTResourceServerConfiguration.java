@@ -30,6 +30,12 @@ public class TWTResourceServerConfiguration {
 	@Autowired
 	private OpaqueTokenIntrospector customOpaqueTokenIntrospector;
 
+	/**
+	 * 配置授权，开放部分url，自定义oauth处理
+	 * @param http
+	 * @return
+	 * @throws Exception
+	 */
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE)
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
