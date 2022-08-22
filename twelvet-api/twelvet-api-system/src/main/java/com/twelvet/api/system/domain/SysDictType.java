@@ -35,7 +35,7 @@ public class SysDictType extends BaseEntity {
 	 * 状态（0正常 1停用）
 	 */
 	@Excel(name = "状态", readConverterExp = "1=正常,0=停用")
-	private Integer status;
+	private String status;
 
 	public Long getDictId() {
 		return dictId;
@@ -65,11 +65,11 @@ public class SysDictType extends BaseEntity {
 		this.dictType = dictType;
 	}
 
-	public Integer getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

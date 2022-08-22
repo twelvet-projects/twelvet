@@ -62,12 +62,12 @@ public class SysMenu extends BaseEntity {
 	/**
 	 * 显示状态（1显示 0隐藏）
 	 */
-	private Integer visible;
+	private String visible;
 
 	/**
 	 * 菜单状态（1显示 0隐藏）
 	 */
-	private Integer status;
+	private String status;
 
 	/**
 	 * 权限字符串
@@ -156,19 +156,19 @@ public class SysMenu extends BaseEntity {
 		this.menuType = menuType;
 	}
 
-	public Integer getVisible() {
+	public String getVisible() {
 		return visible;
 	}
 
-	public void setVisible(Integer visible) {
+	public void setVisible(String visible) {
 		this.visible = visible;
 	}
 
-	public Integer getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

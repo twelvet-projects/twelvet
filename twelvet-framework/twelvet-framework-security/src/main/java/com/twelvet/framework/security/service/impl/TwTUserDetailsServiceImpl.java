@@ -69,7 +69,7 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 
 		// 获取用户状态信息
 		SysUser sysUser = userInfo.getData().getSysUser();
-		if (sysUser.getStatus().equals(0)) {
+		if (sysUser.getStatus().equals("1")) {
 			log.info("{}： 用户已被冻结.", username);
 			throw new TWTException("账号已被冻结");
 		}

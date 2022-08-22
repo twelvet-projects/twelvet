@@ -12,6 +12,7 @@ import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.utils.SecurityUtils;
+import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.framework.utils.poi.ExcelUtils;
 import com.twelvet.framework.utils.$;
 import com.twelvet.server.system.service.*;
@@ -208,11 +209,13 @@ public class SysUserController extends TWTController {
 	public AjaxResult edit(@Validated @RequestBody SysUser user) {
 		iSysUserService.checkUserAllowed(user);
 		iSysUserService.checkUserDataScope(user.getUserId());
-		if (UserConstants.NOT_UNIQUE.equals(iSysUserService.checkPhoneUnique(user))) {
-			return AjaxResult.error("修改用户信息失败，手机号码已存在");
+		if (StringUtils.isNotEmpty(user.getPhonenumber())
+				&& UserConstants.NOT_UNIQUE.equals(iSysUserService.checkPhoneUnique(user))) {
+			return AjaxResult.error("修改用户'" + user.getUsername() + "'失败，手机号码已存在");
 		}
-		else if (UserConstants.NOT_UNIQUE.equals(iSysUserService.checkEmailUnique(user))) {
-			return AjaxResult.error("修改用户信息失败，邮箱账号已存在");
+		else if (StringUtils.isNotEmpty(user.getEmail())
+				&& UserConstants.NOT_UNIQUE.equals(iSysUserService.checkEmailUnique(user))) {
+			return AjaxResult.error("修改用户'" + user.getUsername() + "'失败，邮箱账号已存在");
 		}
 		user.setUpdateBy(SecurityUtils.getUsername());
 		return json(iSysUserService.updateUser(user));
