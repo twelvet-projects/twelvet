@@ -1,8 +1,8 @@
 DROP DATABASE IF EXISTS `twelvet`;
 
-CREATE DATABASE  `twelvet` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE  `twelvet` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-SET NAMES utf8;
+SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 USE `twelvet`;
