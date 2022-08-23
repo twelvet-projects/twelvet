@@ -1,5 +1,11 @@
-SET NAMES utf8mb4;
+DROP DATABASE IF EXISTS `twelvet`;
+
+CREATE DATABASE  `twelvet` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
+
+USE `twelvet`;
 
 -- ----------------------------
 -- Table structure for gen_table

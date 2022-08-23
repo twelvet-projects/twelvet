@@ -40,7 +40,6 @@ services:
         '--lower-case-table-names=1'
     ]
     environment:
-      MYSQL_DATABASE: 'twelvet'
       MYSQL_ROOT_PASSWORD: 123456
 
   twelvet-redis:
