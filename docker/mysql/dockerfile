@@ -1,7 +1,11 @@
 # 基础镜像
-FROM mysql:8.0
+FROM mysql/mysql-server:8.0.30
 # author
 MAINTAINER twelvet
+
+ENV TZ=Asia/Shanghai
+
+RUN ln -sf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # 执行sql脚本
 ADD ./db/*.sql /docker-entrypoint-initdb.d/
