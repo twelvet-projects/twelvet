@@ -8,5 +8,5 @@ ENV TZ=Asia/Shanghai
 RUN ln -sf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # 执行sql脚本
-ADD ./db/twelvet_nacos.sql /docker-entrypoint-initdb.d/
-ADD ./db/twelvet.sql /docker-entrypoint-initdb.d/
+COPY ./db/twelvet_nacos.sql /docker-entrypoint-initdb.d/
+COPY ./db/twelvet.sql /docker-entrypoint-initdb.d/
