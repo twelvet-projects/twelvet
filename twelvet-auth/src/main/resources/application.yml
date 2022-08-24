@@ -35,7 +35,7 @@ spring:
       - nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
 
 
-  # 接入第三方OAuth2登录（开放功能-dev）
+  # 接入第三方OAuth2登录（开发功能-dev）
   security:
     oauth2:
       client:
