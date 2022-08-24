@@ -50,7 +50,7 @@ spring:
             # 授权范围
             scope: user_info
             # 回调地址
-            redirect-uri: http://localhost:8888/{action}/oauth2/code/{registrationId}
+            redirect-uri: '{baseUrl}/{action}/oauth2/code/{registrationId}'
             client-name: Gitee
         provider:
           gitee:
