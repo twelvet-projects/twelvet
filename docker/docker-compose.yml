@@ -21,8 +21,8 @@ services:
         '--lower-case-table-names=1'
     ]
     environment:
-      MYSQL_ROOT_HOST: "%"
-      MYSQL_ROOT_PASSWORD: 123456
+      - MYSQL_ROOT_HOST="%"
+      - MYSQL_ROOT_PASSWORD=123456
 
   twelvet-redis:
     container_name: twelvet-redis
