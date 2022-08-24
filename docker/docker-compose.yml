@@ -3,7 +3,7 @@ services:
   twelvet-mysql:
     container_name: twelvet-mysql
     restart: always
-    image: mysql:8.0
+    image: twelvet-mysql
     build:
       context: ./mysql
     ports:
@@ -27,7 +27,7 @@ services:
   twelvet-redis:
     container_name: twelvet-redis
     restart: always
-    image: redis
+    image: twelvet-redis
     privileged: true
     build:
       context: ./redis
@@ -40,7 +40,7 @@ services:
 
   twelvet-nacos:
     container_name: twelvet-nacos
-    image: nacos/nacos-server
+    image: twelvet-nacos
     ports:
       - "8848:8848"
       - "9848:9848"
@@ -61,7 +61,7 @@ services:
   twelvet-nginx:
     container_name: twelvet-nginx
     restart: always
-    image: nginx
+    image: twelvet-nginx
     environment:
       - TZ=Asia/Shanghai
     build:
