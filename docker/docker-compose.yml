@@ -81,6 +81,8 @@ services:
   twelvet-gateway:
     container_name: twelvet-gateway
     restart: always
+    depends_on:
+      - twelvet-nacos
     environment:
       - MODE=standalone
       - TZ=Asia/Shanghai
@@ -91,66 +93,56 @@ services:
   twelvet-auth:
     container_name: twelvet-auth
     restart: always
+    depends_on:
+      - twelvet-nacos
     environment:
       - MODE=standalone
       - TZ=Asia/Shanghai
     build:
       context: ./twelvet/auth
       dockerfile: dockerfile
-    depends_on:
-      - twelvet-redis
-      - twelvet-mysql
-    links:
-      - twelvet-redis
-      - twelvet-mysql
 
   twelvet-server-system:
     container_name: twelvet-system
     restart: always
+    depends_on:
+      - twelvet-nacos
     environment:
       - MODE=standalone
       - TZ=Asia/Shanghai
     build:
       context: ./twelvet/server/system
       dockerfile: dockerfile
-    depends_on:
-      - twelvet-redis
-      - twelvet-mysql
-    links:
-      - twelvet-redis
-      - twelvet-mysql
 
   twelvet-server-job:
     container_name: twelvet-job
     restart: always
+    depends_on:
+      - twelvet-nacos
     environment:
       - MODE=standalone
       - TZ=Asia/Shanghai
     build:
       context: ./twelvet/server/job
       dockerfile: dockerfile
-    depends_on:
-      - twelvet-mysql
-    links:
-      - twelvet-mysql
 
   twelvet-server-dfs:
     container_name: twelvet-dfs
     restart: always
+    depends_on:
+      - twelvet-nacos
     environment:
       - MODE=standalone
       - TZ=Asia/Shanghai
     build:
       context: ./twelvet/server/dfs
       dockerfile: dockerfile
-    depends_on:
-      - twelvet-mysql
-    links:
-      - twelvet-mysql
 
   twelvet-visual-monitor:
     container_name: twelvet-monitor
     restart: always
+    depends_on:
+      - twelvet-nacos
     environment:
       - MODE=standalone
       - TZ=Asia/Shanghai
