@@ -89,6 +89,8 @@ services:
     build:
       context: ./twelvet/gateway
       dockerfile: dockerfile
+    ports:
+      - "8080:8080"
 
   twelvet-auth:
     container_name: twelvet-auth
