@@ -565,8 +565,8 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 101, 'admin', 'TwelveT', '00', '2471835953@qq.com', '15788888888', 0, 'http://cloud.twelvet.cn/dfs/group1/M00/00/02/CgAIDWA_LIaACVcrAAE4lCIAI8o859.jpg', '$2a$10$MBq3PvaIX9Yghhu.mm45wO8IC4WKXAUST9LvneCsQ71k/mrOdN6SO', 0, '0', '127.0.0.1', '2018-03-16 11:33:00', 'admin', '2021-02-11 11:33:00', 'admin', '2021-03-03 10:19:38', '管理员');
-INSERT INTO `sys_user` VALUES (4, 103, 'demo', 'demo', '00', '8888@qq.com', '15478978787', 2, '', '$2a$10$MBq3PvaIX9Yghhu.mm45wO8IC4WKXAUST9LvneCsQ71k/mrOdN6SO', 0, '0', '', NULL, 'admin', '2020-11-19 14:06:45', 'admin', '2022-03-21 18:03:54', NULL);
+INSERT INTO `sys_user` VALUES (1, 101, 'admin', 'TwelveT', '00', '2471835953@qq.com', '15788888888', 0, '/avatar.jpg', '$2a$10$MBq3PvaIX9Yghhu.mm45wO8IC4WKXAUST9LvneCsQ71k/mrOdN6SO', 0, '0', '127.0.0.1', '2018-03-16 11:33:00', 'admin', '2021-02-11 11:33:00', 'admin', '2021-03-03 10:19:38', '管理员');
+INSERT INTO `sys_user` VALUES (4, 103, 'demo', 'demo', '00', '8888@qq.com', '15478978787', 2, '/avatar.jpg', '$2a$10$MBq3PvaIX9Yghhu.mm45wO8IC4WKXAUST9LvneCsQ71k/mrOdN6SO', 0, '0', '', NULL, 'admin', '2020-11-19 14:06:45', 'admin', '2022-03-21 18:03:54', NULL);
 
 -- ----------------------------
 -- Table structure for sys_user_post
