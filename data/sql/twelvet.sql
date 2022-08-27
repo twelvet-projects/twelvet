@@ -345,7 +345,7 @@ INSERT INTO `sys_menu` VALUES (1076, '生成删除', 1072, 4, '', NULL, 1, 'F', 
 INSERT INTO `sys_menu` VALUES (1077, '预览代码', 1072, 5, '', NULL, 1, 'F', 0, 0, 'tool:gen:preview', '#', 'admin', '2021-03-20 23:03:22', 'admin', '2021-03-20 23:03:30', '');
 INSERT INTO `sys_menu` VALUES (1078, '生成代码', 1072, 6, '', NULL, 1, 'F', 0, 0, 'tool:gen:code', '#', 'admin', '2021-03-20 23:03:46', 'admin', '2021-03-22 11:34:47', '');
 INSERT INTO `sys_menu` VALUES (1080, 'DFS文件删除', 1071, 1, '', NULL, 1, 'F', 0, 0, 'dfs:dfs:remove', '#', 'admin', '2021-04-09 15:19:55', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (1082, '欢迎页', 1, 1, '/', '/index', 1, 'C', 0, 0, 'index', 'icon-home', 'admin', '2021-06-16 17:03:03', 'admin', '2021-08-01 12:03:45', '');
+INSERT INTO `sys_menu` VALUES (1082, '欢迎页', 0, 0, '/', '/index', 1, 'C', 0, 0, 'index', 'icon-home', 'admin', '2021-06-16 17:03:03', 'admin', '2021-08-01 12:03:45', '');
 INSERT INTO `sys_menu` VALUES (1083, '系统监控', 0, 2, '/monitor', NULL, 1, 'M', 0, 0, NULL, 'icon-monitor', 'admin', '2021-08-06 22:03:13', 'admin', '2021-08-06 22:54:33', '');
 INSERT INTO `sys_menu` VALUES (1084, '缓存监控', 1083, 1, '/monitor/redis', '/monitor/redis', 1, 'C', 0, 0, 'monitor:redis:query', 'icon-redis', 'admin', '2021-08-07 08:48:22', 'admin', '2021-08-08 21:51:33', '');
 
