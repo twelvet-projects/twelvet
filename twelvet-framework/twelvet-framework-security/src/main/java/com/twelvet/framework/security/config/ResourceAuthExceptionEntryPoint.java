@@ -38,7 +38,7 @@ public class ResourceAuthExceptionEntryPoint implements AuthenticationEntryPoint
 
 			// 针对令牌过期返回特殊的 424
 			if (authException instanceof InsufficientAuthenticationException) {
-				code = org.springframework.http.HttpStatus.FAILED_DEPENDENCY.value();
+				code = HttpStatus.HTTP_OK;
 				result.setMsg("token expire");
 			}
 
