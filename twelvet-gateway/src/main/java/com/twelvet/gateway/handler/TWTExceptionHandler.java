@@ -45,20 +45,20 @@ public class TWTExceptionHandler implements ErrorWebExceptionHandler {
 		}
 
 		// 按照异常类型进行处理
-		int code;
+		HttpStatus code;
 		String msg;
 		if (throwable instanceof NotFoundException) {
-			code = HttpStatus.SERVICE_UNAVAILABLE.value();
+			code = HttpStatus.SERVICE_UNAVAILABLE;
 			// HttpStatus.SERVICE_UNAVAILABLE.getReasonPhrase()
 			msg = "服务未开启";
 		}
 		else if (throwable instanceof ResponseStatusException) {
 			ResponseStatusException responseStatusException = (ResponseStatusException) throwable;
-			code = responseStatusException.getStatus().value();
+			code = responseStatusException.getStatus();
 			msg = responseStatusException.getStatus().getReasonPhrase();
 		}
 		else {
-			code = HttpStatus.INTERNAL_SERVER_ERROR.value();
+			code = HttpStatus.INTERNAL_SERVER_ERROR;
 			msg = HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase();
 		}
 
@@ -67,12 +67,12 @@ public class TWTExceptionHandler implements ErrorWebExceptionHandler {
 		// 设置响应头
 		response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
 		// 设置响应的状态
-		response.setStatusCode(HttpStatus.OK);
+		response.setStatusCode(code);
 
 		// 返回信息
 		return response.writeWith(Mono.fromSupplier(() -> {
 			DataBufferFactory bufferFactory = response.bufferFactory();
-			return bufferFactory.wrap(JSON.toJSONBytes(R.fail(code, msg)));
+			return bufferFactory.wrap(JSON.toJSONBytes(R.fail(code.value(), msg)));
 		}));
 
 	}
