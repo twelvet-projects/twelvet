@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react'
-import { ProColumns } from '@/components/TwelveT/ProTable/Table'
-import TWTProTable, { ActionType } from '@/components/TwelveT/ProTable/Index'
+import TWTProTable from '@/components/TwelveT/ProTable/Index'
+import type { ActionType, ProColumns } from '@ant-design/pro-components'
+import { ProTable } from '@ant-design/pro-components'
 import { DeleteOutlined, FundProjectionScreenOutlined, PlusOutlined, EditOutlined, CloseOutlined } from '@ant-design/icons'
 import { Popconfirm, Button, message, Modal, Form, Input, Space, Divider } from 'antd'
 import { FormInstance } from 'antd/lib/form'
@@ -11,16 +12,16 @@ import { list${BusinessName}, get${BusinessName}, del${BusinessName}, add${Busin
 import { system } from '@/utils/twelvet'
 import { isArray } from 'lodash'
 import UploadTWT from '@/components/TwelveT/Upload'
-import TWT from '@/setting'
+import TWT, { proTableConfigs } from '@/setting'
 import DatePickerTWT from '@/components/TwelveT/DatePicker/Index'
 import moment from 'moment'
 #if($table.sub)
-import { EditableProTable } from '@ant-design/pro-table'
+import { EditableProTable } from '@ant-design/pro-components'
 #end
 /**
  * ${functionName}模块
  */
-const ${BusinessName}: React.FC<{}> = () => {
+const ${BusinessName}: React.FC = () => {
 
     // 显示Modal
     const [modal, setModal] = useState<{ title: string, visible: boolean }>({ title: ``, visible: false })
@@ -245,7 +246,14 @@ const ${BusinessName}: React.FC<{}> = () => {
 
     return (
         <>
-            <TWTProTable
+            <ProTable
+                {...proTableConfigs}
+                pagination={{
+                    // 是否允许每页大小更改
+                    showSizeChanger: true,
+                    // 每页显示条数
+                    pageSize: state.pageSize,
+                }}
                 actionRef={acForm}
                 formRef={formRef}
                 rowKey="${pkColumn.javaField}"
