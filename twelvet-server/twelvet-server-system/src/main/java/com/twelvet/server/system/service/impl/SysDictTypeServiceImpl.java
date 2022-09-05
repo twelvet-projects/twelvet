@@ -56,7 +56,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
 	 * @return 字典数据集合信息
 	 */
 	@Override
-	@Cacheable(value = CacheConstants.SYS_DICT_KEY, key = "#dictType", unless = "#result == null")
+	@Cacheable(value = CacheConstants.SYS_DICT_KEY, key = "#dictType", unless = "#result?.size() == 0")
 	public List<SysDictData> selectDictDataByType(String dictType) {
 		return dictDataMapper.selectDictDataByType(dictType);
 	}
