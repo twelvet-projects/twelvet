@@ -346,7 +346,7 @@ const ${BusinessName}: React.FC = () => {
 
             <Modal
                 title={`${modal.title}${functionName}`}
-                visible={modal.visible}
+                open={modal.visible}
                 okText={`${modal.title}`}
                 confirmLoading={loadingModal}
                 onOk={onSave}

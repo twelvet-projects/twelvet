@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,79 +33,93 @@ import com.twelvet.framework.utils.poi.ExcelUtils;
  * @WebSite www.twelvet.cn
  * @date ${datetime}
  */
+@Api(value = "${ClassName}Controller", tags = {"${functionName}"})
 @RestController
 @RequestMapping("/${businessName}")
-public class ${ClassName}Controller extends TWTController {
-
+public class ${ClassName}Controller extends BaseController
+{
     @Autowired
     private I${ClassName}Service ${className}Service;
 
     /**
      * 查询${functionName}列表
      */
-    @PreAuthorize("@role.hasPermi('${permissionPrefix}:list')")
+    @ApiOperation(value = "查询${functionName}列表")
+    @RequiresPermissions("${permissionPrefix}:list")
     @GetMapping("/list")
-#if($table.crud || $table.sub)
-    public AjaxResult list(${ClassName} ${className}) {
-        PageUtils.startPage();
+    #if($table.crud || $table.sub)
+    public TableDataInfo list(${ClassName} ${className})
+    {
+        startPage();
         List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
-        return AjaxResult.success(PageUtils.getDataTable(list));
+        return getDataTable(list);
     }
-#elseif($table.tree)
-    public AjaxResult list(${ClassName} ${className}) {
-        List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
-        return AjaxResult.success(list);
-    }
-#end
+    #elseif($table.tree)
+        public AjaxResult list(${ClassName} ${className})
+        {
+            List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
+            return AjaxResult.success(list);
+        }
+    #end
 
     /**
      * 导出${functionName}列表
      */
-    @PreAuthorize("@role.hasPermi('${permissionPrefix}:export')")
-    @Log(service = "${functionName}", businessType = BusinessType.EXPORT)
+    @ApiOperation(value = "导出${functionName}列表")
+    @RequiresPermissions("${permissionPrefix}:export")
+    @Log(title = "${functionName}", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, ${ClassName} ${className}) {
+    public void export(HttpServletResponse response, ${ClassName} ${className})
+    {
         List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
-        ExcelUtils<${ClassName}> util = new ExcelUtils<>(${ClassName}.class);
-        util.exportExcel(response, list, "${businessName}");
+        ExcelUtil<${ClassName}> util = new ExcelUtil<${ClassName}>(${ClassName}.class);
+        util.exportExcel(response, list, "${functionName}数据");
     }
 
     /**
      * 获取${functionName}详细信息
      */
-    @PreAuthorize("@role.hasPermi('${permissionPrefix}:query')")
+    @ApiOperation(value = "获取${functionName}详细信息")
+    @RequiresPermissions("${permissionPrefix}:query")
     @GetMapping(value = "/{${pkColumn.javaField}}")
-    public AjaxResult getInfo(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField}) {
-        return AjaxResult.success(${className}Service.select${ClassName}ById(${pkColumn.javaField}));
+    public AjaxResult getInfo(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField})
+    {
+        return AjaxResult.success(${className}Service.select${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaField}));
     }
 
     /**
      * 新增${functionName}
      */
-    @PreAuthorize("@role.hasPermi('${permissionPrefix}:add')")
-    @Log(service = "${functionName}", businessType = BusinessType.INSERT)
+    @ApiOperation(value = "新增${functionName}")
+    @RequiresPermissions("${permissionPrefix}:add")
+    @Log(title = "${functionName}", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody ${ClassName} ${className}) {
-        return json(${className}Service.insert${ClassName}(${className}));
+    public AjaxResult add(@RequestBody ${ClassName} ${className})
+    {
+        return toAjax(${className}Service.insert${ClassName}(${className}));
     }
 
     /**
      * 修改${functionName}
      */
-    @PreAuthorize("@role.hasPermi('${permissionPrefix}:edit')")
-    @Log(service = "${functionName}", businessType = BusinessType.UPDATE)
+    @ApiOperation(value = "修改${functionName}")
+    @RequiresPermissions("${permissionPrefix}:edit")
+    @Log(title = "${functionName}", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody ${ClassName} ${className}) {
-        return json(${className}Service.update${ClassName}(${className}));
+    public AjaxResult edit(@RequestBody ${ClassName} ${className})
+    {
+        return toAjax(${className}Service.update${ClassName}(${className}));
     }
 
     /**
      * 删除${functionName}
      */
-    @PreAuthorize("@role.hasPermi('${permissionPrefix}:remove')")
-    @Log(service = "${functionName}", businessType = BusinessType.DELETE)
+    @ApiOperation(value = "删除${functionName}")
+    @RequiresPermissions("${permissionPrefix}:remove")
+    @Log(title = "${functionName}", businessType = BusinessType.DELETE)
     @DeleteMapping("/{${pkColumn.javaField}s}")
-    public AjaxResult remove(@PathVariable ${pkColumn.javaType}[] ${pkColumn.javaField}s) {
-        return json(${className}Service.delete${ClassName}ByIds(${pkColumn.javaField}s));
+    public AjaxResult remove(@PathVariable ${pkColumn.javaType}[] ${pkColumn.javaField}s)
+    {
+        return toAjax(${className}Service.delete${ClassName}By${pkColumn.capJavaField}s(${pkColumn.javaField}s));
     }
 }
