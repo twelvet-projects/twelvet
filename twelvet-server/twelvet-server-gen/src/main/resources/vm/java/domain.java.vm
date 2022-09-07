@@ -4,6 +4,9 @@ package ${packageName}.domain;
 import ${import};
 #end
 import com.twelvet.framework.utils.annotation.excel.Excel;
+import com.twelvet.framework.core.application.domain.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiModel;
 #if($table.crud || $table.sub)

@@ -19,10 +19,10 @@ public interface ${ClassName}Mapper {
     /**
      * 查询${functionName}
      *
-     * @param ${pkColumn.javaField} ${functionName}ID
+     * @param ${pkColumn.javaField} ${functionName}主键
      * @return ${functionName}
      */
-    ${ClassName} select${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField});
+    public ${ClassName} select${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaType} ${pkColumn.javaField});
 
     /**
      * 查询${functionName}列表
@@ -30,7 +30,7 @@ public interface ${ClassName}Mapper {
      * @param ${className} ${functionName}
      * @return ${functionName}集合
      */
-    List<${ClassName}> select${ClassName}List(${ClassName} ${className});
+    public List<${ClassName}> select${ClassName}List(${ClassName} ${className});
 
     /**
      * 新增${functionName}
@@ -38,7 +38,7 @@ public interface ${ClassName}Mapper {
      * @param ${className} ${functionName}
      * @return 结果
      */
-    int insert${ClassName}(${ClassName} ${className});
+    public int insert${ClassName}(${ClassName} ${className});
 
     /**
      * 修改${functionName}
@@ -46,48 +46,48 @@ public interface ${ClassName}Mapper {
      * @param ${className} ${functionName}
      * @return 结果
      */
-    int update${ClassName}(${ClassName} ${className});
+    public int update${ClassName}(${ClassName} ${className});
 
     /**
      * 删除${functionName}
      *
-     * @param ${pkColumn.javaField} ${functionName}ID
+     * @param ${pkColumn.javaField} ${functionName}主键
      * @return 结果
      */
-    int delete${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField});
+    public int delete${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaType} ${pkColumn.javaField});
 
     /**
      * 批量删除${functionName}
      *
-     * @param ${pkColumn.javaField}s 需要删除的数据ID
+     * @param ${pkColumn.javaField}s 需要删除的数据主键集合
      * @return 结果
      */
-    int delete${ClassName}ByIds(${pkColumn.javaType}[] ${pkColumn.javaField}s);
-    #if($table.sub)
+    public int delete${ClassName}By${pkColumn.capJavaField}s(${pkColumn.javaType}[] ${pkColumn.javaField}s);
+#if($table.sub)
 
-        /**
-         * 批量删除${subTable.functionName}
-         *
-         * @param ${pkColumn.javaField} 需要删除的数据ID
-         * @return 结果
-         */
-        int delete${subClassName}By${subTableFkClassName}s(${pkColumn.javaType}[] ${pkColumn.javaField}s);
+    /**
+     * 批量删除${subTable.functionName}
+     *
+     * @param ${pkColumn.javaField}s 需要删除的数据主键集合
+     * @return 结果
+     */
+    public int delete${subClassName}By${subTableFkClassName}s(${pkColumn.javaType}[] ${pkColumn.javaField}s);
 
-        /**
-         * 批量新增${subTable.functionName}
-         *
-         * @param ${subclassName}List ${subTable.functionName}列表
-         * @return 结果
-         */
-        int batch${subClassName}(List<${subClassName}> ${subclassName}List);
+    /**
+     * 批量新增${subTable.functionName}
+     *
+     * @param ${subclassName}List ${subTable.functionName}列表
+     * @return 结果
+     */
+    public int batch${subClassName}(List<${subClassName}> ${subclassName}List);
 
 
-        /**
-         * 通过${functionName}ID删除${subTable.functionName}信息
-         *
-         * @param ${pkColumn.javaField} ID
-         * @return 结果
-         */
-        int delete${subClassName}By${subTableFkClassName}(${pkColumn.javaType} ${pkColumn.javaField});
+    /**
+     * 通过${functionName}主键删除${subTable.functionName}信息
+     *
+     * @param ${pkColumn.javaField} ${functionName}ID
+     * @return 结果
+     */
+    public int delete${subClassName}By${subTableFkClassName}(${pkColumn.javaType} ${pkColumn.javaField});
 #end
 }
