@@ -38,7 +38,7 @@ public class SysDictDataController extends TWTController {
 	/**
 	 * 分页查询数据字典
 	 * @param sysDictData SysDictData
-	 * @return AjaxResult
+	 * @return JsonResult<TableDataInfo>
 	 */
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:dict:list')")
@@ -65,7 +65,7 @@ public class SysDictDataController extends TWTController {
 	/**
 	 * 查询字典数据详细
 	 * @param dictCode 数据字典Code
-	 * @return AjaxResult
+	 * @return JsonResult<SysDictData>
 	 */
 	@GetMapping(value = "/{dictCode}")
 	@PreAuthorize("@role.hasPermi('system:dict:query')")
@@ -76,7 +76,7 @@ public class SysDictDataController extends TWTController {
 	/**
 	 * 根据字典类型查询字典数据信息
 	 * @param dictType 字典类型
-	 * @return AjaxResult
+	 * @return JsonResult<List<SysDictData>>
 	 */
 	@GetMapping(value = "/type/{dictType}")
 	public JsonResult<List<SysDictData>> dictType(@PathVariable String dictType) {
@@ -86,7 +86,7 @@ public class SysDictDataController extends TWTController {
 	/**
 	 * 新增字典类型
 	 * @param sysDictData SysDictData
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@Log(service = "字典数据", businessType = BusinessType.INSERT)
 	@PostMapping
@@ -99,7 +99,7 @@ public class SysDictDataController extends TWTController {
 	/**
 	 * 修改保存字典类型
 	 * @param sysDictData SysDictData
-	 * @return JsonResult
+	 * @return JsonResult<String>
 	 */
 	@Log(service = "字典数据", businessType = BusinessType.UPDATE)
 	@PutMapping
@@ -112,7 +112,7 @@ public class SysDictDataController extends TWTController {
 	/**
 	 * 删除字典类型
 	 * @param dictCodes 字典类型Codes
-	 * @return JsonResult
+	 * @return JsonResult<String>
 	 */
 	@Log(service = "字典类型", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{dictCodes}")

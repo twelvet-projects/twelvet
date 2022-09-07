@@ -21,6 +21,7 @@ import ${packageName}.domain.${ClassName};
 import ${packageName}.service.I${ClassName}Service;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.core.application.domain.JsonResult;
 import com.twelvet.framework.utils.poi.ExcelUtils;
 #if($table.crud || $table.sub)
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
@@ -49,14 +50,14 @@ public class ${ClassName}Controller extends TWTController
     @PreAuthorize("@role.hasPermi('{permissionPrefix}:list')")
     @GetMapping("/list")
     #if($table.crud || $table.sub)
-    public AjaxResult list(${ClassName} ${className})
+    public JsonResult<TableDataInfo> list(${ClassName} ${className})
     {
         PageUtils.startPage();
         List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
         return AjaxResult.success(PageUtils.getDataTable(list));
     }
     #elseif($table.tree)
-        public AjaxResult list(${ClassName} ${className})
+        public JsonResult<List<${ClassName}>> list(${ClassName} ${className})
         {
             List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
             return AjaxResult.success(list);
@@ -83,9 +84,9 @@ public class ${ClassName}Controller extends TWTController
     @ApiOperation(value = "获取${functionName}详细信息")
     @PreAuthorize("@role.hasPermi('{permissionPrefix}:query')")
     @GetMapping(value = "/{${pkColumn.javaField}}")
-    public AjaxResult getInfo(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField})
+    public JsonResult<${pkColumn.javaType}> getInfo(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField})
     {
-        return AjaxResult.success(${className}Service.select${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaField}));
+        return JsonResult.success(${className}Service.select${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaField}));
     }
 
     /**
@@ -95,9 +96,9 @@ public class ${ClassName}Controller extends TWTController
     @PreAuthorize("@role.hasPermi('${permissionPrefix}:add')")
     @Log(service = "${functionName}", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody ${ClassName} ${className})
+    public JsonResult<String> add(@RequestBody ${ClassName} ${className})
     {
-        return json(${className}Service.insert${ClassName}(${className}));
+        return JsonResult(${className}Service.insert${ClassName}(${className}));
     }
 
     /**
@@ -107,7 +108,7 @@ public class ${ClassName}Controller extends TWTController
     @PreAuthorize("@role.hasPermi('${permissionPrefix}:edit')")
     @Log(service = "${functionName}", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody ${ClassName} ${className})
+    public JsonResult<String> edit(@RequestBody ${ClassName} ${className})
     {
         return json(${className}Service.update${ClassName}(${className}));
     }
@@ -119,7 +120,7 @@ public class ${ClassName}Controller extends TWTController
     @PreAuthorize("@role.hasPermi('${permissionPrefix}:remove')")
     @Log(service = "${functionName}", businessType = BusinessType.DELETE)
     @DeleteMapping("/{${pkColumn.javaField}s}")
-    public AjaxResult remove(@PathVariable ${pkColumn.javaType}[] ${pkColumn.javaField}s)
+    public JsonResult<String> remove(@PathVariable ${pkColumn.javaType}[] ${pkColumn.javaField}s)
     {
         return json(${className}Service.delete${ClassName}By${pkColumn.capJavaField}s(${pkColumn.javaField}s));
     }

@@ -24,7 +24,7 @@ public class SysOperationLogApi extends TWTController {
 	/**
 	 * 新增操作日志
 	 * @param operationLog SysOperationLog
-	 * @return AjaxResult
+	 * @return JsonResult
 	 */
 	@AuthIgnore
 	@PostMapping

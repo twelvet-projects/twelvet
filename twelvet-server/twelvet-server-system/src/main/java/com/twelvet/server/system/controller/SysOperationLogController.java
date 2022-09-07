@@ -32,7 +32,7 @@ public class SysOperationLogController extends TWTController {
 	/**
 	 * 移除指定ID日志
 	 * @param operationLogIds Long[]
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@Log(service = "操作日志", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{operationLogIds}")
@@ -43,7 +43,7 @@ public class SysOperationLogController extends TWTController {
 
 	/**
 	 * 清空初始化操作日志
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@Log(service = "操作日志", businessType = BusinessType.CLEAN)
 	@DeleteMapping("/clean")
@@ -56,7 +56,7 @@ public class SysOperationLogController extends TWTController {
 	/**
 	 * 分页查询
 	 * @param operationLog SysOperationLog
-	 * @return AjaxResult
+	 * @return JsonResult<TableDataInfo>
 	 */
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:operlog:list')")

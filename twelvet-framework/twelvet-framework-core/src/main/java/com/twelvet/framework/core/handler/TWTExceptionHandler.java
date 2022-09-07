@@ -27,7 +27,7 @@ public class TWTExceptionHandler {
 	/**
 	 * 全局异常
 	 * @param e Exception
-	 * @return AjaxResult
+	 * @return JsonResult
 	 */
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -39,7 +39,7 @@ public class TWTExceptionHandler {
 	/**
 	 * 基础异常
 	 * @param e TWTException
-	 * @return AjaxResult
+	 * @return JsonResult
 	 */
 	@ExceptionHandler(TWTException.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -61,7 +61,7 @@ public class TWTExceptionHandler {
 
 	/**
 	 * validation Exception 参数绑定异常
-	 * @return AjaxResult
+	 * @return JsonResult
 	 */
 	@ExceptionHandler({ MethodArgumentNotValidException.class })
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -73,7 +73,7 @@ public class TWTExceptionHandler {
 
 	/**
 	 * validation Exception (以form-data形式传参) 参数绑定异常
-	 * @return AjaxResult
+	 * @return JsonResult
 	 */
 	@ExceptionHandler({ BindException.class })
 	@ResponseStatus(HttpStatus.BAD_REQUEST)

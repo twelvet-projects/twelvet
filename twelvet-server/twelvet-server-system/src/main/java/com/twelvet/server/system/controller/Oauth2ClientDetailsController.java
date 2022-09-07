@@ -32,7 +32,7 @@ public class Oauth2ClientDetailsController extends TWTController {
 	/**
 	 * 查询终端配置列表
 	 * @param sysClientDetails SysClientDetails
-	 * @return JsonResult
+	 * @return JsonResult<TableDataInfo>
 	 */
 	@PreAuthorize("@role.hasPermi('system:client:list')")
 	@GetMapping("/pageQuery")
@@ -45,7 +45,7 @@ public class Oauth2ClientDetailsController extends TWTController {
 	/**
 	 * 获取终端配置详细信息
 	 * @param clientId 终端ID
-	 * @return JsonResult
+	 * @return JsonResult<SysClientDetails>
 	 */
 	@PreAuthorize("@role.hasPermi('system:client:query')")
 	@GetMapping(value = "/{clientId}")
@@ -56,7 +56,7 @@ public class Oauth2ClientDetailsController extends TWTController {
 	/**
 	 * 新增终端配置
 	 * @param sysClientDetails SysClientDetails
-	 * @return JsonResult
+	 * @return JsonResult<String>
 	 */
 	@PreAuthorize("@role.hasPermi('system:client:insert')")
 	@Log(service = "终端配置", businessType = BusinessType.INSERT)
@@ -73,7 +73,7 @@ public class Oauth2ClientDetailsController extends TWTController {
 	/**
 	 * 修改终端配置
 	 * @param sysClientDetails sysClientDetails
-	 * @return JsonResult
+	 * @return JsonResult<String>
 	 */
 	@PreAuthorize("@role.hasPermi('system:client:update')")
 	@Log(service = "终端配置", businessType = BusinessType.UPDATE)

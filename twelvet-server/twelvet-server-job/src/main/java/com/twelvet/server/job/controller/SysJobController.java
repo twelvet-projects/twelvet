@@ -39,7 +39,7 @@ public class SysJobController extends TWTController {
 	/**
 	 * 查询定时任务列表
 	 * @param sysJob SysJob
-	 * @return AjaxResult
+	 * @return JsonResult<TableDataInfo>
 	 */
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('monitor:job:list')")
@@ -66,7 +66,7 @@ public class SysJobController extends TWTController {
 	/**
 	 * 获取定时任务详细信息
 	 * @param jobId 定时任务ID
-	 * @return AjaxResult
+	 * @return JsonResult<SysJob>
 	 */
 	@GetMapping(value = "/{jobId}")
 	@PreAuthorize("@role.hasPermi('monitor:job:query')")
@@ -77,7 +77,7 @@ public class SysJobController extends TWTController {
 	/**
 	 * 新增定时任务
 	 * @param sysJob SysJob
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 * @throws SchedulerException 表达式异常
 	 * @throws TaskException 任务异常
 	 */
@@ -113,7 +113,7 @@ public class SysJobController extends TWTController {
 	/**
 	 * 修改定时任务
 	 * @param sysJob SysJob
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 * @throws SchedulerException 表达式异常
 	 * @throws TaskException 任务异常
 	 */
@@ -148,7 +148,7 @@ public class SysJobController extends TWTController {
 	/**
 	 * 定时任务状态修改
 	 * @param job SysJob
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 * @throws SchedulerException 表达式异常
 	 */
 	@Log(service = "定时任务", businessType = BusinessType.UPDATE)
@@ -163,7 +163,7 @@ public class SysJobController extends TWTController {
 	/**
 	 * 定时任务立即执行一次
 	 * @param job SysJob
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 * @throws SchedulerException 表达式异常
 	 */
 	@Log(service = "定时任务", businessType = BusinessType.UPDATE)
@@ -176,7 +176,7 @@ public class SysJobController extends TWTController {
 	/**
 	 * 删除定时任务
 	 * @param jobIds 定时任务id数组
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 * @throws SchedulerException 表达式异常
 	 */
 	@Log(service = "定时任务", businessType = BusinessType.DELETE)

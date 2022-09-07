@@ -35,7 +35,7 @@ public class SysRoleController extends TWTController {
 	/**
 	 * 角色信息分页查询
 	 * @param role SysRole
-	 * @return AjaxResult
+	 * @return JsonResult<TableDataInfo>
 	 */
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:role:list')")
@@ -62,7 +62,7 @@ public class SysRoleController extends TWTController {
 	/**
 	 * 根据角色编号获取详细信息
 	 * @param roleId 角色ID
-	 * @return AjaxResult
+	 * @return JsonResult<SysRole>
 	 */
 	@GetMapping("/{roleId}")
 	@PreAuthorize("@role.hasPermi('system:role:query')")
@@ -74,7 +74,7 @@ public class SysRoleController extends TWTController {
 	/**
 	 * 新增角色
 	 * @param role SysRole
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@Log(service = "角色管理", businessType = BusinessType.INSERT)
 	@PostMapping
@@ -93,7 +93,7 @@ public class SysRoleController extends TWTController {
 	/**
 	 * 修改保存角色
 	 * @param role SysRole
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@Log(service = "角色管理", businessType = BusinessType.UPDATE)
 	@PutMapping
@@ -114,7 +114,7 @@ public class SysRoleController extends TWTController {
 	/**
 	 * 状态修改
 	 * @param role SysRole
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@Log(service = "角色管理", businessType = BusinessType.UPDATE)
 	@PutMapping("/changeStatus")

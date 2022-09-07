@@ -30,7 +30,7 @@ public class DFSController extends TWTController {
 	/**
 	 * 多文件上传
 	 * @param files MultipartFile[]
-	 * @return R<SysFile>
+	 * @return JsonResult<List<SysDfs>>
 	 */
 	@Log(service = "多文件上传", businessType = BusinessType.IMPORT)
 	@PostMapping("/batchUpload")
@@ -44,7 +44,7 @@ public class DFSController extends TWTController {
 	/**
 	 * 单文件上传
 	 * @param file MultipartFile
-	 * @return R<SysFile>
+	 * @return JsonResult<String>
 	 */
 	@PostMapping("/commonUpload")
 	@Log(service = "单文件上传", businessType = BusinessType.IMPORT)
@@ -57,7 +57,7 @@ public class DFSController extends TWTController {
 	/**
 	 * 删除文件
 	 * @param fileIds 文件地址
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@PreAuthorize("@role.hasPermi('dfs:dfs:remove')")
 	@Log(service = "删除文件", businessType = BusinessType.DELETE)
@@ -70,7 +70,7 @@ public class DFSController extends TWTController {
 	/**
 	 * 分页查询
 	 * @param sysDfs SysDfs
-	 * @return AjaxResult
+	 * @return JsonResult<TableDataInfo>
 	 */
 	@PreAuthorize("@role.hasPermi('dfs:dfs:list')")
 	@GetMapping("/pageQuery")

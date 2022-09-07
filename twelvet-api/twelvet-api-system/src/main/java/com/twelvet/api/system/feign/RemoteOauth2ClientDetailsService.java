@@ -24,7 +24,7 @@ public interface RemoteOauth2ClientDetailsService {
 	/**
 	 * 获取终端配置详细信息
 	 * @param clientId 终端ID
-	 * @return AjaxResult
+	 * @return JsonResult
 	 */
 	@GetMapping(value = "/api/client/{clientId}")
 	R<SysClientDetails> getClientDetailsById(@PathVariable("clientId") String clientId,

@@ -37,7 +37,7 @@ public class SysProfileController extends TWTController {
 
 	/**
 	 * 个人信息
-	 * @return AjaxResult
+	 * @return JsonResult<UserInfoVo>
 	 */
 	@GetMapping
 	public JsonResult<UserInfoVo> profile() {
@@ -71,7 +71,7 @@ public class SysProfileController extends TWTController {
 
 	/**
 	 * 修改用户头像
-	 * @param file
+	 * @param file MultipartFile
 	 * @return 上传信息
 	 */
 	@Log(service = "用户头像", businessType = BusinessType.UPDATE)

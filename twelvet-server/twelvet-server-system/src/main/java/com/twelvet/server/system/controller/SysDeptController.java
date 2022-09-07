@@ -36,7 +36,7 @@ public class SysDeptController extends TWTController {
 	/**
 	 * 获取部门列表
 	 * @param dept SysDept
-	 * @return JsonResult
+	 * @return JsonResult<List<SysDept>>
 	 */
 	@GetMapping("/list")
 	@PreAuthorize("@role.hasPermi('system:dept:list')")
@@ -48,7 +48,7 @@ public class SysDeptController extends TWTController {
 	/**
 	 * 查询部门列表（排除节点）
 	 * @param deptId 部门ID
-	 * @return JsonResult
+	 * @return JsonResult<List<SysDept>>
 	 */
 	@GetMapping("/list/exclude/{deptId}")
 	@PreAuthorize("@role.hasPermi('system:dept:query')")
@@ -62,7 +62,7 @@ public class SysDeptController extends TWTController {
 	/**
 	 * 根据部门编号获取详细信息
 	 * @param deptId 部门ID
-	 * @return JsonResult
+	 * @return JsonResult<SysDept>
 	 */
 	@GetMapping(value = "/{deptId}")
 	@PreAuthorize("@role.hasPermi('system:dept:query')")
@@ -74,7 +74,7 @@ public class SysDeptController extends TWTController {
 	/**
 	 * 获取部门下拉树列表
 	 * @param dept SysDept
-	 * @return JsonResult
+	 * @return JsonResult<List<TreeSelect>>
 	 */
 	@GetMapping("/treeSelect")
 	public JsonResult<List<TreeSelect>> treeSelect(SysDept dept) {
@@ -85,7 +85,7 @@ public class SysDeptController extends TWTController {
 	/**
 	 * 加载对应角色部门列表树
 	 * @param roleId 部门ID
-	 * @return JsonResult
+	 * @return AjaxResult
 	 */
 	@GetMapping(value = "/roleDeptTreeSelect/{roleId}")
 	public AjaxResult roleDeptTreeSelect(@PathVariable("roleId") Long roleId) {
@@ -100,7 +100,7 @@ public class SysDeptController extends TWTController {
 	/**
 	 * 新增部门
 	 * @param dept SysDept
-	 * @return JsonResult
+	 * @return JsonResult<String>
 	 */
 	@Log(service = "部门管理", businessType = BusinessType.INSERT)
 	@PostMapping
@@ -116,7 +116,7 @@ public class SysDeptController extends TWTController {
 	/**
 	 * 修改部门
 	 * @param dept SysDept
-	 * @return JsonResult
+	 * @return JsonResult<String>
 	 */
 	@Log(service = "部门管理", businessType = BusinessType.UPDATE)
 	@PutMapping
@@ -141,7 +141,7 @@ public class SysDeptController extends TWTController {
 	/**
 	 * 删除部门
 	 * @param deptId 部门ID
-	 * @return JsonResult
+	 * @return JsonResult<String>
 	 */
 	@Log(service = "部门管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{deptId}")

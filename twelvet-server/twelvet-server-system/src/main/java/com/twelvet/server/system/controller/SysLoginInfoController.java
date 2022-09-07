@@ -55,7 +55,7 @@ public class SysLoginInfoController extends TWTController {
 
 	/**
 	 * 清空登录日志
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@Log(service = "登陆日志", businessType = BusinessType.CLEAN)
 	@DeleteMapping("/clean")

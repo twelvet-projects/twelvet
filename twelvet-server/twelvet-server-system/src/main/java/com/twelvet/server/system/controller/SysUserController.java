@@ -62,7 +62,7 @@ public class SysUserController extends TWTController {
 	/**
 	 * 获取用户列表
 	 * @param user SysUser
-	 * @return AjaxResult
+	 * @return JsonResult<TableDataInfo>
 	 */
 	@ApiOperationSupport(author = "twelvet")
 	@ApiOperation(value = "获取用户列表")
@@ -94,7 +94,7 @@ public class SysUserController extends TWTController {
 	 * 用户数据导入
 	 * @param files MultipartFile[]
 	 * @param cover 是否允许覆盖
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 * @throws Exception Exception
 	 */
 	@ApiOperationSupport(author = "twelvet")
@@ -176,7 +176,7 @@ public class SysUserController extends TWTController {
 	/**
 	 * 新增用户
 	 * @param user SysUser
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@ApiOperationSupport(author = "twelvet")
 	@ApiOperation(value = "新增用户")
@@ -201,7 +201,7 @@ public class SysUserController extends TWTController {
 	/**
 	 * 修改用户
 	 * @param user SysUser
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@ApiOperationSupport(author = "twelvet")
 	@ApiOperation(value = "修改用户")
@@ -226,7 +226,7 @@ public class SysUserController extends TWTController {
 	/**
 	 * 删除用户
 	 * @param userIds Long[]
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@ApiOperationSupport(author = "twelvet")
 	@ApiOperation(value = "删除用户")
@@ -240,7 +240,7 @@ public class SysUserController extends TWTController {
 	/**
 	 * 重置密码
 	 * @param user SysUser
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@ApiOperationSupport(author = "twelvet")
 	@ApiOperation(value = "重置密码")
@@ -258,7 +258,7 @@ public class SysUserController extends TWTController {
 	/**
 	 * 用户状态修改
 	 * @param user SysUser
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@ApiOperationSupport(author = "twelvet")
 	@ApiOperation(value = "用户状态修改")

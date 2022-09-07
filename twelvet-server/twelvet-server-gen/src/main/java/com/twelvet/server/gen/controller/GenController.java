@@ -42,7 +42,7 @@ public class GenController extends TWTController {
 	/**
 	 * 查询代码生成列表
 	 * @param genTable GenTable
-	 * @return AjaxResult
+	 * @return JsonResult<TableDataInfo>
 	 */
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('tool:gen:list')")
@@ -72,7 +72,7 @@ public class GenController extends TWTController {
 
 	/**
 	 * 查询数据库列表
-	 * @return AjaxResult
+	 * @return JsonResult<TableDataInfo>
 	 */
 	@PreAuthorize("@role.hasPermi('tool:gen:list')")
 	@GetMapping("/db/list")
@@ -85,7 +85,7 @@ public class GenController extends TWTController {
 	/**
 	 * 查询数据表字段列表
 	 * @param tableId Long
-	 * @return AjaxResult
+	 * @return JsonResult<TableDataInfo>
 	 */
 	@GetMapping(value = "/column/{tableId}")
 	public JsonResult<TableDataInfo> columnList(@PathVariable Long tableId) {
@@ -99,7 +99,7 @@ public class GenController extends TWTController {
 	/**
 	 * 导入表结构（保存）
 	 * @param tables String
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@PreAuthorize("@role.hasPermi('tool:gen:list')")
 	@Log(service = "代码生成", businessType = BusinessType.IMPORT)
@@ -115,7 +115,7 @@ public class GenController extends TWTController {
 	/**
 	 * 修改保存代码生成业务
 	 * @param genTable GenTable
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@PreAuthorize("@role.hasPermi('tool:gen:edit')")
 	@Log(service = "代码生成", businessType = BusinessType.UPDATE)
@@ -129,7 +129,7 @@ public class GenController extends TWTController {
 	/**
 	 * 删除代码生成
 	 * @param tableIds Long[]
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@PreAuthorize("@role.hasPermi('tool:gen:remove')")
 	@Log(service = "代码生成", businessType = BusinessType.DELETE)
@@ -168,7 +168,7 @@ public class GenController extends TWTController {
 	/**
 	 * 生成代码（自定义路径）
 	 * @param tableName String
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@PreAuthorize("@role.hasPermi('tool:gen:code')")
 	@Log(service = "代码生成", businessType = BusinessType.GENCODE)
@@ -181,7 +181,7 @@ public class GenController extends TWTController {
 	/**
 	 * 同步数据库
 	 * @param tableName String
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@PreAuthorize("@role.hasPermi('tool:gen:edit')")
 	@Log(service = "代码生成", businessType = BusinessType.UPDATE)

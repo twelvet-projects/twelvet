@@ -32,7 +32,7 @@ public class SysJobLogController extends TWTController {
 	/**
 	 * 查询定时任务调度日志列表
 	 * @param sysJobLog SysJobLog
-	 * @return AjaxResult
+	 * @return JsonResult
 	 */
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:job:list')")
@@ -59,7 +59,7 @@ public class SysJobLogController extends TWTController {
 	/**
 	 * 根据调度编号获取详细信息
 	 * @param jobLogId id
-	 * @return AjaxResult
+	 * @return JsonResult
 	 */
 	@GetMapping("/{configId}")
 	@PreAuthorize("@role.hasPermi('system:job:query')")
@@ -70,7 +70,7 @@ public class SysJobLogController extends TWTController {
 	/**
 	 * 删除定时任务调度日志
 	 * @param jobLogIds 数组id
-	 * @return AjaxResult
+	 * @return JsonResult
 	 */
 	@Log(service = "定时任务调度日志", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{jobLogIds}")
@@ -81,7 +81,7 @@ public class SysJobLogController extends TWTController {
 
 	/**
 	 * 清空定时任务调度日志
-	 * @return AjaxResult
+	 * @return JsonResult
 	 */
 	@Log(service = "调度日志", businessType = BusinessType.CLEAN)
 	@DeleteMapping("/clean")

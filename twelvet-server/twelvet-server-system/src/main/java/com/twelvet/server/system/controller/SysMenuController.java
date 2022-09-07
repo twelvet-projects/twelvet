@@ -74,7 +74,7 @@ public class SysMenuController extends TWTController {
      * 修改菜单
      *
      * @param menu SysMenu
-     * @return AjaxResult
+     * @return JsonResult<String>
      */
     @Log(service = "菜单管理", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -118,7 +118,7 @@ public class SysMenuController extends TWTController {
      * 加载对应角色菜单列表树
      *
      * @param roleId 角色ID
-     * @return AjaxResult
+     * @return JsonResult
      */
     @GetMapping(value = "/roleMenuTreeSelect/{roleId}")
     @PreAuthorize("@role.hasPermi('system:menu:list')")
@@ -138,7 +138,7 @@ public class SysMenuController extends TWTController {
      * 获取菜单下拉树列表
      *
      * @param menu SysMenu
-     * @return AjaxResult
+     * @return JsonResult<List<TreeSelect>>
      */
     @GetMapping("/treeSelect")
     @PreAuthorize("@role.hasPermi('system:menu:list')")

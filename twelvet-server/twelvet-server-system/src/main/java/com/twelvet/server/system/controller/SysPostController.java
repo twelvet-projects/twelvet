@@ -35,7 +35,7 @@ public class SysPostController extends TWTController {
 	/**
 	 * 新增岗位
 	 * @param sysPost SysPost
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@Log(service = "岗位管理", businessType = BusinessType.INSERT)
 	@PostMapping
@@ -54,7 +54,7 @@ public class SysPostController extends TWTController {
 	/**
 	 * 删除岗位
 	 * @param postIds 唯一ID数组
-	 * @return JsonResult
+	 * @return JsonResult<String>
 	 */
 	@Log(service = "岗位管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{postIds}")
@@ -66,7 +66,7 @@ public class SysPostController extends TWTController {
 	/**
 	 * 修改岗位
 	 * @param sysPost SysPost
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@Log(service = "岗位管理", businessType = BusinessType.UPDATE)
 	@PutMapping
@@ -85,7 +85,7 @@ public class SysPostController extends TWTController {
 	/**
 	 * 获取岗位列表
 	 * @param post SysPost
-	 * @return AjaxResult
+	 * @return JsonResult<TableDataInfo>
 	 */
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:post:list')")
@@ -98,7 +98,7 @@ public class SysPostController extends TWTController {
 	/**
 	 * 根据岗位编号获取详细信息
 	 * @param postId 唯一ID
-	 * @return AjaxResult
+	 * @return JsonResult<SysPost>
 	 */
 	@GetMapping("/{postId}")
 	@PreAuthorize("@role.hasPermi('system:post:query')")
@@ -108,7 +108,7 @@ public class SysPostController extends TWTController {
 
 	/**
 	 * 获取岗位选择框列表
-	 * @return AjaxResult
+	 * @return JsonResult<List<SysPost>>
 	 */
 	@GetMapping("/optionSelect")
 	public JsonResult<List<SysPost>> optionSelect() {
