@@ -409,7 +409,7 @@ public class GenTableServiceImpl implements IGenTableService {
      */
     public void setTableFromOptions(GenTable genTable) {
         Map<String, String> paramsObj = JacksonUtils.readValue(genTable.getOptions(), Map.class);
-        if ($.isNotEmpty(paramsObj) && !paramsObj.isEmpty()) {
+        if ($.isNotEmpty(paramsObj)) {
             String treeCode = paramsObj.get(GenConstants.TREE_CODE);
             String treeParentCode = paramsObj.get(GenConstants.TREE_PARENT_CODE);
             String treeName = paramsObj.get(GenConstants.TREE_NAME);
