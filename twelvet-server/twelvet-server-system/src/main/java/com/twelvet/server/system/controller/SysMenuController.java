@@ -30,123 +30,116 @@ import java.util.Map;
 @RequestMapping("/menu")
 public class SysMenuController extends TWTController {
 
-    @Autowired
-    private ISysMenuService iSysMenuService;
+	@Autowired
+	private ISysMenuService iSysMenuService;
 
-    /**
-     * 新增菜单
-     *
-     * @param menu SysMenu
-     * @return 操作信息
-     */
-    @Log(service = "菜单管理", businessType = BusinessType.INSERT)
-    @PostMapping
-    @PreAuthorize("@role.hasPermi('system:menu:insert')")
-    public JsonResult<String> insert(@Validated @RequestBody SysMenu menu) {
-        if (UserConstants.NOT_UNIQUE.equals(iSysMenuService.checkMenuNameUnique(menu))) {
-            throw new TWTException("新增菜单【" + menu.getMenuName() + "】失败，菜单名称已存在");
-        }
-        // 加入当前操作人员ID
-        menu.setCreateBy(SecurityUtils.getUsername());
-        return json(iSysMenuService.insertMenu(menu));
-    }
+	/**
+	 * 新增菜单
+	 * @param menu SysMenu
+	 * @return 操作信息
+	 */
+	@Log(service = "菜单管理", businessType = BusinessType.INSERT)
+	@PostMapping
+	@PreAuthorize("@role.hasPermi('system:menu:insert')")
+	public JsonResult<String> insert(@Validated @RequestBody SysMenu menu) {
+		if (UserConstants.NOT_UNIQUE.equals(iSysMenuService.checkMenuNameUnique(menu))) {
+			throw new TWTException("新增菜单【" + menu.getMenuName() + "】失败，菜单名称已存在");
+		}
+		// 加入当前操作人员ID
+		menu.setCreateBy(SecurityUtils.getUsername());
+		return json(iSysMenuService.insertMenu(menu));
+	}
 
-    /**
-     * 删除菜单
-     *
-     * @param menuId menuId
-     * @return 操作提示
-     */
-    @Log(service = "菜单管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{menuId}")
-    @PreAuthorize("@role.hasPermi('system:menu:remove')")
-    public JsonResult<String> remove(@PathVariable("menuId") Long menuId) {
-        if (iSysMenuService.hasChildByMenuId(menuId)) {
-            return JsonResult.error("存在子菜单,不允许删除");
-        }
-        if (iSysMenuService.checkMenuExistRole(menuId)) {
-            return JsonResult.error("菜单已分配角色,不允许删除");
-        }
-        return json(iSysMenuService.deleteMenuById(menuId));
-    }
+	/**
+	 * 删除菜单
+	 * @param menuId menuId
+	 * @return 操作提示
+	 */
+	@Log(service = "菜单管理", businessType = BusinessType.DELETE)
+	@DeleteMapping("/{menuId}")
+	@PreAuthorize("@role.hasPermi('system:menu:remove')")
+	public JsonResult<String> remove(@PathVariable("menuId") Long menuId) {
+		if (iSysMenuService.hasChildByMenuId(menuId)) {
+			return JsonResult.error("存在子菜单,不允许删除");
+		}
+		if (iSysMenuService.checkMenuExistRole(menuId)) {
+			return JsonResult.error("菜单已分配角色,不允许删除");
+		}
+		return json(iSysMenuService.deleteMenuById(menuId));
+	}
 
-    /**
-     * 修改菜单
-     *
-     * @param menu SysMenu
-     * @return JsonResult<String>
-     */
-    @Log(service = "菜单管理", businessType = BusinessType.UPDATE)
-    @PutMapping
-    @PreAuthorize("@role.hasPermi('system:menu:update')")
-    public JsonResult<String> update(@Validated @RequestBody SysMenu menu) {
-        if (UserConstants.NOT_UNIQUE.equals(iSysMenuService.checkMenuNameUnique(menu))) {
-            throw new TWTException("新增菜单【" + menu.getMenuName() + "】失败，菜单名称已存在");
-        }
-        menu.setUpdateBy(SecurityUtils.getUsername());
-        return json(iSysMenuService.updateMenu(menu));
-    }
+	/**
+	 * 修改菜单
+	 * @param menu SysMenu
+	 * @return JsonResult<String>
+	 */
+	@Log(service = "菜单管理", businessType = BusinessType.UPDATE)
+	@PutMapping
+	@PreAuthorize("@role.hasPermi('system:menu:update')")
+	public JsonResult<String> update(@Validated @RequestBody SysMenu menu) {
+		if (UserConstants.NOT_UNIQUE.equals(iSysMenuService.checkMenuNameUnique(menu))) {
+			throw new TWTException("新增菜单【" + menu.getMenuName() + "】失败，菜单名称已存在");
+		}
+		menu.setUpdateBy(SecurityUtils.getUsername());
+		return json(iSysMenuService.updateMenu(menu));
+	}
 
-    /**
-     * 获取菜单列表
-     *
-     * @param sysMenu sysMenu
-     * @return 菜单数据
-     */
-    @GetMapping("/list")
-    @PreAuthorize("@role.hasPermi('system:menu:list')")
-    public JsonResult<List<SysMenu>> list(SysMenu sysMenu) {
-        LoginUser loginUser = SecurityUtils.getLoginUser();
-        Long userId = loginUser.getUserId();
-        List<SysMenu> menus = iSysMenuService.selectMenuList(sysMenu, userId);
-        return JsonResult.success(menus);
-    }
+	/**
+	 * 获取菜单列表
+	 * @param sysMenu sysMenu
+	 * @return 菜单数据
+	 */
+	@GetMapping("/list")
+	@PreAuthorize("@role.hasPermi('system:menu:list')")
+	public JsonResult<List<SysMenu>> list(SysMenu sysMenu) {
+		LoginUser loginUser = SecurityUtils.getLoginUser();
+		Long userId = loginUser.getUserId();
+		List<SysMenu> menus = iSysMenuService.selectMenuList(sysMenu, userId);
+		return JsonResult.success(menus);
+	}
 
-    /**
-     * 根据ID获取菜单信息
-     *
-     * @param menuId menuId
-     * @return 操心信息
-     */
-    @GetMapping(value = "/{menuId}")
-    @PreAuthorize("@role.hasPermi('system:menu:query')")
-    public JsonResult<SysMenu> getByMenuId(@PathVariable Long menuId) {
-        return JsonResult.success(iSysMenuService.selectMenuById(menuId));
-    }
+	/**
+	 * 根据ID获取菜单信息
+	 * @param menuId menuId
+	 * @return 操心信息
+	 */
+	@GetMapping(value = "/{menuId}")
+	@PreAuthorize("@role.hasPermi('system:menu:query')")
+	public JsonResult<SysMenu> getByMenuId(@PathVariable Long menuId) {
+		return JsonResult.success(iSysMenuService.selectMenuById(menuId));
+	}
 
-    /**
-     * 加载对应角色菜单列表树
-     *
-     * @param roleId 角色ID
-     * @return JsonResult
-     */
-    @GetMapping(value = "/roleMenuTreeSelect/{roleId}")
-    @PreAuthorize("@role.hasPermi('system:menu:list')")
-    public AjaxResult roleMenuTreeSelect(@PathVariable("roleId") Long roleId) {
-        LoginUser loginUser = SecurityUtils.getLoginUser();
-        Long userId = loginUser.getUserId();
-        List<SysMenu> menus = iSysMenuService.selectMenuList(userId);
+	/**
+	 * 加载对应角色菜单列表树
+	 * @param roleId 角色ID
+	 * @return JsonResult
+	 */
+	@GetMapping(value = "/roleMenuTreeSelect/{roleId}")
+	@PreAuthorize("@role.hasPermi('system:menu:list')")
+	public AjaxResult roleMenuTreeSelect(@PathVariable("roleId") Long roleId) {
+		LoginUser loginUser = SecurityUtils.getLoginUser();
+		Long userId = loginUser.getUserId();
+		List<SysMenu> menus = iSysMenuService.selectMenuList(userId);
 
-        Map<String, Object> res = new HashMap<>(2);
-        res.put("checkedMenus", iSysMenuService.selectMenuListByRoleId(roleId));
-        res.put("menus", iSysMenuService.buildMenuTreeSelect(menus));
+		Map<String, Object> res = new HashMap<>(2);
+		res.put("checkedMenus", iSysMenuService.selectMenuListByRoleId(roleId));
+		res.put("menus", iSysMenuService.buildMenuTreeSelect(menus));
 
-        return AjaxResult.success(res);
-    }
+		return AjaxResult.success(res);
+	}
 
-    /**
-     * 获取菜单下拉树列表
-     *
-     * @param menu SysMenu
-     * @return JsonResult<List<TreeSelect>>
-     */
-    @GetMapping("/treeSelect")
-    @PreAuthorize("@role.hasPermi('system:menu:list')")
-    public JsonResult<List<TreeSelect>> treeSelect(SysMenu menu) {
-        LoginUser loginUser = SecurityUtils.getLoginUser();
-        Long userId = loginUser.getUserId();
-        List<SysMenu> menus = iSysMenuService.selectMenuList(menu, userId);
-        return JsonResult.success(iSysMenuService.buildMenuTreeSelect(menus));
-    }
+	/**
+	 * 获取菜单下拉树列表
+	 * @param menu SysMenu
+	 * @return JsonResult<List<TreeSelect>>
+	 */
+	@GetMapping("/treeSelect")
+	@PreAuthorize("@role.hasPermi('system:menu:list')")
+	public JsonResult<List<TreeSelect>> treeSelect(SysMenu menu) {
+		LoginUser loginUser = SecurityUtils.getLoginUser();
+		Long userId = loginUser.getUserId();
+		List<SysMenu> menus = iSysMenuService.selectMenuList(menu, userId);
+		return JsonResult.success(iSysMenuService.buildMenuTreeSelect(menus));
+	}
 
 }
