@@ -16,6 +16,8 @@ import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.server.system.service.ISysUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @WebSite www.twelvet.cn
  * @Description: DFS控制器
  */
+@Api(value = "SysProfileController", tags = { "DFS控制器" })
 @RestController
 @RequestMapping("/user/profile")
 public class SysProfileController extends TWTController {
@@ -39,6 +42,7 @@ public class SysProfileController extends TWTController {
 	 * 个人信息
 	 * @return JsonResult<UserInfoVo>
 	 */
+	@ApiOperation(value = "个人信息")
 	@GetMapping
 	public JsonResult<UserInfoVo> profile() {
 		String username = SecurityUtils.getUsername();
@@ -58,6 +62,7 @@ public class SysProfileController extends TWTController {
 	 * @param user SysUser
 	 * @return 修改结果
 	 */
+	@ApiOperation(value = "修改当前用户信息")
 	@Log(service = "个人信息", businessType = BusinessType.UPDATE)
 	@PutMapping
 	public JsonResult<String> updateProfile(@RequestBody SysUser user) {
@@ -74,6 +79,7 @@ public class SysProfileController extends TWTController {
 	 * @param file MultipartFile
 	 * @return 上传信息
 	 */
+	@ApiOperation(value = "修改用户头像")
 	@Log(service = "用户头像", businessType = BusinessType.UPDATE)
 	@PostMapping("/avatar")
 	public AjaxResult avatar(@RequestParam("avatarFile") MultipartFile file) {
@@ -107,6 +113,7 @@ public class SysProfileController extends TWTController {
 	 * @param userPassword 用户修改密码参数
 	 * @return 重置结果
 	 */
+	@ApiOperation(value = "重置密码")
 	@Log(service = "个人信息", businessType = BusinessType.UPDATE)
 	@PutMapping("/updatePwd")
 	public JsonResult<String> updatePwd(@RequestBody UserPassword userPassword) {

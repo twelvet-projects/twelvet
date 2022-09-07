@@ -9,6 +9,8 @@ import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.utils.poi.ExcelUtils;
 import com.twelvet.server.system.service.ISysOperationLogService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,7 @@ import java.util.List;
  * @WebSite www.twelvet.cn
  * @Description: 操作日志记录
  */
+@Api(value = "SysOperationLogController", tags = { "操作日志记录" })
 @RestController
 @RequestMapping("/operationLog")
 public class SysOperationLogController extends TWTController {
@@ -33,6 +36,7 @@ public class SysOperationLogController extends TWTController {
 	 * @param operationLogIds Long[]
 	 * @return JsonResult<String>
 	 */
+	@ApiOperation(value = "移除指定ID日志")
 	@Log(service = "操作日志", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{operationLogIds}")
 	@PreAuthorize("@role.hasPermi('system:operlog:remove')")
@@ -44,6 +48,7 @@ public class SysOperationLogController extends TWTController {
 	 * 清空初始化操作日志
 	 * @return JsonResult<String>
 	 */
+	@ApiOperation(value = "清空初始化操作日志")
 	@Log(service = "操作日志", businessType = BusinessType.CLEAN)
 	@DeleteMapping("/clean")
 	@PreAuthorize("@role.hasPermi('system:operlog:remove')")
@@ -57,6 +62,7 @@ public class SysOperationLogController extends TWTController {
 	 * @param operationLog SysOperationLog
 	 * @return JsonResult<TableDataInfo>
 	 */
+	@ApiOperation(value = "分页查询")
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:operlog:list')")
 	public JsonResult<TableDataInfo> pageQuery(SysOperationLog operationLog) {
@@ -70,6 +76,7 @@ public class SysOperationLogController extends TWTController {
 	 * @param response HttpServletResponse
 	 * @param operationLog SysOperationLog
 	 */
+	@ApiOperation(value = "Excel导出")
 	@Log(service = "操作日志", businessType = BusinessType.EXPORT)
 	@PostMapping("/export")
 	@PreAuthorize("@role.hasPermi('system:operlog:export')")

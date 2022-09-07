@@ -12,6 +12,8 @@ import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.poi.ExcelUtils;
 import com.twelvet.server.system.service.ISysDictDataService;
 import com.twelvet.server.system.service.ISysDictTypeService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -25,6 +27,7 @@ import java.util.List;
  * @WebSite www.twelvet.cn
  * @Description: 数据字典信息
  */
+@Api(value = "SysDictDataController", tags = { "数据字典信息" })
 @RestController
 @RequestMapping("/dictionaries/data")
 public class SysDictDataController extends TWTController {
@@ -40,6 +43,7 @@ public class SysDictDataController extends TWTController {
 	 * @param sysDictData SysDictData
 	 * @return JsonResult<TableDataInfo>
 	 */
+	@ApiOperation(value = "分页查询数据字典")
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:dict:list')")
 	public JsonResult<TableDataInfo> pageQuery(SysDictData sysDictData) {
@@ -53,6 +57,7 @@ public class SysDictDataController extends TWTController {
 	 * @param response HttpServletResponse
 	 * @param sysDictData SysDictData
 	 */
+	@ApiOperation(value = "导出数据字典excel")
 	@Log(service = "字典数据", businessType = BusinessType.EXPORT)
 	@PostMapping("/export")
 	@PreAuthorize("@role.hasPermi('system:dict:export')")
@@ -67,6 +72,7 @@ public class SysDictDataController extends TWTController {
 	 * @param dictCode 数据字典Code
 	 * @return JsonResult<SysDictData>
 	 */
+	@ApiOperation(value = "查询字典数据详细")
 	@GetMapping(value = "/{dictCode}")
 	@PreAuthorize("@role.hasPermi('system:dict:query')")
 	public JsonResult<SysDictData> getDictDataById(@PathVariable Long dictCode) {
@@ -78,6 +84,7 @@ public class SysDictDataController extends TWTController {
 	 * @param dictType 字典类型
 	 * @return JsonResult<List<SysDictData>>
 	 */
+	@ApiOperation(value = "根据字典类型查询字典数据信息")
 	@GetMapping(value = "/type/{dictType}")
 	public JsonResult<List<SysDictData>> dictType(@PathVariable String dictType) {
 		return JsonResult.success(dictTypeService.selectDictDataByType(dictType));
@@ -88,6 +95,7 @@ public class SysDictDataController extends TWTController {
 	 * @param sysDictData SysDictData
 	 * @return JsonResult<String>
 	 */
+	@ApiOperation(value = "新增字典类型")
 	@Log(service = "字典数据", businessType = BusinessType.INSERT)
 	@PostMapping
 	@PreAuthorize("@role.hasPermi('system:dict:insert')")
@@ -101,6 +109,7 @@ public class SysDictDataController extends TWTController {
 	 * @param sysDictData SysDictData
 	 * @return JsonResult<String>
 	 */
+	@ApiOperation(value = "修改保存字典类型")
 	@Log(service = "字典数据", businessType = BusinessType.UPDATE)
 	@PutMapping
 	@PreAuthorize("@role.hasPermi('system:dict:update')")
@@ -114,6 +123,7 @@ public class SysDictDataController extends TWTController {
 	 * @param dictCodes 字典类型Codes
 	 * @return JsonResult<String>
 	 */
+	@ApiOperation(value = "删除字典类型")
 	@Log(service = "字典类型", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{dictCodes}")
 	@PreAuthorize("@role.hasPermi('system:dict:remove')")

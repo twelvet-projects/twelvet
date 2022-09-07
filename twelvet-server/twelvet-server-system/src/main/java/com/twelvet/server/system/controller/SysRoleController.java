@@ -11,6 +11,8 @@ import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.poi.ExcelUtils;
 import com.twelvet.server.system.service.ISysRoleService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -24,6 +26,7 @@ import java.util.List;
  * @WebSite www.twelvet.cn
  * @Description: 角色信息
  */
+@Api(value = "SysRoleController", tags = { "角色信息" })
 @RestController
 @RequestMapping("/role")
 public class SysRoleController extends TWTController {
@@ -36,6 +39,7 @@ public class SysRoleController extends TWTController {
 	 * @param role SysRole
 	 * @return JsonResult<TableDataInfo>
 	 */
+	@ApiOperation(value = "角色信息分页查询")
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:role:list')")
 	public JsonResult<TableDataInfo> pageQuery(SysRole role) {
@@ -49,6 +53,7 @@ public class SysRoleController extends TWTController {
 	 * @param response HttpServletResponse
 	 * @param role SysRole
 	 */
+	@ApiOperation(value = "数据导出")
 	@Log(service = "角色管理", businessType = BusinessType.EXPORT)
 	@PostMapping("/export")
 	@PreAuthorize("@role.hasPermi('system:role:export')")
@@ -63,6 +68,7 @@ public class SysRoleController extends TWTController {
 	 * @param roleId 角色ID
 	 * @return JsonResult<SysRole>
 	 */
+	@ApiOperation(value = "根据角色编号获取详细信息")
 	@GetMapping("/{roleId}")
 	@PreAuthorize("@role.hasPermi('system:role:query')")
 	public JsonResult<SysRole> getInfo(@PathVariable Long roleId) {
@@ -75,6 +81,7 @@ public class SysRoleController extends TWTController {
 	 * @param role SysRole
 	 * @return JsonResult<String>
 	 */
+	@ApiOperation(value = "新增角色")
 	@Log(service = "角色管理", businessType = BusinessType.INSERT)
 	@PostMapping
 	@PreAuthorize("@role.hasPermi('system:role:insert')")
@@ -94,6 +101,7 @@ public class SysRoleController extends TWTController {
 	 * @param role SysRole
 	 * @return JsonResult<String>
 	 */
+	@ApiOperation(value = "修改保存角色")
 	@Log(service = "角色管理", businessType = BusinessType.UPDATE)
 	@PutMapping
 	@PreAuthorize("@role.hasPermi('system:role:update')")
@@ -115,6 +123,7 @@ public class SysRoleController extends TWTController {
 	 * @param role SysRole
 	 * @return JsonResult<String>
 	 */
+	@ApiOperation(value = "状态修改")
 	@Log(service = "角色管理", businessType = BusinessType.UPDATE)
 	@PutMapping("/changeStatus")
 	@PreAuthorize("@role.hasPermi('system:role:update')")
@@ -127,6 +136,7 @@ public class SysRoleController extends TWTController {
 	/**
 	 * 删除角色
 	 */
+	@ApiOperation(value = "删除角色")
 	@Log(service = "角色管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{roleIds}")
 	@PreAuthorize("@role.hasPermi('system:role:remove')")
@@ -137,6 +147,7 @@ public class SysRoleController extends TWTController {
 	/**
 	 * 获取角色选择框列表
 	 */
+	@ApiOperation(value = "获取角色选择框列表")
 	@GetMapping("/optionSelect")
 	@PreAuthorize("@role.hasPermi('system:role:query')")
 	public JsonResult<List<SysRole>> optionSelect() {

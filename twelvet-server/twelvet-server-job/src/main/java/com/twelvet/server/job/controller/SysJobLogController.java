@@ -24,7 +24,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/log")
-public class SysJobLogController extends TWTController {
+public class
+SysJobLogController extends TWTController {
 
 	@Autowired
 	private ISysJobLogService jobLogService;

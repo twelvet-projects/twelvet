@@ -12,6 +12,8 @@ import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.server.system.service.ISysMenuService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -26,6 +28,7 @@ import java.util.Map;
  * @WebSite www.twelvet.cn
  * @Description: 系统菜单控制器
  */
+@Api(value = "SysMenuController", tags = { "系统菜单控制器" })
 @RestController
 @RequestMapping("/menu")
 public class SysMenuController extends TWTController {
@@ -38,6 +41,7 @@ public class SysMenuController extends TWTController {
 	 * @param menu SysMenu
 	 * @return 操作信息
 	 */
+	@ApiOperation(value = "新增菜单")
 	@Log(service = "菜单管理", businessType = BusinessType.INSERT)
 	@PostMapping
 	@PreAuthorize("@role.hasPermi('system:menu:insert')")
@@ -55,6 +59,7 @@ public class SysMenuController extends TWTController {
 	 * @param menuId menuId
 	 * @return 操作提示
 	 */
+	@ApiOperation(value = "删除菜单")
 	@Log(service = "菜单管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{menuId}")
 	@PreAuthorize("@role.hasPermi('system:menu:remove')")
@@ -73,6 +78,7 @@ public class SysMenuController extends TWTController {
 	 * @param menu SysMenu
 	 * @return JsonResult<String>
 	 */
+	@ApiOperation(value = "修改菜单")
 	@Log(service = "菜单管理", businessType = BusinessType.UPDATE)
 	@PutMapping
 	@PreAuthorize("@role.hasPermi('system:menu:update')")
@@ -89,6 +95,7 @@ public class SysMenuController extends TWTController {
 	 * @param sysMenu sysMenu
 	 * @return 菜单数据
 	 */
+	@ApiOperation(value = "获取菜单列表")
 	@GetMapping("/list")
 	@PreAuthorize("@role.hasPermi('system:menu:list')")
 	public JsonResult<List<SysMenu>> list(SysMenu sysMenu) {
@@ -103,6 +110,7 @@ public class SysMenuController extends TWTController {
 	 * @param menuId menuId
 	 * @return 操心信息
 	 */
+	@ApiOperation(value = "根据ID获取菜单信息")
 	@GetMapping(value = "/{menuId}")
 	@PreAuthorize("@role.hasPermi('system:menu:query')")
 	public JsonResult<SysMenu> getByMenuId(@PathVariable Long menuId) {
@@ -114,6 +122,7 @@ public class SysMenuController extends TWTController {
 	 * @param roleId 角色ID
 	 * @return JsonResult
 	 */
+	@ApiOperation(value = "加载对应角色菜单列表树")
 	@GetMapping(value = "/roleMenuTreeSelect/{roleId}")
 	@PreAuthorize("@role.hasPermi('system:menu:list')")
 	public AjaxResult roleMenuTreeSelect(@PathVariable("roleId") Long roleId) {
@@ -133,6 +142,7 @@ public class SysMenuController extends TWTController {
 	 * @param menu SysMenu
 	 * @return JsonResult<List<TreeSelect>>
 	 */
+	@ApiOperation(value = "获取菜单下拉树列表")
 	@GetMapping("/treeSelect")
 	@PreAuthorize("@role.hasPermi('system:menu:list')")
 	public JsonResult<List<TreeSelect>> treeSelect(SysMenu menu) {
