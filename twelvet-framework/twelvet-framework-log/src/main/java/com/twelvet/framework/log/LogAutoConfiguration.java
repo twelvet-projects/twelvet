@@ -2,10 +2,8 @@ package com.twelvet.framework.log;
 
 import com.twelvet.api.system.feign.RemoteLogService;
 import com.twelvet.framework.log.aspect.SysLogAspect;
-import com.twelvet.framework.log.event.event.SysOperationLogEvent;
 import com.twelvet.framework.log.event.listener.SysLoginLogListener;
 import com.twelvet.framework.log.event.listener.SysSysOperationLogEventLogListener;
-import com.twelvet.framework.log.service.AsyncLogService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
