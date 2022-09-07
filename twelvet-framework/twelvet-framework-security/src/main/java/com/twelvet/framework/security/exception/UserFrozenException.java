@@ -10,12 +10,12 @@ import org.springframework.security.core.AuthenticationException;
  */
 public class UserFrozenException extends AccessDeniedException {
 
+	public UserFrozenException(String msg) {
+		super(msg);
+	}
 
-    public UserFrozenException(String msg) {
-        super(msg);
-    }
+	public UserFrozenException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
 
-    public UserFrozenException(String msg, Throwable cause) {
-        super(msg, cause);
-    }
 }
