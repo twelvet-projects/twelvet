@@ -12,6 +12,8 @@ import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.utils.Convert;
 import com.twelvet.server.gen.service.IGenTableColumnService;
 import com.twelvet.server.gen.service.IGenTableService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,6 +31,7 @@ import java.util.Map;
  * @WebSite www.twelvet.cn
  * @Description: 代码生成 操作处理
  */
+@Api(value = "GenController", tags = { "代码生成" })
 @RequestMapping
 @RestController
 public class GenController extends TWTController {
@@ -44,6 +47,7 @@ public class GenController extends TWTController {
 	 * @param genTable GenTable
 	 * @return JsonResult<TableDataInfo>
 	 */
+	@ApiOperation(value = "查询代码生成列表")
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('tool:gen:list')")
 	public JsonResult<TableDataInfo> pageQuery(GenTable genTable) {
@@ -57,6 +61,7 @@ public class GenController extends TWTController {
 	 * @param tableId Long
 	 * @return AjaxResult
 	 */
+	@ApiOperation(value = "获取代码生成信息")
 	@GetMapping(value = "/{tableId}")
 	@PreAuthorize("@role.hasPermi('tool:gen:query')")
 	public AjaxResult getInfo(@PathVariable Long tableId) {
@@ -74,6 +79,7 @@ public class GenController extends TWTController {
 	 * 查询数据库列表
 	 * @return JsonResult<TableDataInfo>
 	 */
+	@ApiOperation(value = "查询数据库列表")
 	@PreAuthorize("@role.hasPermi('tool:gen:list')")
 	@GetMapping("/db/list")
 	public JsonResult<TableDataInfo> dataList(GenTable genTable) {
@@ -87,6 +93,7 @@ public class GenController extends TWTController {
 	 * @param tableId Long
 	 * @return JsonResult<TableDataInfo>
 	 */
+	@ApiOperation(value = "查询数据表字段列表")
 	@GetMapping(value = "/column/{tableId}")
 	public JsonResult<TableDataInfo> columnList(@PathVariable Long tableId) {
 		TableDataInfo dataInfo = new TableDataInfo();
@@ -101,6 +108,7 @@ public class GenController extends TWTController {
 	 * @param tables String
 	 * @return JsonResult<String>
 	 */
+	@ApiOperation(value = "导入表结构")
 	@PreAuthorize("@role.hasPermi('tool:gen:list')")
 	@Log(service = "代码生成", businessType = BusinessType.IMPORT)
 	@PostMapping("/importTable")
@@ -117,6 +125,7 @@ public class GenController extends TWTController {
 	 * @param genTable GenTable
 	 * @return JsonResult<String>
 	 */
+	@ApiOperation(value = "修改保存代码生成业务")
 	@PreAuthorize("@role.hasPermi('tool:gen:edit')")
 	@Log(service = "代码生成", businessType = BusinessType.UPDATE)
 	@PutMapping
@@ -131,6 +140,7 @@ public class GenController extends TWTController {
 	 * @param tableIds Long[]
 	 * @return JsonResult<String>
 	 */
+	@ApiOperation(value = "删除代码生成")
 	@PreAuthorize("@role.hasPermi('tool:gen:remove')")
 	@Log(service = "代码生成", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{tableIds}")
@@ -144,6 +154,7 @@ public class GenController extends TWTController {
 	 * @param tableId Long
 	 * @return AjaxResult
 	 */
+	@ApiOperation(value = "预览代码")
 	@PreAuthorize("@role.hasPermi('tool:gen:preview')")
 	@GetMapping("/preview/{tableId}")
 	public AjaxResult preview(@PathVariable("tableId") Long tableId) {
@@ -157,6 +168,7 @@ public class GenController extends TWTController {
 	 * @param tableName String
 	 * @throws IOException IOException
 	 */
+	@ApiOperation(value = "生成代码")
 	@PreAuthorize("@role.hasPermi('tool:gen:code')")
 	@Log(service = "代码生成", businessType = BusinessType.GENCODE)
 	@GetMapping("/download/{tableName}")
@@ -170,6 +182,7 @@ public class GenController extends TWTController {
 	 * @param tableName String
 	 * @return JsonResult<String>
 	 */
+	@ApiOperation(value = "生成代码")
 	@PreAuthorize("@role.hasPermi('tool:gen:code')")
 	@Log(service = "代码生成", businessType = BusinessType.GENCODE)
 	@GetMapping("/genCode/{tableName}")
@@ -183,6 +196,7 @@ public class GenController extends TWTController {
 	 * @param tableName String
 	 * @return JsonResult<String>
 	 */
+	@ApiOperation(value = "同步数据库")
 	@PreAuthorize("@role.hasPermi('tool:gen:edit')")
 	@Log(service = "代码生成", businessType = BusinessType.UPDATE)
 	@GetMapping("/synchDb/{tableName}")
@@ -197,6 +211,7 @@ public class GenController extends TWTController {
 	 * @param tables String
 	 * @throws IOException IOException
 	 */
+	@ApiOperation(value = "批量生成代码")
 	@PreAuthorize("@role.hasPermi('tool:gen:code')")
 	@Log(service = "代码生成", businessType = BusinessType.GENCODE)
 	@PostMapping("/batchGenCode")
@@ -212,6 +227,7 @@ public class GenController extends TWTController {
 	 * @param data 数据
 	 * @throws IOException IOException
 	 */
+	@ApiOperation(value = "生成zip文件")
 	private void genCode(HttpServletResponse response, byte[] data) throws IOException {
 		response.reset();
 		response.setHeader("Content-Disposition", "attachment; filename=\"twelvet.zip\"");
