@@ -413,7 +413,7 @@ public class GenTableServiceImpl implements IGenTableService {
             String treeCode = paramsObj.get(GenConstants.TREE_CODE);
             String treeParentCode = paramsObj.get(GenConstants.TREE_PARENT_CODE);
             String treeName = paramsObj.get(GenConstants.TREE_NAME);
-            Long parentMenuId = Long.parseLong(paramsObj.get(GenConstants.PARENT_MENU_ID));
+            String parentMenuId = paramsObj.get(GenConstants.PARENT_MENU_ID);
             String parentMenuName = paramsObj.get(GenConstants.PARENT_MENU_NAME);
 
             genTable.setTreeCode(treeCode);

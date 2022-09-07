@@ -52,7 +52,7 @@ public class GenController extends TWTController {
 	}
 
 	/**
-	 * 修改代码生成业务
+	 * 获取代码生成信息
 	 * @param tableId Long
 	 * @return AjaxResult
 	 */

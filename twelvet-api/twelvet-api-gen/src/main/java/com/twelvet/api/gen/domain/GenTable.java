@@ -135,7 +135,7 @@ public class GenTable extends BaseEntity {
 	/**
 	 * 上级菜单ID字段
 	 */
-	private Long parentMenuId;
+	private String parentMenuId;
 
 	/**
 	 * 上级菜单名称字段
@@ -310,11 +310,11 @@ public class GenTable extends BaseEntity {
 		this.treeName = treeName;
 	}
 
-	public Long getParentMenuId() {
+	public String getParentMenuId() {
 		return parentMenuId;
 	}
 
-	public void setParentMenuId(Long parentMenuId) {
+	public void setParentMenuId(String parentMenuId) {
 		this.parentMenuId = parentMenuId;
 	}
 
