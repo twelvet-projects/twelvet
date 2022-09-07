@@ -7,7 +7,9 @@ import com.twelvet.api.system.domain.SysRole;
 import com.twelvet.api.system.domain.SysUser;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.core.application.domain.JsonResult;
 import com.twelvet.framework.core.constants.UserConstants;
+import com.twelvet.framework.jdbc.web.page.TableDataInfo;
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
@@ -66,10 +68,10 @@ public class SysUserController extends TWTController {
 	@ApiOperation(value = "获取用户列表")
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:user:list')")
-	public AjaxResult pageQuery(SysUser user) {
+	public JsonResult<TableDataInfo> pageQuery(SysUser user) {
 		PageUtils.startPage();
 		List<SysUser> list = iSysUserService.selectUserList(user);
-		return AjaxResult.success(PageUtils.getDataTable(list));
+		return JsonResult.success(PageUtils.getDataTable(list));
 	}
 
 	/**
@@ -100,7 +102,7 @@ public class SysUserController extends TWTController {
 	@PostMapping("/importData")
 	@Log(service = "用户管理", businessType = BusinessType.IMPORT)
 	@PreAuthorize("@role.hasPermi('system:user:import')")
-	public AjaxResult importData(MultipartFile[] files, boolean cover) throws Exception {
+	public JsonResult<String> importData(MultipartFile[] files, boolean cover) throws Exception {
 		ExcelUtils<SysUser> excelUtils = new ExcelUtils<>(SysUser.class);
 		// 支持多数据源导入
 		for (MultipartFile file : files) {
@@ -108,7 +110,7 @@ public class SysUserController extends TWTController {
 			String operName = SecurityUtils.getUsername();
 			iSysUserService.importUser(userList, cover, operName);
 		}
-		return AjaxResult.success();
+		return JsonResult.success();
 	}
 
 	/**
@@ -181,15 +183,15 @@ public class SysUserController extends TWTController {
 	@PostMapping
 	@Log(service = "用户管理", businessType = BusinessType.INSERT)
 	@PreAuthorize("@role.hasPermi('system:user:insert')")
-	public AjaxResult insert(@Validated @RequestBody SysUser user) {
+	public JsonResult<String> insert(@Validated @RequestBody SysUser user) {
 		if (UserConstants.NOT_UNIQUE.equals(iSysUserService.checkUserNameUnique(user.getUsername()))) {
-			return AjaxResult.error("新增用户'" + user.getUsername() + "'失败，登录账号已存在");
+			return JsonResult.error("新增用户'" + user.getUsername() + "'失败，登录账号已存在");
 		}
 		else if (UserConstants.NOT_UNIQUE.equals(iSysUserService.checkPhoneUnique(user))) {
-			return AjaxResult.error("新增用户'" + user.getUsername() + "'失败，手机号码已存在");
+			return JsonResult.error("新增用户'" + user.getUsername() + "'失败，手机号码已存在");
 		}
 		else if (UserConstants.NOT_UNIQUE.equals(iSysUserService.checkEmailUnique(user))) {
-			return AjaxResult.error("新增用户'" + user.getUsername() + "'失败，邮箱账号已存在");
+			return JsonResult.error("新增用户'" + user.getUsername() + "'失败，邮箱账号已存在");
 		}
 		user.setCreateBy(SecurityUtils.getUsername());
 		user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
@@ -206,16 +208,16 @@ public class SysUserController extends TWTController {
 	@PutMapping
 	@Log(service = "用户管理", businessType = BusinessType.UPDATE)
 	@PreAuthorize("@role.hasPermi('system:user:edit')")
-	public AjaxResult edit(@Validated @RequestBody SysUser user) {
+	public JsonResult<String> edit(@Validated @RequestBody SysUser user) {
 		iSysUserService.checkUserAllowed(user);
 		iSysUserService.checkUserDataScope(user.getUserId());
 		if (StringUtils.isNotEmpty(user.getPhonenumber())
 				&& UserConstants.NOT_UNIQUE.equals(iSysUserService.checkPhoneUnique(user))) {
-			return AjaxResult.error("修改用户'" + user.getUsername() + "'失败，手机号码已存在");
+			return JsonResult.error("修改用户'" + user.getUsername() + "'失败，手机号码已存在");
 		}
 		else if (StringUtils.isNotEmpty(user.getEmail())
 				&& UserConstants.NOT_UNIQUE.equals(iSysUserService.checkEmailUnique(user))) {
-			return AjaxResult.error("修改用户'" + user.getUsername() + "'失败，邮箱账号已存在");
+			return JsonResult.error("修改用户'" + user.getUsername() + "'失败，邮箱账号已存在");
 		}
 		user.setUpdateBy(SecurityUtils.getUsername());
 		return json(iSysUserService.updateUser(user));
@@ -231,7 +233,7 @@ public class SysUserController extends TWTController {
 	@PreAuthorize("@role.hasPermi('system:user:remove')")
 	@Log(service = "用户管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{userIds}")
-	public AjaxResult remove(@PathVariable Long[] userIds) {
+	public JsonResult<String> remove(@PathVariable Long[] userIds) {
 		return json(iSysUserService.deleteUserByIds(userIds));
 	}
 
@@ -245,7 +247,7 @@ public class SysUserController extends TWTController {
 	@PutMapping("/resetPwd")
 	@Log(service = "用户管理", businessType = BusinessType.UPDATE)
 	@PreAuthorize("@role.hasPermi('system:user:resetPwd')")
-	public AjaxResult resetPwd(@RequestBody SysUser user) {
+	public JsonResult<String> resetPwd(@RequestBody SysUser user) {
 		iSysUserService.checkUserAllowed(user);
 		iSysUserService.checkUserDataScope(user.getUserId());
 		user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
@@ -263,7 +265,7 @@ public class SysUserController extends TWTController {
 	@PutMapping("/changeStatus")
 	@Log(service = "用户管理", businessType = BusinessType.UPDATE)
 	@PreAuthorize("@role.hasPermi('system:user:update')")
-	public AjaxResult changeStatus(@RequestBody SysUser user) {
+	public JsonResult<String> changeStatus(@RequestBody SysUser user) {
 		iSysUserService.checkUserAllowed(user);
 		iSysUserService.checkUserDataScope(user.getUserId());
 		user.setUpdateBy(SecurityUtils.getUsername());

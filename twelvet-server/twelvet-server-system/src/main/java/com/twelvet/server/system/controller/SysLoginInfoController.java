@@ -3,6 +3,8 @@ package com.twelvet.server.system.controller;
 import com.twelvet.api.system.domain.SysLoginInfo;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.core.application.domain.JsonResult;
+import com.twelvet.framework.jdbc.web.page.TableDataInfo;
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
@@ -34,10 +36,10 @@ public class SysLoginInfoController extends TWTController {
 	 */
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:logininfor:list')")
-	public AjaxResult pageQuery(SysLoginInfo loginInfo) {
+	public JsonResult<TableDataInfo> pageQuery(SysLoginInfo loginInfo) {
 		PageUtils.startPage();
 		List<SysLoginInfo> list = iSysLoginInfoService.selectLoginInfoList(loginInfo);
-		return AjaxResult.success(PageUtils.getDataTable(list));
+		return JsonResult.success(PageUtils.getDataTable(list));
 	}
 
 	/**
@@ -47,7 +49,7 @@ public class SysLoginInfoController extends TWTController {
 	 */
 	@DeleteMapping("/{infoIds}")
 	@PreAuthorize("@role.hasPermi('system:logininfor:remove')")
-	public AjaxResult remove(@PathVariable Long[] infoIds) {
+	public JsonResult<String> remove(@PathVariable Long[] infoIds) {
 		return json(iSysLoginInfoService.deleteLoginInfoByIds(infoIds));
 	}
 
@@ -58,9 +60,9 @@ public class SysLoginInfoController extends TWTController {
 	@Log(service = "登陆日志", businessType = BusinessType.CLEAN)
 	@DeleteMapping("/clean")
 	@PreAuthorize("@role.hasPermi('system:logininfor:remove')")
-	public AjaxResult clean() {
+	public JsonResult<String> clean() {
 		iSysLoginInfoService.cleanLoginInfo();
-		return AjaxResult.success();
+		return JsonResult.success();
 	}
 
 	/**

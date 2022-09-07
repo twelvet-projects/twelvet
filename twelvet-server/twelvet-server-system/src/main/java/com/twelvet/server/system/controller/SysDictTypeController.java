@@ -2,8 +2,9 @@ package com.twelvet.server.system.controller;
 
 import com.twelvet.api.system.domain.SysDictType;
 import com.twelvet.framework.core.application.controller.TWTController;
-import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.core.application.domain.JsonResult;
 import com.twelvet.framework.core.constants.UserConstants;
+import com.twelvet.framework.jdbc.web.page.TableDataInfo;
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
@@ -33,14 +34,14 @@ public class SysDictTypeController extends TWTController {
 	/**
 	 * 数据字典信息分页查询
 	 * @param dictType SysDictType
-	 * @return AjaxResult
+	 * @return JsonResult<TableDataInfo>
 	 */
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:dictionaries:list')")
-	public AjaxResult pageQuery(SysDictType dictType) {
+	public JsonResult<TableDataInfo> pageQuery(SysDictType dictType) {
 		PageUtils.startPage();
 		List<SysDictType> list = dictTypeService.selectDictTypeList(dictType);
-		return AjaxResult.success(PageUtils.getDataTable(list));
+		return JsonResult.success(PageUtils.getDataTable(list));
 	}
 
 	/**
@@ -60,25 +61,25 @@ public class SysDictTypeController extends TWTController {
 	/**
 	 * 查询字典类型详细
 	 * @param dictId 数据字典ID
-	 * @return AjaxResult
+	 * @return JsonResult<SysDictType>
 	 */
 	@GetMapping(value = "/{dictId}")
 	@PreAuthorize("@role.hasPermi('system:dict:query')")
-	public AjaxResult getInfo(@PathVariable Long dictId) {
-		return AjaxResult.success(dictTypeService.selectDictTypeById(dictId));
+	public JsonResult<SysDictType> getInfo(@PathVariable Long dictId) {
+		return JsonResult.success(dictTypeService.selectDictTypeById(dictId));
 	}
 
 	/**
 	 * 新增字典类型
 	 * @param dict SysDictType
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@Log(service = "字典类型", businessType = BusinessType.INSERT)
 	@PostMapping
 	@PreAuthorize("@role.hasPermi('system:dict:insert')")
-	public AjaxResult insert(@Validated @RequestBody SysDictType dict) {
+	public JsonResult<String> insert(@Validated @RequestBody SysDictType dict) {
 		if (UserConstants.NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(dict))) {
-			return AjaxResult.error("新增字典'" + dict.getDictName() + "'失败，字典类型已存在");
+			return JsonResult.error("新增字典'" + dict.getDictName() + "'失败，字典类型已存在");
 		}
 		dict.setCreateBy(SecurityUtils.getUsername());
 		return json(dictTypeService.insertDictType(dict));
@@ -87,14 +88,14 @@ public class SysDictTypeController extends TWTController {
 	/**
 	 * 修改字典类型
 	 * @param dict SysDictType
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@Log(service = "字典类型", businessType = BusinessType.UPDATE)
 	@PutMapping
 	@PreAuthorize("@role.hasPermi('system:dict:update')")
-	public AjaxResult update(@Validated @RequestBody SysDictType dict) {
+	public JsonResult<String> update(@Validated @RequestBody SysDictType dict) {
 		if (UserConstants.NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(dict))) {
-			return AjaxResult.error("修改字典'" + dict.getDictName() + "'失败，字典类型已存在");
+			return JsonResult.error("修改字典'" + dict.getDictName() + "'失败，字典类型已存在");
 		}
 		dict.setUpdateBy(SecurityUtils.getUsername());
 		return json(dictTypeService.updateDictType(dict));
@@ -103,35 +104,35 @@ public class SysDictTypeController extends TWTController {
 	/**
 	 * 删除字典类型
 	 * @param dictIds 数据字典Ids
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@Log(service = "字典类型", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{dictIds}")
 	@PreAuthorize("@role.hasPermi('system:dict:remove')")
-	public AjaxResult remove(@PathVariable Long[] dictIds) {
+	public JsonResult<String> remove(@PathVariable Long[] dictIds) {
 		return json(dictTypeService.deleteDictTypeByIds(dictIds));
 	}
 
 	/**
 	 * 清空缓存
-	 * @return AjaxResult
+	 * @return JsonResult<String>
 	 */
 	@Log(service = "字典类型", businessType = BusinessType.CLEAN)
 	@DeleteMapping("/clearCache")
 	@PreAuthorize("@role.hasPermi('system:dict:remove')")
-	public AjaxResult clearCache() {
+	public JsonResult<String> clearCache() {
 		dictTypeService.clearCache();
-		return AjaxResult.success();
+		return JsonResult.success();
 	}
 
 	/**
 	 * 获取字典选择框列表
-	 * @return AjaxResult
+	 * @return JsonResult<List<SysDictType>>
 	 */
 	@GetMapping("/optionSelect")
-	public AjaxResult optionSelect() {
+	public JsonResult<List<SysDictType>> optionSelect() {
 		List<SysDictType> dictTypes = dictTypeService.selectDictTypeAll();
-		return AjaxResult.success(dictTypes);
+		return JsonResult.success(dictTypes);
 	}
 
 }

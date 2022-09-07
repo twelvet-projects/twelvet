@@ -2,13 +2,14 @@ package com.twelvet.server.system.controller;
 
 import com.twelvet.api.system.domain.SysClientDetails;
 import com.twelvet.framework.core.application.controller.TWTController;
-import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.core.application.domain.JsonResult;
+import com.twelvet.framework.jdbc.web.page.TableDataInfo;
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.framework.utils.$;
+import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.server.system.service.ISysClientDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,39 +32,39 @@ public class Oauth2ClientDetailsController extends TWTController {
 	/**
 	 * 查询终端配置列表
 	 * @param sysClientDetails SysClientDetails
-	 * @return AjaxResult
+	 * @return JsonResult
 	 */
 	@PreAuthorize("@role.hasPermi('system:client:list')")
 	@GetMapping("/pageQuery")
-	public AjaxResult pageQuery(SysClientDetails sysClientDetails) {
+	public JsonResult<TableDataInfo> pageQuery(SysClientDetails sysClientDetails) {
 		PageUtils.startPage();
 		List<SysClientDetails> list = sysClientDetailsService.selectSysClientDetailsList(sysClientDetails);
-		return AjaxResult.success(PageUtils.getDataTable(list));
+		return JsonResult.success(PageUtils.getDataTable(list));
 	}
 
 	/**
 	 * 获取终端配置详细信息
 	 * @param clientId 终端ID
-	 * @return AjaxResult
+	 * @return JsonResult
 	 */
 	@PreAuthorize("@role.hasPermi('system:client:query')")
 	@GetMapping(value = "/{clientId}")
-	public AjaxResult getInfo(@PathVariable("clientId") String clientId) {
-		return AjaxResult.success(sysClientDetailsService.selectSysClientDetailsById(clientId));
+	public JsonResult<SysClientDetails> getInfo(@PathVariable("clientId") String clientId) {
+		return JsonResult.success(sysClientDetailsService.selectSysClientDetailsById(clientId));
 	}
 
 	/**
 	 * 新增终端配置
 	 * @param sysClientDetails SysClientDetails
-	 * @return AjaxResult
+	 * @return JsonResult
 	 */
 	@PreAuthorize("@role.hasPermi('system:client:insert')")
 	@Log(service = "终端配置", businessType = BusinessType.INSERT)
 	@PostMapping
-	public AjaxResult insert(@RequestBody SysClientDetails sysClientDetails) {
+	public JsonResult<String> insert(@RequestBody SysClientDetails sysClientDetails) {
 		String clientId = sysClientDetails.getClientId();
 		if (StringUtils.isNotNull(sysClientDetailsService.selectSysClientDetailsById(clientId))) {
-			return AjaxResult.error("新增终端'" + clientId + "'失败，编号已存在");
+			return JsonResult.error("新增终端'" + clientId + "'失败，编号已存在");
 		}
 		sysClientDetails.setClientSecret(SecurityUtils.encryptPassword(sysClientDetails.getClientSecret()));
 		return json(sysClientDetailsService.insertSysClientDetails(sysClientDetails));
@@ -72,12 +73,12 @@ public class Oauth2ClientDetailsController extends TWTController {
 	/**
 	 * 修改终端配置
 	 * @param sysClientDetails sysClientDetails
-	 * @return AjaxResult
+	 * @return JsonResult
 	 */
 	@PreAuthorize("@role.hasPermi('system:client:update')")
 	@Log(service = "终端配置", businessType = BusinessType.UPDATE)
 	@PutMapping
-	public AjaxResult update(@RequestBody SysClientDetails sysClientDetails) {
+	public JsonResult<String> update(@RequestBody SysClientDetails sysClientDetails) {
 		// 重新设置密码
 		if ($.isNotEmpty(sysClientDetails.getClientSecret())) {
 			sysClientDetails.setClientSecret(SecurityUtils.encryptPassword(sysClientDetails.getClientSecret()));
@@ -94,7 +95,7 @@ public class Oauth2ClientDetailsController extends TWTController {
 	@PreAuthorize("@role.hasPermi('system:client:remove')")
 	@Log(service = "终端配置", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{clientIds}")
-	public AjaxResult remove(@PathVariable String[] clientIds) {
+	public JsonResult<String> remove(@PathVariable String[] clientIds) {
 		return json(sysClientDetailsService.deleteSysClientDetailsByIds(clientIds));
 	}
 

@@ -3,6 +3,8 @@ package com.twelvet.server.system.controller;
 import com.twelvet.api.system.domain.SysOperationLog;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.core.application.domain.JsonResult;
+import com.twelvet.framework.jdbc.web.page.TableDataInfo;
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
@@ -35,7 +37,7 @@ public class SysOperationLogController extends TWTController {
 	@Log(service = "操作日志", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{operationLogIds}")
 	@PreAuthorize("@role.hasPermi('system:operlog:remove')")
-	public AjaxResult remove(@PathVariable Long[] operationLogIds) {
+	public JsonResult<String> remove(@PathVariable Long[] operationLogIds) {
 		return json(iSysOperationLogService.deleteOperationLogByIds(operationLogIds));
 	}
 
@@ -46,9 +48,9 @@ public class SysOperationLogController extends TWTController {
 	@Log(service = "操作日志", businessType = BusinessType.CLEAN)
 	@DeleteMapping("/clean")
 	@PreAuthorize("@role.hasPermi('system:operlog:remove')")
-	public AjaxResult clean() {
+	public JsonResult<String> clean() {
 		iSysOperationLogService.cleanOperationLog();
-		return AjaxResult.success();
+		return JsonResult.success();
 	}
 
 	/**
@@ -58,10 +60,10 @@ public class SysOperationLogController extends TWTController {
 	 */
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:operlog:list')")
-	public AjaxResult pageQuery(SysOperationLog operationLog) {
+	public JsonResult<TableDataInfo> pageQuery(SysOperationLog operationLog) {
 		PageUtils.startPage();
 		List<SysOperationLog> list = iSysOperationLogService.selectOperationLogList(operationLog);
-		return AjaxResult.success(PageUtils.getDataTable(list));
+		return JsonResult.success(PageUtils.getDataTable(list));
 	}
 
 	/**

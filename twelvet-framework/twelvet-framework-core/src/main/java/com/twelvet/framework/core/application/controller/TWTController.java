@@ -1,6 +1,7 @@
 package com.twelvet.framework.core.application.controller;
 
 import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.core.application.domain.JsonResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.WebDataBinder;
@@ -37,15 +38,15 @@ public class TWTController {
 	 * @param rows 影响行数
 	 * @return 操作结果
 	 */
-	protected AjaxResult json(int rows) {
-		return rows > 0 ? AjaxResult.success() : AjaxResult.error();
+	protected JsonResult<String> json(int rows) {
+		return rows > 0 ? JsonResult.success() : JsonResult.error();
 	}
 
 	/**
 	 * 返回失败消息
 	 */
-	public AjaxResult error(String message) {
-		return AjaxResult.error(message);
+	public JsonResult<String> error(String message) {
+		return JsonResult.error(message);
 	}
 
 }

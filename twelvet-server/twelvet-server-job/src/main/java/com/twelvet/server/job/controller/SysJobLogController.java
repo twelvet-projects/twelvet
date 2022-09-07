@@ -3,6 +3,8 @@ package com.twelvet.server.job.controller;
 import com.twelvet.api.job.domain.SysJobLog;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.core.application.domain.JsonResult;
+import com.twelvet.framework.jdbc.web.page.TableDataInfo;
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
@@ -34,10 +36,10 @@ public class SysJobLogController extends TWTController {
 	 */
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:job:list')")
-	public AjaxResult pageQuery(SysJobLog sysJobLog) {
+	public JsonResult<TableDataInfo> pageQuery(SysJobLog sysJobLog) {
 		PageUtils.startPage();
 		List<SysJobLog> list = jobLogService.selectJobLogList(sysJobLog);
-		return AjaxResult.success(PageUtils.getDataTable(list));
+		return JsonResult.success(PageUtils.getDataTable(list));
 	}
 
 	/**
@@ -61,8 +63,8 @@ public class SysJobLogController extends TWTController {
 	 */
 	@GetMapping("/{configId}")
 	@PreAuthorize("@role.hasPermi('system:job:query')")
-	public AjaxResult getInfo(@PathVariable Long jobLogId) {
-		return AjaxResult.success(jobLogService.selectJobLogById(jobLogId));
+	public JsonResult<SysJobLog> getInfo(@PathVariable Long jobLogId) {
+		return JsonResult.success(jobLogService.selectJobLogById(jobLogId));
 	}
 
 	/**
@@ -73,7 +75,7 @@ public class SysJobLogController extends TWTController {
 	@Log(service = "定时任务调度日志", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{jobLogIds}")
 	@PreAuthorize("@role.hasPermi('system:job:remove')")
-	public AjaxResult remove(@PathVariable Long[] jobLogIds) {
+	public JsonResult<String> remove(@PathVariable Long[] jobLogIds) {
 		return json(jobLogService.deleteJobLogByIds(jobLogIds));
 	}
 
@@ -84,9 +86,9 @@ public class SysJobLogController extends TWTController {
 	@Log(service = "调度日志", businessType = BusinessType.CLEAN)
 	@DeleteMapping("/clean")
 	@PreAuthorize("@role.hasPermi('system:job:remove')")
-	public AjaxResult clean() {
+	public JsonResult<String> clean() {
 		jobLogService.cleanJobLog();
-		return AjaxResult.success();
+		return JsonResult.success();
 	}
 
 }

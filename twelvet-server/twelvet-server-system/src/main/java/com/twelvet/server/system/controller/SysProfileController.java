@@ -7,6 +7,7 @@ import com.twelvet.api.system.domain.params.UserPassword;
 import com.twelvet.api.system.domain.vo.UserInfoVo;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.core.application.domain.JsonResult;
 import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.log.annotation.Log;
@@ -39,7 +40,7 @@ public class SysProfileController extends TWTController {
 	 * @return AjaxResult
 	 */
 	@GetMapping
-	public AjaxResult profile() {
+	public JsonResult<UserInfoVo> profile() {
 		String username = SecurityUtils.getUsername();
 		SysUser user = userService.selectUserByUserName(username, true);
 
@@ -49,7 +50,7 @@ public class SysProfileController extends TWTController {
 		userInfoVo.setPostGroup(userService.selectUserPostGroup(username));
 		userInfoVo.setRoleGroup(userService.selectUserRoleGroup(username));
 
-		return AjaxResult.success(userInfoVo);
+		return JsonResult.success(userInfoVo);
 	}
 
 	/**
@@ -59,13 +60,13 @@ public class SysProfileController extends TWTController {
 	 */
 	@Log(service = "个人信息", businessType = BusinessType.UPDATE)
 	@PutMapping
-	public AjaxResult updateProfile(@RequestBody SysUser user) {
+	public JsonResult<String> updateProfile(@RequestBody SysUser user) {
 		Long userId = SecurityUtils.getLoginUser().getUserId();
 		user.setUserId(userId);
 		if (userService.updateUserProfile(user) > 0) {
-			return AjaxResult.success();
+			return JsonResult.success();
 		}
-		return AjaxResult.error("修改个人信息异常，请联系管理员");
+		return JsonResult.error("修改个人信息异常，请联系管理员");
 	}
 
 	/**
@@ -108,10 +109,10 @@ public class SysProfileController extends TWTController {
 	 */
 	@Log(service = "个人信息", businessType = BusinessType.UPDATE)
 	@PutMapping("/updatePwd")
-	public AjaxResult updatePwd(@RequestBody UserPassword userPassword) {
+	public JsonResult<String> updatePwd(@RequestBody UserPassword userPassword) {
 
 		if (!userPassword.getNewPassword().equals(userPassword.getConfirmPassword())) {
-			return AjaxResult.error("确认密码不一致");
+			return JsonResult.error("确认密码不一致");
 		}
 
 		String username = SecurityUtils.getUsername();
@@ -119,18 +120,18 @@ public class SysProfileController extends TWTController {
 		String password = user.getPassword();
 
 		if (!SecurityUtils.matchesPassword(userPassword.getOldPassword(), password)) {
-			return AjaxResult.error("修改密码失败，旧密码错误");
+			return JsonResult.error("修改密码失败，旧密码错误");
 		}
 
 		if (SecurityUtils.matchesPassword(userPassword.getNewPassword(), password)) {
-			return AjaxResult.error("新密码不能与旧密码相同");
+			return JsonResult.error("新密码不能与旧密码相同");
 		}
 
 		if (userService.resetUserPwd(username, SecurityUtils.encryptPassword(userPassword.getNewPassword())) > 0) {
-			return AjaxResult.success();
+			return JsonResult.success();
 		}
 
-		return AjaxResult.error("修改密码异常，请联系管理员");
+		return JsonResult.error("修改密码异常，请联系管理员");
 	}
 
 }

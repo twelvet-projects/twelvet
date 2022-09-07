@@ -3,7 +3,9 @@ package com.twelvet.server.job.controller;
 import com.twelvet.api.job.domain.SysJob;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.core.application.domain.JsonResult;
 import com.twelvet.framework.core.constants.Constants;
+import com.twelvet.framework.jdbc.web.page.TableDataInfo;
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
@@ -41,10 +43,10 @@ public class SysJobController extends TWTController {
 	 */
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('monitor:job:list')")
-	public AjaxResult pageQuery(SysJob sysJob) {
+	public JsonResult<TableDataInfo> pageQuery(SysJob sysJob) {
 		PageUtils.startPage();
 		List<SysJob> list = jobService.selectJobList(sysJob);
-		return AjaxResult.success(PageUtils.getDataTable(list));
+		return JsonResult.success(PageUtils.getDataTable(list));
 	}
 
 	/**
@@ -68,8 +70,8 @@ public class SysJobController extends TWTController {
 	 */
 	@GetMapping(value = "/{jobId}")
 	@PreAuthorize("@role.hasPermi('monitor:job:query')")
-	public AjaxResult getByJobId(@PathVariable("jobId") Long jobId) {
-		return AjaxResult.success(jobService.selectJobById(jobId));
+	public JsonResult<SysJob> getByJobId(@PathVariable("jobId") Long jobId) {
+		return JsonResult.success(jobService.selectJobById(jobId));
 	}
 
 	/**
@@ -82,7 +84,7 @@ public class SysJobController extends TWTController {
 	@Log(service = "定时任务", businessType = BusinessType.INSERT)
 	@PostMapping
 	@PreAuthorize("@role.hasPermi('monitor:job:insert')")
-	public AjaxResult insert(@RequestBody SysJob sysJob) throws SchedulerException, TaskException {
+	public JsonResult<String> insert(@RequestBody SysJob sysJob) throws SchedulerException, TaskException {
 		if (!CronUtils.isValid(sysJob.getCronExpression())) {
 			return error("新增任务'" + sysJob.getJobName() + "'失败，Cron表达式不正确");
 		}
@@ -118,7 +120,7 @@ public class SysJobController extends TWTController {
 	@Log(service = "定时任务", businessType = BusinessType.UPDATE)
 	@PutMapping
 	@PreAuthorize("@role.hasPermi('monitor:job:update')")
-	public AjaxResult update(@RequestBody SysJob sysJob) throws SchedulerException, TaskException {
+	public JsonResult<String> update(@RequestBody SysJob sysJob) throws SchedulerException, TaskException {
 		if (!CronUtils.isValid(sysJob.getCronExpression())) {
 			return error("修改任务'" + sysJob.getJobName() + "'失败，Cron表达式不正确");
 		}
@@ -152,7 +154,7 @@ public class SysJobController extends TWTController {
 	@Log(service = "定时任务", businessType = BusinessType.UPDATE)
 	@PutMapping("/changeStatus")
 	@PreAuthorize("@role.hasPermi('monitor:job:update')")
-	public AjaxResult changeStatus(@RequestBody SysJob job) throws SchedulerException {
+	public JsonResult<String> changeStatus(@RequestBody SysJob job) throws SchedulerException {
 		SysJob newJob = jobService.selectJobById(job.getJobId());
 		newJob.setStatus(job.getStatus());
 		return json(jobService.changeStatus(newJob));
@@ -166,9 +168,9 @@ public class SysJobController extends TWTController {
 	 */
 	@Log(service = "定时任务", businessType = BusinessType.UPDATE)
 	@PutMapping("/run")
-	public AjaxResult run(@RequestBody SysJob job) throws SchedulerException {
+	public JsonResult<String> run(@RequestBody SysJob job) throws SchedulerException {
 		jobService.run(job);
-		return AjaxResult.success();
+		return JsonResult.success();
 	}
 
 	/**
@@ -180,9 +182,9 @@ public class SysJobController extends TWTController {
 	@Log(service = "定时任务", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{jobIds}")
 	@PreAuthorize("@role.hasPermi('monitor:job:remove')")
-	public AjaxResult remove(@PathVariable Long[] jobIds) throws SchedulerException {
+	public JsonResult<String> remove(@PathVariable Long[] jobIds) throws SchedulerException {
 		jobService.deleteJobByIds(jobIds);
-		return AjaxResult.success();
+		return JsonResult.success();
 	}
 
 }

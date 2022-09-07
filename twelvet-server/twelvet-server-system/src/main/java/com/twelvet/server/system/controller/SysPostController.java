@@ -3,7 +3,9 @@ package com.twelvet.server.system.controller;
 import com.twelvet.api.system.domain.SysPost;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.core.application.domain.JsonResult;
 import com.twelvet.framework.core.constants.UserConstants;
+import com.twelvet.framework.jdbc.web.page.TableDataInfo;
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
@@ -38,12 +40,12 @@ public class SysPostController extends TWTController {
 	@Log(service = "岗位管理", businessType = BusinessType.INSERT)
 	@PostMapping
 	@PreAuthorize("@role.hasPermi('system:post:insert')")
-	public AjaxResult insert(@Validated @RequestBody SysPost sysPost) {
+	public JsonResult<String> insert(@Validated @RequestBody SysPost sysPost) {
 		if (UserConstants.NOT_UNIQUE.equals(iSysPostService.checkPostNameUnique(sysPost))) {
-			return AjaxResult.error("新增岗位'" + sysPost.getPostName() + "'失败，岗位名称已存在");
+			return JsonResult.error("新增岗位'" + sysPost.getPostName() + "'失败，岗位名称已存在");
 		}
 		else if (UserConstants.NOT_UNIQUE.equals(iSysPostService.checkPostCodeUnique(sysPost))) {
-			return AjaxResult.error("新增岗位'" + sysPost.getPostName() + "'失败，岗位编码已存在");
+			return JsonResult.error("新增岗位'" + sysPost.getPostName() + "'失败，岗位编码已存在");
 		}
 		sysPost.setCreateBy(SecurityUtils.getUsername());
 		return json(iSysPostService.insertPost(sysPost));
@@ -52,12 +54,12 @@ public class SysPostController extends TWTController {
 	/**
 	 * 删除岗位
 	 * @param postIds 唯一ID数组
-	 * @return AjaxResult
+	 * @return JsonResult
 	 */
 	@Log(service = "岗位管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{postIds}")
 	@PreAuthorize("@role.hasPermi('system:post:remove')")
-	public AjaxResult remove(@PathVariable Long[] postIds) {
+	public JsonResult<String> remove(@PathVariable Long[] postIds) {
 		return json(iSysPostService.deletePostByIds(postIds));
 	}
 
@@ -69,12 +71,12 @@ public class SysPostController extends TWTController {
 	@Log(service = "岗位管理", businessType = BusinessType.UPDATE)
 	@PutMapping
 	@PreAuthorize("@role.hasPermi('system:post:update')")
-	public AjaxResult update(@Validated @RequestBody SysPost sysPost) {
+	public JsonResult<String> update(@Validated @RequestBody SysPost sysPost) {
 		if (UserConstants.NOT_UNIQUE.equals(iSysPostService.checkPostNameUnique(sysPost))) {
-			return AjaxResult.error("修改岗位'" + sysPost.getPostName() + "'失败，岗位名称已存在");
+			return JsonResult.error("修改岗位'" + sysPost.getPostName() + "'失败，岗位名称已存在");
 		}
 		else if (UserConstants.NOT_UNIQUE.equals(iSysPostService.checkPostCodeUnique(sysPost))) {
-			return AjaxResult.error("修改岗位'" + sysPost.getPostName() + "'失败，岗位编码已存在");
+			return JsonResult.error("修改岗位'" + sysPost.getPostName() + "'失败，岗位编码已存在");
 		}
 		sysPost.setUpdateBy(SecurityUtils.getUsername());
 		return json(iSysPostService.updatePost(sysPost));
@@ -87,10 +89,10 @@ public class SysPostController extends TWTController {
 	 */
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:post:list')")
-	public AjaxResult pageQuery(SysPost post) {
+	public JsonResult<TableDataInfo> pageQuery(SysPost post) {
 		PageUtils.startPage();
 		List<SysPost> list = iSysPostService.selectPostList(post);
-		return AjaxResult.success(PageUtils.getDataTable(list));
+		return JsonResult.success(PageUtils.getDataTable(list));
 	}
 
 	/**
@@ -100,8 +102,8 @@ public class SysPostController extends TWTController {
 	 */
 	@GetMapping("/{postId}")
 	@PreAuthorize("@role.hasPermi('system:post:query')")
-	public AjaxResult getByPostId(@PathVariable Long postId) {
-		return AjaxResult.success(iSysPostService.selectPostById(postId));
+	public JsonResult<SysPost> getByPostId(@PathVariable Long postId) {
+		return JsonResult.success(iSysPostService.selectPostById(postId));
 	}
 
 	/**
@@ -109,9 +111,9 @@ public class SysPostController extends TWTController {
 	 * @return AjaxResult
 	 */
 	@GetMapping("/optionSelect")
-	public AjaxResult optionSelect() {
+	public JsonResult<List<SysPost>> optionSelect() {
 		List<SysPost> posts = iSysPostService.selectPostAll();
-		return AjaxResult.success(posts);
+		return JsonResult.success(posts);
 	}
 
 	/**

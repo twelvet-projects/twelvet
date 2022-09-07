@@ -3,7 +3,9 @@ package com.twelvet.server.system.controller;
 import com.twelvet.api.system.domain.SysRole;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.core.application.domain.JsonResult;
 import com.twelvet.framework.core.constants.UserConstants;
+import com.twelvet.framework.jdbc.web.page.TableDataInfo;
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
@@ -37,10 +39,10 @@ public class SysRoleController extends TWTController {
 	 */
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:role:list')")
-	public AjaxResult pageQuery(SysRole role) {
+	public JsonResult<TableDataInfo> pageQuery(SysRole role) {
 		PageUtils.startPage();
 		List<SysRole> list = iSysRoleService.selectRoleList(role);
-		return AjaxResult.success(PageUtils.getDataTable(list));
+		return JsonResult.success(PageUtils.getDataTable(list));
 	}
 
 	/**
@@ -64,9 +66,9 @@ public class SysRoleController extends TWTController {
 	 */
 	@GetMapping("/{roleId}")
 	@PreAuthorize("@role.hasPermi('system:role:query')")
-	public AjaxResult getInfo(@PathVariable Long roleId) {
+	public JsonResult<SysRole> getInfo(@PathVariable Long roleId) {
 		iSysRoleService.checkRoleDataScope(roleId);
-		return AjaxResult.success(iSysRoleService.selectRoleById(roleId));
+		return JsonResult.success(iSysRoleService.selectRoleById(roleId));
 	}
 
 	/**
@@ -77,12 +79,12 @@ public class SysRoleController extends TWTController {
 	@Log(service = "角色管理", businessType = BusinessType.INSERT)
 	@PostMapping
 	@PreAuthorize("@role.hasPermi('system:role:insert')")
-	public AjaxResult insert(@Validated @RequestBody SysRole role) {
+	public JsonResult<String> insert(@Validated @RequestBody SysRole role) {
 		if (UserConstants.NOT_UNIQUE.equals(iSysRoleService.checkRoleNameUnique(role))) {
-			return AjaxResult.error("新增角色'" + role.getRoleName() + "'失败，角色名称已存在");
+			return JsonResult.error("新增角色'" + role.getRoleName() + "'失败，角色名称已存在");
 		}
 		else if (UserConstants.NOT_UNIQUE.equals(iSysRoleService.checkRoleKeyUnique(role))) {
-			return AjaxResult.error("新增角色'" + role.getRoleName() + "'失败，角色权限已存在");
+			return JsonResult.error("新增角色'" + role.getRoleName() + "'失败，角色权限已存在");
 		}
 		role.setCreateBy(SecurityUtils.getUsername());
 		return json(iSysRoleService.insertRole(role));
@@ -96,14 +98,14 @@ public class SysRoleController extends TWTController {
 	@Log(service = "角色管理", businessType = BusinessType.UPDATE)
 	@PutMapping
 	@PreAuthorize("@role.hasPermi('system:role:update')")
-	public AjaxResult update(@Validated @RequestBody SysRole role) {
+	public JsonResult<String> update(@Validated @RequestBody SysRole role) {
 		iSysRoleService.checkRoleAllowed(role);
 		iSysRoleService.checkRoleDataScope(role.getRoleId());
 		if (UserConstants.NOT_UNIQUE.equals(iSysRoleService.checkRoleNameUnique(role))) {
-			return AjaxResult.error("修改角色'" + role.getRoleName() + "'失败，角色名称已存在");
+			return JsonResult.error("修改角色'" + role.getRoleName() + "'失败，角色名称已存在");
 		}
 		else if (UserConstants.NOT_UNIQUE.equals(iSysRoleService.checkRoleKeyUnique(role))) {
-			return AjaxResult.error("修改角色'" + role.getRoleName() + "'失败，角色权限已存在");
+			return JsonResult.error("修改角色'" + role.getRoleName() + "'失败，角色权限已存在");
 		}
 		role.setUpdateBy(SecurityUtils.getUsername());
 		return json(iSysRoleService.updateRole(role));
@@ -117,7 +119,7 @@ public class SysRoleController extends TWTController {
 	@Log(service = "角色管理", businessType = BusinessType.UPDATE)
 	@PutMapping("/changeStatus")
 	@PreAuthorize("@role.hasPermi('system:role:update')")
-	public AjaxResult changeStatus(@RequestBody SysRole role) {
+	public JsonResult<String> changeStatus(@RequestBody SysRole role) {
 		iSysRoleService.checkRoleAllowed(role);
 		role.setUpdateBy(SecurityUtils.getUsername());
 		return json(iSysRoleService.updateRoleStatus(role));
@@ -129,7 +131,7 @@ public class SysRoleController extends TWTController {
 	@Log(service = "角色管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{roleIds}")
 	@PreAuthorize("@role.hasPermi('system:role:remove')")
-	public AjaxResult remove(@PathVariable Long[] roleIds) {
+	public JsonResult<String> remove(@PathVariable Long[] roleIds) {
 		return json(iSysRoleService.deleteRoleByIds(roleIds));
 	}
 
@@ -138,8 +140,8 @@ public class SysRoleController extends TWTController {
 	 */
 	@GetMapping("/optionSelect")
 	@PreAuthorize("@role.hasPermi('system:role:query')")
-	public AjaxResult optionSelect() {
-		return AjaxResult.success(iSysRoleService.selectRoleAll());
+	public JsonResult<List<SysRole>> optionSelect() {
+		return JsonResult.success(iSysRoleService.selectRoleAll());
 	}
 
 }

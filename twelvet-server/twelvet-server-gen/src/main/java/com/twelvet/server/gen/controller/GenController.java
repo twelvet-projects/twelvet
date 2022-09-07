@@ -4,6 +4,7 @@ import com.twelvet.api.gen.domain.GenTable;
 import com.twelvet.api.gen.domain.GenTableColumn;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.core.application.domain.JsonResult;
 import com.twelvet.framework.jdbc.web.page.TableDataInfo;
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
@@ -45,10 +46,10 @@ public class GenController extends TWTController {
 	 */
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('tool:gen:list')")
-	public AjaxResult pageQuery(GenTable genTable) {
+	public JsonResult<TableDataInfo> pageQuery(GenTable genTable) {
 		PageUtils.startPage();
 		List<GenTable> list = genTableService.selectGenTableList(genTable);
-		return AjaxResult.success(PageUtils.getDataTable(list));
+		return JsonResult.success(PageUtils.getDataTable(list));
 	}
 
 	/**
@@ -75,10 +76,10 @@ public class GenController extends TWTController {
 	 */
 	@PreAuthorize("@role.hasPermi('tool:gen:list')")
 	@GetMapping("/db/list")
-	public AjaxResult dataList(GenTable genTable) {
+	public JsonResult<TableDataInfo> dataList(GenTable genTable) {
 		PageUtils.startPage();
 		List<GenTable> list = genTableService.selectDbTableList(genTable);
-		return AjaxResult.success(PageUtils.getDataTable(list));
+		return JsonResult.success(PageUtils.getDataTable(list));
 	}
 
 	/**
@@ -87,12 +88,12 @@ public class GenController extends TWTController {
 	 * @return AjaxResult
 	 */
 	@GetMapping(value = "/column/{tableId}")
-	public AjaxResult columnList(@PathVariable Long tableId) {
+	public JsonResult<TableDataInfo> columnList(@PathVariable Long tableId) {
 		TableDataInfo dataInfo = new TableDataInfo();
 		List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(tableId);
 		dataInfo.setRecords(list);
 		dataInfo.setTotal(list.size());
-		return AjaxResult.success(dataInfo);
+		return JsonResult.success(dataInfo);
 	}
 
 	/**
@@ -103,12 +104,12 @@ public class GenController extends TWTController {
 	@PreAuthorize("@role.hasPermi('tool:gen:list')")
 	@Log(service = "代码生成", businessType = BusinessType.IMPORT)
 	@PostMapping("/importTable")
-	public AjaxResult importTableSave(String tables) {
+	public JsonResult<String> importTableSave(String tables) {
 		String[] tableNames = Convert.toStrArray(tables);
 		// 查询表信息
 		List<GenTable> tableList = genTableService.selectDbTableListByNames(tableNames);
 		genTableService.importGenTable(tableList);
-		return AjaxResult.success();
+		return JsonResult.success();
 	}
 
 	/**
@@ -119,10 +120,10 @@ public class GenController extends TWTController {
 	@PreAuthorize("@role.hasPermi('tool:gen:edit')")
 	@Log(service = "代码生成", businessType = BusinessType.UPDATE)
 	@PutMapping
-	public AjaxResult editSave(@Validated @RequestBody GenTable genTable) {
+	public JsonResult<String> editSave(@Validated @RequestBody GenTable genTable) {
 		genTableService.validateEdit(genTable);
 		genTableService.updateGenTable(genTable);
-		return AjaxResult.success();
+		return JsonResult.success();
 	}
 
 	/**
@@ -133,9 +134,9 @@ public class GenController extends TWTController {
 	@PreAuthorize("@role.hasPermi('tool:gen:remove')")
 	@Log(service = "代码生成", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{tableIds}")
-	public AjaxResult remove(@PathVariable Long[] tableIds) {
+	public JsonResult<String> remove(@PathVariable Long[] tableIds) {
 		genTableService.deleteGenTableByIds(tableIds);
-		return AjaxResult.success();
+		return JsonResult.success();
 	}
 
 	/**
@@ -172,9 +173,9 @@ public class GenController extends TWTController {
 	@PreAuthorize("@role.hasPermi('tool:gen:code')")
 	@Log(service = "代码生成", businessType = BusinessType.GENCODE)
 	@GetMapping("/genCode/{tableName}")
-	public AjaxResult genCode(@PathVariable("tableName") String tableName) {
+	public JsonResult<String> genCode(@PathVariable("tableName") String tableName) {
 		genTableService.generatorCode(tableName);
-		return AjaxResult.success();
+		return JsonResult.success();
 	}
 
 	/**
@@ -185,9 +186,9 @@ public class GenController extends TWTController {
 	@PreAuthorize("@role.hasPermi('tool:gen:edit')")
 	@Log(service = "代码生成", businessType = BusinessType.UPDATE)
 	@GetMapping("/synchDb/{tableName}")
-	public AjaxResult synchDb(@PathVariable("tableName") String tableName) {
+	public JsonResult<String> synchDb(@PathVariable("tableName") String tableName) {
 		genTableService.synchDb(tableName);
-		return AjaxResult.success();
+		return JsonResult.success();
 	}
 
 	/**
