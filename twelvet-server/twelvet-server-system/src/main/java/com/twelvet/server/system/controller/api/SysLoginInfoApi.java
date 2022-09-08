@@ -6,6 +6,7 @@ import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.utils.http.IpUtils;
 import com.twelvet.server.system.service.ISysLoginInfoService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  * @WebSite www.twelvet.cn
  * @Description: 系统操作/访问日志
  */
-@Api(tags = "系统操作/访问日志API")
+@Api(tags = "系统操作日志API")
 @RestController
 @RequestMapping("/api/loginInfo")
 public class SysLoginInfoApi extends TWTController {
@@ -26,6 +27,7 @@ public class SysLoginInfoApi extends TWTController {
 	 * 记录登录信息
 	 * @param sysLoginInfo SysLoginInfo
 	 */
+	@ApiOperation(value = "记录登录信息")
 	@AuthIgnore
 	@PostMapping
 	public void insertLog(@RequestBody SysLoginInfo sysLoginInfo) {
