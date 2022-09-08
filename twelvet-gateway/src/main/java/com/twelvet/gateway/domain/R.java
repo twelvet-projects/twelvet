@@ -1,5 +1,7 @@
 package com.twelvet.gateway.domain;
 
+import io.swagger.annotations.ApiModel;
+
 import java.io.Serializable;
 
 /**
@@ -7,6 +9,7 @@ import java.io.Serializable;
  * @WebSite www.twelvet.cn
  * @Description: 响应信息实体
  */
+@ApiModel("响应信息实体")
 public class R<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
