@@ -39,7 +39,7 @@ public class SysDeptController extends TWTController {
 	/**
 	 * 获取部门列表
 	 * @param dept SysDept
-	 * @return JsonResult<List<SysDept>>
+	 * @return JsonResult<List < SysDept>>
 	 */
 	@ApiOperation(value = "获取部门列表")
 	@GetMapping("/list")
@@ -52,7 +52,7 @@ public class SysDeptController extends TWTController {
 	/**
 	 * 查询部门列表（排除节点）
 	 * @param deptId 部门ID
-	 * @return JsonResult<List<SysDept>>
+	 * @return JsonResult<List < SysDept>>
 	 */
 	@ApiOperation(value = "查询部门列表")
 	@GetMapping("/list/exclude/{deptId}")
@@ -80,7 +80,7 @@ public class SysDeptController extends TWTController {
 	/**
 	 * 获取部门下拉树列表
 	 * @param dept SysDept
-	 * @return JsonResult<List<TreeSelect>>
+	 * @return JsonResult<List < TreeSelect>>
 	 */
 	@ApiOperation(value = "获取部门下拉树列表")
 	@GetMapping("/treeSelect")
