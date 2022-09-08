@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description: 响应信息实体
+ * @Description:
  */
 @ApiModel("响应信息实体")
 public class R<T> implements Serializable {
