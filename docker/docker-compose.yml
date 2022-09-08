@@ -105,7 +105,7 @@ services:
       dockerfile: dockerfile
 
   twelvet-server-system:
-    container_name: twelvet-system
+    container_name: twelvet-server-system
     restart: always
     depends_on:
       - twelvet-nacos
@@ -117,7 +117,7 @@ services:
       dockerfile: dockerfile
 
   twelvet-server-job:
-    container_name: twelvet-job
+    container_name: twelvet-server-job
     restart: always
     depends_on:
       - twelvet-nacos
@@ -129,7 +129,7 @@ services:
       dockerfile: dockerfile
 
   twelvet-server-dfs:
-    container_name: twelvet-dfs
+    container_name: twelvet-server-dfs
     restart: always
     depends_on:
       - twelvet-nacos
@@ -141,7 +141,7 @@ services:
       dockerfile: dockerfile
 
   twelvet-visual-monitor:
-    container_name: twelvet-monitor
+    container_name: twelvet-visual-monitor
     restart: always
     depends_on:
       - twelvet-nacos
