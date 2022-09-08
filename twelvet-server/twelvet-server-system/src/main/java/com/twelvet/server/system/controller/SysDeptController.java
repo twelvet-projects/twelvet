@@ -26,9 +26,9 @@ import java.util.Map;
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description: 系统操作/访问日志
+ * @Description: 部门管理
  */
-@Api(value = "SysDeptController", tags = { "系统操作日志" })
+@Api(value = "SysDeptController", tags = { "部门管理" })
 @RestController
 @RequestMapping("/dept")
 public class SysDeptController extends TWTController {
