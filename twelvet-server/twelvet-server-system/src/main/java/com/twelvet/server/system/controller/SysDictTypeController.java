@@ -26,7 +26,7 @@ import java.util.List;
  * @WebSite www.twelvet.cn
  * @Description: 数据字典信息
  */
-@Api(value = "SysDictTypeController",tags = "数据字典信息")
+@Api(value = "SysDictTypeController", tags = "数据字典信息")
 @RestController
 @RequestMapping("/dictionaries/type")
 public class SysDictTypeController extends TWTController {

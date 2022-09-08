@@ -5,6 +5,7 @@ import com.twelvet.framework.security.annotation.AuthIgnore;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.server.system.service.ISysOperationLogService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,8 +25,8 @@ public class SysOperationLogApi extends TWTController {
 	/**
 	 * 新增操作日志
 	 * @param operationLog SysOperationLog
-	 * @return JsonResult
 	 */
+	@ApiOperation(value = "新增操作日志")
 	@AuthIgnore
 	@PostMapping
 	public void saveLog(@RequestBody SysOperationLog operationLog) {
