@@ -19,6 +19,7 @@ public class SysClientDetails extends BaseEntity {
 	/**
 	 * 终端编号
 	 */
+
 	@ApiModelProperty(value = "终端编号")
 	private String clientId;
 

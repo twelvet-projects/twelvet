@@ -3,6 +3,8 @@ package com.twelvet.api.system.domain;
 import com.twelvet.framework.core.application.domain.BaseEntity;
 import com.twelvet.framework.utils.annotation.excel.Excel;
 import com.twelvet.framework.utils.annotation.excel.Excel.ColumnType;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -14,6 +16,7 @@ import javax.validation.constraints.Size;
  * @WebSite www.twelvet.cn
  * @Description: 参数配置表 sys_config
  */
+@ApiModel("参数配置表")
 public class SysConfig extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -21,30 +24,35 @@ public class SysConfig extends BaseEntity {
 	/**
 	 * 参数主键
 	 */
+	@ApiModelProperty(value = "参数主键")
 	@Excel(name = "参数主键", cellType = ColumnType.NUMERIC)
 	private Long configId;
 
 	/**
 	 * 参数名称
 	 */
+	@ApiModelProperty(value = "参数名称")
 	@Excel(name = "参数名称")
 	private String configName;
 
 	/**
 	 * 参数键名
 	 */
+	@ApiModelProperty(value = "参数键名")
 	@Excel(name = "参数键名")
 	private String configKey;
 
 	/**
 	 * 参数键值
 	 */
+	@ApiModelProperty(value = "参数键值")
 	@Excel(name = "参数键值")
 	private String configValue;
 
 	/**
 	 * 系统内置（Y是 N否）
 	 */
+	@ApiModelProperty(value = "系统内置")
 	@Excel(name = "系统内置", readConverterExp = "Y=是,N=否")
 	private String configType;
 

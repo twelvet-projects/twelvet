@@ -1,5 +1,8 @@
 package com.twelvet.api.system.domain.params;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
@@ -7,6 +10,7 @@ import java.io.Serializable;
  * @WebSite www.twelvet.cn
  * @Description: 用户修改密码参数
  */
+@ApiModel("用户修改密码参数")
 public class UserPassword implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -14,16 +18,19 @@ public class UserPassword implements Serializable {
 	/**
 	 * 旧密码
 	 */
+	@ApiModelProperty(value = "旧密码")
 	private String oldPassword;
 
 	/**
 	 * 新密码
 	 */
+	@ApiModelProperty(value = "新密码")
 	private String newPassword;
 
 	/**
 	 * 确认密码
 	 */
+	@ApiModelProperty(value = "确认密码")
 	private String confirmPassword;
 
 	public String getOldPassword() {

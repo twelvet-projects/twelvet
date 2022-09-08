@@ -4,6 +4,8 @@ import com.twelvet.framework.core.application.domain.BaseEntity;
 import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.utils.annotation.excel.Excel;
 import com.twelvet.framework.utils.annotation.excel.Excel.ColumnType;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -15,6 +17,7 @@ import javax.validation.constraints.Size;
  * @WebSite www.twelvet.cn
  * @Description: 字典数据表 sys_dict_data
  */
+@ApiModel("字典数据表")
 public class SysDictData extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -22,52 +25,61 @@ public class SysDictData extends BaseEntity {
 	/**
 	 * 字典编码
 	 */
+	@ApiModelProperty(value = "字典编码")
 	@Excel(name = "字典编码", cellType = ColumnType.NUMERIC)
 	private Long dictCode;
 
 	/**
 	 * 字典排序
 	 */
+	@ApiModelProperty(value = "字典排序")
 	@Excel(name = "字典排序", cellType = ColumnType.NUMERIC)
 	private Long dictSort;
 
 	/**
 	 * 字典标签
 	 */
+	@ApiModelProperty(value = "字典标签")
 	@Excel(name = "字典标签")
 	private String dictLabel;
 
 	/**
 	 * 字典键值
 	 */
+	@ApiModelProperty(value = "字典键值")
 	@Excel(name = "字典键值")
 	private String dictValue;
 
 	/**
 	 * 字典类型
 	 */
+	@ApiModelProperty(value = "字典类型")
 	@Excel(name = "字典类型")
 	private String dictType;
 
 	/**
 	 * 样式属性（其他样式扩展）
 	 */
+	@ApiModelProperty(value = "样式属性")
 	private String cssClass;
 
 	/**
 	 * 表格字典样式
 	 */
+	@ApiModelProperty(value = "表格字典样式")
 	private String listClass;
 
 	/**
 	 * 是否默认（Y是 N否）
 	 */
+	@ApiModelProperty(value = "是否默认")
 	@Excel(name = "是否默认", readConverterExp = "Y=是,N=否")
 	private String isDefault;
 
 	/**
 	 * 状态（0正常 1停用）
 	 */
+	@ApiModelProperty(value = "状态")
 	@Excel(name = "状态", readConverterExp = "0=正常,1=停用")
 	private String status;
 

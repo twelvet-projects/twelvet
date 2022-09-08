@@ -3,6 +3,8 @@ package com.twelvet.api.system.domain;
 import com.twelvet.framework.core.application.domain.BaseEntity;
 import com.twelvet.framework.utils.annotation.excel.Excel;
 import com.twelvet.framework.utils.annotation.excel.Excel.ColumnType;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -14,6 +16,7 @@ import javax.validation.constraints.Size;
  * @WebSite www.twelvet.cn
  * @Description: 岗位表 sys_post
  */
+@ApiModel("岗位表")
 public class SysPost extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -21,36 +24,42 @@ public class SysPost extends BaseEntity {
 	/**
 	 * 岗位序号
 	 */
+	@ApiModelProperty(value = "岗位序号")
 	@Excel(name = "岗位序号", cellType = ColumnType.NUMERIC)
 	private Long postId;
 
 	/**
 	 * 岗位编码
 	 */
+	@ApiModelProperty(value = "岗位编码")
 	@Excel(name = "岗位编码")
 	private String postCode;
 
 	/**
 	 * 岗位名称
 	 */
+	@ApiModelProperty(value = "岗位名称")
 	@Excel(name = "岗位名称")
 	private String postName;
 
 	/**
 	 * 岗位排序
 	 */
+	@ApiModelProperty(value = "岗位排序")
 	@Excel(name = "岗位排序")
 	private String postSort;
 
 	/**
 	 * 状态（0正常 1停用）
 	 */
+	@ApiModelProperty(value = "状态")
 	@Excel(name = "状态", readConverterExp = "1=正常,0=停用")
 	private String status;
 
 	/**
 	 * 用户是否存在此岗位标识 默认不存在
 	 */
+	@ApiModelProperty(value = "岗位标识")
 	private boolean flag = false;
 
 	public Long getPostId() {

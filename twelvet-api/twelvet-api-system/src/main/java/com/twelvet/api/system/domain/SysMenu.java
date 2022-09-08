@@ -1,6 +1,8 @@
 package com.twelvet.api.system.domain;
 
 import com.twelvet.framework.core.application.domain.BaseEntity;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.List;
  * @WebSite www.twelvet.cn
  * @Description: 角色表 sys_menu
  */
+@ApiModel("角色表")
 public class SysMenu extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -17,71 +20,85 @@ public class SysMenu extends BaseEntity {
 	/**
 	 * 菜单ID
 	 */
+	@ApiModelProperty(value = "菜单ID")
 	private Long menuId;
 
 	/**
 	 * 菜单名称
 	 */
+	@ApiModelProperty(value = "菜单名称")
 	private String menuName;
 
 	/**
 	 * 父菜单名称
 	 */
+	@ApiModelProperty(value = "父菜单名称")
 	private String parentName;
 
 	/**
 	 * 父菜单ID
 	 */
+	@ApiModelProperty(value = "父菜单ID")
 	private Long parentId;
 
 	/**
 	 * 显示顺序
 	 */
+	@ApiModelProperty(value = "显示顺序")
 	private String orderNum;
 
 	/**
 	 * 路由地址
 	 */
+	@ApiModelProperty(value = "路由地址")
 	private String path;
 
 	/**
 	 * 组件路径
 	 */
+	@ApiModelProperty(value = "组件路径")
 	private String component;
 
 	/**
 	 * 是否为外链（1是 0否）
 	 */
+	@ApiModelProperty(value = "是否为外链")
 	private Integer isFrame;
 
 	/**
 	 * 类型（M目录 C菜单 F按钮）
 	 */
+	@ApiModelProperty(value = "类型")
 	private String menuType;
 
 	/**
 	 * 显示状态（1显示 0隐藏）
 	 */
+	@ApiModelProperty(value = "显示状态")
 	private String visible;
 
 	/**
 	 * 菜单状态（1显示 0隐藏）
 	 */
+	@ApiModelProperty(value = "菜单状态")
 	private String status;
 
 	/**
 	 * 权限字符串
 	 */
+	@ApiModelProperty(value = "权限字符串")
 	private String perms;
 
 	/**
 	 * 菜单图标
 	 */
+	@ApiModelProperty(value = "菜单图标")
 	private String icon;
 
 	/**
 	 * 子菜单
 	 */
+	@ApiModelProperty(value = "子菜单")
 	private List<SysMenu> routes = new ArrayList<>();
 
 	public Long getMenuId() {

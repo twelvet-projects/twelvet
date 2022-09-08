@@ -1,5 +1,8 @@
 package com.twelvet.api.system.domain.vo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
@@ -7,6 +10,7 @@ import java.io.Serializable;
  * @WebSite www.twelvet.cn
  * @Description: 路由显示信息
  */
+@ApiModel("路由显示信息")
 public class MetaVo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -14,11 +18,13 @@ public class MetaVo implements Serializable {
 	/**
 	 * 设置该路由在侧边栏和面包屑中展示的名字
 	 */
+	@ApiModelProperty(value = "展示的名字")
 	private String title;
 
 	/**
 	 * 设置该路由的图标，对应路径src/icons/svg
 	 */
+	@ApiModelProperty(value = "图标对应路径")
 	private String icon;
 
 	public MetaVo() {

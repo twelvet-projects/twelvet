@@ -2,13 +2,15 @@ package com.twelvet.api.system.domain;
 
 import com.twelvet.framework.core.application.domain.BaseEntity;
 import com.twelvet.framework.utils.annotation.excel.Excel;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.twelvet.framework.utils.annotation.excel.Excel.ColumnType;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-
+@ApiModel("字典表")
 public class SysDictType extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -16,24 +18,28 @@ public class SysDictType extends BaseEntity {
 	/**
 	 * 字典主键
 	 */
+	@ApiModelProperty(value = "字典主键")
 	@Excel(name = "字典主键", cellType = ColumnType.NUMERIC)
 	private Long dictId;
 
 	/**
 	 * 字典名称
 	 */
+	@ApiModelProperty(value = "字典名称")
 	@Excel(name = "字典名称")
 	private String dictName;
 
 	/**
 	 * 字典类型
 	 */
+	@ApiModelProperty(value = "字典类型")
 	@Excel(name = "字典类型")
 	private String dictType;
 
 	/**
 	 * 状态（0正常 1停用）
 	 */
+	@ApiModelProperty(value = "状态")
 	@Excel(name = "状态", readConverterExp = "1=正常,0=停用")
 	private String status;
 
