@@ -1,44 +1,54 @@
 package com.twelvet.api.dfs.domain;
 
 import com.twelvet.framework.core.application.domain.BaseEntity;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+@ApiModel("SysDfs")
 public class SysDfs extends BaseEntity {
 
 	/**
 	 * 主键
 	 */
+	@ApiModelProperty(value = "主键")
 	private Long fileId;
 
 	/**
 	 * 文件路径
 	 */
+	@ApiModelProperty(value = "文件路径")
 	private String path;
 
 	/**
 	 * 文件名称
 	 */
+	@ApiModelProperty(value = "文件名称")
 	private String fileName;
 
 	/**
 	 * 文件原名称
 	 */
+	@ApiModelProperty(value = "文件原名称")
 	private String originalFileName;
 
 	/**
 	 * 文件分组
 	 */
+	@ApiModelProperty(value = "文件分组")
 	private String spaceName;
 
 	/**
 	 * 文件大小
 	 */
+	@ApiModelProperty(value = "文件大小")
 	private Long size;
 
 	/**
 	 * 文件类型
 	 */
+	@ApiModelProperty(value = "文件类型")
 	private String type;
 
 	public Long getFileId() {
