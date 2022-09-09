@@ -1,7 +1,7 @@
 package com.twelvet.gateway.handler;
 
-import com.alibaba.fastjson.JSON;
-import com.twelvet.gateway.domain.R;
+import com.twelvet.framework.core.domain.R;
+import com.twelvet.framework.utils.JacksonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
@@ -72,7 +72,7 @@ public class TWTExceptionHandler implements ErrorWebExceptionHandler {
 		// 返回信息
 		return response.writeWith(Mono.fromSupplier(() -> {
 			DataBufferFactory bufferFactory = response.bufferFactory();
-			return bufferFactory.wrap(JSON.toJSONBytes(R.fail(code.value(), msg)));
+			return bufferFactory.wrap(JacksonUtils.toJsonAsBytes(R.fail(code.value(), msg)));
 		}));
 
 	}

@@ -1,6 +1,6 @@
 package com.twelvet.gateway.handler;
 
-import com.twelvet.gateway.domain.R;
+import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.utils.JacksonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
