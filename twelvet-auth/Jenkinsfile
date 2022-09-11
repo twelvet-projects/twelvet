@@ -37,7 +37,7 @@ node {
       remote.allowAnyHosts = true
       stage('push to twelvet') {
         sshPut remote: remote, from: 'twelvet-auth/target/twelvet-auth.jar', into: '/twelvet/docker/twelvet/auth/'
-        sshCommand remote: remote, command: 'docker-compose -f /data/docker/twelvet/docker-compose.yml restart twelvet-auth'
+        sshCommand remote: remote, command: 'docker-compose -f /twelvet/docker/docker-compose.yml restart twelvet-auth'
       }
     }
   }
