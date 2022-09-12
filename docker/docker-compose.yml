@@ -80,6 +80,7 @@ services:
 
   twelvet-gateway:
     container_name: twelvet-gateway
+    image: twelvet-gateway
     restart: always
     depends_on:
       - twelvet-nacos
@@ -94,6 +95,7 @@ services:
 
   twelvet-auth:
     container_name: twelvet-auth
+    image: twelvet-auth
     restart: always
     depends_on:
       - twelvet-nacos
@@ -106,6 +108,7 @@ services:
 
   twelvet-server-system:
     container_name: twelvet-server-system
+    image: twelvet-server-system
     restart: always
     depends_on:
       - twelvet-nacos
@@ -118,6 +121,7 @@ services:
 
   twelvet-server-job:
     container_name: twelvet-server-job
+    image: twelvet-server-job
     restart: always
     depends_on:
       - twelvet-nacos
@@ -130,6 +134,7 @@ services:
 
   twelvet-server-dfs:
     container_name: twelvet-server-dfs
+    image: twelvet-server-dfs
     restart: always
     depends_on:
       - twelvet-nacos
@@ -142,6 +147,7 @@ services:
 
   twelvet-visual-monitor:
     container_name: twelvet-visual-monitor
+    image: twelvet-visual-monitor
     restart: always
     depends_on:
       - twelvet-nacos
