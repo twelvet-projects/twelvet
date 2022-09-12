@@ -36,7 +36,7 @@ node {
       remote.password = password
       remote.allowAnyHosts = true
       stage('push to twelvet') {
-        sshPut remote: remote, from: 'twelvet-server/twelvet-server-dfs/target/twelvet-server-dfs.jar', into: '/twelvet/docker/twelvet/dfs/jar/'
+        sshPut remote: remote, from: 'twelvet-server/twelvet-server-dfs/target/twelvet-server-dfs.jar', into: '/twelvet/docker/twelvet/server/dfs/jar/'
         sshCommand remote: remote, command: 'docker-compose -f /twelvet/docker/docker-compose.yml restart twelvet-server-dfs'
       }
     }
