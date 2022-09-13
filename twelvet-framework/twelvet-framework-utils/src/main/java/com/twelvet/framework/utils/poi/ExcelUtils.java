@@ -116,7 +116,7 @@ public class ExcelUtils<T> {
 	/**
 	 * 统计列表
 	 */
-	private Map<Integer, Double> statistics = new HashMap<Integer, Double>();
+	private final Map<Integer, Double> statistics = new HashMap<>();
 
 	/**
 	 * 数字格式
@@ -134,7 +134,7 @@ public class ExcelUtils<T> {
 
 	public void init(List<T> list, String sheetName, String title, Type type) {
 		if (list == null) {
-			list = new ArrayList<T>();
+			list = new ArrayList<>();
 		}
 		this.list = list;
 		this.sheetName = sheetName;
@@ -189,7 +189,7 @@ public class ExcelUtils<T> {
 	public List<T> importExcel(String sheetName, InputStream is, int titleNum) throws Exception {
 		this.type = Type.IMPORT;
 		this.wb = WorkbookFactory.create(is);
-		List<T> list = new ArrayList<T>();
+		List<T> list = new ArrayList<>();
 		// 如果指定sheet名,则取指定sheet中的内容 否则默认指向第1个sheet
 		Sheet sheet = StringUtils.isNotEmpty(sheetName) ? wb.getSheet(sheetName) : wb.getSheetAt(0);
 		if (sheet == null) {
