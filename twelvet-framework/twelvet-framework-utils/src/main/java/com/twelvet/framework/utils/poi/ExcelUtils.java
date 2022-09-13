@@ -33,8 +33,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.apache.poi.xssf.usermodel.XSSFWorkbookType.XLSX;
-
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
@@ -203,7 +201,7 @@ public class ExcelUtils<T> {
 
 		if (rows > 0) {
 			// 定义一个map用于存放excel列的序号和field.
-			Map<String, Integer> cellMap = new HashMap<String, Integer>();
+			Map<String, Integer> cellMap = new HashMap<>();
 			// 获取表头
 			Row heard = sheet.getRow(titleNum);
 			for (int i = 0; i < heard.getPhysicalNumberOfCells(); i++) {
@@ -218,7 +216,7 @@ public class ExcelUtils<T> {
 			}
 			// 有数据时才处理 得到类的所有field.
 			List<Object[]> fields = this.getFields();
-			Map<Integer, Object[]> fieldsMap = new HashMap<Integer, Object[]>();
+			Map<Integer, Object[]> fieldsMap = new HashMap<>();
 			for (Object[] objects : fields) {
 				Excel attr = (Excel) objects[1];
 				Integer column = cellMap.get(attr.name());
@@ -311,8 +309,6 @@ public class ExcelUtils<T> {
 	 * 对list数据源将其里面的数据导入到excel表单
 	 * @param response 返回数据
 	 * @param sheetName 工作表的名称
-	 * @return 结果
-	 * @throws IOException
 	 */
 	public void exportExcel(HttpServletResponse response, String sheetName) {
 		exportExcel(response, null, sheetName, StringUtils.EMPTY);
@@ -323,8 +319,6 @@ public class ExcelUtils<T> {
 	 * @param response 返回数据
 	 * @param list 导出数据集合
 	 * @param sheetName 工作表的名称
-	 * @return 结果
-	 * @throws IOException
 	 */
 	public void exportExcel(HttpServletResponse response, List<T> list, String sheetName) {
 		exportExcel(response, list, sheetName, StringUtils.EMPTY);
@@ -336,8 +330,6 @@ public class ExcelUtils<T> {
 	 * @param list 导出数据集合
 	 * @param sheetName 工作表的名称
 	 * @param title 标题
-	 * @return 结果
-	 * @throws IOException
 	 */
 	public void exportExcel(HttpServletResponse response, List<T> list, String sheetName, String title) {
 		try {
@@ -368,12 +360,6 @@ public class ExcelUtils<T> {
 	/**
 	 * 对list数据源将其里面的数据导入到excel表单
 	 * @param sheetName 工作表的名称
-	 * @return 结果
-	 */
-	/**
-	 * 对list数据源将其里面的数据导入到excel表单
-	 * @param sheetName 工作表的名称
-	 * @return 结果
 	 */
 	public void importTemplateExcel(HttpServletResponse response, String sheetName) {
 		importTemplateExcel(response, sheetName, StringUtils.EMPTY);
@@ -383,7 +369,6 @@ public class ExcelUtils<T> {
 	 * 对list数据源将其里面的数据导入到excel表单
 	 * @param sheetName 工作表的名称
 	 * @param title 标题
-	 * @return 结果
 	 */
 	public void importTemplateExcel(HttpServletResponse response, String sheetName, String title) {
 		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -394,7 +379,6 @@ public class ExcelUtils<T> {
 
 	/**
 	 * 对list数据源将其里面的数据导入到excel表单
-	 * @return 结果
 	 */
 	public void exportExcel(HttpServletResponse response) {
 		try {
@@ -461,7 +445,7 @@ public class ExcelUtils<T> {
 	 */
 	private Map<String, CellStyle> createStyles(Workbook wb) {
 		// 写入各条记录,每条记录对应excel表中的一行
-		Map<String, CellStyle> styles = new HashMap<String, CellStyle>();
+		Map<String, CellStyle> styles = new HashMap<>();
 		CellStyle style = wb.createCellStyle();
 		style.setAlignment(HorizontalAlignment.CENTER);
 		style.setVerticalAlignment(VerticalAlignment.CENTER);
@@ -523,7 +507,7 @@ public class ExcelUtils<T> {
 	 * @return 自定义样式列表
 	 */
 	private Map<String, CellStyle> annotationStyles(Workbook wb) {
-		Map<String, CellStyle> styles = new HashMap<String, CellStyle>();
+		Map<String, CellStyle> styles = new HashMap<>();
 		for (Object[] os : fields) {
 			Excel excel = (Excel) os[1];
 			String key = "data_" + excel.align() + "_" + excel.color();
@@ -625,7 +609,7 @@ public class ExcelUtils<T> {
 	 * 创建表格样式
 	 */
 	public void setDataValidation(Excel attr, Row row, int column) {
-		if (attr.name().indexOf("注：") >= 0) {
+		if (attr.name().contains("注：")) {
 			sheet.setColumnWidth(column, 6000);
 		}
 		else {
@@ -677,7 +661,7 @@ public class ExcelUtils<T> {
 			}
 		}
 		catch (Exception e) {
-			log.error("导出Excel失败{}", e);
+			log.error("导出Excel失败：", e);
 		}
 		return cell;
 	}
@@ -730,7 +714,7 @@ public class ExcelUtils<T> {
 			if (StringUtils.containsAny(separator, propertyValue)) {
 				for (String value : propertyValue.split(separator)) {
 					if (itemArray[0].equals(value)) {
-						propertyString.append(itemArray[1] + separator);
+						propertyString.append(itemArray[1]).append(separator);
 						break;
 					}
 				}
@@ -759,7 +743,7 @@ public class ExcelUtils<T> {
 			if (StringUtils.containsAny(separator, propertyValue)) {
 				for (String value : propertyValue.split(separator)) {
 					if (itemArray[1].equals(value)) {
-						propertyString.append(itemArray[0] + separator);
+						propertyString.append(itemArray[0]).append(separator);
 						break;
 					}
 				}
@@ -777,7 +761,6 @@ public class ExcelUtils<T> {
 	 * 数据处理器
 	 * @param value 数据值
 	 * @param excel 数据注解
-	 * @return
 	 */
 	public String dataFormatHandlerAdapter(Object value, Excel excel) {
 		try {
@@ -835,7 +818,6 @@ public class ExcelUtils<T> {
 	 * @param field 字段
 	 * @param excel 注解
 	 * @return 最终的属性值
-	 * @throws Exception
 	 */
 	private Object getTargetValue(T vo, Field field, Excel excel) throws Exception {
 		Object o = field.get(vo);
@@ -856,10 +838,7 @@ public class ExcelUtils<T> {
 
 	/**
 	 * 以类的属性的get方法方法形式获取值
-	 * @param o
-	 * @param name
 	 * @return value
-	 * @throws Exception
 	 */
 	private Object getValue(Object o, String name) throws Exception {
 		if ($.isNotEmpty(o) && StringUtils.isNotEmpty(name)) {
@@ -885,7 +864,7 @@ public class ExcelUtils<T> {
 	 * 获取字段注解信息
 	 */
 	public List<Object[]> getFields() {
-		List<Object[]> fields = new ArrayList<Object[]>();
+		List<Object[]> fields = new ArrayList<>();
 		List<Field> tempFields = new ArrayList<>();
 		tempFields.addAll(Arrays.asList(clazz.getSuperclass().getDeclaredFields()));
 		tempFields.addAll(Arrays.asList(clazz.getDeclaredFields()));
@@ -999,7 +978,6 @@ public class ExcelUtils<T> {
 	/**
 	 * 判断是否是空行
 	 * @param row 判断的行
-	 * @return
 	 */
 	private boolean isRowEmpty(Row row) {
 		if (row == null) {
