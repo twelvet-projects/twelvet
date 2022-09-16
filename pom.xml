@@ -57,7 +57,7 @@
         <commons.io.version>2.11.0</commons.io.version>
         <velocity.version>2.3</velocity.version>
         <knife4j.version>3.0.3</knife4j.version>
-        <hutool.version>5.8.4</hutool.version>
+        <hutool.version>5.8.7</hutool.version>
         <redisson.version>3.17.5</redisson.version>
         <qiniu.version>7.10.3</qiniu.version>
 
