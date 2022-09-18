@@ -86,7 +86,7 @@ pipeline {
     DOCKER_HUB = 'aliyun-docker-registry'
     KUBECONFIG_CREDENTIAL_ID = 'kubeconfig'
     REGISTRY = 'registry-vpc.us-west-1.aliyuncs.com'
-    DOCKERHUB_NAMESPACE = 'twelvet-prod'
+    DOCKERHUB_NAMESPACE = 'twelvet-pro'
     APP_NAME = 'twelvet-server-job'
   }
   parameters {
