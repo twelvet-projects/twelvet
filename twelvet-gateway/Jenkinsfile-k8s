@@ -43,8 +43,8 @@ pipeline {
       steps {
         container('maven') {
           withCredentials([usernamePassword(credentialsId : "$DOCKER_HUB" ,usernameVariable : 'DOCKER_USER_VAR' ,passwordVariable : 'DOCKER_PWD_VAR' ,)]) {
-            sh 'docker tag $APP_NAME:latest $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:v1.$BUILD_NUMBER'
             sh 'echo "$DOCKER_PWD_VAR" | docker login $REGISTRY -u "$DOCKER_USER_VAR" --password-stdin'
+            sh 'docker tag $APP_NAME:latest $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:v1.$BUILD_NUMBER'
             sh 'docker push $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:v1.$BUILD_NUMBER'
           }
 
