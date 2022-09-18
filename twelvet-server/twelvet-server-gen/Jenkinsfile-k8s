@@ -32,7 +32,7 @@ pipeline {
       steps {
         container('maven') {
           sh 'ls $APP_NAME/target'
-          sh 'docker build -t $APP_NAME:latest -f twelvet-server/$APP_NAME/dockerfile-k8s ./$APP_NAME/'
+          sh 'docker build -t $APP_NAME:latest -f $APP_NAME/dockerfile-k8s ./$APP_NAME/'
         }
 
       }
@@ -58,8 +58,8 @@ pipeline {
       steps {
         container('maven') {
           withCredentials([kubeconfigFile(credentialsId: env.KUBECONFIG_CREDENTIAL_ID, variable: 'KUBECONFIG')]) {
-                                  sh 'envsubst < twelvet-server-gen/deploy/deploy.yml | kubectl apply -f -'
-                              }
+            sh 'envsubst < twelvet-gateway/deploy.yml | kubectl apply -f -'
+          }
         }
       }
     }
@@ -85,7 +85,7 @@ pipeline {
   environment {
     DOCKER_HUB = 'aliyun-docker-registry'
     KUBECONFIG_CREDENTIAL_ID = 'kubeconfig'
-    REGISTRY = 'registry-vpc.us-west-1.aliyuncs.com'
+    REGISTRY = 'registry.cn-guangzhou.aliyuncs.com'
     DOCKERHUB_NAMESPACE = 'twelvet-pro'
     APP_NAME = 'twelvet-server-gen'
   }
