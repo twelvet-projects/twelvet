@@ -25,13 +25,6 @@ spec:
         - name: aliyun-docker-registry  #提前在项目下配置访问docker仓库的账号密码
       containers:
         - image: $REGISTRY/$DOCKERHUB_NAMESPACE/twelvet-gateway:v1.$BUILD_NUMBER
-          #         readinessProbe:
-          #           httpGet:
-          #             path: /actuator/health
-          #             port: 8080
-          #           timeoutSeconds: 10
-          #           failureThreshold: 30
-          #           periodSeconds: 5
           imagePullPolicy: Always
           name: app
           ports:
