@@ -90,6 +90,6 @@ pipeline {
     APP_NAME = 'twelvet-server-dfs'
   }
   parameters {
-    string(name: 'TAG_NAME', defaultValue: '', description: '')
+    string(name: 'TAG_NAME', defaultValue: 'master', description: '')
   }
 }
