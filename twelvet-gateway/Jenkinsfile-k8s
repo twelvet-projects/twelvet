@@ -64,7 +64,22 @@ pipeline {
       }
     }
 
-
+    stage('删除旧版本docker镜像') {
+      agent none
+      steps {
+        container('maven') {
+          sleep(60)
+          timeout(unit: 'MINUTES', activity: true, time: 5) {
+            waitUntil{
+              script{
+                def r = sh script: 'docker rmi $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:v1.$(($BUILD_NUMBER-1))',returnStatus: true
+                return ( r == 0 )
+              }
+           }
+          }
+        }
+      }
+    }
 
   }
   environment {
