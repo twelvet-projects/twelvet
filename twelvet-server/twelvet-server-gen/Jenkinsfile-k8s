@@ -58,7 +58,7 @@ pipeline {
       steps {
         container('maven') {
           withCredentials([kubeconfigFile(credentialsId: env.KUBECONFIG_CREDENTIAL_ID, variable: 'KUBECONFIG')]) {
-            sh 'envsubst < twelvet-gateway/deploy.yml | kubectl apply -f -'
+            sh 'envsubst < twelvet-server/twelvet-server-gen/deploy.yml | kubectl apply -f -'
           }
         }
       }
