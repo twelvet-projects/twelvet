@@ -4,7 +4,7 @@ metadata:
   labels:
     app: twelvet-server-job
   name: twelvet-server-job
-  namespace: twelvet-cloud   #一定要写名称空间
+  namespace: twelvet   #一定要写名称空间
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
@@ -52,7 +52,7 @@ metadata:
   labels:
     app: twelvet-server-job
   name: twelvet-server-job
-  namespace: twelvet-cloud
+  namespace: twelvet
 spec:
   ports:
     - name: http
