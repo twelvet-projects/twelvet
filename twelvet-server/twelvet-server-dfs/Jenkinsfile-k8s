@@ -32,7 +32,7 @@ pipeline {
       steps {
         container('maven') {
           sh 'ls twelvet-server/$APP_NAME/target'
-          sh 'docker build -t $APP_NAME:latest -f twelvet-server/$APP_NAME/dockerfile-k8s ./$APP_NAME/'
+          sh 'docker build -t $APP_NAME:latest -f twelvet-server/$APP_NAME/dockerfile-k8s ./twelvet-server/$APP_NAME/'
         }
 
       }
