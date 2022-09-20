@@ -28,14 +28,14 @@ spec:
           #         readinessProbe:
           #           httpGet:
           #             path: /actuator/health
-          #             port: 8080
+          #             port: 8083
           #           timeoutSeconds: 10
           #           failureThreshold: 30
           #           periodSeconds: 5
           imagePullPolicy: Always
           name: app
           ports:
-            - containerPort: 8080
+            - containerPort: 8083
               protocol: TCP
 #          resources:
 #            limits:
@@ -56,9 +56,9 @@ metadata:
 spec:
   ports:
     - name: http
-      port: 8080
+      port: 8083
       protocol: TCP
-      targetPort: 8080
+      targetPort: 8083
   selector:
     app: twelvet-server-dfs
   sessionAffinity: None
