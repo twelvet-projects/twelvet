@@ -2,13 +2,9 @@ package com.twelvet.framework.security.config;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.twelvet.framework.security.annotation.AuthIgnore;
-import com.twelvet.framework.security.config.properties.IgnoreUrlsProperties;
 import com.twelvet.framework.utils.$;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.ApplicationContext;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
