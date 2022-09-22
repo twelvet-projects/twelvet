@@ -20,7 +20,6 @@ import java.util.regex.Pattern;
  * @WebSite www.twelvet.cn
  * @Description: 忽略服务间的认证
  */
-@ConfigurationProperties(prefix = "security.oauth2.ignore")
 public class AuthIgnoreConfig implements InitializingBean {
 
     private static final Pattern PATTERN = Pattern.compile("\\{(.*?)\\}");
