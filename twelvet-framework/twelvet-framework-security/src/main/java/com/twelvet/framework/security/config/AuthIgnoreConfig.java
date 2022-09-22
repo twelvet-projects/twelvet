@@ -3,8 +3,6 @@ package com.twelvet.framework.security.config;
 import cn.hutool.core.util.ReUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.twelvet.framework.security.annotation.AuthIgnore;
-import com.twelvet.framework.utils.$;
-import javassist.runtime.Inner;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -49,7 +47,7 @@ public class AuthIgnoreConfig implements InitializingBean {
             HandlerMethod handlerMethod = map.get(mappingInfo);
             // 获取方法上边的注解 替代path variable 为 *
             AuthIgnore method = AnnotationUtils.findAnnotation(handlerMethod.getMethod(), AuthIgnore.class);
-            Optional.ofNullable(method).ifPresent(inner -> Objects.requireNonNull(mappingInfo.getPathPatternsCondition())
+            Optional.ofNullable(method).ifPresent(authIgnore -> Objects.requireNonNull(mappingInfo.getPathPatternsCondition())
                     .getPatternValues().forEach(url -> urls.add(ReUtil.replaceAll(url, PATTERN, "*"))));
 
             // 获取类上边的注解, 替代path variable 为 *
