@@ -44,7 +44,7 @@ public class SysUserApi extends TWTController {
 	@GetMapping("/info/{username}")
 	public R<UserInfo> info(@PathVariable("username") String username) {
 		SysUser sysUser = iSysUserService.selectUserByUserName(username, false);
-		if (sysUser == null) {
+		if (TUtils.isEmpty(sysUser)) {
 			return R.fail("用户名或密码错误");
 		}
 		// 角色集合

@@ -1,5 +1,5 @@
 # 指定基础镜像
-FROM openjdk:8-jre
+FROM openjdk:8-jdk
 LABEL maintainer="2471835953@qq.com"
 # 创建目录
 RUN mkdir -p /home/twelvet
