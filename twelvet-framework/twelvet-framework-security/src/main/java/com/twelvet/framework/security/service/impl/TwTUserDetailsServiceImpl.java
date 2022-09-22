@@ -5,12 +5,11 @@ import com.twelvet.api.system.feign.RemoteUserService;
 import com.twelvet.api.system.model.UserInfo;
 import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.core.domain.R;
-import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.exception.UserFrozenException;
 import com.twelvet.framework.security.service.TwUserDetailsService;
-import com.twelvet.framework.utils.$;
+import com.twelvet.framework.utils.T;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +62,7 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 	 * @param username username
 	 */
 	private void auth(R<UserInfo> userInfo, String username) {
-		if ($.isEmpty(userInfo) || $.isEmpty(userInfo.getData())) {
+		if (T.isEmpty(userInfo) || T.isEmpty(userInfo.getData())) {
 			log.info("登录用户：{} 不存在.", username);
 			throw new UsernameNotFoundException("登录用户：" + username + " 不存在");
 		}

@@ -2,7 +2,7 @@ package com.twelvet.server.system.service.impl;
 
 import com.twelvet.api.system.domain.SysLoginInfo;
 import com.twelvet.api.system.domain.SysUser;
-import com.twelvet.framework.utils.$;
+import com.twelvet.framework.utils.T;
 import com.twelvet.server.system.mapper.SysLoginInfoMapper;
 import com.twelvet.server.system.mapper.SysUserMapper;
 import com.twelvet.server.system.service.ISysLoginInfoService;
@@ -61,9 +61,9 @@ public class ISysLoginInfoServiceImpl implements ISysLoginInfoService {
 	public int insertLoginInfo(SysLoginInfo loginInfo) {
 		String userName = loginInfo.getUserName();
 
-		if ($.isNotEmpty(userName)) {
+		if (T.isNotEmpty(userName)) {
 			SysUser sysUser = sysUserMapper.selectUserByUserName(userName);
-			if ($.isNotEmpty(sysUser)) {
+			if (T.isNotEmpty(sysUser)) {
 				Long deptId = sysUser.getDeptId();
 				loginInfo.setDeptId(deptId);
 				return SysLoginInfoMapper.insertLoginInfo(loginInfo);

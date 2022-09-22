@@ -7,7 +7,7 @@ import com.twelvet.framework.log.enums.BusinessStatus;
 import com.twelvet.framework.log.event.event.SysOperationLogEvent;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.framework.utils.$;
+import com.twelvet.framework.utils.T;
 import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.StringUtils;
@@ -147,7 +147,7 @@ public class SysLogAspect {
 		if (HttpMethod.PUT.name().equals(requestMethod) || HttpMethod.POST.name().equals(requestMethod)) {
 			String params;
 			String contentType = ServletUtils.getRequest().get().getContentType();
-			if (!$.isEmpty(contentType) && contentType.startsWith(MediaType.MULTIPART_FORM_DATA_VALUE)) {
+			if (!T.isEmpty(contentType) && contentType.startsWith(MediaType.MULTIPART_FORM_DATA_VALUE)) {
 				params = "FILE";
 			}
 			else {

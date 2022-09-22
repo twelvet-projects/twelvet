@@ -3,7 +3,6 @@ package com.twelvet.framework.security.feign;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.twelvet.framework.core.constants.SecurityConstants;
-import com.twelvet.framework.utils.$;
 import com.twelvet.framework.utils.http.IpUtils;
 import com.twelvet.framework.utils.http.ServletUtils;
 import feign.RequestInterceptor;
@@ -12,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenResolver;
-import org.springframework.stereotype.Component;
-import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;

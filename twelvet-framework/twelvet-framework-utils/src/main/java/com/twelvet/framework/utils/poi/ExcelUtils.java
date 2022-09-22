@@ -206,7 +206,7 @@ public class ExcelUtils<T> {
 			Row heard = sheet.getRow(titleNum);
 			for (int i = 0; i < heard.getPhysicalNumberOfCells(); i++) {
 				Cell cell = heard.getCell(i);
-				if ($.isNotEmpty(cell)) {
+				if (com.twelvet.framework.utils.T.isNotEmpty(cell)) {
 					String value = this.getCellValue(heard, i).toString();
 					cellMap.put(value, i);
 				}
@@ -285,7 +285,7 @@ public class ExcelUtils<T> {
 					else if (Boolean.TYPE == fieldType || Boolean.class == fieldType) {
 						val = Convert.toBool(val, false);
 					}
-					if ($.isNotEmpty(fieldType)) {
+					if (com.twelvet.framework.utils.T.isNotEmpty(fieldType)) {
 						String propertyName = field.getName();
 						if (StringUtils.isNotEmpty(attr.targetAttr())) {
 							propertyName = field.getName() + "." + attr.targetAttr();
@@ -338,7 +338,7 @@ public class ExcelUtils<T> {
 			response.setContentType(XLSX_RESPONSE_HEAD);
 			response.setCharacterEncoding(CharsetKit.UTF_8);
 			// 文件名称为空将采用工作表名称
-			if ($.isEmpty(title)) {
+			if (com.twelvet.framework.utils.T.isEmpty(title)) {
 				title = sheetName;
 			}
 
@@ -561,10 +561,10 @@ public class ExcelUtils<T> {
 			if (StringUtils.startsWithAny(cellValue, FORMULA_STR)) {
 				cellValue = RegExUtils.replaceFirst(cellValue, FORMULA_REGEX_STR, "\t$0");
 			}
-			cell.setCellValue($.isEmpty(cellValue) ? attr.defaultValue() : cellValue + attr.suffix());
+			cell.setCellValue(com.twelvet.framework.utils.T.isEmpty(cellValue) ? attr.defaultValue() : cellValue + attr.suffix());
 		}
 		else if (ColumnType.NUMERIC == attr.cellType()) {
-			if ($.isNotEmpty(value)) {
+			if (com.twelvet.framework.utils.T.isNotEmpty(value)) {
 				cell.setCellValue(StringUtils.contains(Convert.toStr(value), ".") ? Convert.toDouble(value)
 						: Convert.toInt(value));
 			}
@@ -641,10 +641,10 @@ public class ExcelUtils<T> {
 				String dateFormat = attr.dateFormat();
 				String readConverterExp = attr.readConverterExp();
 				String separator = attr.separator();
-				if (StringUtils.isNotEmpty(dateFormat) && $.isNotEmpty(value)) {
+				if (StringUtils.isNotEmpty(dateFormat) && com.twelvet.framework.utils.T.isNotEmpty(value)) {
 					cell.setCellValue(parseDateToStr(dateFormat, value));
 				}
-				else if (StringUtils.isNotEmpty(readConverterExp) && $.isNotEmpty(value)) {
+				else if (StringUtils.isNotEmpty(readConverterExp) && com.twelvet.framework.utils.T.isNotEmpty(value)) {
 					cell.setCellValue(convertByExp(Convert.toStr(value), readConverterExp, separator));
 				}
 				else if (value instanceof BigDecimal && -1 != attr.scale()) {
@@ -841,7 +841,7 @@ public class ExcelUtils<T> {
 	 * @return value
 	 */
 	private Object getValue(Object o, String name) throws Exception {
-		if ($.isNotEmpty(o) && StringUtils.isNotEmpty(name)) {
+		if (com.twelvet.framework.utils.T.isNotEmpty(o) && StringUtils.isNotEmpty(name)) {
 			Class<?> clazz = o.getClass();
 			Field field = clazz.getDeclaredField(name);
 			field.setAccessible(true);
@@ -942,7 +942,7 @@ public class ExcelUtils<T> {
 		Object val = "";
 		try {
 			Cell cell = row.getCell(column);
-			if ($.isNotEmpty(cell)) {
+			if (com.twelvet.framework.utils.T.isNotEmpty(cell)) {
 				if (cell.getCellType() == CellType.NUMERIC || cell.getCellType() == CellType.FORMULA) {
 					val = cell.getNumericCellValue();
 					if (DateUtil.isCellDateFormatted(cell)) {

@@ -5,7 +5,7 @@ import com.twelvet.api.system.model.UserInfo;
 import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.security.domain.LoginUser;
-import com.twelvet.framework.utils.$;
+import com.twelvet.framework.utils.T;
 import org.springframework.core.Ordered;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -49,7 +49,7 @@ public interface TwUserDetailsService extends UserDetailsService, Ordered {
 		UserInfo info = result.getData();
 
 		Set<String> dbAuthsSet = new HashSet<>();
-		if ($.isNotEmpty(info.getRoles())) {
+		if (T.isNotEmpty(info.getRoles())) {
 			// 获取角色
 			dbAuthsSet.addAll(info.getRoles());
 			// 获取权限

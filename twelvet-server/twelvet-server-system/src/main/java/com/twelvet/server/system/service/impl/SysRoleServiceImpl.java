@@ -8,7 +8,7 @@ import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.SpringContextHolder;
-import com.twelvet.framework.utils.$;
+import com.twelvet.framework.utils.T;
 import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.server.system.mapper.SysRoleDeptMapper;
 import com.twelvet.server.system.mapper.SysRoleMapper;
@@ -62,7 +62,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
 		List<SysRole> perms = sysRoleMapper.selectRolePermissionByUserId(userId);
 		Set<String> permsSet = new HashSet<>();
 		for (SysRole perm : perms) {
-			if ($.isNotEmpty(perm)) {
+			if (T.isNotEmpty(perm)) {
 				permsSet.addAll(Arrays.asList(perm.getRoleKey().trim().split(",")));
 			}
 		}
@@ -105,9 +105,9 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	 */
 	@Override
 	public String checkRoleNameUnique(SysRole role) {
-		Long roleId = $.isEmpty(role.getRoleId()) ? -1L : role.getRoleId();
+		Long roleId = T.isEmpty(role.getRoleId()) ? -1L : role.getRoleId();
 		SysRole info = sysRoleMapper.checkRoleNameUnique(role.getRoleName());
-		if ($.isNotEmpty(info) && info.getRoleId().longValue() != roleId.longValue()) {
+		if (T.isNotEmpty(info) && info.getRoleId().longValue() != roleId.longValue()) {
 			return UserConstants.NOT_UNIQUE;
 		}
 		return UserConstants.UNIQUE;
@@ -120,9 +120,9 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	 */
 	@Override
 	public String checkRoleKeyUnique(SysRole role) {
-		long roleId = $.isEmpty(role.getRoleId()) ? -1L : role.getRoleId();
+		long roleId = T.isEmpty(role.getRoleId()) ? -1L : role.getRoleId();
 		SysRole info = sysRoleMapper.checkRoleKeyUnique(role.getRoleKey());
-		if ($.isNotEmpty(info) && info.getRoleId() != roleId) {
+		if (T.isNotEmpty(info) && info.getRoleId() != roleId) {
 			return UserConstants.NOT_UNIQUE;
 		}
 		return UserConstants.UNIQUE;
@@ -134,7 +134,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	 */
 	@Override
 	public void checkRoleAllowed(SysRole role) {
-		if ($.isNotEmpty(role.getRoleId()) && role.isAdmin()) {
+		if (T.isNotEmpty(role.getRoleId()) && role.isAdmin()) {
 			throw new TWTException("不允许操作超级管理员角色");
 		}
 	}

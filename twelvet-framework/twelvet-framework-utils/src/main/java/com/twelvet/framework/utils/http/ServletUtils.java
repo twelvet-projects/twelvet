@@ -1,12 +1,9 @@
 package com.twelvet.framework.utils.http;
 
-import cn.hutool.http.HttpStatus;
 import com.twelvet.framework.utils.CharsetKit;
 import com.twelvet.framework.utils.Convert;
 import com.twelvet.framework.utils.StringUtils;
-import com.twelvet.framework.utils.$;
 import com.twelvet.framework.utils.exception.TWTUtilsException;
-import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -18,8 +15,6 @@ import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;

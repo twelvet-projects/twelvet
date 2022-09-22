@@ -12,9 +12,9 @@ import java.util.concurrent.TimeUnit;
  * @WebSite www.twelvet.cn
  * @Description: twelvet工具类
  */
-public class $ {
+public class T {
 
-	public $() {
+	public T() {
 		throw new TWTUtilsException("This is a utility class and cannot be instantiated");
 	}
 

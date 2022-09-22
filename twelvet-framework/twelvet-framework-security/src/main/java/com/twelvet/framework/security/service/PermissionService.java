@@ -2,9 +2,8 @@ package com.twelvet.framework.security.service;
 
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.framework.utils.$;
+import com.twelvet.framework.utils.T;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.PatternMatchUtils;
 import org.springframework.util.StringUtils;
@@ -38,11 +37,11 @@ public class PermissionService {
 	 * @return 用户是否具备某权限
 	 */
 	public boolean hasPermi(String permission) {
-		if ($.isEmpty(permission)) {
+		if (T.isEmpty(permission)) {
 			return false;
 		}
 		LoginUser loginUser = SecurityUtils.getLoginUser();
-		if ($.isEmpty(loginUser) || CollectionUtils.isEmpty(loginUser.getAuthorities())) {
+		if (T.isEmpty(loginUser) || CollectionUtils.isEmpty(loginUser.getAuthorities())) {
 			return false;
 		}
 		return hasPermissions(loginUser.getAuthorities(), permission);
@@ -63,11 +62,11 @@ public class PermissionService {
 	 * @return 用户是否具有以下任意一个权限
 	 */
 	public boolean hasAnyPermi(String permissions) {
-		if ($.isEmpty(permissions)) {
+		if (T.isEmpty(permissions)) {
 			return false;
 		}
 		LoginUser loginUser = SecurityUtils.getLoginUser();
-		if ($.isEmpty(loginUser) || CollectionUtils.isEmpty(loginUser.getAuthorities())) {
+		if (T.isEmpty(loginUser) || CollectionUtils.isEmpty(loginUser.getAuthorities())) {
 			return false;
 		}
 		Collection<? extends GrantedAuthority> authorities = loginUser.getAuthorities();
@@ -85,11 +84,11 @@ public class PermissionService {
 	 * @return 用户是否具备某角色
 	 */
 	public boolean hasRole(String role) {
-		if ($.isEmpty(role)) {
+		if (T.isEmpty(role)) {
 			return false;
 		}
 		LoginUser loginUser = SecurityUtils.getLoginUser();
-		if ($.isEmpty(loginUser) || CollectionUtils.isEmpty(loginUser.getAuthorities())) {
+		if (T.isEmpty(loginUser) || CollectionUtils.isEmpty(loginUser.getAuthorities())) {
 			return false;
 		}
 		for (GrantedAuthority authorities : loginUser.getAuthorities()) {
@@ -116,11 +115,11 @@ public class PermissionService {
 	 * @return 用户是否具有以下任意一个角色
 	 */
 	public boolean hasAnyRoles(String roles) {
-		if ($.isEmpty(roles)) {
+		if (T.isEmpty(roles)) {
 			return false;
 		}
 		LoginUser loginUser = SecurityUtils.getLoginUser();
-		if ($.isEmpty(loginUser) || CollectionUtils.isEmpty(loginUser.getAuthorities())) {
+		if (T.isEmpty(loginUser) || CollectionUtils.isEmpty(loginUser.getAuthorities())) {
 			return false;
 		}
 		for (String role : roles.split(ROLE_DELIMETER)) {

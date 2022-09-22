@@ -4,7 +4,7 @@ import com.twelvet.framework.core.constants.Constants;
 import com.twelvet.framework.utils.DateUtils;
 import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.framework.utils.StringUtils;
-import com.twelvet.framework.utils.$;
+import com.twelvet.framework.utils.T;
 import com.twelvet.framework.utils.http.ServletUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +20,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @WebFilter(filterName = "BaseFilter", urlPatterns = "/*")
 @Component
@@ -53,7 +52,7 @@ public class WebLogFilter implements Filter {
 		}
 
 		String contentType = request.getContentType();
-		if (!$.isEmpty(contentType)) {
+		if (!T.isEmpty(contentType)) {
 			if (contentType.startsWith(MediaType.MULTIPART_FORM_DATA_VALUE)
 					|| contentType.startsWith(MediaType.APPLICATION_FORM_URLENCODED_VALUE)) {
 				chain.doFilter(request, response);

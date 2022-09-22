@@ -5,7 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.twelvet.framework.jdbc.web.page.PageDomain;
 import com.twelvet.framework.jdbc.web.page.TableDataInfo;
 import com.twelvet.framework.jdbc.web.page.TableSupport;
-import com.twelvet.framework.utils.$;
+import com.twelvet.framework.utils.T;
 import com.twelvet.framework.utils.sql.SqlUtils;
 
 import java.util.List;
@@ -26,7 +26,7 @@ public class PageUtils {
 		PageDomain pageDomain = TableSupport.buildPageRequest();
 		Integer page = pageDomain.getCurrent();
 		Integer pageSize = pageDomain.getPageSize();
-		if ($.isNotEmpty(page) && $.isNotEmpty(pageSize)) {
+		if (T.isNotEmpty(page) && T.isNotEmpty(pageSize)) {
 			String orderBy = SqlUtils.escapeOrderBySql(pageDomain.getOrderBy());
 			PageHelper.startPage(page, pageSize, orderBy);
 		}

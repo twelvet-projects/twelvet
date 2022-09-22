@@ -1,12 +1,10 @@
 package com.twelvet.server.job.util;
 
-import cn.hutool.core.exceptions.ExceptionUtil;
 import com.twelvet.api.job.domain.SysJob;
 import com.twelvet.api.job.domain.SysJobLog;
 import com.twelvet.framework.core.constants.ScheduleConstants;
 import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.StringUtils;
-import com.twelvet.framework.utils.$;
 import com.twelvet.framework.utils.bean.BeanUtils;
 import com.twelvet.framework.utils.exception.TWTUtilsException;
 import com.twelvet.server.job.service.ISysJobLogService;

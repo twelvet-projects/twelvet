@@ -7,7 +7,6 @@ import com.twelvet.framework.log.utils.SysLogUtils;
 import com.twelvet.framework.log.vo.SysLogVO;
 import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.security.domain.LoginUser;
-import com.twelvet.framework.utils.$;
 import com.twelvet.framework.utils.DateUtils;
 import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.http.IpUtils;

@@ -7,7 +7,7 @@ import com.twelvet.api.system.model.UserInfo;
 import com.twelvet.framework.security.annotation.AuthIgnore;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.domain.R;
-import com.twelvet.framework.utils.$;
+import com.twelvet.framework.utils.T;
 import com.twelvet.server.system.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -44,7 +44,7 @@ public class SysUserApi extends TWTController {
 	@GetMapping("/info/{username}")
 	public R<UserInfo> info(@PathVariable("username") String username) {
 		SysUser sysUser = iSysUserService.selectUserByUserName(username, false);
-		if ($.isEmpty(sysUser)) {
+		if (T.isEmpty(sysUser)) {
 			return R.fail("用户名或密码错误");
 		}
 		// 角色集合
