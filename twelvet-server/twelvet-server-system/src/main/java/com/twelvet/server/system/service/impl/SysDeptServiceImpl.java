@@ -7,7 +7,7 @@ import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.datascope.annotation.SysDataScope;
 import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.framework.utils.T;
+import com.twelvet.framework.utils.TUtils;
 import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.server.system.mapper.SysDeptMapper;
@@ -136,9 +136,9 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	 */
 	@Override
 	public String checkDeptNameUnique(SysDept dept) {
-		Long deptId = T.isEmpty(dept.getDeptId()) ? -1L : dept.getDeptId();
+		Long deptId = TUtils.isEmpty(dept.getDeptId()) ? -1L : dept.getDeptId();
 		SysDept info = deptMapper.checkDeptNameUnique(dept.getDeptName(), dept.getParentId());
-		if (T.isNotEmpty(info) && info.getDeptId().longValue() != deptId.longValue()) {
+		if (TUtils.isNotEmpty(info) && info.getDeptId().longValue() != deptId.longValue()) {
 			return UserConstants.NOT_UNIQUE;
 		}
 		return UserConstants.UNIQUE;
@@ -192,7 +192,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	public int updateDept(SysDept dept) {
 		SysDept newParentDept = deptMapper.selectDeptById(dept.getParentId());
 		SysDept oldDept = deptMapper.selectDeptById(dept.getDeptId());
-		if (T.isNotEmpty(newParentDept) && T.isNotEmpty(oldDept)) {
+		if (TUtils.isNotEmpty(newParentDept) && TUtils.isNotEmpty(oldDept)) {
 			String newAncestors = newParentDept.getAncestors() + "," + newParentDept.getDeptId();
 			String oldAncestors = oldDept.getAncestors();
 			dept.setAncestors(newAncestors);
@@ -266,7 +266,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	private List<SysDept> getChildList(List<SysDept> list, SysDept t) {
 		List<SysDept> tlist = new ArrayList<SysDept>();
 		for (SysDept n : list) {
-			if (T.isNotEmpty(n.getParentId()) && n.getParentId().longValue() == t.getDeptId().longValue()) {
+			if (TUtils.isNotEmpty(n.getParentId()) && n.getParentId().longValue() == t.getDeptId().longValue()) {
 				tlist.add(n);
 			}
 		}

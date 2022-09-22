@@ -9,7 +9,7 @@ import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.exception.UserFrozenException;
 import com.twelvet.framework.security.service.TwUserDetailsService;
-import com.twelvet.framework.utils.T;
+import com.twelvet.framework.utils.TUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +62,7 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 	 * @param username username
 	 */
 	private void auth(R<UserInfo> userInfo, String username) {
-		if (T.isEmpty(userInfo) || T.isEmpty(userInfo.getData())) {
+		if (TUtils.isEmpty(userInfo) || TUtils.isEmpty(userInfo.getData())) {
 			log.info("登录用户：{} 不存在.", username);
 			throw new UsernameNotFoundException("登录用户：" + username + " 不存在");
 		}

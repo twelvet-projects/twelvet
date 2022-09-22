@@ -1,6 +1,6 @@
 package com.twelvet.framework.utils.file;
 
-import com.twelvet.framework.utils.T;
+import com.twelvet.framework.utils.TUtils;
 import com.twelvet.framework.utils.DateUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -183,7 +183,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 * @return 后缀
 	 */
 	public static String getSuffix(String path) {
-		if (T.isEmpty(path)) {
+		if (TUtils.isEmpty(path)) {
 			return "";
 		}
 		return path.substring(path.lastIndexOf(".") + 1);

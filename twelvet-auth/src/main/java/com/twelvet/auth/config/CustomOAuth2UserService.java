@@ -1,6 +1,6 @@
 package com.twelvet.auth.config;
 
-import com.twelvet.framework.utils.T;
+import com.twelvet.framework.utils.TUtils;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
@@ -43,7 +43,7 @@ public class CustomOAuth2UserService<R extends OAuth2UserRequest, U extends OAut
 
 		OAuth2UserService<R, U> oAuth2UserService = userServiceMap.get(registrationId);
 
-		if (T.isEmpty(oAuth2UserService)) {
+		if (TUtils.isEmpty(oAuth2UserService)) {
 			// 采用默认换取方式
 			oAuth2UserService = (OAuth2UserService<R, U>) defaultOAuth2UserService;
 		}

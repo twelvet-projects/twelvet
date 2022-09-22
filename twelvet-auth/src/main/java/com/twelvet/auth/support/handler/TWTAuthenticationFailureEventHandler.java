@@ -6,7 +6,7 @@ import com.twelvet.framework.log.event.event.SysLoginLogEvent;
 import com.twelvet.framework.log.utils.SysLogUtils;
 import com.twelvet.framework.log.vo.SysLogVO;
 import com.twelvet.framework.core.constants.SecurityConstants;
-import com.twelvet.framework.utils.T;
+import com.twelvet.framework.utils.TUtils;
 import com.twelvet.framework.utils.DateUtils;
 import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.http.IpUtils;
@@ -50,7 +50,7 @@ public class TWTAuthenticationFailureEventHandler implements AuthenticationFailu
 		String username = request.getParameter(OAuth2ParameterNames.USERNAME);
 
 		log.error("用户：{} 登录失败，异常：{}", username, exception.getLocalizedMessage());
-		if (T.isNotEmpty(username)) {
+		if (TUtils.isNotEmpty(username)) {
 			SysLoginInfo sysLoginInfo = new SysLoginInfo();
 			SysLogVO sysLog = SysLogUtils.getSysLog();
 			sysLoginInfo.setUserName(username);

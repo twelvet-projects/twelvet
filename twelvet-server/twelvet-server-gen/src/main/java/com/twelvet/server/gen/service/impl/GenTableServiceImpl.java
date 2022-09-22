@@ -6,7 +6,7 @@ import com.twelvet.api.gen.domain.GenTableColumn;
 import com.twelvet.framework.core.constants.Constants;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.framework.utils.T;
+import com.twelvet.framework.utils.TUtils;
 import com.twelvet.framework.utils.CharsetKit;
 import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.framework.utils.StringUtils;
@@ -399,7 +399,7 @@ public class GenTableServiceImpl implements IGenTableService {
 	 */
 	public void setTableFromOptions(GenTable genTable) {
 		Map<String, String> paramsObj = JacksonUtils.readValue(genTable.getOptions(), Map.class);
-		if (T.isNotEmpty(paramsObj)) {
+		if (TUtils.isNotEmpty(paramsObj)) {
 			String treeCode = paramsObj.get(GenConstants.TREE_CODE);
 			String treeParentCode = paramsObj.get(GenConstants.TREE_PARENT_CODE);
 			String treeName = paramsObj.get(GenConstants.TREE_NAME);

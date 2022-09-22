@@ -8,7 +8,7 @@ import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.framework.utils.T;
+import com.twelvet.framework.utils.TUtils;
 import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.server.system.service.ISysClientDetailsService;
 import io.swagger.annotations.Api;
@@ -87,7 +87,7 @@ public class Oauth2ClientDetailsController extends TWTController {
 	@PutMapping
 	public JsonResult<String> update(@RequestBody SysClientDetails sysClientDetails) {
 		// 重新设置密码
-		if (T.isNotEmpty(sysClientDetails.getClientSecret())) {
+		if (TUtils.isNotEmpty(sysClientDetails.getClientSecret())) {
 			sysClientDetails.setClientSecret(SecurityUtils.encryptPassword(sysClientDetails.getClientSecret()));
 		}
 
