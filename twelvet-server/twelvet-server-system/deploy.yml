@@ -53,3 +53,13 @@ metadata:
     app: twelvet-server-system
   name: twelvet-server-system
   namespace: twelvet
+spec:
+  ports:
+    - name: http
+      port: 8081
+      protocol: TCP
+      targetPort: 8081
+  selector:
+    app: twelvet-server-system
+  sessionAffinity: None
+  type: ClusterIP

@@ -53,3 +53,13 @@ metadata:
     app: twelvet-auth
   name: twelvet-auth
   namespace: twelvet
+spec:
+  ports:
+    - name: http
+      port: 8888
+      protocol: TCP
+      targetPort: 8888
+  selector:
+    app: twelvet-auth
+  sessionAffinity: None
+  type: ClusterIP
