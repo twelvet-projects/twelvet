@@ -40,7 +40,7 @@ public class WebSecurityConfiguration {
 				// 接入第三方登录
 				.and().oauth2Login()
 				// 自定义获取授权信息方式
-				.userInfoEndpoint().userService(new CustomOAuth2UserService(oAuth2UserServiceMap));
+				.userInfoEndpoint().userService(new CustomOAuth2UserService<>(oAuth2UserServiceMap));
 		// 处理 UsernamePasswordAuthenticationToken
 		http.authenticationProvider(new TWTDaoAuthenticationProvider());
 		return http.build();
@@ -48,11 +48,9 @@ public class WebSecurityConfiguration {
 
 	/**
 	 * 暴露静态资源
-	 *
-	 * https://github.com/spring-projects/spring-security/issues/10938
+	 * <p>
+	 * <a href="https://github.com/spring-projects/spring-security/issues/10938">...</a>
 	 * @param http
-	 * @return
-	 * @throws Exception
 	 */
 	@Bean
 	@Order(0)
