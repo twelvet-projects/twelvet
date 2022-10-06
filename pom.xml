@@ -50,7 +50,7 @@
         <spring-boot.mybatis>2.2.0</spring-boot.mybatis>
         <spring.authorization.version>0.3.1</spring.authorization.version>
 
-        <druid.version>1.2.11</druid.version>
+        <druid.version>1.2.12</druid.version>
         <dynamic-datasource.version>3.5.1</dynamic-datasource.version>
         <pagehelper.boot.version>1.4.3</pagehelper.boot.version>
         <poi.version>5.2.2</poi.version>
