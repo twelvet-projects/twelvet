@@ -23,7 +23,7 @@ public class SpringDocConfiguration {
 
 	@Bean
 	@Lazy(false)
-	@ConditionalOnProperty(name = "springdoc.api-docs.enabled", matchIfMissing = true)
+	@ConditionalOnProperty(name = "swagger.enabled", matchIfMissing = true)
 	public List<GroupedOpenApi> apis(SwaggerUiConfigParameters swaggerUiConfigParameters,
 									 SwaggerDocProperties swaggerProperties) {
 		List<GroupedOpenApi> groups = new ArrayList<>();
