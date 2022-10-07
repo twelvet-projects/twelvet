@@ -55,7 +55,7 @@ public class WebSecurityConfiguration {
 	@Bean
 	@Order(0)
 	SecurityFilterChain resources(HttpSecurity http) throws Exception {
-		http.requestMatchers((matchers) -> matchers.antMatchers("/actuator/**", "/assets/**", "/error", "/v2/api-docs"))
+		http.requestMatchers((matchers) -> matchers.antMatchers("/actuator/**", "/assets/**", "/error", "/v3/api-docs"))
 				.authorizeHttpRequests((authorize) -> authorize.anyRequest().permitAll()).requestCache().disable()
 				.securityContext().disable().sessionManagement().disable();
 		return http.build();
