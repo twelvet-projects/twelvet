@@ -9,8 +9,8 @@ import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.utils.poi.ExcelUtils;
 import com.twelvet.server.system.service.ISysLoginInfoService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +23,7 @@ import java.util.List;
  * @WebSite www.twelvet.cn
  * @Description: 系统登录日志
  */
-@Api(value = "SysLoginInfoController", tags = { "系统登录日志" })
+@Tag(name = "SysLoginInfoController", description = "系统登录日志")
 @RestController
 @RequestMapping("/loginInfo")
 public class SysLoginInfoController extends TWTController {
@@ -36,7 +36,7 @@ public class SysLoginInfoController extends TWTController {
 	 * @param loginInfo SysLoginInfo
 	 * @return 查询数据
 	 */
-	@ApiOperation(value = "登录日志查询")
+	@Operation(summary = "登录日志查询")
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:logininfor:list')")
 	public JsonResult<TableDataInfo> pageQuery(SysLoginInfo loginInfo) {
@@ -50,7 +50,7 @@ public class SysLoginInfoController extends TWTController {
 	 * @param infoIds 日志Id list
 	 * @return 操作结果
 	 */
-	@ApiOperation(value = "批量删除日志")
+	@Operation(summary = "批量删除日志")
 	@DeleteMapping("/{infoIds}")
 	@PreAuthorize("@role.hasPermi('system:logininfor:remove')")
 	public JsonResult<String> remove(@PathVariable Long[] infoIds) {
@@ -61,7 +61,7 @@ public class SysLoginInfoController extends TWTController {
 	 * 清空登录日志
 	 * @return JsonResult<String>
 	 */
-	@ApiOperation(value = "清空登录日志")
+	@Operation(summary = "清空登录日志")
 	@Log(service = "登陆日志", businessType = BusinessType.CLEAN)
 	@DeleteMapping("/clean")
 	@PreAuthorize("@role.hasPermi('system:logininfor:remove')")
@@ -75,7 +75,7 @@ public class SysLoginInfoController extends TWTController {
 	 * @param response HttpServletResponse
 	 * @param loginInfo SysLoginInfo
 	 */
-	@ApiOperation(value = "导出Excel")
+	@Operation(summary = "导出Excel")
 	@Log(service = "登陆日志", businessType = BusinessType.EXPORT)
 	@PostMapping("/export")
 	@PreAuthorize("@role.hasPermi('system:logininfor:export')")

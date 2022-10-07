@@ -11,8 +11,8 @@ import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.poi.ExcelUtils;
 import com.twelvet.server.system.service.ISysPostService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -26,7 +26,7 @@ import java.util.List;
  * @WebSite www.twelvet.cn
  * @Description: 岗位信息操作处理
  */
-@Api(value = "SysPostController", tags = { "岗位信息操作处理" })
+@Tag(name = "SysPostController", description = "岗位信息操作处理")
 @RestController
 @RequestMapping("/post")
 public class SysPostController extends TWTController {
@@ -39,7 +39,7 @@ public class SysPostController extends TWTController {
 	 * @param sysPost SysPost
 	 * @return JsonResult<String>
 	 */
-	@ApiOperation(value = "新增岗位")
+	@Operation(summary = "新增岗位")
 	@Log(service = "岗位管理", businessType = BusinessType.INSERT)
 	@PostMapping
 	@PreAuthorize("@role.hasPermi('system:post:insert')")
@@ -59,7 +59,7 @@ public class SysPostController extends TWTController {
 	 * @param postIds 唯一ID数组
 	 * @return JsonResult<String>
 	 */
-	@ApiOperation(value = "删除岗位")
+	@Operation(summary = "删除岗位")
 	@Log(service = "岗位管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{postIds}")
 	@PreAuthorize("@role.hasPermi('system:post:remove')")
@@ -72,7 +72,7 @@ public class SysPostController extends TWTController {
 	 * @param sysPost SysPost
 	 * @return JsonResult<String>
 	 */
-	@ApiOperation(value = "修改岗位")
+	@Operation(summary = "修改岗位")
 	@Log(service = "岗位管理", businessType = BusinessType.UPDATE)
 	@PutMapping
 	@PreAuthorize("@role.hasPermi('system:post:update')")
@@ -92,7 +92,7 @@ public class SysPostController extends TWTController {
 	 * @param post SysPost
 	 * @return JsonResult<TableDataInfo>
 	 */
-	@ApiOperation(value = "获取岗位列表")
+	@Operation(summary = "获取岗位列表")
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:post:list')")
 	public JsonResult<TableDataInfo> pageQuery(SysPost post) {
@@ -106,7 +106,7 @@ public class SysPostController extends TWTController {
 	 * @param postId 唯一ID
 	 * @return JsonResult<SysPost>
 	 */
-	@ApiOperation(value = "根据岗位编号获取详细信息")
+	@Operation(summary = "根据岗位编号获取详细信息")
 	@GetMapping("/{postId}")
 	@PreAuthorize("@role.hasPermi('system:post:query')")
 	public JsonResult<SysPost> getByPostId(@PathVariable Long postId) {
@@ -117,7 +117,7 @@ public class SysPostController extends TWTController {
 	 * 获取岗位选择框列表
 	 * @return JsonResult<List<SysPost>>
 	 */
-	@ApiOperation(value = "获取岗位选择框列表")
+	@Operation(summary = "获取岗位选择框列表")
 	@GetMapping("/optionSelect")
 	public JsonResult<List<SysPost>> optionSelect() {
 		List<SysPost> posts = iSysPostService.selectPostAll();
@@ -129,7 +129,7 @@ public class SysPostController extends TWTController {
 	 * @param response HttpServletResponse
 	 * @param sysPost SysPost
 	 */
-	@ApiOperation(value = "数据导出")
+	@Operation(summary = "数据导出")
 	@Log(service = "岗位管理", businessType = BusinessType.EXPORT)
 	@PostMapping("/export")
 	@PreAuthorize("@role.hasPermi('system:post:export')")

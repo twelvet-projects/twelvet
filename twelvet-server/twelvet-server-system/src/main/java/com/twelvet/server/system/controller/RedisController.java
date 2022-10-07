@@ -3,8 +3,8 @@ package com.twelvet.server.system.controller;
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.utils.DateUtils;
 import com.twelvet.framework.utils.StringUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisServerCommands;
 import org.springframework.data.redis.core.RedisCallback;
@@ -21,7 +21,7 @@ import java.util.*;
  * @WebSite www.twelvet.cn
  * @Description: 缓存监控
  */
-@Api(value = "RedisController", tags = { "缓存监控" })
+@Tag(name = "RedisController", description = "缓存监控")
 @RestController
 @RequestMapping("/monitor/redis")
 public class RedisController {
@@ -32,7 +32,7 @@ public class RedisController {
 	/**
 	 * 获取Redis信息
 	 */
-	@ApiOperation(value = "获取Redis信息")
+	@Operation(summary = "获取Redis信息")
 	@PreAuthorize("@role.hasPermi('monitor:redis:query')")
 	@GetMapping()
 	public AjaxResult getInfo() {

@@ -1,8 +1,8 @@
 package com.twelvet.api.system.domain;
 
 import com.twelvet.framework.core.application.domain.BaseEntity;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 
 import java.util.Arrays;
 
@@ -11,7 +11,7 @@ import java.util.Arrays;
  * @WebSite www.twelvet.cn
  * @Description: 角色表 sys_role
  */
-@ApiModel("角色表")
+@Schema(description ="角色表")
 public class SysRole extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -19,61 +19,61 @@ public class SysRole extends BaseEntity {
 	/**
 	 * 角色ID
 	 */
-	@ApiModelProperty(value = "角色ID")
+	@Schema(description = "角色ID")
 	private Long roleId;
 
 	/**
 	 * 角色名称
 	 */
-	@ApiModelProperty(value = "角色名称")
+	@Schema(description = "角色名称")
 	private String roleName;
 
 	/**
 	 * 角色权限
 	 */
-	@ApiModelProperty(value = "角色权限")
+	@Schema(description = "角色权限")
 	private String roleKey;
 
 	/**
 	 * 角色排序
 	 */
-	@ApiModelProperty(value = "角色排序")
+	@Schema(description = "角色排序")
 	private String roleSort;
 
 	/**
 	 * 数据范围（1：所有数据权限；2：自定义数据权限；3：本部门数据权限；4：本部门及以下数据权限）
 	 */
-	@ApiModelProperty(value = "数据范围")
+	@Schema(description = "数据范围")
 	private String dataScope;
 
 	/**
 	 * 角色状态（0正常 1停用）
 	 */
-	@ApiModelProperty(value = "角色状态")
+	@Schema(description = "角色状态")
 	private String status;
 
 	/**
 	 * 删除标志（0代表存在 2代表删除）
 	 */
-	@ApiModelProperty(value = "删除标志")
+	@Schema(description = "删除标志")
 	private String delFlag;
 
 	/**
 	 * 用户是否存在此角色标识 默认不存在
 	 */
-	@ApiModelProperty(value = "角色标识")
+	@Schema(description = "角色标识")
 	private boolean flag = false;
 
 	/**
 	 * 菜单组
 	 */
-	@ApiModelProperty(value = "菜单组")
+	@Schema(description = "菜单组")
 	private Long[] menuIds;
 
 	/**
 	 * 部门组（数据权限）
 	 */
-	@ApiModelProperty(value = "部门组")
+	@Schema(description = "部门组")
 	private Long[] deptIds;
 
 	public SysRole() {

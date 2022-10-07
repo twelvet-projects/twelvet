@@ -3,8 +3,8 @@ package com.twelvet.api.system.domain.vo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.twelvet.api.system.domain.SysDept;
 import com.twelvet.api.system.domain.SysMenu;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * @WebSite www.twelvet.cn
  * @Description: TreeSelect树结构实体类
  */
-@ApiModel("TreeSelect树结构实体类")
+@Schema(description ="TreeSelect树结构实体类")
 public class TreeSelect implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -23,25 +23,25 @@ public class TreeSelect implements Serializable {
 	/**
 	 * 节点ID
 	 */
-	@ApiModelProperty(value = "节点ID")
+	@Schema(description = "节点ID")
 	private Long key;
 
 	/**
 	 * 节点名称
 	 */
-	@ApiModelProperty(value = "节点名称")
+	@Schema(description = "节点名称")
 	private String title;
 
 	/**
 	 * 节点内容
 	 */
-	@ApiModelProperty(value = "节点内容")
+	@Schema(description = "节点内容")
 	private Long value;
 
 	/**
 	 * 子节点
 	 */
-	@ApiModelProperty(value = "子节点")
+	@Schema(description = "子节点")
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private List<TreeSelect> children;
 

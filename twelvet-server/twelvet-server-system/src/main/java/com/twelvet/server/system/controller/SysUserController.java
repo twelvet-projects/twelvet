@@ -1,7 +1,5 @@
 package com.twelvet.server.system.controller;
 
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import com.twelvet.api.system.domain.SysMenu;
 import com.twelvet.api.system.domain.SysRole;
 import com.twelvet.api.system.domain.SysUser;
@@ -18,8 +16,8 @@ import com.twelvet.framework.utils.TUtils;
 import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.framework.utils.poi.ExcelUtils;
 import com.twelvet.server.system.service.*;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -38,8 +36,7 @@ import java.util.stream.Collectors;
  * @WebSite www.twelvet.cn
  * @Description: 用户信息
  */
-@ApiSupport(author = "TwelveT")
-@Api(tags = "用户信息")
+@Tag(name = "用户信息")
 @RestController
 @RequestMapping("/user")
 public class SysUserController extends TWTController {
@@ -64,8 +61,7 @@ public class SysUserController extends TWTController {
 	 * @param user SysUser
 	 * @return JsonResult<TableDataInfo>
 	 */
-	@ApiOperationSupport(author = "twelvet")
-	@ApiOperation(value = "获取用户列表")
+	@Operation(summary = "获取用户列表")
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:user:list')")
 	public JsonResult<TableDataInfo> pageQuery(SysUser user) {
@@ -79,8 +75,7 @@ public class SysUserController extends TWTController {
 	 * @param response HttpServletResponse
 	 * @param user SysUser
 	 */
-	@ApiOperationSupport(author = "twelvet")
-	@ApiOperation(value = "用户用户导出")
+	@Operation(summary = "用户用户导出")
 	@PostMapping("/export")
 	@Log(service = "用户管理", businessType = BusinessType.EXPORT)
 	@PreAuthorize("@role.hasPermi('system:user:export')")
@@ -97,8 +92,7 @@ public class SysUserController extends TWTController {
 	 * @return JsonResult<String>
 	 * @throws Exception Exception
 	 */
-	@ApiOperationSupport(author = "twelvet")
-	@ApiOperation(value = "用户数据导入")
+	@Operation(summary = "用户数据导入")
 	@PostMapping("/importData")
 	@Log(service = "用户管理", businessType = BusinessType.IMPORT)
 	@PreAuthorize("@role.hasPermi('system:user:import')")
@@ -117,8 +111,7 @@ public class SysUserController extends TWTController {
 	 * 导出模板
 	 * @param response HttpServletResponse
 	 */
-	@ApiOperationSupport(author = "twelvet")
-	@ApiOperation(value = "导出模板")
+	@Operation(summary = "导出模板")
 	@PostMapping("/exportTemplate")
 	public void exportTemplate(HttpServletResponse response) {
 		ExcelUtils<SysUser> excelUtils = new ExcelUtils<>(SysUser.class);
@@ -129,8 +122,7 @@ public class SysUserController extends TWTController {
 	 * 获取当前用户信息
 	 * @return 用户信息
 	 */
-	@ApiOperationSupport(author = "twelvet")
-	@ApiOperation(value = "获取当前用户信息")
+	@Operation(summary = "获取当前用户信息")
 	@GetMapping("getInfo")
 	public AjaxResult getInfo() {
 		Long userId = SecurityUtils.getLoginUser().getUserId();
@@ -154,10 +146,9 @@ public class SysUserController extends TWTController {
 	 * @param userId Long
 	 * @return AjaxResult
 	 */
-	@ApiOperationSupport(author = "twelvet")
-	@ApiOperation(value = "根据用户编号获取详细信息")
+	@Operation(summary = "根据用户编号获取详细信息")
 	@PreAuthorize("@role.hasPermi('system:user:query')")
-	@GetMapping({ "/", "/{userId}" })
+	@GetMapping({ "/", "/{userId} "})
 	public AjaxResult getInfo(@PathVariable(value = "userId", required = false) Long userId) {
 		iSysUserService.checkUserDataScope(userId);
 		Map<String, Object> res = new HashMap<>(6);
@@ -178,8 +169,7 @@ public class SysUserController extends TWTController {
 	 * @param user SysUser
 	 * @return JsonResult<String>
 	 */
-	@ApiOperationSupport(author = "twelvet")
-	@ApiOperation(value = "新增用户")
+	@Operation(summary = "新增用户")
 	@PostMapping
 	@Log(service = "用户管理", businessType = BusinessType.INSERT)
 	@PreAuthorize("@role.hasPermi('system:user:insert')")
@@ -203,8 +193,7 @@ public class SysUserController extends TWTController {
 	 * @param user SysUser
 	 * @return JsonResult<String>
 	 */
-	@ApiOperationSupport(author = "twelvet")
-	@ApiOperation(value = "修改用户")
+	@Operation(summary = "修改用户")
 	@PutMapping
 	@Log(service = "用户管理", businessType = BusinessType.UPDATE)
 	@PreAuthorize("@role.hasPermi('system:user:edit')")
@@ -228,8 +217,7 @@ public class SysUserController extends TWTController {
 	 * @param userIds Long[]
 	 * @return JsonResult<String>
 	 */
-	@ApiOperationSupport(author = "twelvet")
-	@ApiOperation(value = "删除用户")
+	@Operation(summary = "删除用户")
 	@PreAuthorize("@role.hasPermi('system:user:remove')")
 	@Log(service = "用户管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{userIds}")
@@ -242,8 +230,7 @@ public class SysUserController extends TWTController {
 	 * @param user SysUser
 	 * @return JsonResult<String>
 	 */
-	@ApiOperationSupport(author = "twelvet")
-	@ApiOperation(value = "重置密码")
+	@Operation(summary = "重置密码")
 	@PutMapping("/resetPwd")
 	@Log(service = "用户管理", businessType = BusinessType.UPDATE)
 	@PreAuthorize("@role.hasPermi('system:user:resetPwd')")
@@ -260,8 +247,7 @@ public class SysUserController extends TWTController {
 	 * @param user SysUser
 	 * @return JsonResult<String>
 	 */
-	@ApiOperationSupport(author = "twelvet")
-	@ApiOperation(value = "用户状态修改")
+	@Operation(summary = "用户状态修改")
 	@PutMapping("/changeStatus")
 	@Log(service = "用户管理", businessType = BusinessType.UPDATE)
 	@PreAuthorize("@role.hasPermi('system:user:update')")

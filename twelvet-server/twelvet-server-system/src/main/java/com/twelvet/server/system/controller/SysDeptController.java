@@ -11,8 +11,8 @@ import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.server.system.service.ISysDeptService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,7 +28,7 @@ import java.util.Map;
  * @WebSite www.twelvet.cn
  * @Description: 部门管理
  */
-@Api(value = "SysDeptController", tags = { "部门管理" })
+@Tag(name = "SysDeptController", description = "部门管理")
 @RestController
 @RequestMapping("/dept")
 public class SysDeptController extends TWTController {
@@ -41,7 +41,7 @@ public class SysDeptController extends TWTController {
 	 * @param dept SysDept
 	 * @return JsonResult<List < SysDept>>
 	 */
-	@ApiOperation(value = "获取部门列表")
+	@Operation(summary = "获取部门列表")
 	@GetMapping("/list")
 	@PreAuthorize("@role.hasPermi('system:dept:list')")
 	public JsonResult<List<SysDept>> list(SysDept dept) {
@@ -54,7 +54,7 @@ public class SysDeptController extends TWTController {
 	 * @param deptId 部门ID
 	 * @return JsonResult<List < SysDept>>
 	 */
-	@ApiOperation(value = "查询部门列表")
+	@Operation(summary = "查询部门列表")
 	@GetMapping("/list/exclude/{deptId}")
 	@PreAuthorize("@role.hasPermi('system:dept:query')")
 	public JsonResult<List<SysDept>> excludeChild(@PathVariable(value = "deptId", required = false) Long deptId) {
@@ -69,7 +69,7 @@ public class SysDeptController extends TWTController {
 	 * @param deptId 部门ID
 	 * @return JsonResult<SysDept>
 	 */
-	@ApiOperation(value = "根据部门编号获取详细信息")
+	@Operation(summary = "根据部门编号获取详细信息")
 	@GetMapping(value = "/{deptId}")
 	@PreAuthorize("@role.hasPermi('system:dept:query')")
 	public JsonResult<SysDept> getInfo(@PathVariable Long deptId) {
@@ -82,7 +82,7 @@ public class SysDeptController extends TWTController {
 	 * @param dept SysDept
 	 * @return JsonResult<List < TreeSelect>>
 	 */
-	@ApiOperation(value = "获取部门下拉树列表")
+	@Operation(summary = "获取部门下拉树列表")
 	@GetMapping("/treeSelect")
 	public JsonResult<List<TreeSelect>> treeSelect(SysDept dept) {
 		List<SysDept> depts = deptService.selectDeptList(dept);
@@ -94,7 +94,7 @@ public class SysDeptController extends TWTController {
 	 * @param roleId 部门ID
 	 * @return AjaxResult
 	 */
-	@ApiOperation(value = "加载对应角色部门列表树")
+	@Operation(summary = "加载对应角色部门列表树")
 	@GetMapping(value = "/roleDeptTreeSelect/{roleId}")
 	public AjaxResult roleDeptTreeSelect(@PathVariable("roleId") Long roleId) {
 		List<SysDept> depts = deptService.selectDeptList(new SysDept());
@@ -110,7 +110,7 @@ public class SysDeptController extends TWTController {
 	 * @param dept SysDept
 	 * @return JsonResult<String>
 	 */
-	@ApiOperation(value = "新增部门")
+	@Operation(summary = "新增部门")
 	@Log(service = "部门管理", businessType = BusinessType.INSERT)
 	@PostMapping
 	@PreAuthorize("@role.hasPermi('system:dept:insert')")
@@ -127,7 +127,7 @@ public class SysDeptController extends TWTController {
 	 * @param dept SysDept
 	 * @return JsonResult<String>
 	 */
-	@ApiOperation(value = "修改部门")
+	@Operation(summary = "修改部门")
 	@Log(service = "部门管理", businessType = BusinessType.UPDATE)
 	@PutMapping
 	@PreAuthorize("@role.hasPermi('system:dept:update')")
@@ -153,7 +153,7 @@ public class SysDeptController extends TWTController {
 	 * @param deptId 部门ID
 	 * @return JsonResult<String>
 	 */
-	@ApiOperation(value = "删除部门")
+	@Operation(summary = "删除部门")
 	@Log(service = "部门管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{deptId}")
 	@PreAuthorize("@role.hasPermi('system:dept:remove')")

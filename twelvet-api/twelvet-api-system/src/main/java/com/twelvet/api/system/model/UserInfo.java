@@ -1,8 +1,8 @@
 package com.twelvet.api.system.model;
 
 import com.twelvet.api.system.domain.SysUser;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 
 import java.io.Serializable;
 import java.util.Set;
@@ -12,7 +12,7 @@ import java.util.Set;
  * @WebSite www.twelvet.cn
  * @Description: 登录用户基本信息实体
  */
-@ApiModel("登录用户基本信息实体")
+@Schema(description ="登录用户基本信息实体")
 public class UserInfo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -20,19 +20,19 @@ public class UserInfo implements Serializable {
 	/**
 	 * 用户基本信息
 	 */
-	@ApiModelProperty(value = "用户基本信息")
+	@Schema(description = "用户基本信息")
 	private SysUser sysUser;
 
 	/**
 	 * 权限标识集合
 	 */
-	@ApiModelProperty(value = "权限标识集合")
+	@Schema(description = "权限标识集合")
 	private Set<String> permissions;
 
 	/**
 	 * 角色集合
 	 */
-	@ApiModelProperty(value = "角色集合")
+	@Schema(description = "角色集合")
 	private Set<String> roles;
 
 	public SysUser getSysUser() {

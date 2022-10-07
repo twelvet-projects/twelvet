@@ -54,14 +54,8 @@
 
         <!--Swagger接口文档-->
         <dependency>
-            <groupId>com.twelvet</groupId>
-            <artifactId>twelvet-framework-swagger</artifactId>
-        </dependency>
-
-        <!--twelvet utils-->
-        <dependency>
-            <groupId>com.twelvet</groupId>
-            <artifactId>twelvet-framework-utils</artifactId>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-webflux-ui</artifactId>
         </dependency>
 
         <!--twelvet core-->

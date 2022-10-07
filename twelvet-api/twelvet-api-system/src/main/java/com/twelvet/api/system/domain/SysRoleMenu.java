@@ -1,7 +1,7 @@
 package com.twelvet.api.system.domain;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -10,15 +10,15 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @WebSite www.twelvet.cn
  * @Description: 角色和菜单关联 sys_role_menu
  */
-@ApiModel("角色和菜单关联")
+@Schema(description ="角色和菜单关联")
 public class SysRoleMenu {
 
 	/** 角色ID */
-	@ApiModelProperty(value = "角色ID")
+	@Schema(description = "角色ID")
 	private Long roleId;
 
 	/** 菜单ID */
-	@ApiModelProperty(value = "菜单ID")
+	@Schema(description = "菜单ID")
 	private Long menuId;
 
 	public Long getRoleId() {

@@ -1,8 +1,8 @@
 package com.twelvet.api.system.domain.vo;
 
 import com.twelvet.api.system.domain.SysUser;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 
 import java.io.Serializable;
 
@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @WebSite www.twelvet.cn
  * @Description: 用户信息
  */
-@ApiModel("用户信息")
+@Schema(description ="用户信息")
 public class UserInfoVo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -19,19 +19,19 @@ public class UserInfoVo implements Serializable {
 	/**
 	 * 用户信息
 	 */
-	@ApiModelProperty(value = "用户信息")
+	@Schema(description = "用户信息")
 	private SysUser user;
 
 	/**
 	 * 权限组
 	 */
-	@ApiModelProperty(value = "权限组")
+	@Schema(description = "权限组")
 	private String roleGroup;
 
 	/**
 	 * 角色岗位
 	 */
-	@ApiModelProperty(value = "角色岗位")
+	@Schema(description = "角色岗位")
 	private String postGroup;
 
 	public static long getSerialVersionUID() {

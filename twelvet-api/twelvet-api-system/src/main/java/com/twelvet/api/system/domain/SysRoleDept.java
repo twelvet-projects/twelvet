@@ -1,7 +1,7 @@
 package com.twelvet.api.system.domain;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -10,15 +10,15 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @WebSite www.twelvet.cn
  * @Description: 角色和部门关联 sys_role_dept
  */
-@ApiModel("角色和部门关联")
+@Schema(description ="角色和部门关联")
 public class SysRoleDept {
 
 	/** 角色ID */
-	@ApiModelProperty(value = "角色ID")
+	@Schema(description = "角色ID")
 	private Long roleId;
 
 	/** 部门ID */
-	@ApiModelProperty(value = "部门ID")
+	@Schema(description = "部门ID")
 	private Long deptId;
 
 	public Long getRoleId() {

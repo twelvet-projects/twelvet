@@ -50,13 +50,15 @@
         <spring-boot.mybatis>2.2.0</spring-boot.mybatis>
         <spring.authorization.version>0.3.1</spring.authorization.version>
 
+        <swagger.core.version>2.2.2</swagger.core.version>
+        <springdoc.version>1.6.11</springdoc.version>
+
         <druid.version>1.2.12</druid.version>
         <dynamic-datasource.version>3.5.1</dynamic-datasource.version>
         <pagehelper.boot.version>1.4.3</pagehelper.boot.version>
         <poi.version>5.2.2</poi.version>
         <commons.io.version>2.11.0</commons.io.version>
         <velocity.version>2.3</velocity.version>
-        <knife4j.version>3.0.3</knife4j.version>
         <hutool.version>5.8.7</hutool.version>
         <redisson.version>3.17.5</redisson.version>
         <qiniu.version>7.10.3</qiniu.version>
@@ -167,11 +169,32 @@
                 <version>${commons.io.version}</version>
             </dependency>
 
-            <!-- Swagger -->
+            <!--Swagger -->
             <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-spring-boot-starter</artifactId>
-                <version>${knife4j.version}</version>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger.core.version}</version>
+            </dependency>
+
+            <!--springdoc -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-webmvc-core</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+
+            <!--springdoc -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-webflux-ui</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+
+            <!--springdoc -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-security</artifactId>
+                <version>${springdoc.version}</version>
             </dependency>
 
             <!-- excel工具 -->

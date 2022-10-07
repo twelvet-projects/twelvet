@@ -1,7 +1,5 @@
 package com.twelvet.framework.core.application.domain;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
@@ -11,7 +9,6 @@ import java.io.Serializable;
  * @WebSite www.twelvet.cn
  * @Description: 统一操作信息实体(支持Swagger响应泛型)
  */
-@ApiModel("统一操作信息实体")
 public class JsonResult<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -19,19 +16,16 @@ public class JsonResult<T> implements Serializable {
 	/**
 	 * 状态码
 	 */
-	@ApiModelProperty("状态码")
 	private int code;
 
 	/**
 	 * 返回内容信息
 	 */
-	@ApiModelProperty("返回内容信息")
 	private String msg;
 
 	/**
 	 * 数据对象
 	 */
-	@ApiModelProperty("数据对象")
 	private T data;
 
 	public int getCode() {

@@ -11,8 +11,8 @@ import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.TUtils;
 import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.server.system.service.ISysClientDetailsService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +24,7 @@ import java.util.List;
  * @WebSite www.twelvet.cn
  * @Description: 终端配置 信息操作处理
  */
-@Api(value = "Oauth2ClientDetailsController", tags = { "终端配置" })
+@Tag(name = "Oauth2ClientDetailsController", description = "终端配置")
 @RestController
 @RequestMapping("/client")
 public class Oauth2ClientDetailsController extends TWTController {
@@ -37,7 +37,7 @@ public class Oauth2ClientDetailsController extends TWTController {
 	 * @param sysClientDetails SysClientDetails
 	 * @return JsonResult<TableDataInfo>
 	 */
-	@ApiOperation(value = "查询终端配置列表")
+	@Operation(summary = "查询终端配置列表")
 	@PreAuthorize("@role.hasPermi('system:client:list')")
 	@GetMapping("/pageQuery")
 	public JsonResult<TableDataInfo> pageQuery(SysClientDetails sysClientDetails) {
@@ -51,7 +51,7 @@ public class Oauth2ClientDetailsController extends TWTController {
 	 * @param clientId 终端ID
 	 * @return JsonResult<SysClientDetails>
 	 */
-	@ApiOperation(value = "获取终端配置详细信息")
+	@Operation(summary = "获取终端配置详细信息")
 	@PreAuthorize("@role.hasPermi('system:client:query')")
 	@GetMapping(value = "/{clientId}")
 	public JsonResult<SysClientDetails> getInfo(@PathVariable("clientId") String clientId) {
@@ -63,7 +63,7 @@ public class Oauth2ClientDetailsController extends TWTController {
 	 * @param sysClientDetails SysClientDetails
 	 * @return JsonResult<String>
 	 */
-	@ApiOperation(value = "新增终端配置")
+	@Operation(summary = "新增终端配置")
 	@PreAuthorize("@role.hasPermi('system:client:insert')")
 	@Log(service = "终端配置", businessType = BusinessType.INSERT)
 	@PostMapping
@@ -81,7 +81,7 @@ public class Oauth2ClientDetailsController extends TWTController {
 	 * @param sysClientDetails sysClientDetails
 	 * @return JsonResult<String>
 	 */
-	@ApiOperation(value = "修改终端配置")
+	@Operation(summary = "修改终端配置")
 	@PreAuthorize("@role.hasPermi('system:client:update')")
 	@Log(service = "终端配置", businessType = BusinessType.UPDATE)
 	@PutMapping
@@ -99,7 +99,7 @@ public class Oauth2ClientDetailsController extends TWTController {
 	 * @param clientIds 终端ID数组
 	 * @return 成功删除个数
 	 */
-	@ApiOperation(value = "删除终端配置")
+	@Operation(summary = "删除终端配置")
 	@PreAuthorize("@role.hasPermi('system:client:remove')")
 	@Log(service = "终端配置", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{clientIds}")

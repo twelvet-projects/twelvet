@@ -7,8 +7,8 @@ import com.twelvet.framework.utils.CronUtils;
 import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.framework.utils.annotation.excel.Excel;
 import com.twelvet.framework.utils.annotation.excel.Excel.ColumnType;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -21,7 +21,7 @@ import java.util.Date;
  * @WebSite www.twelvet.cn
  * @Description: 定时任务调度表 sys_job
  */
-@ApiModel("定时任务调度表")
+@Schema(description ="定时任务调度表")
 public class SysJob extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -29,56 +29,56 @@ public class SysJob extends BaseEntity {
 	/**
 	 * 任务ID
 	 */
-	@ApiModelProperty(value = "任务序号")
+	@Schema(description = "任务序号")
 	@Excel(name = "任务序号", cellType = ColumnType.NUMERIC)
 	private Long jobId;
 
 	/**
 	 * 任务名称
 	 */
-	@ApiModelProperty(value = "任务名称")
+	@Schema(description = "任务名称")
 	@Excel(name = "任务名称")
 	private String jobName;
 
 	/**
 	 * 任务组名
 	 */
-	@ApiModelProperty(value = "任务组名")
+	@Schema(description = "任务组名")
 	@Excel(name = "任务组名")
 	private String jobGroup;
 
 	/**
 	 * 调用目标字符串
 	 */
-	@ApiModelProperty(value = "调用目标字符串")
+	@Schema(description = "调用目标字符串")
 	@Excel(name = "调用目标字符串")
 	private String invokeTarget;
 
 	/**
 	 * cron执行表达式
 	 */
-	@ApiModelProperty(value = "执行表达式")
+	@Schema(description = "执行表达式")
 	@Excel(name = "执行表达式 ")
 	private String cronExpression;
 
 	/**
 	 * cron计划策略
 	 */
-	@ApiModelProperty(value = "计划策略")
+	@Schema(description = "计划策略")
 	@Excel(name = "计划策略 ", readConverterExp = "0=默认,1=立即触发执行,2=触发一次执行,3=不触发立即执行")
 	private String misfirePolicy = ScheduleConstants.MISFIRE_DEFAULT;
 
 	/**
 	 * 是否并发执行（0允许 1禁止）
 	 */
-	@ApiModelProperty(value = "是否并发执行")
+	@Schema(description = "是否并发执行")
 	@Excel(name = "并发执行", readConverterExp = "0=允许,1=禁止")
 	private String concurrent;
 
 	/**
 	 * 任务状态（0正常 1暂停）
 	 */
-	@ApiModelProperty(value = "任务状态")
+	@Schema(description = "任务状态")
 	@Excel(name = "任务状态", readConverterExp = "0=正常,1=暂停")
 	private String status;
 

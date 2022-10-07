@@ -23,6 +23,12 @@
 
     <dependencies>
 
+        <!-- undertow容器 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
+
         <!-- twelvet core -->
         <dependency>
             <groupId>com.twelvet</groupId>
@@ -33,6 +39,12 @@
         <dependency>
             <groupId>com.twelvet</groupId>
             <artifactId>twelvet-framework-log</artifactId>
+        </dependency>
+
+        <!--Swagger-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-swagger</artifactId>
         </dependency>
 
         <!-- SpringCloud Alibaba Nacos -->

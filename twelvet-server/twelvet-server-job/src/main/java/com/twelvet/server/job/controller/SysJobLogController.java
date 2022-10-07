@@ -10,8 +10,8 @@ import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.utils.poi.ExcelUtils;
 import com.twelvet.server.job.service.ISysJobLogService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +24,7 @@ import java.util.List;
  * @WebSite www.twelvet.cn
  * @Description: 调度日志操作处理
  */
-@Api(value = "SysJobLogController", tags = { "调度日志操作处理" })
+@Tag(name = "SysJobLogController", description = "调度日志操作处理")
 @RestController
 @RequestMapping("/log")
 public class SysJobLogController extends TWTController {
@@ -37,7 +37,7 @@ public class SysJobLogController extends TWTController {
 	 * @param sysJobLog SysJobLog
 	 * @return JsonResult
 	 */
-	@ApiOperation(value = "查询定时任务调度日志列表")
+	@Operation(summary = "查询定时任务调度日志列表")
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:job:list')")
 	public JsonResult<TableDataInfo> pageQuery(SysJobLog sysJobLog) {
@@ -51,7 +51,7 @@ public class SysJobLogController extends TWTController {
 	 * @param response HttpServletResponse
 	 * @param sysJobLog SysJobLog
 	 */
-	@ApiOperation(value = "导出定时任务调度日志列表")
+	@Operation(summary = "导出定时任务调度日志列表")
 	@Log(service = "任务调度日志", businessType = BusinessType.EXPORT)
 	@PostMapping("/export")
 	@PreAuthorize("@role.hasPermi('system:job:export')")
@@ -66,7 +66,7 @@ public class SysJobLogController extends TWTController {
 	 * @param jobLogId id
 	 * @return JsonResult
 	 */
-	@ApiOperation(value = "根据调度编号获取详细信息")
+	@Operation(summary = "根据调度编号获取详细信息")
 	@GetMapping("/{configId}")
 	@PreAuthorize("@role.hasPermi('system:job:query')")
 	public JsonResult<SysJobLog> getInfo(@PathVariable Long jobLogId) {
@@ -78,7 +78,7 @@ public class SysJobLogController extends TWTController {
 	 * @param jobLogIds 数组id
 	 * @return JsonResult
 	 */
-	@ApiOperation(value = "删除定时任务调度日志")
+	@Operation(summary = "删除定时任务调度日志")
 	@Log(service = "定时任务调度日志", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{jobLogIds}")
 	@PreAuthorize("@role.hasPermi('system:job:remove')")
@@ -90,7 +90,7 @@ public class SysJobLogController extends TWTController {
 	 * 清空定时任务调度日志
 	 * @return JsonResult
 	 */
-	@ApiOperation(value = "清空定时任务调度日志")
+	@Operation(summary = "清空定时任务调度日志")
 	@Log(service = "调度日志", businessType = BusinessType.CLEAN)
 	@DeleteMapping("/clean")
 	@PreAuthorize("@role.hasPermi('system:job:remove')")

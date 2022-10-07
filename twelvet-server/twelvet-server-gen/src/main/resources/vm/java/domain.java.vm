@@ -7,8 +7,8 @@ import com.twelvet.framework.utils.annotation.excel.Excel;
 import com.twelvet.framework.core.application.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiModel;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 #if($table.crud || $table.sub)
 #elseif($table.tree)
 import com.twelvet.framework.jdbc.web.domain.TreeEntity;
@@ -26,7 +26,7 @@ import com.twelvet.framework.jdbc.web.domain.TreeEntity;
 #elseif($table.tree)
 #set($Entity="TreeEntity")
 #end
-@ApiModel("${functionName}对象")
+@Schema(description ="${functionName}对象")
 public class ${ClassName} extends ${Entity} {
 
     private static final long serialVersionUID = 1L;
@@ -34,7 +34,7 @@ public class ${ClassName} extends ${Entity} {
 #foreach ($column in $columns)
     #if(!$table.isSuperColumn($column.javaField))
     /** $column.columnComment */
-    @ApiModelProperty(value = "$column.columnComment")
+    @Schema(description = "$column.columnComment")
         #if($column.list)
             #set($parentheseIndex=$column.columnComment.indexOf("（"))
             #if($parentheseIndex != -1)

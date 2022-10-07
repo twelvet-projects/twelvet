@@ -4,8 +4,8 @@ import com.twelvet.api.system.domain.SysOperationLog;
 import com.twelvet.framework.security.annotation.AuthIgnore;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.server.system.service.ISysOperationLogService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * @WebSite www.twelvet.cn
  * @Description: 操作日志记录
  */
-@Api(tags = "操作日志记录API")
+@Tag(name = "操作日志记录API")
 @RestController
 @RequestMapping("/api/operationLog")
 public class SysOperationLogApi extends TWTController {
@@ -26,7 +26,7 @@ public class SysOperationLogApi extends TWTController {
 	 * 新增操作日志
 	 * @param operationLog SysOperationLog
 	 */
-	@ApiOperation(value = "新增操作日志")
+	@Operation(summary = "新增操作日志")
 	@AuthIgnore
 	@PostMapping
 	public void saveLog(@RequestBody SysOperationLog operationLog) {

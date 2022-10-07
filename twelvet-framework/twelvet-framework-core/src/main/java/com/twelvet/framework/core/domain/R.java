@@ -1,7 +1,5 @@
 package com.twelvet.framework.core.domain;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
@@ -11,26 +9,20 @@ import java.io.Serializable;
  * @WebSite www.twelvet.cn
  * @Description: 响应信息实体
  */
-@ApiModel("响应信息实体")
 public class R<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	/** 成功 */
-	@ApiModelProperty(value = "成功")
 	public static final int SUCCESS = HttpStatus.OK.value();
 
 	/** 失败 */
-	@ApiModelProperty(value = "失败")
 	public static final int FAIL = HttpStatus.INTERNAL_SERVER_ERROR.value();
 
-	@ApiModelProperty(value = "响应码")
 	private int code;
 
-	@ApiModelProperty(value = "返回信息")
 	private String msg;
 
-	@ApiModelProperty(value = "数据")
 	private T data;
 
 	public static <T> R<T> ok(T data) {

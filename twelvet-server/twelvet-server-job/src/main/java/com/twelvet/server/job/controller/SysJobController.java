@@ -16,8 +16,8 @@ import com.twelvet.server.job.exception.TaskException;
 import com.twelvet.server.job.service.ISysJobService;
 import com.twelvet.server.job.util.CronUtils;
 import com.twelvet.server.job.util.ScheduleUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,7 +31,7 @@ import java.util.List;
  * @WebSite www.twelvet.cn
  * @Description: 调度任务信息操作处理
  */
-@Api(value = "SysJobController", tags = { "调度任务信息操作处理" })
+@Tag(name = "SysJobController", description = "调度任务信息操作处理")
 @RestController
 @RequestMapping("/cron")
 public class SysJobController extends TWTController {
@@ -44,7 +44,7 @@ public class SysJobController extends TWTController {
 	 * @param sysJob SysJob
 	 * @return JsonResult<TableDataInfo>
 	 */
-	@ApiOperation(value = "查询定时任务列表")
+	@Operation(summary = "查询定时任务列表")
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('monitor:job:list')")
 	public JsonResult<TableDataInfo> pageQuery(SysJob sysJob) {
@@ -58,7 +58,7 @@ public class SysJobController extends TWTController {
 	 * @param response HttpServletResponse
 	 * @param sysJob SysJob
 	 */
-	@ApiOperation(value = "导出定时任务列表")
+	@Operation(summary = "导出定时任务列表")
 	@Log(service = "定时任务", businessType = BusinessType.EXPORT)
 	@PostMapping("/export")
 	@PreAuthorize("@role.hasPermi('monitor:job:export')")
@@ -73,7 +73,7 @@ public class SysJobController extends TWTController {
 	 * @param jobId 定时任务ID
 	 * @return JsonResult<SysJob>
 	 */
-	@ApiOperation(value = "获取定时任务详细信息")
+	@Operation(summary = "获取定时任务详细信息")
 	@GetMapping(value = "/{jobId}")
 	@PreAuthorize("@role.hasPermi('monitor:job:query')")
 	public JsonResult<SysJob> getByJobId(@PathVariable("jobId") Long jobId) {
@@ -87,7 +87,7 @@ public class SysJobController extends TWTController {
 	 * @throws SchedulerException 表达式异常
 	 * @throws TaskException 任务异常
 	 */
-	@ApiOperation(value = "新增定时任务")
+	@Operation(summary = "新增定时任务")
 	@Log(service = "定时任务", businessType = BusinessType.INSERT)
 	@PostMapping
 	@PreAuthorize("@role.hasPermi('monitor:job:insert')")
@@ -124,7 +124,7 @@ public class SysJobController extends TWTController {
 	 * @throws SchedulerException 表达式异常
 	 * @throws TaskException 任务异常
 	 */
-	@ApiOperation(value = "修改定时任务")
+	@Operation(summary = "修改定时任务")
 	@Log(service = "定时任务", businessType = BusinessType.UPDATE)
 	@PutMapping
 	@PreAuthorize("@role.hasPermi('monitor:job:update')")
@@ -159,7 +159,7 @@ public class SysJobController extends TWTController {
 	 * @return JsonResult<String>
 	 * @throws SchedulerException 表达式异常
 	 */
-	@ApiOperation(value = "定时任务状态修改")
+	@Operation(summary = "定时任务状态修改")
 	@Log(service = "定时任务", businessType = BusinessType.UPDATE)
 	@PutMapping("/changeStatus")
 	@PreAuthorize("@role.hasPermi('monitor:job:update')")
@@ -175,7 +175,7 @@ public class SysJobController extends TWTController {
 	 * @return JsonResult<String>
 	 * @throws SchedulerException 表达式异常
 	 */
-	@ApiOperation(value = "定时任务立即执行一次")
+	@Operation(summary = "定时任务立即执行一次")
 	@Log(service = "定时任务", businessType = BusinessType.UPDATE)
 	@PutMapping("/run")
 	public JsonResult<String> run(@RequestBody SysJob job) throws SchedulerException {
@@ -189,7 +189,7 @@ public class SysJobController extends TWTController {
 	 * @return JsonResult<String>
 	 * @throws SchedulerException 表达式异常
 	 */
-	@ApiOperation(value = "删除定时任务")
+	@Operation(summary = "删除定时任务")
 	@Log(service = "定时任务", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{jobIds}")
 	@PreAuthorize("@role.hasPermi('monitor:job:remove')")

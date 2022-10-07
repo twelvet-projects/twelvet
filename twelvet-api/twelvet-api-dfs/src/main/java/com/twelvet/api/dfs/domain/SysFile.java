@@ -1,7 +1,7 @@
 package com.twelvet.api.dfs.domain;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -10,19 +10,19 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @WebSite www.twelvet.cn
  * @Description: 文件信息
  */
-@ApiModel("文件信息")
+@Schema(description ="文件信息")
 public class SysFile {
 
 	/**
 	 * 文件名称
 	 */
-	@ApiModelProperty(value = "文件名称")
+	@Schema(description = "文件名称")
 	private String name;
 
 	/**
 	 * 文件地址
 	 */
-	@ApiModelProperty(value = "文件地址")
+	@Schema(description = "文件地址")
 	private String url;
 
 	public String getName() {

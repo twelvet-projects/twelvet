@@ -11,8 +11,8 @@ import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.poi.ExcelUtils;
 import com.twelvet.server.system.service.ISysDictTypeService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -26,7 +26,7 @@ import java.util.List;
  * @WebSite www.twelvet.cn
  * @Description: 数据字典信息
  */
-@Api(value = "SysDictTypeController", tags = "数据字典信息")
+@Tag(name = "SysDictTypeController", description = "数据字典信息")
 @RestController
 @RequestMapping("/dictionaries/type")
 public class SysDictTypeController extends TWTController {
@@ -39,7 +39,7 @@ public class SysDictTypeController extends TWTController {
 	 * @param dictType SysDictType
 	 * @return JsonResult<TableDataInfo>
 	 */
-	@ApiOperation(value = "数据字典信息分页查询")
+	@Operation(summary = "数据字典信息分页查询")
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:dictionaries:list')")
 	public JsonResult<TableDataInfo> pageQuery(SysDictType dictType) {
@@ -53,7 +53,7 @@ public class SysDictTypeController extends TWTController {
 	 * @param response HttpServletResponse
 	 * @param dictType SysDictType
 	 */
-	@ApiOperation(value = "数据字典导出")
+	@Operation(summary = "数据字典导出")
 	@Log(service = "字典类型", businessType = BusinessType.EXPORT)
 	@PostMapping("/export")
 	@PreAuthorize("@role.hasPermi('system:dict:export')")
@@ -68,7 +68,7 @@ public class SysDictTypeController extends TWTController {
 	 * @param dictId 数据字典ID
 	 * @return JsonResult<SysDictType>
 	 */
-	@ApiOperation(value = "查询字典类型详细")
+	@Operation(summary = "查询字典类型详细")
 	@GetMapping(value = "/{dictId}")
 	@PreAuthorize("@role.hasPermi('system:dict:query')")
 	public JsonResult<SysDictType> getInfo(@PathVariable Long dictId) {
@@ -80,7 +80,7 @@ public class SysDictTypeController extends TWTController {
 	 * @param dict SysDictType
 	 * @return JsonResult<String>
 	 */
-	@ApiOperation(value = "新增字典类型")
+	@Operation(summary = "新增字典类型")
 	@Log(service = "字典类型", businessType = BusinessType.INSERT)
 	@PostMapping
 	@PreAuthorize("@role.hasPermi('system:dict:insert')")
@@ -97,7 +97,7 @@ public class SysDictTypeController extends TWTController {
 	 * @param dict SysDictType
 	 * @return JsonResult<String>
 	 */
-	@ApiOperation(value = "修改字典类型")
+	@Operation(summary = "修改字典类型")
 	@Log(service = "字典类型", businessType = BusinessType.UPDATE)
 	@PutMapping
 	@PreAuthorize("@role.hasPermi('system:dict:update')")
@@ -114,7 +114,7 @@ public class SysDictTypeController extends TWTController {
 	 * @param dictIds 数据字典Ids
 	 * @return JsonResult<String>
 	 */
-	@ApiOperation(value = "删除字典类型")
+	@Operation(summary = "删除字典类型")
 	@Log(service = "字典类型", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{dictIds}")
 	@PreAuthorize("@role.hasPermi('system:dict:remove')")
@@ -126,7 +126,7 @@ public class SysDictTypeController extends TWTController {
 	 * 清空缓存
 	 * @return JsonResult<String>
 	 */
-	@ApiOperation(value = "清空缓存")
+	@Operation(summary = "清空缓存")
 	@Log(service = "字典类型", businessType = BusinessType.CLEAN)
 	@DeleteMapping("/clearCache")
 	@PreAuthorize("@role.hasPermi('system:dict:remove')")
@@ -139,7 +139,7 @@ public class SysDictTypeController extends TWTController {
 	 * 获取字典选择框列表
 	 * @return JsonResult<List<SysDictType>>
 	 */
-	@ApiOperation(value = "获取字典选择框列表")
+	@Operation(summary = "获取字典选择框列表")
 	@GetMapping("/optionSelect")
 	public JsonResult<List<SysDictType>> optionSelect() {
 		List<SysDictType> dictTypes = dictTypeService.selectDictTypeAll();
