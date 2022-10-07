@@ -27,7 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @WebSite www.twelvet.cn
  * @Description: DFS控制器
  */
-@Tag(name = "SysProfileController", description = "DFS控制器")
+@Tag(description = "SysProfileController", name = "DFS控制器")
 @RestController
 @RequestMapping("/user/profile")
 public class SysProfileController extends TWTController {

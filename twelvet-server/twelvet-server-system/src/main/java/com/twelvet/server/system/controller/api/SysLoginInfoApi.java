@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  * @WebSite www.twelvet.cn
  * @Description: 系统操作/访问日志
  */
-@Tag(name = "系统操作日志API")
+@Tag(description = "SysLoginInfoApi", name = "系统操作日志API")
 @RestController
 @RequestMapping("/api/loginInfo")
 public class SysLoginInfoApi extends TWTController {

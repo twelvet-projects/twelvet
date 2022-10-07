@@ -21,10 +21,10 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite www.twelvet.cnR
  * @Description: 终端配置 信息操作处理
  */
-@Tag(name = "Oauth2ClientDetailsController", description = "终端配置")
+@Tag(description = "Oauth2ClientDetailsController", name = "终端配置")
 @RestController
 @RequestMapping("/client")
 public class Oauth2ClientDetailsController extends TWTController {

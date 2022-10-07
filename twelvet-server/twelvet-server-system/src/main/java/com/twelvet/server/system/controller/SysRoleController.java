@@ -26,7 +26,7 @@ import java.util.List;
  * @WebSite www.twelvet.cn
  * @Description: 角色信息
  */
-@Tag(name = "SysRoleController", description = "角色信息")
+@Tag(description = "SysRoleController", name = "角色信息")
 @RestController
 @RequestMapping("/role")
 public class SysRoleController extends TWTController {

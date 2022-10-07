@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @WebSite www.twelvet.cn
  * @Description: OAuth2 API
  */
-@Tag(name = "OAuth2 API")
+@Tag(description = "Oauth2ClientDetailsApi", name = "OAuth2 API")
 @RestController
 @RequestMapping("/api/client")
 public class Oauth2ClientDetailsApi extends TWTController {

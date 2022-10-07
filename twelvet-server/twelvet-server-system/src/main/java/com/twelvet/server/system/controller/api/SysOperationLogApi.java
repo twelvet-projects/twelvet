@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * @WebSite www.twelvet.cn
  * @Description: 操作日志记录
  */
-@Tag(name = "操作日志记录API")
+@Tag(description = "SysOperationLogApi", name = "操作日志记录API")
 @RestController
 @RequestMapping("/api/operationLog")
 public class SysOperationLogApi extends TWTController {

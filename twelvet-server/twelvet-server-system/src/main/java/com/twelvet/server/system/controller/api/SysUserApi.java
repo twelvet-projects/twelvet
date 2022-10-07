@@ -23,7 +23,7 @@ import java.util.Set;
  * @WebSite www.twelvet.cn
  * @Description: 用户信息
  */
-@Tag(name = "用户信息API")
+@Tag(description = "SysUserApi", name = "用户信息API")
 @RestController
 @RequestMapping("/api/user")
 public class SysUserApi extends TWTController {

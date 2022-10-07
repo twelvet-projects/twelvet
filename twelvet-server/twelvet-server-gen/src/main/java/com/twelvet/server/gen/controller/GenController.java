@@ -31,7 +31,7 @@ import java.util.Map;
  * @WebSite www.twelvet.cn
  * @Description: 代码生成 操作处理
  */
-@Tag(name = "GenController", description = "代码生成")
+@Tag(description = "GenController", name = "代码生成")
 @RequestMapping
 @RestController
 public class GenController extends TWTController {

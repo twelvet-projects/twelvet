@@ -28,7 +28,7 @@ import java.util.Map;
  * @WebSite www.twelvet.cn
  * @Description: 部门管理
  */
-@Tag(name = "SysDeptController", description = "部门管理")
+@Tag(description = "SysDeptController", name = "部门管理")
 @RestController
 @RequestMapping("/dept")
 public class SysDeptController extends TWTController {

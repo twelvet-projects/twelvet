@@ -23,7 +23,7 @@ import java.util.List;
  * @WebSite www.twelvet.cn
  * @Description: 系统登录日志
  */
-@Tag(name = "SysLoginInfoController", description = "系统登录日志")
+@Tag(description = "SysLoginInfoController", name = "系统登录日志")
 @RestController
 @RequestMapping("/loginInfo")
 public class SysLoginInfoController extends TWTController {

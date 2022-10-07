@@ -31,7 +31,7 @@ import java.util.List;
  * @WebSite www.twelvet.cn
  * @Description: 调度任务信息操作处理
  */
-@Tag(name = "SysJobController", description = "调度任务信息操作处理")
+@Tag(description = "SysJobController", name = "调度任务信息操作处理")
 @RestController
 @RequestMapping("/cron")
 public class SysJobController extends TWTController {

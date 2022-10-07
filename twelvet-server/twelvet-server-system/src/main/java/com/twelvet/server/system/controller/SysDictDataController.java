@@ -27,7 +27,7 @@ import java.util.List;
  * @WebSite www.twelvet.cn
  * @Description: 数据字典信息
  */
-@Tag(name = "SysDictDataController", description = "数据字典信息")
+@Tag(description = "SysDictDataController", name = "数据字典信息")
 @RestController
 @RequestMapping("/dictionaries/data")
 public class SysDictDataController extends TWTController {

@@ -24,7 +24,7 @@ import java.util.List;
  * @WebSite www.twelvet.cn
  * @Description: 调度日志操作处理
  */
-@Tag(name = "SysJobLogController", description = "调度日志操作处理")
+@Tag(description = "SysJobLogController", name = "调度日志操作处理")
 @RestController
 @RequestMapping("/log")
 public class SysJobLogController extends TWTController {

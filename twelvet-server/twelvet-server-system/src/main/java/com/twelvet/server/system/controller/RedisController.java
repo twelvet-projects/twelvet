@@ -21,7 +21,7 @@ import java.util.*;
  * @WebSite www.twelvet.cn
  * @Description: 缓存监控
  */
-@Tag(name = "RedisController", description = "缓存监控")
+@Tag(description = "RedisController", name = "缓存监控")
 @RestController
 @RequestMapping("/monitor/redis")
 public class RedisController {

@@ -28,7 +28,7 @@ import java.util.Map;
  * @WebSite www.twelvet.cn
  * @Description: 系统菜单控制器
  */
-@Tag(name = "SysMenuController", description = "系统菜单控制器")
+@Tag(description = "SysMenuController", name = "系统菜单控制器")
 @RestController
 @RequestMapping("/menu")
 public class SysMenuController extends TWTController {

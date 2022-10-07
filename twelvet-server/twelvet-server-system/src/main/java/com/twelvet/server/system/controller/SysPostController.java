@@ -26,7 +26,7 @@ import java.util.List;
  * @WebSite www.twelvet.cn
  * @Description: 岗位信息操作处理
  */
-@Tag(name = "SysPostController", description = "岗位信息操作处理")
+@Tag(description = "SysPostController", name = "岗位信息操作处理")
 @RestController
 @RequestMapping("/post")
 public class SysPostController extends TWTController {

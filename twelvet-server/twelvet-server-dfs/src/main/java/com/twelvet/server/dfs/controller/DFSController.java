@@ -23,7 +23,7 @@ import java.util.List;
  * @WebSite www.twelvet.cn
  * @Description: 文件请求处理
  */
-@Tag(name = "DFSController", description = "文件请求处理")
+@Tag(description = "DFSController", name = "文件请求处理")
 @RestController
 public class DFSController extends TWTController {
 

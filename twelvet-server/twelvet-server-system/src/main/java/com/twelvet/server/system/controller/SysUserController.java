@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
  * @WebSite www.twelvet.cn
  * @Description: 用户信息
  */
-@Tag(name = "用户信息")
+@Tag(description = "SysUserController", name = "用户信息")
 @RestController
 @RequestMapping("/user")
 public class SysUserController extends TWTController {
