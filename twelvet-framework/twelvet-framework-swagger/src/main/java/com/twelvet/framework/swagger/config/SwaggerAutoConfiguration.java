@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClas
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpHeaders;
 
 import java.util.ArrayList;
@@ -25,7 +26,9 @@ import java.util.List;
  * <p>
  * 禁用方法1：使用注解@Profile({"dev","test"})
  * <p>
- * 表示在开发或测试环境开启，而在生产关闭。（推荐使用） 禁用方法2：使用注解@ConditionalOnProperty(name = "swagger.enable",
+ * 表示在开发或测试环境开启，而在生产关闭。（推荐使用）
+ *
+ * 禁用方法2：使用注解@ConditionalOnProperty(name = "swagger.enable",
  * havingValue = "true")
  * <p>
  * 然后在测试配置或者开发配置中添加swagger.enable=true即可开启，生产环境不填则默认关闭Swagger.
