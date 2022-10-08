@@ -52,10 +52,10 @@
             <artifactId>sentinel-datasource-nacos</artifactId>
         </dependency>
 
-        <!--Swagger接口文档-->
         <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-webflux-ui</artifactId>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>3.0.3</version>
         </dependency>
 
         <!--twelvet core-->
