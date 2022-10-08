@@ -52,6 +52,7 @@
 
         <swagger.core.version>2.2.2</swagger.core.version>
         <springdoc.version>1.6.11</springdoc.version>
+        <knife4j.version>3.0.3</knife4j.version>
 
         <druid.version>1.2.12</druid.version>
         <dynamic-datasource.version>3.5.1</dynamic-datasource.version>
@@ -118,6 +119,13 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid.version}</version>
+            </dependency>
+
+            <!--Swagger-->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
             </dependency>
 
             <!--redisson-->

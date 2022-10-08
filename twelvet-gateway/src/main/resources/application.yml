@@ -43,5 +43,3 @@ spring:
             groupId: DEFAULT_GROUP
             data-type: json
             rule-type: flow
-knife4j:
-  enable: true
