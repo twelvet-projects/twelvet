@@ -46,7 +46,13 @@ public class SwaggerAutoConfiguration {
 
 	@Bean
 	public OpenAPI springOpenAPI() {
-		OpenAPI openAPI = new OpenAPI().info(new Info().title(swaggerProperties.getTitle()));
+		OpenAPI openAPI = new OpenAPI()
+				.info(
+						new Info()
+								.title(swaggerProperties.getTitle())
+								.version(swaggerProperties.getVersion())
+								.description(swaggerProperties.getDescription())
+				);
 		// oauth2.0 password
 		openAPI.schemaRequirement(HttpHeaders.AUTHORIZATION, this.securityScheme());
 		// servers

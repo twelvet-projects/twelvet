@@ -27,6 +27,16 @@ public class SwaggerProperties {
 	private String basePackage = "";
 
 	/**
+	 * 描述
+	 **/
+	private String description = "";
+
+	/**
+	 * 版本
+	 **/
+	private String version = "";
+
+	/**
 	 * swagger会解析的url规则
 	 **/
 	private List<String> basePath = new ArrayList<>();
@@ -76,6 +86,22 @@ public class SwaggerProperties {
 
 	public String getBasePackage() {
 		return basePackage;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
 	}
 
 	public void setBasePackage(String basePackage) {
