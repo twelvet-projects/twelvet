@@ -35,7 +35,7 @@ import com.twelvet.framework.jdbc.web.utils.PageUtils;
  * @WebSite www.twelvet.cn
  * @date ${datetime}
  */
-@Tag(description = "${ClassName}Controller", description = {"${functionName}"})
+@Tag(description = "${ClassName}Controller", name = "${functionName}")
 @RestController
 @RequestMapping("/${businessName}")
 public class ${ClassName}Controller extends TWTController
