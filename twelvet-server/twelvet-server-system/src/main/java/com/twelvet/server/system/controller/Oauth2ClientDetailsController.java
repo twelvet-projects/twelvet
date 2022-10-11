@@ -1,6 +1,7 @@
 package com.twelvet.server.system.controller;
 
 import com.twelvet.api.system.domain.SysClientDetails;
+import com.twelvet.api.system.domain.dto.SysClientDetailsDTO;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.JsonResult;
 import com.twelvet.framework.jdbc.web.page.TableDataInfo;
@@ -34,15 +35,15 @@ public class Oauth2ClientDetailsController extends TWTController {
 
 	/**
 	 * 查询终端配置列表
-	 * @param sysClientDetails SysClientDetails
+	 * @param sysClientDetailsDTO SysClientDetails
 	 * @return JsonResult<TableDataInfo>
 	 */
 	@Operation(summary = "查询终端配置列表")
 	@PreAuthorize("@role.hasPermi('system:client:list')")
 	@GetMapping("/pageQuery")
-	public JsonResult<TableDataInfo> pageQuery(SysClientDetails sysClientDetails) {
+	public JsonResult<TableDataInfo> pageQuery(SysClientDetailsDTO sysClientDetailsDTO) {
 		PageUtils.startPage();
-		List<SysClientDetails> list = sysClientDetailsService.selectSysClientDetailsList(sysClientDetails);
+		List<SysClientDetails> list = sysClientDetailsService.selectSysClientDetailsList(sysClientDetailsDTO);
 		return JsonResult.success(PageUtils.getDataTable(list));
 	}
 

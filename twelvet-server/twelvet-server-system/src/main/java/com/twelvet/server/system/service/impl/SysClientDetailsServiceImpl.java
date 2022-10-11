@@ -1,6 +1,7 @@
 package com.twelvet.server.system.service.impl;
 
 import com.twelvet.api.system.domain.SysClientDetails;
+import com.twelvet.api.system.domain.dto.SysClientDetailsDTO;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.server.system.mapper.SysClientDetailsMapper;
 import com.twelvet.server.system.service.ISysClientDetailsService;
@@ -38,8 +39,8 @@ public class SysClientDetailsServiceImpl implements ISysClientDetailsService {
 	 * @return 终端配置
 	 */
 	@Override
-	public List<SysClientDetails> selectSysClientDetailsList(SysClientDetails sysClientDetails) {
-		return sysClientDetailsMapper.selectSysClientDetailsList(sysClientDetails);
+	public List<SysClientDetails> selectSysClientDetailsList(SysClientDetailsDTO sysClientDetailsDTO) {
+		return sysClientDetailsMapper.selectSysClientDetailsList(sysClientDetailsDTO);
 	}
 
 	/**

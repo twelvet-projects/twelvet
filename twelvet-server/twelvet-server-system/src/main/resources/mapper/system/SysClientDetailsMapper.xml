@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select client_id, resource_ids, scope, client_secret, authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove from sys_oauth_client_details
     </sql>
 
-    <select id="selectSysClientDetailsList" parameterType="SysClientDetails" resultMap="SysClientDetailsResult">
+    <select id="selectSysClientDetailsList" parameterType="SysClientDetailsDTO" resultMap="SysClientDetailsResult">
         <include refid="selectSysClientDetailsVo"/>
         <where>  
             <if test="clientId != null  and clientId != ''"> and client_id like concat('%', #{clientId}, '%')</if>

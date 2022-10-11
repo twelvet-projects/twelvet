@@ -1,6 +1,7 @@
 package com.twelvet.server.system.mapper;
 
 import com.twelvet.api.system.domain.SysClientDetails;
+import com.twelvet.api.system.domain.dto.SysClientDetailsDTO;
 
 import java.util.List;
 
@@ -20,10 +21,10 @@ public interface SysClientDetailsMapper {
 
 	/**
 	 * 查询终端配置列表
-	 * @param sysClientDetails 终端配置
+	 * @param sysClientDetailsDTO 终端配置
 	 * @return 终端配置集合
 	 */
-	List<SysClientDetails> selectSysClientDetailsList(SysClientDetails sysClientDetails);
+	List<SysClientDetails> selectSysClientDetailsList(SysClientDetailsDTO sysClientDetailsDTO);
 
 	/**
 	 * 新增终端配置
