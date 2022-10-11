@@ -35,7 +35,7 @@ public class SysClientDetailsServiceImpl implements ISysClientDetailsService {
 
 	/**
 	 * 查询终端配置列表
-	 * @param sysClientDetails 终端配置
+	 * @param sysClientDetailsDTO 终端配置
 	 * @return 终端配置
 	 */
 	@Override
