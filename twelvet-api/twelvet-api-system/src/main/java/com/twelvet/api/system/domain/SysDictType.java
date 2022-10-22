@@ -10,9 +10,12 @@ import com.twelvet.framework.utils.annotation.excel.Excel.ColumnType;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serial;
+
 @Schema(description ="字典表")
 public class SysDictType extends BaseEntity {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

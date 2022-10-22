@@ -3,6 +3,7 @@ package com.twelvet.api.system.domain.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -13,6 +14,7 @@ import java.io.Serializable;
 @Schema(description ="路由显示信息")
 public class MetaVo implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

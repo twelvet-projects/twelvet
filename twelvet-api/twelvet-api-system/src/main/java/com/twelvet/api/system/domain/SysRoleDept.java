@@ -5,13 +5,19 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
  * @Description: 角色和部门关联 sys_role_dept
  */
 @Schema(description ="角色和部门关联")
-public class SysRoleDept {
+public class SysRoleDept implements Serializable {
+
+	@Serial
+	private static final long serialVersionUID = 1L;
 
 	/** 角色ID */
 	@Schema(description = "角色ID")

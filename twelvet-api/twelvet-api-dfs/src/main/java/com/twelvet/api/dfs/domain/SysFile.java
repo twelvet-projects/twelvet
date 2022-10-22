@@ -5,13 +5,19 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
  * @Description: 文件信息
  */
 @Schema(description ="文件信息")
-public class SysFile {
+public class SysFile implements Serializable {
+
+	@Serial
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 文件名称

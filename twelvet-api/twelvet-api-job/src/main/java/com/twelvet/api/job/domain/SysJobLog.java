@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.io.Serial;
 import java.util.Date;
 
 /**
@@ -17,6 +18,7 @@ import java.util.Date;
 @Schema(description ="定时任务调度日志表")
 public class SysJobLog extends BaseEntity {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/** ID */

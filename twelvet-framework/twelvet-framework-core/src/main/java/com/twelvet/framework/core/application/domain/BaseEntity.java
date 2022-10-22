@@ -2,6 +2,7 @@ package com.twelvet.framework.core.application.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import java.util.Map;
  */
 public class BaseEntity implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

@@ -14,6 +14,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serial;
 import java.util.Date;
 
 /**
@@ -24,6 +25,7 @@ import java.util.Date;
 @Schema(description ="定时任务调度表")
 public class SysJob extends BaseEntity {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

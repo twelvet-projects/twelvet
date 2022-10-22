@@ -38,9 +38,9 @@
         <twelvet.version>2.7.2</twelvet.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
 
         <spring-boot-dependencies.version>2.7.4</spring-boot-dependencies.version>
         <spring-cloud.version>2021.0.4</spring-cloud.version>

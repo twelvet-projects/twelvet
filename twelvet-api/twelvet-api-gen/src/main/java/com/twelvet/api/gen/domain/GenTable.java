@@ -1,5 +1,6 @@
 package com.twelvet.api.gen.domain;
 
+import java.io.Serial;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -19,6 +20,7 @@ import org.apache.commons.lang3.ArrayUtils;
 @Schema(description ="业务表")
 public class GenTable extends BaseEntity {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

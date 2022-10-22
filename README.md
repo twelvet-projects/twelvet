@@ -1,5 +1,5 @@
 # twelvet
-
+# JDK >= 17
 [![AUR](https://img.shields.io/github/license/twelvet-s/twelvet)](https://gitee.com/twelvet/twelvet/blob/master/LICENSE)
 [![](https://img.shields.io/badge/Author-TwelveT-orange.svg)](https://www.twelvet.cn)
 [![](https://img.shields.io/badge/version-2.6.0-success)](https://gitee.com/twelvet/twelvet)

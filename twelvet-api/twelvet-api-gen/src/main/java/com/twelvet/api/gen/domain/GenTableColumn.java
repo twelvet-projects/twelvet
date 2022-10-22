@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serial;
 
 /**
  * @author twelvet
@@ -15,6 +16,7 @@ import javax.validation.constraints.NotBlank;
 @Schema(description ="代码生成业务字段表")
 public class GenTableColumn extends BaseEntity {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

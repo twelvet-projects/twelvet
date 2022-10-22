@@ -6,8 +6,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.io.Serial;
+
 @Schema(description ="SysDfs")
 public class SysDfs extends BaseEntity {
+
+	@Serial
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 主键

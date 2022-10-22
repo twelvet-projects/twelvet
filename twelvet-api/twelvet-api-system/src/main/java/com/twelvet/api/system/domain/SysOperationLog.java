@@ -1,5 +1,6 @@
 package com.twelvet.api.system.domain;
 
+import java.io.Serial;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -18,6 +19,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(description ="操作日志记录表")
 public class SysOperationLog extends BaseEntity {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

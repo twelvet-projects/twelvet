@@ -10,6 +10,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serial;
 
 /**
  * @author twelvet
@@ -19,6 +20,7 @@ import javax.validation.constraints.Size;
 @Schema(description ="岗位表")
 public class SysPost extends BaseEntity {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**
