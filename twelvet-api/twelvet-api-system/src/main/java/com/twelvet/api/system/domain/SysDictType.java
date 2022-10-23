@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serial;
 
-@Schema(description ="字典表")
+@Schema(description = "字典表")
 public class SysDictType extends BaseEntity {
 
 	@Serial

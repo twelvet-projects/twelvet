@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @WebSite www.twelvet.cn
  * @Description: 文件信息
  */
-@Schema(description ="文件信息")
+@Schema(description = "文件信息")
 public class SysFile implements Serializable {
 
 	@Serial

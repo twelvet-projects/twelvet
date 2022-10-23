@@ -4,7 +4,6 @@ import com.twelvet.framework.core.application.domain.BaseEntity;
 import com.twelvet.framework.utils.StringUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-
 import javax.validation.constraints.NotBlank;
 import java.io.Serial;
 
@@ -13,7 +12,7 @@ import java.io.Serial;
  * @WebSite www.twelvet.cn
  * @Description: 代码生成业务字段表 gen_table_column
  */
-@Schema(description ="代码生成业务字段表")
+@Schema(description = "代码生成业务字段表")
 public class GenTableColumn extends BaseEntity {
 
 	@Serial

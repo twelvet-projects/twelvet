@@ -3,7 +3,6 @@ package com.twelvet.api.system.domain.vo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
  * @WebSite www.twelvet.cn
  * @Description: 路由配置信息
  */
-@Schema(description ="路由配置信息")
+@Schema(description = "路由配置信息")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class RouterVo implements Serializable {
 

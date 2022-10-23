@@ -3,7 +3,6 @@ package com.twelvet.api.system.domain.vo;
 import com.twelvet.api.system.domain.SysUser;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -12,7 +11,7 @@ import java.io.Serializable;
  * @WebSite www.twelvet.cn
  * @Description: 用户信息
  */
-@Schema(description ="用户信息")
+@Schema(description = "用户信息")
 public class UserInfoVo implements Serializable {
 
 	@Serial

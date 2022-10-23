@@ -12,7 +12,7 @@ import java.io.Serial;
  * @WebSite www.twelvet.cn
  * @Description: 终端配置表 sys_oauth_client_details
  */
-@Schema(description ="终端配置表DTO")
+@Schema(description = "终端配置表DTO")
 public class SysClientDetailsDTO extends BaseEntity {
 
 	@Serial

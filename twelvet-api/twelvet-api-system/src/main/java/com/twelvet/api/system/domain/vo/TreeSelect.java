@@ -5,7 +5,6 @@ import com.twelvet.api.system.domain.SysDept;
 import com.twelvet.api.system.domain.SysMenu;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.stream.Collectors;
  * @WebSite www.twelvet.cn
  * @Description: TreeSelect树结构实体类
  */
-@Schema(description ="TreeSelect树结构实体类")
+@Schema(description = "TreeSelect树结构实体类")
 public class TreeSelect implements Serializable {
 
 	@Serial

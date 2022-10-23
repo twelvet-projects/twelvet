@@ -17,7 +17,7 @@ import java.io.Serial;
  * @WebSite www.twelvet.cn
  * @Description: 参数配置表 sys_config
  */
-@Schema(description ="参数配置表")
+@Schema(description = "参数配置表")
 public class SysConfig extends BaseEntity {
 
 	@Serial

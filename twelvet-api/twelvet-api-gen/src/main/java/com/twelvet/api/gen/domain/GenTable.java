@@ -17,7 +17,7 @@ import org.apache.commons.lang3.ArrayUtils;
  * @WebSite www.twelvet.cn
  * @Description: 业务表 gen_table
  */
-@Schema(description ="业务表")
+@Schema(description = "业务表")
 public class GenTable extends BaseEntity {
 
 	@Serial

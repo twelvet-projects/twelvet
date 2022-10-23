@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @WebSite www.twelvet.cn
  * @Description: 角色和部门关联 sys_role_dept
  */
-@Schema(description ="角色和部门关联")
+@Schema(description = "角色和部门关联")
 public class SysRoleDept implements Serializable {
 
 	@Serial

@@ -10,13 +10,12 @@ import com.twelvet.framework.utils.annotation.excel.Excel;
 import com.twelvet.framework.utils.annotation.excel.Excel.ColumnType;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
  * @Description: 操作日志记录表
  */
-@Schema(description ="操作日志记录表")
+@Schema(description = "操作日志记录表")
 public class SysOperationLog extends BaseEntity {
 
 	@Serial

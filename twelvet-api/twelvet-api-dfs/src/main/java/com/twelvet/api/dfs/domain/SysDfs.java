@@ -8,7 +8,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.Serial;
 
-@Schema(description ="SysDfs")
+@Schema(description = "SysDfs")
 public class SysDfs extends BaseEntity {
 
 	@Serial

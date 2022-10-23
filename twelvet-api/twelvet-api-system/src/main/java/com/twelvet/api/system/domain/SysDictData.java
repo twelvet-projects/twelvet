@@ -17,7 +17,7 @@ import java.io.Serial;
  * @WebSite www.twelvet.cn
  * @Description: 字典数据表 sys_dict_data
  */
-@Schema(description ="字典数据表")
+@Schema(description = "字典数据表")
 public class SysDictData extends BaseEntity {
 
 	@Serial

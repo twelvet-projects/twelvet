@@ -24,7 +24,7 @@ import java.util.List;
  * @WebSite www.twelvet.cn
  * @Description: sys_user实体
  */
-@Schema(description ="sys_user实体")
+@Schema(description = "sys_user实体")
 public class SysUser extends BaseEntity {
 
 	@Serial

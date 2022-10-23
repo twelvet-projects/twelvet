@@ -15,7 +15,7 @@ import java.util.Date;
  * @WebSite www.twelvet.cn
  * @Description: 定时任务调度日志表 sys_job_log
  */
-@Schema(description ="定时任务调度日志表")
+@Schema(description = "定时任务调度日志表")
 public class SysJobLog extends BaseEntity {
 
 	@Serial

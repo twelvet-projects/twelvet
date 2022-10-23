@@ -2,7 +2,6 @@ package com.twelvet.api.system.domain.params;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -11,7 +10,7 @@ import java.io.Serializable;
  * @WebSite www.twelvet.cn
  * @Description: 用户修改密码参数
  */
-@Schema(description ="用户修改密码参数")
+@Schema(description = "用户修改密码参数")
 public class UserPassword implements Serializable {
 
 	@Serial

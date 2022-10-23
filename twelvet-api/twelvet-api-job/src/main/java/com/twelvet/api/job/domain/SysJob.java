@@ -22,7 +22,7 @@ import java.util.Date;
  * @WebSite www.twelvet.cn
  * @Description: 定时任务调度表 sys_job
  */
-@Schema(description ="定时任务调度表")
+@Schema(description = "定时任务调度表")
 public class SysJob extends BaseEntity {
 
 	@Serial

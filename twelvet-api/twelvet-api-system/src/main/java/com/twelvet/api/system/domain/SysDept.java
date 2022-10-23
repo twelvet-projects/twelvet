@@ -18,7 +18,7 @@ import java.util.List;
  * @WebSite www.twelvet.cn
  * @Description: 部门表 sys_dept
  */
-@Schema(description ="部门表")
+@Schema(description = "部门表")
 public class SysDept extends BaseEntity {
 
 	@Serial
