@@ -49,7 +49,7 @@ public class TWTAuthenticationFailureEventHandler implements AuthenticationFailu
 			AuthenticationException exception) {
 		String username = request.getParameter(OAuth2ParameterNames.USERNAME);
 
-		log.error("用户：{} 登录失败，异常：{}", username, exception.getLocalizedMessage());
+		log.error("用户：{} 登录失败，异常：", username, exception);
 		if (TUtils.isNotEmpty(username)) {
 			SysLoginInfo sysLoginInfo = new SysLoginInfo();
 			SysLogVO sysLog = SysLogUtils.getSysLog();

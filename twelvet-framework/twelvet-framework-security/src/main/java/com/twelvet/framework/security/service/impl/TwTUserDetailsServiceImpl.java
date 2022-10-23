@@ -29,11 +29,28 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 
 	private static final Logger log = LoggerFactory.getLogger(TwTUserDetailsServiceImpl.class);
 
+	/**
+	 * 仅支持后台登录
+	 */
+	private final static String PLAT_FORM  = "admin" ;
+
 	@Autowired
 	private RemoteUserService remoteUserService;
 
 	@Autowired
 	private CacheManager cacheManager;
+
+	/**
+	 * 识别是否使用此登录器
+	 * @param clientId 目标客户端
+	 * @param grantType 登录类型
+	 * @return boolean
+	 */
+	@Override
+	public boolean support(String clientId, String grantType) {
+        // return PLAT_FORM.equals(grantType);
+		return true;
+    }
 
 	/**
 	 * 用户名称登录

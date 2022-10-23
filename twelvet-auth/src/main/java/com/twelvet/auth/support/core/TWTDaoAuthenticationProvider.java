@@ -32,7 +32,7 @@ import java.util.function.Supplier;
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description: 自定义处理密码校验
+ * @Description: 自定义处理校验
  */
 public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 
@@ -67,9 +67,9 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 	protected void additionalAuthenticationChecks(UserDetails userDetails,
 			UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
 
-		// app 模式不用校验密码
+		// sms 模式不用校验密码
 		String grantType = ServletUtils.getRequest().get().getParameter(OAuth2ParameterNames.GRANT_TYPE);
-		if (StrUtil.equals(SecurityConstants.APP, grantType)) {
+		if (StrUtil.equals(SecurityConstants.SMS, grantType)) {
 			return;
 		}
 
@@ -110,6 +110,7 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 				.getBeansOfType(TwTUserDetailsServiceImpl.class);
 
 		String finalClientId = clientId;
+		// 获取需要使用的登录器
 		Optional<TwTUserDetailsServiceImpl> optional = userDetailsServiceMap.values().stream()
 				.filter(service -> service.support(finalClientId, grantType))
 				.max(Comparator.comparingInt(Ordered::getOrder));

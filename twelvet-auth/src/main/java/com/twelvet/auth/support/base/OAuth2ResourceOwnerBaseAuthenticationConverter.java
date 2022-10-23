@@ -40,11 +40,11 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationConverter<T extends O
 	}
 
 	/**
-	 * 构建具体类型的token
-	 * @param clientPrincipal
-	 * @param requestedScopes
-	 * @param additionalParameters
-	 * @return
+	 * 构建具体类型的token(使用具体登录处理器)
+	 * @param clientPrincipal Authentication
+	 * @param requestedScopes Set<String>
+	 * @param additionalParameters Map<String, Object>
+	 * @return T
 	 */
 	public abstract T buildToken(Authentication clientPrincipal, Set<String> requestedScopes,
 			Map<String, Object> additionalParameters);
