@@ -105,6 +105,7 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 	public abstract void checkClient(RegisteredClient registeredClient);
 
 	/**
+	 * 必须重写此方法，以此校验你的登录
 	 * Performs authentication with the same contract as
 	 * {@link AuthenticationManager#authenticate(Authentication)} .
 	 * @param authentication the authentication request object.
@@ -147,6 +148,7 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 
 			log.debug("got usernamePasswordAuthenticationToken=" + usernamePasswordAuthenticationToken);
 
+			// 会自动调用TwTUserDetailsServiceImpl.loadUserByUsername()
 			Authentication usernamePasswordAuthentication = authenticationManager
 					.authenticate(usernamePasswordAuthenticationToken);
 
@@ -235,8 +237,8 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 	 * @param authenticationException 身份验证异常
 	 * @return {@link OAuth2AuthenticationException}
 	 */
-	private OAuth2AuthenticationException oAuth2AuthenticationException(Authentication authentication,
-			AuthenticationException authenticationException) {
+	protected OAuth2AuthenticationException oAuth2AuthenticationException(Authentication authentication,
+																		  AuthenticationException authenticationException) {
 		if (authenticationException instanceof UsernameNotFoundException) {
 			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodesExpand.USERNAME_NOT_FOUND,
 					this.messages.getMessage("JdbcDaoImpl.notFound", new Object[] { authentication.getName() },
@@ -245,8 +247,9 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 		}
 		if (authenticationException instanceof BadCredentialsException) {
 			return new OAuth2AuthenticationException(
-					new OAuth2Error(OAuth2ErrorCodesExpand.BAD_CREDENTIALS, this.messages.getMessage(
-							"AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"), ""));
+					new OAuth2Error(OAuth2ErrorCodesExpand.BAD_CREDENTIALS, authenticationException.getMessage(),
+							"")
+			);
 		}
 		if (authenticationException instanceof LockedException) {
 			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodesExpand.USER_LOCKED, this.messages

@@ -92,4 +92,9 @@ public interface SecurityConstants {
 	 */
 	String SMS_PARAMETER_NAME = "mobile";
 
+	/**
+	 * 验证码
+	 */
+	String CODE = "code";
+
 }

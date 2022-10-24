@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.twelvet.framework.core.constants.SecurityConstants;
+import com.twelvet.framework.security.service.TwUserDetailsService;
 import com.twelvet.framework.security.service.impl.TwTUserDetailsServiceImpl;
 import com.twelvet.framework.utils.http.ServletUtils;
 import org.springframework.core.Ordered;
@@ -32,7 +33,7 @@ import java.util.function.Supplier;
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description: 自定义处理校验
+ * @Description: 自定义处理校验(默认密码模式)
  */
 public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 
@@ -63,14 +64,28 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 		setPasswordEncoder(PasswordEncoderFactories.createDelegatingPasswordEncoder());
 	}
 
+	/**
+	 * 密码校验，短信验证码校验
+	 * @param userDetails as retrieved from the
+	 * {@link #retrieveUser(String, UsernamePasswordAuthenticationToken)} or
+	 * <code>UserCache</code>
+	 * @param authentication the current request that needs to be authenticated
+	 * @throws AuthenticationException AuthenticationException
+	 */
 	@Override
 	protected void additionalAuthenticationChecks(UserDetails userDetails,
 			UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
 
-		// sms 模式不用校验密码
 		String grantType = ServletUtils.getRequest().get().getParameter(OAuth2ParameterNames.GRANT_TYPE);
-		if (StrUtil.equals(SecurityConstants.SMS, grantType)) {
-			return;
+		if (StrUtil.equals(SecurityConstants.SMS, grantType)) { // sms 模式校验Code
+			String code = ServletUtils.getRequest().get().getParameter(SecurityConstants.CODE);
+			// TODO 实现手机验证码校验
+            if("1234".equals(code)) {
+				return;
+			}
+			this.logger.debug("Failed to authenticate since phone code does not match stored value");
+			throw new BadCredentialsException(this.messages
+					.getMessage("AbstractUserDetailsAuthenticationProvider.smsBadCredentials", "Bad credentials"));
 		}
 
 		if (authentication.getCredentials() == null) {
@@ -106,12 +121,12 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 			clientId = basicConvert.convert(request).getName();
 		}
 
-		Map<String, TwTUserDetailsServiceImpl> userDetailsServiceMap = SpringUtil
-				.getBeansOfType(TwTUserDetailsServiceImpl.class);
+		Map<String, TwUserDetailsService> userDetailsServiceMap = SpringUtil
+				.getBeansOfType(TwUserDetailsService.class);
 
 		String finalClientId = clientId;
 		// 获取需要使用的登录器
-		Optional<TwTUserDetailsServiceImpl> optional = userDetailsServiceMap.values().stream()
+		Optional<TwUserDetailsService> optional = userDetailsServiceMap.values().stream()
 				.filter(service -> service.support(finalClientId, grantType))
 				.max(Comparator.comparingInt(Ordered::getOrder));
 
