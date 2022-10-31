@@ -3,6 +3,7 @@ package com.twelvet.api.system.model;
 import com.twelvet.api.system.domain.SysUser;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -14,6 +15,7 @@ import java.util.Set;
 @Schema(description = "登录用户基本信息实体")
 public class UserInfo implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**
