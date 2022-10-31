@@ -20,7 +20,7 @@ import java.util.List;
 public class ISysLoginInfoServiceImpl implements ISysLoginInfoService {
 
 	@Autowired
-	private SysLoginInfoMapper SysLoginInfoMapper;
+	private SysLoginInfoMapper sysLoginInfoMapper;
 
 	@Autowired
 	private SysUserMapper sysUserMapper;
@@ -32,7 +32,7 @@ public class ISysLoginInfoServiceImpl implements ISysLoginInfoService {
 	 */
 	@Override
 	public List<SysLoginInfo> selectLoginInfoList(SysLoginInfo loginInfo) {
-		return SysLoginInfoMapper.selectLoginInfoList(loginInfo);
+		return sysLoginInfoMapper.selectLoginInfoList(loginInfo);
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class ISysLoginInfoServiceImpl implements ISysLoginInfoService {
 	 */
 	@Override
 	public int deleteLoginInfoByIds(Long[] infoIds) {
-		return SysLoginInfoMapper.deleteLoginInfoByIds(infoIds);
+		return sysLoginInfoMapper.deleteLoginInfoByIds(infoIds);
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class ISysLoginInfoServiceImpl implements ISysLoginInfoService {
 	 */
 	@Override
 	public void cleanLoginInfo() {
-		SysLoginInfoMapper.cleanLoginInfo();
+		sysLoginInfoMapper.cleanLoginInfo();
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class ISysLoginInfoServiceImpl implements ISysLoginInfoService {
 			if (TUtils.isNotEmpty(sysUser)) {
 				Long deptId = sysUser.getDeptId();
 				loginInfo.setDeptId(deptId);
-				return SysLoginInfoMapper.insertLoginInfo(loginInfo);
+				return sysLoginInfoMapper.insertLoginInfo(loginInfo);
 			}
 		}
 
