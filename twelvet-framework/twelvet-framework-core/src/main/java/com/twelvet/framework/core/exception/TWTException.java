@@ -1,5 +1,7 @@
 package com.twelvet.framework.core.exception;
 
+import java.io.Serial;
+
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
@@ -7,6 +9,7 @@ package com.twelvet.framework.core.exception;
  */
 public class TWTException extends RuntimeException {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

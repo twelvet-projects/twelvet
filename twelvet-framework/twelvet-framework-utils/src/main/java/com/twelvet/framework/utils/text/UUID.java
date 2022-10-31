@@ -2,6 +2,7 @@ package com.twelvet.framework.utils.text;
 
 import com.twelvet.framework.utils.exception.TWTUtilsException;
 
+import java.io.Serial;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -19,6 +20,7 @@ public final class UUID implements java.io.Serializable, Comparable<UUID> {
 		throw new TWTUtilsException("This is a utility class and cannot be instantiated");
 	}
 
+	@Serial
 	private static final long serialVersionUID = -1185015143654744140L;
 
 	/**

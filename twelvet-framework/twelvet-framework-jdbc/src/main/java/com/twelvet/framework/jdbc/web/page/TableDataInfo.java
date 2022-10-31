@@ -1,5 +1,6 @@
 package com.twelvet.framework.jdbc.web.page;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  */
 public class TableDataInfo implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

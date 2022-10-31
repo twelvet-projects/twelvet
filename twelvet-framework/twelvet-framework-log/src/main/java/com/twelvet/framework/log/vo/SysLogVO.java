@@ -2,6 +2,7 @@ package com.twelvet.framework.log.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -11,6 +12,7 @@ import java.io.Serializable;
  */
 public class SysLogVO implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

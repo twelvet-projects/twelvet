@@ -3,6 +3,7 @@ package com.twelvet.framework.core.application.domain;
 import com.twelvet.framework.utils.TUtils;
 import org.springframework.http.HttpStatus;
 
+import java.io.Serial;
 import java.util.LinkedHashMap;
 
 /**
@@ -12,6 +13,7 @@ import java.util.LinkedHashMap;
  */
 public class AjaxResult extends LinkedHashMap<String, Object> {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

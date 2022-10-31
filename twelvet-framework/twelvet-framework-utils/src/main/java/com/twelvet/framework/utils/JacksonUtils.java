@@ -19,6 +19,7 @@ import org.springframework.lang.Nullable;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serial;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.*;
@@ -696,6 +697,7 @@ public class JacksonUtils {
 
 	private static class JacksonObjectMapper extends ObjectMapper {
 
+		@Serial
 		private static final long serialVersionUID = 1L;
 
 		private static final Locale CHINA = Locale.CHINA;

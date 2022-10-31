@@ -4,6 +4,7 @@ import com.twelvet.framework.utils.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.io.PrintWriter;
+import java.io.Serial;
 import java.io.StringWriter;
 
 /**
@@ -13,6 +14,7 @@ import java.io.StringWriter;
  */
 public class TWTUtilsException extends RuntimeException {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	public TWTUtilsException(Throwable e) {

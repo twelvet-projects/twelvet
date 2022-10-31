@@ -1,5 +1,7 @@
 package com.twelvet.server.dfs.exception;
 
+import java.io.Serial;
+
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
@@ -7,6 +9,7 @@ package com.twelvet.server.dfs.exception;
  */
 public class FileNameLengthLimitExceededException extends FileException {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	public FileNameLengthLimitExceededException(int defaultFileNameLength) {
