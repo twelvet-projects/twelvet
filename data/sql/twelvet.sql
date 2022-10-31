@@ -608,7 +608,6 @@ CREATE TABLE `sys_user_role`  (
 INSERT INTO `sys_user_role` VALUES (1, 1);
 INSERT INTO `sys_user_role` VALUES (4, 2);
 INSERT INTO `sys_user_role` VALUES (4, 5);
-INSERT INTO `sys_user_role` VALUES (5, 2);
 
 -- ----------------------------
 -- Table structure for undo_log
