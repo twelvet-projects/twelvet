@@ -250,15 +250,13 @@ public class GenTableServiceImpl implements IGenTableService {
 	public void synchDb(String tableName) {
 		GenTable table = genTableMapper.selectGenTableByName(tableName);
 		List<GenTableColumn> tableColumns = table.getColumns();
-		List<String> tableColumnNames = tableColumns.stream().map(GenTableColumn::getColumnName)
-				.collect(Collectors.toList());
+		List<String> tableColumnNames = tableColumns.stream().map(GenTableColumn::getColumnName).toList();
 
 		List<GenTableColumn> dbTableColumns = genTableColumnMapper.selectDbTableColumnsByName(tableName);
 		if (StringUtils.isEmpty(dbTableColumns)) {
 			throw new TWTException("同步数据失败，原表结构不存在");
 		}
-		List<String> dbTableColumnNames = dbTableColumns.stream().map(GenTableColumn::getColumnName)
-				.collect(Collectors.toList());
+		List<String> dbTableColumnNames = dbTableColumns.stream().map(GenTableColumn::getColumnName).toList();
 
 		dbTableColumns.forEach(column -> {
 			if (!tableColumnNames.contains(column.getColumnName())) {
