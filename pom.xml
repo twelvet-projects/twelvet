@@ -50,7 +50,7 @@
         <spring-boot.mybatis>2.2.0</spring-boot.mybatis>
         <spring.authorization.version>0.3.1</spring.authorization.version>
 
-        <swagger.core.version>2.2.2</swagger.core.version>
+        <swagger.core.version>2.2.4</swagger.core.version>
         <springdoc.version>1.6.12</springdoc.version>
         <knife4j.version>3.0.3</knife4j.version>
 
