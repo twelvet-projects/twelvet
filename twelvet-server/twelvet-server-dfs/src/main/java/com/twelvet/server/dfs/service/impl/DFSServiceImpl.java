@@ -32,7 +32,6 @@ import java.util.List;
  */
 @Primary
 @Service
-
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
