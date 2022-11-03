@@ -67,7 +67,7 @@ public class SysJobLogController extends TWTController {
 	 * @return JsonResult
 	 */
 	@Operation(summary = "根据调度编号获取详细信息")
-	@GetMapping("/{configId}")
+	@GetMapping("/{jobLogId}")
 	@PreAuthorize("@role.hasPermi('system:job:query')")
 	public JsonResult<SysJobLog> getInfo(@PathVariable Long jobLogId) {
 		return JsonResult.success(jobLogService.selectJobLogById(jobLogId));
