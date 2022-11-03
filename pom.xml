@@ -51,7 +51,7 @@
         <spring.authorization.version>0.3.1</spring.authorization.version>
 
         <swagger.core.version>2.2.2</swagger.core.version>
-        <springdoc.version>1.6.11</springdoc.version>
+        <springdoc.version>1.6.12</springdoc.version>
         <knife4j.version>3.0.3</knife4j.version>
 
         <druid.version>1.2.12</druid.version>
@@ -188,13 +188,6 @@
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-webmvc-core</artifactId>
-                <version>${springdoc.version}</version>
-            </dependency>
-
-            <!--springdoc -->
-            <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-webflux-ui</artifactId>
                 <version>${springdoc.version}</version>
             </dependency>
 
