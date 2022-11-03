@@ -61,7 +61,7 @@
         <commons.io.version>2.11.0</commons.io.version>
         <velocity.version>2.3</velocity.version>
         <hutool.version>5.8.7</hutool.version>
-        <redisson.version>3.17.5</redisson.version>
+        <redisson.version>3.17.7</redisson.version>
         <qiniu.version>7.10.3</qiniu.version>
 
         <docker.plugin.version>0.32.0</docker.plugin.version>
