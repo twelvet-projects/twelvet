@@ -2,7 +2,7 @@
 
 [![AUR](https://img.shields.io/github/license/twelvet-s/twelvet)](https://gitee.com/twelvet/twelvet/blob/master/LICENSE)
 [![](https://img.shields.io/badge/Author-TwelveT-orange.svg)](https://www.twelvet.cn)
-[![](https://img.shields.io/badge/version-2.6.0-success)](https://gitee.com/twelvet/twelvet)
+[![](https://img.shields.io/badge/version-2.7.5-success)](https://gitee.com/twelvet/twelvet)
 [![star](https://gitee.com/twelvet/twelvet/badge/star.svg?theme=white)](https://gitee.com/twelvet/twelvet/stargazers)
 [![fork](https://gitee.com/twelvet/twelvet/badge/fork.svg?theme=white)](https://gitee.com/twelvet/twelvet/members)
 
