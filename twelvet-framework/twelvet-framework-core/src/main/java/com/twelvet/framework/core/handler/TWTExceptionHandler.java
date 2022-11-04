@@ -1,12 +1,14 @@
 package com.twelvet.framework.core.handler;
 
 import com.twelvet.framework.core.application.domain.AjaxResult;
+import com.twelvet.framework.core.application.domain.JsonResult;
 import com.twelvet.framework.core.exception.TWTException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -81,6 +83,17 @@ public class TWTExceptionHandler {
 		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
 		log.error("参数绑定异常,ex = {}", fieldErrors.get(0).getDefaultMessage());
 		return AjaxResult.error(fieldErrors.get(0).getDefaultMessage());
+	}
+
+	/**
+	 * 请求方式不支持
+	 *
+	 * @param e HttpRequestMethodNotSupportedException
+	 * @return JsonResult
+	 */
+	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+	public JsonResult<Void> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException e) {
+		return JsonResult.error(e.getMessage());
 	}
 
 }
