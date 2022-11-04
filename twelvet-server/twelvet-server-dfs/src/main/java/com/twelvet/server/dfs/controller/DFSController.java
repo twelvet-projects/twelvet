@@ -60,11 +60,11 @@ public class DFSController extends TWTController {
 	}
 
 	/**
-	 * 分页查询
+	 * 批量删除文件
 	 * @param fileIds 文件地址
 	 * @return JsonResult<String>
 	 */
-	@Operation(summary = "查询代码生成列表")
+	@Operation(summary = "批量删除文件")
 	@PreAuthorize("@role.hasPermi('dfs:dfs:remove')")
 	@Log(service = "删除文件", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{fileIds}")
