@@ -126,8 +126,7 @@ public class SysDataScopeAspect {
 
 		if (StringUtils.isNotBlank(sqlString.toString())) {
 			Object params = joinPoint.getArgs()[0];
-			if (StringUtils.isNotNull(params) && params instanceof BaseEntity) {
-				BaseEntity baseEntity = (BaseEntity) params;
+			if (StringUtils.isNotNull(params) && params instanceof BaseEntity baseEntity) {
 				baseEntity.getParams().put(DATA_SCOPE, " AND (" + sqlString.substring(4) + ")");
 			}
 		}
