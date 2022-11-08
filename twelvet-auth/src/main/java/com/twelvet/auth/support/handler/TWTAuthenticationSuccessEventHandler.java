@@ -2,7 +2,7 @@ package com.twelvet.auth.support.handler;
 
 import cn.hutool.core.map.MapUtil;
 import com.twelvet.api.system.domain.SysLoginInfo;
-import com.twelvet.framework.log.event.event.SysLoginLogEvent;
+import com.twelvet.framework.log.event.SysLoginLogEvent;
 import com.twelvet.framework.log.utils.SysLogUtils;
 import com.twelvet.framework.log.vo.SysLogVO;
 import com.twelvet.framework.core.constants.SecurityConstants;

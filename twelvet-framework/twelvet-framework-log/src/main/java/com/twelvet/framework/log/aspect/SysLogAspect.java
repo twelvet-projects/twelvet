@@ -4,7 +4,7 @@ import com.twelvet.api.system.domain.SysOperationLog;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessStatus;
-import com.twelvet.framework.log.event.event.SysOperationLogEvent;
+import com.twelvet.framework.log.event.SysOperationLogEvent;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.TUtils;
