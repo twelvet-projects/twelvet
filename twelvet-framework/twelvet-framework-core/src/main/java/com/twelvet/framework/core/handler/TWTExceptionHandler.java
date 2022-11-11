@@ -2,6 +2,7 @@ package com.twelvet.framework.core.handler;
 
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.core.application.domain.JsonResult;
+import com.twelvet.framework.core.exception.NotFoundException;
 import com.twelvet.framework.core.exception.TWTException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,18 @@ public class TWTExceptionHandler {
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public AjaxResult handleException(Exception e) {
+		log.error(e.getMessage(), e);
+		return AjaxResult.error(e.getLocalizedMessage());
+	}
+
+	/**
+	 * 404
+	 * @param e Exception
+	 * @return JsonResult
+	 */
+	@ExceptionHandler(NotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public AjaxResult handleNotFoundException(Exception e) {
 		log.error(e.getMessage(), e);
 		return AjaxResult.error(e.getLocalizedMessage());
 	}
