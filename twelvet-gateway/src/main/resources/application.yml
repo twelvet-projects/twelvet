@@ -26,12 +26,8 @@ spring:
         group: DEFAULT_GROUP
         # shared-configs:
           # - data-id: twelvet-app-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
-  config:
-    import:
-      - nacos:twelvet-app-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
-      - nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
     sentinel:
-      # 规则持久化配置
+      # nacos配置持久化
       datasource:
         ds:
           # 采用nacos
@@ -43,3 +39,7 @@ spring:
             groupId: DEFAULT_GROUP
             data-type: json
             rule-type: flow
+  config:
+    import:
+      - nacos:twelvet-app-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+      - nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}

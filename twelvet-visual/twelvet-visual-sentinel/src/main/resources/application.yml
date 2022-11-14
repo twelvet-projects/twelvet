@@ -1,5 +1,6 @@
 server:
-  port: 8101
+  # 默认端口：8718
+  port: 8718
   servlet:
     encoding:
       force: true
@@ -11,6 +12,7 @@ spring:
     nacos:
       discovery:
         server-addr: ${NACOS_HOST:twelvet-nacos}:${NACOS_PORT:8848}
+        namespace: @nacos.namespace@
 
 management:
   endpoints:
