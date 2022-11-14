@@ -12,6 +12,7 @@ spring:
     nacos:
       discovery:
         server-addr: ${NACOS_HOST:twelvet-nacos}:${NACOS_PORT:8848}
+        namespace: @nacos.namespace@
 
 management:
   endpoints:
