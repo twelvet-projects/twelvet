@@ -1,6 +1,6 @@
 server:
   # 默认端口：8718
-  port: 8718
+  port: 8101
   servlet:
     encoding:
       force: true
