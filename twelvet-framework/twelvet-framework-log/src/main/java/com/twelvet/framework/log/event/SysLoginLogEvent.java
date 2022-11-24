@@ -1,4 +1,4 @@
-package com.twelvet.framework.log.event.event;
+package com.twelvet.framework.log.event;
 
 import com.twelvet.api.system.domain.SysLoginInfo;
 import org.springframework.context.ApplicationEvent;

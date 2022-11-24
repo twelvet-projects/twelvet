@@ -21,40 +21,42 @@ import java.util.regex.Pattern;
 @ConfigurationProperties(prefix = "security.oauth2.ignore")
 public class AuthIgnoreConfig implements InitializingBean {
 
-    private static final Pattern PATTERN = Pattern.compile("\\{(.*?)\\}");
+	private static final Pattern PATTERN = Pattern.compile("\\{(.*?)\\}");
 
-    private List<String> urls = new ArrayList<>();
+	private List<String> urls = new ArrayList<>();
 
-    public List<String> getUrls() {
-        return urls;
-    }
+	public List<String> getUrls() {
+		return urls;
+	}
 
-    public void setUrls(List<String> urls) {
-        this.urls = urls;
-    }
+	public void setUrls(List<String> urls) {
+		this.urls = urls;
+	}
 
-    /**
-     * 重写bean注入后
-     */
-    @Override
-    public void afterPropertiesSet() {
-        RequestMappingHandlerMapping mapping = SpringUtil.getBean("requestMappingHandlerMapping");
-        Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
+	/**
+	 * 重写bean注入后
+	 */
+	@Override
+	public void afterPropertiesSet() {
+		RequestMappingHandlerMapping mapping = SpringUtil.getBean("requestMappingHandlerMapping");
+		Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
 
-        // 遍历所有mapping
-        map.keySet().forEach(mappingInfo -> {
+		// 遍历所有mapping
+		map.keySet().forEach(mappingInfo -> {
 
-            HandlerMethod handlerMethod = map.get(mappingInfo);
-            // 获取方法上边的注解 替代path variable 为 *
-            AuthIgnore method = AnnotationUtils.findAnnotation(handlerMethod.getMethod(), AuthIgnore.class);
-            Optional.ofNullable(method).ifPresent(authIgnore -> Objects.requireNonNull(mappingInfo.getPathPatternsCondition())
-                    .getPatternValues().forEach(url -> urls.add(ReUtil.replaceAll(url, PATTERN, "*"))));
+			HandlerMethod handlerMethod = map.get(mappingInfo);
+			// 获取方法上边的注解 替代path variable 为 *
+			AuthIgnore method = AnnotationUtils.findAnnotation(handlerMethod.getMethod(), AuthIgnore.class);
+			Optional.ofNullable(method)
+					.ifPresent(authIgnore -> Objects.requireNonNull(mappingInfo.getPathPatternsCondition())
+							.getPatternValues().forEach(url -> urls.add(ReUtil.replaceAll(url, PATTERN, "*"))));
 
-            // 获取类上边的注解, 替代path variable 为 *
-            AuthIgnore controller = AnnotationUtils.findAnnotation(handlerMethod.getBeanType(), AuthIgnore.class);
-            Optional.ofNullable(controller).ifPresent(inner -> Objects.requireNonNull(mappingInfo.getPathPatternsCondition())
-                    .getPatternValues().forEach(url -> urls.add(ReUtil.replaceAll(url, PATTERN, "*"))));
-        });
-    }
+			// 获取类上边的注解, 替代path variable 为 *
+			AuthIgnore controller = AnnotationUtils.findAnnotation(handlerMethod.getBeanType(), AuthIgnore.class);
+			Optional.ofNullable(controller)
+					.ifPresent(inner -> Objects.requireNonNull(mappingInfo.getPathPatternsCondition())
+							.getPatternValues().forEach(url -> urls.add(ReUtil.replaceAll(url, PATTERN, "*"))));
+		});
+	}
 
 }

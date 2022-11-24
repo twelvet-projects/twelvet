@@ -3,7 +3,7 @@ package com.twelvet.framework.log.event.listener;
 import com.twelvet.api.system.domain.SysLoginInfo;
 import com.twelvet.api.system.feign.RemoteLogService;
 import com.twelvet.framework.core.constants.SecurityConstants;
-import com.twelvet.framework.log.event.event.SysLoginLogEvent;
+import com.twelvet.framework.log.event.SysLoginLogEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;

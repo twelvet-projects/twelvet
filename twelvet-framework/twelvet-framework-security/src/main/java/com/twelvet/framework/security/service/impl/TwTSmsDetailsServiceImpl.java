@@ -18,27 +18,20 @@ import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description: 自定义用户信息处理
+ * @Description: 自定义手机登录处理
  */
-@Primary
-public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
+public class TwTSmsDetailsServiceImpl implements TwUserDetailsService {
 
-	private static final Logger log = LoggerFactory.getLogger(TwTUserDetailsServiceImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(TwTSmsDetailsServiceImpl.class);
 
 	/**
 	 * 仅支持后台登录
 	 */
 	private final static String PLAT_FORM  = "admin";
-
-	/**
-	 * 登录类型
-	 */
-	private final static String GRAN_TYPE  = "password";
 
 	@Autowired
 	private RemoteUserService remoteUserService;
@@ -54,7 +47,7 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 	 */
 	@Override
 	public boolean support(String clientId, String grantType) {
-        return AuthorizationGrantType.PASSWORD.getValue().equals(grantType);
+        return SecurityConstants.SMS.equals(grantType);
     }
 
 	/**

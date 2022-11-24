@@ -28,13 +28,13 @@ public class OAuth2ResourceOwnerSmsAuthenticationConverter
 	 */
 	@Override
 	public boolean support(String grantType) {
-		return SecurityConstants.APP.equals(grantType);
+		return SecurityConstants.SMS.equals(grantType);
 	}
 
 	@Override
 	public OAuth2ResourceOwnerSmsAuthenticationToken buildToken(Authentication clientPrincipal, Set requestedScopes,
 			Map additionalParameters) {
-		return new OAuth2ResourceOwnerSmsAuthenticationToken(new AuthorizationGrantType(SecurityConstants.APP),
+		return new OAuth2ResourceOwnerSmsAuthenticationToken(new AuthorizationGrantType(SecurityConstants.SMS),
 				clientPrincipal, requestedScopes, additionalParameters);
 	}
 

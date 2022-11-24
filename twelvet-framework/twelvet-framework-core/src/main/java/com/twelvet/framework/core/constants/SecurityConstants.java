@@ -85,11 +85,16 @@ public interface SecurityConstants {
 	/**
 	 * 手机号登录
 	 */
-	String APP = "app";
+	String SMS = "sms";
 
 	/**
 	 * 短信登录 参数名称
 	 */
 	String SMS_PARAMETER_NAME = "mobile";
+
+	/**
+	 * 验证码
+	 */
+	String CODE = "code";
 
 }

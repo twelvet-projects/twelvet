@@ -2,7 +2,7 @@ package com.twelvet.auth.support.handler;
 
 import com.twelvet.api.system.domain.SysLoginInfo;
 import com.twelvet.framework.core.domain.R;
-import com.twelvet.framework.log.event.event.SysLoginLogEvent;
+import com.twelvet.framework.log.event.SysLoginLogEvent;
 import com.twelvet.framework.log.utils.SysLogUtils;
 import com.twelvet.framework.log.vo.SysLogVO;
 import com.twelvet.framework.core.constants.SecurityConstants;
@@ -49,7 +49,7 @@ public class TWTAuthenticationFailureEventHandler implements AuthenticationFailu
 			AuthenticationException exception) {
 		String username = request.getParameter(OAuth2ParameterNames.USERNAME);
 
-		log.error("用户：{} 登录失败，异常：{}", username, exception.getLocalizedMessage());
+		log.error("用户：{} 登录失败，异常：", username, exception);
 		if (TUtils.isNotEmpty(username)) {
 			SysLoginInfo sysLoginInfo = new SysLoginInfo();
 			SysLogVO sysLog = SysLogUtils.getSysLog();

@@ -24,7 +24,7 @@ import java.util.Set;
 public interface TwUserDetailsService extends UserDetailsService, Ordered {
 
 	/**
-	 * 是否支持此客户端校验
+	 * 重写此方法，以此支持登录器是否支持此客户端校验
 	 * @param clientId 目标客户端
 	 * @return true/false
 	 */
