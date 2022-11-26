@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.buffer.DataBufferFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.lang.NonNull;
@@ -45,17 +46,16 @@ public class TWTExceptionHandler implements ErrorWebExceptionHandler {
 		}
 
 		// 按照异常类型进行处理
-		HttpStatus code;
+		HttpStatusCode code;
 		String msg;
 		if (throwable instanceof NotFoundException) {
 			code = HttpStatus.SERVICE_UNAVAILABLE;
 			// HttpStatus.SERVICE_UNAVAILABLE.getReasonPhrase()
 			msg = "服务未开启";
 		}
-		else if (throwable instanceof ResponseStatusException) {
-			ResponseStatusException responseStatusException = (ResponseStatusException) throwable;
-			code = responseStatusException.getStatus();
-			msg = responseStatusException.getStatus().getReasonPhrase();
+		else if (throwable instanceof ResponseStatusException responseStatusException) {
+			code = responseStatusException.getStatusCode();
+			msg = responseStatusException.getMessage();
 		}
 		else {
 			code = HttpStatus.INTERNAL_SERVER_ERROR;

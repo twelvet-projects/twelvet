@@ -113,7 +113,7 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 			throw new InternalAuthenticationServiceException("web request is empty");
 		}
 
-		Map<String, String> paramMap = ServletUtil.getParamMap(request);
+		Map<String, String> paramMap = ServletUtils.getMapParam();
 		String grantType = paramMap.get(OAuth2ParameterNames.GRANT_TYPE);
 		String clientId = paramMap.get(OAuth2ParameterNames.CLIENT_ID);
 

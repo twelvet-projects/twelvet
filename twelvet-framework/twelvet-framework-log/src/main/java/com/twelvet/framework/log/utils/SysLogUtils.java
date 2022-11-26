@@ -1,9 +1,10 @@
 package com.twelvet.framework.log.utils;
 
 import cn.hutool.core.util.URLUtil;
-import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.http.HttpUtil;
 import com.twelvet.framework.log.vo.SysLogVO;
+import com.twelvet.framework.utils.http.IpUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
@@ -15,7 +16,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
@@ -30,7 +30,7 @@ public class SysLogUtils {
 		HttpServletRequest request = ((ServletRequestAttributes) Objects
 				.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
 		SysLogVO sysLogVO = new SysLogVO();
-		sysLogVO.setRemoteAddr(ServletUtil.getClientIP(request));
+		sysLogVO.setRemoteAddr(IpUtils.getIpAddr());
 		sysLogVO.setRequestUri(URLUtil.getPath(request.getRequestURI()));
 		sysLogVO.setMethod(request.getMethod());
 		sysLogVO.setUserAgent(request.getHeader(HttpHeaders.USER_AGENT));

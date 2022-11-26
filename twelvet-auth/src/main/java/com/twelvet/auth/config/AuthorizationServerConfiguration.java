@@ -72,8 +72,8 @@ public class AuthorizationServerConfiguration {
 						.consentPage(SecurityConstants.CUSTOM_CONSENT_PAGE_URI)));
 
 		RequestMatcher endpointsMatcher = authorizationServerConfigurer.getEndpointsMatcher();
-		DefaultSecurityFilterChain securityFilterChain = http.requestMatcher(endpointsMatcher)
-				.authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
+		DefaultSecurityFilterChain securityFilterChain = http.securityMatcher(endpointsMatcher)
+				.authorizeHttpRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
 				// redis存储token的实现
 				.apply(authorizationServerConfigurer.authorizationService(authorizationService)
 						.authorizationServerSettings(AuthorizationServerSettings.builder()
