@@ -2,7 +2,7 @@ package com.twelvet.framework.security.utils;
 
 import org.springframework.util.LinkedMultiValueMap;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 import cn.hutool.core.map.MapUtil;
@@ -14,7 +14,7 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;

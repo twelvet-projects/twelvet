@@ -3,13 +3,13 @@ package com.twelvet.auth.support.sms;
 import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.security.utils.OAuth2EndpointUtils;
 import com.twelvet.auth.support.base.OAuth2ResourceOwnerBaseAuthenticationConverter;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.Set;
 

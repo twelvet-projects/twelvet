@@ -2,8 +2,8 @@ package com.twelvet.api.gen.domain;
 
 import java.io.Serial;
 import java.util.List;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 
 import com.twelvet.api.gen.constant.GenConstants;
 import com.twelvet.framework.core.application.domain.BaseEntity;

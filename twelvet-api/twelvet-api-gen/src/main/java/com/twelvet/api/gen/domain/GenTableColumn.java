@@ -4,7 +4,7 @@ import com.twelvet.framework.core.application.domain.BaseEntity;
 import com.twelvet.framework.utils.StringUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 import java.io.Serial;
 
 /**
