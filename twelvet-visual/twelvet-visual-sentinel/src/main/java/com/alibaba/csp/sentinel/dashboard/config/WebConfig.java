@@ -12,7 +12,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *//*
+
 package com.alibaba.csp.sentinel.dashboard.config;
 
 import com.alibaba.csp.sentinel.adapter.servlet.CommonFilter;
@@ -37,9 +38,11 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+*/
 /**
  * @author leyou
- */
+ *//*
+
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
@@ -66,10 +69,12 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addViewController("/").setViewName("forward:/index.htm");
 	}
 
-	/**
+	*/
+/**
 	 * Add {@link CommonFilter} to the server, this is the simplest way to use Sentinel
 	 * for Web application.
-	 */
+	 *//*
+
 	@Bean
 	public FilterRegistrationBean sentinelFilterRegistration() {
 		FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>();
@@ -113,3 +118,4 @@ public class WebConfig implements WebMvcConfigurer {
 	}
 
 }
+*/
