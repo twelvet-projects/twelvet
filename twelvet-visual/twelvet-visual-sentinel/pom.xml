@@ -12,7 +12,34 @@
     <artifactId>twelvet-visual-sentinel</artifactId>
     <description>sentinel</description>
 
+    <properties>
+        <spring-boot-dependencies.version>2.7.6</spring-boot-dependencies.version>
+        <spring-cloud.version>2021.0.5</spring-cloud.version>
+    </properties>
+
+    <!--依赖版本声明-->
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- SpringBoot 依赖配置 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot-dependencies.version}</version>
+            </dependency>
+
+            <!-- SpringCloud 微服务 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
+
         <!--注册中心客户端-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -84,7 +111,7 @@
             <artifactId>httpcore-nio</artifactId>
             <version>4.4.6</version>
         </dependency>
-        
+
     </dependencies>
 
     <build>

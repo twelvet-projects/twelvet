@@ -11,7 +11,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import jakarta.annotation.PostConstruct;
+import javax.annotation.PostConstruct;
 import java.time.ZoneId;
 
 /**

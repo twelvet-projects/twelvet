@@ -15,7 +15,22 @@
 
     <properties>
         <nacos.version>2.1.1</nacos.version>
+        <spring-boot-dependencies.version>2.7.6</spring-boot-dependencies.version>
     </properties>
+
+    <!--依赖版本声明-->
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- SpringBoot 依赖配置 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot-dependencies.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
