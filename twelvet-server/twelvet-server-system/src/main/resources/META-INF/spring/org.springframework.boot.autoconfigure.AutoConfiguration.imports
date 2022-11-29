@@ -1,1 +1,2 @@
 com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration
+com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
