@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class IndexController {
 
-	@GetMapping("/")
+	/*@GetMapping("/")
 	public AjaxResult callback(OAuth2AuthenticationToken oAuth2AuthenticationToken) {
 		return AjaxResult.success(oAuth2AuthenticationToken);
-	}
+	}*/
 
 }
