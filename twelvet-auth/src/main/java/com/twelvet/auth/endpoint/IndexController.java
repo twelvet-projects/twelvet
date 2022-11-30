@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class IndexController {
 
-    // TODO 实现测试登录
-	/*@GetMapping("/")
+	@GetMapping("/")
 	public AjaxResult callback(OAuth2AuthenticationToken oAuth2AuthenticationToken) {
 		return AjaxResult.success(oAuth2AuthenticationToken);
-	}*/
+	}
 
 }
