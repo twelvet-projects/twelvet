@@ -371,7 +371,7 @@ CREATE TABLE `sys_oauth_client_details`  (
 -- ----------------------------
 -- Records of sys_oauth_client_details
 -- ----------------------------
-INSERT INTO `sys_oauth_client_details` VALUES ('twelvet', NULL, '123456', 'server', 'password,sms,refresh_token', NULL, NULL, 3600, 7200, NULL, NULL);
+INSERT INTO `sys_oauth_client_details` VALUES ('twelvet', NULL, '123456', 'server', 'password,sms,refresh_token,authorization_code', 'http://www.twelvet.cn', NULL, 3600, 7200, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_operation_log
