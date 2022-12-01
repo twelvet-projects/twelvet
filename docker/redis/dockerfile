@@ -1,5 +1,5 @@
 # 基础镜像
-FROM redis:7.0.0
+FROM redis
 # author
 MAINTAINER twelvet
 
