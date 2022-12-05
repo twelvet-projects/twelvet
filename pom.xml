@@ -55,7 +55,7 @@
         <knife4j.version>3.0.3</knife4j.version>
 
         <druid.version>1.2.12</druid.version>
-        <dynamic-datasource.version>3.5.2</dynamic-datasource.version>
+        <dynamic-datasource.version>3.6.0</dynamic-datasource.version>
         <pagehelper.boot.version>1.4.5</pagehelper.boot.version>
         <poi.version>5.2.3</poi.version>
         <commons.io.version>2.11.0</commons.io.version>
