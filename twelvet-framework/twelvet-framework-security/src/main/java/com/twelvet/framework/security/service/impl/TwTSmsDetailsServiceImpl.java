@@ -31,7 +31,7 @@ public class TwTSmsDetailsServiceImpl implements TwUserDetailsService {
 	/**
 	 * 仅支持后台登录
 	 */
-	private final static String PLAT_FORM  = "admin";
+	private final static String PLAT_FORM = "admin";
 
 	@Autowired
 	private RemoteUserService remoteUserService;
@@ -47,8 +47,8 @@ public class TwTSmsDetailsServiceImpl implements TwUserDetailsService {
 	 */
 	@Override
 	public boolean support(String clientId, String grantType) {
-        return SecurityConstants.SMS.equals(grantType);
-    }
+		return SecurityConstants.SMS.equals(grantType);
+	}
 
 	/**
 	 * 用户名称登录

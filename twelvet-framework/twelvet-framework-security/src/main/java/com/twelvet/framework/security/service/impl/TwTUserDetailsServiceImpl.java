@@ -33,12 +33,12 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 	/**
 	 * 仅支持后台登录
 	 */
-	private final static String PLAT_FORM  = "admin";
+	private final static String PLAT_FORM = "admin";
 
 	/**
 	 * 登录类型
 	 */
-	private final static String GRAN_TYPE  = "password";
+	private final static String GRAN_TYPE = "password";
 
 	@Autowired
 	private RemoteUserService remoteUserService;
@@ -54,8 +54,8 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 	 */
 	@Override
 	public boolean support(String clientId, String grantType) {
-        return AuthorizationGrantType.PASSWORD.getValue().equals(grantType);
-    }
+		return AuthorizationGrantType.PASSWORD.getValue().equals(grantType);
+	}
 
 	/**
 	 * 用户名称登录

@@ -15,6 +15,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -86,11 +87,20 @@ public class WebLogFilter implements Filter {
 			responseData = "IGNORES";
 		}
 
-		log.info(
-				"\n===================Request================>\n时间：{}\n地址：{}\ntoken：{}\n参数：{}\n方式：{}"
-						+ "\n<===================Response================\n状态：{}\n内容：{}\n时长：{}毫秒"
-						+ "\n============================================",
-				DateUtils.getTime(), requestWrapper.getRequestURL(),
+		log.info("""
+
+				===================Request================>
+				时间：{}
+				地址：{}
+				token：{}
+				参数：{}
+				方式：{}
+				<===================Response================
+				状态：{}
+				内容：{}
+				时长：{}毫秒
+				============================================
+				""", DateUtils.getTime(), requestWrapper.getRequestURL(),
 				// 认证Token
 				ServletUtils.getRequest().get().getHeader(Constants.AUTHORIZATION), reqJson, requestWrapper.getMethod(),
 				responseWrapper.getStatus(), responseData, endTime - startTime

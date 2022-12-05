@@ -80,7 +80,7 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 		if (StrUtil.equals(SecurityConstants.SMS, grantType)) { // sms 模式校验Code
 			String code = ServletUtils.getRequest().get().getParameter(SecurityConstants.CODE);
 			// TODO 实现手机验证码校验
-            if("1234".equals(code)) {
+			if ("1234".equals(code)) {
 				return;
 			}
 			this.logger.debug("Failed to authenticate since phone code does not match stored value");
@@ -121,8 +121,7 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 			clientId = basicConvert.convert(request).getName();
 		}
 
-		Map<String, TwUserDetailsService> userDetailsServiceMap = SpringUtil
-				.getBeansOfType(TwUserDetailsService.class);
+		Map<String, TwUserDetailsService> userDetailsServiceMap = SpringUtil.getBeansOfType(TwUserDetailsService.class);
 
 		String finalClientId = clientId;
 		// 获取需要使用的登录器

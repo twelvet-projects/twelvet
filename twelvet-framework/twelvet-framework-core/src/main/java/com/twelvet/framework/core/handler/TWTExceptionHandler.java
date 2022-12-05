@@ -100,7 +100,6 @@ public class TWTExceptionHandler {
 
 	/**
 	 * 请求方式不支持
-	 *
 	 * @param e HttpRequestMethodNotSupportedException
 	 * @return JsonResult
 	 */

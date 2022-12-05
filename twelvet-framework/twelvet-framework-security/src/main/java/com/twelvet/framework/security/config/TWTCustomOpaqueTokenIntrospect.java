@@ -54,7 +54,6 @@ public class TWTCustomOpaqueTokenIntrospect implements OpaqueTokenIntrospector {
 					AuthorityUtils.NO_AUTHORITIES, oldAuthorization.getPrincipalName());
 		}
 
-
 		Map<String, TwUserDetailsService> userDetailsServiceMap = SpringUtil.getBeansOfType(TwUserDetailsService.class);
 
 		Optional<TwUserDetailsService> optional = userDetailsServiceMap.values().stream()
