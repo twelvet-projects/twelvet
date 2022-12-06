@@ -4,7 +4,7 @@ import com.twelvet.framework.security.config.TWTResourceServerAutoConfiguration;
 import com.twelvet.framework.security.config.TWTResourceServerConfiguration;
 import com.twelvet.framework.security.feign.FeignConfig;
 import org.springframework.context.annotation.Import;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 
 import java.lang.annotation.*;
 
@@ -17,7 +17,7 @@ import java.lang.annotation.*;
 @Inherited
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity(prePostEnabled = true)
 @Import({ TWTResourceServerAutoConfiguration.class, TWTResourceServerConfiguration.class, FeignConfig.class })
 public @interface EnableTWTResourceServer {
 
