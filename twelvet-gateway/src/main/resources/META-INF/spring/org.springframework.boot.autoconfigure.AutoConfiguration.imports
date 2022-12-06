@@ -1,0 +1,2 @@
+# 暂时修复自动注入Gateway配置，让其能正常启动
+org.springframework.cloud.gateway.config.GatewayAutoConfiguration
