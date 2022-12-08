@@ -43,8 +43,8 @@
         <maven.compiler.target>17</maven.compiler.target>
 
         <spring-boot-dependencies.version>3.0.0</spring-boot-dependencies.version>
-        <spring-cloud.version>2021.0.5</spring-cloud.version>
-        <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
+        <spring-cloud.version>2022.0.0-RC3</spring-cloud.version>
+        <spring-cloud-tencent.version>1.8.1-2022.0.0-RC2</spring-cloud-tencent.version>
         <io.seata.version>1.4.2</io.seata.version>
         <spring-boot-admin.version>2.7.8</spring-boot-admin.version>
         <spring-boot.mybatis>3.0.0</spring-boot.mybatis>
@@ -91,11 +91,11 @@
                 <scope>import</scope>
             </dependency>
 
-            <!-- SpringCloud Alibaba 微服务 -->
+            <!-- Spring Cloud Alibaba 微服务 -->
             <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${spring-cloud-alibaba.version}</version>
+                <groupId>com.tencent.cloud</groupId>
+                <artifactId>spring-cloud-tencent-dependencies</artifactId>
+                <version>${spring-cloud-tencent.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -363,7 +363,6 @@
         <module>twelvet-api</module>
         <module>twelvet-server</module>
         <module>twelvet-visual</module>
-        <module>twelvet-nacos</module>
     </modules>
 
     <build>

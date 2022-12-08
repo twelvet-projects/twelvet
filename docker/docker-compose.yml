@@ -38,26 +38,6 @@ services:
       - ./redis/data:/data
     command: redis-server /home/twelvet/redis/redis.conf
 
-  twelvet-nacos:
-    container_name: twelvet-nacos
-    image: twelvet-nacos
-    ports:
-      - "8848:8848"
-      - "9848:9848"
-      - "9849:9849"
-    restart: always
-    privileged: true
-    build:
-      context: ./nacos
-    depends_on:
-      - twelvet-mysql
-    volumes:
-      - ./nacos/logs/:/home/nacos/logs
-      - ./nacos/conf/application.properties:/home/nacos/conf/application.properties
-    environment:
-      - MODE=standalone
-      - TZ=Asia/Shanghai
-
   twelvet-nginx:
     container_name: twelvet-nginx
     restart: always

@@ -18,7 +18,6 @@
     </description>
     <modules>
         <module>twelvet-visual-monitor</module>
-        <module>twelvet-visual-sentinel</module>
     </modules>
 
 </project>

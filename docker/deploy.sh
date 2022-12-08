@@ -11,7 +11,6 @@ init() {
   # copy sql
   echo "begin copy sql "
   cp ../data/sql/twelvet.sql ./mysql/db
-  cp ../data/sql/twelvet_nacos.sql ./mysql/db
 
   # copy jar
   echo "begin copy twelvet-gateway "
@@ -40,7 +39,7 @@ base() {
 
 # 启动程序模块（必须）
 server() {
-  docker-compose up -d twelvet-nacos twelvet-gateway twelvet-auth twelvet-server-system
+  docker-compose up -d twelvet-gateway twelvet-auth twelvet-server-system
 }
 
 # 启动nginx（必须）
