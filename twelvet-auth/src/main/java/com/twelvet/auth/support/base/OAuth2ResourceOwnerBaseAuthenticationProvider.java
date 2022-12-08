@@ -238,8 +238,8 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 	 * @param authenticationException 身份验证异常
 	 * @return {@link OAuth2AuthenticationException}
 	 */
-	protected OAuth2AuthenticationException oAuth2AuthenticationException(Authentication authentication,
-			AuthenticationException authenticationException) {
+	private OAuth2AuthenticationException oAuth2AuthenticationException(Authentication authentication,
+																		AuthenticationException authenticationException) {
 		if (authenticationException instanceof UsernameNotFoundException) {
 			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodesExpand.USERNAME_NOT_FOUND,
 					this.messages.getMessage("JdbcDaoImpl.notFound", new Object[] { authentication.getName() },
@@ -248,7 +248,8 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 		}
 		if (authenticationException instanceof BadCredentialsException) {
 			return new OAuth2AuthenticationException(
-					new OAuth2Error(OAuth2ErrorCodesExpand.BAD_CREDENTIALS, authenticationException.getMessage(), ""));
+					new OAuth2Error(OAuth2ErrorCodesExpand.BAD_CREDENTIALS, this.messages.getMessage(
+							"AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"), ""));
 		}
 		if (authenticationException instanceof LockedException) {
 			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodesExpand.USER_LOCKED, this.messages

@@ -58,13 +58,7 @@ public class AuthorizationServerConfiguration {
 		})
 				// 个性化客户端认证
 				.clientAuthentication(oAuth2ClientAuthenticationConfigurer -> {
-					AuthenticationConverter authenticationConverter = new DelegatingAuthenticationConverter(
-							Arrays.asList(new JwtClientAssertionAuthenticationConverter(),
-									new ClientSecretBasicAuthenticationConverter(),
-									new ClientSecretPostAuthenticationConverter(),
-									new PublicClientAuthenticationConverter()));
-
-					oAuth2ClientAuthenticationConfigurer.authenticationConverter(authenticationConverter)
+					oAuth2ClientAuthenticationConfigurer
 							// 处理客户端认证异常
 							.errorResponseHandler(new TWTAuthenticationFailureEventHandler());
 				}).authorizationEndpoint(authorizationEndpoint -> authorizationEndpoint
