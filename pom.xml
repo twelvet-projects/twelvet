@@ -45,7 +45,6 @@
         <spring-boot-dependencies.version>3.0.0</spring-boot-dependencies.version>
         <spring-cloud.version>2022.0.0-RC3</spring-cloud.version>
         <spring-cloud-tencent.version>1.8.1-2022.0.0-RC2</spring-cloud-tencent.version>
-        <io.seata.version>1.4.2</io.seata.version>
         <spring-boot-admin.version>3.0.0-M5</spring-boot-admin.version>
         <spring-boot.mybatis>3.0.0</spring-boot.mybatis>
         <spring.authorization.version>1.0.0</spring.authorization.version>
@@ -61,7 +60,7 @@
         <commons.io.version>2.11.0</commons.io.version>
         <velocity.version>2.3</velocity.version>
         <hutool.version>5.8.10</hutool.version>
-        <redisson.version>3.18.0</redisson.version>
+        <redisson.version>3.18.1</redisson.version>
         <qiniu.version>7.12.0</qiniu.version>
 
         <docker.plugin.version>0.32.0</docker.plugin.version>
