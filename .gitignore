@@ -44,3 +44,6 @@ nbdist/
 !*/build/*.java
 !*/build/*.html
 !*/build/*.xml
+
+### sct 临时文件
+polaris/

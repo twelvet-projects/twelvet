@@ -11,25 +11,13 @@ spring:
     # 环境配置
     active: @active@
   cloud:
-    nacos:
-      discovery:
-        # 解决获取IP为内网，一般微服务采用内网安全性、可用性高
-        # ip: 127.0.0.1
-        # 服务注册地址
-        server-addr: ${NACOS_HOST:twelvet-nacos}:${NACOS_PORT:8848}
-        namespace: @nacos.namespace@
+    polaris:
+      address: grpc://${POLARIS_HOST:twelvet-polaris}:${POLARIS_PORT:8091}
+      namespace: ${spring.profiles.active}
       config:
-        # 配置中心地址
-        server-addr: ${spring.cloud.nacos.discovery.server-addr}
-        # 配置文件格式
+        # 自定义配置文件格式，非polaris配置
         file-extension: yml
-        # 命名空间
-        namespace: @nacos.namespace@
-        # 配置组
-        group: DEFAULT_GROUP
-        # shared-configs:
-          # - data-id: twelvet-app-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
   config:
     import:
-      - nacos:twelvet-app-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
-      - nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+      - optional:polaris:tw:twelvet-app-${spring.profiles.active}.${spring.cloud.polaris.config.file-extension}
+      - optional:polaris:tw:${spring.application.name}-${spring.profiles.active}.${spring.cloud.polaris.config.file-extension}

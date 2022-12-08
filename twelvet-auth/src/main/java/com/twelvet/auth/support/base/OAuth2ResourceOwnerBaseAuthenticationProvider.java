@@ -118,36 +118,35 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
-		T resouceOwnerBaseAuthenticationScopes = (T) authentication;
+		T resouceOwnerBaseAuthentication = (T) authentication;
 
 		OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(
-				resouceOwnerBaseAuthenticationScopes);
+				resouceOwnerBaseAuthentication);
 
 		RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
 		checkClient(registeredClient);
 
 		Set<String> authorizedScopes;
 		// Default to configured scopes
-		if (!CollectionUtils.isEmpty(resouceOwnerBaseAuthenticationScopes.getScopes())) {
-			for (String requestedScope : resouceOwnerBaseAuthenticationScopes.getScopes()) {
+		if (!CollectionUtils.isEmpty(resouceOwnerBaseAuthentication.getScopes())) {
+			for (String requestedScope : resouceOwnerBaseAuthentication.getScopes()) {
 				if (!registeredClient.getScopes().contains(requestedScope)) {
 					throw new OAuth2AuthenticationException(OAuth2ErrorCodes.INVALID_SCOPE);
 				}
 			}
-			authorizedScopes = new LinkedHashSet<>(resouceOwnerBaseAuthenticationScopes.getScopes());
+			authorizedScopes = new LinkedHashSet<>(resouceOwnerBaseAuthentication.getScopes());
 		}
 		else {
 			throw new ScopeException(OAuth2ErrorCodesExpand.SCOPE_IS_EMPTY);
 		}
 
-		Map<String, Object> reqParameters = resouceOwnerBaseAuthenticationScopes.getAdditionalParameters();
+		Map<String, Object> reqParameters = resouceOwnerBaseAuthentication.getAdditionalParameters();
 		try {
 
 			UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = buildToken(reqParameters);
 
 			log.debug("got usernamePasswordAuthenticationToken=" + usernamePasswordAuthenticationToken);
 
-			// 会自动调用TwTUserDetailsServiceImpl.loadUserByUsername()
 			Authentication usernamePasswordAuthentication = authenticationManager
 					.authenticate(usernamePasswordAuthenticationToken);
 
@@ -158,7 +157,7 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 					.authorizationServerContext(AuthorizationServerContextHolder.getContext())
 					.authorizedScopes(authorizedScopes)
 					.authorizationGrantType(AuthorizationGrantType.PASSWORD)
-					.authorizationGrant(resouceOwnerBaseAuthenticationScopes);
+					.authorizationGrant(resouceOwnerBaseAuthentication);
 			// @formatter:on
 
 			OAuth2Authorization.Builder authorizationBuilder = OAuth2Authorization
@@ -194,7 +193,7 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 			// ----- Refresh token -----
 			OAuth2RefreshToken refreshToken = null;
 			if (registeredClient.getAuthorizationGrantTypes().contains(AuthorizationGrantType.REFRESH_TOKEN) &&
-			// Do not issue refresh token to public client
+					// Do not issue refresh token to public client
 					!clientPrincipal.getClientAuthenticationMethod().equals(ClientAuthenticationMethod.NONE)) {
 
 				if (this.refreshTokenGenerator != null) {
@@ -238,8 +237,8 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 	 * @param authenticationException 身份验证异常
 	 * @return {@link OAuth2AuthenticationException}
 	 */
-	protected OAuth2AuthenticationException oAuth2AuthenticationException(Authentication authentication,
-			AuthenticationException authenticationException) {
+	private OAuth2AuthenticationException oAuth2AuthenticationException(Authentication authentication,
+																		AuthenticationException authenticationException) {
 		if (authenticationException instanceof UsernameNotFoundException) {
 			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodesExpand.USERNAME_NOT_FOUND,
 					this.messages.getMessage("JdbcDaoImpl.notFound", new Object[] { authentication.getName() },
@@ -248,7 +247,8 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 		}
 		if (authenticationException instanceof BadCredentialsException) {
 			return new OAuth2AuthenticationException(
-					new OAuth2Error(OAuth2ErrorCodesExpand.BAD_CREDENTIALS, authenticationException.getMessage(), ""));
+					new OAuth2Error(OAuth2ErrorCodesExpand.BAD_CREDENTIALS, this.messages.getMessage(
+							"AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"), ""));
 		}
 		if (authenticationException instanceof LockedException) {
 			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodesExpand.USER_LOCKED, this.messages

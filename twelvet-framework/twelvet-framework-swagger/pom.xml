@@ -18,19 +18,13 @@
         <!--Springdoc Swagger-->
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-webmvc-core</artifactId>
-        </dependency>
-
-        <!--Springdoc Swagger-->
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-security</artifactId>
+            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
         </dependency>
 
         <!--Springdoc Swagger-->
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-annotations</artifactId>
+            <artifactId>swagger-annotations-jakarta</artifactId>
         </dependency>
 
         <!--网关 swagger 聚合依赖-->
