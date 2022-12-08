@@ -1,3 +1,4 @@
+/*
 package com.twelvet.framework.swagger.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
@@ -17,6 +18,7 @@ import org.springframework.http.HttpHeaders;
 import java.util.ArrayList;
 import java.util.List;
 
+*/
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
@@ -31,7 +33,8 @@ import java.util.List;
  * <p>
  * 然后在测试配置或者开发配置中添加swagger.enable=true即可开启，生产环境不填则默认关闭Swagger.
  * </p>
- */
+ *//*
+
 @ConditionalOnProperty(name = "swagger.enabled", matchIfMissing = true)
 @ConditionalOnMissingClass("org.springframework.cloud.gateway.config.GatewayAutoConfiguration")
 public class SwaggerAutoConfiguration {
@@ -69,3 +72,4 @@ public class SwaggerAutoConfiguration {
 	}
 
 }
+*/
