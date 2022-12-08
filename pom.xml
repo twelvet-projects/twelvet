@@ -43,15 +43,15 @@
         <maven.compiler.target>17</maven.compiler.target>
 
         <spring-boot-dependencies.version>3.0.0</spring-boot-dependencies.version>
-        <spring-cloud.version>2021.0.5</spring-cloud.version>
+        <spring-cloud.version>2022.0.0-RC3</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
         <io.seata.version>1.4.2</io.seata.version>
-        <spring-boot-admin.version>2.7.8</spring-boot-admin.version>
+        <spring-boot-admin.version>3.0.0-M5</spring-boot-admin.version>
         <spring-boot.mybatis>3.0.0</spring-boot.mybatis>
         <spring.authorization.version>1.0.0</spring.authorization.version>
 
         <swagger.core.version>2.2.7</swagger.core.version>
-        <springdoc.version>1.6.13</springdoc.version>
+        <springdoc.version>2.0.0</springdoc.version>
         <knife4j.version>3.0.3</knife4j.version>
 
         <druid.version>1.2.15</druid.version>
@@ -180,21 +180,14 @@
             <!--Swagger -->
             <dependency>
                 <groupId>io.swagger.core.v3</groupId>
-                <artifactId>swagger-annotations</artifactId>
+                <artifactId>swagger-annotations-jakarta</artifactId>
                 <version>${swagger.core.version}</version>
             </dependency>
 
             <!--springdoc -->
             <dependency>
                 <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-webmvc-core</artifactId>
-                <version>${springdoc.version}</version>
-            </dependency>
-
-            <!--springdoc -->
-            <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-security</artifactId>
+                <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
                 <version>${springdoc.version}</version>
             </dependency>
 
