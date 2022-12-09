@@ -31,8 +31,8 @@ spring:
           # - data-id: twelvet-app-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
   config:
     import:
-      - nacos:twelvet-app-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
-      - nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+      - optional:nacos:twelvet-app-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
 
 
   # 接入第三方OAuth2登录（开发功能-dev）
