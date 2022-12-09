@@ -28,12 +28,6 @@
             <artifactId>redisson-spring-boot-starter</artifactId>
         </dependency>
 
-        <!--redis-->
-        <!--<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>-->
-
         <!--aspectj-->
         <dependency>
             <groupId>org.aspectj</groupId>
