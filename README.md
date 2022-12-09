@@ -10,9 +10,9 @@
 [![star](https://gitee.com/twelvet/twelvet/badge/star.svg?theme=white)](https://gitee.com/twelvet/twelvet/stargazers)
 [![fork](https://gitee.com/twelvet/twelvet/badge/fork.svg?theme=white)](https://gitee.com/twelvet/twelvet/members)
 
-一款基于Spring Cloud Alibaba的权限管理系统，集成市面上流行库，可以作用为快速开发的一个框架使用
+一款基于Spring Cloud Tencent的权限管理系统，集成市面上流行库，可以作用为快速开发的一个框架使用
 
-一套以微服务架构的脚手架,使用Spring Cloud Alibaba系列进行架构,学习并了解它将能快速掌握微服务核心基础。
+一套以微服务架构的脚手架,使用Spring Cloud Tencent系列进行架构,学习并了解它将能快速掌握微服务核心基础。
 此项目是为了减少业务代码的重复轮子,它具有一个系统该有的通用性核心业务代码,无论是微服务还是单体,都是通用的业务
 但更多的,是为了学习微服务的理念以及开发 您可以使用它进行网站管理后台，网站会员中心，CMS，CRM，OA等待系统的开发,
 当然,不仅仅是一些小系统,我们可以生产更多的服务模块,不断完善项目。
