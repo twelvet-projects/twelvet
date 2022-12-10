@@ -28,7 +28,9 @@
 
 前端源码：https://gitee.com/twelvet/twelvet-ui-react
 
-技术文档：https://www.twelvet.cn/docs/
+技术文档：https://www.twelvet.cn/docs
+
+官方博客：https://www.twelvet.cn
 
 ## 系统模块
 
