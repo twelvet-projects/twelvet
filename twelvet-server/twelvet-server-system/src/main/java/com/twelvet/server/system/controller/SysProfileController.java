@@ -10,6 +10,8 @@ import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.core.application.domain.JsonResult;
 import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.core.domain.R;
+import com.twelvet.framework.core.domain.utils.ResUtils;
+import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.domain.LoginUser;
@@ -87,11 +89,9 @@ public class SysProfileController extends TWTController {
 		try {
 			R<SysFile> fileResult = remoteFileService.upload(file, SecurityConstants.INNER);
 
-			if (StringUtils.isNull(fileResult) || StringUtils.isNull(fileResult.getData())) {
-				return AjaxResult.error("文件服务异常，请联系管理员");
-			}
+			SysFile sysFile = ResUtils.of(fileResult).getData().orElseThrow(() -> new TWTException("文件服务异常，请联系管理员"));
 
-			String url = fileResult.getData().getUrl();
+			String url = sysFile.getUrl();
 
 			LoginUser user = SecurityUtils.getLoginUser();
 

@@ -239,7 +239,7 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 	 * @return {@link OAuth2AuthenticationException}
 	 */
 	private OAuth2AuthenticationException oAuth2AuthenticationException(Authentication authentication,
-																		AuthenticationException authenticationException) {
+			AuthenticationException authenticationException) {
 		if (authenticationException instanceof UsernameNotFoundException) {
 			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodesExpand.USERNAME_NOT_FOUND,
 					this.messages.getMessage("JdbcDaoImpl.notFound", new Object[] { authentication.getName() },
