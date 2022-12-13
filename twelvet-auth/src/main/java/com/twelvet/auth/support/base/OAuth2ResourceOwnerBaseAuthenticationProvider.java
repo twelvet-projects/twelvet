@@ -33,8 +33,7 @@ import java.util.function.Supplier;
 /**
  * @author twelvet
  * @WebSite www.twelvet.cn
- * @Description: 处理自定义授权登录验证
- * 注意：目前已经实现UserDetailsService的
+ * @Description: 处理自定义授权登录验证 注意：目前已经实现UserDetailsService的
  */
 public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OAuth2ResourceOwnerBaseAuthenticationToken>
 		implements AuthenticationProvider {
@@ -106,8 +105,7 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 	public abstract void checkClient(RegisteredClient registeredClient);
 
 	/**
-	 * 必须重写此方法，以此校验你的登录
-	 * Performs authentication with the same contract as
+	 * 必须重写此方法，以此校验你的登录 Performs authentication with the same contract as
 	 * {@link AuthenticationManager#authenticate(Authentication)} .
 	 * @param authentication the authentication request object.
 	 * @return a fully authenticated object including credentials. May return
@@ -241,7 +239,7 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 	 * @return {@link OAuth2AuthenticationException}
 	 */
 	protected OAuth2AuthenticationException oAuth2AuthenticationException(Authentication authentication,
-																		  AuthenticationException authenticationException) {
+			AuthenticationException authenticationException) {
 		if (authenticationException instanceof UsernameNotFoundException) {
 			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodesExpand.USERNAME_NOT_FOUND,
 					this.messages.getMessage("JdbcDaoImpl.notFound", new Object[] { authentication.getName() },
@@ -250,9 +248,7 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 		}
 		if (authenticationException instanceof BadCredentialsException) {
 			return new OAuth2AuthenticationException(
-					new OAuth2Error(OAuth2ErrorCodesExpand.BAD_CREDENTIALS, authenticationException.getMessage(),
-							"")
-			);
+					new OAuth2Error(OAuth2ErrorCodesExpand.BAD_CREDENTIALS, authenticationException.getMessage(), ""));
 		}
 		if (authenticationException instanceof LockedException) {
 			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodesExpand.USER_LOCKED, this.messages

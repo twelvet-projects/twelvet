@@ -10,7 +10,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @WebSite www.twelvet.cn
  * @Description: 终端配置表 sys_oauth_client_details
  */
-@Schema(description ="终端配置表DTO")
+@Schema(description = "终端配置表DTO")
 public class SysClientDetailsDTO extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;

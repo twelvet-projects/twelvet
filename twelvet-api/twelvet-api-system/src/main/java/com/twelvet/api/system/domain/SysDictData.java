@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
  * @WebSite www.twelvet.cn
  * @Description: 字典数据表 sys_dict_data
  */
-@Schema(description ="字典数据表")
+@Schema(description = "字典数据表")
 public class SysDictData extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
