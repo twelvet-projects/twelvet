@@ -82,7 +82,7 @@ public class TWTRemoteRegisteredClientRepository implements RegisteredClientRepo
 	@Override
 	@Cacheable(value = CacheConstants.CLIENT_DETAILS_KEY, key = "#clientId", unless = "#result == null")
 	public RegisteredClient findByClientId(String clientId) {
-		ysClientDetails clientDetails = ResUtils
+		SysClientDetails clientDetails = ResUtils
 				.of(remoteOauth2ClientDetailsService.getClientDetailsById(clientId, SecurityConstants.INNER)).getData()
 				.orElseThrow(() -> new OAuth2AuthorizationCodeRequestAuthenticationException(
 						new OAuth2Error("客户端查询异常，请检查数据库链接"), null));
