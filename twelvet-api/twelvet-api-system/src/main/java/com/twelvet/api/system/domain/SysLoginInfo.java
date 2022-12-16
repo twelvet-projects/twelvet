@@ -6,7 +6,6 @@ import com.twelvet.framework.utils.annotation.excel.Excel;
 import com.twelvet.framework.utils.annotation.excel.Excel.ColumnType;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-
 import java.util.Date;
 
 /**
@@ -14,7 +13,7 @@ import java.util.Date;
  * @WebSite www.twelvet.cn
  * @Description: 系统访问记录表 sys_login_info
  */
-@Schema(description ="系统访问记录表")
+@Schema(description = "系统访问记录表")
 public class SysLoginInfo extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;

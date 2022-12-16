@@ -10,7 +10,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @WebSite www.twelvet.cn
  * @Description: 角色和菜单关联 sys_role_menu
  */
-@Schema(description ="角色和菜单关联")
+@Schema(description = "角色和菜单关联")
 public class SysRoleMenu {
 
 	/** 角色ID */

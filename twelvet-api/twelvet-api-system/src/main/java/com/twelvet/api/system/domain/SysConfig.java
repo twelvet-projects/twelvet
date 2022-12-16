@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
  * @WebSite www.twelvet.cn
  * @Description: 参数配置表 sys_config
  */
-@Schema(description ="参数配置表")
+@Schema(description = "参数配置表")
 public class SysConfig extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;

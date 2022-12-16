@@ -171,4 +171,5 @@ public class SwaggerProperties {
 	public void setServices(Map<String, String> services) {
 		this.services = services;
 	}
+
 }

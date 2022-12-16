@@ -2,7 +2,6 @@ package com.twelvet.api.system.domain.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-
 import java.io.Serializable;
 
 /**
@@ -10,7 +9,7 @@ import java.io.Serializable;
  * @WebSite www.twelvet.cn
  * @Description: 路由显示信息
  */
-@Schema(description ="路由显示信息")
+@Schema(description = "路由显示信息")
 public class MetaVo implements Serializable {
 
 	private static final long serialVersionUID = 1L;

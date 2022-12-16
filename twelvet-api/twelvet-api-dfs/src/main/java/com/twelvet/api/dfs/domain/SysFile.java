@@ -10,7 +10,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @WebSite www.twelvet.cn
  * @Description: 文件信息
  */
-@Schema(description ="文件信息")
+@Schema(description = "文件信息")
 public class SysFile {
 
 	/**

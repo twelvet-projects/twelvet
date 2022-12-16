@@ -26,6 +26,8 @@
 
 技术文档：https://www.twelvet.cn/docs/
 
+官方博客：https://www.twelvet.cn
+
 ## 系统模块
 
 ~~~

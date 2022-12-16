@@ -5,6 +5,7 @@ import com.twelvet.api.system.feign.RemoteUserService;
 import com.twelvet.api.system.model.UserInfo;
 import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.core.domain.R;
+import com.twelvet.framework.core.domain.utils.ResUtils;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.exception.UserFrozenException;
@@ -33,12 +34,12 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 	/**
 	 * 仅支持后台登录
 	 */
-	private final static String PLAT_FORM  = "admin";
+	private final static String PLAT_FORM = "admin";
 
 	/**
 	 * 登录类型
 	 */
-	private final static String GRAN_TYPE  = "password";
+	private final static String GRAN_TYPE = "password";
 
 	@Autowired
 	private RemoteUserService remoteUserService;
@@ -54,8 +55,8 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 	 */
 	@Override
 	public boolean support(String clientId, String grantType) {
-        return AuthorizationGrantType.PASSWORD.getValue().equals(grantType);
-    }
+		return AuthorizationGrantType.PASSWORD.getValue().equals(grantType);
+	}
 
 	/**
 	 * 用户名称登录
@@ -84,13 +85,11 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 	 * @param username username
 	 */
 	private void auth(R<UserInfo> userInfo, String username) {
-		if (TUtils.isEmpty(userInfo) || TUtils.isEmpty(userInfo.getData())) {
+		SysUser sysUser = ResUtils.of(userInfo).getData().orElseThrow(() -> {
 			log.info("登录用户：{} 不存在.", username);
 			throw new UsernameNotFoundException("登录用户：" + username + " 不存在");
-		}
+		}).getSysUser();
 
-		// 获取用户状态信息
-		SysUser sysUser = userInfo.getData().getSysUser();
 		if (sysUser.getStatus().equals("1")) {
 			log.info("{}： 用户已被冻结.", username);
 			throw new UserFrozenException("账号已被冻结");

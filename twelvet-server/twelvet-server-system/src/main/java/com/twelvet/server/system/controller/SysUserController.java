@@ -148,7 +148,7 @@ public class SysUserController extends TWTController {
 	 */
 	@Operation(summary = "根据用户编号获取详细信息")
 	@PreAuthorize("@role.hasPermi('system:user:query')")
-	@GetMapping({ "/", "/{userId}"})
+	@GetMapping({ "/", "/{userId}" })
 	public AjaxResult getInfo(@PathVariable(value = "userId", required = false) Long userId) {
 		iSysUserService.checkUserDataScope(userId);
 		Map<String, Object> res = new HashMap<>(6);

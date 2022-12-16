@@ -62,6 +62,4 @@ public class OAuth2ResourceOwnerSmsAuthenticationProvider
 		return new UsernamePasswordAuthenticationToken(phone, null);
 	}
 
-
-
 }

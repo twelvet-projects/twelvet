@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
  * @WebSite www.twelvet.cn
  * @Description: 岗位表 sys_post
  */
-@Schema(description ="岗位表")
+@Schema(description = "岗位表")
 public class SysPost extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;

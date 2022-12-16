@@ -5,11 +5,14 @@ import com.twelvet.api.system.domain.SysClientDetails;
 import com.twelvet.api.system.feign.RemoteOauth2ClientDetailsService;
 import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.core.domain.R;
+import com.twelvet.framework.core.domain.utils.ResUtils;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.oauth2.core.OAuth2Error;
+import org.springframework.security.oauth2.server.authorization.authentication.OAuth2AuthorizationCodeRequestAuthenticationException;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
@@ -79,9 +82,10 @@ public class TWTRemoteRegisteredClientRepository implements RegisteredClientRepo
 	@Override
 	@Cacheable(value = CacheConstants.CLIENT_DETAILS_KEY, key = "#clientId", unless = "#result == null")
 	public RegisteredClient findByClientId(String clientId) {
-		R<SysClientDetails> detailsR = remoteOauth2ClientDetailsService.getClientDetailsById(clientId,
-				SecurityConstants.INNER);
-		SysClientDetails clientDetails = detailsR.getData();
+		SysClientDetails clientDetails = ResUtils
+				.of(remoteOauth2ClientDetailsService.getClientDetailsById(clientId, SecurityConstants.INNER)).getData()
+				.orElseThrow(() -> new OAuth2AuthorizationCodeRequestAuthenticationException(
+						new OAuth2Error("客户端查询异常，请检查数据库链接"), null));
 
 		RegisteredClient.Builder builder = RegisteredClient.withId(clientDetails.getClientId())
 				.clientId(clientDetails.getClientId())

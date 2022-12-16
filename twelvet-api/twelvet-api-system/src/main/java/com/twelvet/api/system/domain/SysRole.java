@@ -3,7 +3,6 @@ package com.twelvet.api.system.domain;
 import com.twelvet.framework.core.application.domain.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-
 import java.util.Arrays;
 
 /**
@@ -11,7 +10,7 @@ import java.util.Arrays;
  * @WebSite www.twelvet.cn
  * @Description: 角色表 sys_role
  */
-@Schema(description ="角色表")
+@Schema(description = "角色表")
 public class SysRole extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
