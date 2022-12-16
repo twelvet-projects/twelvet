@@ -80,7 +80,7 @@ public class TwTSmsDetailsServiceImpl implements TwUserDetailsService {
 	private void auth(R<UserInfo> userInfo, String username) {
 		SysUser sysUser = ResUtils.of(userInfo).getData().orElseThrow(() -> {
 			log.info("登录用户：{} 不存在.", username);
-			throw new UsernameNotFoundException("登录用户：" + username + " 不存在");
+			return new UsernameNotFoundException("登录用户：" + username + " 不存在");
 		}).getSysUser();
 		if (sysUser.getStatus().equals("1")) {
 			log.info("{}： 用户已被冻结.", username);
