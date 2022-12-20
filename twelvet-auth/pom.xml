@@ -28,10 +28,10 @@
         </dependency>
 
         <!-- SpringCloud Alibaba Sentinel -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!-- undertow容器 -->
         <dependency>
