@@ -27,11 +27,11 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
 
-        <!-- SpringCloud Alibaba Sentinel TODO 等待兼容JakartaEE -->
-        <!--<dependency>
+        <!-- SpringCloud Alibaba Sentinel -->
+        <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
-        </dependency>-->
+        </dependency>
 
         <!-- undertow容器 -->
         <dependency>
