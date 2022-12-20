@@ -1,5 +1,5 @@
 # twelvet
-# 等待各集成组件升级Spring Boot 3中暂时无法使用，Spring Cloud官方预计北京时间12月15日完成依赖更新，届时可尝试修复
+# 等待各集成组件升级Spring Boot 3中暂时无法使用，如有需要自行clone https://github.com/alibaba/spring-cloud-alibaba/tree/2022.x mvn install 尝试使用。
 # JDK >= 17
 [![AUR](https://img.shields.io/github/license/twelvet-s/twelvet)](https://gitee.com/twelvet/twelvet/blob/master/LICENSE)
 [![](https://img.shields.io/badge/Author-TwelveT-orange.svg)](https://www.twelvet.cn)

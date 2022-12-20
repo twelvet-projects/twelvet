@@ -44,7 +44,7 @@
 
         <spring-boot-dependencies.version>3.0.0</spring-boot-dependencies.version>
         <spring-cloud.version>2022.0.0</spring-cloud.version>
-        <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
+        <spring-cloud-alibaba.version>2022.0.0.0-SNAPSHOT</spring-cloud-alibaba.version>
         <io.seata.version>1.4.2</io.seata.version>
         <spring-boot-admin.version>3.0.0-M5</spring-boot-admin.version>
         <spring-boot.mybatis>3.0.0</spring-boot.mybatis>
