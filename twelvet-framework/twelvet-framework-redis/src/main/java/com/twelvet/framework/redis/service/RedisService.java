@@ -22,7 +22,6 @@ import java.util.concurrent.TimeUnit;
  * @Description: spring redis 工具类
  */
 @SuppressWarnings(value = { "unchecked", "rawtypes" })
-@Component
 public class RedisService {
 
 	@Autowired
