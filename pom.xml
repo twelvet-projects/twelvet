@@ -289,6 +289,13 @@
                 <version>${twelvet.version}</version>
             </dependency>
 
+            <!--Auth API-->
+            <dependency>
+                <groupId>com.twelvet</groupId>
+                <artifactId>twelvet-api-auth</artifactId>
+                <version>${twelvet.version}</version>
+            </dependency>
+
             <!--七牛云oss-->
             <dependency>
                 <groupId>com.qiniu</groupId>

@@ -2,9 +2,8 @@ package com.twelvet.server.system.controller;
 
 import com.twelvet.api.system.domain.SysDictData;
 import com.twelvet.framework.core.application.controller.TWTController;
-import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.core.application.domain.JsonResult;
-import com.twelvet.framework.jdbc.web.page.TableDataInfo;
+import com.twelvet.framework.core.application.page.TableDataInfo;
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;

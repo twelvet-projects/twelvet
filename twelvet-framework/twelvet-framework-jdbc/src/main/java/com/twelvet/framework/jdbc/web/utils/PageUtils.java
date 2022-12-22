@@ -2,9 +2,9 @@ package com.twelvet.framework.jdbc.web.utils;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.twelvet.framework.jdbc.web.page.PageDomain;
-import com.twelvet.framework.jdbc.web.page.TableDataInfo;
-import com.twelvet.framework.jdbc.web.page.TableSupport;
+import com.twelvet.framework.core.application.page.PageDomain;
+import com.twelvet.framework.core.application.page.TableDataInfo;
+import com.twelvet.framework.core.application.page.TableSupport;
 import com.twelvet.framework.utils.TUtils;
 import com.twelvet.framework.utils.sql.SqlUtils;
 
