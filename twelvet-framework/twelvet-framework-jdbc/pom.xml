@@ -14,6 +14,13 @@
 
     <dependencies>
 
+        <!-- twelvet core -->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <!--工具模块-->
         <dependency>
             <groupId>com.twelvet</groupId>

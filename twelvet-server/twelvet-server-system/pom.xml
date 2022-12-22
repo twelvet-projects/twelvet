@@ -56,6 +56,12 @@
             <artifactId>twelvet-framework-security</artifactId>
         </dependency>
 
+        <!--Auth API-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-api-auth</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

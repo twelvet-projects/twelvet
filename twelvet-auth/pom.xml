@@ -87,6 +87,12 @@
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
 
+        <!--Auth API-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-api-auth</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

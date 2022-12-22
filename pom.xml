@@ -303,6 +303,13 @@
                 <version>${twelvet.version}</version>
             </dependency>
 
+            <!--Auth API-->
+            <dependency>
+                <groupId>com.twelvet</groupId>
+                <artifactId>twelvet-api-auth</artifactId>
+                <version>${twelvet.version}</version>
+            </dependency>
+
             <!--七牛云oss-->
             <dependency>
                 <groupId>com.qiniu</groupId>
@@ -438,7 +445,7 @@
     </build>
 
     <!--maven依赖远程仓库-->
-    <repositories>
+    <!--<repositories>
         <repository>
             <id>public</id>
             <name>aliyun nexus</name>
@@ -447,7 +454,7 @@
                 <enabled>true</enabled>
             </releases>
         </repository>
-    </repositories>
+    </repositories>-->
     <!--maven插件远程仓库-->
     <pluginRepositories>
         <pluginRepository>
