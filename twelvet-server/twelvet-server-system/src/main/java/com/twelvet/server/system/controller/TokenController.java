@@ -26,44 +26,42 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/token")
 public class TokenController extends TWTController {
 
-    @Autowired
-    private RemoteTokenService remoteTokenService;
+	@Autowired
+	private RemoteTokenService remoteTokenService;
 
-    /**
-     * 分页token 信息
-     *
-     * @param username username
-     * @return 分页数据
-     */
-    @Operation(summary = "分页token 信息")
-    @PreAuthorize("@role.hasPermi('system:token:list')")
-    @GetMapping("/pageQuery")
-    public JsonResult<TableDataInfo> token(String username) {
-        TokenDTO tokenDTO = new TokenDTO();
-        tokenDTO.setUsername(username);
-        PageDomain pageDomain = TableSupport.buildPageRequest();
-        Integer current = pageDomain.getCurrent();
-        Integer pageSize = pageDomain.getPageSize();
-        if (TUtils.isNotEmpty(current) && TUtils.isNotEmpty(pageSize)) {
-            tokenDTO.setCurrent(current);
-            tokenDTO.setPageSize(pageSize);
-        }
-        R<TableDataInfo> tokenPage = remoteTokenService.getTokenPage(tokenDTO);
-        return JsonResult.success(tokenPage.getData());
-    }
+	/**
+	 * 分页token 信息
+	 * @param username username
+	 * @return 分页数据
+	 */
+	@Operation(summary = "分页token 信息")
+	@PreAuthorize("@role.hasPermi('system:token:list')")
+	@GetMapping("/pageQuery")
+	public JsonResult<TableDataInfo> token(String username) {
+		TokenDTO tokenDTO = new TokenDTO();
+		tokenDTO.setUsername(username);
+		PageDomain pageDomain = TableSupport.buildPageRequest();
+		Integer current = pageDomain.getCurrent();
+		Integer pageSize = pageDomain.getPageSize();
+		if (TUtils.isNotEmpty(current) && TUtils.isNotEmpty(pageSize)) {
+			tokenDTO.setCurrent(current);
+			tokenDTO.setPageSize(pageSize);
+		}
+		R<TableDataInfo> tokenPage = remoteTokenService.getTokenPage(tokenDTO);
+		return JsonResult.success(tokenPage.getData());
+	}
 
-    /**
-     * 删除token
-     *
-     * @param token token
-     * @return JsonResult<Void>
-     */
-    @Operation(summary = "删除token")
-    @PreAuthorize("@role.hasPermi('system:token:remove')")
-    @DeleteMapping("/{token}")
-    public JsonResult<Void> delete(@PathVariable String token) {
-        remoteTokenService.removeToken(token);
-        return JsonResult.success();
-    }
+	/**
+	 * 删除token
+	 * @param token token
+	 * @return JsonResult<Void>
+	 */
+	@Operation(summary = "删除token")
+	@PreAuthorize("@role.hasPermi('system:token:remove')")
+	@DeleteMapping("/{token}")
+	public JsonResult<Void> delete(@PathVariable String token) {
+		remoteTokenService.removeToken(token);
+		return JsonResult.success();
+	}
 
 }

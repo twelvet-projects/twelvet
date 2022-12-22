@@ -19,25 +19,23 @@ import org.springframework.web.bind.annotation.RequestHeader;
  * @Description: 令牌管理服务
  */
 @FeignClient(contextId = "remoteTokenService", value = ServiceNameConstants.AUTH_SERVICE,
-        fallbackFactory = RemoteTokenFallbackFactory.class)
+		fallbackFactory = RemoteTokenFallbackFactory.class)
 public interface RemoteTokenService {
 
-    /**
-     * 分页查询token 信息
-     *
-     * @param tokenDTO TokenDTO
-     * @return
-     */
-    @GetMapping(value = "/api/token/pageQuery", headers = SecurityConstants.HEADER_FROM_IN)
-    R<TableDataInfo> getTokenPage(@SpringQueryMap TokenDTO tokenDTO);
+	/**
+	 * 分页查询token 信息
+	 * @param tokenDTO TokenDTO
+	 * @return
+	 */
+	@GetMapping(value = "/api/token/pageQuery", headers = SecurityConstants.HEADER_FROM_IN)
+	R<TableDataInfo> getTokenPage(@SpringQueryMap TokenDTO tokenDTO);
 
-    /**
-     * 删除token
-     *
-     * @param token token
-     * @return R<Void>
-     */
-    @DeleteMapping(value = "/api/token/{token}", headers = SecurityConstants.HEADER_FROM_IN)
-    R<Void> removeToken(@PathVariable("token") String token);
+	/**
+	 * 删除token
+	 * @param token token
+	 * @return R<Void>
+	 */
+	@DeleteMapping(value = "/api/token/{token}", headers = SecurityConstants.HEADER_FROM_IN)
+	R<Void> removeToken(@PathVariable("token") String token);
 
 }
