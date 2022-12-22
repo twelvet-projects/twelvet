@@ -68,6 +68,11 @@ public interface SecurityConstants {
 	String INNER = "inner";
 
 	/**
+	 * 请求header
+	 */
+	String HEADER_FROM_IN = REQUEST_SOURCE + "=" + INNER;
+
+	/**
 	 * 协议字段
 	 */
 	String DETAILS_LICENSE = "license";
