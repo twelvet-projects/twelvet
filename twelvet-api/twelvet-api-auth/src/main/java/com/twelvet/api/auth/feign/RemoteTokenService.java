@@ -28,9 +28,8 @@ public interface RemoteTokenService {
      * @param tokenDTO TokenDTO
      * @return
      */
-    @GetMapping(value = "/api/token/pageQuery")
-    R<TableDataInfo> getTokenPage(@SpringQueryMap TokenDTO tokenDTO,
-                                  @RequestHeader(SecurityConstants.REQUEST_SOURCE) String requestSource);
+    @GetMapping(value = "/api/token/pageQuery", headers = SecurityConstants.HEADER_FROM_IN)
+    R<TableDataInfo> getTokenPage(@SpringQueryMap TokenDTO tokenDTO);
 
     /**
      * 删除token

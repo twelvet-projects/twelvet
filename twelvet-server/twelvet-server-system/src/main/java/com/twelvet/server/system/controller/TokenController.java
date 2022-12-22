@@ -48,7 +48,7 @@ public class TokenController extends TWTController {
             tokenDTO.setCurrent(current);
             tokenDTO.setPageSize(pageSize);
         }
-        R<TableDataInfo> tokenPage = remoteTokenService.getTokenPage(tokenDTO, SecurityConstants.INNER);
+        R<TableDataInfo> tokenPage = remoteTokenService.getTokenPage(tokenDTO);
         return JsonResult.success(tokenPage.getData());
     }
 

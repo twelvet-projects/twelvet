@@ -26,14 +26,9 @@ public class RemoteTokenFallbackFactory implements FallbackFactory<RemoteTokenSe
         log.error("令牌管理服务调用失败:{}", throwable.getMessage());
         return new RemoteTokenService(){
 
-            /*@Override
+            @Override
             public R<TableDataInfo> getTokenPage(TokenDTO tokenDTO) {
                     return R.fail();
-            }*/
-
-            @Override
-            public R<TableDataInfo> getTokenPage(TokenDTO tokenDTO, String requestSource) {
-                return null;
             }
 
             @Override
