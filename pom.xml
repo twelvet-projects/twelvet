@@ -429,7 +429,7 @@
     </build>
 
     <!--maven依赖远程仓库-->
-    <!--<repositories>
+    <repositories>
         <repository>
             <id>public</id>
             <name>aliyun nexus</name>
@@ -438,7 +438,7 @@
                 <enabled>true</enabled>
             </releases>
         </repository>
-    </repositories>-->
+    </repositories>
     <!--maven插件远程仓库-->
     <pluginRepositories>
         <pluginRepository>
