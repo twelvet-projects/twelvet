@@ -45,7 +45,7 @@
         <spring-boot-dependencies.version>3.0.1</spring-boot-dependencies.version>
         <spring-cloud.version>2022.0.0</spring-cloud.version>
         <spring-cloud-tencent.version>1.8.2-2022.0.0</spring-cloud-tencent.version>
-        <spring-boot-admin.version>3.0.0-M5</spring-boot-admin.version>
+        <spring-boot-admin.version>3.0.0-M7</spring-boot-admin.version>
         <spring-boot.mybatis>3.0.0</spring-boot.mybatis>
         <spring.authorization.version>1.0.0</spring.authorization.version>
 
