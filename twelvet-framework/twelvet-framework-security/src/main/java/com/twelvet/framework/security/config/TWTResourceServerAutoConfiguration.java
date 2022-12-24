@@ -2,6 +2,7 @@ package com.twelvet.framework.security.config;
 
 import com.twelvet.framework.security.service.PermissionService;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
@@ -39,8 +40,8 @@ public class TWTResourceServerAutoConfiguration {
 	 * @return ResourceAuthExceptionEntryPoint
 	 */
 	@Bean
-	public ResourceAuthExceptionEntryPoint resourceAuthExceptionEntryPoint() {
-		return new ResourceAuthExceptionEntryPoint();
+	public ResourceAuthExceptionEntryPoint resourceAuthExceptionEntryPoint(MessageSource securityMessageSource) {
+		return new ResourceAuthExceptionEntryPoint(securityMessageSource);
 	}
 
 	/**
