@@ -26,8 +26,11 @@ public class ResourceAuthExceptionEntryPoint implements AuthenticationEntryPoint
 
 	private static final Logger log = LoggerFactory.getLogger(ResourceAuthExceptionEntryPoint.class);
 
-	@Autowired
-	private MessageSource messageSource;
+	private final MessageSource messageSource;
+
+	public ResourceAuthExceptionEntryPoint(MessageSource messageSource) {
+		this.messageSource = messageSource;
+	}
 
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
