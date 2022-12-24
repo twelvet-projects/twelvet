@@ -9,6 +9,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -21,6 +25,9 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 public class ResourceAuthExceptionEntryPoint implements AuthenticationEntryPoint {
 
 	private static final Logger log = LoggerFactory.getLogger(ResourceAuthExceptionEntryPoint.class);
+
+	@Autowired
+	private MessageSource messageSource;
 
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
@@ -36,15 +43,17 @@ public class ResourceAuthExceptionEntryPoint implements AuthenticationEntryPoint
 			}
 
 			// 针对令牌过期返回特殊的 424
-			if (authException instanceof InvalidBearerTokenException) {
+			if (authException instanceof InvalidBearerTokenException
+					|| authException instanceof InsufficientAuthenticationException) {
 				code = HttpStatus.HTTP_OK;
-				result.setMsg("token expire");
+				result.setMsg(this.messageSource.getMessage("OAuth2ResourceOwnerBaseAuthenticationProvider.tokenExpired",
+						null, LocaleContextHolder.getLocale()));
 			}
 
 			ServletUtils.render(code, JacksonUtils.getInstance().writeValueAsString(result));
 		}
 		catch (Exception e) {
-			log.error("鉴权返回错误失败");
+			log.error("鉴权返回错误失败", e);
 		}
 	}
 
