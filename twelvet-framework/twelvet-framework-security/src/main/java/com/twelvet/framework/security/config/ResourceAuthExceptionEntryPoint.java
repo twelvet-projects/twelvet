@@ -7,8 +7,8 @@ import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.framework.utils.http.ServletUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +37,7 @@ public class ResourceAuthExceptionEntryPoint implements AuthenticationEntryPoint
 			}
 
 			// 针对令牌过期返回特殊的 424
-			if (authException instanceof InsufficientAuthenticationException) {
+			if (authException instanceof InvalidBearerTokenException) {
 				code = HttpStatus.HTTP_OK;
 				result.setMsg("token expire");
 			}
