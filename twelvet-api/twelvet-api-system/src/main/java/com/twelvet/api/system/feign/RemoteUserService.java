@@ -24,7 +24,7 @@ public interface RemoteUserService {
 	 * @param username 用户名称
 	 * @return R<UserInfo>
 	 */
-	@GetMapping(value = "/api/user/info/{username}", headers = SecurityConstants.REQUEST_SOURCE)
+	@GetMapping(value = "/api/user/info/{username}", headers = SecurityConstants.HEADER_FROM_IN)
 	R<UserInfo> getUserInfo(@PathVariable("username") String username);
 
 }
