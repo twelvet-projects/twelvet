@@ -26,7 +26,7 @@ public class SysSysOperationLogEventLogListener {
 	@EventListener(SysOperationLogEvent.class)
 	public void saveSysLog(SysOperationLogEvent event) {
 		SysOperationLog sysOperationLog = (SysOperationLog) event.getSource();
-		remoteLogService.saveLog(sysOperationLog, SecurityConstants.INNER);
+		remoteLogService.saveLog(sysOperationLog);
 	}
 
 }

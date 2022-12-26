@@ -26,17 +26,15 @@ public interface RemoteLogService {
 	 * @param sysOperationLog 日志实体
 	 * @return 结果
 	 */
-	@PostMapping("/api/operationLog")
-	R<Boolean> saveLog(@RequestBody SysOperationLog sysOperationLog,
-			@RequestHeader(SecurityConstants.REQUEST_SOURCE) String requestSource);
+	@PostMapping(value = "/api/operationLog", headers = SecurityConstants.HEADER_FROM_IN)
+	R<Boolean> saveLog(@RequestBody SysOperationLog sysOperationLog);
 
 	/**
 	 * 保存登录记录
 	 * @param sysLoginInfo 登录结果
 	 * @return 结果
 	 */
-	@PostMapping("/api/loginInfo")
-	R<Boolean> saveLoginInfo(@RequestBody SysLoginInfo sysLoginInfo,
-			@RequestHeader(SecurityConstants.REQUEST_SOURCE) String requestSource);
+	@PostMapping(value = "/api/loginInfo", headers = SecurityConstants.HEADER_FROM_IN)
+	R<Boolean> saveLoginInfo(@RequestBody SysLoginInfo sysLoginInfo);
 
 }

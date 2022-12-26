@@ -82,9 +82,8 @@ public class TWTRemoteRegisteredClientRepository implements RegisteredClientRepo
 	@Override
 	@Cacheable(value = CacheConstants.CLIENT_DETAILS_KEY, key = "#clientId", unless = "#result == null")
 	public RegisteredClient findByClientId(String clientId) {
-		SysClientDetails clientDetails = ResUtils
-				.of(remoteOauth2ClientDetailsService.getClientDetailsById(clientId)).getData()
-				.orElseThrow(() -> new OAuth2AuthorizationCodeRequestAuthenticationException(
+		SysClientDetails clientDetails = ResUtils.of(remoteOauth2ClientDetailsService.getClientDetailsById(clientId))
+				.getData().orElseThrow(() -> new OAuth2AuthorizationCodeRequestAuthenticationException(
 						new OAuth2Error("客户端查询异常，请检查数据库链接"), null));
 
 		RegisteredClient.Builder builder = RegisteredClient.withId(clientDetails.getClientId())

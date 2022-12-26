@@ -26,7 +26,7 @@ public interface RemoteOauth2ClientDetailsService {
 	 * @param clientId 终端ID
 	 * @return JsonResult
 	 */
-	@GetMapping(value = "/api/client/{clientId}",headers = SecurityConstants .HEADER_FROM_IN)
+	@GetMapping(value = "/api/client/{clientId}", headers = SecurityConstants.HEADER_FROM_IN)
 	R<SysClientDetails> getClientDetailsById(@PathVariable("clientId") String clientId);
 
 }

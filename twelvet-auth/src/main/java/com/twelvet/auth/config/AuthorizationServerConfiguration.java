@@ -67,8 +67,8 @@ public class AuthorizationServerConfiguration {
 
 		DefaultSecurityFilterChain securityFilterChain = http.authorizeHttpRequests(authorizeRequests -> {
 			// 自定义接口、端点暴露
-			authorizeRequests.requestMatchers("/api/token/*","/token/**", "/actuator/**", "/assets/**", "/error", "/v3/api-docs")
-					.permitAll();
+			authorizeRequests.requestMatchers("/api/token/*", "/token/**", "/actuator/**", "/assets/**", "/error",
+					"/v3/api-docs").permitAll();
 			authorizeRequests.anyRequest().authenticated();
 		}).apply(authorizationServerConfigurer.authorizationService(authorizationService)// redis存储token的实现
 				.authorizationServerSettings(
