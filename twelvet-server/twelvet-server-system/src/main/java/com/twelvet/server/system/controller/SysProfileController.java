@@ -87,7 +87,7 @@ public class SysProfileController extends TWTController {
 	public AjaxResult avatar(@RequestParam("avatarFile") MultipartFile file) {
 
 		try {
-			R<SysFile> fileResult = remoteFileService.upload(file, SecurityConstants.INNER);
+			R<SysFile> fileResult = remoteFileService.upload(file);
 
 			SysFile sysFile = ResUtils.of(fileResult).getData().orElseThrow(() -> new TWTException("文件服务异常，请联系管理员"));
 
