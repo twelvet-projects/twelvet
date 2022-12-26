@@ -24,12 +24,12 @@ public class RemoteLogFallbackFactory implements FallbackFactory<RemoteLogServic
 		log.error("日志服务调用失败:{}", throwable.getMessage());
 		return new RemoteLogService() {
 			@Override
-			public R<Boolean> saveLog(SysOperationLog sysOperationLog, String requestSource) {
+			public R<Boolean> saveLog(SysOperationLog sysOperationLog) {
 				return R.fail();
 			}
 
 			@Override
-			public R<Boolean> saveLoginInfo(SysLoginInfo sysLoginInfo, String requestSource) {
+			public R<Boolean> saveLoginInfo(SysLoginInfo sysLoginInfo) {
 				return R.fail();
 			}
 		};

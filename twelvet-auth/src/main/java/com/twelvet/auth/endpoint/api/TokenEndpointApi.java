@@ -41,95 +41,93 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/token")
 public class TokenEndpointApi {
 
-    @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+	@Autowired
+	private RedisTemplate<String, Object> redisTemplate;
 
-    @Autowired
-    private CacheManager cacheManager;
+	@Autowired
+	private CacheManager cacheManager;
 
-    @Autowired
-    private OAuth2AuthorizationService authorizationService;
+	@Autowired
+	private OAuth2AuthorizationService authorizationService;
 
-    /**
-     * 删除token
-     *
-     * @param token token
-     * @return R<Void>
-     */
-    @Operation(summary = "删除token")
-    @AuthIgnore
-    @DeleteMapping("/{token}")
-    public R<Void> removeToken(@PathVariable("token") String token) {
-        OAuth2Authorization authorization = authorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
-        OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
-        if (accessToken == null || StrUtil.isBlank(accessToken.getToken().getTokenValue())) {
-            return R.ok();
-        }
-        // 清空用户信息
-        cacheManager.getCache(CacheConstants.USER_DETAILS).evict(authorization.getPrincipalName());
-        // 清空access token
-        authorizationService.remove(authorization);
-        // 处理自定义退出事件，保存相关日志
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        SpringContextHolder.publishEvent(new LogoutSuccessEvent(new PreAuthenticatedAuthenticationToken(
-                authorization.getPrincipalName(), authorization.getRegisteredClientId())));
-        return R.ok();
-    }
+	/**
+	 * 删除token
+	 * @param token token
+	 * @return R<Void>
+	 */
+	@Operation(summary = "删除token")
+	@AuthIgnore
+	@DeleteMapping("/{token}")
+	public R<Void> removeToken(@PathVariable("token") String token) {
+		OAuth2Authorization authorization = authorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
+		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
+		if (accessToken == null || StrUtil.isBlank(accessToken.getToken().getTokenValue())) {
+			return R.ok();
+		}
+		// 清空用户信息
+		cacheManager.getCache(CacheConstants.USER_DETAILS).evict(authorization.getPrincipalName());
+		// 清空access token
+		authorizationService.remove(authorization);
+		// 处理自定义退出事件，保存相关日志
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		SpringContextHolder.publishEvent(new LogoutSuccessEvent(new PreAuthenticatedAuthenticationToken(
+				authorization.getPrincipalName(), authorization.getRegisteredClientId())));
+		return R.ok();
+	}
 
-    /**
-     * 分页查询Token
-     *
-     * @param tokenDTO TokenDTO
-     * @return R<TableDataInfo>
-     */
-    @Operation(summary = "分页token 信息")
-    @AuthIgnore
-    @GetMapping("/pageQuery")
-    public R<TableDataInfo> tokenList(TokenDTO tokenDTO) {
-        String username = tokenDTO.getUsername();
-        Integer current = tokenDTO.getCurrent();
-        Integer pageSize = tokenDTO.getPageSize();
+	/**
+	 * 分页查询Token
+	 * @param tokenDTO TokenDTO
+	 * @return R<TableDataInfo>
+	 */
+	@Operation(summary = "分页token 信息")
+	@AuthIgnore
+	@GetMapping("/pageQuery")
+	public R<TableDataInfo> tokenList(TokenDTO tokenDTO) {
+		String username = tokenDTO.getUsername();
+		Integer current = tokenDTO.getCurrent();
+		Integer pageSize = tokenDTO.getPageSize();
 
-        // 根据分页参数获取对应数据
-        String key = String.format("%s::*", CacheConstants.PROJECT_OAUTH_ACCESS);
-        if (StringUtils.isNotEmpty(username)) {
-            key = String.format("%s::*%s*", CacheConstants.PROJECT_OAUTH_ACCESS, username);
-        }
-        Set<String> keys = redisTemplate.keys(key);
-        List<String> pages = keys.stream().skip((long) (current - 1) * pageSize).limit(pageSize).collect(Collectors.toList());
+		// 根据分页参数获取对应数据
+		String key = String.format("%s::*", CacheConstants.PROJECT_OAUTH_ACCESS);
+		if (StringUtils.isNotEmpty(username)) {
+			key = String.format("%s::*%s*", CacheConstants.PROJECT_OAUTH_ACCESS, username);
+		}
+		Set<String> keys = redisTemplate.keys(key);
+		List<String> pages = keys.stream().skip((long) (current - 1) * pageSize).limit(pageSize)
+				.collect(Collectors.toList());
 
-        TableDataInfo tableDataInfo = new TableDataInfo();
+		TableDataInfo tableDataInfo = new TableDataInfo();
 
+		List<TokenVo> tokenVoList = redisTemplate.opsForValue().multiGet(pages).stream().map(obj -> {
+			OAuth2Authorization authorization = (OAuth2Authorization) obj;
+			TokenVo tokenVo = new TokenVo();
+			tokenVo.setClientId(authorization.getRegisteredClientId());
+			tokenVo.setId(authorization.getId());
+			tokenVo.setUsername(authorization.getPrincipalName());
+			tokenVo.setTokenType(authorization.getAuthorizationGrantType().toString());
+			tokenVo.setScope(authorization.getAuthorizationGrantType().toString());
 
-        List<TokenVo> tokenVoList = redisTemplate.opsForValue().multiGet(pages).stream().map(obj -> {
-            OAuth2Authorization authorization = (OAuth2Authorization) obj;
-            TokenVo tokenVo = new TokenVo();
-            tokenVo.setClientId(authorization.getRegisteredClientId());
-            tokenVo.setId(authorization.getId());
-            tokenVo.setUsername(authorization.getPrincipalName());
-            tokenVo.setTokenType(authorization.getAuthorizationGrantType().toString());
-            tokenVo.setScope(authorization.getAuthorizationGrantType().toString());
+			OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
+			tokenVo.setAccessToken(accessToken.getToken().getTokenValue());
 
-            OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
-            tokenVo.setAccessToken(accessToken.getToken().getTokenValue());
+			OAuth2Authorization.Token<OAuth2RefreshToken> refreshToken = authorization.getRefreshToken();
+			tokenVo.setRefreshToken(refreshToken.getToken().getTokenValue());
 
-            OAuth2Authorization.Token<OAuth2RefreshToken> refreshToken = authorization.getRefreshToken();
-            tokenVo.setRefreshToken(refreshToken.getToken().getTokenValue());
+			String expiresAt = TemporalAccessorUtil.format(accessToken.getToken().getExpiresAt(),
+					DatePattern.NORM_DATETIME_PATTERN);
+			tokenVo.setExpiresAt(expiresAt);
 
-            String expiresAt = TemporalAccessorUtil.format(accessToken.getToken().getExpiresAt(),
-                    DatePattern.NORM_DATETIME_PATTERN);
-            tokenVo.setExpiresAt(expiresAt);
+			String issuedAt = TemporalAccessorUtil.format(accessToken.getToken().getIssuedAt(),
+					DatePattern.NORM_DATETIME_PATTERN);
+			tokenVo.setIssuedAt(issuedAt);
+			return tokenVo;
+		}).collect(Collectors.toList());
 
-            String issuedAt = TemporalAccessorUtil.format(accessToken.getToken().getIssuedAt(),
-                    DatePattern.NORM_DATETIME_PATTERN);
-            tokenVo.setIssuedAt(issuedAt);
-            return tokenVo;
-        }).collect(Collectors.toList());
+		tableDataInfo.setRecords(tokenVoList);
+		tableDataInfo.setTotal(keys.size());
 
-        tableDataInfo.setRecords(tokenVoList);
-        tableDataInfo.setTotal(keys.size());
-
-        return R.ok(tableDataInfo);
-    }
+		return R.ok(tableDataInfo);
+	}
 
 }

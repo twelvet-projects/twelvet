@@ -15,7 +15,7 @@ import java.lang.annotation.*;
 @Documented
 @Inherited
 @EnableConfigurationProperties(SwaggerProperties.class)
-//@Import({ SwaggerAutoConfiguration.class })
+// @Import({ SwaggerAutoConfiguration.class })
 public @interface EnableTwelveTSwagger2 {
 
 }

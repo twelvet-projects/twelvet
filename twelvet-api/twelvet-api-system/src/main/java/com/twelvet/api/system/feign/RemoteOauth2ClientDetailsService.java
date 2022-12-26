@@ -1,11 +1,7 @@
 package com.twelvet.api.system.feign;
 
 import com.twelvet.api.system.domain.SysClientDetails;
-import com.twelvet.api.system.domain.SysLoginInfo;
-import com.twelvet.api.system.domain.SysOperationLog;
-import com.twelvet.api.system.feign.factory.RemoteLogFallbackFactory;
 import com.twelvet.api.system.feign.factory.RemoteOauth2ClientDetailsFallbackFactory;
-import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.core.constants.ServiceNameConstants;
 import com.twelvet.framework.core.domain.R;
@@ -26,8 +22,7 @@ public interface RemoteOauth2ClientDetailsService {
 	 * @param clientId 终端ID
 	 * @return JsonResult
 	 */
-	@GetMapping(value = "/api/client/{clientId}")
-	R<SysClientDetails> getClientDetailsById(@PathVariable("clientId") String clientId,
-			@RequestHeader(SecurityConstants.REQUEST_SOURCE) String requestSource);
+	@GetMapping(value = "/api/client/{clientId}", headers = SecurityConstants.HEADER_FROM_IN)
+	R<SysClientDetails> getClientDetailsById(@PathVariable("clientId") String clientId);
 
 }

@@ -28,7 +28,7 @@ public class RemoteOauth2ClientDetailsFallbackFactory implements FallbackFactory
 		return new RemoteOauth2ClientDetailsService() {
 
 			@Override
-			public R<SysClientDetails> getClientDetailsById(String clientId, String requestSource) {
+			public R<SysClientDetails> getClientDetailsById(String clientId) {
 				return R.fail();
 			}
 		};

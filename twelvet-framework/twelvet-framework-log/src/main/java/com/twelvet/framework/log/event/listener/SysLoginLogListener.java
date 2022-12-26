@@ -26,7 +26,7 @@ public class SysLoginLogListener {
 	@EventListener(SysLoginLogEvent.class)
 	public void saveSysLog(SysLoginLogEvent event) {
 		SysLoginInfo sysLoginInfo = (SysLoginInfo) event.getSource();
-		remoteLogService.saveLoginInfo(sysLoginInfo, SecurityConstants.INNER);
+		remoteLogService.saveLoginInfo(sysLoginInfo);
 	}
 
 }

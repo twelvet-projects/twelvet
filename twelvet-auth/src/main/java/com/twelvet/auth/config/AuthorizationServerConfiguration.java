@@ -66,12 +66,13 @@ public class AuthorizationServerConfiguration {
 						.consentPage(SecurityConstants.CUSTOM_CONSENT_PAGE_URI)));
 
 		DefaultSecurityFilterChain securityFilterChain = http.authorizeHttpRequests(authorizeRequests -> {
-					// 自定义接口、端点暴露
-					authorizeRequests.requestMatchers("/api/token/*", "/token/**", "/actuator/**", "/assets/**", "/error", "/v3/api-docs").permitAll();
-					authorizeRequests.anyRequest().authenticated();
-				}).apply(authorizationServerConfigurer.authorizationService(authorizationService)// redis存储token的实现
-						.authorizationServerSettings(
-								AuthorizationServerSettings.builder().issuer(SecurityConstants.PROJECT_LICENSE).build()))
+			// 自定义接口、端点暴露
+			authorizeRequests.requestMatchers("/api/token/*", "/token/**", "/actuator/**", "/assets/**", "/error",
+					"/v3/api-docs").permitAll();
+			authorizeRequests.anyRequest().authenticated();
+		}).apply(authorizationServerConfigurer.authorizationService(authorizationService)// redis存储token的实现
+				.authorizationServerSettings(
+						AuthorizationServerSettings.builder().issuer(SecurityConstants.PROJECT_LICENSE).build()))
 				// 授权码登录的登录页个性化
 				.and().apply(new FormIdentityLoginConfigurer()).and().build();
 

@@ -193,7 +193,7 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 			// ----- Refresh token -----
 			OAuth2RefreshToken refreshToken = null;
 			if (registeredClient.getAuthorizationGrantTypes().contains(AuthorizationGrantType.REFRESH_TOKEN) &&
-					// Do not issue refresh token to public client
+			// Do not issue refresh token to public client
 					!clientPrincipal.getClientAuthenticationMethod().equals(ClientAuthenticationMethod.NONE)) {
 
 				if (this.refreshTokenGenerator != null) {
@@ -238,7 +238,7 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 	 * @return {@link OAuth2AuthenticationException}
 	 */
 	private OAuth2AuthenticationException oAuth2AuthenticationException(Authentication authentication,
-																		AuthenticationException authenticationException) {
+			AuthenticationException authenticationException) {
 		if (authenticationException instanceof UsernameNotFoundException) {
 			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodesExpand.USERNAME_NOT_FOUND,
 					this.messages.getMessage("JdbcDaoImpl.notFound", new Object[] { authentication.getName() },

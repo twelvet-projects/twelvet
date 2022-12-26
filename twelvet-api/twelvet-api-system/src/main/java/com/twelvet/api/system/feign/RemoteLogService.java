@@ -9,8 +9,6 @@ import com.twelvet.framework.core.domain.R;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author twelvet
@@ -26,17 +24,15 @@ public interface RemoteLogService {
 	 * @param sysOperationLog 日志实体
 	 * @return 结果
 	 */
-	@PostMapping("/api/operationLog")
-	R<Boolean> saveLog(@RequestBody SysOperationLog sysOperationLog,
-			@RequestHeader(SecurityConstants.REQUEST_SOURCE) String requestSource);
+	@PostMapping(value = "/api/operationLog", headers = SecurityConstants.HEADER_FROM_IN)
+	R<Boolean> saveLog(@RequestBody SysOperationLog sysOperationLog);
 
 	/**
 	 * 保存登录记录
 	 * @param sysLoginInfo 登录结果
 	 * @return 结果
 	 */
-	@PostMapping("/api/loginInfo")
-	R<Boolean> saveLoginInfo(@RequestBody SysLoginInfo sysLoginInfo,
-			@RequestHeader(SecurityConstants.REQUEST_SOURCE) String requestSource);
+	@PostMapping(value = "/api/loginInfo", headers = SecurityConstants.HEADER_FROM_IN)
+	R<Boolean> saveLoginInfo(@RequestBody SysLoginInfo sysLoginInfo);
 
 }

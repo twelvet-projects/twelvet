@@ -4,15 +4,11 @@ import cn.hutool.core.util.StrUtil;
 import com.twelvet.api.system.domain.SysClientDetails;
 import com.twelvet.api.system.feign.RemoteOauth2ClientDetailsService;
 import com.twelvet.framework.core.application.domain.AjaxResult;
-import com.twelvet.framework.core.constants.SecurityConstants;
-import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.core.domain.utils.ResUtils;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
-import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.exception.OAuthClientException;
 import com.twelvet.framework.security.utils.OAuth2EndpointUtils;
 import com.twelvet.framework.security.utils.OAuth2ErrorCodesExpand;
-import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.SpringContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
@@ -88,9 +84,8 @@ public class TWTTokenEndpoint {
 			@RequestParam(OAuth2ParameterNames.SCOPE) String scope,
 			@RequestParam(OAuth2ParameterNames.STATE) String state) {
 
-		SysClientDetails clientDetails = ResUtils
-				.of(remoteOauth2ClientDetailsService.getClientDetailsById(clientId, SecurityConstants.INNER)).getData()
-				.orElseThrow(() -> new OAuthClientException("clientId 不合法"));
+		SysClientDetails clientDetails = ResUtils.of(remoteOauth2ClientDetailsService.getClientDetailsById(clientId))
+				.getData().orElseThrow(() -> new OAuthClientException("clientId 不合法"));
 		Set<String> authorizedScopes = StringUtils.commaDelimitedListToSet(clientDetails.getScope());
 		modelAndView.addObject("clientId", clientId);
 		modelAndView.addObject("state", state);

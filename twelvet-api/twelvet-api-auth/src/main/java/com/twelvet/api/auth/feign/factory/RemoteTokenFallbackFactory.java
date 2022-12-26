@@ -19,22 +19,23 @@ import java.util.Map;
 @Component
 public class RemoteTokenFallbackFactory implements FallbackFactory<RemoteTokenService> {
 
-    private static final Logger log = LoggerFactory.getLogger(RemoteTokenFallbackFactory.class);
+	private static final Logger log = LoggerFactory.getLogger(RemoteTokenFallbackFactory.class);
 
-    @Override
-    public RemoteTokenService create(Throwable throwable) {
-        log.error("令牌管理服务调用失败:{}", throwable.getMessage());
-        return new RemoteTokenService(){
+	@Override
+	public RemoteTokenService create(Throwable throwable) {
+		log.error("令牌管理服务调用失败:{}", throwable.getMessage());
+		return new RemoteTokenService() {
 
-            @Override
-            public R<TableDataInfo> getTokenPage(TokenDTO tokenDTO) {
-                    return R.fail();
-            }
+			@Override
+			public R<TableDataInfo> getTokenPage(TokenDTO tokenDTO) {
+				return R.fail();
+			}
 
-            @Override
-            public R<Void> removeToken(String token) {
-                return R.fail();
-            }
-        };
-    }
+			@Override
+			public R<Void> removeToken(String token) {
+				return R.fail();
+			}
+		};
+	}
+
 }
