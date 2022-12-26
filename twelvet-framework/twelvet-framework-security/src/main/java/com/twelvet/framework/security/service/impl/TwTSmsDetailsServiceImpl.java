@@ -62,7 +62,7 @@ public class TwTSmsDetailsServiceImpl implements TwUserDetailsService {
 		if (cache != null && cache.get(username) != null) {
 			return (LoginUser) cache.get(username).get();
 		}
-		R<UserInfo> userResult = remoteUserService.getUserInfo(username, SecurityConstants.INNER);
+		R<UserInfo> userResult = remoteUserService.getUserInfo(username);
 		auth(userResult, username);
 		UserDetails userDetails = getUserDetails(userResult);
 
