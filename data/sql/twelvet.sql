@@ -348,7 +348,7 @@ INSERT INTO `sys_menu` VALUES (1080, 'DFS文件删除', 1071, 1, '', NULL, 1, 'F
 INSERT INTO `sys_menu` VALUES (1082, '欢迎页', 0, 0, '/', '/index', 1, 'C', 0, 0, 'index', 'icon-home', 'admin', '2021-06-16 17:03:03', 'admin', '2021-08-01 12:03:45', '');
 INSERT INTO `sys_menu` VALUES (1083, '系统监控', 0, 2, '/monitor', NULL, 1, 'M', 0, 0, NULL, 'icon-monitor', 'admin', '2021-08-06 22:03:13', 'admin', '2021-08-06 22:54:33', '');
 INSERT INTO `sys_menu` VALUES (1084, '缓存监控', 1083, 1, '/monitor/redis', '/monitor/redis', 1, 'C', 0, 0, 'monitor:redis:query', 'icon-redis', 'admin', '2021-08-07 08:48:22', 'admin', '2021-08-08 21:51:33', '');
-INSERT INTO `sys_menu` VALUES (1092, '令牌管理', 1, 7, '/system/token', '/system/token', 1, 'C', 0, 0, 'system:token:list', 'icon--token', 'admin', '2022-12-25 12:01:45', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1092, '令牌管理', 1, 7, '/system/token', '/system/token', 1, 'C', 0, 0, 'system:token:list', 'icon-token', 'admin', '2022-12-25 12:01:45', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1093, '强退用户', 1092, 1, '', NULL, 1, 'F', 1, 0, 'system:token:remove', '#', 'admin', '2022-12-25 12:02:34', 'admin', '2022-12-25 12:08:08', '');
 
 -- ----------------------------
