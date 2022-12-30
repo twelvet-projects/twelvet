@@ -1,8 +1,10 @@
 # twelvet
 
-[![AUR](https://img.shields.io/github/license/twelvet-s/twelvet)](https://gitee.com/twelvet/twelvet/blob/master/LICENSE)
+[![AUR](https://img.shields.io/github/license/twelvet-s/twelvet)](https://github.com/twelvet-s/twelvet/blob/master/LICENSE)
 [![](https://img.shields.io/badge/Author-TwelveT-orange.svg)](https://www.twelvet.cn)
 [![](https://img.shields.io/badge/version-2.7.5-success)](https://gitee.com/twelvet/twelvet)
+[![GitHub stars](https://img.shields.io/github/stars/twelvet-s/twelvet.svg?style=social&label=Stars)](https://github.com/twelvet-s/twelvet/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/twelvet-s/twelvet.svg?style=social&label=Fork)](https://github.com/twelvet-s/twelvet/network/members)
 [![star](https://gitee.com/twelvet/twelvet/badge/star.svg?theme=white)](https://gitee.com/twelvet/twelvet/stargazers)
 [![fork](https://gitee.com/twelvet/twelvet/badge/fork.svg?theme=white)](https://gitee.com/twelvet/twelvet/members)
 
@@ -20,9 +22,9 @@
 由此，我们应当把更多的时间投入到其它更有意义的事情当中，我们深知知识的重要性，但，并不希望仅拥有单一”知识“。
 去感受/关爱更多光彩，无论人、事、物，它们也将成为你最好的灵感。
 
-后端源码：https://gitee.com/twelvet/twelvet
+后端源码：https://github.com/twelvet-s/twelvet
 
-前端源码：https://gitee.com/twelvet/twelvet-ui-react
+前端源码：https://github.com/twelvet-s/twelvet-ui
 
 技术文档：https://www.twelvet.cn/docs/
 
