@@ -1,0 +1,42 @@
+name: 'sync'
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+
+jobs:
+  gitee:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mirror the Github organization repos to Gitee.
+        uses: Yikun/hub-mirror-action@master
+        with:
+          src: github/twelvet-s
+          dst: gitee/twelvet
+          dst_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          dst_token: ${{ secrets.GITEE_TOKEN }}
+          # 指定同步仓库仓库
+          static_list:
+            - twelvet
+          force_update: true
+          account_type: user
+          clone_style: ssh
+          debug: true
+
+#   gitlab:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Mirror the Github organization repos to gitlab.
+#         uses: Yikun/hub-mirror-action@master
+#         with:
+#           src: github/twelvet-s
+#           dst: gitlab/twelvet
+#           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+#           dst_token: ${{ secrets.GITEE_TOKEN }}
+#           # static_list: "twelvet"
+#           force_update: true
+#           account_type: user
+#           clone_style: ssh
+#           debug: true
