@@ -3,8 +3,8 @@ name: 'sync'
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *"
-
+    # cron表达式，时区是UTC时间，比我们早8小时，如上所表示的是每天0点0分（16+8=24点整）
+    - cron: '00 16 * * *'
 
 jobs:
   gitee:
