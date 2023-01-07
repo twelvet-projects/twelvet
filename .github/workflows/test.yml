@@ -1,0 +1,38 @@
+name: test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master, master-boot-3 ]
+  pull_request:
+    branches: [ master, master-boot-3 ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: [ 17 ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK ${{ matrix.java-version }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: 'zulu'
+
+      - name: mvn spring-javaformat:validate
+        run: mvn spring-javaformat:validate
+
+      - name: mvn clean install
+        run: mvn clean install
+
+      - name: init
+        run: cd docker && chmod 751 ./deploy.sh && ./deploy.sh init
+
+      - name: Start Base
+        run: cd docker && ./deploy.sh base
+
+      - name: Start Server
+        run: cd docker && ./deploy.sh server
+
