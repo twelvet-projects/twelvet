@@ -29,6 +29,9 @@ jobs:
       - name: init
         run: cd docker && chmod 751 ./deploy.sh && ./deploy.sh init
 
+      - name: Start Base
+        run: cd docker && ./deploy.sh base
+
       - name: Start Server
-        run: cd docker && docker-compose up -d
+        run: cd docker && ./deploy.sh base
 
