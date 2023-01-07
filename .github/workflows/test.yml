@@ -33,5 +33,5 @@ jobs:
         run: cd docker && ./deploy.sh base
 
       - name: Start Server
-        run: cd docker && ./deploy.sh base
+        run: cd docker && ./deploy.sh Server
 
