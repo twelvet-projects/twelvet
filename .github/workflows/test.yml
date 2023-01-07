@@ -26,8 +26,12 @@ jobs:
       - name: mvn clean install
         run: mvn clean install
 
+      - name: chmod
+        run: chmod 751 docker/deploy.sh
+
+      - name: Start Base
+        run: docker/deploy.sh base
+
       - name: Start Server
-      - run: chmod 751 docker/deploy.sh
-      - run: docker/deploy.sh base
-      - run: docker/deploy.sh server
+        run: docker/deploy.sh server
 
