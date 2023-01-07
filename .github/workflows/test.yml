@@ -30,8 +30,8 @@ jobs:
         run: cd docker
 
       - name: chmod
-        run: ls && chmod 751 deploy.sh && deploy.sh init
+        run: cd docker && chmod 751 deploy.sh && deploy.sh init
 
       - name: Start Server
-        run: docker-compose -f docker-compose.yml up -d
+        run: cd docker && docker-compose -f docker-compose.yml up -d
 
