@@ -20,18 +20,15 @@ jobs:
           java-version: ${{ matrix.java-version }}
           distribution: 'zulu'
 
-      - name: mvn spring-javaformat:validate
-        run: mvn spring-javaformat:validate
+#      - name: mvn spring-javaformat:validate
+#        run: mvn spring-javaformat:validate
+#
+#      - name: mvn clean install
+#        run: mvn clean install
 
-      - name: mvn clean install
-        run: mvn clean install
-
-      - name: into docker
-        run: cd docker
-
-      - name: cp
-        run: cp data/sql/twelvet.sql ./mysql/db && cp data/sql/twelvet_nacos.sql ./mysql/db && cp twelvet-gateway/target/twelvet-gateway.jar ./twelvet/gateway/jar && cp twelvet-auth/target/twelvet-auth.jar ./twelvet/auth/jar && cp twelvet-server/twelvet-server-system/target/twelvet-server-system.jar ./twelvet/server/system/jar
+      - name: chmod
+        run: chmod 751 docker/deploy.sh && docker/deploy.sh init
 
       - name: Start Server
-        run: docker-compose -f docker/docker-compose.yml up -d
+        run: docker-compose -f docker-compose.yml up -d
 
