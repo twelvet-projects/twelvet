@@ -21,7 +21,7 @@ jobs:
         with:
           java-version: ${{ matrix.java-version }}
           distribution: zulu
-          cache: maven
+          cache: maven,docker
 
       - name: mvn spring-javaformat:validate
         run: mvn spring-javaformat:validate
