@@ -20,7 +20,13 @@ jobs:
         with:
           java-version: ${{ matrix.java-version }}
           distribution: 'zulu'
-
+      - name: Cache Maven Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            m2-
       - name: mvn spring-javaformat:validate
         run: mvn spring-javaformat:validate
 
@@ -35,4 +41,3 @@ jobs:
 
       - name: Start Server
         run: cd docker && ./deploy.sh server
-
