@@ -21,7 +21,15 @@ jobs:
         with:
           java-version: ${{ matrix.java-version }}
           distribution: zulu
-          cache: maven,docker
+          cache: maven
+
+      - name: Cache Docker
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
 
       - name: mvn spring-javaformat:validate
         run: mvn spring-javaformat:validate
