@@ -15,20 +15,21 @@ jobs:
         java-version: [ 17 ]
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up JDK ${{ matrix.java-version }}
         uses: actions/setup-java@v3
         with:
           java-version: ${{ matrix.java-version }}
-          distribution: 'zulu'
-          cache: 'maven'
+          distribution: zulu
+          cache: maven
 
       - name: Cache local Maven repository
         uses: actions/cache@v3
         with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          path: ~/.m2
+          key: m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
-            ${{ runner.os }}-maven-
+            m2-
 
       - name: mvn spring-javaformat:validate
         run: mvn spring-javaformat:validate
