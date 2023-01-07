@@ -20,11 +20,11 @@ jobs:
           java-version: ${{ matrix.java-version }}
           distribution: 'zulu'
 
-#      - name: mvn spring-javaformat:validate
-#        run: mvn spring-javaformat:validate
-#
-#      - name: mvn clean install
-#        run: mvn clean install
+      - name: mvn spring-javaformat:validate
+        run: mvn spring-javaformat:validate
+
+      - name: mvn clean install
+        run: mvn clean install
 
       - name: chmod
         run: cd docker && chmod 751 ./deploy.sh && ./deploy.sh init
