@@ -1,0 +1,29 @@
+name: test
+
+on:
+  push:
+    branches: [ master, master-boot-3 ]
+  pull_request:
+    branches: [ master, master-boot-3 ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: [ 17 ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK ${{ matrix.java-version }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java-version }}
+
+      - name: mvn spring-javaformat:validate
+        run: mvn spring-javaformat:validate
+
+      - name: mvn clean install
+        run: mvn clean install
+
+      - name: Start containers
+        run: docker-compose build && docker-compose up -d
