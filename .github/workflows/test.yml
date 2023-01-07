@@ -26,9 +26,9 @@ jobs:
       - name: mvn clean install
         run: mvn clean install
 
-      - name: chmod
+      - name: init
         run: cd docker && chmod 751 ./deploy.sh && ./deploy.sh init
 
       - name: Start Server
-        run: docker-compose -f docker-compose.yml up -d
+        run: cd docker && docker-compose up -d
 
