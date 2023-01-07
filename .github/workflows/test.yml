@@ -30,7 +30,7 @@ jobs:
         run: cd docker
 
       - name: cp
-        run: cp ../data/sql/twelvet.sql ./mysql/db && cp ../data/sql/twelvet_nacos.sql ./mysql/db && cp ../twelvet-gateway/target/twelvet-gateway.jar ./twelvet/gateway/jar && cp ../twelvet-auth/target/twelvet-auth.jar ./twelvet/auth/jar && cp ../twelvet-server/twelvet-server-system/target/twelvet-server-system.jar ./twelvet/server/system/jar
+        run: cp data/sql/twelvet.sql ./mysql/db && cp data/sql/twelvet_nacos.sql ./mysql/db && cp twelvet-gateway/target/twelvet-gateway.jar ./twelvet/gateway/jar && cp twelvet-auth/target/twelvet-auth.jar ./twelvet/auth/jar && cp twelvet-server/twelvet-server-system/target/twelvet-server-system.jar ./twelvet/server/system/jar
 
       - name: Start Server
         run: docker-compose -f docker/docker-compose.yml up -d
