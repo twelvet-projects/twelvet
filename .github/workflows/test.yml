@@ -27,4 +27,4 @@ jobs:
         run: mvn clean install
 
       - name: Start containers
-        run: /docker/docker-compose build && /docker/docker-compose up -d
+        run: docker/docker-compose.yml build && docker/docker-compose.yml up -d
