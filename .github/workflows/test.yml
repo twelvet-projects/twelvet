@@ -29,9 +29,9 @@ jobs:
       - name: into docker
         run: cd docker
 
-      - name: chmod
-        run: cd docker && chmod 751 deploy.sh && deploy.sh init
+      - name: cp
+        run: cp ../data/sql/twelvet.sql ./mysql/db && cp ../data/sql/twelvet_nacos.sql ./mysql/db && cp ../twelvet-gateway/target/twelvet-gateway.jar ./twelvet/gateway/jar && cp ../twelvet-auth/target/twelvet-auth.jar ./twelvet/auth/jar && cp ../twelvet-server/twelvet-server-system/target/twelvet-server-system.jar ./twelvet/server/system/jar
 
       - name: Start Server
-        run: cd docker && docker-compose -f docker-compose.yml up -d
+        run: docker-compose -f docker/docker-compose.yml up -d
 
