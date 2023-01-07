@@ -19,6 +19,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: ${{ matrix.java-version }}
+          distribution: ${{ matrix.jdistribution }}
 
       - name: mvn spring-javaformat:validate
         run: mvn spring-javaformat:validate
