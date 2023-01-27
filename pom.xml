@@ -428,18 +428,6 @@
         </plugins>
     </build>
 
-    <!--maven依赖远程仓库-->
-    <repositories>
-        <repository>
-            <id>snapshots</id>
-            <name>aliyun nexus</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-    </repositories>
-
     <profiles>
         <!-- 开发环境 -->
         <profile>
