@@ -1,30 +1,32 @@
 package com.twelvet.server.system.controller;
 
-import com.twelvet.api.system.domain.SysMenu;
 import com.twelvet.api.system.domain.SysRole;
 import com.twelvet.api.system.domain.SysUser;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.core.application.domain.JsonResult;
-import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.core.application.page.TableDataInfo;
+import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.framework.utils.TUtils;
 import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.TUtils;
 import com.twelvet.framework.utils.poi.ExcelUtils;
-import com.twelvet.server.system.service.*;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.twelvet.server.system.service.ISysPermissionService;
+import com.twelvet.server.system.service.ISysPostService;
+import com.twelvet.server.system.service.ISysRoleService;
+import com.twelvet.server.system.service.ISysUserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,9 +54,6 @@ public class SysUserController extends TWTController {
 
 	@Autowired
 	private ISysPermissionService iSysPermissionService;
-
-	@Autowired
-	private ISysMenuService iSysMenuService;
 
 	/**
 	 * 获取用户列表
@@ -130,14 +129,11 @@ public class SysUserController extends TWTController {
 		Set<String> roles = iSysPermissionService.getRolePermission(userId);
 		// 权限集合
 		Set<String> permissions = iSysPermissionService.getMenuPermission(userId);
-		// 路由菜单
-		List<SysMenu> menus = iSysMenuService.selectMenuTreeByUserId(userId);
 
 		AjaxResult ajax = AjaxResult.success();
 		ajax.put("user", iSysUserService.selectUserById(userId));
 		ajax.put("roles", roles);
 		ajax.put("permissions", permissions);
-		ajax.put("menus", iSysMenuService.buildMenus(menus));
 		return ajax;
 	}
 
