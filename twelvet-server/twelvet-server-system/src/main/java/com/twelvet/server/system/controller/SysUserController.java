@@ -53,9 +53,6 @@ public class SysUserController extends TWTController {
 	@Autowired
 	private ISysPermissionService iSysPermissionService;
 
-	@Autowired
-	private ISysMenuService iSysMenuService;
-
 	/**
 	 * 获取用户列表
 	 * @param user SysUser
@@ -130,14 +127,11 @@ public class SysUserController extends TWTController {
 		Set<String> roles = iSysPermissionService.getRolePermission(userId);
 		// 权限集合
 		Set<String> permissions = iSysPermissionService.getMenuPermission(userId);
-		// 路由菜单
-		List<SysMenu> menus = iSysMenuService.selectMenuTreeByUserId(userId);
 
 		AjaxResult ajax = AjaxResult.success();
 		ajax.put("user", iSysUserService.selectUserById(userId));
 		ajax.put("roles", roles);
 		ajax.put("permissions", permissions);
-		ajax.put("menus", iSysMenuService.buildMenus(menus));
 		return ajax;
 	}
 

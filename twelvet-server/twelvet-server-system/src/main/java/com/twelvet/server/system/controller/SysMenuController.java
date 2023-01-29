@@ -1,6 +1,7 @@
 package com.twelvet.server.system.controller;
 
 import com.twelvet.api.system.domain.SysMenu;
+import com.twelvet.api.system.domain.vo.RouterVo;
 import com.twelvet.api.system.domain.vo.TreeSelect;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
@@ -140,7 +141,7 @@ public class SysMenuController extends TWTController {
 	/**
 	 * 获取菜单下拉树列表
 	 * @param menu SysMenu
-	 * @return JsonResult<List<TreeSelect>>
+	 * @return JsonResult<List < TreeSelect>>
 	 */
 	@Operation(summary = "获取菜单下拉树列表")
 	@GetMapping("/treeSelect")
@@ -150,6 +151,18 @@ public class SysMenuController extends TWTController {
 		Long userId = loginUser.getUserId();
 		List<SysMenu> menus = iSysMenuService.selectMenuList(menu, userId);
 		return JsonResult.success(iSysMenuService.buildMenuTreeSelect(menus));
+	}
+
+	/**
+	 * 获取路由信息
+	 * @return 路由信息
+	 */
+	@GetMapping("getRouters")
+	public JsonResult<List<RouterVo>> getRouters() {
+		Long userId = SecurityUtils.getLoginUser().getUserId();
+		// 路由菜单
+		List<SysMenu> menus = iSysMenuService.selectMenuTreeByUserId(userId);
+		return JsonResult.success(iSysMenuService.buildMenus(menus));
 	}
 
 }
