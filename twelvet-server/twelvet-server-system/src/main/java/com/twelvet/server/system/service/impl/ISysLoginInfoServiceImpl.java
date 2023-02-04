@@ -16,7 +16,7 @@ import java.util.List;
  * @WebSite www.twelvet.cn
  * @Description: 系统操作/访问日志
  */
-@Service
+
 public class ISysLoginInfoServiceImpl implements ISysLoginInfoService {
 
 	@Autowired
