@@ -73,7 +73,7 @@ public class Oauth2ClientDetailsController extends TWTController {
 		if (StringUtils.isNotNull(sysClientDetailsService.selectSysClientDetailsById(clientId))) {
 			return JsonResult.error("新增终端'" + clientId + "'失败，编号已存在");
 		}
-		sysClientDetails.setClientSecret(SecurityUtils.encryptPassword(sysClientDetails.getClientSecret()));
+		sysClientDetails.setClientSecret(sysClientDetails.getClientSecret());
 		return json(sysClientDetailsService.insertSysClientDetails(sysClientDetails));
 	}
 
@@ -89,7 +89,7 @@ public class Oauth2ClientDetailsController extends TWTController {
 	public JsonResult<String> update(@RequestBody SysClientDetails sysClientDetails) {
 		// 重新设置密码
 		if (TUtils.isNotEmpty(sysClientDetails.getClientSecret())) {
-			sysClientDetails.setClientSecret(SecurityUtils.encryptPassword(sysClientDetails.getClientSecret()));
+			sysClientDetails.setClientSecret(sysClientDetails.getClientSecret());
 		}
 
 		return json(sysClientDetailsService.updateSysClientDetails(sysClientDetails));
