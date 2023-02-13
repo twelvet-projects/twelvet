@@ -55,7 +55,9 @@
         <knife4j.version>3.0.3</knife4j.version>
 
         <druid.version>1.2.15</druid.version>
-        <dynamic-datasource.version>3.6.0</dynamic-datasource.version>
+        <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
+        <shardingsphere-jdbc.version>5.3.1</shardingsphere-jdbc.version>
+
         <pagehelper.boot.version>1.4.6</pagehelper.boot.version>
         <poi.version>5.2.3</poi.version>
         <commons.io.version>2.11.0</commons.io.version>
@@ -126,6 +128,13 @@
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson-spring-boot-starter</artifactId>
                 <version>${redisson.version}</version>
+            </dependency>
+
+            <!--Sharding-JDBC-->
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>shardingsphere-jdbc-core</artifactId>
+                <version>${shardingsphere-jdbc.version}</version>
             </dependency>
 
             <!-- Dynamic DataSource -->

@@ -33,6 +33,12 @@
             <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
         </dependency>
 
+        <!--Sharding-JDBC-->
+        <dependency>
+            <groupId>org.apache.shardingsphere</groupId>
+            <artifactId>shardingsphere-jdbc-core</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>
