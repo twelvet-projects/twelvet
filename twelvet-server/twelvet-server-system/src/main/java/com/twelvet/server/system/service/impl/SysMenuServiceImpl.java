@@ -6,6 +6,7 @@ import com.twelvet.api.system.domain.vo.MetaVo;
 import com.twelvet.api.system.domain.vo.RouterVo;
 import com.twelvet.api.system.domain.vo.TreeSelect;
 import com.twelvet.framework.core.constants.UserConstants;
+import com.twelvet.framework.datasource.annotation.ShardingDatasource;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.framework.utils.TUtils;
@@ -49,6 +50,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 	 * @param menu 菜单信息
 	 * @return 菜单列表
 	 */
+	@ShardingDatasource
 	@Override
 	public List<SysMenu> selectMenuList(SysMenu menu, Long userId) {
 		List<SysMenu> menuList;

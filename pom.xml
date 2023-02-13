@@ -54,8 +54,10 @@
         <springdoc.version>1.6.13</springdoc.version>
         <knife4j.version>3.0.3</knife4j.version>
 
-        <druid.version>1.2.12</druid.version>
-        <dynamic-datasource.version>3.6.0</dynamic-datasource.version>
+        <shardingsphere-jdbc.version>5.3.1</shardingsphere-jdbc.version>
+        <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
+        <druid.version>1.2.15</druid.version>
+
         <pagehelper.boot.version>1.4.6</pagehelper.boot.version>
         <poi.version>5.2.3</poi.version>
         <commons.io.version>2.11.0</commons.io.version>
@@ -128,7 +130,14 @@
                 <version>${redisson.version}</version>
             </dependency>
 
-            <!-- Dynamic DataSource -->
+            <!--Sharding-JDBC-->
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>shardingsphere-jdbc-core</artifactId>
+                <version>${shardingsphere-jdbc.version}</version>
+            </dependency>
+
+            <!--dynamic-->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
@@ -188,13 +197,6 @@
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-webmvc-core</artifactId>
-                <version>${springdoc.version}</version>
-            </dependency>
-
-            <!--springdoc -->
-            <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-webflux-ui</artifactId>
                 <version>${springdoc.version}</version>
             </dependency>
 

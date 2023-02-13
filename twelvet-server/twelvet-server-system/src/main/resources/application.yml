@@ -32,3 +32,9 @@ spring:
     import:
       - nacos:twelvet-app-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
       - nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+  datasource:
+    dynamic:
+      datasource:
+#        shardingSphere:
+#          driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
+#          url: jdbc:shardingsphere:classpath:sharding-jdbc.yml
