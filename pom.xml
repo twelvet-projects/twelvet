@@ -50,13 +50,14 @@
         <spring-boot.mybatis>3.0.0</spring-boot.mybatis>
         <spring.authorization.version>0.4.0</spring.authorization.version>
 
+        <snakeyaml.version>1.33</snakeyaml.version>
+
         <swagger.core.version>2.2.7</swagger.core.version>
         <springdoc.version>1.6.13</springdoc.version>
         <knife4j.version>3.0.3</knife4j.version>
 
         <shardingsphere-jdbc.version>5.3.1</shardingsphere-jdbc.version>
         <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
-        <druid.version>1.2.15</druid.version>
 
         <pagehelper.boot.version>1.4.6</pagehelper.boot.version>
         <poi.version>5.2.3</poi.version>
@@ -102,6 +103,13 @@
                 <scope>import</scope>
             </dependency>
 
+            <!--snakeyaml 兼容Sharding JDBC-->
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml.version}</version>
+            </dependency>
+
             <!-- Spring Authorization Server -->
             <dependency>
                 <groupId>org.springframework.security</groupId>
@@ -114,13 +122,6 @@
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-starter-server</artifactId>
                 <version>${spring-boot-admin.version}</version>
-            </dependency>
-
-            <!--druid-->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-starter</artifactId>
-                <version>${druid.version}</version>
             </dependency>
 
             <!--redisson-->
