@@ -53,8 +53,10 @@
         <springdoc.version>2.0.0</springdoc.version>
         <knife4j.version>3.0.3</knife4j.version>
 
-        <druid.version>1.2.15</druid.version>
+
         <dynamic-datasource.version>3.6.0</dynamic-datasource.version>
+        <shardingsphere-jdbc.version>5.3.1</shardingsphere-jdbc.version>
+
         <pagehelper.boot.version>1.4.5</pagehelper.boot.version>
         <poi.version>5.2.3</poi.version>
         <commons.io.version>2.11.0</commons.io.version>
@@ -113,13 +115,6 @@
                 <version>${spring-boot-admin.version}</version>
             </dependency>
 
-            <!--druid-->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-starter</artifactId>
-                <version>${druid.version}</version>
-            </dependency>
-
             <!--redisson-->
             <dependency>
                 <groupId>org.redisson</groupId>
@@ -132,6 +127,13 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
                 <version>${dynamic-datasource.version}</version>
+            </dependency>
+
+            <!--Sharding-JDBC-->
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>shardingsphere-jdbc-core</artifactId>
+                <version>${shardingsphere-jdbc.version}</version>
             </dependency>
 
             <!-- 代码生成使用模板 -->

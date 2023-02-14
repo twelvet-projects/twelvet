@@ -1,0 +1,22 @@
+dataSources:
+  ds0:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://twelvet-mysql:3306/twelvet?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+
+# Sharding JDBC配置
+rules:
+  - !SHARDING
+    tables:
+      # 配置表分片
+      sys_login_info:
+        # 数据节点：数据源$->{0..N}.逻辑表名$->{0..N}
+        actualDataNodes: ds0.sys_login_info_$->{0..1}
+mode:
+  # 单机运行
+  type: Standalone
+props:
+  # 开启SQL显示
+  sql-show: true
