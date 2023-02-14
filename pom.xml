@@ -54,7 +54,6 @@
         <springdoc.version>2.0.0</springdoc.version>
         <knife4j.version>3.0.3</knife4j.version>
 
-        <druid.version>1.2.15</druid.version>
         <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
         <shardingsphere-jdbc.version>5.3.1</shardingsphere-jdbc.version>
 
@@ -114,13 +113,6 @@
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-starter-server</artifactId>
                 <version>${spring-boot-admin.version}</version>
-            </dependency>
-
-            <!--druid-->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-starter</artifactId>
-                <version>${druid.version}</version>
             </dependency>
 
             <!--redisson-->

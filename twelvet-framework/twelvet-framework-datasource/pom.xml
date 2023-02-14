@@ -21,12 +21,6 @@
             <artifactId>mysql-connector-j</artifactId>
         </dependency>
 
-        <!--druid-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-        </dependency>
-
         <!-- Dynamic DataSource -->
         <dependency>
             <groupId>com.baomidou</groupId>
