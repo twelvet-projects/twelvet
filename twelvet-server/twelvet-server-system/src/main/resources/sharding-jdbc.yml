@@ -1,6 +1,18 @@
 dataSources:
   ds0:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    # 连接测试查询
+    connection-test-query: SELECT 1 FROM DUAL
+    # 连接最大存活时间.不等于0且小于30秒，会被重置为默认值30分钟.设置应该比mysql设置的超时时间短
+    max-lifetime: 540000
+    # 只有空闲连接数大于最大连接数且空闲时间超过该值，才会被释放
+    idle-timeout: 500000
+    # 最小空闲连接，默认值10，小于0或大于maximum-pool-size，都会重置为maximum-pool-size
+    minimum-idle: 10
+    # 最大连接数，小于等于0会被重置为默认值10；大于零小于1会被重置为minimum-idle的值
+    maximum-pool-size: 12
+    # 连接超时时间:毫秒，小于250毫秒，否则被重置为默认值30秒
+    connection-timeout: 60000
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://twelvet-mysql:3306/twelvet?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
     username: root
