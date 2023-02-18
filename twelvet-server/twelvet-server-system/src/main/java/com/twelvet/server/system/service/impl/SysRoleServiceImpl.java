@@ -7,6 +7,7 @@ import com.twelvet.api.system.domain.SysUser;
 import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.datascope.annotation.SysDataScope;
+import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.StringUtils;
@@ -17,6 +18,7 @@ import com.twelvet.server.system.mapper.SysRoleMenuMapper;
 import com.twelvet.server.system.mapper.SysUserRoleMapper;
 import com.twelvet.server.system.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +43,9 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
 	@Autowired
 	private SysRoleDeptMapper sysRoleDeptMapper;
+
+	@Autowired
+	private CacheManager cacheManager;
 
 	/**
 	 * 根据条件分页查询角色数据
@@ -196,6 +201,9 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
 		// 新增数据权限
 		insertRoleDept(role);
+
+		// 清空userinfo
+		Objects.requireNonNull(cacheManager.getCache(CacheConstants.USER_DETAILS)).clear();
 
 		return insertRoleMenu(role);
 	}
