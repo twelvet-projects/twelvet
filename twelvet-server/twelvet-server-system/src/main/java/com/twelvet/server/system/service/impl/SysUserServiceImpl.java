@@ -4,6 +4,7 @@ import com.twelvet.framework.datascope.annotation.SysDataScope;
 import com.twelvet.api.system.domain.*;
 import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.core.exception.TWTException;
+import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.StringUtils;
@@ -13,6 +14,7 @@ import com.twelvet.server.system.service.ISysUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -223,6 +225,7 @@ public class SysUserServiceImpl implements ISysUserService {
 	 */
 	@Override
 	@Transactional(rollbackFor = TWTException.class)
+	@CacheEvict(value = CacheConstants.USER_DETAILS, key = "#user.username")
 	public int updateUser(SysUser user) {
 		Long userId = user.getUserId();
 		// 删除用户与角色关联
@@ -252,6 +255,7 @@ public class SysUserServiceImpl implements ISysUserService {
 	 * @return 结果
 	 */
 	@Override
+	@CacheEvict(value = CacheConstants.USER_DETAILS, key = "#user.username")
 	public int updateUserProfile(SysUser user) {
 		return sysUserMapper.updateUser(user);
 	}
