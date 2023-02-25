@@ -209,6 +209,6 @@ CREATE TABLE `sys_job`  (
 -- Records of sys_job
 -- ----------------------------
 INSERT INTO `sys_job` VALUES (1, '系统默认（无参）', 'DEFAULT', 'twtTask.twtNoParams', '0 */15 * * * ?', 3, 1, '0', 'admin', '2018-03-16 11:33:00', 'admin', '2021-08-06 23:02:47', '');
-INSERT INTO `sys_job` VALUES (106, '系统默认（有参）', 'DEFAULT', 'twtTask.twtParams(\'twt\')', '0/5 * * * * ?', 1, NULL, '0', 'admin', '2020-12-10 23:37:38', 'admin', '2021-08-06 23:02:45', '');
+INSERT INTO `sys_job` VALUES (106, '系统默认（有参）', 'DEFAULT', 'twtTask.twtParams(\'twt\')', '0/5 * * * * ?', 1, 1, '0', 'admin', '2020-12-10 23:37:38', 'admin', '2021-08-06 23:02:45', '');
 
 commit;
