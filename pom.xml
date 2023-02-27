@@ -50,6 +50,8 @@
         <spring-boot.mybatis>3.0.0</spring-boot.mybatis>
         <spring.authorization.version>0.4.0</spring.authorization.version>
 
+        <snakeyaml.version>1.33</snakeyaml.version>
+
         <swagger.core.version>2.2.7</swagger.core.version>
         <springdoc.version>1.6.13</springdoc.version>
         <knife4j.version>3.0.3</knife4j.version>
@@ -99,6 +101,13 @@
                 <version>${spring-cloud-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!--snakeyaml 兼容Sharding JDBC-->
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml.version}</version>
             </dependency>
 
             <!-- Spring Authorization Server -->
