@@ -52,11 +52,15 @@ public class SysProfileController extends TWTController {
 		String username = SecurityUtils.getUsername();
 		UserInfoVo userInfoVo = new UserInfoVo();
 
-		CompletableFuture<Void> sysUserCompletableFuture = CompletableFuture.runAsync(() -> userInfoVo.setUser(userService.selectUserByUserName(username, true)));
-		CompletableFuture<Void> postGroupCompletableFuture = CompletableFuture.runAsync(() -> userInfoVo.setPostGroup(userService.selectUserPostGroup(username)));
-		CompletableFuture<Void> roleGroupCompletableFuture = CompletableFuture.runAsync(() -> userInfoVo.setRoleGroup(userService.selectUserRoleGroup(username)));
+		CompletableFuture<Void> sysUserCompletableFuture = CompletableFuture
+				.runAsync(() -> userInfoVo.setUser(userService.selectUserByUserName(username, true)));
+		CompletableFuture<Void> postGroupCompletableFuture = CompletableFuture
+				.runAsync(() -> userInfoVo.setPostGroup(userService.selectUserPostGroup(username)));
+		CompletableFuture<Void> roleGroupCompletableFuture = CompletableFuture
+				.runAsync(() -> userInfoVo.setRoleGroup(userService.selectUserRoleGroup(username)));
 
-		CompletableFuture.allOf(sysUserCompletableFuture, postGroupCompletableFuture, roleGroupCompletableFuture).join();
+		CompletableFuture.allOf(sysUserCompletableFuture, postGroupCompletableFuture, roleGroupCompletableFuture)
+				.join();
 
 		return JsonResult.success(userInfoVo);
 	}
