@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author twelvet
@@ -46,6 +47,9 @@ public class SysUserServiceImpl implements ISysUserService {
 	@Autowired
 	private SysUserPostMapper sysUserPostMapper;
 
+    @Autowired
+    private SysDeptMapper sysDeptMapper;
+
 	/**
 	 * 根据条件分页查询用户列表
 	 * @param user 用户信息
@@ -62,27 +66,29 @@ public class SysUserServiceImpl implements ISysUserService {
 	 * @param userName 用户名
 	 * @return 用户对象信息
 	 */
-	@Override
-	public SysUser selectUserByUserName(String userName, boolean hidden) {
-		SysUser sysUser = sysUserMapper.selectUserByUserName(userName);
+    @Override
+    public SysUser selectUserByUserName(String userName, boolean hidden) {
+        SysUser sysUser = sysUserMapper.selectUserByUserName(userName);
+        Long deptId = sysUser.getDeptId();
+        SysDept sysDept = sysDeptMapper.selectDeptById(deptId);
+        sysUser.setDept(sysDept);
+        if (hidden) {
+            // 隐藏手机号码/邮箱
+            String phoneNumber = sysUser.getPhonenumber();
+            String email = sysUser.getEmail();
 
-		if (hidden) {
-			// 隐藏手机号码/邮箱
-			String phoneNumber = sysUser.getPhonenumber();
-			String email = sysUser.getEmail();
+            String phoneNumberHide = StringUtils.hidePhone(phoneNumber);
+            String emailHide = StringUtils.hideEmail(email);
 
-			String phoneNumberHide = StringUtils.hidePhone(phoneNumber);
-			String emailHide = StringUtils.hideEmail(email);
+            sysUser.setPhonenumber(phoneNumberHide);
+            sysUser.setEmail(emailHide);
 
-			sysUser.setPhonenumber(phoneNumberHide);
-			sysUser.setEmail(emailHide);
+            // 隐藏密码
+            sysUser.setPassword(null);
+        }
 
-			// 隐藏密码
-			sysUser.setPassword(null);
-		}
-
-		return sysUser;
-	}
+        return sysUser;
+    }
 
 	/**
 	 * 通过用户ID查询用户
