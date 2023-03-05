@@ -288,7 +288,7 @@ CREATE TABLE `sys_menu`  (
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES (1, '系统管理', 0, 1, '/system', NULL, '1', 'M', 0, 0, '', 'clipboard', 'admin', '2019-03-16 11:33:00', 'admin', '2023-03-06 00:20:21', '系统管理目录');
+INSERT INTO `sys_menu` VALUES (1, '系统管理', 0, 1, '/system', NULL, '1', 'M', 0, 0, '', 'icon-system', 'admin', '2019-03-16 11:33:00', 'admin', '2023-03-06 00:20:21', '系统管理目录');
 INSERT INTO `sys_menu` VALUES (2, '人力管理', 0, 3, '/human', NULL, '1', 'M', 0, 0, '', 'icon-human-resources', 'admin', '2019-03-16 11:33:00', 'admin', '2021-09-18 17:38:47', '系统监控目录');
 INSERT INTO `sys_menu` VALUES (3, '工具箱', 0, 5, '/tool', NULL, '1', 'M', 0, 0, '', 'icon-tool-box', 'admin', '2019-03-16 11:33:00', 'admin', '2021-08-06 22:03:42', '系统工具目录');
 INSERT INTO `sys_menu` VALUES (4, '日志管理', 0, 4, '/log', '', '1', 'M', 0, 0, '', 'icon-log', 'admin', '2019-03-16 11:33:00', 'admin', '2021-08-06 22:54:45', '日志管理菜单');
