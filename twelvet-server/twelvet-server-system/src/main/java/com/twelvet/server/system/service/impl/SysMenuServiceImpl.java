@@ -132,16 +132,6 @@ public class SysMenuServiceImpl implements ISysMenuService {
 				router.setRedirect("noRedirect");
 				router.setRoutes(buildMenus(cMenus));
 			}
-			else if (isMenuFrame(menu)) {
-				List<RouterVo> childrenList = new ArrayList<>();
-				RouterVo children = new RouterVo();
-				children.setPath(menu.getPath());
-				children.setComponent(menu.getComponent());
-				children.setName(StringUtils.capitalize(menu.getPath()));
-				children.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon()));
-				childrenList.add(children);
-				router.setRoutes(childrenList);
-			}
 			routers.add(router);
 		}
 		return routers;
