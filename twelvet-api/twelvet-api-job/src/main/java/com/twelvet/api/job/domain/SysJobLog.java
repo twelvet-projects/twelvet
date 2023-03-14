@@ -46,7 +46,7 @@ public class SysJobLog extends BaseEntity {
 
 	/** 执行状态（0正常 1失败） */
 	@Schema(description = "执行状态")
-	@Excel(name = "执行状态", readConverterExp = "1=正常,0=失败")
+	@Excel(name = "执行状态", readConverterExp = "0=正常,1=失败")
 	private String status;
 
 	/** 异常信息 */

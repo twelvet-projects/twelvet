@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author twelvet
@@ -46,6 +47,9 @@ public class SysUserServiceImpl implements ISysUserService {
 	@Autowired
 	private SysUserPostMapper sysUserPostMapper;
 
+	@Autowired
+	private SysDeptMapper sysDeptMapper;
+
 	/**
 	 * 根据条件分页查询用户列表
 	 * @param user 用户信息
@@ -65,7 +69,9 @@ public class SysUserServiceImpl implements ISysUserService {
 	@Override
 	public SysUser selectUserByUserName(String userName, boolean hidden) {
 		SysUser sysUser = sysUserMapper.selectUserByUserName(userName);
-
+		Long deptId = sysUser.getDeptId();
+		SysDept sysDept = sysDeptMapper.selectDeptById(deptId);
+		sysUser.setDept(sysDept);
 		if (hidden) {
 			// 隐藏手机号码/邮箱
 			String phoneNumber = sysUser.getPhonenumber();
