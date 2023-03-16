@@ -17,7 +17,7 @@ import java.lang.annotation.*;
 @Inherited
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity // 开启全局注解安全
 @Import({ TWTResourceServerAutoConfiguration.class, TWTResourceServerConfiguration.class, FeignConfig.class })
 public @interface EnableTWTResourceServer {
 
