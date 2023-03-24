@@ -45,25 +45,24 @@
         <spring-boot-dependencies.version>3.0.4</spring-boot-dependencies.version>
         <spring-cloud.version>2022.0.1</spring-cloud.version>
         <spring-cloud-tencent.version>1.8.5-2020.0.5</spring-cloud-tencent.version>
-        <spring-boot-admin.version>3.0.0</spring-boot-admin.version>
-        <spring-boot.mybatis>3.0.0</spring-boot.mybatis>
+        <spring-boot-admin.version>3.0.2</spring-boot-admin.version>
+        <spring-boot.mybatis>3.0.1</spring-boot.mybatis>
         <spring.authorization.version>1.0.0</spring.authorization.version>
 
-        <swagger.core.version>2.2.7</swagger.core.version>
-        <springdoc.version>2.0.0</springdoc.version>
+        <swagger.core.version>2.2.9</swagger.core.version>
+        <springdoc.version>2.0.4</springdoc.version>
         <knife4j.version>3.0.3</knife4j.version>
-
 
         <dynamic-datasource.version>3.6.0</dynamic-datasource.version>
         <shardingsphere-jdbc.version>5.3.1</shardingsphere-jdbc.version>
 
-        <pagehelper.boot.version>1.4.5</pagehelper.boot.version>
+        <pagehelper.boot.version>1.4.6</pagehelper.boot.version>
         <poi.version>5.2.3</poi.version>
         <commons.io.version>2.11.0</commons.io.version>
         <velocity.version>2.3</velocity.version>
-        <hutool.version>5.8.10</hutool.version>
-        <redisson.version>3.18.1</redisson.version>
-        <qiniu.version>7.12.0</qiniu.version>
+        <hutool.version>5.8.15</hutool.version>
+        <redisson.version>3.20.0</redisson.version>
+        <qiniu.version>7.12.1</qiniu.version>
 
         <docker.plugin.version>0.32.0</docker.plugin.version>
         <spring.checkstyle.plugin>0.0.32</spring.checkstyle.plugin>
