@@ -53,7 +53,7 @@
         <snakeyaml.version>1.33</snakeyaml.version>
 
         <swagger.core.version>2.2.7</swagger.core.version>
-        <springdoc.version>1.6.13</springdoc.version>
+        <springdoc.version>1.6.15</springdoc.version>
         <knife4j.version>3.0.3</knife4j.version>
 
         <shardingsphere-jdbc.version>5.3.1</shardingsphere-jdbc.version>
