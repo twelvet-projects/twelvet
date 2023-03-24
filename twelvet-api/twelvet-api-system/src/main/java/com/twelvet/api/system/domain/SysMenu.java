@@ -64,7 +64,7 @@ public class SysMenu extends BaseEntity {
 	 * 是否为外链（1是 0否）
 	 */
 	@Schema(description = "是否为外链")
-	private Integer isFrame;
+	private String isFrame;
 
 	/**
 	 * 类型（M目录 C菜单 F按钮）
@@ -158,11 +158,11 @@ public class SysMenu extends BaseEntity {
 		this.component = component;
 	}
 
-	public Integer getIsFrame() {
+	public String getIsFrame() {
 		return isFrame;
 	}
 
-	public void setIsFrame(Integer isFrame) {
+	public void setIsFrame(String isFrame) {
 		this.isFrame = isFrame;
 	}
 

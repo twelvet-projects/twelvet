@@ -132,16 +132,6 @@ public class SysMenuServiceImpl implements ISysMenuService {
 				router.setRedirect("noRedirect");
 				router.setRoutes(buildMenus(cMenus));
 			}
-			else if (isMeunFrame(menu)) {
-				List<RouterVo> childrenList = new ArrayList<>();
-				RouterVo children = new RouterVo();
-				children.setPath(menu.getPath());
-				children.setComponent(menu.getComponent());
-				children.setName(StringUtils.capitalize(menu.getPath()));
-				children.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon()));
-				childrenList.add(children);
-				router.setRoutes(childrenList);
-			}
 			routers.add(router);
 		}
 		return routers;
@@ -264,7 +254,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 	private String getRouteName(SysMenu menu) {
 		String routerName = menu.getPath();
 		// 非外链并且是一级目录（类型为目录）
-		if (isMeunFrame(menu)) {
+		if (isMenuFrame(menu)) {
 			routerName = StringUtils.EMPTY;
 		}
 		return routerName;
@@ -278,7 +268,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 	private String getRouterPath(SysMenu menu) {
 		String routerPath = menu.getPath();
 		// 非外链并且是一级目录（类型为目录）
-		if (isMeunFrame(menu)) {
+		if (isMenuFrame(menu)) {
 			routerPath = "/";
 		}
 		return routerPath;
@@ -291,7 +281,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 	 */
 	private String getComponent(SysMenu menu) {
 		String component = UserConstants.LAYOUT;
-		if (TUtils.isNotEmpty(menu.getComponent()) && !isMeunFrame(menu)) {
+		if (TUtils.isNotEmpty(menu.getComponent()) && !isMenuFrame(menu)) {
 			component = menu.getComponent();
 		}
 		return component;
@@ -302,9 +292,9 @@ public class SysMenuServiceImpl implements ISysMenuService {
 	 * @param menu 菜单信息
 	 * @return 结果
 	 */
-	private boolean isMeunFrame(SysMenu menu) {
+	private boolean isMenuFrame(SysMenu menu) {
 		return menu.getParentId().intValue() == 0 && UserConstants.TYPE_MENU.equals(menu.getMenuType())
-				&& menu.getIsFrame().equals(UserConstants.NO_FRAME);
+				&& UserConstants.NO_FRAME.equals(menu.getIsFrame());
 	}
 
 	/**

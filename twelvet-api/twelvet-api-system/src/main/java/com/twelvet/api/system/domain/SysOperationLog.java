@@ -115,7 +115,7 @@ public class SysOperationLog extends BaseEntity {
 	 * 操作状态（0正常 1异常）
 	 */
 	@Schema(description = "操作状态")
-	@Excel(name = "状态", readConverterExp = "1=正常,0=异常")
+	@Excel(name = "状态", readConverterExp = "0=正常,1=异常")
 	private Integer status;
 
 	/**
