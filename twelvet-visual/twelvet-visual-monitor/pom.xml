@@ -49,7 +49,7 @@
             <exclusions>
                 <exclusion>
                     <artifactId>org.springframework.boot</artifactId>
-                    <groupId>spring-boot-start-tomcat</groupId>
+                    <groupId>spring-boot-starter-tomcat</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
