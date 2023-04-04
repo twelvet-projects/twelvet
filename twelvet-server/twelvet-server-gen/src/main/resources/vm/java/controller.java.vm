@@ -1,7 +1,7 @@
 package ${packageName}.controller;
 
 import java.util.List;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,24 +43,24 @@ public class ${ClassName}Controller extends TWTController
     @Autowired
     private I${ClassName}Service ${className}Service;
 
-    /**
-     * 查询${functionName}列表
-     */
-    @Operation(summary = "查询${functionName}列表")
-    @PreAuthorize("@role.hasPermi('{permissionPrefix}:list')")
-    @GetMapping("/list")
+/**
+ * 查询${functionName}列表
+ */
+@Operation(summary = "查询${functionName}列表")
+@PreAuthorize("@role.hasPermi('{permissionPrefix}:list')")
+@GetMapping("/list")
     #if($table.crud || $table.sub)
     public JsonResult<TableDataInfo> list(${ClassName} ${className})
     {
         PageUtils.startPage();
         List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
-        return AjaxResult.success(PageUtils.getDataTable(list));
+        return JsonResult.success(PageUtils.getDataTable(list));
     }
     #elseif($table.tree)
         public JsonResult<List<${ClassName}>> list(${ClassName} ${className})
         {
             List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
-            return AjaxResult.success(list);
+            return JsonResult.success(list);
         }
     #end
 
@@ -98,7 +98,7 @@ public class ${ClassName}Controller extends TWTController
     @PostMapping
     public JsonResult<String> add(@RequestBody ${ClassName} ${className})
     {
-        return JsonResult(${className}Service.insert${ClassName}(${className}));
+        return json(${className}Service.insert${ClassName}(${className}));
     }
 
     /**
