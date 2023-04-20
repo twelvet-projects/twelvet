@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 自定义导出Excel数据注解
  */
 @Retention(RetentionPolicy.RUNTIME)

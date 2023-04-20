@@ -22,7 +22,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 自定义手机登录处理
  */
 public class TwTSmsDetailsServiceImpl implements TwUserDetailsService {

@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: twelvet工具类
  */
 public class TUtils {

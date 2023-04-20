@@ -4,7 +4,7 @@ import java.util.Set;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 权限服务
  */
 public interface ISysPermissionService {

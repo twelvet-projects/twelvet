@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: Oauth2服务
  */
 @FeignClient(contextId = "RemoteOauth2ClientDetailsService", value = ServiceNameConstants.SYSTEM_SERVICE,

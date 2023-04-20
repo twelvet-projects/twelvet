@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 路由显示信息
  */
 @Schema(description = "路由显示信息")

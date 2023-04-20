@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 角色表 sys_menu
  */
 @Schema(description = "角色表")

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: OAuth2 API
  */
 @Tag(description = "Oauth2ClientDetailsApi", name = "OAuth2 API")

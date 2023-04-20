@@ -6,7 +6,7 @@ import org.quartz.CronExpression;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: cron表达式工具类
  */
 public class CronUtils {

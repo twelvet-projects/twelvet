@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 角色和部门关联 sys_role_dept
  */
 @Schema(description = "角色和部门关联")

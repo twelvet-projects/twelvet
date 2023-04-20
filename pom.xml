@@ -10,12 +10,12 @@
     <version>3.0.0</version>
 
     <name>twelvet</name>
-    <url>https://www.twelvet.cn</url>
+    <url>https://twelvet.cn</url>
     <description>TwelveT Cloud System</description>
 
     <organization>
         <name>twelvet</name>
-        <url>https://www.twelvet.cn</url>
+        <url>https://twelvet.cn</url>
     </organization>
 
     <licenses>

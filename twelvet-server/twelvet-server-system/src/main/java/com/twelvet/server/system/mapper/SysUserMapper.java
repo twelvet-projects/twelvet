@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 用户信息Mapper
  */
 public interface SysUserMapper {

@@ -5,7 +5,7 @@ import com.twelvet.framework.utils.text.UUID;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: ID生成器工具类
  */
 public class IdUtils {

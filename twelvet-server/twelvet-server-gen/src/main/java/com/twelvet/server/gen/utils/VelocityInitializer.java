@@ -7,7 +7,7 @@ import java.util.Properties;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: VelocityEngine工厂
  */
 public class VelocityInitializer {

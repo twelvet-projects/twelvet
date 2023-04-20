@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 日志服务
  */
 @FeignClient(contextId = "remoteLogService", value = ServiceNameConstants.SYSTEM_SERVICE,

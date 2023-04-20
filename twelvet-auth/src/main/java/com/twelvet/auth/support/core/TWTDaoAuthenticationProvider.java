@@ -32,7 +32,7 @@ import java.util.function.Supplier;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 自定义处理校验(默认密码模式)
  */
 public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {

@@ -8,7 +8,7 @@ import java.util.Collection;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 字典工具类
  */
 public class DictUtils {

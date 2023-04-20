@@ -8,7 +8,7 @@ import ${packageName}.domain.${ClassName};
  * ${functionName}Service接口
  *
  * @author ${author}
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @date ${datetime}
  */
 public interface I${ClassName}Service {

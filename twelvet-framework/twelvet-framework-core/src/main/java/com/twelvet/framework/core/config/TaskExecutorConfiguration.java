@@ -12,7 +12,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: Spring定时任务线程池配置
  */
 @AutoConfiguration

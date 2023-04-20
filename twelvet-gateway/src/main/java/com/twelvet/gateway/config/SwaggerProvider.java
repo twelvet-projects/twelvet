@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 聚合接口文档注册
  */
 @Primary

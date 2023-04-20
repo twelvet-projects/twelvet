@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 统一操作信息实体
  */
 public class AjaxResult extends LinkedHashMap<String, Object> {

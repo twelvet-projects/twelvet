@@ -42,7 +42,7 @@ import java.util.Set;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 统一登录管理
  */
 @RestController
@@ -66,7 +66,7 @@ public class TWTTokenEndpoint {
 	private CacheManager cacheManager;
 
 	/**
-	 * 认证页面（localhost:8888/oauth/authorize?response_type=code&client_id=twelvet&scope=server&redirect_uri=https://www.twelvet.cn）
+	 * 认证页面（localhost:8888/oauth/authorize?response_type=code&client_id=twelvet&scope=server&redirect_uri=https://twelvet.cn）
 	 * @param modelAndView
 	 * @param error 表单登录失败处理回调的错误信息
 	 * @return ModelAndView

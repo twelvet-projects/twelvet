@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: DFS服务降级处理
  */
 @Component

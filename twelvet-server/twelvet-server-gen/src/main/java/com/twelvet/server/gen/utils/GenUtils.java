@@ -11,7 +11,7 @@ import org.apache.commons.lang3.RegExUtils;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 代码生成器 工具类
  */
 public class GenUtils {

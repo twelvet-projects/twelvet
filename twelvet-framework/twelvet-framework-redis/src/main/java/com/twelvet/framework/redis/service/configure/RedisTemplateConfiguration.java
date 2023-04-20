@@ -11,7 +11,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: Redis 配置类
  */
 @EnableCaching

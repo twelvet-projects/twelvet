@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 字符串工具类
  */
 public class StringUtils extends org.apache.commons.lang3.StringUtils {

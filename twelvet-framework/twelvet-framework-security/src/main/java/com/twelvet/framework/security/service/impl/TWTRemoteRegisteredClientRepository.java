@@ -25,7 +25,7 @@ import java.util.Optional;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 实现储存redis个性化
  */
 public class TWTRemoteRegisteredClientRepository implements RegisteredClientRepository {

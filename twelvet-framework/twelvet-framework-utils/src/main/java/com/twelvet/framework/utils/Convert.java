@@ -11,7 +11,7 @@ import java.util.Set;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 类型转换器
  */
 public class Convert {

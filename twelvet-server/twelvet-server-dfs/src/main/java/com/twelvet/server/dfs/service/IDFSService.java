@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 文件上传接口（支持七牛、阿里云、腾讯云、又拍云，DFS）
  */
 public interface IDFSService {

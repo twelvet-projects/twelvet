@@ -4,7 +4,7 @@ import java.io.Serial;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 自定义404业务异常抛出
  */
 public class NotFoundException extends RuntimeException {

@@ -26,7 +26,7 @@ import java.util.*;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: jackson工具类
  */
 public class JacksonUtils {

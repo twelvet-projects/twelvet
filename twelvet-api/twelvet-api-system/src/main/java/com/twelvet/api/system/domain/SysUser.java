@@ -21,7 +21,7 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: sys_user实体
  */
 @Schema(description = "sys_user实体")

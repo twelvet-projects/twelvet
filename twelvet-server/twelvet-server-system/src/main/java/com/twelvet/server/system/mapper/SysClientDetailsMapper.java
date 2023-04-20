@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: Oauth2 数据层
  */
 public interface SysClientDetailsMapper {

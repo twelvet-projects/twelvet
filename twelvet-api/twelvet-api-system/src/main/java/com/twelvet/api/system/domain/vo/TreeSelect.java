@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: TreeSelect树结构实体类
  */
 @Schema(description = "TreeSelect树结构实体类")

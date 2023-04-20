@@ -18,7 +18,7 @@ import java.util.Set;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 自定义实现spring security用户体系
  */
 public interface TwUserDetailsService extends UserDetailsService, Ordered {

@@ -32,7 +32,7 @@ import java.util.function.Supplier;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 处理自定义授权登录验证 注意：目前已经实现UserDetailsService的
  */
 public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OAuth2ResourceOwnerBaseAuthenticationToken>

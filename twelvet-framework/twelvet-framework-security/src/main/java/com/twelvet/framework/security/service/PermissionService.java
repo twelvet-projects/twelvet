@@ -12,7 +12,7 @@ import java.util.Collection;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 自定义权限实现
  */
 public class PermissionService {

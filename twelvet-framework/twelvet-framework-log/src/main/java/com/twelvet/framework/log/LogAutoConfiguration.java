@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 日志自动配置
  */
 @EnableAsync

@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 运行时工具类
  */
 public class RuntimeUtils {

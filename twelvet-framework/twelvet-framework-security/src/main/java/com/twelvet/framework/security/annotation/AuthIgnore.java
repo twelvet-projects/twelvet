@@ -4,7 +4,7 @@ import java.lang.annotation.*;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 开放服务间认证权限（支持外部完全开放以及限制内部开放）
  */
 @Target({ ElementType.TYPE, ElementType.METHOD })

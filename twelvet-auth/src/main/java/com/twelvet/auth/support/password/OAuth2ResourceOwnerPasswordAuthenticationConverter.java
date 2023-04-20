@@ -19,7 +19,7 @@ import java.util.Set;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 密码认证转换器
  */
 public class OAuth2ResourceOwnerPasswordAuthenticationConverter

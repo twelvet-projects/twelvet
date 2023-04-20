@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: XSS跨站脚本配置
  */
 @Configuration

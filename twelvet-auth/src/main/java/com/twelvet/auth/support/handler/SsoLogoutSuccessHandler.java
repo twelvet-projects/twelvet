@@ -11,7 +11,7 @@ import java.io.IOException;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: sso 退出功能 ，根据客户端传入跳转
  */
 public class SsoLogoutSuccessHandler implements LogoutSuccessHandler {
