@@ -4,7 +4,7 @@ import java.io.Serial;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 计划策略异常
  */
 public class TaskException extends Exception {

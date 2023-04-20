@@ -17,7 +17,7 @@ import java.util.Map;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 登录用户身份
  */
 public class LoginUser extends User implements OAuth2AuthenticatedPrincipal {

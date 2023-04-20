@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 分页基础控制器
  */
 public class PageUtils {

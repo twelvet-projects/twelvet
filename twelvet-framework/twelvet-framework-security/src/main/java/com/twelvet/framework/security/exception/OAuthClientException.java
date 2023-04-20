@@ -5,7 +5,7 @@ import org.springframework.security.oauth2.core.OAuth2Error;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: OAuthClientException 异常信息
  */
 public class OAuthClientException extends OAuth2AuthenticationException {

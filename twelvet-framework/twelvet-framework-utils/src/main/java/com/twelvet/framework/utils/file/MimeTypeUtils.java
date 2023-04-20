@@ -4,7 +4,7 @@ import com.twelvet.framework.utils.exception.TWTUtilsException;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 媒体类型工具类
  */
 public class MimeTypeUtils {

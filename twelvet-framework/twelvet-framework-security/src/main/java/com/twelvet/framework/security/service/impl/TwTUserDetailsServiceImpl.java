@@ -23,7 +23,7 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 自定义用户信息处理
  */
 @Primary

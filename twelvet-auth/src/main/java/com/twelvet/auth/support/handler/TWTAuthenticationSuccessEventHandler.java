@@ -32,7 +32,7 @@ import java.util.Map;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 处理登录成功
  */
 public class TWTAuthenticationSuccessEventHandler implements AuthenticationSuccessHandler {

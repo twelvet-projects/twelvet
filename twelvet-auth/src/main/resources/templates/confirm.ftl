@@ -20,7 +20,7 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-5">
             <p class="navbar-text navbar-right">
-                <a target="_blank" href="https://www.twelvet.cn">欢迎您，${principalName}</a>
+                <a target="_blank" href="https://twelvet.cn">欢迎您，${principalName}</a>
             </p>
         </div>
     </div>
@@ -44,7 +44,7 @@
     </form>
 
     <footer style="clear:both;text-align: center">
-        <a href="https://www.twelvet.cn" target="_blank">Powered By TwelveT</a>
+        <a href="https://twelvet.cn" target="_blank">Powered By TwelveT</a>
     </footer>
 </div>
 

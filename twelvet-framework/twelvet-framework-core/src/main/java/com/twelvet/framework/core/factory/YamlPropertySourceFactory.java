@@ -13,7 +13,7 @@ import java.util.Properties;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 读取自定义 yaml 文件工厂类
  */
 public class YamlPropertySourceFactory implements PropertySourceFactory {

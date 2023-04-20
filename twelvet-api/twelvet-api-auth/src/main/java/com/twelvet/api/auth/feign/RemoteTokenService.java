@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 令牌管理服务
  */
 @FeignClient(contextId = "remoteTokenService", value = ServiceNameConstants.AUTH_SERVICE,

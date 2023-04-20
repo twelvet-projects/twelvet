@@ -20,7 +20,7 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: java 8 时间默认序列化
  */
 public class JavaTimeModule extends SimpleModule {

@@ -2,7 +2,7 @@ package com.twelvet.framework.core.constants;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 任务调度通用常量
  */
 public class ScheduleConstants {

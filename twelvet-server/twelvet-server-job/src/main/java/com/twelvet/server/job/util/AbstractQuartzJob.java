@@ -18,7 +18,7 @@ import java.util.Date;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 抽象quartz调用
  */
 public abstract class AbstractQuartzJob implements Job {

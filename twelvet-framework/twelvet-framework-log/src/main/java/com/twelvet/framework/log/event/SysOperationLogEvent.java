@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationEvent;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 系统操作日志事件
  */
 public class SysOperationLogEvent extends ApplicationEvent {

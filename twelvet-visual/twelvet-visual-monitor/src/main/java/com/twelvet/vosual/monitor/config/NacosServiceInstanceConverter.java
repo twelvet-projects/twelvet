@@ -11,7 +11,7 @@ import static java.util.Collections.emptyMap;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 针对 nacos 2.x 服务注册处理
  */
 @Configuration(proxyBeanMethods = false)

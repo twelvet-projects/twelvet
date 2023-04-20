@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 系统操作/访问日志
  */
 public interface ISysLoginInfoService {

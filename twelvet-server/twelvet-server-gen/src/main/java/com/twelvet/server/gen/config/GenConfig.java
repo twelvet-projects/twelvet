@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 代码生成相关配置
  */
 @Component

@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 实体基类
  */
 public class BaseEntity implements Serializable {

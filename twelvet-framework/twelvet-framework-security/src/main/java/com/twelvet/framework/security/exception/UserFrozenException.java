@@ -5,7 +5,7 @@ import org.springframework.security.core.AuthenticationException;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 用户已被冻结
  */
 public class UserFrozenException extends AccessDeniedException {

@@ -9,7 +9,7 @@ import java.util.Set;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 菜单权限
  */
 public interface ISysMenuService {

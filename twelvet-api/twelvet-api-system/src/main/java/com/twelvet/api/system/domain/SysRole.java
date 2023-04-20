@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 角色表 sys_role
  */
 @Schema(description = "角色表")

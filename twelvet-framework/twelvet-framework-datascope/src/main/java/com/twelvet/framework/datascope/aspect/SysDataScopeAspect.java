@@ -19,7 +19,7 @@ import java.lang.reflect.Method;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 系统数据过滤AOP
  */
 @Aspect

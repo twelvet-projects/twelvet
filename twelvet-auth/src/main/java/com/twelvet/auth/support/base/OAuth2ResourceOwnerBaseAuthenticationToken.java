@@ -11,7 +11,7 @@ import java.util.*;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 自定义授权模式抽象
  */
 public abstract class OAuth2ResourceOwnerBaseAuthenticationToken extends AbstractAuthenticationToken {

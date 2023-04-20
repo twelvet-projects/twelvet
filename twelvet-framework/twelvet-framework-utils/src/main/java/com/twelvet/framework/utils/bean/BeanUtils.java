@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: Bean 工具类
  */
 public class BeanUtils extends org.springframework.beans.BeanUtils {

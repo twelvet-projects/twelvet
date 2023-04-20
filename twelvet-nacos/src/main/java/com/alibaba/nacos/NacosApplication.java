@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: nacos console 源码运行，方便开发 生产从官网下载zip最新版集群配置运行
  * https://github.com/alibaba/nacos/releases
  */

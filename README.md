@@ -1,7 +1,7 @@
 # twelvet
 # JDK >= 17
 [![AUR](https://img.shields.io/github/license/twelvet-s/twelvet)](https://gitee.com/twelvet/twelvet/blob/master/LICENSE)
-[![](https://img.shields.io/badge/Author-TwelveT-orange.svg)](https://www.twelvet.cn)
+[![](https://img.shields.io/badge/Author-TwelveT-orange.svg)](https://twelvet.cn)
 [![](https://img.shields.io/badge/version-3.0.0-success)](https://gitee.com/twelvet/twelvet)
 [![star](https://gitee.com/twelvet/twelvet/badge/star.svg?theme=white)](https://gitee.com/twelvet/twelvet/stargazers)
 [![fork](https://gitee.com/twelvet/twelvet/badge/fork.svg?theme=white)](https://gitee.com/twelvet/twelvet/members)
@@ -24,7 +24,7 @@
 
 前端源码：https://gitee.com/twelvet/twelvet-ui-react
 
-技术文档：https://www.twelvet.cn/docs/
+技术文档：https://twelvet.cn/docs/
 
 ## 系统模块
 
@@ -81,16 +81,16 @@ com.twelvet
 
 <table>
     <tr>
-        <td><img src="https://www.twelvet.cn/assets/images/twelvet/1.png"/></td>
-        <td><img src="https://www.twelvet.cn/assets/images/twelvet/2.png"/></td>
+        <td><img src="https://twelvet.cn/assets/images/twelvet/1.png"/></td>
+        <td><img src="https://twelvet.cn/assets/images/twelvet/2.png"/></td>
     </tr>
     <tr>
-        <td><img src="https://www.twelvet.cn/assets/images/twelvet/3.png"/></td>
-        <td><img src="https://www.twelvet.cn/assets/images/twelvet/4.png"/></td>
+        <td><img src="https://twelvet.cn/assets/images/twelvet/3.png"/></td>
+        <td><img src="https://twelvet.cn/assets/images/twelvet/4.png"/></td>
     </tr>
     <tr>
-        <td><img src="https://www.twelvet.cn/assets/images/twelvet/5.png"/></td>
-        <td><img src="https://www.twelvet.cn/assets/images/twelvet/6.png"/></td>
+        <td><img src="https://twelvet.cn/assets/images/twelvet/5.png"/></td>
+        <td><img src="https://twelvet.cn/assets/images/twelvet/6.png"/></td>
     </tr>
 </table>
 
@@ -101,7 +101,7 @@ com.twelvet
 演示地址：[http://cloud.twelvet.cn](http://cloud.twelvet.cn)
 
 ## 架构图
-<img src="https://www.twelvet.cn/assets/images/twelvet/map.png"/>
+<img src="https://twelvet.cn/assets/images/twelvet/map.png"/>
 
 ## 支持Linux一件Docker启动(最小化启动服务)
 内存 > 16

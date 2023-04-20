@@ -9,7 +9,7 @@ import java.io.Serial;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 终端配置表 sys_oauth_client_details
  */
 @Schema(description = "终端配置表DTO")

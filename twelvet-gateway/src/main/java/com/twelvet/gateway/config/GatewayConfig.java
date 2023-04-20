@@ -13,7 +13,7 @@ import java.util.TimeZone;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 网关限流配置
  */
 @Configuration

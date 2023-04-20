@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 任务执行工具
  */
 public class JobInvokeUtil {

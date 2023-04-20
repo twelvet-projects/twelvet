@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 自定义xss校验注解
  */
 @Retention(RetentionPolicy.RUNTIME)

@@ -14,7 +14,7 @@ import org.springframework.security.access.AccessDeniedException;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 忽略内部请求的授权
  */
 @Aspect

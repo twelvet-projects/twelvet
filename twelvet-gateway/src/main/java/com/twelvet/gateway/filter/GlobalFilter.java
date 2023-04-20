@@ -17,7 +17,7 @@ import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.a
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 全局拦截器
  */
 @Component

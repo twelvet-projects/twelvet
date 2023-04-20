@@ -10,7 +10,7 @@ import java.lang.annotation.*;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 资源服务注解
  */
 @Documented

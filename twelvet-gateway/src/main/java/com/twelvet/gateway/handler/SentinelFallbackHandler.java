@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 自定义限流异常处理
  */
 public class SentinelFallbackHandler implements WebExceptionHandler {

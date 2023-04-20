@@ -12,7 +12,7 @@ import java.net.URL;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: image 工具
  */
 public class ImageUtils {

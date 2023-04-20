@@ -5,7 +5,7 @@ import com.twelvet.framework.utils.exception.TWTUtilsException;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: sql操作工具类
  */
 public class SqlUtils {

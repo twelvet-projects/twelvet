@@ -2,7 +2,7 @@ package com.twelvet.framework.redis.service.constants;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 缓存key 常量
  */
 public interface CacheConstants {

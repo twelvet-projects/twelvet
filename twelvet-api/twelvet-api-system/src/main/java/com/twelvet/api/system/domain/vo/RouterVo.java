@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 路由配置信息
  */
 @Schema(description = "路由配置信息")

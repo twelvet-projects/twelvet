@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: HTML过滤器，XSS
  */
 public final class HTMLFilter {

@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 线程工具类
  */
 public class ThreadUtils {

@@ -6,7 +6,7 @@ import java.lang.annotation.*;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: Sharding JDBC数据源
  */
 @Target({ ElementType.TYPE, ElementType.METHOD })

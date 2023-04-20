@@ -19,7 +19,7 @@
  */
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: Swagger配置
  *
  * <p>

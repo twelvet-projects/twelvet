@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 岗位信息操作处理
  */
 public interface ISysPostService {

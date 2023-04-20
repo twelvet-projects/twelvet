@@ -15,7 +15,7 @@ import java.util.Set;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 短信登录转换器
  */
 public class OAuth2ResourceOwnerSmsAuthenticationConverter

@@ -21,7 +21,7 @@ import java.util.Map;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description:
  */
 public class OAuth2EndpointUtils {

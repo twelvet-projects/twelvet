@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 图片工具
  */
 public class ImageUtils {

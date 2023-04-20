@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 浮点型数据计算
  */
 public class DecimalNum extends Number {

@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 用户信息
  */
 @Tag(description = "SysUserController", name = "用户信息")

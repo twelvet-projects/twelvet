@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 令牌管理
  */
 @Tag(description = "TokenController", name = "令牌管理")

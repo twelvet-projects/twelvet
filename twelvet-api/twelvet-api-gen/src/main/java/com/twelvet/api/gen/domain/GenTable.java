@@ -14,7 +14,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 业务表 gen_table
  */
 @Schema(description = "业务表")

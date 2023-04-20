@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 角色和菜单关联 sys_role_menu
  */
 @Schema(description = "角色和菜单关联")

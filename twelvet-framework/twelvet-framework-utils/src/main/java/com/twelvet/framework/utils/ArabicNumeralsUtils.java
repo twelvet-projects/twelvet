@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 阿拉伯数字与中文之间的转换
  */
 public class ArabicNumeralsUtils {

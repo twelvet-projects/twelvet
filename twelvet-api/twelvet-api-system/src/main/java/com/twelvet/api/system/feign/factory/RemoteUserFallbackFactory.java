@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 用户信息服务降级处理
  */
 @Component

@@ -20,7 +20,7 @@ import java.util.Map;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: redis使用jackson序列化
  */
 @SuppressWarnings("all")

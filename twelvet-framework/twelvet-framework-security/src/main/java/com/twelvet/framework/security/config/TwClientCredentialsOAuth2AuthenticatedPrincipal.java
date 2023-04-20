@@ -8,7 +8,7 @@ import java.util.Map;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: credential 支持客户端模式的用户存储
  */
 public class TwClientCredentialsOAuth2AuthenticatedPrincipal implements OAuth2AuthenticatedPrincipal {

@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 令牌管理VO
  */
 @Schema(description = "令牌管理DTO")

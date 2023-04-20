@@ -5,7 +5,7 @@ import java.util.Random;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 一些常用的单例对象
  */
 public class SingleConstants {

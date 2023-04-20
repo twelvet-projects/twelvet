@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 业务 服务层
  */
 public interface IGenTableService {

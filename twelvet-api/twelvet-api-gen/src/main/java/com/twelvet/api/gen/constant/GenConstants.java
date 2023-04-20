@@ -2,7 +2,7 @@ package com.twelvet.api.gen.constant;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 代码生成通用常量
  */
 public class GenConstants {

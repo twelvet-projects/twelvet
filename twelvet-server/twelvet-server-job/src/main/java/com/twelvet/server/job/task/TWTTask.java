@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 定时任务调度测试
  */
 @Component("twtTask")

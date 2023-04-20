@@ -20,7 +20,7 @@ import java.lang.reflect.Method;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 注解分布式锁
  */
 @Aspect

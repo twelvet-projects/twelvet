@@ -32,7 +32,7 @@ import com.twelvet.framework.jdbc.web.utils.PageUtils;
  * ${functionName}Controller
  *
  * @author ${author}
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @date ${datetime}
  */
 @Tag(description = "${ClassName}Controller", name = "${functionName}")

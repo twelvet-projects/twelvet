@@ -2,7 +2,7 @@ package com.alibaba.nacos.config;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 、覆盖nacos 默认配置
  */
 public interface ConfigConstants {

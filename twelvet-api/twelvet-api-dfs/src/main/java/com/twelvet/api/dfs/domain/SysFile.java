@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 文件信息
  */
 @Schema(description = "文件信息")

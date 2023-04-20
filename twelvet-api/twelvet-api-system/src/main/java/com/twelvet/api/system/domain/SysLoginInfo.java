@@ -11,7 +11,7 @@ import java.util.Date;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 系统访问记录表 sys_login_info
  */
 @Schema(description = "系统访问记录表")
