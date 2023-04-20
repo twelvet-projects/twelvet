@@ -47,7 +47,7 @@
                 </#if>
             </form>
             <footer class='copyright'>
-                <a href="https://www.twelvet.cn" target="_blank">Powered By TwelveT</a>
+                <a href="https://twelvet.cn" target="_blank">Powered By TwelveT</a>
             </footer>
         </div>
     </div>

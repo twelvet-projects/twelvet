@@ -2,7 +2,7 @@ package com.twelvet.framework.log.enums;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 操作状态
  */
 public enum BusinessStatus {

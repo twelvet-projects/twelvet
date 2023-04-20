@@ -2,7 +2,7 @@ package com.twelvet.framework.core.constants;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 权限相关常量
  */
 public interface SecurityConstants {
@@ -55,7 +55,7 @@ public interface SecurityConstants {
 	/**
 	 * 项目的license
 	 */
-	String PROJECT_LICENSE = "https://www.twelvet.cn/docs/";
+	String PROJECT_LICENSE = "https://twelvet.cn/docs/";
 
 	/**
 	 * 内部请求标志

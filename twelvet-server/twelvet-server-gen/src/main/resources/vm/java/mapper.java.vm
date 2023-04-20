@@ -11,7 +11,7 @@ import ${packageName}.domain.${subClassName};
  * ${functionName}Mapper接口
  *
  * @author ${author}
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @date ${datetime}
  */
 public interface ${ClassName}Mapper {

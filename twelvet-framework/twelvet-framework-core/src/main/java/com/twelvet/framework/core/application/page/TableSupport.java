@@ -4,7 +4,7 @@ import com.twelvet.framework.utils.http.ServletUtils;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 表格数据处理
  */
 public class TableSupport {

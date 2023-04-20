@@ -24,7 +24,7 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 用户信息
  */
 @Service

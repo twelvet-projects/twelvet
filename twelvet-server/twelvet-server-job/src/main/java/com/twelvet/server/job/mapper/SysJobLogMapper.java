@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 调度任务日志信息 数据层
  */
 public interface SysJobLogMapper {

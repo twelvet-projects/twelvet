@@ -21,7 +21,7 @@ import java.util.Objects;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 日志工具类
  */
 public class SysLogUtils {

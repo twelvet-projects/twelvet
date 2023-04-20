@@ -25,7 +25,7 @@ import java.util.Map;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 部门管理
  */
 @Tag(description = "SysDeptController", name = "部门管理")

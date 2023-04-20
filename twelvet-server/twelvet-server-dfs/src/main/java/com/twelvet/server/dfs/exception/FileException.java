@@ -4,7 +4,7 @@ import com.twelvet.framework.core.exception.TWTException;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 文件信息异常类
  */
 public class FileException extends TWTException {

@@ -2,7 +2,7 @@ package com.twelvet.framework.security.utils;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description:
  */
 public interface OAuth2ErrorCodesExpand {

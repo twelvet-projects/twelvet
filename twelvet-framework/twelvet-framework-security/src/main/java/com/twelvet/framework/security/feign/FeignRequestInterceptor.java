@@ -18,7 +18,7 @@ import java.util.Enumeration;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: Feign 请求拦截器
  */
 public class FeignRequestInterceptor implements RequestInterceptor {

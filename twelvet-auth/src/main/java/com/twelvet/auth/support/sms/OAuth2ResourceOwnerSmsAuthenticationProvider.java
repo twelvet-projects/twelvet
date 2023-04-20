@@ -18,7 +18,7 @@ import java.util.Map;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 短信登录的核心处理
  */
 public class OAuth2ResourceOwnerSmsAuthenticationProvider

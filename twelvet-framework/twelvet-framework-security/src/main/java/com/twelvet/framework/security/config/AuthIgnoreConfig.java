@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 忽略服务间的认证
  */
 @ConfigurationProperties(prefix = "security.oauth2.ignore")

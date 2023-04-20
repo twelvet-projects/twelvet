@@ -18,7 +18,7 @@ import java.util.Date;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 定时任务调度表 sys_job
  */
 @Schema(description = "定时任务调度表")

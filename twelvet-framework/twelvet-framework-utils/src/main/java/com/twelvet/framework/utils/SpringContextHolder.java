@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: spring工具类 方便在非spring管理环境中获取bean
  */
 @Service

@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 统一管理API
  */
 @Tag(description = "TokenEndpointApi", name = "TokenEndpointApi")

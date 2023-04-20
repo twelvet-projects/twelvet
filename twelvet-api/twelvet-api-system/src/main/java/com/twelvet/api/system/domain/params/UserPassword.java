@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 用户修改密码参数
  */
 @Schema(description = "用户修改密码参数")

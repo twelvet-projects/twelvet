@@ -20,7 +20,7 @@ import java.util.Set;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 用户信息
  */
 @Tag(description = "SysUserApi", name = "用户信息API")

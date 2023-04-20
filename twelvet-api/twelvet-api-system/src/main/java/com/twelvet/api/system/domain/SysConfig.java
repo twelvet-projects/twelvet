@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 参数配置表 sys_config
  */
 @Schema(description = "参数配置表")

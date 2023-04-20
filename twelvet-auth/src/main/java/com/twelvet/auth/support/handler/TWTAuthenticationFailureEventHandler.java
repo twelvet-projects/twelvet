@@ -28,7 +28,7 @@ import java.io.IOException;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 处理登录以及续签失败
  */
 public class TWTAuthenticationFailureEventHandler implements AuthenticationFailureHandler {

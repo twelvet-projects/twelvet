@@ -26,7 +26,7 @@ import java.util.Optional;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 资源服务器toke内省处理器
  */
 public class TWTCustomOpaqueTokenIntrospect implements OpaqueTokenIntrospector {

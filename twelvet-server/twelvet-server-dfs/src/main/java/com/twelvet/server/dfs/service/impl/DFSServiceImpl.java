@@ -27,7 +27,7 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: FastDFS文件存储
  */
 @Primary
@@ -35,7 +35,7 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 文件上传实现类
  */
 public class DFSServiceImpl implements IDFSService {

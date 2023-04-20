@@ -7,7 +7,7 @@ import java.io.File;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 文件类型工具类
  */
 public class FileTypeUtils {

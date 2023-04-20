@@ -26,7 +26,7 @@ import java.util.Map;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 系统菜单控制器
  */
 @Tag(description = "SysMenuController", name = "系统菜单控制器")

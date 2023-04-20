@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 工具测试
  */
 public class UtilsTest {

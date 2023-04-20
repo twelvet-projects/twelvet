@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 菜单权限
  */
 @Service

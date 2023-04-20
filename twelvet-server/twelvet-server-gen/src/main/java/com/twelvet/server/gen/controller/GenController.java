@@ -28,7 +28,7 @@ import java.util.Map;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 代码生成 操作处理
  */
 @Tag(description = "GenController", name = "代码生成")

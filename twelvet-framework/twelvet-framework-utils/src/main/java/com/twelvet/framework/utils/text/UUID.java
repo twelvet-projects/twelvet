@@ -10,7 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 提供通用唯一识别码（universally unique identifier）（UUID）实现
  */
 public final class UUID implements java.io.Serializable, Comparable<UUID> {

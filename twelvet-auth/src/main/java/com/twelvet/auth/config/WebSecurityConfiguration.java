@@ -17,7 +17,7 @@ import java.util.Map;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: WEB安全配置
  */
 @EnableWebSecurity(debug = true)

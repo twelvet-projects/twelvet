@@ -2,7 +2,7 @@ package com.twelvet.framework.utils.constants;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: char 常量池
  */
 public interface CharConstants {

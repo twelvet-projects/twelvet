@@ -5,7 +5,7 @@ import com.twelvet.framework.utils.TUtils;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 分页数据
  */
 public class PageDomain {

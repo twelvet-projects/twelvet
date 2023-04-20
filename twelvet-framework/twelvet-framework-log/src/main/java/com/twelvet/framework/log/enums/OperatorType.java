@@ -2,7 +2,7 @@ package com.twelvet.framework.log.enums;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 操作人类别
  */
 public enum OperatorType {

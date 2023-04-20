@@ -4,7 +4,7 @@ import java.lang.annotation.*;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 系统数据权限
  */
 @Target(ElementType.METHOD)

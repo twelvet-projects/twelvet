@@ -10,7 +10,7 @@ import java.util.Properties;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 定时任务配置
  */
 @Configuration

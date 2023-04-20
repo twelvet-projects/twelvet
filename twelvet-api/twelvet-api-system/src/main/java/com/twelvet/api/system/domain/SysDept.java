@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 部门表 sys_dept
  */
 @Schema(description = "部门表")

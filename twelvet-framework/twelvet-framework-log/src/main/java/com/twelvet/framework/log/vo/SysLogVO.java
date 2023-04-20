@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 日志工具VO
  */
 public class SysLogVO implements Serializable {

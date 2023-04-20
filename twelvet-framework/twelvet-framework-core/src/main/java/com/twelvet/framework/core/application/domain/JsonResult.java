@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 统一操作信息实体(支持Swagger响应泛型)
  */
 public class JsonResult<T> implements Serializable {

@@ -20,7 +20,7 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 系统登录日志
  */
 @Tag(description = "SysLoginInfoController", name = "系统登录日志")

@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 开启 swagger
  */
 @Target({ ElementType.TYPE })

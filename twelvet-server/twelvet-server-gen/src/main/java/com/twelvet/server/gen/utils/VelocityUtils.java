@@ -15,7 +15,7 @@ import java.util.Map;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 模板工具类
  */
 public class VelocityUtils {

@@ -11,7 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 操作日志记录表
  */
 @Schema(description = "操作日志记录表")

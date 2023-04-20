@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: Excel注解集
  */
 @Target(ElementType.FIELD)

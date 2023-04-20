@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 系统操作/访问日志
  */
 @Tag(description = "SysLoginInfoApi", name = "系统操作日志API")

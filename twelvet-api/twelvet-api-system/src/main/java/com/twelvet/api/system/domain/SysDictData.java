@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 字典数据表 sys_dict_data
  */
 @Schema(description = "字典数据表")

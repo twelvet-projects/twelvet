@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 用户与角色关联表 数据层
  */
 public interface SysUserRoleMapper {

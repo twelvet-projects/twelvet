@@ -8,7 +8,7 @@ import java.io.*;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: RequestWrapper
  */
 public class RequestWrapper extends HttpServletRequestWrapper {

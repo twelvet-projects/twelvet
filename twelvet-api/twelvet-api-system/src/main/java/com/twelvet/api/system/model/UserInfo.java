@@ -8,7 +8,7 @@ import java.util.Set;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 登录用户基本信息实体
  */
 @Schema(description = "登录用户基本信息实体")

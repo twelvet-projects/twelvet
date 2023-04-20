@@ -6,7 +6,7 @@ import org.quartz.JobExecutionContext;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 定时任务处理（禁止并发执行）
  */
 @DisallowConcurrentExecution

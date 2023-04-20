@@ -20,7 +20,7 @@ import reactor.core.publisher.Mono;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 网关异常处理器，只作用在webflux 环境下 , 优先级低于 {@link ResponseStatusExceptionHandler} 执行
  */
 @Order(-1)

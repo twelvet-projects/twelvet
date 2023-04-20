@@ -2,7 +2,7 @@ package com.twelvet.framework.core.exception;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 基础异常
  */
 public class TWTException extends RuntimeException {

@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 表格分页数据对象
  */
 public class TableDataInfo implements Serializable {

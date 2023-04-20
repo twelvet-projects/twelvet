@@ -13,7 +13,7 @@ import java.util.function.Predicate;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 简化{@code R<T>} 的访问操作,例子 <pre>
  * R<Integer> result = R.ok(0);
  * // 使用场景1: 链式操作: 断言然后消费

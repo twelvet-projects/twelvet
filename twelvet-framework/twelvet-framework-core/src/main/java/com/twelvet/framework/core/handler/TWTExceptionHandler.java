@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 全局异常处理器
  */
 @RestControllerAdvice

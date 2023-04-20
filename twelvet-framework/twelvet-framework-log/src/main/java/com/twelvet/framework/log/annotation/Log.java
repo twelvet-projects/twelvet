@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 自定义操作日志记录注解
  */
 @Target({ ElementType.PARAMETER, ElementType.METHOD })

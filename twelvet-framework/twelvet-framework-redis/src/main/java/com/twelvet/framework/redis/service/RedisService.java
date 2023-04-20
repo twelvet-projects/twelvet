@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: spring redis 工具类
  */
 @SuppressWarnings(value = { "unchecked", "rawtypes" })

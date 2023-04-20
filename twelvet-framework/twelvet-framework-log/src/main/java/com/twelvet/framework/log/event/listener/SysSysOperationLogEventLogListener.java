@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.Async;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 异步监听系统登录日志事件
  */
 public class SysSysOperationLogEventLogListener {

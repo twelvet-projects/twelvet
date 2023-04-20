@@ -11,7 +11,7 @@ import java.util.Locale;
 
 /**
  * @author twelvet
- * @WebSite www.twelvet.cn
+ * @WebSite twelvet.cn
  * @Description: 配置国际化
  */
 @ConditionalOnWebApplication(type = SERVLET)
