@@ -37,3 +37,16 @@ jobs:
 
       - name: Start Server
         run: cd docker && ./deploy.sh server
+
+      - name: Check Server twelvet-gateway
+        run: |
+          sleep 30
+          docker logs --tail 500 twelvet-gateway
+
+      - name: Check Server twelvet-auth
+        run: |
+          docker logs --tail 500 twelvet-auth
+
+      - name: Check Server twelvet-server-system
+        run: |
+          docker logs --tail 500 twelvet-server-system
