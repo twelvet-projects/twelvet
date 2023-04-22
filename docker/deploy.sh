@@ -36,15 +36,15 @@ port() {
 # 启动基础环境（必须）
 base() {
   docker-compose up -d twelvet-mysql twelvet-redis
-  sleep 15
+  ehco '等待Mysql导入数据' && sleep 15
   docker-compose up -d twelvet-nacos
-  sleep 15
+  ehco '等待Nacos启动' && sleep 15
 }
 
 # 启动程序模块（必须）
 server() {
   docker-compose up -d twelvet-gateway twelvet-auth twelvet-server-system
-  sleep 30
+  ehco '等待服务启动' sleep 30
 }
 
 # 启动nginx（必须）
