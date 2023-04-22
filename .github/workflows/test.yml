@@ -37,7 +37,7 @@ jobs:
 
       - name: Start Server
         run: |
-          sleep 15
+          sleep 30
           cd docker
           docker-compose up -d twelvet-gateway twelvet-auth twelvet-server-system
 

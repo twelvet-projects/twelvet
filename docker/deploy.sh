@@ -36,7 +36,7 @@ port() {
 # 启动基础环境（必须）
 base() {
   docker-compose up -d twelvet-mysql twelvet-redis
-  sleep 15
+  sleep 30
   docker-compose up -d twelvet-nacos
 }
 
