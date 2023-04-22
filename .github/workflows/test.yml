@@ -36,7 +36,7 @@ jobs:
         run: |
           cd docker
           docker-compose up -d twelvet-mysql twelvet-redis
-          sleep 30
+          sleep 60
           docker-compose up -d twelvet-nacos
 
       - name: Start Server
