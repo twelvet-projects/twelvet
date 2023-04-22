@@ -33,7 +33,11 @@ jobs:
         run: cd docker && chmod 751 ./deploy.sh && ./deploy.sh init
 
       - name: Start Base
-        run: cd docker && ./deploy.sh base
+        run: |
+          cd docker
+          docker-compose up -d twelvet-mysql twelvet-redis
+          sleep 30
+          docker-compose up -d twelvet-nacos
 
       - name: Start Server
         run: |
