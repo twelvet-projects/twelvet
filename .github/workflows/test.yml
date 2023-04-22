@@ -36,11 +36,12 @@ jobs:
         run: cd docker && ./deploy.sh base
 
       - name: Start Server
-        run: cd docker && ./deploy.sh server
+        run: |
+          sleep 30
+          cd docker && ./deploy.sh server
 
       - name: Check Server twelvet-nacos
         run: |
-          sleep 30
           docker logs --tail 500 twelvet-nacos
 
       - name: Check Server twelvet-gateway
