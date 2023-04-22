@@ -37,7 +37,9 @@ jobs:
 
       - name: Start Server
         run: |
-          cd docker && ./deploy.sh server
+          sleep 15
+          cd docker
+          docker-compose up -d twelvet-gateway twelvet-auth twelvet-server-system
 
       - name: Check Server twelvet-nacos
         run: |
