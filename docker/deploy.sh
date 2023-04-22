@@ -36,11 +36,15 @@ port() {
 # 启动基础环境（必须）
 base() {
   docker-compose up -d twelvet-mysql twelvet-redis
+  sleep 15
+  docker-compose up -d twelvet-nacos
+  sleep 15
 }
 
 # 启动程序模块（必须）
 server() {
-  docker-compose up -d twelvet-nacos twelvet-gateway twelvet-auth twelvet-server-system
+  docker-compose up -d twelvet-gateway twelvet-auth twelvet-server-system
+  sleep 30
 }
 
 # 启动nginx（必须）
@@ -59,7 +63,7 @@ nginx() {
   else
     echo "前端已初始化"
   fi
-  
+
   docker-compose up -d twelvet-nginx
 }
 
