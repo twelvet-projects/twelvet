@@ -29,7 +29,7 @@ create table QRTZ_JOB_DETAILS
     requests_recovery varchar(1)   not null comment '是否接受恢复执行',
     job_data          blob null comment '存放持久化job对象',
     primary key (sched_name, job_name, job_group)
-) engine=innodb comment = '任务详细信息表';
+) engine=innodb CHARACTER SET = utf8 COLLATE = utf8_general_ci comment = '任务详细信息表';
 
 INSERT INTO `qrtz_job_details` VALUES ('TWTScheduler', 'TASK_CLASS_NAME1', 'DEFAULT', NULL, 'com.twelvet.server.job.util.QuartzJobExecution', '0', '0', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000F5441534B5F50524F5045525449455373720021636F6D2E7477656C7665742E6170692E6A6F622E646F6D61696E2E5379734A6F62000000000000000102000849000A636F6E63757272656E7449000D6D697366697265506F6C6963794900067374617475734C000E63726F6E45787072657373696F6E7400124C6A6176612F6C616E672F537472696E673B4C000C696E766F6B6554617267657471007E00094C00086A6F6247726F757071007E00094C00056A6F6249647400104C6A6176612F6C616E672F4C6F6E673B4C00076A6F624E616D6571007E000978720038636F6D2E7477656C7665742E6672616D65776F726B2E636F72652E6170706C69636174696F6E2E646F6D61696E2E42617365456E7469747900000000000000010200094C0009626567696E54696D6571007E00094C0008637265617465427971007E00094C000A63726561746554696D657400104C6A6176612F7574696C2F446174653B4C0007656E6454696D6571007E00094C0006706172616D7371007E00034C000672656D61726B71007E00094C000B73656172636856616C756571007E00094C0008757064617465427971007E00094C000A75706461746554696D6571007E000C78707074000561646D696E7372000E6A6176612E7574696C2E44617465686A81014B59741903000078707708000001622CDE29E078707074000070707000000001000000030000000074000E30202A2F3135202A202A202A203F7400137477745461736B2E7477744E6F506172616D7374000744454641554C547372000E6A6176612E6C616E672E4C6F6E673B8BE490CC8F23DF0200014A000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B02000078700000000000000001740018E7B3BBE7BB9FE9BB98E8AEA4EFBC88E697A0E58F82EFBC897800);
 INSERT INTO `qrtz_job_details` VALUES ('TWTScheduler', 'TASK_CLASS_NAME106', 'DEFAULT', NULL, 'com.twelvet.server.job.util.QuartzDisallowConcurrentExecution', '0', '1', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000F5441534B5F50524F5045525449455373720021636F6D2E7477656C7665742E6170692E6A6F622E646F6D61696E2E5379734A6F62000000000000000102000849000A636F6E63757272656E7449000D6D697366697265506F6C6963794900067374617475734C000E63726F6E45787072657373696F6E7400124C6A6176612F6C616E672F537472696E673B4C000C696E766F6B6554617267657471007E00094C00086A6F6247726F757071007E00094C00056A6F6249647400104C6A6176612F6C616E672F4C6F6E673B4C00076A6F624E616D6571007E000978720038636F6D2E7477656C7665742E6672616D65776F726B2E636F72652E6170706C69636174696F6E2E646F6D61696E2E42617365456E7469747900000000000000010200094C0009626567696E54696D6571007E00094C0008637265617465427971007E00094C000A63726561746554696D657400104C6A6176612F7574696C2F446174653B4C0007656E6454696D6571007E00094C0006706172616D7371007E00034C000672656D61726B71007E00094C000B73656172636856616C756571007E00094C0008757064617465427971007E00094C000A75706461746554696D6571007E000C78707074000561646D696E7372000E6A6176612E7574696C2E44617465686A81014B59741903000078707708000001764D4CF5D078707074000070707000000000000000010000000074000D302F35202A202A202A202A203F7400187477745461736B2E747774506172616D732827747774272974000744454641554C547372000E6A6176612E6C616E672E4C6F6E673B8BE490CC8F23DF0200014A000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B0200007870000000000000006A740018E7B3BBE7BB9FE9BB98E8AEA4EFBC88E69C89E58F82EFBC897800);
@@ -57,7 +57,7 @@ create table QRTZ_TRIGGERS
     job_data       blob null comment '存放持久化job对象',
     primary key (sched_name, trigger_name, trigger_group),
     foreign key (sched_name, job_name, job_group) references QRTZ_JOB_DETAILS (sched_name, job_name, job_group)
-) engine=innodb comment = '触发器详细信息表';
+) engine=innodb CHARACTER SET = utf8 COLLATE = utf8_general_ci comment = '触发器详细信息表';
 
 -- ----------------------------
 -- 3、 存储简单的 Trigger，包括重复次数，间隔，以及已触发的次数
@@ -72,11 +72,11 @@ create table QRTZ_SIMPLE_TRIGGERS
     times_triggered bigint(10) not null comment '已经触发的次数',
     primary key (sched_name, trigger_name, trigger_group),
     foreign key (sched_name, trigger_name, trigger_group) references QRTZ_TRIGGERS (sched_name, trigger_name, trigger_group)
-) engine=innodb comment = '简单触发器的信息表';
+) engine=innodb CHARACTER SET = utf8 COLLATE = utf8_general_ci comment = '简单触发器的信息表';
 
 -- ----------------------------
 -- 4、 存储 Cron Trigger，包括 Cron 表达式和时区信息
--- ---------------------------- 
+-- ----------------------------
 create table QRTZ_CRON_TRIGGERS
 (
     sched_name      varchar(120) not null comment '调度名称',
@@ -86,11 +86,11 @@ create table QRTZ_CRON_TRIGGERS
     time_zone_id    varchar(80) comment '时区',
     primary key (sched_name, trigger_name, trigger_group),
     foreign key (sched_name, trigger_name, trigger_group) references QRTZ_TRIGGERS (sched_name, trigger_name, trigger_group)
-) engine=innodb comment = 'Cron类型的触发器表';
+) engine=innodb CHARACTER SET = utf8 COLLATE = utf8_general_ci comment = 'Cron类型的触发器表';
 
 -- ----------------------------
 -- 5、 Trigger 作为 Blob 类型存储(用于 Quartz 用户用 JDBC 创建他们自己定制的 Trigger 类型，JobStore 并不知道如何存储实例的时候)
--- ---------------------------- 
+-- ----------------------------
 create table QRTZ_BLOB_TRIGGERS
 (
     sched_name    varchar(120) not null comment '调度名称',
@@ -99,32 +99,32 @@ create table QRTZ_BLOB_TRIGGERS
     blob_data     blob null comment '存放持久化Trigger对象',
     primary key (sched_name, trigger_name, trigger_group),
     foreign key (sched_name, trigger_name, trigger_group) references QRTZ_TRIGGERS (sched_name, trigger_name, trigger_group)
-) engine=innodb comment = 'Blob类型的触发器表';
+) engine=innodb CHARACTER SET = utf8 COLLATE = utf8_general_ci comment = 'Blob类型的触发器表';
 
 -- ----------------------------
 -- 6、 以 Blob 类型存储存放日历信息， quartz可配置一个日历来指定一个时间范围
--- ---------------------------- 
+-- ----------------------------
 create table QRTZ_CALENDARS
 (
     sched_name    varchar(120) not null comment '调度名称',
     calendar_name varchar(200) not null comment '日历名称',
     calendar      blob         not null comment '存放持久化calendar对象',
     primary key (sched_name, calendar_name)
-) engine=innodb comment = '日历信息表';
+) engine=innodb CHARACTER SET = utf8 COLLATE = utf8_general_ci comment = '日历信息表';
 
 -- ----------------------------
 -- 7、 存储已暂停的 Trigger 组的信息
--- ---------------------------- 
+-- ----------------------------
 create table QRTZ_PAUSED_TRIGGER_GRPS
 (
     sched_name    varchar(120) not null comment '调度名称',
     trigger_group varchar(200) not null comment 'qrtz_triggers表trigger_group的外键',
     primary key (sched_name, trigger_group)
-) engine=innodb comment = '暂停的触发器表';
+) engine=innodb CHARACTER SET = utf8 COLLATE = utf8_general_ci comment = '暂停的触发器表';
 
 -- ----------------------------
 -- 8、 存储与已触发的 Trigger 相关的状态信息，以及相联 Job 的执行信息
--- ---------------------------- 
+-- ----------------------------
 create table QRTZ_FIRED_TRIGGERS
 (
     sched_name        varchar(120) not null comment '调度名称',
@@ -141,11 +141,11 @@ create table QRTZ_FIRED_TRIGGERS
     is_nonconcurrent  varchar(1) null comment '是否并发',
     requests_recovery varchar(1) null comment '是否接受恢复执行',
     primary key (sched_name, entry_id)
-) engine=innodb comment = '已触发的触发器表';
+) engine=innodb CHARACTER SET = utf8 COLLATE = utf8_general_ci comment = '已触发的触发器表';
 
 -- ----------------------------
 -- 9、 存储少量的有关 Scheduler 的状态信息，假如是用于集群中，可以看到其他的 Scheduler 实例
--- ---------------------------- 
+-- ----------------------------
 create table QRTZ_SCHEDULER_STATE
 (
     sched_name        varchar(120) not null comment '调度名称',
@@ -153,21 +153,21 @@ create table QRTZ_SCHEDULER_STATE
     last_checkin_time bigint(13) not null comment '上次检查时间',
     checkin_interval  bigint(13) not null comment '检查间隔时间',
     primary key (sched_name, instance_name)
-) engine=innodb comment = '调度器状态表';
+) engine=innodb CHARACTER SET = utf8 COLLATE = utf8_general_ci comment = '调度器状态表';
 
 -- ----------------------------
 -- 10、 存储程序的悲观锁的信息(假如使用了悲观锁)
--- ---------------------------- 
+-- ----------------------------
 create table QRTZ_LOCKS
 (
     sched_name varchar(120) not null comment '调度名称',
     lock_name  varchar(40)  not null comment '悲观锁名称',
     primary key (sched_name, lock_name)
-) engine=innodb comment = '存储的悲观锁信息表';
+) engine=innodb CHARACTER SET = utf8 COLLATE = utf8_general_ci comment = '存储的悲观锁信息表';
 
 -- ----------------------------
 -- 11、 Quartz集群实现同步机制的行锁表
--- ---------------------------- 
+-- ----------------------------
 create table QRTZ_SIMPROP_TRIGGERS
 (
     sched_name    varchar(120) not null comment '调度名称',
@@ -186,7 +186,7 @@ create table QRTZ_SIMPROP_TRIGGERS
     bool_prop_2   varchar(1) null comment 'Boolean类型的trigger的第二个参数',
     primary key (sched_name, trigger_name, trigger_group),
     foreign key (sched_name, trigger_name, trigger_group) references QRTZ_TRIGGERS (sched_name, trigger_name, trigger_group)
-) engine=innodb comment = '同步机制的行锁表';
+) engine=innodb CHARACTER SET = utf8 COLLATE = utf8_general_ci comment = '同步机制的行锁表';
 
 CREATE TABLE `sys_job`  (
     `job_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '任务ID',
