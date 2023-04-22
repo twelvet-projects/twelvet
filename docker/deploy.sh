@@ -44,7 +44,7 @@ base() {
 # 启动程序模块（必须）
 server() {
   docker-compose up -d twelvet-gateway twelvet-auth twelvet-server-system
-  ehco '等待服务启动' sleep 30
+  ehco '等待服务启动' && sleep 30
 }
 
 # 启动nginx（必须）
