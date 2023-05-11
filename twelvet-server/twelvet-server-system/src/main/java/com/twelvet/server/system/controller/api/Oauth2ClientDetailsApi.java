@@ -5,6 +5,7 @@ import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.security.annotation.AuthIgnore;
 import com.twelvet.server.system.service.ISysClientDetailsService;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @WebSite twelvet.cn
  * @Description: OAuth2 API
  */
+@Hidden
 @Tag(description = "Oauth2ClientDetailsApi", name = "OAuth2 API")
 @RestController
 @RequestMapping("/api/client")

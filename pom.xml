@@ -51,7 +51,7 @@
         <spring.authorization.version>1.0.2</spring.authorization.version>
 
         <swagger.core.version>2.2.9</swagger.core.version>
-        <springdoc.version>2.0.4</springdoc.version>
+        <springdoc.version>2.1.0</springdoc.version>
         <knife4j.version>3.0.3</knife4j.version>
 
         <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
@@ -61,9 +61,9 @@
         <poi.version>5.2.3</poi.version>
         <commons.io.version>2.11.0</commons.io.version>
         <velocity.version>2.3</velocity.version>
-        <hutool.version>5.8.15</hutool.version>
+        <hutool.version>5.8.18</hutool.version>
         <redisson.version>3.20.0</redisson.version>
-        <qiniu.version>7.12.1</qiniu.version>
+        <qiniu.version>7.13.0</qiniu.version>
 
         <docker.plugin.version>0.32.0</docker.plugin.version>
         <spring.checkstyle.plugin>0.0.35</spring.checkstyle.plugin>

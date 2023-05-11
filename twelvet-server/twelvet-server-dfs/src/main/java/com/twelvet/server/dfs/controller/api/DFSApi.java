@@ -7,6 +7,7 @@ import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.security.annotation.AuthIgnore;
 import com.twelvet.framework.utils.file.FileUtils;
 import com.twelvet.server.dfs.service.IDFSService;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @WebSite twelvet.cn
  * @Description: 文件请求处理API
  */
+@Hidden
 @AuthIgnore
 @RestController
 @RequestMapping("/api")
