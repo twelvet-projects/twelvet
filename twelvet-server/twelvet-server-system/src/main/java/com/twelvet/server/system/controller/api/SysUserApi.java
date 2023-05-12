@@ -8,6 +8,7 @@ import com.twelvet.framework.security.annotation.AuthIgnore;
 import com.twelvet.framework.utils.TUtils;
 import com.twelvet.server.system.service.ISysPermissionService;
 import com.twelvet.server.system.service.ISysUserService;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import java.util.Set;
  * @WebSite twelvet.cn
  * @Description: 用户信息
  */
+@Hidden
 @Tag(description = "SysUserApi", name = "用户信息API")
 @RestController
 @RequestMapping("/api/user")
