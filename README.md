@@ -107,7 +107,7 @@ com.twelvet
 
 - admin/123456
 
-演示地址：[http://cloud.twelvet.cn](http://cloud.twelvet.cn)
+演示地址：[https://cloud.twelvet.cn](https://cloud.twelvet.cn)
 
 ## 架构图
 
