@@ -48,8 +48,8 @@
             <!--排除tomcat-->
             <exclusions>
                 <exclusion>
-                    <artifactId>org.springframework.boot</artifactId>
-                    <groupId>spring-boot-starter-tomcat</groupId>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
