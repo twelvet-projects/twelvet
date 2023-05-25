@@ -53,7 +53,7 @@ public class TWTRemoteRegisteredClientRepository implements RegisteredClientRepo
 	 */
 	@Override
 	public void save(RegisteredClient registeredClient) {
-		throw new UnsupportedOperationException();
+		// throw new UnsupportedOperationException();
 	}
 
 	/**
