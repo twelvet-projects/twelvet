@@ -49,13 +49,13 @@ public class AuthorizationServerConfiguration {
 		OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer();
 		// 个性化认证授权端点
 		http.apply(authorizationServerConfigurer.tokenEndpoint((tokenEndpoint) -> {
-			// 注入自定义的授权认证Converter
-			tokenEndpoint.accessTokenRequestConverter(accessTokenRequestConverter())
-					// 登录成功处理器
-					.accessTokenResponseHandler(new TWTAuthenticationSuccessEventHandler())
-					// 登录失败处理器
-					.errorResponseHandler(new TWTAuthenticationFailureEventHandler());
-		})
+					// 注入自定义的授权认证Converter
+					tokenEndpoint.accessTokenRequestConverter(accessTokenRequestConverter())
+							// 登录成功处理器
+							.accessTokenResponseHandler(new TWTAuthenticationSuccessEventHandler())
+							// 登录失败处理器
+							.errorResponseHandler(new TWTAuthenticationFailureEventHandler());
+				})
 				// 个性化客户端认证
 				.clientAuthentication(oAuth2ClientAuthenticationConfigurer -> {
 					oAuth2ClientAuthenticationConfigurer
@@ -65,16 +65,19 @@ public class AuthorizationServerConfiguration {
 						// 授权码端点个性化confirm页面
 						.consentPage(SecurityConstants.CUSTOM_CONSENT_PAGE_URI)));
 
+		// 授权码登录的登录页个性化
+		http.apply(new FormIdentityLoginConfigurer());
+
+		http.apply(authorizationServerConfigurer.authorizationService(authorizationService)// redis存储token的实现
+				.authorizationServerSettings(
+						AuthorizationServerSettings.builder().issuer(SecurityConstants.PROJECT_LICENSE).build()));
+
 		DefaultSecurityFilterChain securityFilterChain = http.authorizeHttpRequests(authorizeRequests -> {
 			// 自定义接口、端点暴露
 			authorizeRequests.requestMatchers("/api/token/*", "/token/**", "/actuator/**", "/assets/**", "/error",
 					"/v3/api-docs").permitAll();
 			authorizeRequests.anyRequest().authenticated();
-		}).apply(authorizationServerConfigurer.authorizationService(authorizationService)// redis存储token的实现
-				.authorizationServerSettings(
-						AuthorizationServerSettings.builder().issuer(SecurityConstants.PROJECT_LICENSE).build()))
-				// 授权码登录的登录页个性化
-				.and().apply(new FormIdentityLoginConfigurer()).and().build();
+		}).build();
 
 		// 注入自定义授权模式实现
 		addCustomOAuth2GrantAuthenticationProvider(http);
