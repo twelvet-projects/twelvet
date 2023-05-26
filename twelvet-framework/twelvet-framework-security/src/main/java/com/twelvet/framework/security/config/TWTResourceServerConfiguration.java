@@ -7,6 +7,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -41,13 +42,13 @@ public class TWTResourceServerConfiguration {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 		http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
-				.requestMatchers(ArrayUtil.toArray(permitAllUrl.getUrls(), String.class)).permitAll().anyRequest()
-				.authenticated())
+						.requestMatchers(ArrayUtil.toArray(permitAllUrl.getUrls(), String.class)).permitAll().anyRequest()
+						.authenticated())
 				.oauth2ResourceServer(
 						oauth2 -> oauth2.opaqueToken(token -> token.introspector(customOpaqueTokenIntrospector))
 								.authenticationEntryPoint(resourceAuthExceptionEntryPoint)
 								.bearerTokenResolver(twtBearerTokenExtractor))
-				.headers().frameOptions().disable().and().csrf().disable();
+				.headers(AbstractHttpConfigurer::disable).csrf(AbstractHttpConfigurer::disable);
 
 		return http.build();
 	}
