@@ -20,7 +20,7 @@ import java.util.Map;
  * @WebSite twelvet.cn
  * @Description: WEB安全配置
  */
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 public class WebSecurityConfiguration {
 
 	/**
