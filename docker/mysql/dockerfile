@@ -1,5 +1,5 @@
 # 基础镜像
-FROM mysql/mysql-server:8.0.31
+FROM mysql/mysql-server:8.0.32
 # author
 MAINTAINER twelvet
 
