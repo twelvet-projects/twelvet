@@ -56,15 +56,18 @@ public class TWTCustomOpaqueTokenIntrospect implements OpaqueTokenIntrospector {
 
 		Map<String, TwUserDetailsService> userDetailsServiceMap = SpringUtil.getBeansOfType(TwUserDetailsService.class);
 
-		Optional<TwUserDetailsService> optional = userDetailsServiceMap.values().stream()
-				.filter(service -> service.support(Objects.requireNonNull(oldAuthorization).getRegisteredClientId(),
-						oldAuthorization.getAuthorizationGrantType().getValue()))
-				.max(Comparator.comparingInt(Ordered::getOrder));
+		Optional<TwUserDetailsService> optional = userDetailsServiceMap.values()
+			.stream()
+			.filter(service -> service.support(Objects.requireNonNull(oldAuthorization).getRegisteredClientId(),
+					oldAuthorization.getAuthorizationGrantType().getValue()))
+			.max(Comparator.comparingInt(Ordered::getOrder));
 
 		UserDetails userDetails = null;
 		try {
 			UsernamePasswordAuthenticationToken principal = (UsernamePasswordAuthenticationToken) Objects
-					.requireNonNull(oldAuthorization).getAttributes().get(Principal.class.getName());
+				.requireNonNull(oldAuthorization)
+				.getAttributes()
+				.get(Principal.class.getName());
 			Object tokenPrincipal = principal.getPrincipal();
 			userDetails = optional.get().loadUserByUser((LoginUser) tokenPrincipal);
 		}

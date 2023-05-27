@@ -90,7 +90,8 @@ public class TWTTokenEndpoint {
 			@RequestParam(OAuth2ParameterNames.STATE) String state) {
 
 		SysClientDetails clientDetails = ResUtils.of(remoteOauth2ClientDetailsService.getClientDetailsById(clientId))
-				.getData().orElseThrow(() -> new OAuthClientException("clientId 不合法"));
+			.getData()
+			.orElseThrow(() -> new OAuthClientException("clientId 不合法"));
 		Set<String> authorizedScopes = StringUtils.commaDelimitedListToSet(clientDetails.getScope());
 		modelAndView.addObject("clientId", clientId);
 		modelAndView.addObject("state", state);
@@ -139,7 +140,7 @@ public class TWTTokenEndpoint {
 
 			Map<String, Object> claims = authorization.getAccessToken().getClaims();
 			OAuth2AccessTokenResponse sendAccessTokenResponse = OAuth2EndpointUtils
-					.sendAccessTokenResponse(authorization, claims);
+				.sendAccessTokenResponse(authorization, claims);
 			this.accessTokenHttpResponseConverter.write(sendAccessTokenResponse, MediaType.APPLICATION_JSON,
 					httpResponse);
 		}

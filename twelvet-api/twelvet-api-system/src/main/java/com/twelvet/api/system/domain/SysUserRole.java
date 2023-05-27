@@ -46,7 +46,8 @@ public class SysUserRole implements Serializable {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("userId", getUserId())
-				.append("roleId", getRoleId()).toString();
+			.append("roleId", getRoleId())
+			.toString();
 	}
 
 }

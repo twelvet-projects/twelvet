@@ -201,11 +201,20 @@ public class SysDept extends BaseEntity {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("deptId", getDeptId())
-				.append("parentId", getParentId()).append("ancestors", getAncestors()).append("deptName", getDeptName())
-				.append("orderNum", getOrderNum()).append("leader", getLeader()).append("phone", getPhone())
-				.append("email", getEmail()).append("status", getStatus()).append("delFlag", getDelFlag())
-				.append("createBy", getCreateBy()).append("createTime", getCreateTime())
-				.append("updateBy", getUpdateBy()).append("updateTime", getUpdateTime()).toString();
+			.append("parentId", getParentId())
+			.append("ancestors", getAncestors())
+			.append("deptName", getDeptName())
+			.append("orderNum", getOrderNum())
+			.append("leader", getLeader())
+			.append("phone", getPhone())
+			.append("email", getEmail())
+			.append("status", getStatus())
+			.append("delFlag", getDelFlag())
+			.append("createBy", getCreateBy())
+			.append("createTime", getCreateTime())
+			.append("updateBy", getUpdateBy())
+			.append("updateTime", getUpdateTime())
+			.toString();
 	}
 
 }

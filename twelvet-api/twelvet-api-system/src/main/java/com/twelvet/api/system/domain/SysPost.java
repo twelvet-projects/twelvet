@@ -120,10 +120,16 @@ public class SysPost extends BaseEntity {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("postId", getPostId())
-				.append("postCode", getPostCode()).append("postName", getPostName()).append("postSort", getPostSort())
-				.append("status", getStatus()).append("createBy", getCreateBy()).append("createTime", getCreateTime())
-				.append("updateBy", getUpdateBy()).append("updateTime", getUpdateTime()).append("remark", getRemark())
-				.toString();
+			.append("postCode", getPostCode())
+			.append("postName", getPostName())
+			.append("postSort", getPostSort())
+			.append("status", getStatus())
+			.append("createBy", getCreateBy())
+			.append("createTime", getCreateTime())
+			.append("updateBy", getUpdateBy())
+			.append("updateTime", getUpdateTime())
+			.append("remark", getRemark())
+			.toString();
 	}
 
 }

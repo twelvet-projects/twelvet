@@ -43,10 +43,10 @@
         <maven.compiler.target>17</maven.compiler.target>
 
         <spring-boot-dependencies.version>3.1.0</spring-boot-dependencies.version>
-        <spring-cloud.version>2022.0.2</spring-cloud.version>
-        <spring-cloud-alibaba.version>2022.0.0.0-RC1</spring-cloud-alibaba.version>
+        <spring-cloud.version>2022.0.3</spring-cloud.version>
+        <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
         <io.seata.version>1.6.1</io.seata.version>
-        <spring-boot-admin.version>3.0.2</spring-boot-admin.version>
+        <spring-boot-admin.version>3.0.4</spring-boot-admin.version>
         <spring-boot.mybatis>3.0.1</spring-boot.mybatis>
         <spring.authorization.version>1.1.0</spring.authorization.version>
 
@@ -66,7 +66,7 @@
         <qiniu.version>7.13.0</qiniu.version>
 
         <docker.plugin.version>0.32.0</docker.plugin.version>
-        <spring.checkstyle.plugin>0.0.35</spring.checkstyle.plugin>
+        <spring.checkstyle.plugin>0.0.39</spring.checkstyle.plugin>
         <git.commit.plugin>4.9.9</git.commit.plugin>
     </properties>
 
