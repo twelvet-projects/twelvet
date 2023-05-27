@@ -37,9 +37,11 @@ public class WebSecurityConfigurer {
 			httpSecurityHeadersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable);
 		}).authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
 			authorizationManagerRequestMatcherRegistry
-					.requestMatchers(adminContextPath + "/assets/**", adminContextPath + "/login",
-							adminContextPath + "/instances/**", adminContextPath + "/actuator/**")
-					.permitAll().anyRequest().authenticated();
+				.requestMatchers(adminContextPath + "/assets/**", adminContextPath + "/login",
+						adminContextPath + "/instances/**", adminContextPath + "/actuator/**")
+				.permitAll()
+				.anyRequest()
+				.authenticated();
 
 		}).formLogin(httpSecurityFormLoginConfigurer -> {
 			httpSecurityFormLoginConfigurer.loginPage(adminContextPath + "/login");

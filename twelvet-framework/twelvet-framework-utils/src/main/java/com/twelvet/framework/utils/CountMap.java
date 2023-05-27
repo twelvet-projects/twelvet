@@ -83,8 +83,11 @@ public class CountMap {
 	@Nullable
 	@SuppressWarnings("unchecked")
 	public <T> T getMax() {
-		return (T) this.data.entrySet().stream().max(Comparator.comparingLong(entry -> entry.getValue().longValue()))
-				.map(Map.Entry::getKey).orElse(null);
+		return (T) this.data.entrySet()
+			.stream()
+			.max(Comparator.comparingLong(entry -> entry.getValue().longValue()))
+			.map(Map.Entry::getKey)
+			.orElse(null);
 	}
 
 	/**
@@ -94,8 +97,11 @@ public class CountMap {
 	@Nullable
 	@SuppressWarnings("unchecked")
 	public <T> T getMin() {
-		return (T) this.data.entrySet().stream().min(Comparator.comparingLong(entry -> entry.getValue().longValue()))
-				.map(Map.Entry::getKey).orElse(null);
+		return (T) this.data.entrySet()
+			.stream()
+			.min(Comparator.comparingLong(entry -> entry.getValue().longValue()))
+			.map(Map.Entry::getKey)
+			.orElse(null);
 	}
 
 	/**

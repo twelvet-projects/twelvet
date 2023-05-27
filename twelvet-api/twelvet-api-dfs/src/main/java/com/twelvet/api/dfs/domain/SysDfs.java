@@ -115,9 +115,15 @@ public class SysDfs extends BaseEntity {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("fileId", getFileId())
-				.append("fileName", getFileName()).append("path", getPath()).append("spaceName", getSpaceName())
-				.append("originalName", getOriginalFileName()).append("size", getSize()).append("type", getType())
-				.append("createBy", getCreateBy()).append("createTime", getCreateTime()).toString();
+			.append("fileName", getFileName())
+			.append("path", getPath())
+			.append("spaceName", getSpaceName())
+			.append("originalName", getOriginalFileName())
+			.append("size", getSize())
+			.append("type", getType())
+			.append("createBy", getCreateBy())
+			.append("createTime", getCreateTime())
+			.toString();
 	}
 
 }

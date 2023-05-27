@@ -148,7 +148,7 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 			log.debug("got usernamePasswordAuthenticationToken=" + usernamePasswordAuthenticationToken);
 
 			Authentication usernamePasswordAuthentication = authenticationManager
-					.authenticate(usernamePasswordAuthenticationToken);
+				.authenticate(usernamePasswordAuthenticationToken);
 
 			// @formatter:off
 			DefaultOAuth2TokenContext.Builder tokenContextBuilder = DefaultOAuth2TokenContext.builder()
@@ -161,10 +161,11 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 			// @formatter:on
 
 			OAuth2Authorization.Builder authorizationBuilder = OAuth2Authorization
-					.withRegisteredClient(registeredClient).principalName(usernamePasswordAuthentication.getName())
-					.authorizationGrantType(AuthorizationGrantType.PASSWORD)
-					// 0.4.0 新增的方法
-					.authorizedScopes(authorizedScopes);
+				.withRegisteredClient(registeredClient)
+				.principalName(usernamePasswordAuthentication.getName())
+				.authorizationGrantType(AuthorizationGrantType.PASSWORD)
+				// 0.4.0 新增的方法
+				.authorizedScopes(authorizedScopes);
 
 			// ----- Access token -----
 			OAuth2TokenContext tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.ACCESS_TOKEN).build();
@@ -179,12 +180,12 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 					generatedAccessToken.getExpiresAt(), tokenContext.getAuthorizedScopes());
 			if (generatedAccessToken instanceof ClaimAccessor) {
 				authorizationBuilder.id(accessToken.getTokenValue())
-						.token(accessToken,
-								(metadata) -> metadata.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME,
-										((ClaimAccessor) generatedAccessToken).getClaims()))
-						// 0.4.0 新增的方法
-						.authorizedScopes(authorizedScopes)
-						.attribute(Principal.class.getName(), usernamePasswordAuthentication);
+					.token(accessToken,
+							(metadata) -> metadata.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME,
+									((ClaimAccessor) generatedAccessToken).getClaims()))
+					// 0.4.0 新增的方法
+					.authorizedScopes(authorizedScopes)
+					.attribute(Principal.class.getName(), usernamePasswordAuthentication);
 			}
 			else {
 				authorizationBuilder.id(accessToken.getTokenValue()).accessToken(accessToken);
@@ -252,7 +253,7 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 		}
 		if (authenticationException instanceof LockedException) {
 			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodesExpand.USER_LOCKED, this.messages
-					.getMessage("AbstractUserDetailsAuthenticationProvider.locked", "User account is locked"), ""));
+				.getMessage("AbstractUserDetailsAuthenticationProvider.locked", "User account is locked"), ""));
 		}
 		if (authenticationException instanceof DisabledException) {
 			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodesExpand.USER_DISABLE,
@@ -261,7 +262,7 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 		}
 		if (authenticationException instanceof AccountExpiredException) {
 			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodesExpand.USER_EXPIRED, this.messages
-					.getMessage("AbstractUserDetailsAuthenticationProvider.expired", "User account has expired"), ""));
+				.getMessage("AbstractUserDetailsAuthenticationProvider.expired", "User account has expired"), ""));
 		}
 		if (authenticationException instanceof CredentialsExpiredException) {
 			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodesExpand.CREDENTIALS_EXPIRED,

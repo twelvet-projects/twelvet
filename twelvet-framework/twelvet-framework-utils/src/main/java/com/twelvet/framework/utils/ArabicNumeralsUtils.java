@@ -71,23 +71,23 @@ public class ArabicNumeralsUtils {
 				for (int j = 0; j < chArr.length; j++) {
 					if (c == chArr[j]) {
 						switch (j) {
-						case 0:
-							temp *= 10;
-							break;
-						case 1:
-							temp *= 100;
-							break;
-						case 2:
-							temp *= 1000;
-							break;
-						case 3:
-							temp *= 10000;
-							break;
-						case 4:
-							temp *= 100000000;
-							break;
-						default:
-							break;
+							case 0:
+								temp *= 10;
+								break;
+							case 1:
+								temp *= 100;
+								break;
+							case 2:
+								temp *= 1000;
+								break;
+							case 3:
+								temp *= 10000;
+								break;
+							case 4:
+								temp *= 100000000;
+								break;
+							default:
+								break;
 						}
 						count++;
 					}
@@ -124,8 +124,13 @@ public class ArabicNumeralsUtils {
 			stringBuffer.insert(0, CN_NEGATIVE);
 		}
 
-		return stringBuffer.toString().replaceAll("零[千百十]", "零").replaceAll("零+万", "万").replaceAll("零+亿", "亿")
-				.replaceAll("亿万", "亿零").replaceAll("零+", "零").replaceAll("零$", "");
+		return stringBuffer.toString()
+			.replaceAll("零[千百十]", "零")
+			.replaceAll("零+万", "万")
+			.replaceAll("零+亿", "亿")
+			.replaceAll("亿万", "亿零")
+			.replaceAll("零+", "零")
+			.replaceAll("零$", "");
 	}
 
 	/**

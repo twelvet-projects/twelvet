@@ -32,8 +32,10 @@ public class GlobalFilter implements org.springframework.cloud.gateway.filter.Gl
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		// 1. 清洗请求头中from 参数
-		ServerHttpRequest request = exchange.getRequest().mutate()
-				.headers(httpHeaders -> httpHeaders.remove(SecurityConstants.REQUEST_SOURCE)).build();
+		ServerHttpRequest request = exchange.getRequest()
+			.mutate()
+			.headers(httpHeaders -> httpHeaders.remove(SecurityConstants.REQUEST_SOURCE))
+			.build();
 
 		return chain.filter(exchange.mutate().request(request.mutate().build()).build());
 	}

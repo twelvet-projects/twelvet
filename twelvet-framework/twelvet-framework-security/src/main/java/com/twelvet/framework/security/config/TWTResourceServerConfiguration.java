@@ -42,13 +42,16 @@ public class TWTResourceServerConfiguration {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 		http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
-						.requestMatchers(ArrayUtil.toArray(permitAllUrl.getUrls(), String.class)).permitAll().anyRequest()
-						.authenticated())
-				.oauth2ResourceServer(
-						oauth2 -> oauth2.opaqueToken(token -> token.introspector(customOpaqueTokenIntrospector))
-								.authenticationEntryPoint(resourceAuthExceptionEntryPoint)
-								.bearerTokenResolver(twtBearerTokenExtractor))
-				.headers(AbstractHttpConfigurer::disable).csrf(AbstractHttpConfigurer::disable);
+			.requestMatchers(ArrayUtil.toArray(permitAllUrl.getUrls(), String.class))
+			.permitAll()
+			.anyRequest()
+			.authenticated())
+			.oauth2ResourceServer(
+					oauth2 -> oauth2.opaqueToken(token -> token.introspector(customOpaqueTokenIntrospector))
+						.authenticationEntryPoint(resourceAuthExceptionEntryPoint)
+						.bearerTokenResolver(twtBearerTokenExtractor))
+			.headers(AbstractHttpConfigurer::disable)
+			.csrf(AbstractHttpConfigurer::disable);
 
 		return http.build();
 	}

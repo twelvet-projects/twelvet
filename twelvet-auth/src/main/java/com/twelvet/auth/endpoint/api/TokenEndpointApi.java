@@ -94,8 +94,10 @@ public class TokenEndpointApi {
 			key = String.format("%s::*%s*", CacheConstants.PROJECT_OAUTH_ACCESS, username);
 		}
 		Set<String> keys = redisTemplate.keys(key);
-		List<String> pages = keys.stream().skip((long) (current - 1) * pageSize).limit(pageSize)
-				.collect(Collectors.toList());
+		List<String> pages = keys.stream()
+			.skip((long) (current - 1) * pageSize)
+			.limit(pageSize)
+			.collect(Collectors.toList());
 
 		TableDataInfo tableDataInfo = new TableDataInfo();
 

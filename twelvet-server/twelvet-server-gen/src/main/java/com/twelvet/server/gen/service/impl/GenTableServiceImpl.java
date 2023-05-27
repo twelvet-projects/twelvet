@@ -266,7 +266,8 @@ public class GenTableServiceImpl implements IGenTableService {
 		});
 
 		List<GenTableColumn> delColumns = tableColumns.stream()
-				.filter(column -> !dbTableColumnNames.contains(column.getColumnName())).collect(Collectors.toList());
+			.filter(column -> !dbTableColumnNames.contains(column.getColumnName()))
+			.collect(Collectors.toList());
 		if (StringUtils.isNotEmpty(delColumns)) {
 			genTableColumnMapper.deleteGenTableColumns(delColumns);
 		}

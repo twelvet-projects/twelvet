@@ -724,10 +724,11 @@ public class JacksonUtils {
 
 		private static JsonFactory jsonFactory() {
 			return JsonFactory.builder()
-					// 可解析反斜杠引用的所有字符
-					.configure(JsonReadFeature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER, true)
-					// 允许JSON字符串包含非引号控制字符（值小于32的ASCII字符，包含制表符和换行符）
-					.configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS, true).build();
+				// 可解析反斜杠引用的所有字符
+				.configure(JsonReadFeature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER, true)
+				// 允许JSON字符串包含非引号控制字符（值小于32的ASCII字符，包含制表符和换行符）
+				.configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS, true)
+				.build();
 		}
 
 		@Override

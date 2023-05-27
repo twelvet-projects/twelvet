@@ -46,7 +46,7 @@
         <spring-cloud.version>2022.0.2</spring-cloud.version>
         <spring-cloud-tencent.version>1.8.5-2020.0.5</spring-cloud-tencent.version>
 
-        <spring-boot-admin.version>3.0.2</spring-boot-admin.version>
+        <spring-boot-admin.version>3.0.4</spring-boot-admin.version>
         <spring-boot.mybatis>3.0.1</spring-boot.mybatis>
         <spring.authorization.version>1.1.0</spring.authorization.version>
 
@@ -66,7 +66,7 @@
         <qiniu.version>7.12.1</qiniu.version>
 
         <docker.plugin.version>0.32.0</docker.plugin.version>
-        <spring.checkstyle.plugin>0.0.32</spring.checkstyle.plugin>
+        <spring.checkstyle.plugin>0.0.39</spring.checkstyle.plugin>
         <git.commit.plugin>4.9.9</git.commit.plugin>
     </properties>
 
