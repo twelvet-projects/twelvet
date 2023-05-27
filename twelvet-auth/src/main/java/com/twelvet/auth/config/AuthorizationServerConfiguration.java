@@ -51,35 +51,37 @@ public class AuthorizationServerConfiguration {
 		http.apply(authorizationServerConfigurer.tokenEndpoint((tokenEndpoint) -> {
 			// 注入自定义的授权认证Converter
 			tokenEndpoint.accessTokenRequestConverter(accessTokenRequestConverter())
-					// 登录成功处理器
-					.accessTokenResponseHandler(new TWTAuthenticationSuccessEventHandler())
-					// 登录失败处理器
-					.errorResponseHandler(new TWTAuthenticationFailureEventHandler());
+				// 登录成功处理器
+				.accessTokenResponseHandler(new TWTAuthenticationSuccessEventHandler())
+				// 登录失败处理器
+				.errorResponseHandler(new TWTAuthenticationFailureEventHandler());
 		})
-				// 个性化客户端认证
-				.clientAuthentication(oAuth2ClientAuthenticationConfigurer -> {
-					AuthenticationConverter authenticationConverter = new DelegatingAuthenticationConverter(
-							Arrays.asList(new JwtClientAssertionAuthenticationConverter(),
-									new ClientSecretBasicAuthenticationConverter(),
-									new ClientSecretPostAuthenticationConverter(),
-									new PublicClientAuthenticationConverter()));
+			// 个性化客户端认证
+			.clientAuthentication(oAuth2ClientAuthenticationConfigurer -> {
+				AuthenticationConverter authenticationConverter = new DelegatingAuthenticationConverter(Arrays.asList(
+						new JwtClientAssertionAuthenticationConverter(), new ClientSecretBasicAuthenticationConverter(),
+						new ClientSecretPostAuthenticationConverter(), new PublicClientAuthenticationConverter()));
 
-					oAuth2ClientAuthenticationConfigurer.authenticationConverter(authenticationConverter)
-							// 处理客户端认证异常
-							.errorResponseHandler(new TWTAuthenticationFailureEventHandler());
-				}).authorizationEndpoint(authorizationEndpoint -> authorizationEndpoint
-						// 授权码端点个性化confirm页面
-						.consentPage(SecurityConstants.CUSTOM_CONSENT_PAGE_URI)));
+				oAuth2ClientAuthenticationConfigurer.authenticationConverter(authenticationConverter)
+					// 处理客户端认证异常
+					.errorResponseHandler(new TWTAuthenticationFailureEventHandler());
+			})
+			.authorizationEndpoint(authorizationEndpoint -> authorizationEndpoint
+				// 授权码端点个性化confirm页面
+				.consentPage(SecurityConstants.CUSTOM_CONSENT_PAGE_URI)));
 
 		RequestMatcher endpointsMatcher = authorizationServerConfigurer.getEndpointsMatcher();
 		DefaultSecurityFilterChain securityFilterChain = http.requestMatcher(endpointsMatcher)
-				.authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
-				// redis存储token的实现
-				.apply(authorizationServerConfigurer.authorizationService(authorizationService)
-						.authorizationServerSettings(AuthorizationServerSettings.builder()
-								.issuer(SecurityConstants.PROJECT_LICENSE).build()))
-				// 授权码登录的登录页个性化
-				.and().apply(new FormIdentityLoginConfigurer()).and().build();
+			.authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
+			// redis存储token的实现
+			.apply(authorizationServerConfigurer.authorizationService(authorizationService)
+				.authorizationServerSettings(
+						AuthorizationServerSettings.builder().issuer(SecurityConstants.PROJECT_LICENSE).build()))
+			// 授权码登录的登录页个性化
+			.and()
+			.apply(new FormIdentityLoginConfigurer())
+			.and()
+			.build();
 
 		// 注入自定义授权模式实现
 		addCustomOAuth2GrantAuthenticationProvider(http);

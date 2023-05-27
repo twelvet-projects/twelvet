@@ -57,7 +57,7 @@ public interface TwUserDetailsService extends UserDetailsService, Ordered {
 		}
 
 		Collection<? extends GrantedAuthority> authorities = AuthorityUtils
-				.createAuthorityList(dbAuthsSet.toArray(new String[0]));
+			.createAuthorityList(dbAuthsSet.toArray(new String[0]));
 
 		SysUser user = info.getSysUser();
 

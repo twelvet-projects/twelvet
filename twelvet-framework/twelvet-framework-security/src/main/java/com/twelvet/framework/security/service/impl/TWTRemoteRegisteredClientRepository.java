@@ -83,34 +83,36 @@ public class TWTRemoteRegisteredClientRepository implements RegisteredClientRepo
 	@Cacheable(value = CacheConstants.CLIENT_DETAILS_KEY, key = "#clientId", unless = "#result == null")
 	public RegisteredClient findByClientId(String clientId) {
 		SysClientDetails clientDetails = ResUtils.of(remoteOauth2ClientDetailsService.getClientDetailsById(clientId))
-				.getData().orElseThrow(() -> new OAuth2AuthorizationCodeRequestAuthenticationException(
-						new OAuth2Error("客户端查询异常，请检查数据库链接"), null));
+			.getData()
+			.orElseThrow(() -> new OAuth2AuthorizationCodeRequestAuthenticationException(
+					new OAuth2Error("客户端查询异常，请检查数据库链接"), null));
 
 		RegisteredClient.Builder builder = RegisteredClient.withId(clientDetails.getClientId())
-				.clientId(clientDetails.getClientId())
-				.clientSecret(SecurityConstants.NOOP + clientDetails.getClientSecret())
-				.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC);
+			.clientId(clientDetails.getClientId())
+			.clientSecret(SecurityConstants.NOOP + clientDetails.getClientSecret())
+			.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC);
 
 		// 授权模式
 		Optional.ofNullable(clientDetails.getAuthorizedGrantTypes())
-				.ifPresent(grants -> StringUtils.commaDelimitedListToSet(grants)
-						.forEach(s -> builder.authorizationGrantType(new AuthorizationGrantType(s))));
+			.ifPresent(grants -> StringUtils.commaDelimitedListToSet(grants)
+				.forEach(s -> builder.authorizationGrantType(new AuthorizationGrantType(s))));
 		// 回调地址
 		Optional.ofNullable(clientDetails.getWebServerRedirectUri()).ifPresent(builder::redirectUri);
 
 		// scope
 		Optional.ofNullable(clientDetails.getScope()).ifPresent(builder::scope);
 		return builder
-				.tokenSettings(TokenSettings.builder().accessTokenFormat(OAuth2TokenFormat.REFERENCE)
-						.accessTokenTimeToLive(Duration.ofSeconds(Optional
-								.ofNullable(clientDetails.getAccessTokenValidity()).orElse(accessTokenValiditySeconds)))
-						.refreshTokenTimeToLive(
-								Duration.ofSeconds(Optional.ofNullable(clientDetails.getRefreshTokenValidity())
-										.orElse(refreshTokenValiditySeconds)))
-						.build())
-				.clientSettings(ClientSettings.builder()
-						.requireAuthorizationConsent(!BooleanUtil.toBoolean(clientDetails.getAutoapprove())).build())
-				.build();
+			.tokenSettings(TokenSettings.builder()
+				.accessTokenFormat(OAuth2TokenFormat.REFERENCE)
+				.accessTokenTimeToLive(Duration.ofSeconds(
+						Optional.ofNullable(clientDetails.getAccessTokenValidity()).orElse(accessTokenValiditySeconds)))
+				.refreshTokenTimeToLive(Duration.ofSeconds(Optional.ofNullable(clientDetails.getRefreshTokenValidity())
+					.orElse(refreshTokenValiditySeconds)))
+				.build())
+			.clientSettings(ClientSettings.builder()
+				.requireAuthorizationConsent(!BooleanUtil.toBoolean(clientDetails.getAutoapprove()))
+				.build())
+			.build();
 
 	}
 

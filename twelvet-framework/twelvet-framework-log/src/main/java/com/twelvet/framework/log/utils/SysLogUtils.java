@@ -28,7 +28,7 @@ public class SysLogUtils {
 
 	public static SysLogVO getSysLog() {
 		HttpServletRequest request = ((ServletRequestAttributes) Objects
-				.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+			.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
 		SysLogVO sysLogVO = new SysLogVO();
 		sysLogVO.setRemoteAddr(ServletUtil.getClientIP(request));
 		sysLogVO.setRequestUri(URLUtil.getPath(request.getRequestURI()));

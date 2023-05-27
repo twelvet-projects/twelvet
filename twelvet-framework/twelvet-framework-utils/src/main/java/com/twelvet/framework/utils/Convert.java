@@ -815,8 +815,11 @@ public class Convert {
 			}
 			s.insert(0, p.replaceAll("(零.)*零$", "").replaceAll("^$", "零") + unit[0][i]);
 		}
-		return head + s.toString().replaceAll("(零.)*零元", "元").replaceFirst("(零.)+", "").replaceAll("(零.)+", "零")
-				.replaceAll("^整$", "零元整");
+		return head + s.toString()
+			.replaceAll("(零.)*零元", "元")
+			.replaceFirst("(零.)+", "")
+			.replaceAll("(零.)+", "零")
+			.replaceAll("^整$", "零元整");
 	}
 
 }

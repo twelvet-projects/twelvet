@@ -137,9 +137,14 @@ public class SysJobLog extends BaseEntity {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("jobLogId", getJobLogId())
-				.append("jobName", getJobName()).append("jobGroup", getJobGroup()).append("jobMessage", getJobMessage())
-				.append("status", getStatus()).append("exceptionInfo", getExceptionInfo())
-				.append("startTime", getStartTime()).append("stopTime", getStopTime()).toString();
+			.append("jobName", getJobName())
+			.append("jobGroup", getJobGroup())
+			.append("jobMessage", getJobMessage())
+			.append("status", getStatus())
+			.append("exceptionInfo", getExceptionInfo())
+			.append("startTime", getStartTime())
+			.append("stopTime", getStopTime())
+			.toString();
 	}
 
 }

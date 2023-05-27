@@ -394,20 +394,29 @@ public class SysUserServiceImpl implements ISysUserService {
 					user.setCreateBy(operName);
 					this.insertUser(user);
 					successNum++;
-					successMsg.append("<br/>").append(successNum).append("、账号 ").append(user.getUsername())
-							.append(" 导入成功");
+					successMsg.append("<br/>")
+						.append(successNum)
+						.append("、账号 ")
+						.append(user.getUsername())
+						.append(" 导入成功");
 				}
 				else if (cover) {
 					user.setUpdateBy(operName);
 					this.updateUser(user);
 					successNum++;
-					successMsg.append("<br/>").append(successNum).append("、账号 ").append(user.getUsername())
-							.append(" 更新成功");
+					successMsg.append("<br/>")
+						.append(successNum)
+						.append("、账号 ")
+						.append(user.getUsername())
+						.append(" 更新成功");
 				}
 				else {
 					failureNum++;
-					failureMsg.append("<br/>").append(failureNum).append("、账号 ").append(user.getUsername())
-							.append(" 已存在");
+					failureMsg.append("<br/>")
+						.append(failureNum)
+						.append("、账号 ")
+						.append(user.getUsername())
+						.append(" 已存在");
 				}
 			}
 			catch (Exception e) {

@@ -95,8 +95,10 @@ public class TokenEndpointApi {
 		}
 
 		Set<String> keys = redisTemplate.keys(key);
-		List<String> pages = keys.stream().skip((long) (current - 1) * pageSize).limit(pageSize)
-				.collect(Collectors.toList());
+		List<String> pages = keys.stream()
+			.skip((long) (current - 1) * pageSize)
+			.limit(pageSize)
+			.collect(Collectors.toList());
 
 		TableDataInfo tableDataInfo = new TableDataInfo();
 

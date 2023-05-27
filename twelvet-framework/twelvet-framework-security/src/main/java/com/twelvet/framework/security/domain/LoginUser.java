@@ -73,7 +73,9 @@ public class LoginUser extends User implements OAuth2AuthenticatedPrincipal {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("deptId", getDeptId())
-				.append("roles", getRoles()).append("userId", getUserId()).toString();
+			.append("roles", getRoles())
+			.append("userId", getUserId())
+			.toString();
 	}
 
 	/**

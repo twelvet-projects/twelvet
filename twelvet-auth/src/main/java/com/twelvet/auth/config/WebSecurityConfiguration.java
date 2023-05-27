@@ -33,16 +33,22 @@ public class WebSecurityConfiguration {
 		// 增加自定义第三方换取信息方式
 		Map<String, OAuth2UserService<OAuth2UserRequest, OAuth2User>> oAuth2UserServiceMap = new HashMap<>();
 
-		http.authorizeRequests(
-				authorizeRequests -> authorizeRequests.antMatchers("/token/*", "/api/token/*").permitAll()// 开放自定义的部分端点
-						.anyRequest().authenticated())
-				.headers().frameOptions().sameOrigin()// 避免iframe同源无法登录
-				// 表单登录个性化
-				.and().apply(new FormIdentityLoginConfigurer())
-				// 接入第三方登录
-				.and().oauth2Login()
-				// 自定义获取授权信息方式
-				.userInfoEndpoint().userService(new CustomOAuth2UserService<>(oAuth2UserServiceMap));
+		http.authorizeRequests(authorizeRequests -> authorizeRequests.antMatchers("/token/*", "/api/token/*")
+			.permitAll()// 开放自定义的部分端点
+			.anyRequest()
+			.authenticated())
+			.headers()
+			.frameOptions()
+			.sameOrigin()// 避免iframe同源无法登录
+			// 表单登录个性化
+			.and()
+			.apply(new FormIdentityLoginConfigurer())
+			// 接入第三方登录
+			.and()
+			.oauth2Login()
+			// 自定义获取授权信息方式
+			.userInfoEndpoint()
+			.userService(new CustomOAuth2UserService<>(oAuth2UserServiceMap));
 		// 处理 UsernamePasswordAuthenticationToken
 		http.authenticationProvider(new TWTDaoAuthenticationProvider());
 		return http.build();
@@ -58,8 +64,13 @@ public class WebSecurityConfiguration {
 	@Order(0)
 	SecurityFilterChain resources(HttpSecurity http) throws Exception {
 		http.requestMatchers((matchers) -> matchers.antMatchers("/actuator/**", "/assets/**", "/error", "/v3/api-docs"))
-				.authorizeHttpRequests((authorize) -> authorize.anyRequest().permitAll()).requestCache().disable()
-				.securityContext().disable().sessionManagement().disable();
+			.authorizeHttpRequests((authorize) -> authorize.anyRequest().permitAll())
+			.requestCache()
+			.disable()
+			.securityContext()
+			.disable()
+			.sessionManagement()
+			.disable();
 		return http.build();
 	}
 

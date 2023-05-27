@@ -137,8 +137,10 @@ public class PermissionService {
 	 * @return 用户是否具备某权限
 	 */
 	private boolean hasPermissions(Collection<? extends GrantedAuthority> authorities, String permission) {
-		return authorities.stream().map(GrantedAuthority::getAuthority).filter(StringUtils::hasText)
-				.anyMatch(x -> ALL_PERMISSION.contains(x) || PatternMatchUtils.simpleMatch(permission, x));
+		return authorities.stream()
+			.map(GrantedAuthority::getAuthority)
+			.filter(StringUtils::hasText)
+			.anyMatch(x -> ALL_PERMISSION.contains(x) || PatternMatchUtils.simpleMatch(permission, x));
 	}
 
 }

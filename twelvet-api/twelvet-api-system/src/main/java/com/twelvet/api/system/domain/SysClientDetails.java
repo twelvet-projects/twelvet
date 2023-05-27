@@ -174,13 +174,17 @@ public class SysClientDetails extends BaseEntity {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("clientId", getClientId())
-				.append("resourceIds", getResourceIds()).append("clientSecret", getClientSecret())
-				.append("scope", getScope()).append("authorizedGrantTypes", getAuthorizedGrantTypes())
-				.append("webServerRedirectUri", getWebServerRedirectUri()).append("authorities", getAuthorities())
-				.append("accessTokenValidity", getAccessTokenValidity())
-				.append("refreshTokenValidity", getRefreshTokenValidity())
-				.append("additionalInformation", getAdditionalInformation()).append("autoapprove", getAutoapprove())
-				.toString();
+			.append("resourceIds", getResourceIds())
+			.append("clientSecret", getClientSecret())
+			.append("scope", getScope())
+			.append("authorizedGrantTypes", getAuthorizedGrantTypes())
+			.append("webServerRedirectUri", getWebServerRedirectUri())
+			.append("authorities", getAuthorities())
+			.append("accessTokenValidity", getAccessTokenValidity())
+			.append("refreshTokenValidity", getRefreshTokenValidity())
+			.append("additionalInformation", getAdditionalInformation())
+			.append("autoapprove", getAutoapprove())
+			.toString();
 	}
 
 }

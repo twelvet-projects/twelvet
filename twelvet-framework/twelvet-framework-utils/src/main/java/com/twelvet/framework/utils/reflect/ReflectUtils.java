@@ -189,7 +189,7 @@ public class ReflectUtils {
 		}
 		Validate.notBlank(fieldName, "fieldName can't be blank");
 		for (Class<?> superClass = obj.getClass(); superClass != Object.class; superClass = superClass
-				.getSuperclass()) {
+			.getSuperclass()) {
 			try {
 				Field field = superClass.getDeclaredField(fieldName);
 				makeAccessible(field);
@@ -213,7 +213,7 @@ public class ReflectUtils {
 		}
 		Validate.notBlank(methodName, "methodName can't be blank");
 		for (Class<?> searchType = obj.getClass(); searchType != Object.class; searchType = searchType
-				.getSuperclass()) {
+			.getSuperclass()) {
 			try {
 				Method method = searchType.getDeclaredMethod(methodName, parameterTypes);
 				makeAccessible(method);
@@ -236,7 +236,7 @@ public class ReflectUtils {
 		}
 		Validate.notBlank(methodName, "methodName can't be blank");
 		for (Class<?> searchType = obj.getClass(); searchType != Object.class; searchType = searchType
-				.getSuperclass()) {
+			.getSuperclass()) {
 			Method[] methods = searchType.getDeclaredMethods();
 			for (Method method : methods) {
 				if (method.getName().equals(methodName) && method.getParameterTypes().length == argsNum) {

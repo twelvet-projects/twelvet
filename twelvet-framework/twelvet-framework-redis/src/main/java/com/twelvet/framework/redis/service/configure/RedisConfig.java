@@ -62,12 +62,12 @@ public class RedisConfig extends CachingConfigurerSupport {
 		jackson2JsonRedisSerializer.setObjectMapper(om);
 
 		RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-				// 缓存前缀
-				.prefixCacheNameWith("twelvet:")
-				// 修改为一个 :
-				// .computePrefixWith(name -> name + ":")
-				// 过期时间
-				.entryTtl(Duration.ofSeconds(seconds));
+			// 缓存前缀
+			.prefixCacheNameWith("twelvet:")
+			// 修改为一个 :
+			// .computePrefixWith(name -> name + ":")
+			// 过期时间
+			.entryTtl(Duration.ofSeconds(seconds));
 
 		return redisCacheConfiguration;
 	}

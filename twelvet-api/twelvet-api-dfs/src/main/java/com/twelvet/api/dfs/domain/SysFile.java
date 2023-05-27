@@ -44,7 +44,8 @@ public class SysFile {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("name", getName())
-				.append("url", getUrl()).toString();
+			.append("url", getUrl())
+			.toString();
 	}
 
 }

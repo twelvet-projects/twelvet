@@ -85,19 +85,19 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 			}
 			this.logger.debug("Failed to authenticate since phone code does not match stored value");
 			throw new BadCredentialsException(this.messages
-					.getMessage("AbstractUserDetailsAuthenticationProvider.smsBadCredentials", "Bad credentials"));
+				.getMessage("AbstractUserDetailsAuthenticationProvider.smsBadCredentials", "Bad credentials"));
 		}
 
 		if (authentication.getCredentials() == null) {
 			this.logger.debug("Failed to authenticate since no credentials provided");
 			throw new BadCredentialsException(this.messages
-					.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
+				.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
 		}
 		String presentedPassword = authentication.getCredentials().toString();
 		if (!this.passwordEncoder.matches(presentedPassword, userDetails.getPassword())) {
 			this.logger.debug("Failed to authenticate since password does not match stored value");
 			throw new BadCredentialsException(this.messages
-					.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
+				.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
 		}
 	}
 
@@ -106,8 +106,9 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 		prepareTimingAttackProtection();
 		HttpServletRequest request = null;
 		try {
-			request = ServletUtils.getRequest().orElseThrow(
-					(Supplier<Throwable>) () -> new InternalAuthenticationServiceException("web request is empty"));
+			request = ServletUtils.getRequest()
+				.orElseThrow(
+						(Supplier<Throwable>) () -> new InternalAuthenticationServiceException("web request is empty"));
 		}
 		catch (Throwable e) {
 			throw new InternalAuthenticationServiceException("web request is empty");
@@ -125,9 +126,10 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 
 		String finalClientId = clientId;
 		// 获取需要使用的登录器
-		Optional<TwUserDetailsService> optional = userDetailsServiceMap.values().stream()
-				.filter(service -> service.support(finalClientId, grantType))
-				.max(Comparator.comparingInt(Ordered::getOrder));
+		Optional<TwUserDetailsService> optional = userDetailsServiceMap.values()
+			.stream()
+			.filter(service -> service.support(finalClientId, grantType))
+			.max(Comparator.comparingInt(Ordered::getOrder));
 
 		if (!optional.isPresent()) {
 			throw new InternalAuthenticationServiceException("UserDetailsService error , not register");

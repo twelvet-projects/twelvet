@@ -68,7 +68,7 @@
         <qiniu.version>7.12.1</qiniu.version>
 
         <docker.plugin.version>0.32.0</docker.plugin.version>
-        <spring.checkstyle.plugin>0.0.35</spring.checkstyle.plugin>
+        <spring.checkstyle.plugin>0.0.39</spring.checkstyle.plugin>
         <git.commit.plugin>4.9.9</git.commit.plugin>
     </properties>
 

@@ -48,14 +48,16 @@ public class AuthIgnoreConfig implements InitializingBean {
 			// 获取方法上边的注解 替代path variable 为 *
 			AuthIgnore method = AnnotationUtils.findAnnotation(handlerMethod.getMethod(), AuthIgnore.class);
 			Optional.ofNullable(method)
-					.ifPresent(authIgnore -> Objects.requireNonNull(mappingInfo.getPathPatternsCondition())
-							.getPatternValues().forEach(url -> urls.add(ReUtil.replaceAll(url, PATTERN, "*"))));
+				.ifPresent(authIgnore -> Objects.requireNonNull(mappingInfo.getPathPatternsCondition())
+					.getPatternValues()
+					.forEach(url -> urls.add(ReUtil.replaceAll(url, PATTERN, "*"))));
 
 			// 获取类上边的注解, 替代path variable 为 *
 			AuthIgnore controller = AnnotationUtils.findAnnotation(handlerMethod.getBeanType(), AuthIgnore.class);
 			Optional.ofNullable(controller)
-					.ifPresent(inner -> Objects.requireNonNull(mappingInfo.getPathPatternsCondition())
-							.getPatternValues().forEach(url -> urls.add(ReUtil.replaceAll(url, PATTERN, "*"))));
+				.ifPresent(inner -> Objects.requireNonNull(mappingInfo.getPathPatternsCondition())
+					.getPatternValues()
+					.forEach(url -> urls.add(ReUtil.replaceAll(url, PATTERN, "*"))));
 		});
 	}
 
