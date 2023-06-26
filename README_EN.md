@@ -1,6 +1,8 @@
 [中文](https://github.com/twelvet-s/twelvet/blob/master/README.md) | [English](https://github.com/twelvet-s/twelvet/blob/master/README_EN.md)
-# twelvet
+
+# 🚀twelvet
 # JDK >= 17
+
 [![AUR](https://img.shields.io/github/license/twelvet-s/twelvet)](https://github.com/twelvet-s/twelvet/blob/master/LICENSE)
 [![](https://img.shields.io/badge/Author-TwelveT-orange.svg)](https://twelvet.cn)
 [![](https://img.shields.io/badge/version-2.7.5-success)](https://gitee.com/twelvet/twelvet)
@@ -9,15 +11,26 @@
 [![star](https://gitee.com/twelvet/twelvet/badge/star.svg?theme=white)](https://gitee.com/twelvet/twelvet/stargazers)
 [![fork](https://gitee.com/twelvet/twelvet/badge/fork.svg?theme=white)](https://gitee.com/twelvet/twelvet/members)
 
-A permission management system based on Spring Cloud Alibaba that integrates popular libraries on the market and can act as a framework for rapid development.
+A permission management system based on Spring Cloud Alibaba that integrates popular libraries on the market and can act
+as a framework for rapid development.
 
-A scaffolding framework based on microservices architecture, using the Spring Cloud Alibaba series for architecture. Learning and understanding it will enable you to quickly grasp the core basics of microservices. This project aims to reduce duplication of business code and has a common core business code that is universal for both microservices and monoliths.
+A scaffolding framework based on microservices architecture, using the Spring Cloud Alibaba series for architecture.
+Learning and understanding it will enable you to quickly grasp the core basics of microservices. This project aims to
+reduce duplication of business code and has a common core business code that is universal for both microservices and
+monoliths.
 
-But more importantly, it is for learning the concept of microservices and development. You can use it for website management backstage, website member center, CMS, CRM, OA and other systems development. Of course, not just small systems, we can produce more service modules and continuously improve the project.
+But more importantly, it is for learning the concept of microservices and development. You can use it for website
+management backstage, website member center, CMS, CRM, OA and other systems development. Of course, not just small
+systems, we can produce more service modules and continuously improve the project.
 
-The initial intention of the system is to be able to quickly meet the business needs, to bring better experience and more time. It will be used to incubate some practical functional points. We hope that they are lightweight, highly portable functional plugins.
+The initial intention of the system is to be able to quickly meet the business needs, to bring better experience and
+more time. It will be used to incubate some practical functional points. We hope that they are lightweight, highly
+portable functional plugins.
 
-At the same time, we hope that more developers can quickly obtain better solutions in it, and try to reduce our learning costs as much as possible. Therefore, we should invest more time in other more meaningful things. We know the importance of knowledge, but we don't just want a single "knowledge". Go feel / care for more brilliance, no matter people, things, or objects, they will become your best inspiration.
+At the same time, we hope that more developers can quickly obtain better solutions in it, and try to reduce our learning
+costs as much as possible. Therefore, we should invest more time in other more meaningful things. We know the importance
+of knowledge, but we don't just want a single "knowledge". Go feel / care for more brilliance, no matter people, things,
+or objects, they will become your best inspiration.
 
 Backend source code: https://github.com/twelvet-s/twelvet
 
@@ -26,6 +39,14 @@ Frontend source code: https://github.com/twelvet-s/twelvet-ui
 Technical documents: https://twelvet.cn/docs/
 
 Official blog: https://twelvet.cn
+
+## 🍎 Branch Description
+
+| Branch               | Description                                                        |
+|----------------------|--------------------------------------------------------------------|
+| master               | java8 + springboot 2.7.x + springcloud 2021 + spring cloud alibaba |
+| master-boot-3        | java17 + springboot 3.x + springcloud 2022 + spring cloud alibaba  |
+| spring-cloud-tencent | java17 + springboot 3.x + springcloud 2022 + spring cloud tencent  |
 
 ## System Module
 
@@ -61,8 +82,10 @@ com.twelvet
 
 ## Built-in Functions
 
-1. User management: Users are operators of the system, and this function mainly completes the configuration of system users.
-2. Department management: configure the system organization structure (company, department, group), tree structure display supports data permissions.
+1. User management: Users are operators of the system, and this function mainly completes the configuration of system
+   users.
+2. Department management: configure the system organization structure (company, department, group), tree structure
+   display supports data permissions.
 3. Post management: Configure the positions held by system users.
 4. Menu Management: Configure system menus, operation permissions, button permission identifiers, etc.
 5. Role Management: Role menu permission allocation, set role data range permission division by organization.
@@ -70,14 +93,15 @@ com.twelvet
 7. Parameter management: Dynamic configuration of commonly used parameters in the system.
 8. Asynchronous: Login log / system operation log / system login log recording and inquiry.
 9. Scheduled task: Online (add, modify, delete) task scheduling includes execution result logs.
-10. Code generation: One-click generation of CRUD front-end and back-end code, providing faster speed for business development.
+10. Code generation: One-click generation of CRUD front-end and back-end code, providing faster speed for business
+    development.
 11. Service monitoring: Monitor current system CPU, memory, disk, stack and other related information.
-12. Connection pool monitoring: Monitor the status of the current system database connection pool, and analyze SQL to find out the system performance bottleneck.
+12. Connection pool monitoring: Monitor the status of the current system database connection pool, and analyze SQL to
+    find out the system performance bottleneck.
 13. Distributed file storage.
 14. Swagger gateway aggregation document.
 15. Sentinel flow restriction center.
 16. Nacos registration + configuration center.
-
 
 ## Demonstration
 
@@ -103,11 +127,14 @@ com.twelvet
 Demonstration address：[https://cloud.twelvet.cn](https://cloud.twelvet.cn)
 
 ## Architecture Diagram
+
 <img src="https://twelvet.cn/assets/images/twelvet/map.png"/>
 
-## One-click Docker startup for Linux (minimal service startup)
+## ✈️✈️✈️ Quickly start Microservices
+
 Memory > 16
 Maven, Docker, Docker-compose, Node, and Yarn need to be installed manually.
+
 ```shell
 # mvn
 mvn clean && mvn install
