@@ -77,7 +77,9 @@ public class WebLogFilter implements Filter {
 		long endTime = System.currentTimeMillis();
 		// 获取response返回的内容并重新写入response
 		byte[] bytes = responseWrapper.getResponseData();
-		response.getOutputStream().write(bytes);
+		if (bytes.length > 0) {
+			response.getOutputStream().write(bytes);
+		}
 
 		// 仅输出JSON
 		String responseData = new String(bytes, StandardCharsets.UTF_8);
