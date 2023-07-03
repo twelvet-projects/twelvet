@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 @WebFilter(filterName = "BaseFilter", urlPatterns = "/*")
-@Component
 public class WebLogFilter implements Filter {
 
 	private final static Logger log = LoggerFactory.getLogger(WebLogFilter.class);
