@@ -144,3 +144,6 @@ chmod 751 deploy.sh
 ## TwelveT微服务交流群
 
 QQ群： [![加入QQ群](https://img.shields.io/badge/985830229-blue.svg)](https://jq.qq.com/?_wv=1027&k=cznM6Q00) 点击按钮入群。
+
+## 🤝鸣谢
+感谢jetbrains提供的许可证[![jetbrains](https://cdn.staticaly.com/gh/fxzbiz/img@url/2022/12/01/DGnop3.png)](https://www.jetbrains.com/)
