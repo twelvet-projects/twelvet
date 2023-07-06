@@ -153,4 +153,4 @@ chmod 751 deploy.sh
 ./deploy.sh nginx
 ```
 ## 🤝Thank You
-Thanks to jetbrains for the license[![jetbrains](https://cdn.staticaly.com/gh/fxzbiz/img@url/2022/12/01/DGnop3.png)](https://www.jetbrains.com/)
+Thanks to jetbrains for the license[![jetbrains](https://cloud.twelvet.cn/jetbrains.png)](https://www.jetbrains.com?from=https://github.com/twelvet-s/twelvet)
