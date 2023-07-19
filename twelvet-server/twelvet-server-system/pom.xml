@@ -14,7 +14,7 @@
 
     <dependencies>
 
-        <!--通用核心-->
+        <!--twelvet Api System-->
         <dependency>
             <groupId>com.twelvet</groupId>
             <artifactId>twelvet-api-system</artifactId>
