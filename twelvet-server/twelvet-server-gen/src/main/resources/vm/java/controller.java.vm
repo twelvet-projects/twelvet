@@ -47,7 +47,7 @@ public class ${ClassName}Controller extends TWTController
      * 查询${functionName}列表
      */
     @Operation(summary = "查询${functionName}列表")
-    @PreAuthorize("@role.hasPermi('{permissionPrefix}:list')")
+    @PreAuthorize("@role.hasPermi('${permissionPrefix}:list')")
     @GetMapping("/list")
     #if($table.crud || $table.sub)
     public JsonResult<TableDataInfo> list(${ClassName} ${className})
@@ -68,7 +68,7 @@ public class ${ClassName}Controller extends TWTController
      * 导出${functionName}列表
      */
     @Operation(summary = "导出${functionName}列表")
-    @PreAuthorize("@role.hasPermi('{permissionPrefix}:export')")
+    @PreAuthorize("@role.hasPermi('${permissionPrefix}:export')")
     @Log(service = "${functionName}", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, ${ClassName} ${className})
@@ -82,7 +82,7 @@ public class ${ClassName}Controller extends TWTController
      * 获取${functionName}详细信息
      */
     @Operation(summary = "获取${functionName}详细信息")
-    @PreAuthorize("@role.hasPermi('{permissionPrefix}:query')")
+    @PreAuthorize("@role.hasPermi('${permissionPrefix}:query')")
     @GetMapping(value = "/{${pkColumn.javaField}}")
     public JsonResult<${ClassName}> getInfo(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField})
     {
