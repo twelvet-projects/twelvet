@@ -130,7 +130,7 @@ public class VelocityUtils {
 		templates.add("vm/java/controller.java.vm");
 		templates.add("vm/xml/mapper.xml.vm");
 		templates.add("vm/sql/sql.vm");
-		templates.add("vm/js/api.ts.vm");
+		templates.add("vm/react/service.ts.vm");
 		if (GenConstants.TPL_CRUD.equals(tplCategory)) {
 			templates.add("vm/react/index.tsx.vm");
 		}
@@ -188,7 +188,7 @@ public class VelocityUtils {
 		else if (template.contains("sql.vm")) {
 			fileName = businessName + "Menu.sql";
 		}
-		else if (template.contains("api.ts.vm")) {
+		else if (template.contains("service.ts.vm")) {
 			fileName = StringUtils.format("{}/pages/{}/{}/service.ts", reactPath, moduleName, businessName);
 		}
 		else if (template.contains("index.tsx.vm")) {

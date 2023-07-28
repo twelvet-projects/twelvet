@@ -61,7 +61,7 @@
 
         <pagehelper.boot.version>1.4.6</pagehelper.boot.version>
         <poi.version>5.2.3</poi.version>
-        <commons.io.version>2.11.0</commons.io.version>
+        <commons.io.version>2.13.0</commons.io.version>
         <velocity.version>2.3</velocity.version>
         <hutool.version>5.8.19</hutool.version>
         <redisson.version>3.18.0</redisson.version>
