@@ -1,21 +1,65 @@
-import React, { useState, useRef } from 'react'
-import type { ActionType, ProColumns } from '@ant-design/pro-components'
-import { ProTable } from '@ant-design/pro-components'
-import { DeleteOutlined, FundProjectionScreenOutlined, PlusOutlined, EditOutlined, CloseOutlined } from '@ant-design/icons'
-import { Popconfirm, Button, message, Modal, Form, Input, Space, Divider, TreeSelect } from 'antd'
-import { FormInstance } from 'antd/lib/form'
-import DictionariesSelect from '@/components/TwelveT/Dictionaries/DictionariesSelect/Index'
-import DictionariesRadio from '@/components/TwelveT/Dictionaries/DictionariesRadio/Index'
-import DictionariesCheckbox from '@/components/TwelveT/Dictionaries/DictionariesCheckbox/Index'
-import { list${BusinessName}, get${BusinessName}, del${BusinessName}, add${BusinessName}, update${BusinessName}, export${BusinessName} } from "./service";
-import { makeTree, system } from '@/utils/twelvet'
-import { isArray } from 'lodash'
-import UploadTWT from '@/components/TwelveT/Upload'
-import TWT, { proTableConfigs } from '@/setting'
-import DatePickerTWT from '@/components/TwelveT/DatePicker/Index'
-import moment from 'moment'
+import React, {useState, useRef} from 'react'
+import {PageContainer, ProTable} from '@ant-design/pro-components'
+import type {ActionType, ProColumns} from '@ant-design/pro-components'
+import {
+    DeleteOutlined,
+    FundProjectionScreenOutlined,
+    PlusOutlined,
+    EditOutlined,
+    CloseOutlined
+} from '@ant-design/icons'
+import {Popconfirm, Button, message, Modal, Form, Input, Space, Divider, TreeSelect} from 'antd'
+import {FormInstance} from 'antd/lib/form'
+#foreach($column in $subTable.columns)
+    #if($column.htmlType == "select")
+    import DictionariesSelect from '@/components/TwelveT/Dictionaries/DictionariesSelect/Index'
+        #break
+    #end
+#end
+#foreach($column in $subTable.columns)
+    #if($column.htmlType == "radio")
+    import DictionariesRadio from '@/components/TwelveT/Dictionaries/DictionariesRadio/Index'
+        #break
+    #end
+#end
+#foreach($column in $subTable.columns)
+    #if($column.htmlType == "checkbox")
+    import DictionariesCheckbox from '@/components/TwelveT/Dictionaries/DictionariesCheckbox/Index'
+        #break
+    #end
+#end
+import {
+    list${BusinessName},
+    get${BusinessName},
+    del${BusinessName},
+    add${BusinessName},
+    update${BusinessName},
+    export${BusinessName}
+} from "./service";
+import {makeTree, system} from '@/utils/twelvet'
+import {isArray} from 'lodash'
+#set($importTwT = false)
+#foreach($column in $subTable.columns)
+    #if($column.htmlType == "imageUpload" || $column.htmlType == "fileUpload")
+        #set($importTwT = true)
+    import UploadTWT from '@/components/TwelveT/Upload'
+        #break
+    #end
+#end
+#if($importTwT)
+import TWT, {proTableConfigs} from '@/setting'
+#else
+import {proTableConfigs} from '@/setting'
+#end
+#foreach($column in $subTable.columns)
+    #if($column.htmlType == "datetime")
+    import DatePickerTWT from '@/components/TwelveT/DatePicker/Index'
+    import moment from 'moment'
+        #break
+    #end
+#end
 #if($table.sub)
-import { EditableProTable } from '@ant-design/pro-components'
+import {EditableProTable} from '@ant-design/pro-components'
 #end
 
 /**
@@ -23,8 +67,14 @@ import { EditableProTable } from '@ant-design/pro-components'
  */
 const ${BusinessName}: React.FC = () => {
 
+    const [state] = useState<{
+        pageSize: number
+    }>({
+        pageSize: 10,
+    });
+
     // 显示Modal
-    const [modal, setModal] = useState<{ title: string, visible: boolean }>({ title: ``, visible: false })
+    const [modal, setModal] = useState<{ title: string, visible: boolean }>({title: ``, visible: false})
 
     // 是否执行Modal数据操作中
     const [loadingModal, setLoadingModal] = useState<boolean>(false)
@@ -33,71 +83,20 @@ const ${BusinessName}: React.FC = () => {
 
     const formRef = useRef<FormInstance>()
 
-    const [form] = Form.useForm<FormInstance>()
+    const [form] = Form.useForm()
 
     const formItemLayout = {
         labelCol: {
-            xs: { span: 4 },
-            sm: { span: 4 },
+            xs: {span: 4},
+            sm: {span: 4},
         },
         wrapperCol: {
-            xs: { span: 18 },
-            sm: { span: 18 },
+            xs: {span: 18},
+            sm: {span: 18},
         },
     }
 
     const [${businessName}Options, set${BusinessName}Options] = useState<[]>()
-
-    // Form参数
-    const columns: ProColumns = [
-    #foreach($column in $columns)
-        #set($javaField=$column.javaField)
-        #set($parentheseIndex=$column.columnComment.indexOf("（"))
-        #if($parentheseIndex != -1)
-            #set($comment=$column.columnComment.substring(0, $parentheseIndex))
-        #else
-            #set($comment=$column.columnComment)
-        #end
-        #if($column.pk)
-        #elseif($column.list && $column.htmlType == "datetime")
-            {
-                title: '${comment}', ellipsis: true, width: 200, valueType: "datetime", dataIndex: '${javaField}',
-            },
-        #elseif($column.list && "" != $javaField)
-            {
-                title: '${comment}', ellipsis: true, width: 200, valueType: "text", dataIndex: '${javaField}',
-            },
-        #end
-    #end
-        {
-            title: '操作', fixed: 'right', width: 320, valueType: "option", dataIndex: 'operation', render: (_: string, row: { [key: string]: string }) => {
-                return (
-                    <>
-                        <a onClick={() => refPut(row)}>
-                            <Space>
-                                <EditOutlined />
-                                修改
-                            </Space>
-                        </a>
-
-                        <Divider type="vertical" />
-
-                        <Popconfirm
-                            onConfirm={() => refRemove(row.${pkColumn.javaField})}
-                            title="确定删除吗"
-                        >
-                            <a href='#'>
-                                <Space>
-                                    <CloseOutlined />
-                                    删除
-                                </Space>
-                            </a>
-                        </Popconfirm>
-                    </>
-                )
-            }
-        },
-    ]
 
     #if($table.sub)
 
@@ -126,13 +125,12 @@ const ${BusinessName}: React.FC = () => {
         ]
     #end
 
-
     /**
      * 新增${functionName}数据
      * @param row row
      */
     const refPost = async () => {
-        setModal({ title: "新增", visible: true })
+        setModal({title: "新增", visible: true})
         getTreeselect()
     }
 
@@ -142,7 +140,7 @@ const ${BusinessName}: React.FC = () => {
      */
     const refPut = async (row: { [key: string]: any }) => {
         try {
-            const { code, msg, data } = await get${BusinessName}(row.${pkColumn.javaField})
+            const {code, msg, data} = await get${BusinessName}(row.${pkColumn.javaField})
             if (code != 200) {
                 return message.error(msg)
             }
@@ -151,14 +149,13 @@ const ${BusinessName}: React.FC = () => {
                 setDataSource(data.${subclassName}List)
             #end
 
-
             // 赋值表单数据
             form.setFieldsValue(data)
 
             getTreeselect()
 
             // 设置Modal状态
-            setModal({ title: "修改", visible: true })
+            setModal({title: "修改", visible: true})
 
         } catch (e) {
             system.error(e)
@@ -168,9 +165,9 @@ const ${BusinessName}: React.FC = () => {
     /** 查询下拉树结构 */
     const getTreeselect = async () => {
 
-        try{
-            const { code, msg, data } = await list${BusinessName}({})
-            if (code != 200) {
+        try {
+            const {code, msg, data} = await list${BusinessName}({})
+            if (code !== 200) {
                 return message.error(msg)
             }
 
@@ -191,7 +188,7 @@ const ${BusinessName}: React.FC = () => {
                 })
             }]
             set${BusinessName}Options(tree)
-        }catch (e){
+        } catch (e) {
             system.error(e)
         }
     }
@@ -213,7 +210,7 @@ const ${BusinessName}: React.FC = () => {
                 params = ${pkColumn.javaField}
             }
 
-            const { code, msg } = await del${BusinessName}(params)
+            const {code, msg} = await del${BusinessName}(params)
 
             if (code !== 200) {
                 return message.error(msg)
@@ -221,7 +218,7 @@ const ${BusinessName}: React.FC = () => {
 
             message.success(msg)
 
-            acForm.current && acForm.current.reload()
+            acForm?.current?.reload()
 
         } catch (e) {
             system.error(e)
@@ -233,7 +230,7 @@ const ${BusinessName}: React.FC = () => {
      * 取消Modal的显示
      */
     const handleCancel = () => {
-        setModal({ title: "", visible: false })
+        setModal({title: "", visible: false})
 
         form.resetFields()
 
@@ -255,10 +252,12 @@ const ${BusinessName}: React.FC = () => {
                             fields.${subclassName}List = dataSource
                         #end
 
-
                         // ID为0则insert，否则将update
-                        const { code, msg } = fields.${pkColumn.javaField} == 0 ? await add${BusinessName}(fields) : await update${BusinessName}(fields)
-                        if (code != 200) {
+                        const {
+                            code,
+                            msg
+                        } = fields.${pkColumn.javaField} === 0 ? await add${BusinessName}(fields) : await update${BusinessName}(fields)
+                        if (code !== 200) {
                             return message.error(msg)
                         }
 
@@ -280,8 +279,64 @@ const ${BusinessName}: React.FC = () => {
         })
     }
 
+    // Form参数
+    const columns: ProColumns<any>[] = [
+        #foreach($column in $columns)
+            #set($javaField=$column.javaField)
+            #set($parentheseIndex=$column.columnComment.indexOf("（"))
+            #if($parentheseIndex != -1)
+                #set($comment=$column.columnComment.substring(0, $parentheseIndex))
+            #else
+                #set($comment=$column.columnComment)
+            #end
+            #if($column.pk)
+            #elseif($column.list && $column.htmlType == "datetime")
+                {
+                    title: '${comment}', ellipsis: true, width: 200, valueType: "datetime", dataIndex: '${javaField}',
+                },
+            #elseif($column.list && "" != $javaField)
+                {
+                    title: '${comment}', ellipsis: true, width: 200, valueType: "text", dataIndex: '${javaField}',
+                },
+            #end
+        #end
+        {
+            title: '操作',
+            fixed: 'right',
+            width: 320,
+            valueType: "option",
+            dataIndex: 'operation',
+            render: (_, row) => {
+                return (
+                    <>
+                        <a onClick={() => refPut(row)}>
+                            <Space>
+                                <EditOutlined/>
+                                修改
+                            </Space>
+                        </a>
+
+                        <Divider type="vertical"/>
+
+                        <Popconfirm
+                            onConfirm={() => refRemove(row.${pkColumn.javaField})}
+                            title="确定删除吗"
+                        >
+                            <a href='#'>
+                                <Space>
+                                    <CloseOutlined/>
+                                    删除
+                                </Space>
+                            </a>
+                        </Popconfirm>
+                    </>
+                )
+            }
+        },
+    ]
+
     return (
-        <>
+        <PageContainer>
             <ProTable
                 {...proTableConfigs}
                 pagination={{
@@ -299,7 +354,7 @@ const ${BusinessName}: React.FC = () => {
                 beforeSearchSubmit={(params) => {
                     // 分隔搜索参数
                     if (params.between) {
-                        const { between } = params
+                        const {between} = params
                         // 移除参数
                         delete params.between
 
@@ -309,12 +364,13 @@ const ${BusinessName}: React.FC = () => {
                     }
                     return params
                 }}
-                toolBarRender={(action, { selectedRowKeys }) => [
-                    <Button type="default" onClick={refPost}>
-                        <PlusOutlined />
+                toolBarRender={(action, {selectedRowKeys}) => [
+                    <Button key='add' type="default" onClick={refPost}>
+                        <PlusOutlined/>
                         新增
                     </Button>,
                     <Popconfirm
+                        key='batchDelete'
                         disabled={!(selectedRowKeys && selectedRowKeys.length > 0)}
                         onConfirm={() => refRemove(selectedRowKeys)}
                         title="是否删除选中数据"
@@ -323,11 +379,12 @@ const ${BusinessName}: React.FC = () => {
                             disabled={!(selectedRowKeys && selectedRowKeys.length > 0)}
                             type="primary" danger
                         >
-                            <DeleteOutlined />
+                            <DeleteOutlined/>
                             批量删除
                         </Button>
                     </Popconfirm>,
                     <Popconfirm
+                        key='export'
                         title="是否导出数据"
                         onConfirm={() => {
                             export${BusinessName}({
@@ -336,7 +393,7 @@ const ${BusinessName}: React.FC = () => {
                         }}
                     >
                         <Button type="default">
-                            <FundProjectionScreenOutlined />
+                            <FundProjectionScreenOutlined/>
                             导出数据
                         </Button>
                     </Popconfirm>
@@ -365,167 +422,167 @@ const ${BusinessName}: React.FC = () => {
                         name="${pkColumn.javaField}"
                         initialValue={0}
                     >
-                        <Input />
+                        <Input/>
                     </Form.Item>
-#foreach($column in $columns)
-#set($field=$column.javaField)
-#if($column.insert && !$column.pk)
-#if(($column.usableColumn) || (!$column.superColumn))
-#if($column.isRequired)
-    #set($isRequired=true)
-#else
-    #set($isRequired=false)
-#end
+                    #foreach($column in $columns)
+                        #set($field=$column.javaField)
+                        #if($column.insert && !$column.pk)
+                            #if(($column.usableColumn) || (!$column.superColumn))
+                                #if($column.isRequired)
+                                    #set($isRequired=true)
+                                #else
+                                    #set($isRequired=false)
+                                #end
 
-#set($parentheseIndex=$column.columnComment.indexOf("（"))
-#if($parentheseIndex != -1)
-    #set($comment=$column.columnComment.substring(0, $parentheseIndex))
-#else
-    #set($comment=$column.columnComment)
-#end
-#set($dictType=$column.dictType)
-                    <Form.Item
-                        {...formItemLayout}
-                        label="${comment}"
-                        rules={[{ required: ${isRequired}, message: '${comment}不能为空' }]}
-                        name="${field}"
-                    >
-                        <Input />
-                    </Form.Item>
-#if("" != $treeParentCode && $column.javaField == $treeParentCode)
-                    <Form.Item
-                        {...formItemLayout}
-                        label="${comment}"
-                        rules={[{ required: ${isRequired}, message: '${comment}不能为空' }]}
-                        name="${field}"
-                    >
-                        <TreeSelect
-                            placeholder={"请选择${comment}"}
-                            showSearch
-                            treeLine
-                            treeNodeFilterProp="title"
-                            treeData={${businessName}Options}
-                        />
-                    </Form.Item>
-#elseif($column.htmlType == "input")
-                    <Form.Item
-                        {...formItemLayout}
-                        label="${comment}"
-                        rules={[{ required: ${isRequired}, message: '${comment}不能为空' }]}
-                        name="${field}"
-                    >
-                        <Input placeholder={"请输入${comment}"} />
-                    </Form.Item>
-#elseif($column.htmlType == "imageUpload")
-                    <Form.Item
-                        {...formItemLayout}
-                        label="${comment}"
-                        rules={[{ required: ${isRequired}, message: '请上传${comment}' }]}
-                        name="${field}"
-                    >
-                        <UploadTWT
-                            name='file'
-                            maxCount={1}
-                            // 开启图片剪裁
-                            imgCrop={true}
-                            action={TWT.uploadUrl}
-                        >
-                        </UploadTWT>
-                    </Form.Item>
-#elseif($column.htmlType == "fileUpload")
-                    <Form.Item
-                        {...formItemLayout}
-                        label="${comment}"
-                        rules={[{ required: ${isRequired}, message: '请上传${comment}' }]}
-                        name="${field}"
-                    >
-                        <UploadTWT
-                            name='file'
-                            maxCount={1}
-                            listType={'picture'}
-                            action={TWT.uploadUrl}
-                            title={<Button> 上传文件</Button>}
-                        >
-                        </UploadTWT>
-                    </Form.Item>
-#elseif($column.htmlType == "editor")
-                    <Form.Item
-                        {...formItemLayout}
-                        label="${comment}"
-                        rules={[{ required: ${isRequired}, message: '${comment}不能为空' }]}
-                        name="${field}"
-                    >
-                        <Upload
-                            name='file'
-                            headers={{
-                                Authorization: `Bearer ${token.access_token}`
-                            }}
-                            maxCount={1}
-                        >
-                            <Button>上传文件</Button>
-                        </Upload>
-                    </Form.Item>
-#elseif($column.htmlType == "select" && $dictType)
-                    <Form.Item
-                        {...formItemLayout}
-                        label="${comment}"
-                        rules={[{ required: ${isRequired}, message: '${comment}不能为空' }]}
-                        name="${field}"
-                    >
-                        <DictionariesSelect type='${dictType}' mode={false} />
-                    </Form.Item>
-#elseif($column.htmlType == "checkbox" && $dictType)
-                    <Form.Item
-                        // 格式数组
-                        getValueFromEvent={(value) => {
-                            return value.join(',')
-                        }}
-                        {...formItemLayout}
-                        label="${comment}"
-                        rules={[{ required: ${isRequired}, message: '${comment}不能为空' }]}
-                        name="${field}"
-                    >
-                        <DictionariesCheckbox type='${dictType}' />
-                    </Form.Item>
-#elseif($column.htmlType == "radio" && $dictType)
-                    <Form.Item
-                        {...formItemLayout}
-                        label="${comment}"
-                        name="${field}"
-                    >
-                        <DictionariesRadio type='${dictType}' />
-                    </Form.Item>
-#elseif($column.htmlType == "datetime")
-                    <Form.Item
-                        // 格式化时间
-                        getValueFromEvent={(date) => {
-                            return moment(date).valueOf()
-                        }}
-                        {...formItemLayout}
-                        label="${comment}"
-                        rules={[{ required: ${isRequired}, message: '${comment}不能为空' }]}
-                        name="${field}"
-                    >
-                        <DatePickerTWT showTime />
-                    </Form.Item>
-#elseif($column.htmlType == "textarea")
-                    <Form.Item
-                        {...formItemLayout}
-                        label="${comment}"
-                        rules={[{ required: ${isRequired}, message: '${comment}不能为空' }]}
-                        name="${field}"
-                    >
-                        <Input.TextArea />
-                    </Form.Item>
-#end
-#end
-#end
-#end
+                                #set($parentheseIndex=$column.columnComment.indexOf("（"))
+                                #if($parentheseIndex != -1)
+                                    #set($comment=$column.columnComment.substring(0, $parentheseIndex))
+                                #else
+                                    #set($comment=$column.columnComment)
+                                #end
+                                #set($dictType=$column.dictType)
+                                <Form.Item
+                                    {...formItemLayout}
+                                    label="${comment}"
+                                    rules={[{required: ${isRequired}, message: '${comment}不能为空'}]}
+                                    name="${field}"
+                                >
+                                    <Input/>
+                                </Form.Item>
+                                #if("" != $treeParentCode && $column.javaField == $treeParentCode)
+                                    <Form.Item
+                                        {...formItemLayout}
+                                        label="${comment}"
+                                        rules={[{required: ${isRequired}, message: '${comment}不能为空'}]}
+                                        name="${field}"
+                                    >
+                                        <TreeSelect
+                                            placeholder={"请选择${comment}"}
+                                            showSearch
+                                            treeLine
+                                            treeNodeFilterProp="title"
+                                            treeData={${businessName}Options}
+                                        />
+                                    </Form.Item>
+                                #elseif($column.htmlType == "input")
+                                    <Form.Item
+                                        {...formItemLayout}
+                                        label="${comment}"
+                                        rules={[{required: ${isRequired}, message: '${comment}不能为空'}]}
+                                        name="${field}"
+                                    >
+                                        <Input placeholder={"请输入${comment}"}/>
+                                    </Form.Item>
+                                #elseif($column.htmlType == "imageUpload")
+                                    <Form.Item
+                                        {...formItemLayout}
+                                        label="${comment}"
+                                        rules={[{required: ${isRequired}, message: '请上传${comment}'}]}
+                                        name="${field}"
+                                    >
+                                        <UploadTWT
+                                            name='file'
+                                            maxCount={1}
+                                            // 开启图片剪裁
+                                            imgCrop={true}
+                                            action={TWT.uploadUrl}
+                                        >
+                                        </UploadTWT>
+                                    </Form.Item>
+                                #elseif($column.htmlType == "fileUpload")
+                                    <Form.Item
+                                        {...formItemLayout}
+                                        label="${comment}"
+                                        rules={[{required: ${isRequired}, message: '请上传${comment}'}]}
+                                        name="${field}"
+                                    >
+                                        <UploadTWT
+                                            name='file'
+                                            maxCount={1}
+                                            listType={'picture'}
+                                            action={TWT.uploadUrl}
+                                            title={<Button> 上传文件</Button>}
+                                        >
+                                        </UploadTWT>
+                                    </Form.Item>
+                                #elseif($column.htmlType == "editor")
+                                    <Form.Item
+                                        {...formItemLayout}
+                                        label="${comment}"
+                                        rules={[{required: ${isRequired}, message: '${comment}不能为空'}]}
+                                        name="${field}"
+                                    >
+                                        <Upload
+                                            name='file'
+                                            headers={{
+                                                Authorization: `Bearer ${token.access_token}`
+                                            }}
+                                            maxCount={1}
+                                        >
+                                            <Button>上传文件</Button>
+                                        </Upload>
+                                    </Form.Item>
+                                #elseif($column.htmlType == "select" && $dictType)
+                                    <Form.Item
+                                        {...formItemLayout}
+                                        label="${comment}"
+                                        rules={[{required: ${isRequired}, message: '${comment}不能为空'}]}
+                                        name="${field}"
+                                    >
+                                        <DictionariesSelect type='${dictType}' mode={false}/>
+                                    </Form.Item>
+                                #elseif($column.htmlType == "checkbox" && $dictType)
+                                    <Form.Item
+                                        // 格式数组
+                                        getValueFromEvent={(value) => {
+                                            return value.join(',')
+                                        }}
+                                        {...formItemLayout}
+                                        label="${comment}"
+                                        rules={[{required: ${isRequired}, message: '${comment}不能为空'}]}
+                                        name="${field}"
+                                    >
+                                        <DictionariesCheckbox type='${dictType}'/>
+                                    </Form.Item>
+                                #elseif($column.htmlType == "radio" && $dictType)
+                                    <Form.Item
+                                        {...formItemLayout}
+                                        label="${comment}"
+                                        name="${field}"
+                                    >
+                                        <DictionariesRadio type='${dictType}'/>
+                                    </Form.Item>
+                                #elseif($column.htmlType == "datetime")
+                                    <Form.Item
+                                        // 格式化时间
+                                        getValueFromEvent={(date) => {
+                                            return moment(date).valueOf()
+                                        }}
+                                        {...formItemLayout}
+                                        label="${comment}"
+                                        rules={[{required: ${isRequired}, message: '${comment}不能为空'}]}
+                                        name="${field}"
+                                    >
+                                        <DatePickerTWT showTime/>
+                                    </Form.Item>
+                                #elseif($column.htmlType == "textarea")
+                                    <Form.Item
+                                        {...formItemLayout}
+                                        label="${comment}"
+                                        rules={[{required: ${isRequired}, message: '${comment}不能为空'}]}
+                                        name="${field}"
+                                    >
+                                        <Input.TextArea/>
+                                    </Form.Item>
+                                #end
+                            #end
+                        #end
+                    #end
 
                 </Form>
 
             </Modal>
-        </>
+        </PageContainer>
     )
 
 }
