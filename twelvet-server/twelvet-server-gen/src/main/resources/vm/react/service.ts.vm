@@ -1,4 +1,5 @@
-import request, { download } from '@/utils/request'
+import request from '@umijs/max'
+import {download} from '@/utils/twelvet'
 
 /**
  * 查询${functionName}列表
@@ -57,6 +58,6 @@ export function del${BusinessName}(${pkColumn.javaField}: string | number) {
  * 导出数据
  * @param params
  */
-export async function exportDfs(params?: { [key: string]: any }) {
+export async function export${BusinessName}(params?: { [key: string]: any }) {
     return download(`/${moduleName}/${businessName}/export`, params);
 }
