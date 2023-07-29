@@ -96,7 +96,7 @@ const ${BusinessName}: React.FC = () => {
         },
     }
 
-    const [${businessName}Options, set${BusinessName}Options] = useState<[]>()
+    const [${businessName}Options, set${BusinessName}Options] = useState<any[]>()
 
     #if($table.sub)
 
@@ -125,43 +125,6 @@ const ${BusinessName}: React.FC = () => {
         ]
     #end
 
-    /**
-     * 新增${functionName}数据
-     * @param row row
-     */
-    const refPost = async () => {
-        setModal({title: "新增", visible: true})
-        getTreeselect()
-    }
-
-    /**
-     * 获取修改${functionName}信息
-     * @param row row
-     */
-    const refPut = async (row: { [key: string]: any }) => {
-        try {
-            const {code, msg, data} = await get${BusinessName}(row.${pkColumn.javaField})
-            if (code != 200) {
-                return message.error(msg)
-            }
-
-            #if($table.sub)
-                setDataSource(data.${subclassName}List)
-            #end
-
-            // 赋值表单数据
-            form.setFieldsValue(data)
-
-            getTreeselect()
-
-            // 设置Modal状态
-            setModal({title: "修改", visible: true})
-
-        } catch (e) {
-            system.error(e)
-        }
-    }
-
     /** 查询下拉树结构 */
     const getTreeselect = async () => {
 
@@ -188,6 +151,43 @@ const ${BusinessName}: React.FC = () => {
                 })
             }]
             set${BusinessName}Options(tree)
+        } catch (e) {
+            system.error(e)
+        }
+    }
+
+    /**
+     * 新增${functionName}数据
+     * @param row row
+     */
+    const refPost = async () => {
+        setModal({title: "新增", visible: true})
+        getTreeselect()
+    }
+
+    /**
+     * 获取修改${functionName}信息
+     * @param row row
+     */
+    const refPut = async (row: { [key: string]: any }) => {
+        try {
+            const {code, msg, data} = await get${BusinessName}(row.${pkColumn.javaField})
+            if (code !== 200) {
+                return message.error(msg)
+            }
+
+            #if($table.sub)
+                setDataSource(data.${subclassName}List)
+            #end
+
+            // 赋值表单数据
+            form.setFieldsValue(data)
+
+            getTreeselect()
+
+            // 设置Modal状态
+            setModal({title: "修改", visible: true})
+
         } catch (e) {
             system.error(e)
         }
