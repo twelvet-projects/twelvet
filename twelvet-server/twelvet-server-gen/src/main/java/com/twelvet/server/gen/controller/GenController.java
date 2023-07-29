@@ -230,7 +230,7 @@ public class GenController extends TWTController {
 	private void genCode(HttpServletResponse response, byte[] data) throws IOException {
 		response.reset();
 		response.setHeader("Content-Disposition", "attachment; filename=\"twelvet.zip\"");
-		response.addHeader("Content-Length", String.valueOf(data.length));
+		response.setHeader("Content-Length", String.valueOf(data.length));
 		response.setContentType("application/octet-stream; charset=UTF-8");
 		IOUtils.write(data, response.getOutputStream());
 	}
