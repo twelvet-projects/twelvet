@@ -10,7 +10,7 @@
 [![star](https://gitee.com/twelvet/twelvet/badge/star.svg?theme=white)](https://gitee.com/twelvet/twelvet/stargazers)
 [![fork](https://gitee.com/twelvet/twelvet/badge/fork.svg?theme=white)](https://gitee.com/twelvet/twelvet/members)
 
-### 此版本将跟随Spring Boot的脚步于2023-11-18停止维护,将不会再有新的特性更新（依旧进行BUG修复），请尽快升级到Spring Boot3
+### This version will be deprecated following the timeline of Spring Boot on 2023-11-18. There will be no further feature updates, although bug fixes will continue to be addressed. We strongly encourage you to upgrade to the Spring Boot 3 branch as soon as possible.
 
 A permission management system based on Spring Cloud Alibaba that integrates popular libraries on the market and can act
 as a framework for rapid development.

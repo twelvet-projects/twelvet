@@ -10,7 +10,7 @@
 [![star](https://gitee.com/twelvet/twelvet/badge/star.svg?theme=white)](https://gitee.com/twelvet/twelvet/stargazers)
 [![fork](https://gitee.com/twelvet/twelvet/badge/fork.svg?theme=white)](https://gitee.com/twelvet/twelvet/members)
 
-### 此版本将跟随Spring Boot的脚步于2023-11-18停止维护,将不会再有新的特性更新（依旧进行BUG修复），请尽快升级到Spring Boot3
+### 此版本将跟随Spring Boot的脚步于2023-11-18停止维护,将不会再有新的特性更新（依旧进行BUG修复），请尽快升级到Spring Boot3分支
 
 一款基于Spring Cloud Alibaba的权限管理系统，集成市面上流行库，可以作用为快速开发的一个框架使用
 
