@@ -1,6 +1,7 @@
 [中文](https://github.com/twelvet-s/twelvet/blob/master/README.md) | [English](https://github.com/twelvet-s/twelvet/blob/master/README_EN.md)
 
 # 🚀twelvet
+
 # JDK >= 17
 
 [![AUR](https://img.shields.io/github/license/twelvet-s/twelvet)](https://github.com/twelvet-s/twelvet/blob/master/LICENSE)
@@ -42,11 +43,11 @@ Official blog: https://twelvet.cn
 
 ## 🍎 Branch Description
 
-| Branch               | Description                                                        |
-|----------------------|--------------------------------------------------------------------|
-| master               | java8 + springboot 2.7.x + springcloud 2021 + spring cloud alibaba |
-| master-boot-3        | java17 + springboot 3.x + springcloud 2022 + spring cloud alibaba  |
-| spring-cloud-tencent | java17 + springboot 3.x + springcloud 2022 + spring cloud tencent  |
+| Branch               | Description                                                        | Additional Description                                                          |
+|----------------------|--------------------------------------------------------------------|---------------------------------------------------------------------------------|
+| master               | java8 + springboot 2.7.x + springcloud 2021 + spring cloud alibaba | Maintenance will stop on November 18, 2023 and enter the repair period          |
+| master-boot-3        | java17 + springboot 3.x + springcloud 2022 + spring cloud alibaba  | master                                                                          |
+| spring-cloud-tencent | java17 + springboot 3.x + springcloud 2022 + spring cloud tencent  | Demonstration branch, does not support compatibility with too many new features |
 
 ## System Module
 
@@ -152,5 +153,8 @@ chmod 751 deploy.sh
 # Start UI
 ./deploy.sh nginx
 ```
+
 ## 🤝Thank You
-Thanks to jetbrains for the license[![jetbrains](https://cloud.twelvet.cn/jetbrains.png)](https://www.jetbrains.com?from=https://github.com/twelvet-s/twelvet)
+
+Thanks to jetbrains for the
+license[![jetbrains](https://cloud.twelvet.cn/jetbrains.png)](https://www.jetbrains.com?from=https://github.com/twelvet-s/twelvet)

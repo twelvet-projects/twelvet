@@ -1,6 +1,7 @@
 [中文](https://github.com/twelvet-s/twelvet/blob/master/README.md) | [English](https://github.com/twelvet-s/twelvet/blob/master/README_EN.md)
 
 # 🚀twelvet
+
 # JDK >= 17
 
 [![AUR](https://img.shields.io/github/license/twelvet-s/twelvet)](https://github.com/twelvet-s/twelvet/blob/master/LICENSE)
@@ -35,11 +36,11 @@
 
 ## 🍎 分支说明
 
-| 分支                   | 说明                                                                 |
-|----------------------|--------------------------------------------------------------------|
-| master               | java8 + springboot 2.7.x + springcloud 2021 + spring cloud alibaba |
-| master-boot-3        | java17 + springboot 3.x + springcloud 2022 + spring cloud alibaba  |
-| spring-cloud-tencent | java17 + springboot 3.x + springcloud 2022 + spring cloud tencent  |
+| 分支                   | 说明                                                                 | 额外说明                    |
+|----------------------|--------------------------------------------------------------------|-------------------------|
+| master               | java8 + springboot 2.7.x + springcloud 2021 + spring cloud alibaba | 将于2023年11月18号停止维护，进入修复期 |
+| master-boot-3        | java17 + springboot 3.x + springcloud 2022 + spring cloud alibaba  | 主要版本                    |
+| spring-cloud-tencent | java17 + springboot 3.x + springcloud 2022 + spring cloud tencent  | 示范分支，不支持兼容过多新特性         |
 
 ## 项目结构
 
@@ -147,4 +148,5 @@ chmod 751 deploy.sh
 QQ群： [![加入QQ群](https://img.shields.io/badge/985830229-blue.svg)](https://jq.qq.com/?_wv=1027&k=cznM6Q00) 点击按钮入群。
 
 ## 🤝鸣谢
+
 感谢jetbrains提供的许可证[![jetbrains](https://cloud.twelvet.cn/jetbrains.png)](https://www.jetbrains.com?from=https://github.com/twelvet-s/twelvet)
