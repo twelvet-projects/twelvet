@@ -10,36 +10,36 @@ import {
 } from '@ant-design/icons'
 import {Popconfirm, Button, message, Modal, Form, Input, Space, Divider, TreeSelect} from 'antd'
 import {FormInstance} from 'antd/lib/form'
-#foreach($column in $subTable.columns)
+#foreach($column in $columns)
     #if($column.htmlType == "select")
     import DictionariesSelect from '@/components/TwelveT/Dictionaries/DictionariesSelect/Index'
         #break
     #end
 #end
-#foreach($column in $subTable.columns)
+#foreach($column in $columns)
     #if($column.htmlType == "radio")
     import DictionariesRadio from '@/components/TwelveT/Dictionaries/DictionariesRadio/Index'
         #break
     #end
 #end
-#foreach($column in $subTable.columns)
+#foreach($column in $columns)
     #if($column.htmlType == "checkbox")
     import DictionariesCheckbox from '@/components/TwelveT/Dictionaries/DictionariesCheckbox/Index'
         #break
     #end
 #end
 import {
-    list${BusinessName},
+    pageQuery${BusinessName},
     get${BusinessName},
     del${BusinessName},
     add${BusinessName},
     update${BusinessName},
     export${BusinessName}
-} from "./service";
+} from './service'
 import {makeTree, system} from '@/utils/twelvet'
 import {isArray} from 'lodash'
 #set($importTwT = false)
-#foreach($column in $subTable.columns)
+#foreach($column in $columns)
     #if($column.htmlType == "imageUpload" || $column.htmlType == "fileUpload")
         #set($importTwT = true)
     import UploadTWT from '@/components/TwelveT/Upload'
@@ -51,7 +51,7 @@ import TWT, {proTableConfigs} from '@/setting'
 #else
 import {proTableConfigs} from '@/setting'
 #end
-#foreach($column in $subTable.columns)
+#foreach($column in $columns)
     #if($column.htmlType == "datetime")
     import DatePickerTWT from '@/components/TwelveT/DatePicker/Index'
     import moment from 'moment'
@@ -292,7 +292,7 @@ const ${BusinessName}: React.FC = () => {
             #if($column.pk)
             #elseif($column.list && $column.htmlType == "datetime")
                 {
-                    title: '${comment}', ellipsis: true, width: 200, valueType: "datetime", dataIndex: '${javaField}',
+                    title: '${comment}', ellipsis: true, width: 200, valueType: "dateTime", dataIndex: '${javaField}',
                 },
             #elseif($column.list && "" != $javaField)
                 {
@@ -349,7 +349,15 @@ const ${BusinessName}: React.FC = () => {
                 formRef={formRef}
                 rowKey="${pkColumn.javaField}"
                 columns={columns}
-                request={list${BusinessName}}
+                request={async (params) => {
+                    const {data} = await list${BusinessName}(params);
+                    const {records, total} = data;
+                    return Promise.resolve({
+                        data: records,
+                        success: true,
+                        total,
+                    });
+                }}
                 rowSelection={{}}
                 beforeSearchSubmit={(params) => {
                     // 分隔搜索参数
@@ -441,14 +449,6 @@ const ${BusinessName}: React.FC = () => {
                                     #set($comment=$column.columnComment)
                                 #end
                                 #set($dictType=$column.dictType)
-                                <Form.Item
-                                    {...formItemLayout}
-                                    label="${comment}"
-                                    rules={[{required: ${isRequired}, message: '${comment}不能为空'}]}
-                                    name="${field}"
-                                >
-                                    <Input/>
-                                </Form.Item>
                                 #if("" != $treeParentCode && $column.javaField == $treeParentCode)
                                     <Form.Item
                                         {...formItemLayout}
@@ -486,8 +486,7 @@ const ${BusinessName}: React.FC = () => {
                                             // 开启图片剪裁
                                             imgCrop={true}
                                             action={TWT.uploadUrl}
-                                        >
-                                        </UploadTWT>
+                                        />
                                     </Form.Item>
                                 #elseif($column.htmlType == "fileUpload")
                                     <Form.Item
@@ -502,8 +501,7 @@ const ${BusinessName}: React.FC = () => {
                                             listType={'picture'}
                                             action={TWT.uploadUrl}
                                             title={<Button> 上传文件</Button>}
-                                        >
-                                        </UploadTWT>
+                                        />
                                     </Form.Item>
                                 #elseif($column.htmlType == "editor")
                                     <Form.Item
