@@ -30,8 +30,8 @@ spring:
         # shared-configs:
           # - data-id: twelvet-app-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
     # 暂时修复因sentinel导致的无法启动
-    openfeign:
-      lazy-attributes-resolution: true
+    # openfeign:
+      # lazy-attributes-resolution: true
   config:
     import:
       - optional:nacos:twelvet-app-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
