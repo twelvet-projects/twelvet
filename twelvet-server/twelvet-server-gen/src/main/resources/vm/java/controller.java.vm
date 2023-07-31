@@ -48,9 +48,9 @@ public class ${ClassName}Controller extends TWTController
  */
 @Operation(summary = "查询${functionName}列表")
 @PreAuthorize("@role.hasPermi('${permissionPrefix}:list')")
-@GetMapping("/list")
+@GetMapping("/pageQuery")
     #if($table.crud || $table.sub)
-    public JsonResult<TableDataInfo> list(${ClassName} ${className})
+    public JsonResult<TableDataInfo> pageQuery(${ClassName} ${className})
     {
         PageUtils.startPage();
         List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});

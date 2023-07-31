@@ -1,12 +1,15 @@
-import request from '@umijs/max'
+import {request} from '@umijs/max'
 import {download} from '@/utils/twelvet'
+
+// 请求的控制器名称
+const controller = "/${moduleName}/${businessName}";
 
 /**
  * 查询${functionName}列表
  * @param query 查询参数
  */
-export function list${BusinessName}(query: { [key: string]: any }) {
-    return request(`/${moduleName}/${businessName}/list`, {
+export function pageQuery${BusinessName}(query: { [key: string]: any }) {
+    return request(`${controller}/pageQuery`, {
         method: `get`,
         params: query
     })
@@ -17,7 +20,7 @@ export function list${BusinessName}(query: { [key: string]: any }) {
  * @param 主键
  */
 export function get${BusinessName}(${pkColumn.javaField}: string | number) {
-    return request(`/${moduleName}/${businessName}/${${pkColumn.javaField}}`, {
+    return request(`${controller}/${${pkColumn.javaField}}`, {
         method: `get`
     })
 }
@@ -27,7 +30,7 @@ export function get${BusinessName}(${pkColumn.javaField}: string | number) {
  * @param data 数据参数
  */
 export function add${BusinessName}(data: { [key: string]: any }) {
-    return request(`/${moduleName}/${businessName}`, {
+    return request(`${controller}`, {
         method: `post`,
         data: data
     })
@@ -38,7 +41,7 @@ export function add${BusinessName}(data: { [key: string]: any }) {
  * @param data 数据参数
  */
 export function update${BusinessName}(data: { [key: string]: any }) {
-    return request(`/${moduleName}/${businessName}`, {
+    return request(`${controller}`, {
         method: `put`,
         data: data
     })
@@ -49,7 +52,7 @@ export function update${BusinessName}(data: { [key: string]: any }) {
  * @param 主键
  */
 export function del${BusinessName}(${pkColumn.javaField}: string | number) {
-    return request(`/${moduleName}/${businessName}/${${pkColumn.javaField}}`, {
+    return request(`${controller}/${${pkColumn.javaField}}`, {
         method: `delete`
     })
 }
@@ -59,5 +62,5 @@ export function del${BusinessName}(${pkColumn.javaField}: string | number) {
  * @param params
  */
 export async function export${BusinessName}(params?: { [key: string]: any }) {
-    return download(`/${moduleName}/${businessName}/export`, params);
+    return download(`${controller}/export`, params);
 }
