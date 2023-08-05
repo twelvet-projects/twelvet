@@ -86,7 +86,7 @@ public class SysUserController extends TWTController {
 
 	/**
 	 * 用户数据导入
-	 * @param files MultipartFile[]
+	 * @param file MultipartFile
 	 * @param cover 是否允许覆盖
 	 * @return JsonResult<String>
 	 * @throws Exception Exception
@@ -95,14 +95,11 @@ public class SysUserController extends TWTController {
 	@PostMapping("/importData")
 	@Log(service = "用户管理", businessType = BusinessType.IMPORT)
 	@PreAuthorize("@role.hasPermi('system:user:import')")
-	public JsonResult<String> importData(MultipartFile[] files, boolean cover) throws Exception {
+	public JsonResult<String> importData(MultipartFile file, boolean cover) throws Exception {
 		ExcelUtils<SysUser> excelUtils = new ExcelUtils<>(SysUser.class);
-		// 支持多数据源导入
-		for (MultipartFile file : files) {
-			List<SysUser> userList = excelUtils.importExcel(file.getInputStream());
-			String operName = SecurityUtils.getUsername();
-			iSysUserService.importUser(userList, cover, operName);
-		}
+		List<SysUser> userList = excelUtils.importExcel(file.getInputStream());
+		String operName = SecurityUtils.getUsername();
+		iSysUserService.importUser(userList, cover, operName);
 		return JsonResult.success();
 	}
 
