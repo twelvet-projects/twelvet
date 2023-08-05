@@ -16,13 +16,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
-import org.springframework.security.access.prepost.PreAuthorize;
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import ${packageName}.domain.${ClassName};
 import ${packageName}.service.I${ClassName}Service;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.core.application.domain.JsonResult;
-import com.twelvet.framework.utils.poi.ExcelUtils;
+import cn.twelvet.excel.annotation.ResponseExcel;
 #if($table.crud || $table.sub)
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 #elseif($table.tree)
@@ -37,7 +37,7 @@ import com.twelvet.framework.jdbc.web.utils.PageUtils;
  */
 @Tag(description = "${ClassName}Controller", name = "${functionName}")
 @RestController
-@RequestMapping("/${businessName}")
+@RequestMapping("/${moduleName}/${businessName}")
 public class ${ClassName}Controller extends TWTController
 {
     @Autowired
@@ -47,7 +47,7 @@ public class ${ClassName}Controller extends TWTController
      * 查询${functionName}列表
      */
     @Operation(summary = "查询${functionName}列表")
-    @PreAuthorize("@role.hasPermi('${permissionPrefix}:list')")
+    @SaCheckPermission("${permissionPrefix}:list")
     @GetMapping("/pageQuery")
     #if($table.crud || $table.sub)
     public JsonResult<TableDataInfo> pageQuery(${ClassName} ${className})
@@ -67,22 +67,21 @@ public class ${ClassName}Controller extends TWTController
     /**
      * 导出${functionName}列表
      */
+    @ResponseExcel(name = "${functionName}")
     @Operation(summary = "导出${functionName}列表")
-    @PreAuthorize("@role.hasPermi('${permissionPrefix}:export')")
+    @SaCheckPermission("${permissionPrefix}:export")
     @Log(service = "${functionName}", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, ${ClassName} ${className})
+    public List<${ClassName}> export(${ClassName} ${className})
     {
-        List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
-        ExcelUtils<${ClassName}> util = new ExcelUtils<${ClassName}>(${ClassName}.class);
-        util.exportExcel(response, list, "${functionName}数据");
+        return ${className}Service.select${ClassName}List(${className});
     }
 
     /**
      * 获取${functionName}详细信息
      */
     @Operation(summary = "获取${functionName}详细信息")
-    @PreAuthorize("@role.hasPermi('${permissionPrefix}:query')")
+    @SaCheckPermission("${permissionPrefix}:query")
     @GetMapping(value = "/{${pkColumn.javaField}}")
     public JsonResult<${ClassName}> getInfo(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField})
     {
@@ -93,7 +92,7 @@ public class ${ClassName}Controller extends TWTController
      * 新增${functionName}
      */
     @Operation(summary = "新增${functionName}")
-    @PreAuthorize("@role.hasPermi('${permissionPrefix}:add')")
+    @SaCheckPermission("${permissionPrefix}:add")
     @Log(service = "${functionName}", businessType = BusinessType.INSERT)
     @PostMapping
     public JsonResult<String> add(@RequestBody ${ClassName} ${className})
@@ -105,7 +104,7 @@ public class ${ClassName}Controller extends TWTController
      * 修改${functionName}
      */
     @Operation(summary = "修改${functionName}")
-    @PreAuthorize("@role.hasPermi('${permissionPrefix}:edit')")
+    @SaCheckPermission("${permissionPrefix}:edit")
     @Log(service = "${functionName}", businessType = BusinessType.UPDATE)
     @PutMapping
     public JsonResult<String> edit(@RequestBody ${ClassName} ${className})
@@ -117,7 +116,7 @@ public class ${ClassName}Controller extends TWTController
      * 删除${functionName}
      */
     @Operation(summary = "删除${functionName}")
-    @PreAuthorize("@role.hasPermi('${permissionPrefix}:remove')")
+    @SaCheckPermission("${permissionPrefix}:remove")
     @Log(service = "${functionName}", businessType = BusinessType.DELETE)
     @DeleteMapping("/{${pkColumn.javaField}s}")
     public JsonResult<String> remove(@PathVariable ${pkColumn.javaType}[] ${pkColumn.javaField}s)

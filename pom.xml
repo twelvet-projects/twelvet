@@ -64,6 +64,7 @@
         <hutool.version>5.8.19</hutool.version>
         <redisson.version>3.20.0</redisson.version>
         <qiniu.version>7.13.0</qiniu.version>
+        <excel-spring-boot-starter.version>3.0.0</excel-spring-boot-starter.version>
 
         <docker.plugin.version>0.32.0</docker.plugin.version>
         <spring.checkstyle.plugin>0.0.39</spring.checkstyle.plugin>
@@ -183,6 +184,13 @@
                 <groupId>io.swagger.core.v3</groupId>
                 <artifactId>swagger-annotations-jakarta</artifactId>
                 <version>${swagger.core.version}</version>
+            </dependency>
+
+            <!--Excel-->
+            <dependency>
+                <groupId>cn.twelvet.excel</groupId>
+                <artifactId>excel-spring-boot-starter</artifactId>
+                <version>${excel-spring-boot-starter.version}</version>
             </dependency>
 
             <!--springdoc -->
