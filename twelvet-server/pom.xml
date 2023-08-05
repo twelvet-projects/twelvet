@@ -59,6 +59,12 @@
             <artifactId>spring-cloud-starter-tencent-polaris-config</artifactId>
         </dependency>
 
+        <!--Excel-->
+        <dependency>
+            <groupId>cn.twelvet.excel</groupId>
+            <artifactId>excel-spring-boot-starter</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
