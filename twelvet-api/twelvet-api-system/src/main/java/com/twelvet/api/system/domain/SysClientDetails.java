@@ -2,7 +2,6 @@ package com.twelvet.api.system.domain;
 
 import com.twelvet.framework.core.application.domain.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 

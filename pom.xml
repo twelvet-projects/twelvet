@@ -66,7 +66,7 @@
         <hutool.version>5.8.19</hutool.version>
         <redisson.version>3.18.0</redisson.version>
         <qiniu.version>7.12.1</qiniu.version>
-        <excel-spring-boot-starter.version>1.0.0</excel-spring-boot-starter.version>
+        <excel-spring-boot-starter.version>1.0.2</excel-spring-boot-starter.version>
 
         <docker.plugin.version>0.32.0</docker.plugin.version>
         <spring.checkstyle.plugin>0.0.39</spring.checkstyle.plugin>

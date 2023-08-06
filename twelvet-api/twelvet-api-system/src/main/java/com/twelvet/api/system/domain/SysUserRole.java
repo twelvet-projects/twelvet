@@ -1,9 +1,10 @@
 package com.twelvet.api.system.domain;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.io.Serializable;
 
 /**
  * @author twelvet
@@ -11,7 +12,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @Description: 用户和角色关联 sys_user_role
  */
 @Schema(description = "用户和角色关联")
-public class SysUserRole {
+public class SysUserRole implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	/** 用户ID */
 	@Schema(description = "用户ID")

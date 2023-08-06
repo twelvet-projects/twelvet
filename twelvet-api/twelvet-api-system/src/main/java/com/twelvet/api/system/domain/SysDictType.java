@@ -1,12 +1,10 @@
 package com.twelvet.api.system.domain;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.twelvet.framework.core.application.domain.BaseEntity;
-import com.twelvet.framework.utils.annotation.excel.Excel;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import com.twelvet.framework.utils.annotation.excel.Excel.ColumnType;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -20,28 +18,28 @@ public class SysDictType extends BaseEntity {
 	 * 字典主键
 	 */
 	@Schema(description = "字典主键")
-	@Excel(name = "字典主键", cellType = ColumnType.NUMERIC)
+	@ExcelProperty(value = "字典主键")
 	private Long dictId;
 
 	/**
 	 * 字典名称
 	 */
 	@Schema(description = "字典名称")
-	@Excel(name = "字典名称")
+	@ExcelProperty(value = "字典名称")
 	private String dictName;
 
 	/**
 	 * 字典类型
 	 */
 	@Schema(description = "字典类型")
-	@Excel(name = "字典类型")
+	@ExcelProperty(value = "字典类型")
 	private String dictType;
 
 	/**
 	 * 状态（0正常 1停用）
 	 */
 	@Schema(description = "状态")
-	@Excel(name = "状态", readConverterExp = "0=正常,1=停用")
+	@ExcelProperty(value = "状态(0=正常,1=停用)")
 	private String status;
 
 	public Long getDictId() {

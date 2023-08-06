@@ -1,9 +1,10 @@
 package com.twelvet.api.system.domain;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.io.Serializable;
 
 /**
  * @author twelvet
@@ -11,13 +12,19 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @Description: 角色和菜单关联 sys_role_menu
  */
 @Schema(description = "角色和菜单关联")
-public class SysRoleMenu {
+public class SysRoleMenu implements Serializable {
 
-	/** 角色ID */
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 角色ID
+	 */
 	@Schema(description = "角色ID")
 	private Long roleId;
 
-	/** 菜单ID */
+	/**
+	 * 菜单ID
+	 */
 	@Schema(description = "菜单ID")
 	private Long menuId;
 
