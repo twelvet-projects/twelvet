@@ -1,30 +1,32 @@
 package com.twelvet.server.system.controller;
 
-import com.twelvet.api.system.domain.SysMenu;
+import cn.twelvet.excel.annotation.RequestExcel;
+import cn.twelvet.excel.annotation.ResponseExcel;
 import com.twelvet.api.system.domain.SysRole;
 import com.twelvet.api.system.domain.SysUser;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.core.application.domain.JsonResult;
-import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.core.application.page.TableDataInfo;
+import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.framework.utils.TUtils;
 import com.twelvet.framework.utils.StringUtils;
-import com.twelvet.framework.utils.poi.ExcelUtils;
-import com.twelvet.server.system.service.*;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.twelvet.framework.utils.TUtils;
+import com.twelvet.server.system.service.ISysPermissionService;
+import com.twelvet.server.system.service.ISysPostService;
+import com.twelvet.server.system.service.ISysRoleService;
+import com.twelvet.server.system.service.ISysUserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,22 +71,21 @@ public class SysUserController extends TWTController {
 
 	/**
 	 * 用户用户导出
-	 * @param response HttpServletResponse
 	 * @param user SysUser
+	 * @return List<SysUser>
 	 */
+	@ResponseExcel(name = "用户管理")
 	@Operation(summary = "用户用户导出")
 	@PostMapping("/export")
 	@Log(service = "用户管理", businessType = BusinessType.EXPORT)
 	@PreAuthorize("@role.hasPermi('system:user:export')")
-	public void export(HttpServletResponse response, @RequestBody SysUser user) {
-		List<SysUser> list = iSysUserService.selectUserList(user);
-		ExcelUtils<SysUser> excelUtils = new ExcelUtils<>(SysUser.class);
-		excelUtils.exportExcel(response, list, "用户数据");
+	public List<SysUser> export(@RequestBody SysUser user) {
+		return iSysUserService.selectUserList(user);
 	}
 
 	/**
 	 * 用户数据导入
-	 * @param files MultipartFile[]
+	 * @param userList List<SysUser>
 	 * @param cover 是否允许覆盖
 	 * @return JsonResult<String>
 	 * @throws Exception Exception
@@ -93,26 +94,20 @@ public class SysUserController extends TWTController {
 	@PostMapping("/importData")
 	@Log(service = "用户管理", businessType = BusinessType.IMPORT)
 	@PreAuthorize("@role.hasPermi('system:user:import')")
-	public JsonResult<String> importData(MultipartFile[] files, boolean cover) throws Exception {
-		ExcelUtils<SysUser> excelUtils = new ExcelUtils<>(SysUser.class);
-		// 支持多数据源导入
-		for (MultipartFile file : files) {
-			List<SysUser> userList = excelUtils.importExcel(file.getInputStream());
-			String operName = SecurityUtils.getUsername();
-			iSysUserService.importUser(userList, cover, operName);
-		}
+	public JsonResult<String> importData(@RequestExcel List<SysUser> userList, boolean cover,
+			BindingResult bindingResult) throws Exception {
+		String operName = SecurityUtils.getUsername();
+		iSysUserService.importUser(userList, cover, operName);
 		return JsonResult.success();
 	}
 
 	/**
 	 * 导出模板
-	 * @param response HttpServletResponse
 	 */
-	@Operation(summary = "导出模板")
+	@ResponseExcel(name = "用户数据导入模板")
 	@PostMapping("/exportTemplate")
-	public void exportTemplate(HttpServletResponse response) {
-		ExcelUtils<SysUser> excelUtils = new ExcelUtils<>(SysUser.class);
-		excelUtils.exportExcel(response, "用户数据");
+	public List<SysUser> exportTemplate() {
+		return List.of(new SysUser());
 	}
 
 	/**

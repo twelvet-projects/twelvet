@@ -1,7 +1,7 @@
 package com.twelvet.framework.security.domain;
 
 import com.twelvet.api.system.domain.SysRole;
-import com.twelvet.framework.utils.annotation.excel.Excel;
+import com.alibaba.excel.annotation.ExcelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.security.core.GrantedAuthority;

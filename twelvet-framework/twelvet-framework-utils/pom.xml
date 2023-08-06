@@ -21,12 +21,6 @@
             <artifactId>jakarta.servlet-api</artifactId>
         </dependency>
 
-        <!-- excel工具 -->
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-        </dependency>
-
         <!--Spring WEB-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -79,6 +73,12 @@
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
+        </dependency>
+
+        <!--Excel-->
+        <dependency>
+            <groupId>cn.twelvet.excel</groupId>
+            <artifactId>excel-spring-boot-starter</artifactId>
         </dependency>
 
     </dependencies>

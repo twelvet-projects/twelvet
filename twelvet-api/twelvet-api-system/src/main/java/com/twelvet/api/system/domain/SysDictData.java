@@ -1,15 +1,14 @@
 package com.twelvet.api.system.domain;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.twelvet.framework.core.application.domain.BaseEntity;
 import com.twelvet.framework.core.constants.UserConstants;
-import com.twelvet.framework.utils.annotation.excel.Excel;
-import com.twelvet.framework.utils.annotation.excel.Excel.ColumnType;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import java.io.Serial;
 
 /**
@@ -27,35 +26,35 @@ public class SysDictData extends BaseEntity {
 	 * 字典编码
 	 */
 	@Schema(description = "字典编码")
-	@Excel(name = "字典编码", cellType = ColumnType.NUMERIC)
+	@ExcelProperty(value = "字典编码")
 	private Long dictCode;
 
 	/**
 	 * 字典排序
 	 */
 	@Schema(description = "字典排序")
-	@Excel(name = "字典排序", cellType = ColumnType.NUMERIC)
+	@ExcelProperty(value = "字典排序")
 	private Long dictSort;
 
 	/**
 	 * 字典标签
 	 */
 	@Schema(description = "字典标签")
-	@Excel(name = "字典标签")
+	@ExcelProperty(value = "字典标签")
 	private String dictLabel;
 
 	/**
 	 * 字典键值
 	 */
 	@Schema(description = "字典键值")
-	@Excel(name = "字典键值")
+	@ExcelProperty(value = "字典键值")
 	private String dictValue;
 
 	/**
 	 * 字典类型
 	 */
 	@Schema(description = "字典类型")
-	@Excel(name = "字典类型")
+	@ExcelProperty(value = "字典类型")
 	private String dictType;
 
 	/**
@@ -74,14 +73,14 @@ public class SysDictData extends BaseEntity {
 	 * 是否默认（Y是 N否）
 	 */
 	@Schema(description = "是否默认")
-	@Excel(name = "是否默认", readConverterExp = "Y=是,N=否")
+	@ExcelProperty(value = "是否默认(Y=是,N=否)")
 	private String isDefault;
 
 	/**
 	 * 状态（0正常 1停用）
 	 */
 	@Schema(description = "状态")
-	@Excel(name = "状态", readConverterExp = "0=正常,1=停用")
+	@ExcelProperty(value = "状态(0=正常,1=停用)")
 	private String status;
 
 	public Long getDictCode() {

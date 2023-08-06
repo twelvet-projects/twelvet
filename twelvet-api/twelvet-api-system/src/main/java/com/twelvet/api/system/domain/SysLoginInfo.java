@@ -1,9 +1,8 @@
 package com.twelvet.api.system.domain;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.twelvet.framework.core.application.domain.BaseEntity;
-import com.twelvet.framework.utils.annotation.excel.Excel;
-import com.twelvet.framework.utils.annotation.excel.Excel.ColumnType;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serial;
@@ -24,35 +23,35 @@ public class SysLoginInfo extends BaseEntity {
 	 * ID
 	 */
 	@Schema(description = "序号")
-	@Excel(name = "序号", cellType = ColumnType.NUMERIC)
+	@ExcelProperty(value = "序号")
 	private Long infoId;
 
 	/**
 	 * 用户账号
 	 */
 	@Schema(description = "用户账号")
-	@Excel(name = "用户账号")
+	@ExcelProperty(value = "用户账号")
 	private String userName;
 
 	/**
 	 * 状态 0成功 1失败
 	 */
 	@Schema(description = "状态")
-	@Excel(name = "状态", readConverterExp = "1=登录成功,2=退出成功,0=登录失败")
+	@ExcelProperty(value = "状态(1=登录成功,2=退出成功,0=登录失败)")
 	private String status;
 
 	/**
 	 * 地址
 	 */
 	@Schema(description = "地址")
-	@Excel(name = "地址")
+	@ExcelProperty(value = "地址")
 	private String ipaddr;
 
 	/**
 	 * 描述
 	 */
 	@Schema(description = "描述")
-	@Excel(name = "描述")
+	@ExcelProperty(value = "描述")
 	private String msg;
 
 	/**
@@ -60,14 +59,14 @@ public class SysLoginInfo extends BaseEntity {
 	 */
 	@Schema(description = "访问时间")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@Excel(name = "访问时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+	@ExcelProperty(value = "访问时间")
 	private Date accessTime;
 
 	/**
 	 * 部门ID
 	 */
 	@Schema(description = "部门ID")
-	@Excel(name = "部门ID")
+	@ExcelProperty(value = "部门ID")
 	private Long deptId;
 
 	public Long getDeptId() {

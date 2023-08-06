@@ -1,5 +1,6 @@
 package com.twelvet.server.system.controller;
 
+import cn.twelvet.excel.annotation.ResponseExcel;
 import com.twelvet.api.system.domain.SysLoginInfo;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.JsonResult;
@@ -7,15 +8,13 @@ import com.twelvet.framework.core.application.page.TableDataInfo;
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
-import com.twelvet.framework.utils.poi.ExcelUtils;
 import com.twelvet.server.system.service.ISysLoginInfoService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -72,17 +71,16 @@ public class SysLoginInfoController extends TWTController {
 
 	/**
 	 * 导出Excel
-	 * @param response HttpServletResponse
 	 * @param loginInfo SysLoginInfo
+	 * @return List<SysLoginInfo>
 	 */
+	@ResponseExcel(name = "登陆日志")
 	@Operation(summary = "导出Excel")
 	@Log(service = "登陆日志", businessType = BusinessType.EXPORT)
 	@PostMapping("/export")
 	@PreAuthorize("@role.hasPermi('system:logininfor:export')")
-	public void export(HttpServletResponse response, @RequestBody SysLoginInfo loginInfo) {
-		List<SysLoginInfo> list = iSysLoginInfoService.selectLoginInfoList(loginInfo);
-		ExcelUtils<SysLoginInfo> excelUtils = new ExcelUtils<>(SysLoginInfo.class);
-		excelUtils.exportExcel(response, list, "登陆日志");
+	public List<SysLoginInfo> export(@RequestBody SysLoginInfo loginInfo) {
+		return iSysLoginInfoService.selectLoginInfoList(loginInfo);
 	}
 
 }

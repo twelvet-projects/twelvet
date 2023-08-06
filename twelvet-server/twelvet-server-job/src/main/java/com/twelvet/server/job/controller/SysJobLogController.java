@@ -1,5 +1,6 @@
 package com.twelvet.server.job.controller;
 
+import cn.twelvet.excel.annotation.ResponseExcel;
 import com.twelvet.api.job.domain.SysJobLog;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.JsonResult;
@@ -7,15 +8,13 @@ import com.twelvet.framework.core.application.page.TableDataInfo;
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
-import com.twelvet.framework.utils.poi.ExcelUtils;
 import com.twelvet.server.job.service.ISysJobLogService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -47,17 +46,16 @@ public class SysJobLogController extends TWTController {
 
 	/**
 	 * 导出定时任务调度日志列表
-	 * @param response HttpServletResponse
 	 * @param sysJobLog SysJobLog
+	 * @return List<SysJobLog>
 	 */
+	@ResponseExcel(name = "任务调度日志")
 	@Operation(summary = "导出定时任务调度日志列表")
 	@Log(service = "任务调度日志", businessType = BusinessType.EXPORT)
 	@PostMapping("/export")
 	@PreAuthorize("@role.hasPermi('system:job:export')")
-	public void export(HttpServletResponse response, @RequestBody SysJobLog sysJobLog) {
-		List<SysJobLog> list = jobLogService.selectJobLogList(sysJobLog);
-		ExcelUtils<SysJobLog> excelUtils = new ExcelUtils<>(SysJobLog.class);
-		excelUtils.exportExcel(response, list, "调度日志");
+	public List<SysJobLog> export(@RequestBody SysJobLog sysJobLog) {
+		return jobLogService.selectJobLogList(sysJobLog);
 	}
 
 	/**

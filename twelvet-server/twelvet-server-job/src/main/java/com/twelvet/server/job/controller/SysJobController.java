@@ -1,28 +1,27 @@
 package com.twelvet.server.job.controller;
 
+import cn.twelvet.excel.annotation.ResponseExcel;
 import com.twelvet.api.job.domain.SysJob;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.JsonResult;
-import com.twelvet.framework.core.constants.Constants;
 import com.twelvet.framework.core.application.page.TableDataInfo;
+import com.twelvet.framework.core.constants.Constants;
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.StringUtils;
-import com.twelvet.framework.utils.poi.ExcelUtils;
 import com.twelvet.server.job.exception.TaskException;
 import com.twelvet.server.job.service.ISysJobService;
 import com.twelvet.server.job.util.CronUtils;
 import com.twelvet.server.job.util.ScheduleUtils;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -54,17 +53,16 @@ public class SysJobController extends TWTController {
 
 	/**
 	 * 导出定时任务列表
-	 * @param response HttpServletResponse
 	 * @param sysJob SysJob
+	 * @return List<SysJob>
 	 */
+	@ResponseExcel(name = "定时任务")
 	@Operation(summary = "导出定时任务列表")
 	@Log(service = "定时任务", businessType = BusinessType.EXPORT)
 	@PostMapping("/export")
 	@PreAuthorize("@role.hasPermi('monitor:job:export')")
-	public void export(HttpServletResponse response, @RequestBody SysJob sysJob) {
-		List<SysJob> list = jobService.selectJobList(sysJob);
-		ExcelUtils<SysJob> excelUtils = new ExcelUtils<>(SysJob.class);
-		excelUtils.exportExcel(response, list, "定时任务");
+	public List<SysJob> export(@RequestBody SysJob sysJob) {
+		return jobService.selectJobList(sysJob);
 	}
 
 	/**

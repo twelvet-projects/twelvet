@@ -5,7 +5,6 @@ import com.twelvet.framework.utils.DateUtils;
 import com.twelvet.framework.utils.exception.TWTUtilsException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
-import org.apache.poi.ss.usermodel.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -164,9 +163,6 @@ public class ReflectUtils {
 					else if (cs[i] == Date.class) {
 						if (args[i] instanceof String) {
 							args[i] = DateUtils.parseDate(args[i]);
-						}
-						else {
-							args[i] = DateUtil.getJavaDate((Double) args[i]);
 						}
 					}
 				}

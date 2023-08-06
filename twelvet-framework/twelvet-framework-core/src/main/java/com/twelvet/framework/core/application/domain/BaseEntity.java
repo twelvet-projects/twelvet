@@ -1,5 +1,7 @@
 package com.twelvet.framework.core.application.domain;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serial;
@@ -21,48 +23,57 @@ public class BaseEntity implements Serializable {
 	/**
 	 * 搜索值
 	 */
+	@ExcelIgnore
 	private String searchValue;
 
 	/**
 	 * 创建者
 	 */
+	@ExcelProperty("创建者")
 	private String createBy;
 
 	/**
 	 * 创建时间
 	 */
+	@ExcelProperty("创建时间")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date createTime;
 
 	/**
 	 * 更新者
 	 */
+	@ExcelProperty("更新者")
 	private String updateBy;
 
 	/**
 	 * 更新时间
 	 */
+	@ExcelProperty("更新时间")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date updateTime;
 
 	/**
 	 * 备注
 	 */
+	@ExcelProperty("备注")
 	private String remark;
 
 	/**
 	 * 开始时间
 	 */
+	@ExcelProperty("开始时间")
 	private String beginTime;
 
 	/**
 	 * 结束时间
 	 */
+	@ExcelProperty("结束时间")
 	private String endTime;
 
 	/**
 	 * 请求参数
 	 */
+	@ExcelIgnore
 	private Map<String, Object> params;
 
 	public String getSearchValue() {

@@ -65,12 +65,6 @@
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
         </dependency>
 
-        <!--Excel-->
-        <dependency>
-            <groupId>cn.twelvet.excel</groupId>
-            <artifactId>excel-spring-boot-starter</artifactId>
-        </dependency>
-
     </dependencies>
 
     <build>
