@@ -40,6 +40,12 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
+        <!--Excel-->
+        <dependency>
+            <groupId>cn.twelvet.excel</groupId>
+            <artifactId>excel-spring-boot-starter</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

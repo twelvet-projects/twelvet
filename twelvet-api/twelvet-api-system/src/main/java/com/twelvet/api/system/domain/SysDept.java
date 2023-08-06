@@ -2,13 +2,12 @@ package com.twelvet.api.system.domain;
 
 import com.twelvet.framework.core.application.domain.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;

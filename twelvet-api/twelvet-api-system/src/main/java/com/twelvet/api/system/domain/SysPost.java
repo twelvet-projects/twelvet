@@ -1,15 +1,13 @@
 package com.twelvet.api.system.domain;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.twelvet.framework.core.application.domain.BaseEntity;
-import com.twelvet.framework.utils.annotation.excel.Excel;
-import com.twelvet.framework.utils.annotation.excel.Excel.ColumnType;
 import io.swagger.v3.oas.annotations.media.Schema;
-
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import java.io.Serial;
 
 /**
@@ -27,35 +25,35 @@ public class SysPost extends BaseEntity {
 	 * 岗位序号
 	 */
 	@Schema(description = "岗位序号")
-	@Excel(name = "岗位序号", cellType = ColumnType.NUMERIC)
+	@ExcelProperty(value = "岗位序号")
 	private Long postId;
 
 	/**
 	 * 岗位编码
 	 */
 	@Schema(description = "岗位编码")
-	@Excel(name = "岗位编码")
+	@ExcelProperty(value = "岗位编码")
 	private String postCode;
 
 	/**
 	 * 岗位名称
 	 */
 	@Schema(description = "岗位名称")
-	@Excel(name = "岗位名称")
+	@ExcelProperty(value = "岗位名称")
 	private String postName;
 
 	/**
 	 * 岗位排序
 	 */
 	@Schema(description = "岗位排序")
-	@Excel(name = "岗位排序")
+	@ExcelProperty(value = "岗位排序")
 	private String postSort;
 
 	/**
 	 * 状态（0正常 1停用）
 	 */
 	@Schema(description = "状态")
-	@Excel(name = "状态", readConverterExp = "0=正常,1=停用")
+	@ExcelProperty(value = "状态(0=正常,1=停用)")
 	private String status;
 
 	/**

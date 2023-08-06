@@ -1,5 +1,6 @@
 package com.twelvet.server.system.controller;
 
+import cn.twelvet.excel.annotation.ResponseExcel;
 import com.twelvet.api.system.domain.SysDictData;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.JsonResult;
@@ -8,17 +9,15 @@ import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.framework.utils.poi.ExcelUtils;
 import com.twelvet.server.system.service.ISysDictDataService;
 import com.twelvet.server.system.service.ISysDictTypeService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -53,17 +52,16 @@ public class SysDictDataController extends TWTController {
 
 	/**
 	 * 导出数据字典excel
-	 * @param response HttpServletResponse
 	 * @param sysDictData SysDictData
+	 * @return List<SysDictData>
 	 */
+	@ResponseExcel(name = "字典数据")
 	@Operation(summary = "导出数据字典excel")
 	@Log(service = "字典数据", businessType = BusinessType.EXPORT)
 	@PostMapping("/export")
 	@PreAuthorize("@role.hasPermi('system:dict:export')")
-	public void exportExcel(HttpServletResponse response, @RequestBody SysDictData sysDictData) {
-		List<SysDictData> list = dictDataService.selectDictDataList(sysDictData);
-		ExcelUtils<SysDictData> excelUtils = new ExcelUtils<>(SysDictData.class);
-		excelUtils.exportExcel(response, list, "字典数据");
+	public List<SysDictData> exportExcel(@RequestBody SysDictData sysDictData) {
+		return dictDataService.selectDictDataList(sysDictData);
 	}
 
 	/**

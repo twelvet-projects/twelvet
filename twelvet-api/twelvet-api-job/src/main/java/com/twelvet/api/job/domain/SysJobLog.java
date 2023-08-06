@@ -1,9 +1,8 @@
 package com.twelvet.api.job.domain;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.twelvet.framework.core.application.domain.BaseEntity;
-import com.twelvet.framework.utils.annotation.excel.Excel;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -23,37 +22,37 @@ public class SysJobLog extends BaseEntity {
 
 	/** ID */
 	@Schema(description = "日志序号")
-	@Excel(name = "日志序号")
+	@ExcelProperty(value = "日志序号")
 	private Long jobLogId;
 
 	/** 任务名称 */
 	@Schema(description = "任务名称")
-	@Excel(name = "任务名称")
+	@ExcelProperty(value = "任务名称")
 	private String jobName;
 
 	/** 任务组名 */
 	@Schema(description = "任务组名")
-	@Excel(name = "任务组名")
+	@ExcelProperty(value = "任务组名")
 	private String jobGroup;
 
 	/** 调用目标字符串 */
 	@Schema(description = "调用目标字符串")
-	@Excel(name = "调用目标字符串")
+	@ExcelProperty(value = "调用目标字符串")
 	private String invokeTarget;
 
 	/** 日志信息 */
 	@Schema(description = "日志信息")
-	@Excel(name = "日志信息")
+	@ExcelProperty(value = "日志信息")
 	private String jobMessage;
 
 	/** 执行状态（0正常 1失败） */
 	@Schema(description = "执行状态")
-	@Excel(name = "执行状态", readConverterExp = "0=正常,1=失败")
+	@ExcelProperty(value = "执行状态(0=正常,1=失败)")
 	private String status;
 
 	/** 异常信息 */
 	@Schema(description = "异常信息")
-	@Excel(name = "异常信息")
+	@ExcelProperty(value = "异常信息")
 	private String exceptionInfo;
 
 	/** 开始时间 */
