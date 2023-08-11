@@ -8,8 +8,8 @@ body:
   - type: input
     id: twelvet
     attributes:
-      label: twelvet 版本
-      description: 请输入您当前使用的项目版本?
+      label: twelvet Version
+      description: Please enter the current version of the project you are using.
       placeholder: 3.0.0
     validations:
       required: true
@@ -17,7 +17,7 @@ body:
     id: node
     attributes:
       label: Node Version
-      description: 请输入您当前使用的NODE版本?
+      description: Please enter the current version of Node.js you are using.
       placeholder: v16.15.0
     validations:
       required: true
@@ -25,33 +25,33 @@ body:
     id: java
     attributes:
       label: JDK Version
-      description: 请输入您当前使用的GOLANG版本?
+      description: Please enter the current version of JDK you are using.
       placeholder: JDK 17
     validations:
       required: true
   - type: dropdown
     id: reappearance
     attributes:
-      label: 是否依旧存在
-      description: 是否可以在master分支复现此bug?
+      label: Does it still exist
+      description: Can this bug be reproduced on the master branch?
       options:
-        - 可以
-        - 不可以
-        - 未测试
+        - Yes
+        - No
+        - Not tested
     validations:
       required: true
   - type: textarea
     id: desc
     attributes:
-      label: bug描述
-      description: 请简要描述bug以及复现过程.
+      label: Bug Description
+      description: Please briefly describe the bug and its replication process.
       placeholder: |
-        1. 首先...
-        2. 然后...
+        1. Firstly...
+        2. And then...
     validations:
       required: true
   - type: textarea
     id: advise
     attributes:
-      label: 修改建议
-      description: 您有好的建议或者修改方案可以提供给我们。
+      label: Modification suggestions.
+      description: Do you have any good suggestions or modification plans to offer us?

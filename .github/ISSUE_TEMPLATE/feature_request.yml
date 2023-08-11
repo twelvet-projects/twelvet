@@ -8,15 +8,15 @@ body:
   - type: textarea
     id: desc
     attributes:
-      label: 功能描述以及必要性描述
-      description: 您觉得此新功能会为框架带来什么便利.
+      label: Function description and necessity description
+      description: What convenience do you think this new feature will bring to the framework.
       placeholder: |
-        1. 首先...
-        2. 然后...
+        1. Firstly...
+        2. And then...
     validations:
       required: true
   - type: textarea
     id: advise
     attributes:
-      label: 建议和方案
-      description: 您有好的建议或者修改方案可以提供给我们。
+      label: Suggestions and solutions
+      description: You can provide us with good suggestions or modification plans。
