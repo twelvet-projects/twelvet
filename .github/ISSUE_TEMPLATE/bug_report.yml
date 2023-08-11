@@ -35,9 +35,9 @@ body:
       label: Does it still exist
       description: Can this bug be reproduced on the master branch?
       options:
-        - Yes
-        - No
-        - Not tested
+        - It can be reproduced.
+        - It cannot be reproduced.
+        - Not tested.
     validations:
       required: true
   - type: textarea
