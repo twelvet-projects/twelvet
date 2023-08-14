@@ -106,6 +106,7 @@
                     <exclude>**/*.woff</exclude>
                     <exclude>**/*.woff2</exclude>
                     <exclude>**/*.ttf</exclude>
+                    <exclude>**/*.eot</exclude>
                 </excludes>
             </resource>
             <resource>
@@ -115,6 +116,7 @@
                     <include>**/*.woff</include>
                     <include>**/*.woff2</include>
                     <include>**/*.ttf</include>
+                    <include>**/*.eot</include>
                 </includes>
             </resource>
         </resources>
