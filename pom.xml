@@ -489,6 +489,8 @@
             <id>dev</id>
             <properties>
                 <active>dev</active>
+                <nacos.username>nacos</nacos.username>
+                <nacos.password>nacos</nacos.password>
                 <nacos.namespace>eeb43899-8a88-4f5b-b0e0-d7c8fd09b86e</nacos.namespace>
 
                 <!-- elk/日志配置 -->
@@ -528,6 +530,8 @@
             <id>product</id>
             <properties>
                 <active>pro</active>
+                <nacos.username>nacos</nacos.username>
+                <nacos.password>nacos</nacos.password>
                 <nacos.namespace>94664454-62b0-415a-9392-7c0ce2d11b2f</nacos.namespace>
 
                 <!-- elk/日志配置 -->
