@@ -44,7 +44,6 @@ public class ServerStateController {
 
 	/**
 	 * Get server state of current server.
-	 *
 	 * @return state json.
 	 */
 	@GetMapping("/state")
@@ -65,4 +64,5 @@ public class ServerStateController {
 		}
 		return RestResultUtils.success(announcement);
 	}
+
 }
