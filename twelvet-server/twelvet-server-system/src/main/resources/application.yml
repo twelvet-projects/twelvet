@@ -10,6 +10,8 @@ spring:
     active: @active@
   cloud:
     nacos:
+      username: @nacos.username@
+      password: @nacos.password@
       discovery:
         # 解决获取IP为内网，一般微服务采用内网安全性、可用性高
         # ip: 127.0.0.1

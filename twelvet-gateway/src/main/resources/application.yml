@@ -11,6 +11,8 @@ spring:
     active: @active@
   cloud:
     nacos:
+      username: @nacos.username@
+      password: @nacos.password@
       discovery:
         # 服务注册地址
         server-addr: ${NACOS_HOST:twelvet-nacos}:${NACOS_PORT:8848}
