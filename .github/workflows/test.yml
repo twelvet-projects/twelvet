@@ -67,4 +67,5 @@ jobs:
 
       - name: Check Server twelvet-server-system
         run: |
-          docker logs --tail 500 twelvet-server-system
+          cd docker
+          docker-compose up twelvet-server-system
