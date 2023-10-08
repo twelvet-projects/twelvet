@@ -67,6 +67,7 @@
         <redisson.version>3.18.0</redisson.version>
         <qiniu.version>7.12.1</qiniu.version>
         <excel-spring-boot-starter.version>1.0.2</excel-spring-boot-starter.version>
+        <xss-spring-boot-starter.version>1.0.0</xss-spring-boot-starter.version>
 
         <docker.plugin.version>0.32.0</docker.plugin.version>
         <spring.checkstyle.plugin>0.0.39</spring.checkstyle.plugin>
@@ -292,6 +293,13 @@
                 <groupId>cn.twelvet.excel</groupId>
                 <artifactId>excel-spring-boot-starter</artifactId>
                 <version>${excel-spring-boot-starter.version}</version>
+            </dependency>
+
+            <!--XSS-->
+            <dependency>
+                <groupId>cn.twelvet.xss</groupId>
+                <artifactId>xss-spring-boot-starter</artifactId>
+                <version>${xss-spring-boot-starter.version}</version>
             </dependency>
 
             <!--job API-->
