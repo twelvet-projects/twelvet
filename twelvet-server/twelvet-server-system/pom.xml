@@ -62,6 +62,12 @@
             <artifactId>twelvet-api-auth</artifactId>
         </dependency>
 
+        <!--XSS-->
+        <dependency>
+            <groupId>cn.twelvet.xss</groupId>
+            <artifactId>xss-spring-boot-starter</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>
