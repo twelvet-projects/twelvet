@@ -21,12 +21,6 @@
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
 
-        <!-- excel工具 -->
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-        </dependency>
-
         <!--Spring WEB-->
         <dependency>
             <groupId>org.springframework</groupId>
