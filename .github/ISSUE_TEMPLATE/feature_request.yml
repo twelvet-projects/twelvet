@@ -3,7 +3,7 @@ description: Suggest an idea for twelvet
 title: "[Feature]: "
 labels: [feature]
 assignees:
-  - twelvet-s
+  - twelvet-projects
 body:
   - type: textarea
     id: desc

@@ -3,7 +3,7 @@ description: Report a bug to help us improve twelvet
 title: "[Bug]: "
 labels: [bug]
 assignees:
-  - twelvet-s
+  - twelvet-projects
 body:
   - type: input
     id: twelvet

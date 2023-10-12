@@ -1,14 +1,14 @@
-[中文](https://github.com/twelvet-s/twelvet/blob/master/README.md) | [English](https://github.com/twelvet-s/twelvet/blob/master/README_EN.md)
+[中文](https://github.com/twelvet-projects/twelvet/blob/master/README.md) | [English](https://github.com/twelvet-projects/twelvet/blob/master/README_EN.md)
 
 # 🚀twelvet
 
 # JDK >= 17
 
-[![AUR](https://img.shields.io/github/license/twelvet-s/twelvet)](https://github.com/twelvet-s/twelvet/blob/master/LICENSE)
+[![AUR](https://img.shields.io/github/license/twelvet-projects/twelvet)](https://github.com/twelvet-projects/twelvet/blob/master/LICENSE)
 [![](https://img.shields.io/badge/Author-TwelveT-orange.svg)](https://twelvet.cn)
-[![](https://img.shields.io/badge/version-2.7.5-success)](https://github.com/twelvet-s/twelvet)
-[![GitHub stars](https://img.shields.io/github/stars/twelvet-s/twelvet.svg?style=social&label=Stars)](https://github.com/twelvet-s/twelvet/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/twelvet-s/twelvet.svg?style=social&label=Fork)](https://github.com/twelvet-s/twelvet/network/members)
+[![](https://img.shields.io/badge/version-2.7.5-success)](https://github.com/twelvet-projects/twelvet)
+[![GitHub stars](https://img.shields.io/github/stars/twelvet-projects/twelvet.svg?style=social&label=Stars)](https://github.com/twelvet-projects/twelvet/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/twelvet-projects/twelvet.svg?style=social&label=Fork)](https://github.com/twelvet-projects/twelvet/network/members)
 [![star](https://gitee.com/twelvet/twelvet/badge/star.svg?theme=white)](https://gitee.com/twelvet/twelvet/stargazers)
 [![fork](https://gitee.com/twelvet/twelvet/badge/fork.svg?theme=white)](https://gitee.com/twelvet/twelvet/members)
 
@@ -33,9 +33,9 @@ costs as much as possible. Therefore, we should invest more time in other more m
 of knowledge, but we don't just want a single "knowledge". Go feel / care for more brilliance, no matter people, things,
 or objects, they will become your best inspiration.
 
-Backend source code: https://github.com/twelvet-s/twelvet
+Backend source code: https://github.com/twelvet-projects/twelvet
 
-Frontend source code: https://github.com/twelvet-s/twelvet-ui
+Frontend source code: https://github.com/twelvet-projects/twelvet-ui
 
 Technical documents: https://twelvet.cn/docs/
 
@@ -157,4 +157,4 @@ chmod 751 deploy.sh
 ## 🤝Thank You
 
 Thanks to jetbrains for the
-license[![jetbrains](https://cloud.twelvet.cn/jetbrains.png)](https://www.jetbrains.com?from=https://github.com/twelvet-s/twelvet)
+license[![jetbrains](https://cloud.twelvet.cn/jetbrains.png)](https://www.jetbrains.com?from=https://github.com/twelvet-projects/twelvet)
