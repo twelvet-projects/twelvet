@@ -78,10 +78,13 @@ public class UserConstants {
 	public final static String LAYOUT = "Layout";
 
 	/**
-	 * 校验返回结果码
+	 * 唯一标识
 	 */
 	public final static String UNIQUE = "1";
 
+	/**
+	 * 非唯一标识
+	 */
 	public final static String NOT_UNIQUE = "0";
 
 }
