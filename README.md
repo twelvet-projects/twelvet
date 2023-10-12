@@ -27,7 +27,7 @@
 
 后端源码：https://github.com/twelvet-projects/twelvet
 
-前端源码：https://github.com/twelvet-projects/twelvet-ui
+前端源码：https://github.com/twelvet-s/twelvet-ui
 
 技术文档：https://twelvet.cn/docs/
 
