@@ -33,7 +33,7 @@ or objects, they will become your best inspiration.
 
 Backend source code: https://github.com/twelvet-projects/twelvet
 
-Frontend source code: https://github.com/twelvet-projects/twelvet-ui
+Frontend source code: https://github.com/twelvet-s/twelvet-ui
 
 Technical documents: https://twelvet.cn/docs/
 
