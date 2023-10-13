@@ -38,10 +38,10 @@
             <artifactId>twelvet-framework-jdbc</artifactId>
         </dependency>
 
-        <!--七牛云oss-->
+        <!--通用OSS-->
         <dependency>
-            <groupId>com.qiniu</groupId>
-            <artifactId>qiniu-java-sdk</artifactId>
+            <groupId>cn.twelvet.oss</groupId>
+            <artifactId>oss-spring-boot-starter</artifactId>
         </dependency>
 
         <!-- 安全模块 -->
