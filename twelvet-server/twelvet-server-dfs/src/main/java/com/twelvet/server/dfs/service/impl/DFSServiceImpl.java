@@ -1,15 +1,10 @@
 package com.twelvet.server.dfs.service.impl;
 
-import com.qiniu.common.QiniuException;
-import com.qiniu.storage.BucketManager;
-import com.qiniu.storage.Configuration;
-import com.qiniu.storage.Region;
-import com.qiniu.storage.UploadManager;
-import com.qiniu.util.Auth;
+import cn.twelvet.oss.config.properties.OssProperties;
+import cn.twelvet.oss.service.OssTemplate;
 import com.twelvet.api.dfs.domain.SysDfs;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.utils.file.FileUtils;
-import com.twelvet.server.dfs.config.QiNiuConfig;
 import com.twelvet.server.dfs.mapper.DFSMapper;
 import com.twelvet.server.dfs.service.IDFSService;
 import org.slf4j.Logger;
@@ -20,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.PostConstruct;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,40 +26,18 @@ import java.util.List;
  */
 @Primary
 @Service
-
-/**
- * @author twelvet
- * @WebSite twelvet.cn
- * @Description: 文件上传实现类
- */
 public class DFSServiceImpl implements IDFSService {
 
 	private static final Logger logger = LoggerFactory.getLogger(DFSServiceImpl.class);
 
 	@Autowired
-	private QiNiuConfig qiNiuConfig;
-
-	@Autowired
 	private DFSMapper dfsMapper;
 
-	private UploadManager uploadManager;
+	@Autowired
+	private OssTemplate ossTemplate;
 
-	private String token;
-
-	private BucketManager bucketManager;
-
-	@PostConstruct
-	public void init() {
-		// 若不指定 Region 或 Region.autoRegion() ，则会使用 自动判断 区域，使用相应域名处理。
-		// 如果可以明确 区域 的话，最好指定固定区域，这样可以少一步网络请求，少一步出错的可能。
-		uploadManager = new UploadManager(new Configuration(Region.autoRegion()));
-
-		Auth auth = Auth.create(qiNiuConfig.getAccessKey(), qiNiuConfig.getSecretKey());
-
-		bucketManager = new BucketManager(auth, new Configuration(Region.autoRegion()));
-
-		token = auth.uploadToken(qiNiuConfig.getBucketName());
-	}
+	@Autowired
+	private OssProperties ossProperties;
 
 	/**
 	 * FastDfs多文件文件上传接口
@@ -86,7 +58,7 @@ public class DFSServiceImpl implements IDFSService {
 
 				InputStream inputStream = file.getInputStream();
 
-				uploadManager.put(inputStream, key, token, null, null);
+				ossTemplate.putObject(ossProperties.getBucketName(), key, inputStream);
 
 				SysDfs sysDfs = new SysDfs();
 
@@ -126,7 +98,7 @@ public class DFSServiceImpl implements IDFSService {
 
 			InputStream inputStream = file.getInputStream();
 
-			uploadManager.put(inputStream, key, token, null, null);
+			ossTemplate.putObject(ossProperties.getBucketName(), key, inputStream);
 
 			SysDfs sysDfs = new SysDfs();
 
@@ -155,19 +127,13 @@ public class DFSServiceImpl implements IDFSService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void deleteFile(Long[] fileIds) {
-		try {
-			List<SysDfs> sysDfsList = dfsMapper.selectDfsListByFileIds(fileIds);
-			for (SysDfs sysDfs : sysDfsList) {
-				String key = sysDfs.getPath();
-				bucketManager.delete(qiNiuConfig.getBucketName(), key.substring(1));
-			}
-			// 删除数据库信息
-			dfsMapper.deleteSysDfsByFileIds(fileIds);
+		List<SysDfs> sysDfsList = dfsMapper.selectDfsListByFileIds(fileIds);
+		for (SysDfs sysDfs : sysDfsList) {
+			String key = sysDfs.getPath();
+			ossTemplate.removeObject(ossProperties.getBucketName(), key);
 		}
-		catch (QiniuException e) {
-			logger.error("删除文件出错", e);
-			throw new TWTException("删除文件出错");
-		}
+		// 删除数据库信息
+		dfsMapper.deleteSysDfsByFileIds(fileIds);
 	}
 
 	/**
