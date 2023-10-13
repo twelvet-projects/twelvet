@@ -13,8 +13,8 @@
     <description>sentinel</description>
 
     <properties>
-        <spring-boot-dependencies.version>2.7.6</spring-boot-dependencies.version>
-        <spring-cloud.version>2021.0.5</spring-cloud.version>
+        <spring-boot-dependencies.version>2.7.16</spring-boot-dependencies.version>
+        <spring-cloud.version>2021.0.8</spring-cloud.version>
     </properties>
 
     <!--依赖版本声明-->
