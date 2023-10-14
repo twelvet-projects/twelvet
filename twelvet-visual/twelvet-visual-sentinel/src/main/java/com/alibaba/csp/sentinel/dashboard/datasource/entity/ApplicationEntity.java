@@ -15,94 +15,92 @@
  */
 package com.alibaba.csp.sentinel.dashboard.datasource.entity;
 
-import com.alibaba.csp.sentinel.dashboard.discovery.AppInfo;
-
 import java.util.Date;
+
+import com.alibaba.csp.sentinel.dashboard.discovery.AppInfo;
 
 /**
  * @author leyou
  */
 public class ApplicationEntity {
 
-	private Long id;
+    private Long id;
+    private Date gmtCreate;
+    private Date gmtModified;
+    private String app;
+    private Integer appType;
+    private String activeConsole;
+    private Date lastFetch;
 
-	private Date gmtCreate;
+    public long getId() {
+        return id;
+    }
 
-	private Date gmtModified;
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	private String app;
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
 
-	private Integer appType;
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
 
-	private String activeConsole;
+    public Date getGmtModified() {
+        return gmtModified;
+    }
 
-	private Date lastFetch;
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
+    }
 
-	public long getId() {
-		return id;
-	}
+    public String getApp() {
+        return app;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public void setApp(String app) {
+        this.app = app;
+    }
 
-	public Date getGmtCreate() {
-		return gmtCreate;
-	}
+    public Integer getAppType() {
+        return appType;
+    }
 
-	public void setGmtCreate(Date gmtCreate) {
-		this.gmtCreate = gmtCreate;
-	}
+    public void setAppType(Integer appType) {
+        this.appType = appType;
+    }
 
-	public Date getGmtModified() {
-		return gmtModified;
-	}
+    public String getActiveConsole() {
+        return activeConsole;
+    }
 
-	public void setGmtModified(Date gmtModified) {
-		this.gmtModified = gmtModified;
-	}
+    public Date getLastFetch() {
+        return lastFetch;
+    }
 
-	public String getApp() {
-		return app;
-	}
+    public void setLastFetch(Date lastFetch) {
+        this.lastFetch = lastFetch;
+    }
 
-	public void setApp(String app) {
-		this.app = app;
-	}
+    public void setActiveConsole(String activeConsole) {
+        this.activeConsole = activeConsole;
+    }
 
-	public Integer getAppType() {
-		return appType;
-	}
+    public AppInfo toAppInfo() {
+        return new AppInfo(app, appType);
+    }
 
-	public void setAppType(Integer appType) {
-		this.appType = appType;
-	}
-
-	public String getActiveConsole() {
-		return activeConsole;
-	}
-
-	public Date getLastFetch() {
-		return lastFetch;
-	}
-
-	public void setLastFetch(Date lastFetch) {
-		this.lastFetch = lastFetch;
-	}
-
-	public void setActiveConsole(String activeConsole) {
-		this.activeConsole = activeConsole;
-	}
-
-	public AppInfo toAppInfo() {
-		return new AppInfo(app, appType);
-	}
-
-	@Override
-	public String toString() {
-		return "ApplicationEntity{" + "id=" + id + ", gmtCreate=" + gmtCreate + ", gmtModified=" + gmtModified
-				+ ", app='" + app + '\'' + ", activeConsole='" + activeConsole + '\'' + ", lastFetch=" + lastFetch
-				+ '}';
-	}
-
+    @Override
+    public String toString() {
+        return "ApplicationEntity{" +
+            "id=" + id +
+            ", gmtCreate=" + gmtCreate +
+            ", gmtModified=" + gmtModified +
+            ", app='" + app + '\'' +
+            ", activeConsole='" + activeConsole + '\'' +
+            ", lastFetch=" + lastFetch +
+            '}';
+    }
 }

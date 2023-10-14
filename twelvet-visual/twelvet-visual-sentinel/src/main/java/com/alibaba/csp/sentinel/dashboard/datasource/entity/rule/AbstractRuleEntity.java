@@ -15,9 +15,10 @@
  */
 package com.alibaba.csp.sentinel.dashboard.datasource.entity.rule;
 
-import com.alibaba.csp.sentinel.slots.block.AbstractRule;
-
 import java.util.Date;
+
+import com.alibaba.csp.sentinel.slots.block.AbstractRule;
+import com.alibaba.csp.sentinel.slots.block.Rule;
 
 /**
  * @author Eric Zhao
@@ -25,91 +26,87 @@ import java.util.Date;
  */
 public abstract class AbstractRuleEntity<T extends AbstractRule> implements RuleEntity {
 
-	protected Long id;
+    protected Long id;
 
-	protected String app;
+    protected String app;
+    protected String ip;
+    protected Integer port;
 
-	protected String ip;
+    protected T rule;
 
-	protected Integer port;
+    private Date gmtCreate;
+    private Date gmtModified;
 
-	protected T rule;
+    @Override
+    public Long getId() {
+        return id;
+    }
 
-	private Date gmtCreate;
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	private Date gmtModified;
+    @Override
+    public String getApp() {
+        return app;
+    }
 
-	@Override
-	public Long getId() {
-		return id;
-	}
+    public AbstractRuleEntity<T> setApp(String app) {
+        this.app = app;
+        return this;
+    }
 
-	@Override
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @Override
+    public String getIp() {
+        return ip;
+    }
 
-	@Override
-	public String getApp() {
-		return app;
-	}
+    public AbstractRuleEntity<T> setIp(String ip) {
+        this.ip = ip;
+        return this;
+    }
 
-	public AbstractRuleEntity<T> setApp(String app) {
-		this.app = app;
-		return this;
-	}
+    @Override
+    public Integer getPort() {
+        return port;
+    }
 
-	@Override
-	public String getIp() {
-		return ip;
-	}
+    public AbstractRuleEntity<T> setPort(Integer port) {
+        this.port = port;
+        return this;
+    }
 
-	public AbstractRuleEntity<T> setIp(String ip) {
-		this.ip = ip;
-		return this;
-	}
+    public T getRule() {
+        return rule;
+    }
 
-	@Override
-	public Integer getPort() {
-		return port;
-	}
+    public AbstractRuleEntity<T> setRule(T rule) {
+        this.rule = rule;
+        return this;
+    }
 
-	public AbstractRuleEntity<T> setPort(Integer port) {
-		this.port = port;
-		return this;
-	}
+    @Override
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
 
-	public T getRule() {
-		return rule;
-	}
+    public AbstractRuleEntity<T> setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+        return this;
+    }
 
-	public AbstractRuleEntity<T> setRule(T rule) {
-		this.rule = rule;
-		return this;
-	}
+    public Date getGmtModified() {
+        return gmtModified;
+    }
 
-	@Override
-	public Date getGmtCreate() {
-		return gmtCreate;
-	}
+    public AbstractRuleEntity<T> setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
+        return this;
+    }
 
-	public AbstractRuleEntity<T> setGmtCreate(Date gmtCreate) {
-		this.gmtCreate = gmtCreate;
-		return this;
-	}
-
-	public Date getGmtModified() {
-		return gmtModified;
-	}
-
-	public AbstractRuleEntity<T> setGmtModified(Date gmtModified) {
-		this.gmtModified = gmtModified;
-		return this;
-	}
-
-	@Override
-	public T toRule() {
-		return rule;
-	}
-
+    @Override
+    public T toRule() {
+        return rule;
+    }
 }
