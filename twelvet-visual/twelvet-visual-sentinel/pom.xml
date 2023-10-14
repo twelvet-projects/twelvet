@@ -13,6 +13,12 @@
     <description>sentinel</description>
 
     <dependencies>
+        <!-- SpringBoot Admin 服务端-->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-server</artifactId>
+        </dependency>
+
         <!--注册中心客户端-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
