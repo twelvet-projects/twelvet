@@ -15,113 +15,111 @@
  */
 package com.alibaba.csp.sentinel.dashboard.datasource.entity;
 
-import com.alibaba.csp.sentinel.dashboard.discovery.MachineInfo;
-
 import java.util.Date;
+
+import com.alibaba.csp.sentinel.dashboard.discovery.MachineInfo;
 
 /**
  * @author leyou
  */
 public class MachineEntity {
+    private Long id;
+    private Date gmtCreate;
+    private Date gmtModified;
+    private String app;
+    private String ip;
+    private String hostname;
+    private Date timestamp;
+    private Integer port;
 
-	private Long id;
+    public long getId() {
+        return id;
+    }
 
-	private Date gmtCreate;
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	private Date gmtModified;
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
 
-	private String app;
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
 
-	private String ip;
+    public Date getGmtModified() {
+        return gmtModified;
+    }
 
-	private String hostname;
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
+    }
 
-	private Date timestamp;
+    public String getApp() {
+        return app;
+    }
 
-	private Integer port;
+    public void setApp(String app) {
+        this.app = app;
+    }
 
-	public long getId() {
-		return id;
-	}
+    public String getIp() {
+        return ip;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
 
-	public Date getGmtCreate() {
-		return gmtCreate;
-	}
+    public String getHostname() {
+        return hostname;
+    }
 
-	public void setGmtCreate(Date gmtCreate) {
-		this.gmtCreate = gmtCreate;
-	}
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
+    }
 
-	public Date getGmtModified() {
-		return gmtModified;
-	}
+    public Date getTimestamp() {
+        return timestamp;
+    }
 
-	public void setGmtModified(Date gmtModified) {
-		this.gmtModified = gmtModified;
-	}
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
 
-	public String getApp() {
-		return app;
-	}
+    public Integer getPort() {
+        return port;
+    }
 
-	public void setApp(String app) {
-		this.app = app;
-	}
+    public void setPort(Integer port) {
+        this.port = port;
+    }
 
-	public String getIp() {
-		return ip;
-	}
+    public MachineInfo toMachineInfo() {
+        MachineInfo machineInfo = new MachineInfo();
 
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
+        machineInfo.setApp(app);
+        machineInfo.setHostname(hostname);
+        machineInfo.setIp(ip);
+        machineInfo.setPort(port);
+        machineInfo.setLastHeartbeat(timestamp.getTime());
+        machineInfo.setHeartbeatVersion(timestamp.getTime());
 
-	public String getHostname() {
-		return hostname;
-	}
+        return machineInfo;
+    }
 
-	public void setHostname(String hostname) {
-		this.hostname = hostname;
-	}
-
-	public Date getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
-	}
-
-	public Integer getPort() {
-		return port;
-	}
-
-	public void setPort(Integer port) {
-		this.port = port;
-	}
-
-	public MachineInfo toMachineInfo() {
-		MachineInfo machineInfo = new MachineInfo();
-
-		machineInfo.setApp(app);
-		machineInfo.setHostname(hostname);
-		machineInfo.setIp(ip);
-		machineInfo.setPort(port);
-		machineInfo.setLastHeartbeat(timestamp.getTime());
-		machineInfo.setHeartbeatVersion(timestamp.getTime());
-
-		return machineInfo;
-	}
-
-	@Override
-	public String toString() {
-		return "MachineEntity{" + "id=" + id + ", gmtCreate=" + gmtCreate + ", gmtModified=" + gmtModified + ", app='"
-				+ app + '\'' + ", ip='" + ip + '\'' + ", hostname='" + hostname + '\'' + ", timestamp=" + timestamp
-				+ ", port=" + port + '}';
-	}
-
+    @Override
+    public String toString() {
+        return "MachineEntity{" +
+            "id=" + id +
+            ", gmtCreate=" + gmtCreate +
+            ", gmtModified=" + gmtModified +
+            ", app='" + app + '\'' +
+            ", ip='" + ip + '\'' +
+            ", hostname='" + hostname + '\'' +
+            ", timestamp=" + timestamp +
+            ", port=" + port +
+            '}';
+    }
 }

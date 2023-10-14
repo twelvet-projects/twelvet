@@ -24,144 +24,135 @@ import java.util.Date;
  */
 public class SystemRuleEntity implements RuleEntity {
 
-	private Long id;
+    private Long id;
 
-	private String app;
+    private String app;
+    private String ip;
+    private Integer port;
+    private Double highestSystemLoad;
+    private Long avgRt;
+    private Long maxThread;
+    private Double qps;
+    private Double highestCpuUsage;
 
-	private String ip;
+    private Date gmtCreate;
+    private Date gmtModified;
 
-	private Integer port;
+    public static SystemRuleEntity fromSystemRule(String app, String ip, Integer port, SystemRule rule) {
+        SystemRuleEntity entity = new SystemRuleEntity();
+        entity.setApp(app);
+        entity.setIp(ip);
+        entity.setPort(port);
+        entity.setHighestSystemLoad(rule.getHighestSystemLoad());
+        entity.setHighestCpuUsage(rule.getHighestCpuUsage());
+        entity.setAvgRt(rule.getAvgRt());
+        entity.setMaxThread(rule.getMaxThread());
+        entity.setQps(rule.getQps());
+        return entity;
+    }
 
-	private Double highestSystemLoad;
+    @Override
+    public String getIp() {
+        return ip;
+    }
 
-	private Long avgRt;
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
 
-	private Long maxThread;
+    @Override
+    public Integer getPort() {
+        return port;
+    }
 
-	private Double qps;
+    public void setPort(Integer port) {
+        this.port = port;
+    }
 
-	private Double highestCpuUsage;
+    @Override
+    public Long getId() {
+        return id;
+    }
 
-	private Date gmtCreate;
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	private Date gmtModified;
+    @Override
+    public String getApp() {
+        return app;
+    }
 
-	public static SystemRuleEntity fromSystemRule(String app, String ip, Integer port, SystemRule rule) {
-		SystemRuleEntity entity = new SystemRuleEntity();
-		entity.setApp(app);
-		entity.setIp(ip);
-		entity.setPort(port);
-		entity.setHighestSystemLoad(rule.getHighestSystemLoad());
-		entity.setHighestCpuUsage(rule.getHighestCpuUsage());
-		entity.setAvgRt(rule.getAvgRt());
-		entity.setMaxThread(rule.getMaxThread());
-		entity.setQps(rule.getQps());
-		return entity;
-	}
+    public void setApp(String app) {
+        this.app = app;
+    }
 
-	@Override
-	public String getIp() {
-		return ip;
-	}
+    public Double getHighestSystemLoad() {
+        return highestSystemLoad;
+    }
 
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
+    public void setHighestSystemLoad(Double highestSystemLoad) {
+        this.highestSystemLoad = highestSystemLoad;
+    }
 
-	@Override
-	public Integer getPort() {
-		return port;
-	}
+    public Long getAvgRt() {
+        return avgRt;
+    }
 
-	public void setPort(Integer port) {
-		this.port = port;
-	}
+    public void setAvgRt(Long avgRt) {
+        this.avgRt = avgRt;
+    }
 
-	@Override
-	public Long getId() {
-		return id;
-	}
+    public Long getMaxThread() {
+        return maxThread;
+    }
 
-	@Override
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setMaxThread(Long maxThread) {
+        this.maxThread = maxThread;
+    }
 
-	@Override
-	public String getApp() {
-		return app;
-	}
+    public Double getQps() {
+        return qps;
+    }
 
-	public void setApp(String app) {
-		this.app = app;
-	}
+    public void setQps(Double qps) {
+        this.qps = qps;
+    }
 
-	public Double getHighestSystemLoad() {
-		return highestSystemLoad;
-	}
+    public Double getHighestCpuUsage() {
+        return highestCpuUsage;
+    }
 
-	public void setHighestSystemLoad(Double highestSystemLoad) {
-		this.highestSystemLoad = highestSystemLoad;
-	}
+    public void setHighestCpuUsage(Double highestCpuUsage) {
+        this.highestCpuUsage = highestCpuUsage;
+    }
 
-	public Long getAvgRt() {
-		return avgRt;
-	}
+    @Override
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
 
-	public void setAvgRt(Long avgRt) {
-		this.avgRt = avgRt;
-	}
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
 
-	public Long getMaxThread() {
-		return maxThread;
-	}
+    public Date getGmtModified() {
+        return gmtModified;
+    }
 
-	public void setMaxThread(Long maxThread) {
-		this.maxThread = maxThread;
-	}
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
+    }
 
-	public Double getQps() {
-		return qps;
-	}
-
-	public void setQps(Double qps) {
-		this.qps = qps;
-	}
-
-	public Double getHighestCpuUsage() {
-		return highestCpuUsage;
-	}
-
-	public void setHighestCpuUsage(Double highestCpuUsage) {
-		this.highestCpuUsage = highestCpuUsage;
-	}
-
-	@Override
-	public Date getGmtCreate() {
-		return gmtCreate;
-	}
-
-	public void setGmtCreate(Date gmtCreate) {
-		this.gmtCreate = gmtCreate;
-	}
-
-	public Date getGmtModified() {
-		return gmtModified;
-	}
-
-	public void setGmtModified(Date gmtModified) {
-		this.gmtModified = gmtModified;
-	}
-
-	@Override
-	public SystemRule toRule() {
-		SystemRule rule = new SystemRule();
-		rule.setHighestSystemLoad(highestSystemLoad);
-		rule.setAvgRt(avgRt);
-		rule.setMaxThread(maxThread);
-		rule.setQps(qps);
-		rule.setHighestCpuUsage(highestCpuUsage);
-		return rule;
-	}
-
+    @Override
+    public SystemRule toRule() {
+        SystemRule rule = new SystemRule();
+        rule.setHighestSystemLoad(highestSystemLoad);
+        rule.setAvgRt(avgRt);
+        rule.setMaxThread(maxThread);
+        rule.setQps(qps);
+        rule.setHighestCpuUsage(highestCpuUsage);
+        return rule;
+    }
 }

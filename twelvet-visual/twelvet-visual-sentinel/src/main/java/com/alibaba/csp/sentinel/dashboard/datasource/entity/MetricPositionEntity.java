@@ -21,101 +21,101 @@ import java.util.Date;
  * @author leyou
  */
 public class MetricPositionEntity {
+    private long id;
+    private Date gmtCreate;
+    private Date gmtModified;
+    private String app;
+    private String ip;
+    /**
+     * Sentinel在该应用上使用的端口
+     */
+    private int port;
 
-	private long id;
+    /**
+     * 机器名，冗余字段
+     */
+    private String hostname;
 
-	private Date gmtCreate;
+    /**
+     * 上一次拉取的最晚时间戳
+     */
+    private Date lastFetch;
 
-	private Date gmtModified;
+    public long getId() {
+        return id;
+    }
 
-	private String app;
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	private String ip;
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
 
-	/**
-	 * Sentinel在该应用上使用的端口
-	 */
-	private int port;
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
 
-	/**
-	 * 机器名，冗余字段
-	 */
-	private String hostname;
+    public Date getGmtModified() {
+        return gmtModified;
+    }
 
-	/**
-	 * 上一次拉取的最晚时间戳
-	 */
-	private Date lastFetch;
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
+    }
 
-	public long getId() {
-		return id;
-	}
+    public String getApp() {
+        return app;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public void setApp(String app) {
+        this.app = app;
+    }
 
-	public Date getGmtCreate() {
-		return gmtCreate;
-	}
+    public String getIp() {
+        return ip;
+    }
 
-	public void setGmtCreate(Date gmtCreate) {
-		this.gmtCreate = gmtCreate;
-	}
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
 
-	public Date getGmtModified() {
-		return gmtModified;
-	}
+    public int getPort() {
+        return port;
+    }
 
-	public void setGmtModified(Date gmtModified) {
-		this.gmtModified = gmtModified;
-	}
+    public void setPort(int port) {
+        this.port = port;
+    }
 
-	public String getApp() {
-		return app;
-	}
+    public String getHostname() {
+        return hostname;
+    }
 
-	public void setApp(String app) {
-		this.app = app;
-	}
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
+    }
 
-	public String getIp() {
-		return ip;
-	}
+    public Date getLastFetch() {
+        return lastFetch;
+    }
 
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
+    public void setLastFetch(Date lastFetch) {
+        this.lastFetch = lastFetch;
+    }
 
-	public int getPort() {
-		return port;
-	}
-
-	public void setPort(int port) {
-		this.port = port;
-	}
-
-	public String getHostname() {
-		return hostname;
-	}
-
-	public void setHostname(String hostname) {
-		this.hostname = hostname;
-	}
-
-	public Date getLastFetch() {
-		return lastFetch;
-	}
-
-	public void setLastFetch(Date lastFetch) {
-		this.lastFetch = lastFetch;
-	}
-
-	@Override
-	public String toString() {
-		return "MetricPositionEntity{" + "id=" + id + ", gmtCreate=" + gmtCreate + ", gmtModified=" + gmtModified
-				+ ", app='" + app + '\'' + ", ip='" + ip + '\'' + ", port=" + port + ", hostname='" + hostname + '\''
-				+ ", lastFetch=" + lastFetch + '}';
-	}
-
+    @Override
+    public String toString() {
+        return "MetricPositionEntity{" +
+            "id=" + id +
+            ", gmtCreate=" + gmtCreate +
+            ", gmtModified=" + gmtModified +
+            ", app='" + app + '\'' +
+            ", ip='" + ip + '\'' +
+            ", port=" + port +
+            ", hostname='" + hostname + '\'' +
+            ", lastFetch=" + lastFetch +
+            '}';
+    }
 }

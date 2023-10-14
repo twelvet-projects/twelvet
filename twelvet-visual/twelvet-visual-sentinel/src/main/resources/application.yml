@@ -2,8 +2,13 @@ server:
   # 默认端口：8718
   port: 8101
   servlet:
+    session:
+      cookie:
+        name: sentinel_dashboard_cookie
     encoding:
       force: true
+      charset: UTF-8
+      enabled: true
 
 spring:
   application:
@@ -15,6 +20,10 @@ spring:
       discovery:
         server-addr: ${NACOS_HOST:twelvet-nacos}:${NACOS_PORT:8848}
         namespace: @nacos.namespace@
+  mvc:
+    pathmatch:
+      # 在高级版本中需要兼容路径，否则404
+      matching-strategy: ant_path_matcher
 
 management:
   endpoints:
