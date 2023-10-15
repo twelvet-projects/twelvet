@@ -17,29 +17,31 @@ jobs:
           dst: gitee/twelvet
           dst_key: ${{ secrets.SSH_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
+          # 配置黑名单
+          black_list:
           # 指定同步仓库
-          static_list: ${{ matrix.static_list }}
+          # static_list: ${{ matrix.static_list }}
           force_update: true
           # 设置源仓库类型为组织：org，个人：user
           src_account_type: org
           dst_account_type: org
           clone_style: ssh
           debug: true
-    strategy:
-      matrix:
-        static_list:
-          - twelvet
-          - twelvet-ui
-          - twelvet-fast
-          - netty-websocket-spring-boot-starter
-          - gins
-          - twelvet-ai
-          - twelvet-mall-ui
-          - twelvet-mall
-          - excel-spring-boot-starter
-          - xss-spring-boot-starter
-          - oss-spring-boot-starter
-          - idempotent-spring-boot-starter
+#    strategy:
+#      matrix:
+#        static_list:
+#          - twelvet
+#          - twelvet-ui
+#          - twelvet-fast
+#          - netty-websocket-spring-boot-starter
+#          - gins
+#          - twelvet-ai
+#          - twelvet-mall-ui
+#          - twelvet-mall
+#          - excel-spring-boot-starter
+#          - xss-spring-boot-starter
+#          - oss-spring-boot-starter
+#          - idempotent-spring-boot-starter
 #   gitlab:
 #     runs-on: ubuntu-latest
 #     steps:
