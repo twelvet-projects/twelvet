@@ -18,7 +18,7 @@ jobs:
           dst_key: ${{ secrets.SSH_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
           # 指定同步仓库
-          static_list: twelvet,twelvet-ui,twelvet-fast,netty-websocket-spring-boot-starter,gins,twelvet-ai,twelvet-mall-ui,twelvet-mall,excel-spring-boot-starter,xss-spring-boot-starter
+          static_list: twelvet,twelvet-ui,twelvet-fast,netty-websocket-spring-boot-starter,gins,twelvet-ai,twelvet-mall-ui,twelvet-mall,excel-spring-boot-starter,xss-spring-boot-starter,oss-spring-boot-starter,idempotent-spring-boot-starter
           force_update: true
           account_type: user
           clone_style: ssh
