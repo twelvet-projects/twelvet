@@ -24,7 +24,7 @@ jobs:
           src_account_type: org
           dst_account_type: org
           clone_style: ssh
-          debug: true  
+          debug: true
     strategy:
       matrix:
         static_list:
