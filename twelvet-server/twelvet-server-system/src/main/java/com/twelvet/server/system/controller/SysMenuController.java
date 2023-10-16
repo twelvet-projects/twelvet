@@ -1,5 +1,6 @@
 package com.twelvet.server.system.controller;
 
+import cn.twelvet.idempotent.annotation.Idempotent;
 import com.twelvet.api.system.domain.SysMenu;
 import com.twelvet.api.system.domain.vo.RouterVo;
 import com.twelvet.api.system.domain.vo.TreeSelect;
@@ -79,6 +80,7 @@ public class SysMenuController extends TWTController {
 	 * @param menu SysMenu
 	 * @return JsonResult<String>
 	 */
+	@Idempotent(key = "#menu.menuId", expireTime = 3)
 	@Operation(summary = "修改菜单")
 	@Log(service = "菜单管理", businessType = BusinessType.UPDATE)
 	@PutMapping
