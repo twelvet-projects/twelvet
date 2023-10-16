@@ -66,6 +66,7 @@
         <excel-spring-boot-starter.version>3.0.1</excel-spring-boot-starter.version>
         <xss-spring-boot-starter.version>3.0.0</xss-spring-boot-starter.version>
         <oss-spring-boot-starter.version>3.0.0</oss-spring-boot-starter.version>
+        <idempotent-spring-boot-starter.version>3.0.0</idempotent-spring-boot-starter.version>
 
         <docker.plugin.version>0.32.0</docker.plugin.version>
         <spring.checkstyle.plugin>0.0.39</spring.checkstyle.plugin>
@@ -235,6 +236,13 @@
                 <groupId>cn.twelvet.oss</groupId>
                 <artifactId>oss-spring-boot-starter</artifactId>
                 <version>${oss-spring-boot-starter.version}</version>
+            </dependency>
+
+            <!--幂等-->
+            <dependency>
+                <groupId>cn.twelvet.idempotent</groupId>
+                <artifactId>idempotent-spring-boot-starter</artifactId>
+                <version>${idempotent-spring-boot-starter.version}</version>
             </dependency>
 
             <!--Redis缓存模块-->
