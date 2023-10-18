@@ -46,7 +46,7 @@
             <artifactId>twelvet-framework-core</artifactId>
             <exclusions>
                 <exclusion>
-                    <groupId>cn.twelvet.excel</groupId>
+                    <groupId>cn.twelvet</groupId>
                     <artifactId>excel-spring-boot-starter</artifactId>
                 </exclusion>
             </exclusions>

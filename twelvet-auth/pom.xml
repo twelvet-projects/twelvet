@@ -89,7 +89,7 @@
 
         <!--XSS-->
         <dependency>
-            <groupId>cn.twelvet.xss</groupId>
+            <groupId>cn.twelvet</groupId>
             <artifactId>xss-spring-boot-starter</artifactId>
         </dependency>
 

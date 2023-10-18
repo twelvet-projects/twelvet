@@ -40,7 +40,7 @@
 
         <!--通用OSS-->
         <dependency>
-            <groupId>cn.twelvet.oss</groupId>
+            <groupId>cn.twelvet</groupId>
             <artifactId>oss-spring-boot-starter</artifactId>
         </dependency>
 

@@ -64,13 +64,13 @@
 
         <!--XSS-->
         <dependency>
-            <groupId>cn.twelvet.xss</groupId>
+            <groupId>cn.twelvet</groupId>
             <artifactId>xss-spring-boot-starter</artifactId>
         </dependency>
 
         <!--幂等-->
         <dependency>
-            <groupId>cn.twelvet.idempotent</groupId>
+            <groupId>cn.twelvet</groupId>
             <artifactId>idempotent-spring-boot-starter</artifactId>
         </dependency>
 
