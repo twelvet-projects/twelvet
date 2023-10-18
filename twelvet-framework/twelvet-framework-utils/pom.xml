@@ -77,7 +77,7 @@
 
         <!--Excel-->
         <dependency>
-            <groupId>cn.twelvet.excel</groupId>
+            <groupId>cn.twelvet</groupId>
             <artifactId>excel-spring-boot-starter</artifactId>
         </dependency>
 
