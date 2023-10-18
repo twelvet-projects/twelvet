@@ -47,7 +47,7 @@
         <spring-cloud-alibaba.version>2021.0.5.0</spring-cloud-alibaba.version>
         <spring-boot-admin.version>2.7.11</spring-boot-admin.version>
         <spring-boot.mybatis>2.3.1</spring-boot.mybatis>
-        <spring.authorization.version>0.4.3</spring.authorization.version>
+        <spring.authorization.version>0.4.4</spring.authorization.version>
 
         <snakeyaml.version>1.33</snakeyaml.version>
 
