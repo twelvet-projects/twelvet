@@ -63,7 +63,7 @@ public class SysUserController extends TWTController {
 	@Operation(summary = "获取用户列表")
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:user:list')")
-	public JsonResult<TableDataInfo> pageQuery(SysUser user) {
+	public JsonResult<TableDataInfo<SysUser>> pageQuery(SysUser user) {
 		PageUtils.startPage();
 		List<SysUser> list = iSysUserService.selectUserList(user);
 		return JsonResult.success(PageUtils.getDataTable(list));

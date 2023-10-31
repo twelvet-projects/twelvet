@@ -38,7 +38,7 @@ public class SysJobLogController extends TWTController {
 	@Operation(summary = "查询定时任务调度日志列表")
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:job:list')")
-	public JsonResult<TableDataInfo> pageQuery(SysJobLog sysJobLog) {
+	public JsonResult<TableDataInfo<SysJobLog>> pageQuery(SysJobLog sysJobLog) {
 		PageUtils.startPage();
 		List<SysJobLog> list = jobLogService.selectJobLogList(sysJobLog);
 		return JsonResult.success(PageUtils.getDataTable(list));

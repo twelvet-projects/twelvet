@@ -12,15 +12,15 @@ import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.utils.Convert;
 import com.twelvet.server.gen.service.IGenTableColumnService;
 import com.twelvet.server.gen.service.IGenTableService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -50,7 +50,7 @@ public class GenController extends TWTController {
 	@Operation(summary = "查询代码生成列表")
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('tool:gen:list')")
-	public JsonResult<TableDataInfo> pageQuery(GenTable genTable) {
+	public JsonResult<TableDataInfo<GenTable>> pageQuery(GenTable genTable) {
 		PageUtils.startPage();
 		List<GenTable> list = genTableService.selectGenTableList(genTable);
 		return JsonResult.success(PageUtils.getDataTable(list));
@@ -82,7 +82,7 @@ public class GenController extends TWTController {
 	@Operation(summary = "查询数据库列表")
 	@PreAuthorize("@role.hasPermi('tool:gen:list')")
 	@GetMapping("/db/list")
-	public JsonResult<TableDataInfo> dataList(GenTable genTable) {
+	public JsonResult<TableDataInfo<GenTable>> dataList(GenTable genTable) {
 		PageUtils.startPage();
 		List<GenTable> list = genTableService.selectDbTableList(genTable);
 		return JsonResult.success(PageUtils.getDataTable(list));
@@ -95,11 +95,9 @@ public class GenController extends TWTController {
 	 */
 	@Operation(summary = "查询数据表字段列表")
 	@GetMapping(value = "/column/{tableId}")
-	public JsonResult<TableDataInfo> columnList(@PathVariable Long tableId) {
-		TableDataInfo dataInfo = new TableDataInfo();
+	public JsonResult<TableDataInfo<GenTableColumn>> columnList(@PathVariable Long tableId) {
 		List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(tableId);
-		dataInfo.setRecords(list);
-		dataInfo.setTotal(list.size());
+		TableDataInfo<GenTableColumn> dataInfo = TableDataInfo.page(list, list.size());
 		return JsonResult.success(dataInfo);
 	}
 

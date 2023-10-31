@@ -10,6 +10,7 @@ import com.twelvet.framework.security.exception.OAuthClientException;
 import com.twelvet.framework.security.utils.OAuth2EndpointUtils;
 import com.twelvet.framework.security.utils.OAuth2ErrorCodesExpand;
 import com.twelvet.framework.utils.SpringContextHolder;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -35,7 +36,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import jakarta.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.util.Map;
 import java.util.Set;

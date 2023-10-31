@@ -44,7 +44,7 @@ public class SysDictDataController extends TWTController {
 	@Operation(summary = "分页查询数据字典")
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:dict:list')")
-	public JsonResult<TableDataInfo> pageQuery(SysDictData sysDictData) {
+	public JsonResult<TableDataInfo<SysDictData>> pageQuery(SysDictData sysDictData) {
 		PageUtils.startPage();
 		List<SysDictData> list = dictDataService.selectDictDataList(sysDictData);
 		return JsonResult.success(PageUtils.getDataTable(list));

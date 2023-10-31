@@ -64,7 +64,7 @@ public class SysOperationLogController extends TWTController {
 	@Operation(summary = "分页查询")
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:operlog:list')")
-	public JsonResult<TableDataInfo> pageQuery(SysOperationLog operationLog) {
+	public JsonResult<TableDataInfo<SysOperationLog>> pageQuery(SysOperationLog operationLog) {
 		PageUtils.startPage();
 		List<SysOperationLog> list = iSysOperationLogService.selectOperationLogList(operationLog);
 		return JsonResult.success(PageUtils.getDataTable(list));
