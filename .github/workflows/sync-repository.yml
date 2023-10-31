@@ -31,6 +31,7 @@ jobs:
           - twelvet
           - twelvet-ui
           - twelvet-fast
+          - auto-spring-boot-starter
           - netty-websocket-spring-boot-starter
           - gins
           - twelvet-ai
