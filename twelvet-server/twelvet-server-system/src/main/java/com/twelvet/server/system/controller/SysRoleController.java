@@ -41,7 +41,7 @@ public class SysRoleController extends TWTController {
 	@Operation(summary = "角色信息分页查询")
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:role:list')")
-	public JsonResult<TableDataInfo> pageQuery(SysRole role) {
+	public JsonResult<TableDataInfo<SysRole>> pageQuery(SysRole role) {
 		PageUtils.startPage();
 		List<SysRole> list = iSysRoleService.selectRoleList(role);
 		return JsonResult.success(PageUtils.getDataTable(list));

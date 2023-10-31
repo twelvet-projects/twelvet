@@ -83,7 +83,7 @@ public class TokenEndpointApi {
 	@Operation(summary = "分页token 信息")
 	@AuthIgnore
 	@GetMapping("/pageQuery")
-	public R<TableDataInfo> tokenList(TokenDTO tokenDTO) {
+	public R<TableDataInfo<TokenVo>> tokenList(TokenDTO tokenDTO) {
 		String username = tokenDTO.getUsername();
 		Integer current = tokenDTO.getCurrent();
 		Integer pageSize = tokenDTO.getPageSize();
@@ -98,8 +98,6 @@ public class TokenEndpointApi {
 			.skip((long) (current - 1) * pageSize)
 			.limit(pageSize)
 			.collect(Collectors.toList());
-
-		TableDataInfo tableDataInfo = new TableDataInfo();
 
 		List<TokenVo> tokenVoList = redisTemplate.opsForValue().multiGet(pages).stream().map(obj -> {
 			OAuth2Authorization authorization = (OAuth2Authorization) obj;
@@ -126,10 +124,7 @@ public class TokenEndpointApi {
 			return tokenVo;
 		}).collect(Collectors.toList());
 
-		tableDataInfo.setRecords(tokenVoList);
-		tableDataInfo.setTotal(keys.size());
-
-		return R.ok(tableDataInfo);
+		return R.ok(TableDataInfo.page(tokenVoList, keys.size()));
 	}
 
 }

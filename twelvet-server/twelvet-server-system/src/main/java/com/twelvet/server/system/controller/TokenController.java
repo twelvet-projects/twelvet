@@ -2,6 +2,7 @@ package com.twelvet.server.system.controller;
 
 import com.twelvet.api.auth.feign.RemoteTokenService;
 import com.twelvet.api.auth.feign.domain.dto.TokenDTO;
+import com.twelvet.api.auth.feign.domain.vo.TokenVo;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.JsonResult;
 import com.twelvet.framework.core.application.page.PageDomain;
@@ -37,7 +38,7 @@ public class TokenController extends TWTController {
 	@Operation(summary = "分页token 信息")
 	@PreAuthorize("@role.hasPermi('system:token:list')")
 	@GetMapping("/pageQuery")
-	public JsonResult<TableDataInfo> token(String username) {
+	public JsonResult<TableDataInfo<TokenVo>> token(String username) {
 		TokenDTO tokenDTO = new TokenDTO();
 		tokenDTO.setUsername(username);
 		PageDomain pageDomain = TableSupport.buildPageRequest();
@@ -47,7 +48,7 @@ public class TokenController extends TWTController {
 			tokenDTO.setCurrent(current);
 			tokenDTO.setPageSize(pageSize);
 		}
-		R<TableDataInfo> tokenPage = remoteTokenService.getTokenPage(tokenDTO);
+		R<TableDataInfo<TokenVo>> tokenPage = remoteTokenService.getTokenPage(tokenDTO);
 		return JsonResult.success(tokenPage.getData());
 	}
 

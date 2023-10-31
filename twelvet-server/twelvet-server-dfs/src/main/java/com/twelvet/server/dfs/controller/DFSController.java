@@ -80,7 +80,7 @@ public class DFSController extends TWTController {
 	@Operation(summary = "分页查询")
 	@PreAuthorize("@role.hasPermi('dfs:dfs:list')")
 	@GetMapping("/pageQuery")
-	public JsonResult<TableDataInfo> pageQuery(SysDfs sysDfs) {
+	public JsonResult<TableDataInfo<SysDfs>> pageQuery(SysDfs sysDfs) {
 		PageUtils.startPage();
 		List<SysDfs> sysDfsList = sysFileService.selectSysDfsList(sysDfs);
 		return JsonResult.success(PageUtils.getDataTable(sysDfsList));

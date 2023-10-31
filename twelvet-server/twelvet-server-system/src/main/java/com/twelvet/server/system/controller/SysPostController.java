@@ -94,7 +94,7 @@ public class SysPostController extends TWTController {
 	@Operation(summary = "获取岗位列表")
 	@GetMapping("/pageQuery")
 	@PreAuthorize("@role.hasPermi('system:post:list')")
-	public JsonResult<TableDataInfo> pageQuery(SysPost post) {
+	public JsonResult<TableDataInfo<SysPost>> pageQuery(SysPost post) {
 		PageUtils.startPage();
 		List<SysPost> list = iSysPostService.selectPostList(post);
 		return JsonResult.success(PageUtils.getDataTable(list));

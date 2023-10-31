@@ -2,6 +2,7 @@ package com.twelvet.api.auth.feign.factory;
 
 import com.twelvet.api.auth.feign.RemoteTokenService;
 import com.twelvet.api.auth.feign.domain.dto.TokenDTO;
+import com.twelvet.api.auth.feign.domain.vo.TokenVo;
 import com.twelvet.framework.core.application.page.TableDataInfo;
 import com.twelvet.framework.core.domain.R;
 import org.slf4j.Logger;
@@ -27,7 +28,7 @@ public class RemoteTokenFallbackFactory implements FallbackFactory<RemoteTokenSe
 		return new RemoteTokenService() {
 
 			@Override
-			public R<TableDataInfo> getTokenPage(TokenDTO tokenDTO) {
+			public R<TableDataInfo<TokenVo>> getTokenPage(TokenDTO tokenDTO) {
 				return R.fail();
 			}
 

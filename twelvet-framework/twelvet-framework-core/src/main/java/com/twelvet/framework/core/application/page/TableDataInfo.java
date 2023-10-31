@@ -9,7 +9,7 @@ import java.util.List;
  * @WebSite twelvet.cn
  * @Description: 表格分页数据对象
  */
-public class TableDataInfo implements Serializable {
+public class TableDataInfo<T> implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
@@ -22,22 +22,18 @@ public class TableDataInfo implements Serializable {
 	/**
 	 * 列表数据
 	 */
-	private List<?> records;
-
-	/**
-	 * 表格数据对象
-	 */
-	public TableDataInfo() {
-	}
+	private List<T> records;
 
 	/**
 	 * 分页
 	 * @param list 列表数据
 	 * @param total 总记录数
 	 */
-	public TableDataInfo(List<?> list, int total) {
-		this.records = list;
-		this.total = total;
+	public static <T> TableDataInfo<T> page(List<T> list, long total) {
+		TableDataInfo<T> tableDataInfo = new TableDataInfo<>();
+		tableDataInfo.setRecords(list);
+		tableDataInfo.setTotal(total);
+		return tableDataInfo;
 	}
 
 	public long getTotal() {
@@ -48,11 +44,11 @@ public class TableDataInfo implements Serializable {
 		this.total = total;
 	}
 
-	public List<?> getRecords() {
+	public List<T> getRecords() {
 		return records;
 	}
 
-	public void setRecords(List<?> records) {
+	public void setRecords(List<T> records) {
 		this.records = records;
 	}
 

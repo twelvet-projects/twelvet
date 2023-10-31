@@ -1,6 +1,7 @@
 package com.twelvet.api.auth.feign;
 
 import com.twelvet.api.auth.feign.domain.dto.TokenDTO;
+import com.twelvet.api.auth.feign.domain.vo.TokenVo;
 import com.twelvet.api.auth.feign.factory.RemoteTokenFallbackFactory;
 import com.twelvet.framework.core.application.page.TableDataInfo;
 import com.twelvet.framework.core.constants.SecurityConstants;
@@ -28,7 +29,7 @@ public interface RemoteTokenService {
 	 * @return R<TableDataInfo>
 	 */
 	@GetMapping(value = "/api/token/pageQuery", headers = SecurityConstants.HEADER_FROM_IN)
-	R<TableDataInfo> getTokenPage(@SpringQueryMap TokenDTO tokenDTO);
+	R<TableDataInfo<TokenVo>> getTokenPage(@SpringQueryMap TokenDTO tokenDTO);
 
 	/**
 	 * 删除token

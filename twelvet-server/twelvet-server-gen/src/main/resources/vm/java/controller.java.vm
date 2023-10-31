@@ -50,7 +50,7 @@ public class ${ClassName}Controller extends TWTController
     @SaCheckPermission("${permissionPrefix}:list")
     @GetMapping("/pageQuery")
     #if($table.crud || $table.sub)
-    public JsonResult<TableDataInfo> pageQuery(${ClassName} ${className})
+    public JsonResult<TableDataInfo<${ClassName}>> pageQuery(${ClassName} ${className})
     {
         PageUtils.startPage();
         List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
