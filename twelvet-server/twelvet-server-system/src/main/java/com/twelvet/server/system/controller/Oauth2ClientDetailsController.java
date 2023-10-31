@@ -40,7 +40,7 @@ public class Oauth2ClientDetailsController extends TWTController {
 	@Operation(summary = "查询终端配置列表")
 	@PreAuthorize("@role.hasPermi('system:client:list')")
 	@GetMapping("/pageQuery")
-	public JsonResult<TableDataInfo> pageQuery(SysClientDetailsDTO sysClientDetailsDTO) {
+	public JsonResult<TableDataInfo<SysClientDetails>> pageQuery(SysClientDetailsDTO sysClientDetailsDTO) {
 		PageUtils.startPage();
 		List<SysClientDetails> list = sysClientDetailsService.selectSysClientDetailsList(sysClientDetailsDTO);
 		return JsonResult.success(PageUtils.getDataTable(list));

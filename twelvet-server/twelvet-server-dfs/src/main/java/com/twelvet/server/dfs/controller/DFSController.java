@@ -8,8 +8,8 @@ import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.server.dfs.service.IDFSService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -80,7 +80,7 @@ public class DFSController extends TWTController {
 	@Operation(summary = "分页查询")
 	@PreAuthorize("@role.hasPermi('dfs:dfs:list')")
 	@GetMapping("/pageQuery")
-	public JsonResult<TableDataInfo> pageQuery(SysDfs sysDfs) {
+	public JsonResult<TableDataInfo<SysDfs>> pageQuery(SysDfs sysDfs) {
 		PageUtils.startPage();
 		List<SysDfs> sysDfsList = sysFileService.selectSysDfsList(sysDfs);
 		return JsonResult.success(PageUtils.getDataTable(sysDfsList));

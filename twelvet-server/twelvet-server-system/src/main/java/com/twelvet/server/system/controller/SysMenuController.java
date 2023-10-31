@@ -14,8 +14,8 @@ import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.server.system.service.ISysMenuService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -143,7 +143,7 @@ public class SysMenuController extends TWTController {
 	/**
 	 * 获取菜单下拉树列表
 	 * @param menu SysMenu
-	 * @return JsonResult<List<TreeSelect>>
+	 * @return JsonResult<List < TreeSelect>>
 	 */
 	@Operation(summary = "获取菜单下拉树列表")
 	@GetMapping("/treeSelect")
