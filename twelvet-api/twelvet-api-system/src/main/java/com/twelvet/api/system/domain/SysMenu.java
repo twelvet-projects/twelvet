@@ -44,7 +44,7 @@ public class SysMenu extends BaseEntity {
 	 * 显示顺序
 	 */
 	@Schema(description = "显示顺序")
-	private String orderNum;
+	private Long orderNum;
 
 	/**
 	 * 路由地址
@@ -132,11 +132,11 @@ public class SysMenu extends BaseEntity {
 		this.parentId = parentId;
 	}
 
-	public String getOrderNum() {
+	public Long getOrderNum() {
 		return orderNum;
 	}
 
-	public void setOrderNum(String orderNum) {
+	public void setOrderNum(Long orderNum) {
 		this.orderNum = orderNum;
 	}
 
