@@ -30,12 +30,12 @@ public class UserConstants {
 	/**
 	 * 部门正常状态
 	 */
-	public static final String DEPT_NORMAL = "1";
+	public static final String DEPT_NORMAL = "0";
 
 	/**
 	 * 部门停用状态
 	 */
-	public static final String DEPT_DISABLE = "0";
+	public static final String DEPT_DISABLE = "1";
 
 	/**
 	 * 字典正常状态
@@ -80,11 +80,11 @@ public class UserConstants {
 	/**
 	 * 唯一标识
 	 */
-	public final static String UNIQUE = "1";
+	public final static String UNIQUE = "0";
 
 	/**
 	 * 非唯一标识
 	 */
-	public final static String NOT_UNIQUE = "0";
+	public final static String NOT_UNIQUE = "1";
 
 }
