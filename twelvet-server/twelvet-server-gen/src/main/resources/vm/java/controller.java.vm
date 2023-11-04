@@ -40,7 +40,7 @@ public class ${ClassName}Controller extends TWTController
     /**
      * 查询${functionName}列表
      */
-    @Operation(summary = "查询${functionName}列表")
+    @Operation(summary = "查询${functionName}分页")
     @PreAuthorize("@role.hasPermi('${permissionPrefix}:list')")
     @GetMapping("/pageQuery")
     #if($table.crud || $table.sub)
