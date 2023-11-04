@@ -1,28 +1,22 @@
 package ${packageName}.controller;
 
 import java.util.List;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
-import cn.dev33.satoken.annotation.SaCheckPermission;
-import ${packageName}.domain.${ClassName};
+import com.twelvet.framework.core.application.page.TableDataInfo;
+import com.twelvet.api.${moduleName}.domain.${ClassName};
 import ${packageName}.service.I${ClassName}Service;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.core.application.domain.JsonResult;
 import cn.twelvet.excel.annotation.ResponseExcel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 #if($table.crud || $table.sub)
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 #elseif($table.tree)
@@ -47,10 +41,10 @@ public class ${ClassName}Controller extends TWTController
      * 查询${functionName}列表
      */
     @Operation(summary = "查询${functionName}列表")
-    @SaCheckPermission("${permissionPrefix}:list")
+    @PreAuthorize("@role.hasPermi('${permissionPrefix}:list')")
     @GetMapping("/pageQuery")
     #if($table.crud || $table.sub)
-    public JsonResult<TableDataInfo> pageQuery(${ClassName} ${className})
+    public JsonResult<TableDataInfo<${ClassName}>> pageQuery(${ClassName} ${className})
     {
         PageUtils.startPage();
         List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
@@ -69,7 +63,7 @@ public class ${ClassName}Controller extends TWTController
      */
     @ResponseExcel(name = "${functionName}")
     @Operation(summary = "导出${functionName}列表")
-    @SaCheckPermission("${permissionPrefix}:export")
+    @PreAuthorize("@role.hasPermi('${permissionPrefix}:export')")
     @Log(service = "${functionName}", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public List<${ClassName}> export(${ClassName} ${className})
@@ -81,7 +75,7 @@ public class ${ClassName}Controller extends TWTController
      * 获取${functionName}详细信息
      */
     @Operation(summary = "获取${functionName}详细信息")
-    @SaCheckPermission("${permissionPrefix}:query")
+    @PreAuthorize("@role.hasPermi('${permissionPrefix}:query')")
     @GetMapping(value = "/{${pkColumn.javaField}}")
     public JsonResult<${ClassName}> getInfo(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField})
     {
@@ -92,7 +86,7 @@ public class ${ClassName}Controller extends TWTController
      * 新增${functionName}
      */
     @Operation(summary = "新增${functionName}")
-    @SaCheckPermission("${permissionPrefix}:add")
+    @PreAuthorize("@role.hasPermi('${permissionPrefix}:add')")
     @Log(service = "${functionName}", businessType = BusinessType.INSERT)
     @PostMapping
     public JsonResult<String> add(@RequestBody ${ClassName} ${className})
@@ -104,7 +98,7 @@ public class ${ClassName}Controller extends TWTController
      * 修改${functionName}
      */
     @Operation(summary = "修改${functionName}")
-    @SaCheckPermission("${permissionPrefix}:edit")
+    @PreAuthorize("@role.hasPermi('${permissionPrefix}:edit')")
     @Log(service = "${functionName}", businessType = BusinessType.UPDATE)
     @PutMapping
     public JsonResult<String> edit(@RequestBody ${ClassName} ${className})
@@ -116,7 +110,7 @@ public class ${ClassName}Controller extends TWTController
      * 删除${functionName}
      */
     @Operation(summary = "删除${functionName}")
-    @SaCheckPermission("${permissionPrefix}:remove")
+    @PreAuthorize("@role.hasPermi('${permissionPrefix}:remove')")
     @Log(service = "${functionName}", businessType = BusinessType.DELETE)
     @DeleteMapping("/{${pkColumn.javaField}s}")
     public JsonResult<String> remove(@PathVariable ${pkColumn.javaType}[] ${pkColumn.javaField}s)
