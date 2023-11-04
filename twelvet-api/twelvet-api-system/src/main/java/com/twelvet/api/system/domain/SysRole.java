@@ -39,7 +39,7 @@ public class SysRole extends BaseEntity {
 	 * 角色排序
 	 */
 	@Schema(description = "角色排序")
-	private String roleSort;
+	private Long roleSort;
 
 	/**
 	 * 数据范围（1：所有数据权限；2：自定义数据权限；3：本部门数据权限；4：本部门及以下数据权限）
@@ -117,11 +117,11 @@ public class SysRole extends BaseEntity {
 		this.roleKey = roleKey;
 	}
 
-	public String getRoleSort() {
+	public Long getRoleSort() {
 		return roleSort;
 	}
 
-	public void setRoleSort(String roleSort) {
+	public void setRoleSort(Long roleSort) {
 		this.roleSort = roleSort;
 	}
 

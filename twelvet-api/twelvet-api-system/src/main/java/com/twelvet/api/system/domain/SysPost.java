@@ -47,7 +47,7 @@ public class SysPost extends BaseEntity {
 	 */
 	@Schema(description = "岗位排序")
 	@ExcelProperty(value = "岗位排序")
-	private String postSort;
+	private Long postSort;
 
 	/**
 	 * 状态（0正常 1停用）
@@ -90,12 +90,11 @@ public class SysPost extends BaseEntity {
 		this.postName = postName;
 	}
 
-	@NotBlank(message = "显示顺序不能为空")
-	public String getPostSort() {
+	public Long getPostSort() {
 		return postSort;
 	}
 
-	public void setPostSort(String postSort) {
+	public void setPostSort(Long postSort) {
 		this.postSort = postSort;
 	}
 
