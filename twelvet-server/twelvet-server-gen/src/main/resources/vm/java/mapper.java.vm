@@ -2,9 +2,9 @@ package ${packageName}.mapper;
 
 import java.util.List;
 
-import ${packageName}.domain.${ClassName};
+import com.twelvet.api.${moduleName}.domain.${ClassName};
 #if($table.sub)
-import ${packageName}.domain.${subClassName};
+import com.twelvet.api.${moduleName}.domain.${subClassName};
 #end
 
 /**
