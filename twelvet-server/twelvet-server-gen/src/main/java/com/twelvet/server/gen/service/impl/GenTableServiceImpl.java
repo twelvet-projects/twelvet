@@ -23,6 +23,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,7 +170,7 @@ public class GenTableServiceImpl implements IGenTableService {
 		DynamicDataSourceContextHolder.push(DataSourceConstants.DS_MASTER);
 		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 			@Override
-			protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
+			protected void doInTransactionWithoutResult(@NotNull TransactionStatus transactionStatus) {
 				GenTableMapper genTableMapper = GenUtils.getMapper();
 				String operName = SecurityUtils.getUsername();
 				try {
@@ -201,7 +202,7 @@ public class GenTableServiceImpl implements IGenTableService {
 		DynamicDataSourceContextHolder.push(DataSourceConstants.DS_MASTER);
 		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 			@Override
-			protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
+			protected void doInTransactionWithoutResult(@NotNull TransactionStatus transactionStatus) {
 				try {
 					for (GenTableColumn genTableColumn : genTableColumnList) {
 						genTableColumnMapper.insertGenTableColumn(genTableColumn);
@@ -325,7 +326,7 @@ public class GenTableServiceImpl implements IGenTableService {
 		// 执行事务
 		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 			@Override
-			protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
+			protected void doInTransactionWithoutResult(@NotNull TransactionStatus transactionStatus) {
 				dbTableColumns.forEach(column -> {
 					if (!tableColumnNames.contains(column.getColumnName())) {
 						GenUtils.initColumnField(column, genTable);
