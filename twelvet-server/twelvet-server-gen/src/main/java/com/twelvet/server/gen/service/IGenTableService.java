@@ -31,7 +31,7 @@ public interface IGenTableService {
 	 * @param tableNames 表名称组
 	 * @return 数据库表集合
 	 */
-	List<GenTable> selectDbTableListByNames(String[] tableNames);
+	List<GenTable> selectDbTableListByNames(String dsName, String[] tableNames);
 
 	/**
 	 * 查询所有表信息

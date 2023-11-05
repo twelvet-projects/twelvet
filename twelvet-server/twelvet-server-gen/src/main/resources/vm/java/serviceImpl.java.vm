@@ -14,10 +14,10 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import com.twelvet.framework.core.utils.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
-import ${packageName}.domain.${subClassName};
+import com.twelvet.api.${moduleName}.domain.${ClassName};
 #end
 import ${packageName}.mapper.${ClassName}Mapper;
-import ${packageName}.domain.${ClassName};
+import com.twelvet.api.${moduleName}.domain.${ClassName};
 import ${packageName}.service.I${ClassName}Service;
 
 /**

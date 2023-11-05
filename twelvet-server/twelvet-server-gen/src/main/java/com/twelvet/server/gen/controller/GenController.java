@@ -1,11 +1,13 @@
 package com.twelvet.server.gen.controller;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.twelvet.api.gen.domain.GenTable;
 import com.twelvet.api.gen.domain.GenTableColumn;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.core.application.domain.JsonResult;
 import com.twelvet.framework.core.application.page.TableDataInfo;
+import com.twelvet.framework.datasource.support.DataSourceConstants;
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
@@ -21,6 +23,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -109,11 +112,11 @@ public class GenController extends TWTController {
 	@Operation(summary = "导入表结构")
 	@PreAuthorize("@role.hasPermi('tool:gen:list')")
 	@Log(service = "代码生成", businessType = BusinessType.IMPORT)
-	@PostMapping("/importTable")
-	public JsonResult<String> importTableSave(String tables) {
+	@PostMapping("/importTable/{dsName}")
+	public JsonResult<String> importTableSave(@PathVariable String dsName, String tables) {
 		String[] tableNames = Convert.toStrArray(tables);
 		// 查询表信息
-		List<GenTable> tableList = genTableService.selectDbTableListByNames(tableNames);
+		List<GenTable> tableList = genTableService.selectDbTableListByNames(dsName, tableNames);
 		genTableService.importGenTable(tableList);
 		return JsonResult.success();
 	}

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twelvet.server.gen.mapper.GenFieldTypeMapper">
+    
+    <resultMap type="GenFieldType" id="GenFieldTypeResult">
+        <result property="id"    column="id"    />
+        <result property="columnType"    column="column_type"    />
+        <result property="attrType"    column="attr_type"    />
+        <result property="packageName"    column="package_name"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectGenFieldTypeVo">
+        select id, column_type, attr_type, package_name, create_time, create_by, update_time, update_by, del_flag from gen_field_type
+    </sql>
+
+    <select id="selectGenFieldTypeList" parameterType="GenFieldType" resultMap="GenFieldTypeResult">
+        <include refid="selectGenFieldTypeVo"/>
+        <where>  
+            <if test="columnType != null  and columnType != ''"> and column_type like concat('%', #{columnType}, '%')</if>
+            <if test="attrType != null  and attrType != ''"> and attr_type = #{attrType}</if>
+            <if test="packageName != null  and packageName != ''"> and package_name like concat('%', #{packageName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectGenFieldTypeById" parameterType="Long" resultMap="GenFieldTypeResult">
+        <include refid="selectGenFieldTypeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertGenFieldType" parameterType="GenFieldType" useGeneratedKeys="true" keyProperty="id">
+        insert into gen_field_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="columnType != null">column_type,</if>
+            <if test="attrType != null">attr_type,</if>
+            <if test="packageName != null">package_name,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="delFlag != null">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="columnType != null">#{columnType},</if>
+            <if test="attrType != null">#{attrType},</if>
+            <if test="packageName != null">#{packageName},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateGenFieldType" parameterType="GenFieldType">
+        update gen_field_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="columnType != null">column_type = #{columnType},</if>
+            <if test="attrType != null">attr_type = #{attrType},</if>
+            <if test="packageName != null">package_name = #{packageName},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteGenFieldTypeById" parameterType="Long">
+        delete from gen_field_type where id = #{id}
+    </delete>
+
+    <delete id="deleteGenFieldTypeByIds" parameterType="String">
+        delete from gen_field_type where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

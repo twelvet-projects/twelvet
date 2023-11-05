@@ -1,15 +1,17 @@
 package com.twelvet.server.gen.service.impl;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.twelvet.api.gen.constant.GenConstants;
 import com.twelvet.api.gen.domain.GenTable;
 import com.twelvet.api.gen.domain.GenTableColumn;
 import com.twelvet.framework.core.constants.Constants;
 import com.twelvet.framework.core.exception.TWTException;
+import com.twelvet.framework.datasource.support.DataSourceConstants;
 import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.framework.utils.TUtils;
 import com.twelvet.framework.utils.CharsetKit;
 import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.TUtils;
 import com.twelvet.framework.utils.file.FileUtils;
 import com.twelvet.server.gen.mapper.GenTableColumnMapper;
 import com.twelvet.server.gen.mapper.GenTableMapper;
@@ -25,12 +27,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,10 +58,10 @@ public class GenTableServiceImpl implements IGenTableService {
 	private static final Logger log = LoggerFactory.getLogger(GenTableServiceImpl.class);
 
 	@Autowired
-	private GenTableMapper genTableMapper;
+	private GenTableColumnMapper genTableColumnMapper;
 
 	@Autowired
-	private GenTableColumnMapper genTableColumnMapper;
+	private TransactionTemplate transactionTemplate;
 
 	/**
 	 * 查询业务信息
@@ -61,6 +70,7 @@ public class GenTableServiceImpl implements IGenTableService {
 	 */
 	@Override
 	public GenTable selectGenTableById(Long id) {
+		GenTableMapper genTableMapper = GenUtils.getMapper();
 		GenTable genTable = genTableMapper.selectGenTableById(id);
 		setTableFromOptions(genTable);
 		return genTable;
@@ -73,6 +83,7 @@ public class GenTableServiceImpl implements IGenTableService {
 	 */
 	@Override
 	public List<GenTable> selectGenTableList(GenTable genTable) {
+		GenTableMapper genTableMapper = GenUtils.getMapper();
 		return genTableMapper.selectGenTableList(genTable);
 	}
 
@@ -83,6 +94,9 @@ public class GenTableServiceImpl implements IGenTableService {
 	 */
 	@Override
 	public List<GenTable> selectDbTableList(GenTable genTable) {
+		GenTableMapper genTableMapper = GenUtils.getMapper(genTable.getDsName());
+		// 手动切换数据源
+		DynamicDataSourceContextHolder.push(genTable.getDsName());
 		return genTableMapper.selectDbTableList(genTable);
 	}
 
@@ -92,8 +106,13 @@ public class GenTableServiceImpl implements IGenTableService {
 	 * @return 数据库表集合
 	 */
 	@Override
-	public List<GenTable> selectDbTableListByNames(String[] tableNames) {
-		return genTableMapper.selectDbTableListByNames(tableNames);
+	public List<GenTable> selectDbTableListByNames(String dsName, String[] tableNames) {
+		GenTableMapper genTableMapper = GenUtils.getMapper(dsName);
+		// 手动切换数据源
+		DynamicDataSourceContextHolder.push(dsName);
+		List<GenTable> genTables = genTableMapper.selectDbTableListByNames(tableNames);
+		genTables.forEach(genTable -> genTable.setDsName(dsName));
+		return genTables;
 	}
 
 	/**
@@ -102,6 +121,7 @@ public class GenTableServiceImpl implements IGenTableService {
 	 */
 	@Override
 	public List<GenTable> selectGenTableAll() {
+		GenTableMapper genTableMapper = GenUtils.getMapper();
 		return genTableMapper.selectGenTableAll();
 	}
 
@@ -112,6 +132,7 @@ public class GenTableServiceImpl implements IGenTableService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void updateGenTable(GenTable genTable) {
+		GenTableMapper genTableMapper = GenUtils.getMapper();
 		String options = JacksonUtils.toJson(genTable.getParams());
 		genTable.setOptions(options);
 		int row = genTableMapper.updateGenTable(genTable);
@@ -129,6 +150,7 @@ public class GenTableServiceImpl implements IGenTableService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void deleteGenTableByIds(Long[] tableIds) {
+		GenTableMapper genTableMapper = GenUtils.getMapper();
 		genTableMapper.deleteGenTableByIds(tableIds);
 		genTableColumnMapper.deleteGenTableColumnByIds(tableIds);
 	}
@@ -138,27 +160,59 @@ public class GenTableServiceImpl implements IGenTableService {
 	 * @param tableList 导入表列表
 	 */
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	public void importGenTable(List<GenTable> tableList) {
-		String operName = SecurityUtils.getUsername();
-		try {
-			for (GenTable table : tableList) {
-				String tableName = table.getTableName();
-				GenUtils.initTable(table, operName);
-				int row = genTableMapper.insertGenTable(table);
-				if (row > 0) {
-					// 保存列信息
-					List<GenTableColumn> genTableColumns = genTableColumnMapper.selectDbTableColumnsByName(tableName);
-					for (GenTableColumn column : genTableColumns) {
-						GenUtils.initColumnField(column, table);
-						genTableColumnMapper.insertGenTableColumn(column);
+		if (tableList.isEmpty()) {
+			return;
+		}
+
+		// 手动切换回代码生成器数据源
+		DynamicDataSourceContextHolder.push(DataSourceConstants.DS_MASTER);
+		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+			@Override
+			protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
+				GenTableMapper genTableMapper = GenUtils.getMapper();
+				String operName = SecurityUtils.getUsername();
+				try {
+					for (GenTable table : tableList) {
+						String tableName = table.getTableName();
+						GenUtils.initTable(table, operName);
+						genTableMapper.insertGenTable(table);
 					}
 				}
+				catch (Exception e) {
+					throw new TWTException("导入失败：" + e.getMessage());
+				}
 			}
+		});
+
+		// 手动切换回代码生成器数据源
+		DynamicDataSourceContextHolder.push(tableList.get(0).getDsName());
+		List<GenTableColumn> genTableColumnList = new ArrayList<>();
+		for (GenTable genTable : tableList) {
+			String tableName = genTable.getTableName();
+			// 保存列信息
+			List<GenTableColumn> genTableColumns = genTableColumnMapper.selectDbTableColumnsByName(tableName);
+			genTableColumns.forEach(column -> GenUtils.initColumnField(column, genTable));
+
+			genTableColumnList.addAll(genTableColumns);
 		}
-		catch (Exception e) {
-			throw new TWTException("导入失败：" + e.getMessage());
-		}
+
+		// 手动切换回代码生成器数据源(需要tableId)
+		DynamicDataSourceContextHolder.push(DataSourceConstants.DS_MASTER);
+		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+			@Override
+			protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
+				try {
+					for (GenTableColumn genTableColumn : genTableColumnList) {
+						genTableColumnMapper.insertGenTableColumn(genTableColumn);
+					}
+				}
+				catch (Exception e) {
+					throw new TWTException("导入失败：" + e.getMessage());
+				}
+			}
+		});
+
 	}
 
 	/**
@@ -168,6 +222,7 @@ public class GenTableServiceImpl implements IGenTableService {
 	 */
 	@Override
 	public Map<String, String> previewCode(Long tableId) {
+		GenTableMapper genTableMapper = GenUtils.getMapper();
 		Map<String, String> dataMap = new LinkedHashMap<>();
 		// 查询表信息
 		GenTable table = genTableMapper.selectGenTableById(tableId);
@@ -211,6 +266,7 @@ public class GenTableServiceImpl implements IGenTableService {
 	 */
 	@Override
 	public void generatorCode(String tableName) {
+		GenTableMapper genTableMapper = GenUtils.getMapper();
 		// 查询表信息
 		GenTable table = genTableMapper.selectGenTableByName(tableName);
 		// 设置主子表信息
@@ -246,31 +302,45 @@ public class GenTableServiceImpl implements IGenTableService {
 	 * @param tableName 表名称
 	 */
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	public void synchDb(String tableName) {
-		GenTable table = genTableMapper.selectGenTableByName(tableName);
-		List<GenTableColumn> tableColumns = table.getColumns();
+		GenTableMapper genTableMapper = GenUtils.getMapper();
+		GenTable genTable = genTableMapper.selectGenTableByName(tableName);
+		List<GenTableColumn> tableColumns = genTable.getColumns();
+
 		List<String> tableColumnNames = tableColumns.stream().map(GenTableColumn::getColumnName).toList();
 
+		// 手动切换数据源
+		DynamicDataSourceContextHolder.push(genTable.getDsName());
 		List<GenTableColumn> dbTableColumns = genTableColumnMapper.selectDbTableColumnsByName(tableName);
 		if (StringUtils.isEmpty(dbTableColumns)) {
 			throw new TWTException("同步数据失败，原表结构不存在");
 		}
 		List<String> dbTableColumnNames = dbTableColumns.stream().map(GenTableColumn::getColumnName).toList();
 
-		dbTableColumns.forEach(column -> {
-			if (!tableColumnNames.contains(column.getColumnName())) {
-				GenUtils.initColumnField(column, table);
-				genTableColumnMapper.insertGenTableColumn(column);
+		// 手动切换数据源
+		if (!DataSourceConstants.DS_MASTER.equals(genTable.getDsName())) {
+			DynamicDataSourceContextHolder.push(DataSourceConstants.DS_MASTER);
+		}
+
+		// 执行事务
+		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+			@Override
+			protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
+				dbTableColumns.forEach(column -> {
+					if (!tableColumnNames.contains(column.getColumnName())) {
+						GenUtils.initColumnField(column, genTable);
+						genTableColumnMapper.insertGenTableColumn(column);
+					}
+				});
+
+				List<GenTableColumn> delColumns = tableColumns.stream()
+					.filter(column -> !dbTableColumnNames.contains(column.getColumnName()))
+					.collect(Collectors.toList());
+				if (StringUtils.isNotEmpty(delColumns)) {
+					genTableColumnMapper.deleteGenTableColumns(delColumns);
+				}
 			}
 		});
-
-		List<GenTableColumn> delColumns = tableColumns.stream()
-			.filter(column -> !dbTableColumnNames.contains(column.getColumnName()))
-			.collect(Collectors.toList());
-		if (StringUtils.isNotEmpty(delColumns)) {
-			genTableColumnMapper.deleteGenTableColumns(delColumns);
-		}
 	}
 
 	/**
@@ -293,6 +363,7 @@ public class GenTableServiceImpl implements IGenTableService {
 	 * 查询表信息并生成代码
 	 */
 	private void generatorCode(String tableName, ZipOutputStream zip) {
+		GenTableMapper genTableMapper = GenUtils.getMapper();
 		// 查询表信息
 		GenTable table = genTableMapper.selectGenTableByName(tableName);
 		// 设置主子表信息
@@ -388,6 +459,7 @@ public class GenTableServiceImpl implements IGenTableService {
 	public void setSubTable(GenTable table) {
 		String subTableName = table.getSubTableName();
 		if (StringUtils.isNotEmpty(subTableName)) {
+			GenTableMapper genTableMapper = GenUtils.getMapper();
 			table.setSubTable(genTableMapper.selectGenTableByName(subTableName));
 		}
 	}

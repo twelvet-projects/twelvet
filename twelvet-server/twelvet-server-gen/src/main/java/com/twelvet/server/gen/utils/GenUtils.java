@@ -1,13 +1,22 @@
 package com.twelvet.server.gen.utils;
 
 import java.util.Arrays;
+import java.util.Map;
 
+import cn.hutool.core.util.StrUtil;
+import com.twelvet.api.gen.domain.GenDatasourceConf;
 import com.twelvet.api.gen.domain.GenTable;
 import com.twelvet.api.gen.domain.GenTableColumn;
+import com.twelvet.framework.datasource.enums.DsJdbcUrlEnum;
+import com.twelvet.framework.datasource.support.DataSourceConstants;
+import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.server.gen.config.GenConfig;
 import com.twelvet.api.gen.constant.GenConstants;
+import com.twelvet.server.gen.mapper.GenDatasourceConfMapper;
+import com.twelvet.server.gen.mapper.GenTableMapper;
 import org.apache.commons.lang3.RegExUtils;
+import org.springframework.context.ApplicationContext;
 
 /**
  * @author twelvet
@@ -126,18 +135,6 @@ public class GenUtils {
 	}
 
 	/**
-	 * 获取模块名
-	 * @param packageName 包名
-	 * @return 模块名
-	 */
-	public static String getModuleName(String packageName) {
-		int lastIndex = packageName.lastIndexOf(".");
-		int nameLength = packageName.length();
-		String moduleName = StringUtils.substring(packageName, lastIndex + 1, nameLength);
-		return moduleName;
-	}
-
-	/**
 	 * 获取业务名
 	 * @param tableName 表名
 	 * @return 业务名
@@ -168,7 +165,7 @@ public class GenUtils {
 	 * 批量替换前缀
 	 * @param replacementm 替换值
 	 * @param searchList 替换列表
-	 * @return
+	 * @return String
 	 */
 	public static String replaceFirst(String replacementm, String[] searchList) {
 		String text = replacementm;
@@ -217,6 +214,70 @@ public class GenUtils {
 		else {
 			return 0;
 		}
+	}
+
+	/**
+	 * 获取功能名 sys_a_b sysAb
+	 * @param tableName 表名
+	 * @return 功能名
+	 */
+	public static String getFunctionName(String tableName) {
+		return StrUtil.toCamelCase(tableName);
+	}
+
+	/**
+	 * 获取模块名称
+	 * @param packageName 包名
+	 * @return 功能名
+	 */
+	public static String getModuleName(String packageName) {
+		return StrUtil.subAfter(packageName, ".", true);
+	}
+
+	/**
+	 * 获取数据源对应方言的mapper
+	 * @param dsName 数据源名称
+	 * @return GeneratorMapper
+	 */
+	public static GenTableMapper getMapper(String dsName) {
+		String dbConfType;
+		// 获取目标数据源数据库类型
+		if (DataSourceConstants.DS_MASTER.equals(dsName)) {
+			dbConfType = DsJdbcUrlEnum.MYSQL.getDbName();
+		}
+		else {
+			GenDatasourceConfMapper datasourceConfMapper = SpringContextHolder.getBean(GenDatasourceConfMapper.class);
+			GenDatasourceConf datasourceConf = datasourceConfMapper.selectGenDatasourceConfByName(dsName);
+
+			// 默认MYSQL 数据源
+			if (datasourceConf == null) {
+				dbConfType = DsJdbcUrlEnum.MYSQL.getDbName();
+			}
+			else {
+				dbConfType = datasourceConf.getDsType();
+			}
+		}
+
+		// 获取全部数据实现
+		ApplicationContext context = SpringContextHolder.getApplicationContext();
+		Map<String, GenTableMapper> beansOfType = context.getBeansOfType(GenTableMapper.class);
+
+		// 根据数据类型选择mapper
+		for (String key : beansOfType.keySet()) {
+			if (StrUtil.containsIgnoreCase(key, dbConfType)) {
+				return beansOfType.get(key);
+			}
+		}
+
+		throw new IllegalArgumentException("dsName 不合法: " + dsName);
+	}
+
+	/**
+	 * 获取数据源对应方言的mapper
+	 * @return GeneratorMapper
+	 */
+	public static GenTableMapper getMapper() {
+		return getMapper(DataSourceConstants.DS_MASTER);
 	}
 
 }

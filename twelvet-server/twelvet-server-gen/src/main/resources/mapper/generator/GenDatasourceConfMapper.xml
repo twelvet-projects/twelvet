@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twelvet.server.gen.mapper.GenDatasourceConfMapper">
+    
+    <resultMap type="GenDatasourceConf" id="GenDatasourceConfResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="url"    column="url"    />
+        <result property="username"    column="username"    />
+        <result property="password"    column="password"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="dsType"    column="ds_type"    />
+        <result property="confType"    column="conf_type"    />
+        <result property="dsName"    column="ds_name"    />
+        <result property="instance"    column="instance"    />
+        <result property="port"    column="port"    />
+        <result property="host"    column="host"    />
+    </resultMap>
+
+    <sql id="selectGenDatasourceConfVo">
+        select id, name, url, username, password, create_time, update_time, del_flag, ds_type, conf_type, ds_name, instance, port, host from gen_datasource_conf
+    </sql>
+
+    <select id="selectGenDatasourceConfList" parameterType="GenDatasourceConf" resultMap="GenDatasourceConfResult">
+        <include refid="selectGenDatasourceConfVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="url != null  and url != ''"> and url = #{url}</if>
+            <if test="username != null  and username != ''"> and username like concat('%', #{username}, '%')</if>
+            <if test="password != null  and password != ''"> and password = #{password}</if>
+            <if test="dsType != null  and dsType != ''"> and ds_type = #{dsType}</if>
+            <if test="confType != null  and confType != ''"> and conf_type = #{confType}</if>
+            <if test="dsName != null  and dsName != ''"> and ds_name like concat('%', #{dsName}, '%')</if>
+            <if test="instance != null  and instance != ''"> and instance = #{instance}</if>
+            <if test="port != null "> and port = #{port}</if>
+            <if test="host != null  and host != ''"> and host = #{host}</if>
+        </where>
+    </select>
+    
+    <select id="selectGenDatasourceConfById" parameterType="Long" resultMap="GenDatasourceConfResult">
+        <include refid="selectGenDatasourceConfVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectGenDatasourceConfByName" parameterType="String" resultMap="GenDatasourceConfResult">
+        <include refid="selectGenDatasourceConfVo"/>
+        where name = #{dsName}
+    </select>
+        
+    <insert id="insertGenDatasourceConf" parameterType="GenDatasourceConf">
+        insert into gen_datasource_conf
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="url != null">url,</if>
+            <if test="username != null">username,</if>
+            <if test="password != null">password,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="dsType != null">ds_type,</if>
+            <if test="confType != null">conf_type,</if>
+            <if test="dsName != null">ds_name,</if>
+            <if test="instance != null">instance,</if>
+            <if test="port != null">port,</if>
+            <if test="host != null">host,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="url != null">#{url},</if>
+            <if test="username != null">#{username},</if>
+            <if test="password != null">#{password},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="dsType != null">#{dsType},</if>
+            <if test="confType != null">#{confType},</if>
+            <if test="dsName != null">#{dsName},</if>
+            <if test="instance != null">#{instance},</if>
+            <if test="port != null">#{port},</if>
+            <if test="host != null">#{host},</if>
+         </trim>
+    </insert>
+
+    <update id="updateGenDatasourceConf" parameterType="GenDatasourceConf">
+        update gen_datasource_conf
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="url != null">url = #{url},</if>
+            <if test="username != null">username = #{username},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="dsType != null">ds_type = #{dsType},</if>
+            <if test="confType != null">conf_type = #{confType},</if>
+            <if test="dsName != null">ds_name = #{dsName},</if>
+            <if test="instance != null">instance = #{instance},</if>
+            <if test="port != null">port = #{port},</if>
+            <if test="host != null">host = #{host},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteGenDatasourceConfById" parameterType="Long">
+        delete from gen_datasource_conf where id = #{id}
+    </delete>
+
+    <delete id="deleteGenDatasourceConfByIds" parameterType="String">
+        delete from gen_datasource_conf where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

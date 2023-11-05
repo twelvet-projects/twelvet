@@ -2,7 +2,7 @@ package ${packageName}.service;
 
 import java.util.List;
 
-import ${packageName}.domain.${ClassName};
+import com.twelvet.api.${moduleName}.domain.${ClassName};
 
 /**
  * ${functionName}Service接口

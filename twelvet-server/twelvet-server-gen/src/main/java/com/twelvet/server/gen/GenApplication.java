@@ -2,6 +2,7 @@ package com.twelvet.server.gen;
 
 import com.twelvet.framework.core.annotation.EnableTWTFeignClients;
 import com.twelvet.framework.core.annotation.EnableTwelveTConfig;
+import com.twelvet.framework.datasource.annotation.EnableDynamicDataSource;
 import com.twelvet.framework.security.annotation.EnableTWTResourceServer;
 import com.twelvet.framework.swagger.annotation.EnableTwelveTSwagger2;
 import org.mybatis.spring.annotation.MapperScan;
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @WebSite twelvet.cn
  * @Description: 启动器
  */
+@EnableDynamicDataSource
 @EnableTwelveTSwagger2
 @EnableTWTResourceServer
 @MapperScan("com.twelvet.**.mapper")

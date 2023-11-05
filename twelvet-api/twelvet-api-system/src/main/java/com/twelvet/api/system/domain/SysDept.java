@@ -51,7 +51,7 @@ public class SysDept extends BaseEntity {
 	 * 显示顺序
 	 */
 	@Schema(description = "显示顺序")
-	private String orderNum;
+	private Long orderNum;
 
 	/**
 	 * 负责人
@@ -129,12 +129,11 @@ public class SysDept extends BaseEntity {
 		this.deptName = deptName;
 	}
 
-	@NotBlank(message = "显示顺序不能为空")
-	public String getOrderNum() {
+	public Long getOrderNum() {
 		return orderNum;
 	}
 
-	public void setOrderNum(String orderNum) {
+	public void setOrderNum(Long orderNum) {
 		this.orderNum = orderNum;
 	}
 

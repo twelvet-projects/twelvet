@@ -527,7 +527,7 @@ const ${BusinessName}: React.FC = () => {
                                         rules={[{required: ${isRequired}, message: '${comment}不能为空'}]}
                                         name="${field}"
                                     >
-                                        <DictionariesSelect type='${dictType}' mode={false}/>
+                                        <DictionariesSelect type='${dictType}' />
                                     </Form.Item>
                                 #elseif($column.htmlType == "checkbox" && $dictType)
                                     <Form.Item

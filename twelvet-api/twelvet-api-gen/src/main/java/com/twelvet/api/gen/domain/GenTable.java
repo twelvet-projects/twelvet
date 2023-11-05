@@ -30,6 +30,12 @@ public class GenTable extends BaseEntity {
 	private Long tableId;
 
 	/**
+	 * 数据源名称
+	 */
+	@Schema(description = "数据源名称")
+	private String dsName;
+
+	/**
 	 * 表名称
 	 */
 	@Schema(description = "表名称")
@@ -176,6 +182,14 @@ public class GenTable extends BaseEntity {
 
 	public void setTableId(Long tableId) {
 		this.tableId = tableId;
+	}
+
+	public String getDsName() {
+		return dsName;
+	}
+
+	public void setDsName(String dsName) {
+		this.dsName = dsName;
 	}
 
 	public String getTableName() {
