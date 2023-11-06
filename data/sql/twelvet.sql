@@ -660,23 +660,23 @@ INSERT INTO `sys_menu`
 VALUES (1107, '模板分组导出', 1102, 5, '#', '', '1', 'F', '0', '0', 'gen:metadata:group:export', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
-VALUES (1108, '模板分组关联', 1114, 2, 'template_group', 'gen/template_group/index', '1', 'C', '0', '0',
+VALUES (1108, '模板管理', 1114, 2, 'template_group', 'gen/template_group/index', '1', 'C', '0', '0',
         'gen:metadata:template_group:list', '#', 'admin', '2018-03-01 00:00:00', 'admin', '2023-11-06 17:38:37',
-        '模板分组关联菜单');
+        '模板管理菜单');
 INSERT INTO `sys_menu`
-VALUES (1109, '模板分组关联查询', 1108, 1, '#', '', '1', 'F', '0', '0', 'gen:metadata:template_group:query', '#',
+VALUES (1109, '模板管理查询', 1108, 1, '#', '', '1', 'F', '0', '0', 'gen:metadata:template_group:query', '#',
         'admin', '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
-VALUES (1110, '模板分组关联新增', 1108, 2, '#', '', '1', 'F', '0', '0', 'gen:metadata:template_group:add', '#', 'admin',
+VALUES (1110, '模板管理新增', 1108, 2, '#', '', '1', 'F', '0', '0', 'gen:metadata:template_group:add', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
-VALUES (1111, '模板分组关联修改', 1108, 3, '#', '', '1', 'F', '0', '0', 'gen:metadata:template_group:edit', '#',
+VALUES (1111, '模板管理修改', 1108, 3, '#', '', '1', 'F', '0', '0', 'gen:metadata:template_group:edit', '#',
         'admin', '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
-VALUES (1112, '模板分组关联删除', 1108, 4, '#', '', '1', 'F', '0', '0', 'gen:metadata:template_group:remove', '#',
+VALUES (1112, '模板管理删除', 1108, 4, '#', '', '1', 'F', '0', '0', 'gen:metadata:template_group:remove', '#',
         'admin', '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
-VALUES (1113, '模板分组关联导出', 1108, 5, '#', '', '1', 'F', '0', '0', 'gen:metadata:template_group:export', '#',
+VALUES (1113, '模板管理导出', 1108, 5, '#', '', '1', 'F', '0', '0', 'gen:metadata:template_group:export', '#',
         'admin', '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
 VALUES (1114, '元数据管理', 1100, 3, '/tool/code/metadata', NULL, '1', 'M', '0', '0', '', 'icon-gen-metadata', 'admin',
