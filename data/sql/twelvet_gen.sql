@@ -232,5 +232,39 @@ CREATE TABLE `gen_table_column`
 -- Records of gen_table_column
 -- ----------------------------
 
+-- ----------------------------
+-- Table structure for gen_group
+-- ----------------------------
+DROP TABLE IF EXISTS `gen_group`;
+CREATE TABLE `gen_group`
+(
+    `id`          bigint(20)                                                    NOT NULL AUTO_INCREMENT,
+    `group_name`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT NULL COMMENT '分组名称',
+    `group_desc`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT NULL COMMENT '分组描述',
+    `create_by`   varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci        NOT NULL DEFAULT ' ' COMMENT '创建人',
+    `update_by`   varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci        NOT NULL DEFAULT ' ' COMMENT '修改人',
+    `create_time` datetime                                                      NULL     DEFAULT NULL COMMENT '创建人',
+    `update_time` datetime                                                      NULL     DEFAULT NULL COMMENT '修改人',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '模板分组'
+  ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for gen_template_group
+-- ----------------------------
+DROP TABLE IF EXISTS `gen_template_group`;
+CREATE TABLE `gen_template_group`
+(
+    `group_id`    bigint(20) NOT NULL COMMENT '分组id',
+    `template_id` bigint(20) NOT NULL COMMENT '模板id',
+    PRIMARY KEY (`group_id`, `template_id`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '模板分组关联表'
+  ROW_FORMAT = DYNAMIC;
+
 SET
     FOREIGN_KEY_CHECKS = 1;

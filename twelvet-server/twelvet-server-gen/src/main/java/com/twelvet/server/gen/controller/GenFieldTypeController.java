@@ -37,7 +37,7 @@ public class GenFieldTypeController extends TWTController {
 	 * 查询字段类型管理列表
 	 */
 	@Operation(summary = "查询字段类型管理分页")
-	@PreAuthorize("@role.hasPermi('gen:type:list')")
+	@PreAuthorize("@role.hasPermi('gen:metadata:type:list')")
 	@GetMapping("/pageQuery")
 	public JsonResult<TableDataInfo<GenFieldType>> pageQuery(GenFieldType genFieldType) {
 		PageUtils.startPage();
@@ -50,7 +50,7 @@ public class GenFieldTypeController extends TWTController {
 	 */
 	@ResponseExcel(name = "字段类型管理")
 	@Operation(summary = "导出字段类型管理列表")
-	@PreAuthorize("@role.hasPermi('gen:type:export')")
+	@PreAuthorize("@role.hasPermi('gen:metadata:type:export')")
 	@Log(service = "字段类型管理", businessType = BusinessType.EXPORT)
 	@PostMapping("/export")
 	public List<GenFieldType> export(GenFieldType genFieldType) {
@@ -61,7 +61,7 @@ public class GenFieldTypeController extends TWTController {
 	 * 获取字段类型管理详细信息
 	 */
 	@Operation(summary = "获取字段类型管理详细信息")
-	@PreAuthorize("@role.hasPermi('gen:type:query')")
+	@PreAuthorize("@role.hasPermi('gen:metadata:type:query')")
 	@GetMapping(value = "/{id}")
 	public JsonResult<GenFieldType> getInfo(@PathVariable("id") Long id) {
 		return JsonResult.success(genFieldTypeService.selectGenFieldTypeById(id));
@@ -71,7 +71,7 @@ public class GenFieldTypeController extends TWTController {
 	 * 新增字段类型管理
 	 */
 	@Operation(summary = "新增字段类型管理")
-	@PreAuthorize("@role.hasPermi('gen:type:add')")
+	@PreAuthorize("@role.hasPermi('gen:metadata:type:add')")
 	@Log(service = "字段类型管理", businessType = BusinessType.INSERT)
 	@PostMapping
 	public JsonResult<String> add(@RequestBody GenFieldType genFieldType) {
@@ -82,7 +82,7 @@ public class GenFieldTypeController extends TWTController {
 	 * 修改字段类型管理
 	 */
 	@Operation(summary = "修改字段类型管理")
-	@PreAuthorize("@role.hasPermi('gen:type:edit')")
+	@PreAuthorize("@role.hasPermi('gen:metadata:type:edit')")
 	@Log(service = "字段类型管理", businessType = BusinessType.UPDATE)
 	@PutMapping
 	public JsonResult<String> edit(@RequestBody GenFieldType genFieldType) {
@@ -93,7 +93,7 @@ public class GenFieldTypeController extends TWTController {
 	 * 删除字段类型管理
 	 */
 	@Operation(summary = "删除字段类型管理")
-	@PreAuthorize("@role.hasPermi('gen:type:remove')")
+	@PreAuthorize("@role.hasPermi('gen:metadata:type:remove')")
 	@Log(service = "字段类型管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
 	public JsonResult<String> remove(@PathVariable Long[] ids) {

@@ -7,6 +7,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.io.Serial;
+
 /**
  * 数据源对象 gen_datasource_conf
  *
@@ -16,6 +18,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(description = "数据源对象")
 public class GenDatasourceConf extends BaseEntity {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/** 主键 */
