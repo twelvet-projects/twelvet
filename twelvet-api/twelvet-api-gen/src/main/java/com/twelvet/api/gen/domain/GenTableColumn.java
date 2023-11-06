@@ -43,9 +43,15 @@ public class GenTableColumn extends BaseEntity {
 	private String columnComment;
 
 	/**
-	 * 列类型
+	 * 列类型(不包括字段长度)
 	 */
-	@Schema(description = "列类型")
+	@Schema(description = "列类型(不包括字段长度)")
+	private String dataType;
+
+	/**
+	 * 列类型(包括字段长度)
+	 */
+	@Schema(description = "列类型(包括字段长度)")
 	private String columnType;
 
 	/**
@@ -161,6 +167,14 @@ public class GenTableColumn extends BaseEntity {
 
 	public void setColumnType(String columnType) {
 		this.columnType = columnType;
+	}
+
+	public String getDataType() {
+		return dataType;
+	}
+
+	public void setDataType(String dataType) {
+		this.dataType = dataType;
 	}
 
 	public String getColumnType() {

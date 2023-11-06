@@ -183,14 +183,18 @@ public class GenTableServiceImpl implements IGenTableService {
 			}
 		});
 
-		// 手动切换回代码生成器数据源
-		DynamicDataSourceContextHolder.push(tableList.get(0).getDsName());
+
 		List<GenTableColumn> genTableColumnList = new ArrayList<>();
 		for (GenTable genTable : tableList) {
+			// 手动切换回代码生成器数据源
+			DynamicDataSourceContextHolder.push(genTable.getDsName());
 			String tableName = genTable.getTableName();
 			// 保存列信息
 			List<GenTableColumn> genTableColumns = genTableColumnMapper.selectDbTableColumnsByName(tableName);
-			genTableColumns.forEach(column -> GenUtils.initColumnField(column, genTable));
+
+			// 手动切换回代码生成器数据源
+			DynamicDataSourceContextHolder.push(DataSourceConstants.DS_MASTER);
+			GenUtils.initColumnField(genTableColumns, genTable);
 
 			genTableColumnList.addAll(genTableColumns);
 		}
@@ -324,11 +328,12 @@ public class GenTableServiceImpl implements IGenTableService {
 		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 			@Override
 			protected void doInTransactionWithoutResult(@NotNull TransactionStatus transactionStatus) {
+				// 移除存在的字段
+				dbTableColumns.removeIf(genTableColumn -> tableColumnNames.contains(genTableColumn.getColumnName()));
+				GenUtils.initColumnField(dbTableColumns, genTable);
+
 				dbTableColumns.forEach(column -> {
-					if (!tableColumnNames.contains(column.getColumnName())) {
-						GenUtils.initColumnField(column, genTable);
-						genTableColumnMapper.insertGenTableColumn(column);
-					}
+					genTableColumnMapper.insertGenTableColumn(column);
 				});
 
 				List<GenTableColumn> delColumns = tableColumns.stream()

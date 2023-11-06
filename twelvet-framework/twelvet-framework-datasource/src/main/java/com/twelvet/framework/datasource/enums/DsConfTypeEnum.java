@@ -11,23 +11,23 @@ public enum DsConfTypeEnum {
 	/**
 	 * 主机链接
 	 */
-	HOST(0, "主机链接"),
+	HOST("0", "主机链接"),
 
 	/**
 	 * JDBC链接
 	 */
-	JDBC(1, "JDBC链接");
+	JDBC("1", "JDBC链接");
 
-	private final Integer type;
+	private final String type;
 
 	private final String description;
 
-	DsConfTypeEnum(Integer type, String description) {
+	DsConfTypeEnum(String type, String description) {
 		this.type = type;
 		this.description = description;
 	}
 
-	public Integer getType() {
+	public String getType() {
 		return type;
 	}
 

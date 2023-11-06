@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.twelvet.server.gen.mapper.GenFieldTypeMapper">
-    
+
     <resultMap type="GenFieldType" id="GenFieldTypeResult">
         <result property="id"    column="id"    />
         <result property="columnType"    column="column_type"    />
@@ -22,18 +22,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectGenFieldTypeList" parameterType="GenFieldType" resultMap="GenFieldTypeResult">
         <include refid="selectGenFieldTypeVo"/>
-        <where>  
+        <where>
             <if test="columnType != null  and columnType != ''"> and column_type like concat('%', #{columnType}, '%')</if>
             <if test="attrType != null  and attrType != ''"> and attr_type = #{attrType}</if>
             <if test="packageName != null  and packageName != ''"> and package_name like concat('%', #{packageName}, '%')</if>
         </where>
     </select>
-    
+
+    <select id="selectGenFieldTypeListAll" parameterType="GenFieldType" resultMap="GenFieldTypeResult">
+        <include refid="selectGenFieldTypeVo"/>
+    </select>
+
     <select id="selectGenFieldTypeById" parameterType="Long" resultMap="GenFieldTypeResult">
         <include refid="selectGenFieldTypeVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertGenFieldType" parameterType="GenFieldType" useGeneratedKeys="true" keyProperty="id">
         insert into gen_field_type
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -78,7 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteGenFieldTypeByIds" parameterType="String">
-        delete from gen_field_type where id in 
+        delete from gen_field_type where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

@@ -27,6 +27,12 @@ public interface GenFieldTypeMapper {
 	public List<GenFieldType> selectGenFieldTypeList(GenFieldType genFieldType);
 
 	/**
+	 * 查询字段类型管理所有列表
+	 * @return 字段类型管理集合
+	 */
+	public List<GenFieldType> selectGenFieldTypeListAll();
+
+	/**
 	 * 新增字段类型管理
 	 * @param genFieldType 字段类型管理
 	 * @return 结果

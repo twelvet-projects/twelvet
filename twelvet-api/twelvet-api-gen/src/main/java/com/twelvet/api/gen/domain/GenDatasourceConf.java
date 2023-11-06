@@ -51,10 +51,10 @@ public class GenDatasourceConf extends BaseEntity {
 	@ExcelProperty(value = "数据库类型")
 	private String dsType;
 
-	/** 配置类型 */
-	@Schema(description = "配置类型")
-	@ExcelProperty(value = "配置类型")
-	private Integer confType;
+	/** 配置类型(0：主机模式，1：JDBC) */
+	@Schema(description = "配置类型(0：主机模式，1：JDBC)")
+	@ExcelProperty(value = "配置类型(0：主机模式，1：JDBC)")
+	private String confType;
 
 	/** 数据库名称 */
 	@Schema(description = "数据库名称")
@@ -132,11 +132,11 @@ public class GenDatasourceConf extends BaseEntity {
 		return dsType;
 	}
 
-	public void setConfType(Integer confType) {
+	public void setConfType(String confType) {
 		this.confType = confType;
 	}
 
-	public Integer getConfType() {
+	public String getConfType() {
 		return confType;
 	}
 
