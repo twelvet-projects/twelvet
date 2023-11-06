@@ -183,7 +183,6 @@ public class GenTableServiceImpl implements IGenTableService {
 			}
 		});
 
-
 		List<GenTableColumn> genTableColumnList = new ArrayList<>();
 		for (GenTable genTable : tableList) {
 			// 手动切换回代码生成器数据源
