@@ -38,7 +38,7 @@ public class ${ClassName}Controller extends TWTController
     private I${ClassName}Service ${className}Service;
 
     /**
-     * 查询${functionName}列表
+     * 查询${functionName}分页
      */
     @Operation(summary = "查询${functionName}分页")
     @PreAuthorize("@role.hasPermi('${permissionPrefix}:list')")
