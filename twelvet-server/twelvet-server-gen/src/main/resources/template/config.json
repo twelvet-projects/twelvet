@@ -1,0 +1,12 @@
+{
+  "project": {
+    "packageName": "com.twelvet",
+    "version": "3.0.0",
+    "backendPath": "twelvet",
+    "frontendPath": "twelvet-ui"
+  },
+  "developer": {
+    "author": "twelvet",
+    "email": "2471835953@qq.com"
+  }
+}

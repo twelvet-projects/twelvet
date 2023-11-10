@@ -229,8 +229,8 @@ public class GenController extends TWTController {
 	@PostMapping("/batchGenCode")
 	public void batchGenCode(HttpServletResponse response, String tableIds) throws IOException {
 		List<Long> collect = Arrays.stream(tableIds.split(StrUtil.COMMA))
-				.map(Long::parseLong)
-				.collect(Collectors.toList());
+			.map(Long::parseLong)
+			.collect(Collectors.toList());
 
 		byte[] data = genTableService.downloadCode(collect);
 		genCode(response, data);

@@ -54,11 +54,11 @@ public interface GenTemplateMapper {
 	 */
 	public int deleteGenTemplateByIds(Long[] ids);
 
-
 	/**
 	 * 根据分组ID查询代码生成业务模板列表
 	 * @param groupId 分组ID
 	 * @return 代码生成业务模板集合
 	 */
 	public List<GenTemplate> selectGenTemplateListByGroupId(Long groupId);
+
 }
