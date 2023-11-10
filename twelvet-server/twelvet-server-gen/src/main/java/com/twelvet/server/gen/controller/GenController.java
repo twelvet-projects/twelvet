@@ -1,8 +1,8 @@
 package com.twelvet.server.gen.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
-import com.twelvet.api.gen.domain.GenTable;
-import com.twelvet.api.gen.domain.GenTableColumn;
+import com.twelvet.api.gen.domain.*;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.AjaxResult;
 import com.twelvet.framework.core.application.domain.JsonResult;
@@ -25,9 +25,11 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author twelvet
@@ -44,6 +46,16 @@ public class GenController extends TWTController {
 
 	@Autowired
 	private IGenTableColumnService genTableColumnService;
+
+	/**
+	 * 查询代码生成业务模板列表
+	 */
+	@Operation(summary = "查询代码生成业务模板列表")
+	@PreAuthorize("@role.hasPermi('gen:group:list')")
+	@GetMapping("/selectGenGroupAll")
+	public JsonResult<List<GenGroup>> selectGenGroupAll() {
+		return JsonResult.success(genTableColumnService.selectGenGroupAll());
+	}
 
 	/**
 	 * 查询代码生成列表
@@ -159,66 +171,68 @@ public class GenController extends TWTController {
 	@PreAuthorize("@role.hasPermi('tool:gen:preview')")
 	@GetMapping("/preview/{tableId}")
 	public AjaxResult preview(@PathVariable("tableId") Long tableId) {
-		Map<String, String> dataMap = genTableService.previewCode(tableId);
-		return AjaxResult.success(dataMap);
+		return AjaxResult.success(genTableService.previewCode(tableId));
 	}
 
 	/**
 	 * 生成代码（下载方式）
 	 * @param response HttpServletResponse
-	 * @param tableName String
+	 * @param tableId String
 	 * @throws IOException IOException
 	 */
-	@Operation(summary = "生成代码")
+	@Operation(summary = "生成代码（下载方式）")
 	@PreAuthorize("@role.hasPermi('tool:gen:code')")
 	@Log(service = "代码生成", businessType = BusinessType.GENCODE)
-	@GetMapping("/download/{tableName}")
-	public void download(HttpServletResponse response, @PathVariable("tableName") String tableName) throws IOException {
-		byte[] data = genTableService.downloadCode(tableName);
+	@PostMapping("/download/{tableId}")
+	public void download(HttpServletResponse response, @PathVariable Long tableId) throws IOException {
+		byte[] data = genTableService.downloadCode(tableId);
 		genCode(response, data);
 	}
 
 	/**
 	 * 生成代码（自定义路径）
-	 * @param tableName String
+	 * @param tableId 需要生成的表ID
 	 * @return JsonResult<String>
 	 */
-	@Operation(summary = "生成代码")
+	@Operation(summary = "生成代码（自定义路径）")
 	@PreAuthorize("@role.hasPermi('tool:gen:code')")
 	@Log(service = "代码生成", businessType = BusinessType.GENCODE)
-	@GetMapping("/genCode/{tableName}")
-	public JsonResult<String> genCode(@PathVariable("tableName") String tableName) {
-		genTableService.generatorCode(tableName);
+	@PostMapping("/genCode/{tableId}")
+	public JsonResult<String> genCode(@PathVariable Long tableId) {
+		genTableService.generatorCode(tableId);
 		return JsonResult.success();
 	}
 
 	/**
 	 * 同步数据库
-	 * @param tableName String
+	 * @param tableId 同步表ID
 	 * @return JsonResult<String>
 	 */
 	@Operation(summary = "同步数据库")
 	@PreAuthorize("@role.hasPermi('tool:gen:edit')")
 	@Log(service = "代码生成", businessType = BusinessType.UPDATE)
-	@GetMapping("/synchDb/{tableName}")
-	public JsonResult<String> synchDb(@PathVariable("tableName") String tableName) {
-		genTableService.synchDb(tableName);
+	@PostMapping("/synchDb/{tableId}")
+	public JsonResult<String> synchDb(@PathVariable Long tableId) {
+		genTableService.synchDb(tableId);
 		return JsonResult.success();
 	}
 
 	/**
 	 * 批量生成代码
 	 * @param response HttpServletResponse
-	 * @param tables String
+	 * @param tableIds String
 	 * @throws IOException IOException
 	 */
 	@Operation(summary = "批量生成代码")
 	@PreAuthorize("@role.hasPermi('tool:gen:code')")
 	@Log(service = "代码生成", businessType = BusinessType.GENCODE)
 	@PostMapping("/batchGenCode")
-	public void batchGenCode(HttpServletResponse response, String tables) throws IOException {
-		String[] tableNames = Convert.toStrArray(tables);
-		byte[] data = genTableService.downloadCode(tableNames);
+	public void batchGenCode(HttpServletResponse response, String tableIds) throws IOException {
+		List<Long> collect = Arrays.stream(tableIds.split(StrUtil.COMMA))
+				.map(Long::parseLong)
+				.collect(Collectors.toList());
+
+		byte[] data = genTableService.downloadCode(collect);
 		genCode(response, data);
 	}
 

@@ -20,6 +20,12 @@ public interface GenGroupMapper {
 	public GenGroup selectGenGroupById(Long id);
 
 	/**
+	 * 查询模板分组所有列表
+	 * @return 模板分组集合
+	 */
+	public List<GenGroup> selectGenGroupAll();
+
+	/**
 	 * 查询模板分组列表
 	 * @param genGroup 模板分组
 	 * @return 模板分组集合

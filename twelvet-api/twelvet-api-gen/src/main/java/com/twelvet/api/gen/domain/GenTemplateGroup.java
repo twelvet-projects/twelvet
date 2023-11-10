@@ -14,7 +14,6 @@ import java.io.Serial;
  *
  * @author TwelveT
  * @WebSite twelvet.cn
- * @date 2023-11-06
  */
 @Schema(description = "模板分组关联对象")
 public class GenTemplateGroup extends BaseEntity {

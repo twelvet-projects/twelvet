@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.twelvet.server.gen.mapper.GenTemplateMapper">
-    
+
     <resultMap type="GenTemplate" id="GenTemplateResult">
         <result property="id"    column="id"    />
         <result property="templateName"    column="template_name"    />
@@ -23,19 +23,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectGenTemplateList" parameterType="GenTemplate" resultMap="GenTemplateResult">
         <include refid="selectGenTemplateVo"/>
-        <where>  
+        <where>
             <if test="templateName != null  and templateName != ''"> and template_name like concat('%', #{templateName}, '%')</if>
             <if test="generatorPath != null  and generatorPath != ''"> and generator_path = #{generatorPath}</if>
             <if test="templateDesc != null  and templateDesc != ''"> and template_desc = #{templateDesc}</if>
             <if test="templateCode != null  and templateCode != ''"> and template_code = #{templateCode}</if>
         </where>
     </select>
-    
+
     <select id="selectGenTemplateById" parameterType="Long" resultMap="GenTemplateResult">
         <include refid="selectGenTemplateVo"/>
         where id = #{id}
     </select>
-        
+
+    <select id="selectGenTemplateListByGroupId" parameterType="Long" resultMap="GenTemplateResult">
+        SELECT
+            gt.id,
+            gt.template_name,
+            gt.template_code,
+            gt.generator_path
+        FROM
+            `gen_template` AS gt
+                left join `gen_template_group` as gtg on gtg.template_id = gt.id
+        where gtg.group_id = #{groupId}
+    </select>
+
     <insert id="insertGenTemplate" parameterType="GenTemplate">
         insert into gen_template
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -85,7 +97,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteGenTemplateByIds" parameterType="String">
-        delete from gen_template where id in 
+        delete from gen_template where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

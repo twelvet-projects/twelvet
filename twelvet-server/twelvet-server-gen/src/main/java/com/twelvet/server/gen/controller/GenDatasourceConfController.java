@@ -27,7 +27,7 @@ import com.twelvet.framework.jdbc.web.utils.PageUtils;
  */
 @Tag(description = "GenDatasourceConfController", name = "数据源")
 @RestController
-@RequestMapping("/ds_conf")
+@RequestMapping("/dsConf")
 public class GenDatasourceConfController extends TWTController {
 
 	@Autowired
@@ -38,8 +38,8 @@ public class GenDatasourceConfController extends TWTController {
 	 */
 	@Operation(summary = "查询数据源列表")
 	@PreAuthorize("@role.hasPermi('gen:ds_conf:list')")
-	@GetMapping("/list")
-	public JsonResult<List<GenDatasourceConf>> list(GenDatasourceConf genDatasourceConf) {
+	@GetMapping("/listQuery")
+	public JsonResult<List<GenDatasourceConf>> listQuery(GenDatasourceConf genDatasourceConf) {
 		return JsonResult.success(genDatasourceConfService.selectGenDatasourceConfList(genDatasourceConf));
 	}
 

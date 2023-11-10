@@ -1,6 +1,8 @@
 package com.twelvet.server.gen.controller;
 
 import java.util.List;
+
+import com.twelvet.api.gen.domain.vo.GenGroupVO;
 import jakarta.servlet.http.HttpServletResponse;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,30 +34,6 @@ public class GenTemplateGroupController extends TWTController {
 
 	@Autowired
 	private IGenTemplateGroupService genTemplateGroupService;
-
-	/**
-	 * 查询模板管理列表
-	 */
-	@Operation(summary = "查询模板管理分页")
-	@PreAuthorize("@role.hasPermi('gen:metadata:template_group:list')")
-	@GetMapping("/pageQuery")
-	public JsonResult<TableDataInfo<GenTemplateGroup>> pageQuery(GenTemplateGroup genTemplateGroup) {
-		PageUtils.startPage();
-		List<GenTemplateGroup> list = genTemplateGroupService.selectGenTemplateGroupList(genTemplateGroup);
-		return JsonResult.success(PageUtils.getDataTable(list));
-	}
-
-	/**
-	 * 导出模板管理列表
-	 */
-	@ResponseExcel(name = "模板管理")
-	@Operation(summary = "导出模板管理列表")
-	@PreAuthorize("@role.hasPermi('gen:metadata:template_group:export')")
-	@Log(service = "模板管理", businessType = BusinessType.EXPORT)
-	@PostMapping("/export")
-	public List<GenTemplateGroup> export(GenTemplateGroup genTemplateGroup) {
-		return genTemplateGroupService.selectGenTemplateGroupList(genTemplateGroup);
-	}
 
 	/**
 	 * 获取模板管理详细信息

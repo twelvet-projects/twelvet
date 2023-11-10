@@ -1,6 +1,10 @@
 package com.twelvet.server.gen.service.impl;
 
 import java.util.List;
+
+import com.twelvet.api.gen.domain.GenGroup;
+import com.twelvet.api.gen.domain.GenTemplate;
+import com.twelvet.api.gen.domain.vo.GenGroupVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
@@ -28,16 +32,6 @@ public class GenTemplateGroupServiceImpl implements IGenTemplateGroupService {
 	@Override
 	public GenTemplateGroup selectGenTemplateGroupByGroupId(Long groupId) {
 		return genTemplateGroupMapper.selectGenTemplateGroupByGroupId(groupId);
-	}
-
-	/**
-	 * 查询模板分组关联列表
-	 * @param genTemplateGroup 模板分组关联
-	 * @return 模板分组关联
-	 */
-	@Override
-	public List<GenTemplateGroup> selectGenTemplateGroupList(GenTemplateGroup genTemplateGroup) {
-		return genTemplateGroupMapper.selectGenTemplateGroupList(genTemplateGroup);
 	}
 
 	/**

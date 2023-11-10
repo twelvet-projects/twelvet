@@ -21,10 +21,10 @@ public interface GenTemplateGroupMapper {
 
 	/**
 	 * 查询模板分组关联列表
-	 * @param genTemplateGroup 模板分组关联
+	 * @param groupId 模板分组关联ID
 	 * @return 模板分组关联集合
 	 */
-	public List<GenTemplateGroup> selectGenTemplateGroupList(GenTemplateGroup genTemplateGroup);
+	public List<GenTemplateGroup> selectGenTemplateGroupListByGroupId(Long groupId);
 
 	/**
 	 * 新增模板分组关联

@@ -34,7 +34,7 @@ public class GenTemplateController extends TWTController {
 	private IGenTemplateService genTemplateService;
 
 	/**
-	 * 查询代码生成业务模板列表
+	 * 查询代码生成业务模板分页
 	 */
 	@Operation(summary = "查询代码生成业务模板分页")
 	@PreAuthorize("@role.hasPermi('gen:template:list')")

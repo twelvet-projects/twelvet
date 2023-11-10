@@ -2,8 +2,11 @@ package com.twelvet.server.gen.service.impl;
 
 import java.util.List;
 
+import com.twelvet.api.gen.domain.GenGroup;
 import com.twelvet.api.gen.domain.GenTableColumn;
+import com.twelvet.api.gen.domain.GenTemplateGroup;
 import com.twelvet.framework.utils.Convert;
+import com.twelvet.server.gen.mapper.GenGroupMapper;
 import com.twelvet.server.gen.mapper.GenTableColumnMapper;
 import com.twelvet.server.gen.service.IGenTableColumnService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,9 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService {
 
 	@Autowired
 	private GenTableColumnMapper genTableColumnMapper;
+
+	@Autowired
+	private GenGroupMapper genGroupMapper;
 
 	/**
 	 * 查询业务字段列表
@@ -58,6 +64,15 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService {
 	@Override
 	public int deleteGenTableColumnByIds(String ids) {
 		return genTableColumnMapper.deleteGenTableColumnByIds(Convert.toLongArray(ids));
+	}
+
+	/**
+	 * 查询代码生成业务模板列表
+	 * @return List GenTemplate
+	 */
+	@Override
+	public List<GenGroup> selectGenGroupAll() {
+		return genGroupMapper.selectGenGroupAll();
 	}
 
 }

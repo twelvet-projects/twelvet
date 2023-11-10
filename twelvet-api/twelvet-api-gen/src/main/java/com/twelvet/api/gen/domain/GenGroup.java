@@ -14,7 +14,6 @@ import java.io.Serial;
  *
  * @author TwelveT
  * @WebSite twelvet.cn
- * @date 2023-11-06
  */
 @Schema(description = "模板分组对象")
 public class GenGroup extends BaseEntity {
@@ -22,8 +21,8 @@ public class GenGroup extends BaseEntity {
 	@Serial
 	private static final long serialVersionUID = 1L;
 
-	/** $column.columnComment */
-	@Schema(description = "$column.columnComment")
+	/** id */
+	@Schema(description = "id")
 	private Long id;
 
 	/** 分组名称 */

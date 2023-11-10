@@ -1,6 +1,11 @@
 package com.twelvet.server.gen.controller;
 
 import java.util.List;
+
+import com.twelvet.api.gen.domain.GenTemplate;
+import com.twelvet.api.gen.domain.dto.GenGroupDTO;
+import com.twelvet.api.gen.domain.vo.GenGroupVO;
+import com.twelvet.server.gen.service.IGenTemplateService;
 import jakarta.servlet.http.HttpServletResponse;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,11 +32,24 @@ import com.twelvet.framework.jdbc.web.utils.PageUtils;
  */
 @Tag(description = "GenGroupController", name = "模板分组")
 @RestController
-@RequestMapping("/group")
+@RequestMapping("/templateGroup")
 public class GenGroupController extends TWTController {
 
 	@Autowired
 	private IGenGroupService genGroupService;
+
+	@Autowired
+	private IGenTemplateService genTemplateService;
+
+	/**
+	 * 查询代码生成业务模板列表
+	 */
+	@Operation(summary = "查询代码生成业务模板列表")
+	@PreAuthorize("@role.hasPermi('gen:template:list')")
+	@GetMapping("/queryTemplateList")
+	public JsonResult<List<GenTemplate>> queryTemplateList(GenTemplate genTemplate) {
+		return JsonResult.success(genTemplateService.selectGenTemplateList(genTemplate));
+	}
 
 	/**
 	 * 查询模板分组列表
@@ -63,7 +81,7 @@ public class GenGroupController extends TWTController {
 	@Operation(summary = "获取模板分组详细信息")
 	@PreAuthorize("@role.hasPermi('gen:metadata:group:query')")
 	@GetMapping(value = "/{id}")
-	public JsonResult<GenGroup> getInfo(@PathVariable("id") Long id) {
+	public JsonResult<GenGroupDTO> getInfo(@PathVariable("id") Long id) {
 		return JsonResult.success(genGroupService.selectGenGroupById(id));
 	}
 
@@ -74,8 +92,8 @@ public class GenGroupController extends TWTController {
 	@PreAuthorize("@role.hasPermi('gen:metadata:group:add')")
 	@Log(service = "模板分组", businessType = BusinessType.INSERT)
 	@PostMapping
-	public JsonResult<String> add(@RequestBody GenGroup genGroup) {
-		return json(genGroupService.insertGenGroup(genGroup));
+	public JsonResult<String> add(@RequestBody GenGroupDTO genGroupDTO) {
+		return json(genGroupService.insertGenGroup(genGroupDTO));
 	}
 
 	/**
@@ -85,8 +103,8 @@ public class GenGroupController extends TWTController {
 	@PreAuthorize("@role.hasPermi('gen:metadata:group:edit')")
 	@Log(service = "模板分组", businessType = BusinessType.UPDATE)
 	@PutMapping
-	public JsonResult<String> edit(@RequestBody GenGroup genGroup) {
-		return json(genGroupService.updateGenGroup(genGroup));
+	public JsonResult<String> edit(@RequestBody GenGroupDTO genGroupDTO) {
+		return json(genGroupService.updateGenGroup(genGroupDTO));
 	}
 
 	/**

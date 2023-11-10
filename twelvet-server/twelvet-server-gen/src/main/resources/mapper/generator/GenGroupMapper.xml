@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.twelvet.server.gen.mapper.GenGroupMapper">
-    
+
     <resultMap type="GenGroup" id="GenGroupResult">
         <result property="id"    column="id"    />
         <result property="groupName"    column="group_name"    />
@@ -18,19 +18,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select id, group_name, group_desc, create_by, update_by, create_time, update_time from gen_group
     </sql>
 
+    <select id="selectGenGroupAll" parameterType="GenGroup" resultMap="GenGroupResult">
+        <include refid="selectGenGroupVo"/>
+    </select>
+
     <select id="selectGenGroupList" parameterType="GenGroup" resultMap="GenGroupResult">
         <include refid="selectGenGroupVo"/>
-        <where>  
+        <where>
             <if test="groupName != null  and groupName != ''"> and group_name like concat('%', #{groupName}, '%')</if>
             <if test="groupDesc != null  and groupDesc != ''"> and group_desc = #{groupDesc}</if>
         </where>
     </select>
-    
+
     <select id="selectGenGroupById" parameterType="Long" resultMap="GenGroupResult">
         <include refid="selectGenGroupVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertGenGroup" parameterType="GenGroup" useGeneratedKeys="true" keyProperty="id">
         insert into gen_group
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -69,7 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteGenGroupByIds" parameterType="String">
-        delete from gen_group where id in 
+        delete from gen_group where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

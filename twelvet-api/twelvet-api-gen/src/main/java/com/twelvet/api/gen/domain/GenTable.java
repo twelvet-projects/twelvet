@@ -69,10 +69,10 @@ public class GenTable extends BaseEntity {
 	private String className;
 
 	/**
-	 * 使用的模板（crud单表操作 tree树表操作 sub主子表操作）
+	 * 使用的模板分组ID
 	 */
-	@Schema(description = "使用的模板")
-	private String tplCategory;
+	@Schema(description = "使用的模板分组ID")
+	private Long tplGroupId;
 
 	/**
 	 * 生成包路径
@@ -232,12 +232,12 @@ public class GenTable extends BaseEntity {
 		this.className = className;
 	}
 
-	public String getTplCategory() {
-		return tplCategory;
+	public Long getTplGroupId() {
+		return tplGroupId;
 	}
 
-	public void setTplCategory(String tplCategory) {
-		this.tplCategory = tplCategory;
+	public void setTplGroupId(Long tplGroupId) {
+		this.tplGroupId = tplGroupId;
 	}
 
 	public String getPackageName() {
@@ -369,35 +369,35 @@ public class GenTable extends BaseEntity {
 	}
 
 	public boolean isSub() {
-		return isSub(this.tplCategory);
+		return isSub(this.tplGroupId);
 	}
 
-	public static boolean isSub(String tplCategory) {
-		return tplCategory != null && StringUtils.equals(GenConstants.TPL_SUB, tplCategory);
+	public static boolean isSub(Long tplGroupId) {
+		return GenConstants.TPL_SUB.equals(tplGroupId);
 	}
 
 	public boolean isTree() {
-		return isTree(this.tplCategory);
+		return isTree(this.tplGroupId);
 	}
 
-	public static boolean isTree(String tplCategory) {
-		return tplCategory != null && StringUtils.equals(GenConstants.TPL_TREE, tplCategory);
+	public static boolean isTree(Long tplGroupId) {
+		return GenConstants.TPL_TREE.equals(tplGroupId);
 	}
 
 	public boolean isCrud() {
-		return isCrud(this.tplCategory);
+		return isCrud(this.tplGroupId);
 	}
 
-	public static boolean isCrud(String tplCategory) {
-		return tplCategory != null && StringUtils.equals(GenConstants.TPL_CRUD, tplCategory);
+	public static boolean isCrud(Long tplGroupId) {
+		return GenConstants.TPL_CRUD.equals(tplGroupId);
 	}
 
 	public boolean isSuperColumn(String javaField) {
-		return isSuperColumn(this.tplCategory, javaField);
+		return isSuperColumn(this.tplGroupId, javaField);
 	}
 
-	public static boolean isSuperColumn(String tplCategory, String javaField) {
-		if (isTree(tplCategory)) {
+	public static boolean isSuperColumn(Long tplGroupId, String javaField) {
+		if (isTree(tplGroupId)) {
 			return StringUtils.equalsAnyIgnoreCase(javaField,
 					ArrayUtils.addAll(GenConstants.TREE_ENTITY, GenConstants.BASE_ENTITY));
 		}

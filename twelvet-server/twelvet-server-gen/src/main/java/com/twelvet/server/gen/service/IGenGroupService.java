@@ -3,6 +3,8 @@ package com.twelvet.server.gen.service;
 import java.util.List;
 
 import com.twelvet.api.gen.domain.GenGroup;
+import com.twelvet.api.gen.domain.dto.GenGroupDTO;
+import com.twelvet.api.gen.domain.vo.GenGroupVO;
 
 /**
  * 模板分组Service接口
@@ -17,7 +19,7 @@ public interface IGenGroupService {
 	 * @param id 模板分组主键
 	 * @return 模板分组
 	 */
-	public GenGroup selectGenGroupById(Long id);
+	public GenGroupDTO selectGenGroupById(Long id);
 
 	/**
 	 * 查询模板分组列表
@@ -28,17 +30,17 @@ public interface IGenGroupService {
 
 	/**
 	 * 新增模板分组
-	 * @param genGroup 模板分组
+	 * @param genGroupDTO 模板分组
 	 * @return 结果
 	 */
-	public int insertGenGroup(GenGroup genGroup);
+	public int insertGenGroup(GenGroupDTO genGroupDTO);
 
 	/**
 	 * 修改模板分组
-	 * @param genGroup 模板分组
+	 * @param genGroupDTO 模板分组
 	 * @return 结果
 	 */
-	public int updateGenGroup(GenGroup genGroup);
+	public int updateGenGroup(GenGroupDTO genGroupDTO);
 
 	/**
 	 * 批量删除模板分组

@@ -3,6 +3,7 @@ package com.twelvet.server.gen.service;
 import java.util.List;
 
 import com.twelvet.api.gen.domain.GenTemplateGroup;
+import com.twelvet.api.gen.domain.vo.GenGroupVO;
 
 /**
  * 模板分组关联Service接口
@@ -18,13 +19,6 @@ public interface IGenTemplateGroupService {
 	 * @return 模板分组关联
 	 */
 	public GenTemplateGroup selectGenTemplateGroupByGroupId(Long groupId);
-
-	/**
-	 * 查询模板分组关联列表
-	 * @param genTemplateGroup 模板分组关联
-	 * @return 模板分组关联集合
-	 */
-	public List<GenTemplateGroup> selectGenTemplateGroupList(GenTemplateGroup genTemplateGroup);
 
 	/**
 	 * 新增模板分组关联
