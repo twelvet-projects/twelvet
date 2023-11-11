@@ -1,22 +1,21 @@
 package com.twelvet.server.gen.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.twelvet.api.gen.domain.GenGroup;
 import com.twelvet.api.gen.domain.GenTemplate;
 import com.twelvet.api.gen.domain.GenTemplateGroup;
 import com.twelvet.api.gen.domain.dto.GenGroupDTO;
-import com.twelvet.api.gen.domain.vo.GenGroupVO;
+import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.DateUtils;
+import com.twelvet.server.gen.mapper.GenGroupMapper;
 import com.twelvet.server.gen.mapper.GenTemplateGroupMapper;
+import com.twelvet.server.gen.mapper.GenTemplateMapper;
+import com.twelvet.server.gen.service.IGenGroupService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.twelvet.framework.security.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
-import com.twelvet.server.gen.mapper.GenGroupMapper;
-import com.twelvet.api.gen.domain.GenGroup;
-import com.twelvet.server.gen.service.IGenGroupService;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 模板分组Service业务层处理
@@ -32,6 +31,9 @@ public class GenGroupServiceImpl implements IGenGroupService {
 
 	@Autowired
 	private GenTemplateGroupMapper genTemplateGroupMapper;
+
+	@Autowired
+	private GenTemplateMapper genTemplateMapper;
 
 	/**
 	 * 查询模板分组
@@ -135,6 +137,15 @@ public class GenGroupServiceImpl implements IGenGroupService {
 	@Override
 	public int deleteGenGroupById(Long id) {
 		return genGroupMapper.deleteGenGroupById(id);
+	}
+
+	/**
+	 * 查询代码生成业务所有模板列表
+	 * @return List<GenTemplate>
+	 */
+	@Override
+	public List<GenTemplate> selectGenTemplateAll() {
+		return genTemplateMapper.selectGenTemplateAll();
 	}
 
 }

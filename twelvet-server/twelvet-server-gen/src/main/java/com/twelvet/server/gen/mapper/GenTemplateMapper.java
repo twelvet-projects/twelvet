@@ -61,4 +61,10 @@ public interface GenTemplateMapper {
 	 */
 	public List<GenTemplate> selectGenTemplateListByGroupId(Long groupId);
 
+	/**
+	 * 获取所有模板列表
+	 * @return List<GenTemplate>
+	 */
+	List<GenTemplate> selectGenTemplateAll();
+
 }
