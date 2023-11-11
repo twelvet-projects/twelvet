@@ -89,8 +89,8 @@
 
         <!--XSS-->
         <dependency>
-            <groupId>cn.twelvet</groupId>
-            <artifactId>xss-spring-boot-starter</artifactId>
+            <groupId>net.dreamlu</groupId>
+            <artifactId>mica-xss</artifactId>
         </dependency>
 
     </dependencies>
