@@ -62,6 +62,7 @@
         <velocity.version>2.3</velocity.version>
         <hutool.version>5.8.22</hutool.version>
         <redisson.version>3.23.5</redisson.version>
+        <jasypt.version>3.0.5</jasypt.version>
 
         <excel-spring-boot-starter.version>3.0.0</excel-spring-boot-starter.version>
         <xss-spring-boot-starter.version>3.0.0</xss-spring-boot-starter.version>
@@ -351,6 +352,13 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+
+        <!--配置文件加解密-->
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>${jasypt.version}</version>
         </dependency>
 
         <!--caffeine 替换LB 默认缓存实现-->
