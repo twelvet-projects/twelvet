@@ -92,7 +92,7 @@ public class SysUserController extends TWTController {
 	@Log(service = "用户管理", businessType = BusinessType.IMPORT)
 	@PreAuthorize("@role.hasPermi('system:user:import')")
 	public JsonResult<String> importData(@RequestExcel List<SysUser> userList, boolean cover,
-										 BindingResult bindingResult) throws Exception {
+			BindingResult bindingResult) throws Exception {
 		String operName = SecurityUtils.getUsername();
 		iSysUserService.importUser(userList, cover, operName);
 		return JsonResult.success();
