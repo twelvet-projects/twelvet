@@ -66,7 +66,7 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService {
 	}
 
 	/**
-	 * 查询代码生成业务模板列表
+	 * 查询代码生成业务所有模板分组列表
 	 * @return List GenTemplate
 	 */
 	@Override

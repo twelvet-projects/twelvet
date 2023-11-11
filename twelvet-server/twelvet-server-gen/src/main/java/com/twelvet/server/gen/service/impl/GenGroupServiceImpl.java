@@ -1,12 +1,14 @@
 package com.twelvet.server.gen.service.impl;
 
 import com.twelvet.api.gen.domain.GenGroup;
+import com.twelvet.api.gen.domain.GenTemplate;
 import com.twelvet.api.gen.domain.GenTemplateGroup;
 import com.twelvet.api.gen.domain.dto.GenGroupDTO;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.DateUtils;
 import com.twelvet.server.gen.mapper.GenGroupMapper;
 import com.twelvet.server.gen.mapper.GenTemplateGroupMapper;
+import com.twelvet.server.gen.mapper.GenTemplateMapper;
 import com.twelvet.server.gen.service.IGenGroupService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 模板分组Service业务层处理
@@ -31,6 +32,9 @@ public class GenGroupServiceImpl implements IGenGroupService {
 	@Autowired
 	private GenTemplateGroupMapper genTemplateGroupMapper;
 
+	@Autowired
+	private GenTemplateMapper genTemplateMapper;
+
 	/**
 	 * 查询模板分组
 	 * @param id 模板分组主键
@@ -41,9 +45,7 @@ public class GenGroupServiceImpl implements IGenGroupService {
 		GenGroupDTO genGroupDTO = new GenGroupDTO();
 		GenGroup genGroup = genGroupMapper.selectGenGroupById(id);
 		List<GenTemplateGroup> genTemplateGroupList = genTemplateGroupMapper.selectGenTemplateGroupListByGroupId(id);
-		List<Long> templateIdList = genTemplateGroupList.stream()
-			.map(GenTemplateGroup::getTemplateId)
-			.collect(Collectors.toList());
+		List<Long> templateIdList = genTemplateGroupList.stream().map(GenTemplateGroup::getTemplateId).toList();
 		BeanUtils.copyProperties(genGroup, genGroupDTO);
 		genGroupDTO.setTemplateIdList(templateIdList);
 		return genGroupDTO;
@@ -135,6 +137,15 @@ public class GenGroupServiceImpl implements IGenGroupService {
 	@Override
 	public int deleteGenGroupById(Long id) {
 		return genGroupMapper.deleteGenGroupById(id);
+	}
+
+	/**
+	 * 查询代码生成业务所有模板列表
+	 * @return List<GenTemplate>
+	 */
+	@Override
+	public List<GenTemplate> selectGenTemplateAll() {
+		return genTemplateMapper.selectGenTemplateAll();
 	}
 
 }

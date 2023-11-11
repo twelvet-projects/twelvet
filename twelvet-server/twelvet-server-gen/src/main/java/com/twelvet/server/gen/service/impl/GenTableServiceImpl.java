@@ -303,9 +303,7 @@ public class GenTableServiceImpl implements IGenTableService {
 		GenTable genTable = genTableMapper.selectGenTableById(tableId);
 		List<GenTableColumn> tableColumns = genTable.getColumns();
 
-		List<String> tableColumnNames = tableColumns.stream()
-			.map(GenTableColumn::getColumnName)
-			.collect(Collectors.toList());
+		List<String> tableColumnNames = tableColumns.stream().map(GenTableColumn::getColumnName).toList();
 
 		// 手动切换数据源
 		DynamicDataSourceContextHolder.push(genTable.getDsName());
@@ -313,9 +311,7 @@ public class GenTableServiceImpl implements IGenTableService {
 		if (StringUtils.isEmpty(dbTableColumns)) {
 			throw new TWTException("同步数据失败，原表结构不存在");
 		}
-		List<String> dbTableColumnNames = dbTableColumns.stream()
-			.map(GenTableColumn::getColumnName)
-			.collect(Collectors.toList());
+		List<String> dbTableColumnNames = dbTableColumns.stream().map(GenTableColumn::getColumnName).toList();
 
 		// 手动切换数据源
 		if (!DataSourceConstants.DS_MASTER.equals(genTable.getDsName())) {

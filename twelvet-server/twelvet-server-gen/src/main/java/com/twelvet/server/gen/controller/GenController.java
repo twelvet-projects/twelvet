@@ -16,7 +16,7 @@ import com.twelvet.server.gen.service.IGenTableColumnService;
 import com.twelvet.server.gen.service.IGenTableService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -47,10 +47,10 @@ public class GenController extends TWTController {
 	private IGenTableColumnService genTableColumnService;
 
 	/**
-	 * 查询代码生成业务模板列表
+	 * 查询代码生成业务所有模板分组列表
 	 */
-	@Operation(summary = "查询代码生成业务模板列表")
-	@PreAuthorize("@role.hasPermi('gen:group:list')")
+	@Operation(summary = "查询代码生成业务所有模板分组列表")
+	@PreAuthorize("@role.hasPermi('gen:list')")
 	@GetMapping("/selectGenGroupAll")
 	public JsonResult<List<GenGroup>> selectGenGroupAll() {
 		return JsonResult.success(genTableColumnService.selectGenGroupAll());
