@@ -1,14 +1,16 @@
 package com.twelvet.server.gen.utils;
 
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.io.resource.ClassPathResource;
+import com.twelvet.api.gen.constant.GenConstants;
 import com.twelvet.api.gen.domain.GenTable;
 import com.twelvet.api.gen.domain.GenTableColumn;
-import com.twelvet.framework.utils.DateUtils;
 import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.framework.utils.StringUtils;
-import com.twelvet.api.gen.constant.GenConstants;
 import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.Velocity;
 
-import java.util.ArrayList;
+import java.io.StringWriter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -36,43 +38,9 @@ public class VelocityUtils {
 	private static final String DEFAULT_PARENT_MENU_ID = "3";
 
 	/**
-	 * 设置模板变量信息
-	 * @return 模板列表
+	 * 默认配置信息
 	 */
-	public static VelocityContext prepareContext(GenTable genTable) {
-		String moduleName = genTable.getModuleName();
-		String businessName = genTable.getBusinessName();
-		String packageName = genTable.getPackageName();
-		String tplCategory = genTable.getTplCategory();
-		String functionName = genTable.getFunctionName();
-
-		VelocityContext velocityContext = new VelocityContext();
-		velocityContext.put("tplCategory", genTable.getTplCategory());
-		velocityContext.put("tableName", genTable.getTableName());
-		velocityContext.put("functionName", StringUtils.isNotEmpty(functionName) ? functionName : "【请填写功能名称】");
-		velocityContext.put("ClassName", genTable.getClassName());
-		velocityContext.put("className", StringUtils.uncapitalize(genTable.getClassName()));
-		velocityContext.put("moduleName", genTable.getModuleName());
-		velocityContext.put("BusinessName", StringUtils.capitalize(genTable.getBusinessName()));
-		velocityContext.put("businessName", genTable.getBusinessName());
-		velocityContext.put("basePackage", getPackagePrefix(packageName));
-		velocityContext.put("packageName", packageName);
-		velocityContext.put("author", genTable.getFunctionAuthor());
-		velocityContext.put("datetime", DateUtils.getDate());
-		velocityContext.put("pkColumn", genTable.getPkColumn());
-		velocityContext.put("importList", getImportList(genTable));
-		velocityContext.put("permissionPrefix", getPermissionPrefix(moduleName, businessName));
-		velocityContext.put("columns", genTable.getColumns());
-		velocityContext.put("table", genTable);
-		setMenuVelocityContext(velocityContext, genTable);
-		if (GenConstants.TPL_TREE.equals(tplCategory)) {
-			setTreeVelocityContext(velocityContext, genTable);
-		}
-		if (GenConstants.TPL_SUB.equals(tplCategory)) {
-			setSubVelocityContext(velocityContext, genTable);
-		}
-		return velocityContext;
-	}
+	private static final String CONFIG_PATH = "template/config.json";
 
 	public static void setMenuVelocityContext(VelocityContext context, GenTable genTable) {
 		String options = genTable.getOptions();
@@ -100,104 +68,21 @@ public class VelocityUtils {
 		}
 	}
 
-	public static void setSubVelocityContext(VelocityContext context, GenTable genTable) {
+	public static void setSubVelocityContext(Map<String, Object> dataModel, GenTable genTable) {
 		GenTable subTable = genTable.getSubTable();
 		String subTableName = genTable.getSubTableName();
 		String subTableFkName = genTable.getSubTableFkName();
 		String subClassName = genTable.getSubTable().getClassName();
 		String subTableFkClassName = StringUtils.convertToCamelCase(subTableFkName);
 
-		context.put("subTable", subTable);
-		context.put("subTableName", subTableName);
-		context.put("subTableFkName", subTableFkName);
-		context.put("subTableFkClassName", subTableFkClassName);
-		context.put("subTableFkclassName", StringUtils.uncapitalize(subTableFkClassName));
-		context.put("subClassName", subClassName);
-		context.put("subclassName", StringUtils.uncapitalize(subClassName));
-		context.put("subImportList", getImportList(genTable.getSubTable()));
-	}
-
-	/**
-	 * 获取模板信息
-	 * @return 模板列表
-	 */
-	public static List<String> getTemplateList(String tplCategory) {
-		List<String> templates = new ArrayList<>();
-		templates.add("vm/java/domain.java.vm");
-		templates.add("vm/java/mapper.java.vm");
-		templates.add("vm/java/service.java.vm");
-		templates.add("vm/java/serviceImpl.java.vm");
-		templates.add("vm/java/controller.java.vm");
-		templates.add("vm/xml/mapper.xml.vm");
-		templates.add("vm/sql/sql.vm");
-		templates.add("vm/react/service.ts.vm");
-		if (GenConstants.TPL_CRUD.equals(tplCategory)) {
-			templates.add("vm/react/index.tsx.vm");
-		}
-		else if (GenConstants.TPL_TREE.equals(tplCategory)) {
-			templates.add("vm/react/index-tree.tsx.vm");
-		}
-		else if (GenConstants.TPL_SUB.equals(tplCategory)) {
-			templates.add("vm/react/index.tsx.vm");
-			templates.add("vm/java/sub-domain.java.vm");
-		}
-		return templates;
-	}
-
-	/**
-	 * 获取文件名
-	 */
-	public static String getFileName(String template, GenTable genTable) {
-		// 文件名称
-		String fileName = "";
-		// 包路径
-		String packageName = genTable.getPackageName();
-		// 模块名
-		String moduleName = genTable.getModuleName();
-		// 大写类名
-		String className = genTable.getClassName();
-		// 业务名称
-		String businessName = genTable.getBusinessName();
-
-		String javaPath = PROJECT_PATH + "/" + StringUtils.replace(packageName, ".", "/");
-		String mybatisPath = MYBATIS_PATH + "/" + moduleName;
-		String reactPath = "react";
-
-		if (template.contains("domain.java.vm")) {
-			fileName = StringUtils.format("{}/domain/{}.java", javaPath, className);
-		}
-		if (template.contains("sub-domain.java.vm")
-				&& StringUtils.equals(GenConstants.TPL_SUB, genTable.getTplCategory())) {
-			fileName = StringUtils.format("{}/domain/{}.java", javaPath, genTable.getSubTable().getClassName());
-		}
-		else if (template.contains("mapper.java.vm")) {
-			fileName = StringUtils.format("{}/mapper/{}Mapper.java", javaPath, className);
-		}
-		else if (template.contains("service.java.vm")) {
-			fileName = StringUtils.format("{}/service/I{}Service.java", javaPath, className);
-		}
-		else if (template.contains("serviceImpl.java.vm")) {
-			fileName = StringUtils.format("{}/service/impl/{}ServiceImpl.java", javaPath, className);
-		}
-		else if (template.contains("controller.java.vm")) {
-			fileName = StringUtils.format("{}/controller/{}Controller.java", javaPath, className);
-		}
-		else if (template.contains("mapper.xml.vm")) {
-			fileName = StringUtils.format("{}/{}Mapper.xml", mybatisPath, className);
-		}
-		else if (template.contains("sql.vm")) {
-			fileName = businessName + "Menu.sql";
-		}
-		else if (template.contains("service.ts.vm")) {
-			fileName = StringUtils.format("{}/pages/{}/{}/service.ts", reactPath, moduleName, businessName);
-		}
-		else if (template.contains("index.tsx.vm")) {
-			fileName = StringUtils.format("{}/pages/{}/{}/index.tsx", reactPath, moduleName, businessName);
-		}
-		else if (template.contains("index-tree.tsx.vm")) {
-			fileName = StringUtils.format("{}/pages/{}/{}/index.tsx", reactPath, moduleName, businessName);
-		}
-		return fileName;
+		dataModel.put("subTable", subTable);
+		dataModel.put("subTableName", subTableName);
+		dataModel.put("subTableFkName", subTableFkName);
+		dataModel.put("subTableFkClassName", subTableFkClassName);
+		dataModel.put("subTableFkclassName", StringUtils.uncapitalize(subTableFkClassName));
+		dataModel.put("subClassName", subClassName);
+		dataModel.put("subclassName", StringUtils.uncapitalize(subClassName));
+		dataModel.put("subImportList", getImportList(genTable.getSubTable()));
 	}
 
 	/**
@@ -312,6 +197,31 @@ public class VelocityUtils {
 			}
 		}
 		return num;
+	}
+
+	/**
+	 * 渲染文本
+	 * @param str 模板
+	 * @param dataModel 模板数据
+	 * @return 渲染后的模板
+	 */
+	public static String renderStr(String str, Map<String, Object> dataModel) {
+		// 设置velocity资源加载器
+		Velocity.init();
+		StringWriter stringWriter = new StringWriter();
+		VelocityContext context = new VelocityContext(dataModel);
+		// 函数库
+		Velocity.evaluate(context, stringWriter, "renderStr", str);
+		return stringWriter.toString();
+	}
+
+	/**
+	 * 获取生成配置信息
+	 * @return 配置信息
+	 */
+	public static Map<String, Map<String, Object>> getGeneratorConfig() {
+		ClassPathResource classPathResource = new ClassPathResource(CONFIG_PATH);
+		return JacksonUtils.readValue(IoUtil.readUtf8(classPathResource.getStream()), Map.class);
 	}
 
 }

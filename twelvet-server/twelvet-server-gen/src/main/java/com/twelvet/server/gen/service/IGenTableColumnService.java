@@ -1,5 +1,6 @@
 package com.twelvet.server.gen.service;
 
+import com.twelvet.api.gen.domain.GenGroup;
 import com.twelvet.api.gen.domain.GenTableColumn;
 
 import java.util.List;
@@ -38,5 +39,11 @@ public interface IGenTableColumnService {
 	 * @return 结果
 	 */
 	int deleteGenTableColumnByIds(String ids);
+
+	/**
+	 * 查询代码生成业务模板列表
+	 * @return List GenTemplate
+	 */
+	public List<GenGroup> selectGenGroupAll();
 
 }

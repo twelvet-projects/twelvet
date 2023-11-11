@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twelvet.server.gen.mapper.GenGroupMapper">
+
+    <resultMap type="GenGroup" id="GenGroupResult">
+        <result property="id"    column="id"    />
+        <result property="groupName"    column="group_name"    />
+        <result property="groupDesc"    column="group_desc"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectGenGroupVo">
+        select id, group_name, group_desc, create_by, update_by, create_time, update_time from gen_group
+    </sql>
+
+    <select id="selectGenGroupAll" parameterType="GenGroup" resultMap="GenGroupResult">
+        <include refid="selectGenGroupVo"/>
+    </select>
+
+    <select id="selectGenGroupList" parameterType="GenGroup" resultMap="GenGroupResult">
+        <include refid="selectGenGroupVo"/>
+        <where>
+            <if test="groupName != null  and groupName != ''"> and group_name like concat('%', #{groupName}, '%')</if>
+            <if test="groupDesc != null  and groupDesc != ''"> and group_desc = #{groupDesc}</if>
+        </where>
+    </select>
+
+    <select id="selectGenGroupById" parameterType="Long" resultMap="GenGroupResult">
+        <include refid="selectGenGroupVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertGenGroup" parameterType="GenGroup" useGeneratedKeys="true" keyProperty="id">
+        insert into gen_group
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="groupName != null">group_name,</if>
+            <if test="groupDesc != null">group_desc,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="updateBy != null and updateBy != ''">update_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="groupName != null">#{groupName},</if>
+            <if test="groupDesc != null">#{groupDesc},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateGenGroup" parameterType="GenGroup">
+        update gen_group
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="groupName != null">group_name = #{groupName},</if>
+            <if test="groupDesc != null">group_desc = #{groupDesc},</if>
+            <if test="createBy != null and createBy != ''">create_by = #{createBy},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteGenGroupById" parameterType="Long">
+        delete from gen_group where id = #{id}
+    </delete>
+
+    <delete id="deleteGenGroupByIds" parameterType="String">
+        delete from gen_group where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
