@@ -64,7 +64,7 @@
             <artifactId>twelvet-framework-core</artifactId>
             <exclusions>
                 <exclusion>
-                    <groupId>cn.twelvet</groupId>
+                    <groupId>com.pig4cloud.excel</groupId>
                     <artifactId>excel-spring-boot-starter</artifactId>
                 </exclusion>
             </exclusions>
