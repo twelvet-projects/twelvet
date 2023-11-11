@@ -31,7 +31,7 @@ public interface IGenTableService {
 	 * @param tableNames 表名称组
 	 * @return 数据库表集合
 	 */
-	List<GenTable> selectDbTableListByNames(String[] tableNames);
+	List<GenTable> selectDbTableListByNames(String dsName, String[] tableNames);
 
 	/**
 	 * 查询所有表信息
@@ -69,33 +69,33 @@ public interface IGenTableService {
 	 * @param tableId 表编号
 	 * @return 预览数据列表
 	 */
-	Map<String, String> previewCode(Long tableId);
+	List<Map<String, String>> previewCode(Long tableId);
 
 	/**
 	 * 生成代码（下载方式）
-	 * @param tableName 表名称
+	 * @param tableId 表ID
 	 * @return 数据
 	 */
-	byte[] downloadCode(String tableName);
+	byte[] downloadCode(Long tableId);
 
 	/**
 	 * 生成代码（自定义路径）
-	 * @param tableName 表名称
+	 * @param tableId 需要生成的表ID
 	 */
-	void generatorCode(String tableName);
+	void generatorCode(Long tableId);
 
 	/**
 	 * 同步数据库
-	 * @param tableName 表名称
+	 * @param tableId 表ID
 	 */
-	void synchDb(String tableName);
+	void synchDb(Long tableId);
 
 	/**
 	 * 批量生成代码（下载方式）
-	 * @param tableNames 表数组
+	 * @param tableIds 表ID数组
 	 * @return 数据
 	 */
-	byte[] downloadCode(String[] tableNames);
+	byte[] downloadCode(List<Long> tableIds);
 
 	/**
 	 * 修改保存参数校验

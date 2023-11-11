@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twelvet.server.gen.mapper.GenTemplateMapper">
+
+    <resultMap type="GenTemplate" id="GenTemplateResult">
+        <result property="id"    column="id"    />
+        <result property="templateName"    column="template_name"    />
+        <result property="generatorPath"    column="generator_path"    />
+        <result property="templateDesc"    column="template_desc"    />
+        <result property="templateCode"    column="template_code"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+    </resultMap>
+
+    <sql id="selectGenTemplateVo">
+        select id, template_name, generator_path, template_desc, template_code, create_time, update_time, del_flag, create_by, update_by from gen_template
+    </sql>
+
+    <select id="selectGenTemplateList" parameterType="GenTemplate" resultMap="GenTemplateResult">
+        <include refid="selectGenTemplateVo"/>
+        <where>
+            <if test="templateName != null  and templateName != ''"> and template_name like concat('%', #{templateName}, '%')</if>
+            <if test="generatorPath != null  and generatorPath != ''"> and generator_path = #{generatorPath}</if>
+            <if test="templateDesc != null  and templateDesc != ''"> and template_desc = #{templateDesc}</if>
+            <if test="templateCode != null  and templateCode != ''"> and template_code = #{templateCode}</if>
+        </where>
+    </select>
+
+    <select id="selectGenTemplateById" parameterType="Long" resultMap="GenTemplateResult">
+        <include refid="selectGenTemplateVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectGenTemplateListByGroupId" parameterType="Long" resultMap="GenTemplateResult">
+        SELECT
+            gt.id,
+            gt.template_name,
+            gt.template_code,
+            gt.generator_path
+        FROM
+            `gen_template` AS gt
+                left join `gen_template_group` as gtg on gtg.template_id = gt.id
+        where gtg.group_id = #{groupId}
+    </select>
+
+    <insert id="insertGenTemplate" parameterType="GenTemplate">
+        insert into gen_template
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="templateName != null and templateName != ''">template_name,</if>
+            <if test="generatorPath != null and generatorPath != ''">generator_path,</if>
+            <if test="templateDesc != null and templateDesc != ''">template_desc,</if>
+            <if test="templateCode != null and templateCode != ''">template_code,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="delFlag != null and delFlag != ''">del_flag,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="updateBy != null and updateBy != ''">update_by,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="templateName != null and templateName != ''">#{templateName},</if>
+            <if test="generatorPath != null and generatorPath != ''">#{generatorPath},</if>
+            <if test="templateDesc != null and templateDesc != ''">#{templateDesc},</if>
+            <if test="templateCode != null and templateCode != ''">#{templateCode},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+         </trim>
+    </insert>
+
+    <update id="updateGenTemplate" parameterType="GenTemplate">
+        update gen_template
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="templateName != null and templateName != ''">template_name = #{templateName},</if>
+            <if test="generatorPath != null and generatorPath != ''">generator_path = #{generatorPath},</if>
+            <if test="templateDesc != null and templateDesc != ''">template_desc = #{templateDesc},</if>
+            <if test="templateCode != null and templateCode != ''">template_code = #{templateCode},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+            <if test="createBy != null and createBy != ''">create_by = #{createBy},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteGenTemplateById" parameterType="Long">
+        delete from gen_template where id = #{id}
+    </delete>
+
+    <delete id="deleteGenTemplateByIds" parameterType="String">
+        delete from gen_template where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,15 +1,15 @@
 package com.twelvet.api.gen.domain;
 
-import java.util.List;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-
 import com.twelvet.api.gen.constant.GenConstants;
 import com.twelvet.framework.core.application.domain.BaseEntity;
 import com.twelvet.framework.utils.StringUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
-
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import org.apache.commons.lang3.ArrayUtils;
+
+import java.io.Serial;
+import java.util.List;
 
 /**
  * @author twelvet
@@ -19,6 +19,7 @@ import org.apache.commons.lang3.ArrayUtils;
 @Schema(description = "业务表")
 public class GenTable extends BaseEntity {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -26,6 +27,12 @@ public class GenTable extends BaseEntity {
 	 */
 	@Schema(description = "编号")
 	private Long tableId;
+
+	/**
+	 * 数据源名称
+	 */
+	@Schema(description = "数据源名称")
+	private String dsName;
 
 	/**
 	 * 表名称
@@ -61,10 +68,10 @@ public class GenTable extends BaseEntity {
 	private String className;
 
 	/**
-	 * 使用的模板（crud单表操作 tree树表操作 sub主子表操作）
+	 * 使用的模板分组ID
 	 */
-	@Schema(description = "使用的模板")
-	private String tplCategory;
+	@Schema(description = "使用的模板分组ID")
+	private Long tplGroupId;
 
 	/**
 	 * 生成包路径
@@ -176,6 +183,14 @@ public class GenTable extends BaseEntity {
 		this.tableId = tableId;
 	}
 
+	public String getDsName() {
+		return dsName;
+	}
+
+	public void setDsName(String dsName) {
+		this.dsName = dsName;
+	}
+
 	public String getTableName() {
 		return tableName;
 	}
@@ -216,12 +231,12 @@ public class GenTable extends BaseEntity {
 		this.className = className;
 	}
 
-	public String getTplCategory() {
-		return tplCategory;
+	public Long getTplGroupId() {
+		return tplGroupId;
 	}
 
-	public void setTplCategory(String tplCategory) {
-		this.tplCategory = tplCategory;
+	public void setTplGroupId(Long tplGroupId) {
+		this.tplGroupId = tplGroupId;
 	}
 
 	public String getPackageName() {
@@ -353,35 +368,35 @@ public class GenTable extends BaseEntity {
 	}
 
 	public boolean isSub() {
-		return isSub(this.tplCategory);
+		return isSub(this.tplGroupId);
 	}
 
-	public static boolean isSub(String tplCategory) {
-		return tplCategory != null && StringUtils.equals(GenConstants.TPL_SUB, tplCategory);
+	public static boolean isSub(Long tplGroupId) {
+		return GenConstants.TPL_SUB.equals(tplGroupId);
 	}
 
 	public boolean isTree() {
-		return isTree(this.tplCategory);
+		return isTree(this.tplGroupId);
 	}
 
-	public static boolean isTree(String tplCategory) {
-		return tplCategory != null && StringUtils.equals(GenConstants.TPL_TREE, tplCategory);
+	public static boolean isTree(Long tplGroupId) {
+		return GenConstants.TPL_TREE.equals(tplGroupId);
 	}
 
 	public boolean isCrud() {
-		return isCrud(this.tplCategory);
+		return isCrud(this.tplGroupId);
 	}
 
-	public static boolean isCrud(String tplCategory) {
-		return tplCategory != null && StringUtils.equals(GenConstants.TPL_CRUD, tplCategory);
+	public static boolean isCrud(Long tplGroupId) {
+		return GenConstants.TPL_CRUD.equals(tplGroupId);
 	}
 
 	public boolean isSuperColumn(String javaField) {
-		return isSuperColumn(this.tplCategory, javaField);
+		return isSuperColumn(this.tplGroupId, javaField);
 	}
 
-	public static boolean isSuperColumn(String tplCategory, String javaField) {
-		if (isTree(tplCategory)) {
+	public static boolean isSuperColumn(Long tplGroupId, String javaField) {
+		if (isTree(tplGroupId)) {
 			return StringUtils.equalsAnyIgnoreCase(javaField,
 					ArrayUtils.addAll(GenConstants.TREE_ENTITY, GenConstants.BASE_ENTITY));
 		}
