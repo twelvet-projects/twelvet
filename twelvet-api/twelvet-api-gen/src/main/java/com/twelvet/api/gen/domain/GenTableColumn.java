@@ -3,9 +3,7 @@ package com.twelvet.api.gen.domain;
 import com.twelvet.framework.core.application.domain.BaseEntity;
 import com.twelvet.framework.utils.StringUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotBlank;
-
-import java.io.Serial;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author twelvet
@@ -15,7 +13,6 @@ import java.io.Serial;
 @Schema(description = "代码生成业务字段表")
 public class GenTableColumn extends BaseEntity {
 
-	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

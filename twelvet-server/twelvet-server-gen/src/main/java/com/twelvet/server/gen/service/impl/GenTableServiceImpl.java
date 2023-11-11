@@ -1,5 +1,6 @@
 package com.twelvet.server.gen.service.impl;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.twelvet.api.gen.constant.GenConstants;
@@ -275,25 +276,21 @@ public class GenTableServiceImpl implements IGenTableService {
 	 */
 	@Override
 	public void generatorCode(Long tableId) {
-		/*
-		 * GenTableMapper genTableMapper = GenUtils.getMapper(); // 查询表信息 GenTable table =
-		 * genTableMapper.selectGenTableByName(tableName); // 设置主子表信息 setSubTable(table);
-		 * // 设置主键列信息 setPkColumn(table);
-		 *
-		 * VelocityInitializer.initVelocity();
-		 *
-		 * VelocityContext context = VelocityUtils.prepareContext(table);
-		 *
-		 * // 获取模板列表 List<String> templates =
-		 * VelocityUtils.getTemplateList(table.getTplCategory()); for (String template :
-		 * templates) { if (!StringUtils.containsAny(template, "sql.vm", "service.ts.vm",
-		 * "index.tsx.vm", "index-tree.tsx.vm")) { // 渲染模板 StringWriter sw = new
-		 * StringWriter(); Template tpl = Velocity.getTemplate(template, Constants.UTF8);
-		 * tpl.merge(context, sw); try { String path = getGenPath(table, template);
-		 * FileUtils.writeStringToFile(new File(path), sw.toString(), CharsetKit.UTF_8); }
-		 * catch (IOException e) { throw new TWTException("渲染模板失败，表名：" +
-		 * table.getTableName()); } } }
-		 */
+		// 数据模型
+		Map<String, Object> dataModel = getDataModel(tableId);
+
+		Long tplGroupId = (Long) dataModel.get("tplGroupId");
+
+		// 获取模板列表
+		List<GenTemplate> templateList = genTemplateMapper.selectGenTemplateListByGroupId(tplGroupId);
+
+		templateList.forEach(template -> {
+			String templateCode = template.getTemplateCode();
+			String generatorPath = template.getGeneratorPath();
+			String content = VelocityUtils.renderStr(templateCode, dataModel);
+			String path = VelocityUtils.renderStr(generatorPath, dataModel);
+			FileUtil.writeUtf8String(content, path);
+		});
 	}
 
 	/**
@@ -306,7 +303,9 @@ public class GenTableServiceImpl implements IGenTableService {
 		GenTable genTable = genTableMapper.selectGenTableById(tableId);
 		List<GenTableColumn> tableColumns = genTable.getColumns();
 
-		List<String> tableColumnNames = tableColumns.stream().map(GenTableColumn::getColumnName).toList();
+		List<String> tableColumnNames = tableColumns.stream()
+			.map(GenTableColumn::getColumnName)
+			.collect(Collectors.toList());
 
 		// 手动切换数据源
 		DynamicDataSourceContextHolder.push(genTable.getDsName());
@@ -314,7 +313,9 @@ public class GenTableServiceImpl implements IGenTableService {
 		if (StringUtils.isEmpty(dbTableColumns)) {
 			throw new TWTException("同步数据失败，原表结构不存在");
 		}
-		List<String> dbTableColumnNames = dbTableColumns.stream().map(GenTableColumn::getColumnName).toList();
+		List<String> dbTableColumnNames = dbTableColumns.stream()
+			.map(GenTableColumn::getColumnName)
+			.collect(Collectors.toList());
 
 		// 手动切换数据源
 		if (!DataSourceConstants.DS_MASTER.equals(genTable.getDsName())) {
@@ -404,22 +405,27 @@ public class GenTableServiceImpl implements IGenTableService {
 	 */
 	@Override
 	public void validateEdit(GenTable genTable) {
-		/*
-		 * if (GenConstants.TPL_TREE.equals(genTable.getTplGroupId())) { String options =
-		 * JacksonUtils.toJson(genTable.getParams()); Map<String, String> paramsObj =
-		 * JacksonUtils.readValue(options, Map.class); if
-		 * (StringUtils.isEmpty(paramsObj.get(GenConstants.TREE_CODE))) { throw new
-		 * TWTException("树编码字段不能为空"); } else if
-		 * (StringUtils.isEmpty(paramsObj.get(GenConstants.TREE_PARENT_CODE))) { throw new
-		 * TWTException("树父编码字段不能为空"); } else if
-		 * (StringUtils.isEmpty(paramsObj.get(GenConstants.TREE_NAME))) { throw new
-		 * TWTException("树名称字段不能为空"); } else if
-		 * (GenConstants.TPL_SUB.equals(genTable.getTplGroupId())) { if
-		 * (StringUtils.isEmpty(genTable.getSubTableName())) { throw new
-		 * TWTException("关联子表的表名不能为空"); } else if
-		 * (StringUtils.isEmpty(genTable.getSubTableFkName())) { throw new
-		 * TWTException("子表关联的外键名不能为空"); } } }
-		 */
+		if (GenConstants.TPL_TREE.equals(genTable.getTplGroupId())) {
+			String options = JacksonUtils.toJson(genTable.getParams());
+			Map<String, String> paramsObj = JacksonUtils.readValue(options, Map.class);
+			if (StringUtils.isEmpty(paramsObj.get(GenConstants.TREE_CODE))) {
+				throw new TWTException("树编码字段不能为空");
+			}
+			else if (StringUtils.isEmpty(paramsObj.get(GenConstants.TREE_PARENT_CODE))) {
+				throw new TWTException("树父编码字段不能为空");
+			}
+			else if (StringUtils.isEmpty(paramsObj.get(GenConstants.TREE_NAME))) {
+				throw new TWTException("树名称字段不能为空");
+			}
+			else if (GenConstants.TPL_SUB.equals(genTable.getTplGroupId())) {
+				if (StringUtils.isEmpty(genTable.getSubTableName())) {
+					throw new TWTException("关联子表的表名不能为空");
+				}
+				else if (StringUtils.isEmpty(genTable.getSubTableFkName())) {
+					throw new TWTException("子表关联的外键名不能为空");
+				}
+			}
+		}
 	}
 
 	/**
@@ -436,13 +442,17 @@ public class GenTableServiceImpl implements IGenTableService {
 		if (StringUtils.isNull(table.getPkColumn())) {
 			table.setPkColumn(table.getColumns().get(0));
 		}
-		/*
-		 * if (GenConstants.TPL_SUB.equals(table.getTplCategory())) { for (GenTableColumn
-		 * column : table.getSubTable().getColumns()) { if (column.isPk()) {
-		 * table.getSubTable().setPkColumn(column); break; } } if
-		 * (StringUtils.isNull(table.getSubTable().getPkColumn())) {
-		 * table.getSubTable().setPkColumn(table.getSubTable().getColumns().get(0)); } }
-		 */
+		if (GenConstants.TPL_SUB.equals(table.getTplGroupId())) {
+			for (GenTableColumn column : table.getSubTable().getColumns()) {
+				if (column.isPk()) {
+					table.getSubTable().setPkColumn(column);
+					break;
+				}
+			}
+			if (StringUtils.isNull(table.getSubTable().getPkColumn())) {
+				table.getSubTable().setPkColumn(table.getSubTable().getColumns().get(0));
+			}
+		}
 	}
 
 	/**

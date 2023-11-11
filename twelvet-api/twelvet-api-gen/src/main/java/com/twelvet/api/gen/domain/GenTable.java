@@ -4,11 +4,10 @@ import com.twelvet.api.gen.constant.GenConstants;
 import com.twelvet.framework.core.application.domain.BaseEntity;
 import com.twelvet.framework.utils.StringUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.io.Serial;
 import java.util.List;
 
 /**
@@ -19,7 +18,6 @@ import java.util.List;
 @Schema(description = "业务表")
 public class GenTable extends BaseEntity {
 
-	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

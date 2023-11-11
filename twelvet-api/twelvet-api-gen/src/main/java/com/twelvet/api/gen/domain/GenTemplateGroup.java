@@ -5,8 +5,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.io.Serial;
-
 /**
  * 模板分组关联对象 gen_template_group
  *
@@ -16,7 +14,6 @@ import java.io.Serial;
 @Schema(description = "模板分组关联对象")
 public class GenTemplateGroup extends BaseEntity {
 
-	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/** 分组id */

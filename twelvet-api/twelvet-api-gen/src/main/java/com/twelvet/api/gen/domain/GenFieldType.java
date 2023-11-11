@@ -6,8 +6,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.io.Serial;
-
 /**
  * 字段类型管理对象 gen_field_type
  *
@@ -17,7 +15,6 @@ import java.io.Serial;
 @Schema(description = "字段类型管理对象")
 public class GenFieldType extends BaseEntity {
 
-	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/** id */

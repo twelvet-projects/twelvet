@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.io.Serial;
 import java.util.List;
 
 /**
@@ -18,7 +17,6 @@ import java.util.List;
 @Schema(description = "模板分组对象VO")
 public class GenGroupDTO extends BaseEntity {
 
-	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

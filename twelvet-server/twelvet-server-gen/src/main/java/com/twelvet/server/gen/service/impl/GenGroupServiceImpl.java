@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 模板分组Service业务层处理
@@ -40,7 +41,9 @@ public class GenGroupServiceImpl implements IGenGroupService {
 		GenGroupDTO genGroupDTO = new GenGroupDTO();
 		GenGroup genGroup = genGroupMapper.selectGenGroupById(id);
 		List<GenTemplateGroup> genTemplateGroupList = genTemplateGroupMapper.selectGenTemplateGroupListByGroupId(id);
-		List<Long> templateIdList = genTemplateGroupList.stream().map(GenTemplateGroup::getTemplateId).toList();
+		List<Long> templateIdList = genTemplateGroupList.stream()
+			.map(GenTemplateGroup::getTemplateId)
+			.collect(Collectors.toList());
 		BeanUtils.copyProperties(genGroup, genGroupDTO);
 		genGroupDTO.setTemplateIdList(templateIdList);
 		return genGroupDTO;
