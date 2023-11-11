@@ -1,6 +1,6 @@
 package com.twelvet.server.job.controller;
 
-import cn.twelvet.excel.annotation.ResponseExcel;
+import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
 import com.twelvet.api.job.domain.SysJob;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.JsonResult;

@@ -1,7 +1,7 @@
 package com.twelvet.server.system.controller;
 
-import cn.twelvet.excel.annotation.RequestExcel;
-import cn.twelvet.excel.annotation.ResponseExcel;
+import com.pig4cloud.plugin.excel.annotation.RequestExcel;
+import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
 import com.twelvet.api.system.domain.SysRole;
 import com.twelvet.api.system.domain.SysUser;
 import com.twelvet.framework.core.application.controller.TWTController;
@@ -92,7 +92,7 @@ public class SysUserController extends TWTController {
 	@Log(service = "用户管理", businessType = BusinessType.IMPORT)
 	@PreAuthorize("@role.hasPermi('system:user:import')")
 	public JsonResult<String> importData(@RequestExcel List<SysUser> userList, boolean cover,
-			BindingResult bindingResult) throws Exception {
+										 BindingResult bindingResult) throws Exception {
 		String operName = SecurityUtils.getUsername();
 		iSysUserService.importUser(userList, cover, operName);
 		return JsonResult.success();

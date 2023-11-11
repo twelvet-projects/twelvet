@@ -40,7 +40,7 @@
 
         <!--通用OSS-->
         <dependency>
-            <groupId>cn.twelvet</groupId>
+            <groupId>com.pig4cloud.plugin</groupId>
             <artifactId>oss-spring-boot-starter</artifactId>
         </dependency>
 
