@@ -77,7 +77,7 @@
 
         <!--Excel-->
         <dependency>
-            <groupId>cn.twelvet</groupId>
+            <groupId>com.pig4cloud.excel</groupId>
             <artifactId>excel-spring-boot-starter</artifactId>
         </dependency>
 

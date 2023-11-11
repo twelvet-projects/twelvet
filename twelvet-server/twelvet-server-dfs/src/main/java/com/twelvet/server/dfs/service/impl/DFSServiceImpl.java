@@ -1,7 +1,7 @@
 package com.twelvet.server.dfs.service.impl;
 
-import cn.twelvet.oss.config.properties.OssProperties;
-import cn.twelvet.oss.service.OssTemplate;
+import com.pig4cloud.plugin.oss.OssProperties;
+import com.pig4cloud.plugin.oss.service.OssTemplate;
 import com.twelvet.api.dfs.domain.SysDfs;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.utils.file.FileUtils;

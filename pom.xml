@@ -63,10 +63,10 @@
         <redisson.version>3.23.5</redisson.version>
         <jasypt.version>3.0.5</jasypt.version>
 
-        <excel-spring-boot-starter.version>3.0.0</excel-spring-boot-starter.version>
-        <xss-spring-boot-starter.version>3.0.0</xss-spring-boot-starter.version>
-        <oss-spring-boot-starter.version>3.0.1</oss-spring-boot-starter.version>
-        <idempotent-spring-boot-starter.version>3.0.0</idempotent-spring-boot-starter.version>
+        <xss-spring-boot-starter.version>3.1.5.1</xss-spring-boot-starter.version>
+        <excel-spring-boot-starter.version>3.1.0</excel-spring-boot-starter.version>
+        <oss-spring-boot-starter.version>3.0.0</oss-spring-boot-starter.version>
+        <idempotent-spring-boot-starter.version>0.3.0</idempotent-spring-boot-starter.version>
 
         <docker.plugin.version>0.32.0</docker.plugin.version>
         <spring.checkstyle.plugin>0.0.39</spring.checkstyle.plugin>
@@ -191,28 +191,28 @@
 
             <!--Excel-->
             <dependency>
-                <groupId>cn.twelvet</groupId>
+                <groupId>com.pig4cloud.excel</groupId>
                 <artifactId>excel-spring-boot-starter</artifactId>
                 <version>${excel-spring-boot-starter.version}</version>
             </dependency>
 
             <!--XSS-->
             <dependency>
-                <groupId>cn.twelvet</groupId>
-                <artifactId>xss-spring-boot-starter</artifactId>
+                <groupId>net.dreamlu</groupId>
+                <artifactId>mica-xss</artifactId>
                 <version>${xss-spring-boot-starter.version}</version>
             </dependency>
 
             <!--幂等-->
             <dependency>
-                <groupId>cn.twelvet</groupId>
+                <groupId>com.pig4cloud.plugin</groupId>
                 <artifactId>idempotent-spring-boot-starter</artifactId>
                 <version>${idempotent-spring-boot-starter.version}</version>
             </dependency>
 
             <!--通用OSS-->
             <dependency>
-                <groupId>cn.twelvet</groupId>
+                <groupId>com.pig4cloud.plugin</groupId>
                 <artifactId>oss-spring-boot-starter</artifactId>
                 <version>${oss-spring-boot-starter.version}</version>
             </dependency>

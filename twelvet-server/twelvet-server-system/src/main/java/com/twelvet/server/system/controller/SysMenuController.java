@@ -1,6 +1,6 @@
 package com.twelvet.server.system.controller;
 
-import cn.twelvet.idempotent.annotation.Idempotent;
+import com.pig4cloud.plugin.idempotent.annotation.Idempotent;
 import com.twelvet.api.system.domain.SysMenu;
 import com.twelvet.api.system.domain.vo.RouterVo;
 import com.twelvet.api.system.domain.vo.TreeSelect;
