@@ -1,87 +1,15 @@
-DROP DATABASE IF EXISTS `twelvet`;
+DROP
+    DATABASE IF EXISTS `twelvet`;
 
-CREATE DATABASE `twelvet` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE
+    DATABASE `twelvet` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
+SET
+    FOREIGN_KEY_CHECKS = 0;
 
-USE `twelvet`;
-
--- ----------------------------
--- Table structure for gen_table
--- ----------------------------
-DROP TABLE IF EXISTS `gen_table`;
-CREATE TABLE `gen_table`
-(
-    `table_id`          bigint(20)                                               NOT NULL AUTO_INCREMENT COMMENT '编号',
-    `table_name`        varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT '' COMMENT '表名称',
-    `table_comment`     varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT '' COMMENT '表描述',
-    `sub_table_name`    varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci   NULL DEFAULT NULL COMMENT '关联子表的表名',
-    `sub_table_fk_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci   NULL DEFAULT NULL COMMENT '子表关联的外键名',
-    `class_name`        varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT '' COMMENT '实体类名称',
-    `tpl_category`      varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT 'crud' COMMENT '使用的模板（crud单表操作 tree树表操作）',
-    `package_name`      varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT NULL COMMENT '生成包路径',
-    `module_name`       varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci   NULL DEFAULT NULL COMMENT '生成模块名',
-    `business_name`     varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci   NULL DEFAULT NULL COMMENT '生成业务名',
-    `function_name`     varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci   NULL DEFAULT NULL COMMENT '生成功能名',
-    `function_author`   varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci   NULL DEFAULT NULL COMMENT '生成功能作者',
-    `gen_type`          char(1) CHARACTER SET utf8 COLLATE utf8_general_ci       NULL DEFAULT '0' COMMENT '生成代码方式（0zip压缩包 1自定义路径）',
-    `gen_path`          varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT '/' COMMENT '生成路径（不填默认项目路径）',
-    `options`           varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '其它生成选项',
-    `create_by`         varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci   NULL DEFAULT '' COMMENT '创建者',
-    `create_time`       datetime                                                 NULL DEFAULT NULL COMMENT '创建时间',
-    `update_by`         varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci   NULL DEFAULT '' COMMENT '更新者',
-    `update_time`       datetime                                                 NULL DEFAULT NULL COMMENT '更新时间',
-    `remark`            varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT NULL COMMENT '备注',
-    PRIMARY KEY (`table_id`) USING BTREE
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 1
-  CHARACTER SET = utf8
-  COLLATE = utf8_general_ci COMMENT = '代码生成业务表'
-  ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of gen_table
--- ----------------------------
-
--- ----------------------------
--- Table structure for gen_table_column
--- ----------------------------
-DROP TABLE IF EXISTS `gen_table_column`;
-CREATE TABLE `gen_table_column`
-(
-    `column_id`      bigint(20)                                              NOT NULL AUTO_INCREMENT COMMENT '编号',
-    `table_id`       varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT NULL COMMENT '归属表编号',
-    `column_name`    varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '列名称',
-    `column_comment` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '列描述',
-    `column_type`    varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '列类型',
-    `java_type`      varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'JAVA类型',
-    `java_field`     varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'JAVA字段名',
-    `is_pk`          char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NULL DEFAULT NULL COMMENT '是否主键（1是）',
-    `is_increment`   char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NULL DEFAULT NULL COMMENT '是否自增（1是）',
-    `is_required`    char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NULL DEFAULT NULL COMMENT '是否必填（1是）',
-    `is_insert`      char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NULL DEFAULT NULL COMMENT '是否为插入字段（1是）',
-    `is_edit`        char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NULL DEFAULT NULL COMMENT '是否编辑字段（1是）',
-    `is_list`        char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NULL DEFAULT NULL COMMENT '是否列表字段（1是）',
-    `is_query`       char(1) CHARACTER SET utf8 COLLATE utf8_general_ci      NULL DEFAULT NULL COMMENT '是否查询字段（1是）',
-    `query_type`     varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'EQ' COMMENT '查询方式（等于、不等于、大于、小于、范围）',
-    `html_type`      varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '显示类型（文本框、文本域、下拉框、复选框、单选框、日期控件）',
-    `dict_type`      varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '字典类型',
-    `sort`           int(11)                                                 NULL DEFAULT NULL COMMENT '排序',
-    `create_by`      varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT '' COMMENT '创建者',
-    `create_time`    datetime                                                NULL DEFAULT NULL COMMENT '创建时间',
-    `update_by`      varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT '' COMMENT '更新者',
-    `update_time`    datetime                                                NULL DEFAULT NULL COMMENT '更新时间',
-    PRIMARY KEY (`column_id`) USING BTREE
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 1
-  CHARACTER SET = utf8
-  COLLATE = utf8_general_ci COMMENT = '代码生成业务表字段'
-  ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of gen_table_column
--- ----------------------------
+USE
+    `twelvet`;
 
 -- ----------------------------
 -- Table structure for sys_dept
@@ -286,6 +214,23 @@ VALUES (32, 3, '手机号码模式', 'phone_password', 'sys_oauth_client_details
 INSERT INTO `sys_dict_data`
 VALUES (33, 4, '授权码模式', 'authorization_code', 'sys_oauth_client_details', NULL, NULL, 'N', 0, 'admin',
         '2021-01-12 22:28:56', '', NULL, NULL);
+INSERT INTO `sys_dict_data`
+VALUES (110, 1, 'mysql', 'mysql', 'ds_type', NULL, NULL, 'N', 0, 'admin', '2023-11-04 18:50:48', '', NULL, 'mysql');
+INSERT INTO `sys_dict_data`
+VALUES (111, 2, 'oracle', 'oracle', 'ds_type', NULL, NULL, 'N', 0, 'admin', '2023-11-04 18:50:59', '', NULL, 'oracle');
+INSERT INTO `sys_dict_data`
+VALUES (112, 3, 'db2', 'db2', 'ds_type', NULL, NULL, 'N', 0, 'admin', '2023-11-04 18:51:09', '', NULL, 'db2');
+INSERT INTO `sys_dict_data`
+VALUES (113, 4, 'mssql', 'mssql', 'ds_type', NULL, NULL, 'N', 0, 'admin', '2023-11-04 18:51:19', '', NULL, 'mssql');
+INSERT INTO `sys_dict_data`
+VALUES (114, 5, 'pg', 'pg', 'ds_type', NULL, NULL, 'N', 0, 'admin', '2023-11-04 18:51:28', '', NULL, 'pg');
+INSERT INTO `sys_dict_data`
+VALUES (115, 6, '达梦', '达梦', 'ds_type', NULL, NULL, 'N', 0, 'admin', '2023-11-04 18:51:38', '', NULL, '达梦');
+INSERT INTO `sys_dict_data`
+VALUES (116, 1, '主机', '0', 'ds_config_type', NULL, NULL, 'N', 0, 'admin', '2023-11-04 19:04:15', '', NULL, '主机');
+INSERT INTO `sys_dict_data`
+VALUES (117, 1, 'JDBC', '1', 'ds_config_type', NULL, NULL, 'N', 0, 'admin', '2023-11-04 19:04:27', '', NULL, 'JDBC');
+
 
 -- ----------------------------
 -- Table structure for sys_dict_type
@@ -336,6 +281,12 @@ VALUES (10, '系统状态', 'sys_common_status', 0, 'admin', '2023-03-05 23:40:5
 INSERT INTO `sys_dict_type`
 VALUES (11, 'OAuth2终端', 'sys_oauth_client_details', 0, 'admin', '2023-03-05 11:33:00', '', '2023-03-05 22:07:34',
         'OAuth2终端授权模式');
+INSERT INTO `sys_dict_type`
+VALUES (104, '代码生成器支持的数据库类型', 'ds_type', 0, 'admin', '2023-11-04 18:50:11', 'admin', '2023-11-04 18:50:22',
+        '代码生成器支持的数据库类型');
+INSERT INTO `sys_dict_type`
+VALUES (105, '数据库链接类型', 'ds_config_type', 0, 'admin', '2023-11-04 19:03:57', '', NULL, '数据库链接类型');
+
 
 -- ----------------------------
 -- Table structure for sys_job_log
@@ -420,252 +371,321 @@ CREATE TABLE `sys_menu`
 -- Records of sys_menu
 -- ----------------------------
 INSERT INTO `sys_menu`
-VALUES (1, '系统管理', 0, 1, '/system', NULL, '1', 'M', 0, 0, '', 'icon-system', 'admin', '2019-03-16 11:33:00',
+VALUES (1, '系统管理', 0, 1, '/system', NULL, '1', 'M', '0', '0', '', 'icon-system', 'admin', '2019-03-16 11:33:00',
         'admin', '2023-03-06 00:20:21', '系统管理目录');
 INSERT INTO `sys_menu`
-VALUES (2, '人力管理', 0, 3, '/human', NULL, '1', 'M', 0, 0, '', 'icon-human-resources', 'admin', '2019-03-16 11:33:00',
-        'admin', '2021-09-18 17:38:47', '系统监控目录');
+VALUES (2, '人力管理', 0, 3, '/human', NULL, '1', 'M', '0', '0', '', 'icon-human-resources', 'admin',
+        '2019-03-16 11:33:00', 'admin', '2021-09-18 17:38:47', '系统监控目录');
 INSERT INTO `sys_menu`
-VALUES (3, '工具箱', 0, 5, '/tool', NULL, '1', 'M', 0, 0, '', 'icon-tool-box', 'admin', '2019-03-16 11:33:00', 'admin',
-        '2021-08-06 22:03:42', '系统工具目录');
+VALUES (3, '工具箱', 0, 5, '/tool', NULL, '1', 'M', '0', '0', '', 'icon-tool-box', 'admin', '2019-03-16 11:33:00',
+        'admin', '2021-08-06 22:03:42', '系统工具目录');
 INSERT INTO `sys_menu`
-VALUES (4, '日志管理', 0, 4, '/log', '', '1', 'M', 0, 0, '', 'icon-log', 'admin', '2019-03-16 11:33:00', 'admin',
+VALUES (4, '日志管理', 0, 4, '/log', '', '1', 'M', '0', '0', '', 'icon-log', 'admin', '2019-03-16 11:33:00', 'admin',
         '2021-08-06 22:54:45', '日志管理菜单');
 INSERT INTO `sys_menu`
-VALUES (5, 'TwelveT', 0, 6, 'https://twelvet.cn', NULL, '0', 'M', 0, 0, '', 'icon-system', 'admin',
+VALUES (5, 'TwelveT', 0, 6, 'https://twelvet.cn', NULL, '0', 'M', '0', '0', '', 'icon-system', 'admin',
         '2019-03-16 11:33:00', 'admin', '2023-03-06 00:21:15', '若依官网地址');
 INSERT INTO `sys_menu`
-VALUES (100, '职员管理', 2, 1, '/human/staff', '/human/staff/index', '1', 'C', 0, 0, 'system:user:list', 'icon-team',
-        'admin', '2019-03-16 11:33:00', 'admin', '2021-08-01 10:42:25', '用户管理菜单');
+VALUES (100, '职员管理', 2, 1, '/human/staff', '/human/staff/index', '1', 'C', '0', '0', 'system:user:list',
+        'icon-team', 'admin', '2019-03-16 11:33:00', 'admin', '2021-08-01 10:42:25', '用户管理菜单');
 INSERT INTO `sys_menu`
-VALUES (101, '角色管理', 2, 2, '/human/role', '/human/role/index', '1', 'C', 0, 0, 'system:role:list', 'icon-role',
+VALUES (101, '角色管理', 2, 2, '/human/role', '/human/role/index', '1', 'C', '0', '0', 'system:role:list', 'icon-role',
         'admin', '2019-03-16 11:33:00', 'admin', '2020-11-14 11:39:15', '角色管理菜单');
 INSERT INTO `sys_menu`
-VALUES (102, '菜单管理', 1, 2, '/system/menu', '/system/menu/index', '1', 'C', 0, 0, 'system:menu:list', 'icon-menu',
-        'admin', '2019-03-16 11:33:00', 'admin', '2021-06-14 16:57:47', '菜单管理菜单');
+VALUES (102, '菜单管理', 1, 2, '/system/menu', '/system/menu/index', '1', 'C', '0', '0', 'system:menu:list',
+        'icon-menu', 'admin', '2019-03-16 11:33:00', 'admin', '2021-06-14 16:57:47', '菜单管理菜单');
 INSERT INTO `sys_menu`
-VALUES (103, '部门管理', 2, 4, '/human/dept', '/human/dept/index', '1', 'C', 0, 0, 'system:dept:list', 'icon-dept',
+VALUES (103, '部门管理', 2, 4, '/human/dept', '/human/dept/index', '1', 'C', '0', '0', 'system:dept:list', 'icon-dept',
         'admin', '2019-03-16 11:33:00', 'admin', '2020-11-14 11:39:40', '部门管理菜单');
 INSERT INTO `sys_menu`
-VALUES (104, '岗位管理', 2, 5, '/human/post', '/human/post/index', '1', 'C', 0, 0, 'system:post:list', 'icon-post',
+VALUES (104, '岗位管理', 2, 5, '/human/post', '/human/post/index', '1', 'C', '0', '0', 'system:post:list', 'icon-post',
         'admin', '2019-03-16 11:33:00', 'admin', '2020-11-14 11:40:02', '岗位管理菜单');
 INSERT INTO `sys_menu`
-VALUES (105, '字典管理', 1, 3, '/system/dictionaries', '/system/dictionaries/index', '1', 'C', 0, 0,
+VALUES (105, '字典管理', 1, 3, '/system/dictionaries', '/system/dictionaries/index', '1', 'C', '0', '0',
         'system:dictionaries:list', 'icon-dictionaries', 'admin', '2019-03-16 11:33:00', 'admin', '2023-03-05 22:41:49',
         '字典管理菜单');
 INSERT INTO `sys_menu`
-VALUES (107, 'OAuth2终端', 1, 4, '/system/client', '/system/client/index', '1', 'C', 0, 0, 'system:client:list',
+VALUES (107, 'OAuth2终端', 1, 4, '/system/client', '/system/client/index', '1', 'C', '0', '0', 'system:client:list',
         'icon-client', 'admin', '2019-03-16 11:33:00', 'admin', '2023-03-05 22:42:06', '终端设置菜单');
 INSERT INTO `sys_menu`
-VALUES (110, '定时任务', 1083, 5, '/monitor/job', '/monitor/job/index', '1', 'C', 0, 0, 'monitor:job:list', 'icon-job',
-        'admin', '2019-03-16 11:33:00', 'admin', '2023-03-05 22:41:31', '定时任务菜单');
+VALUES (110, '定时任务', 1083, 5, '/monitor/job', '/monitor/job/index', '1', 'C', '0', '0', 'monitor:job:list',
+        'icon-job', 'admin', '2019-03-16 11:33:00', 'admin', '2023-03-05 22:41:31', '定时任务菜单');
 INSERT INTO `sys_menu`
-VALUES (113, '流程编辑器', 1066, 1, '/tool/graphicalEditor/flow', '/tool/graphicalEditor/flow/index', '1', 'C', 0, 0,
-        'tool:build:list', 'icon-flow-edit', 'admin', '2019-03-16 11:33:00', 'admin', '2020-11-14 16:26:30',
+VALUES (113, '流程编辑器', 1066, 1, '/tool/graphicalEditor/flow', '/tool/graphicalEditor/flow/index', '1', 'C', '0',
+        '0', 'tool:build:list', 'icon-flow-edit', 'admin', '2019-03-16 11:33:00', 'admin', '2020-11-14 16:26:30',
         '表单构建菜单');
 INSERT INTO `sys_menu`
-VALUES (114, '拓扑编辑器', 1066, 2, '/tool/graphicalEditor/koni', '/tool/graphicalEditor/koni/index', '1', 'C', 0, 0,
-        'tool:gen:list', 'icon-koni-edit', 'admin', '2019-03-16 11:33:00', 'admin', '2020-11-14 16:27:43',
+VALUES (114, '拓扑编辑器', 1066, 2, '/tool/graphicalEditor/koni', '/tool/graphicalEditor/koni/index', '1', 'C', '0',
+        '0', 'tool:gen:list', 'icon-koni-edit', 'admin', '2019-03-16 11:33:00', 'admin', '2020-11-14 16:27:43',
         '代码生成菜单');
 INSERT INTO `sys_menu`
-VALUES (115, '脑图编辑器', 1066, 3, '/tool/graphicalEditor/mind', '/tool/graphicalEditor/mind/index', '1', 'C', 0, 0,
-        'tool:swagger:list', 'icon-mind-edit', 'admin', '2019-03-16 11:33:00', 'admin', '2020-11-14 16:26:57',
+VALUES (115, '脑图编辑器', 1066, 3, '/tool/graphicalEditor/mind', '/tool/graphicalEditor/mind/index', '1', 'C', '0',
+        '0', 'tool:swagger:list', 'icon-mind-edit', 'admin', '2019-03-16 11:33:00', 'admin', '2020-11-14 16:26:57',
         '系统接口菜单');
 INSERT INTO `sys_menu`
-VALUES (500, '操作日志', 4, 1, '/log/operation', '/log/operation/index', '1', 'C', 0, 0, 'system:operlog:list',
+VALUES (500, '操作日志', 4, 1, '/log/operation', '/log/operation/index', '1', 'C', '0', '0', 'system:operlog:list',
         'icon-log-operation', 'admin', '2019-03-16 11:33:00', 'admin', '2022-03-22 09:42:54', '操作日志菜单');
 INSERT INTO `sys_menu`
-VALUES (501, '登录日志', 4, 2, '/log/login', '/log/login/index', '1', 'C', 0, 0, 'system:logininfor:list',
+VALUES (501, '登录日志', 4, 2, '/log/login', '/log/login/index', '1', 'C', '0', '0', 'system:logininfor:list',
         'icon-log-login', 'admin', '2019-03-16 11:33:00', 'admin', '2022-03-22 09:43:19', '登录日志菜单');
 INSERT INTO `sys_menu`
-VALUES (1001, '用户查询', 100, 1, '', '', '1', 'F', 1, 0, 'system:user:query', NULL, 'admin', '2019-03-16 11:33:00',
+VALUES (1001, '用户查询', 100, 1, '', '', '1', 'F', '1', '0', 'system:user:query', NULL, 'admin', '2019-03-16 11:33:00',
         'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1002, '用户新增', 100, 2, '', '', '1', 'F', 1, 0, 'system:user:insert', NULL, 'admin', '2019-03-16 11:33:00',
+VALUES (1002, '用户新增', 100, 2, '', '', '1', 'F', '1', '0', 'system:user:insert', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu`
+VALUES (1003, '用户修改', 100, 3, '', '', '1', 'F', '1', '0', 'system:user:update', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu`
+VALUES (1004, '用户删除', 100, 4, '', '', '1', 'F', '1', '0', 'system:user:remove', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu`
+VALUES (1005, '用户导出', 100, 5, '', '', '1', 'F', '1', '0', 'system:user:export', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu`
+VALUES (1006, '用户导入', 100, 6, '', '', '1', 'F', '1', '0', 'system:user:import', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu`
+VALUES (1007, '重置密码', 100, 7, '', '', '1', 'F', '1', '0', 'system:user:resetPwd', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu`
+VALUES (1008, '角色查询', 101, 1, '', '', '1', 'F', '0', '0', 'system:role:query', NULL, 'admin', '2019-03-16 11:33:00',
         'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1003, '用户修改', 100, 3, '', '', '1', 'F', 1, 0, 'system:user:update', NULL, 'admin', '2019-03-16 11:33:00',
+VALUES (1009, '角色新增', 101, 2, '', '', '1', 'F', '0', '0', 'system:role:insert', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu`
+VALUES (1010, '角色修改', 101, 3, '', '', '1', 'F', '0', '0', 'system:role:update', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu`
+VALUES (1011, '角色删除', 101, 4, '', '', '1', 'F', '0', '0', 'system:role:remove', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu`
+VALUES (1012, '角色导出', 101, 5, '', '', '1', 'F', '0', '0', 'system:role:export', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu`
+VALUES (1013, '菜单查询', 102, 1, '', '', '1', 'F', '0', '0', 'system:menu:query', NULL, 'admin', '2019-03-16 11:33:00',
         'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1004, '用户删除', 100, 4, '', '', '1', 'F', 1, 0, 'system:user:remove', NULL, 'admin', '2019-03-16 11:33:00',
+VALUES (1014, '菜单新增', 102, 2, '', '', '1', 'F', '0', '0', 'system:menu:insert', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu`
+VALUES (1015, '菜单修改', 102, 3, '', '', '1', 'F', '0', '0', 'system:menu:update', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu`
+VALUES (1016, '菜单删除', 102, 4, '', '', '1', 'F', '0', '0', 'system:menu:remove', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu`
+VALUES (1017, '部门查询', 103, 1, '', '', '1', 'F', '0', '0', 'system:dept:query', NULL, 'admin', '2019-03-16 11:33:00',
         'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1005, '用户导出', 100, 5, '', '', '1', 'F', 1, 0, 'system:user:export', NULL, 'admin', '2019-03-16 11:33:00',
+VALUES (1018, '部门新增', 103, 2, '', '', '1', 'F', '0', '0', 'system:dept:insert', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2020-12-01 10:09:29', '');
+INSERT INTO `sys_menu`
+VALUES (1019, '部门修改', 103, 3, '', '', '1', 'F', '0', '0', 'system:dept:update', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2020-12-01 10:09:38', '');
+INSERT INTO `sys_menu`
+VALUES (1020, '部门删除', 103, 4, '', '', '1', 'F', '0', '0', 'system:dept:remove', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
+INSERT INTO `sys_menu`
+VALUES (1021, '岗位查询', 104, 1, '', '', '1', 'F', '0', '0', 'system:post:query', NULL, 'admin', '2019-03-16 11:33:00',
         'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1006, '用户导入', 100, 6, '', '', '1', 'F', 1, 0, 'system:user:import', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
+VALUES (1022, '岗位新增', 104, 2, '', '', '1', 'F', '0', '0', 'system:post:insert', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1007, '重置密码', 100, 7, '', '', '1', 'F', 1, 0, 'system:user:resetPwd', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
+VALUES (1023, '岗位修改', 104, 3, '', '', '1', 'F', '0', '0', 'system:post:update', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1008, '角色查询', 101, 1, '', '', '1', 'F', 0, 0, 'system:role:query', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
+VALUES (1024, '岗位删除', 104, 4, '', '', '1', 'F', '0', '0', 'system:post:remove', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1009, '角色新增', 101, 2, '', '', '1', 'F', 0, 0, 'system:role:insert', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
+VALUES (1025, '岗位导出', 104, 5, '', '', '1', 'F', '0', '0', 'system:post:export', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1010, '角色修改', 101, 3, '', '', '1', 'F', 0, 0, 'system:role:update', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
+VALUES (1026, '字典查询', 105, 1, '#', '', '1', 'F', '1', '0', 'system:dict:query', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1011, '角色删除', 101, 4, '', '', '1', 'F', 0, 0, 'system:role:remove', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
+VALUES (1027, '字典新增', 105, 2, '#', '', '1', 'F', '1', '0', 'system:dict:insert', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1012, '角色导出', 101, 5, '', '', '1', 'F', 0, 0, 'system:role:export', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
+VALUES (1028, '字典修改', 105, 3, '#', '', '1', 'F', '1', '0', 'system:dict:update', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1013, '菜单查询', 102, 1, '', '', '1', 'F', 0, 0, 'system:menu:query', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
+VALUES (1029, '字典删除', 105, 4, '#', '', '1', 'F', '1', '0', 'system:dict:remove', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1014, '菜单新增', 102, 2, '', '', '1', 'F', 0, 0, 'system:menu:insert', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
+VALUES (1030, '字典导出', 105, 5, '#', '', '1', 'F', '1', '0', 'system:dict:export', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1015, '菜单修改', 102, 3, '', '', '1', 'F', 0, 0, 'system:menu:update', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
+VALUES (1036, '终端查询', 107, 1, '#', '', '1', 'F', '1', '0', 'system:client:query', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1016, '菜单删除', 102, 4, '', '', '1', 'F', 0, 0, 'system:menu:remove', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
+VALUES (1037, '终端新增', 107, 2, '#', '', '1', 'F', '1', '0', 'system:client:insert', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2020-12-01 10:05:20', '');
 INSERT INTO `sys_menu`
-VALUES (1017, '部门查询', 103, 1, '', '', '1', 'F', 0, 0, 'system:dept:query', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
+VALUES (1038, '终端修改', 107, 3, '#', '', '1', 'F', '1', '0', 'system:client:update', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2020-12-01 09:52:47', '');
 INSERT INTO `sys_menu`
-VALUES (1018, '部门新增', 103, 2, '', '', '1', 'F', 0, 0, 'system:dept:insert', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2020-12-01 10:09:29', '');
+VALUES (1039, '终端删除', 107, 4, '#', '', '1', 'F', '1', '0', 'system:client:remove', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1019, '部门修改', 103, 3, '', '', '1', 'F', 0, 0, 'system:dept:update', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2020-12-01 10:09:38', '');
+VALUES (1040, '操作查询', 500, 1, '#', '', '1', 'F', '0', '0', 'system:operlog:query', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2022-03-22 09:43:05', '');
 INSERT INTO `sys_menu`
-VALUES (1020, '部门删除', 103, 4, '', '', '1', 'F', 0, 0, 'system:dept:remove', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_menu`
-VALUES (1021, '岗位查询', 104, 1, '', '', '1', 'F', 0, 0, 'system:post:query', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_menu`
-VALUES (1022, '岗位新增', 104, 2, '', '', '1', 'F', 0, 0, 'system:post:insert', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_menu`
-VALUES (1023, '岗位修改', 104, 3, '', '', '1', 'F', 0, 0, 'system:post:update', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_menu`
-VALUES (1024, '岗位删除', 104, 4, '', '', '1', 'F', 0, 0, 'system:post:remove', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_menu`
-VALUES (1025, '岗位导出', 104, 5, '', '', '1', 'F', 0, 0, 'system:post:export', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_menu`
-VALUES (1026, '字典查询', 105, 1, '#', '', '1', 'F', 1, 0, 'system:dict:query', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_menu`
-VALUES (1027, '字典新增', 105, 2, '#', '', '1', 'F', 1, 0, 'system:dict:insert', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_menu`
-VALUES (1028, '字典修改', 105, 3, '#', '', '1', 'F', 1, 0, 'system:dict:update', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_menu`
-VALUES (1029, '字典删除', 105, 4, '#', '', '1', 'F', 1, 0, 'system:dict:remove', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_menu`
-VALUES (1030, '字典导出', 105, 5, '#', '', '1', 'F', 1, 0, 'system:dict:export', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_menu`
-VALUES (1036, '终端查询', 107, 1, '#', '', '1', 'F', 1, 0, 'system:client:query', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_menu`
-VALUES (1037, '终端新增', 107, 2, '#', '', '1', 'F', 1, 0, 'system:client:insert', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2020-12-01 10:05:20', '');
-INSERT INTO `sys_menu`
-VALUES (1038, '终端修改', 107, 3, '#', '', '1', 'F', 1, 0, 'system:client:update', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2020-12-01 09:52:47', '');
-INSERT INTO `sys_menu`
-VALUES (1039, '终端删除', 107, 4, '#', '', '1', 'F', 1, 0, 'system:client:remove', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_menu`
-VALUES (1040, '操作查询', 500, 1, '#', '', '1', 'F', 0, 0, 'system:operlog:query', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2022-03-22 09:43:05', '');
-INSERT INTO `sys_menu`
-VALUES (1041, '操作删除', 500, 2, '#', '', '1', 'F', 0, 0, 'system:operlog:remove', NULL, 'admin',
+VALUES (1041, '操作删除', 500, 2, '#', '', '1', 'F', '0', '0', 'system:operlog:remove', NULL, 'admin',
         '2019-03-16 11:33:00', 'admin', '2022-03-22 09:43:09', '');
 INSERT INTO `sys_menu`
-VALUES (1042, '日志导出', 500, 4, '#', '', '1', 'F', 0, 0, 'system:operlog:export', NULL, 'admin',
+VALUES (1042, '日志导出', 500, 4, '#', '', '1', 'F', '0', '0', 'system:operlog:export', NULL, 'admin',
         '2019-03-16 11:33:00', 'admin', '2022-03-22 09:43:13', '');
 INSERT INTO `sys_menu`
-VALUES (1043, '登录查询', 501, 1, '#', '', '1', 'F', 0, 0, 'system:logininfor:query', NULL, 'admin',
+VALUES (1043, '登录查询', 501, 1, '#', '', '1', 'F', '0', '0', 'system:logininfor:query', NULL, 'admin',
         '2019-03-16 11:33:00', 'admin', '2022-03-22 09:43:24', '');
 INSERT INTO `sys_menu`
-VALUES (1044, '登录删除', 501, 2, '#', '', '1', 'F', 0, 0, 'system:logininfor:remove', NULL, 'admin',
+VALUES (1044, '登录删除', 501, 2, '#', '', '1', 'F', '0', '0', 'system:logininfor:remove', NULL, 'admin',
         '2019-03-16 11:33:00', 'admin', '2022-03-22 09:43:28', '');
 INSERT INTO `sys_menu`
-VALUES (1045, '日志导出', 501, 3, '#', '', '1', 'F', 0, 0, 'system:logininfor:export', NULL, 'admin',
+VALUES (1045, '日志导出', 501, 3, '#', '', '1', 'F', '0', '0', 'system:logininfor:export', NULL, 'admin',
         '2019-03-16 11:33:00', 'admin', '2022-03-22 09:43:33', '');
 INSERT INTO `sys_menu`
-VALUES (1051, '任务查询', 110, 1, '#', '', '1', 'F', 1, 0, 'monitor:job:query', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
+VALUES (1051, '任务查询', 110, 1, '#', '', '1', 'F', '1', '0', 'monitor:job:query', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1052, '任务新增', 110, 2, '#', '', '1', 'F', 1, 0, 'monitor:job:insert', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
+VALUES (1052, '任务新增', 110, 2, '#', '', '1', 'F', '1', '0', 'monitor:job:insert', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1053, '任务修改', 110, 3, '#', '', '1', 'F', 1, 0, 'monitor:job:update', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
+VALUES (1053, '任务修改', 110, 3, '#', '', '1', 'F', '1', '0', 'monitor:job:update', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1054, '任务删除', 110, 4, '#', '', '1', 'F', 1, 0, 'monitor:job:remove', NULL, 'admin', '2019-03-16 11:33:00',
-        'admin', '2018-03-16 11:33:00', '');
+VALUES (1054, '任务删除', 110, 4, '#', '', '1', 'F', '1', '0', 'monitor:job:remove', NULL, 'admin',
+        '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1061, '定时任务日志', 4, 3, '/log/job', '/log/job/index', '1', 'C', 0, 0, 'system:operlog', 'icon-log-job',
+VALUES (1061, '定时任务日志', 4, 3, '/log/job', '/log/job/index', '1', 'C', '0', '0', 'system:operlog', 'icon-log-job',
         'admin', '2019-03-16 11:33:00', 'admin', '2020-11-14 16:24:38', '');
 INSERT INTO `sys_menu`
-VALUES (1062, '操作删除', 1061, 2, '#', '', '1', 'F', 0, 0, 'system:operlog:remove', NULL, 'admin',
+VALUES (1062, '操作删除', 1061, 2, '#', '', '1', 'F', '0', '0', 'system:operlog:remove', NULL, 'admin',
         '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1063, '日志导出', 1061, 4, '#', '', '1', 'F', 0, 0, 'system:operlog:export', NULL, 'admin',
+VALUES (1063, '日志导出', 1061, 4, '#', '', '1', 'F', '0', '0', 'system:operlog:export', NULL, 'admin',
         '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1064, '操作查询', 1061, 1, '#', '', '1', 'F', 0, 0, 'system:operlog:query', NULL, 'admin',
+VALUES (1064, '操作查询', 1061, 1, '#', '', '1', 'F', '0', '0', 'system:operlog:query', NULL, 'admin',
         '2019-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu`
-VALUES (1066, '图形化编辑器', 3, 2, '/tool/graphicalEditor', NULL, '1', 'M', 0, 0, NULL, 'icon-graphical-edit', 'admin',
-        '2019-03-16 11:33:00', 'admin', '2021-08-01 10:51:47', '');
+VALUES (1066, '图形化编辑器', 3, 2, '/tool/graphicalEditor', NULL, '1', 'M', '0', '0', NULL, 'icon-graphical-edit',
+        'admin', '2019-03-16 11:33:00', 'admin', '2021-08-01 10:51:47', '');
 INSERT INTO `sys_menu`
-VALUES (1071, '文件管理', 1, 6, '/system/dfs', '/system/dfs/index', '1', 'C', 0, 0, 'dfs:dfs:list', 'icon-DFS', 'admin',
-        '2019-03-16 11:33:00', 'admin', '2021-04-09 15:15:52', '');
+VALUES (1071, '文件管理', 1, 6, '/system/dfs', '/system/dfs/index', '1', 'C', '0', '0', 'dfs:dfs:list', 'icon-DFS',
+        'admin', '2019-03-16 11:33:00', 'admin', '2021-04-09 15:15:52', '');
 INSERT INTO `sys_menu`
-VALUES (1072, '代码生成器', 3, 1, '/tool/gen', '/tool/gen/index', '1', 'C', 0, 0, 'tool:gen:list', 'icon-gen-code',
-        'admin', '2019-03-16 11:33:00', 'admin', '2021-08-01 10:51:56', '');
+VALUES (1072, '代码生成', 1100, 2, '/tool/code/gen', '/tool/code/gen/index', '1', 'C', '0', '0', 'gen:list',
+        'icon-gen-code', 'admin', '2019-03-16 11:33:00', 'admin', '2023-11-11 09:19:27', '');
 INSERT INTO `sys_menu`
-VALUES (1073, '生成查询', 1072, 1, '', NULL, '1', 'F', 0, 0, 'tool:gen:query', '#', 'admin', '2019-03-16 11:33:00', '',
-        NULL, '');
+VALUES (1073, '生成查询', 1072, 1, '', NULL, '1', 'F', '0', '0', 'gen:query', '#', 'admin', '2019-03-16 11:33:00',
+        'admin', '2023-11-11 09:19:34', '');
 INSERT INTO `sys_menu`
-VALUES (1074, '生成修改', 1072, 2, '', NULL, '1', 'F', 0, 0, 'tool:gen:edit', '#', 'admin', '2019-03-16 11:33:00', '',
-        NULL, '');
+VALUES (1074, '生成修改', 1072, 2, '', NULL, '1', 'F', '0', '0', 'gen:edit', '#', 'admin', '2019-03-16 11:33:00',
+        'admin', '2023-11-11 09:19:39', '');
 INSERT INTO `sys_menu`
-VALUES (1075, '导入代码 ', 1072, 3, '', NULL, '1', 'F', 0, 0, 'tool:gen:import', '#', 'admin', '2019-03-16 11:33:00',
-        'admin', '2021-03-20 23:02:46', '');
+VALUES (1075, '导入代码', 1072, 3, '', NULL, '1', 'F', '0', '0', 'gen:import', '#', 'admin', '2019-03-16 11:33:00',
+        'admin', '2023-11-11 09:19:45', '');
 INSERT INTO `sys_menu`
-VALUES (1076, '生成删除', 1072, 4, '', NULL, '1', 'F', 0, 0, '	 tool:gen:remove', '#', 'admin',
+VALUES (1076, '生成删除', 1072, 4, '', NULL, '1', 'F', '0', '0', 'gen:remove', '#', 'admin', '2019-03-16 11:33:00',
+        'admin', '2023-11-11 09:19:51', '');
+INSERT INTO `sys_menu`
+VALUES (1077, '预览代码', 1072, 5, '', NULL, '1', 'F', '0', '0', 'gen:preview', '#', 'admin', '2019-03-16 11:33:00',
+        'admin', '2023-11-11 09:19:57', '');
+INSERT INTO `sys_menu`
+VALUES (1078, '生成代码', 1072, 6, '', NULL, '1', 'F', '0', '0', 'gen:code', '#', 'admin', '2019-03-16 11:33:00',
+        'admin', '2023-11-11 09:20:02', '');
+INSERT INTO `sys_menu`
+VALUES (1080, 'DFS文件删除', 1071, 1, '', NULL, '1', 'F', '0', '0', 'dfs:dfs:remove', '#', 'admin',
         '2019-03-16 11:33:00', '', NULL, '');
 INSERT INTO `sys_menu`
-VALUES (1077, '预览代码', 1072, 5, '', NULL, '1', 'F', 0, 0, 'tool:gen:preview', '#', 'admin', '2019-03-16 11:33:00',
-        'admin', '2021-03-20 23:03:30', '');
-INSERT INTO `sys_menu`
-VALUES (1078, '生成代码', 1072, 6, '', NULL, '1', 'F', 0, 0, 'tool:gen:code', '#', 'admin', '2019-03-16 11:33:00',
-        'admin', '2021-03-22 11:34:47', '');
-INSERT INTO `sys_menu`
-VALUES (1080, 'DFS文件删除', 1071, 1, '', NULL, '1', 'F', 0, 0, 'dfs:dfs:remove', '#', 'admin', '2019-03-16 11:33:00',
-        '', NULL, '');
-INSERT INTO `sys_menu`
-VALUES (1082, '欢迎页', 0, 0, '/', '/index', '1', 'C', 0, 0, 'index', 'icon-home', 'admin', '2019-03-16 11:33:00',
+VALUES (1082, '欢迎页', 0, 0, '/', '/index', '1', 'C', '0', '0', 'index', 'icon-home', 'admin', '2019-03-16 11:33:00',
         'admin', '2023-03-06 00:11:35', '');
 INSERT INTO `sys_menu`
-VALUES (1083, '系统监控', 0, 2, '/monitor', NULL, '1', 'M', 0, 0, NULL, 'icon-monitor', 'admin', '2019-03-16 11:33:00',
-        'admin', '2021-08-06 22:54:33', '');
+VALUES (1083, '系统监控', 0, 2, '/monitor', NULL, '1', 'M', '0', '0', NULL, 'icon-monitor', 'admin',
+        '2019-03-16 11:33:00', 'admin', '2021-08-06 22:54:33', '');
 INSERT INTO `sys_menu`
-VALUES (1084, '缓存监控', 1083, 1, '/monitor/redis', '/monitor/redis/index', '1', 'C', 0, 0, 'monitor:redis:query',
+VALUES (1084, '缓存监控', 1083, 1, '/monitor/redis', '/monitor/redis/index', '1', 'C', '0', '0', 'monitor:redis:query',
         'icon-redis', 'admin', '2019-03-16 11:33:00', 'admin', '2021-08-08 21:51:33', '');
 INSERT INTO `sys_menu`
-VALUES (1092, '令牌管理', 1, 7, '/system/token', '/system/token/index', '1', 'C', 0, 0, 'system:token:list',
+VALUES (1092, '令牌管理', 1, 7, '/system/token', '/system/token/index', '1', 'C', '0', '0', 'system:token:list',
         'icon-token', 'admin', '2019-03-16 11:33:00', '', NULL, '');
 INSERT INTO `sys_menu`
-VALUES (1093, '强退用户', 1092, 1, '', NULL, '1', 'F', 1, 0, 'system:token:remove', '#', 'admin', '2019-03-16 11:33:00',
-        'admin', '2022-12-25 12:08:08', '');
+VALUES (1093, '强退用户', 1092, 1, '', NULL, '1', 'F', '1', '0', 'system:token:remove', '#', 'admin',
+        '2019-03-16 11:33:00', 'admin', '2022-12-25 12:08:08', '');
+INSERT INTO `sys_menu`
+VALUES (1094, '数据源', 1100, 1, '/tool/code/ds_conf', 'gen/code/dsConf/index', '1', 'C', '0', '0', 'gen:dsConf:list',
+        'icon-gen-ds_conf', 'admin', '2018-03-01 00:00:00', 'admin', '2023-11-11 09:19:03', '数据源菜单');
+INSERT INTO `sys_menu`
+VALUES (1095, '数据源查询', 1094, 1, '#', '', '1', 'F', '0', '0', 'gen:dsConf:query', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2023-11-11 09:18:51', '');
+INSERT INTO `sys_menu`
+VALUES (1096, '数据源新增', 1094, 2, '#', '', '1', 'F', '0', '0', 'gen:dsConf:add', '#', 'admin', '2018-03-01 00:00:00',
+        'admin', '2023-11-11 09:19:08', '');
+INSERT INTO `sys_menu`
+VALUES (1097, '数据源修改', 1094, 3, '#', '', '1', 'F', '0', '0', 'gen:dsConf:edit', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2023-11-11 09:19:12', '');
+INSERT INTO `sys_menu`
+VALUES (1098, '数据源删除', 1094, 4, '#', '', '1', 'F', '0', '0', 'gen:dsConf:remove', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2023-11-11 09:19:17', '');
+INSERT INTO `sys_menu`
+VALUES (1100, '开发平台', 3, 1, '/tool/code', NULL, '1', 'M', '0', '0', NULL, 'gen', 'admin', '2023-11-04 18:04:01',
+        'admin', '2023-11-06 18:00:35', '');
+INSERT INTO `sys_menu`
+VALUES (1101, '字段管理', 1114, 1, '/tool/code/metadata/type', '/Tool/Metadata/Code/Type', '1', 'C', '0', '0',
+        'gen:type:list', 'icon-gen-Type', 'admin', '2023-11-04 20:46:29', 'admin', '2023-11-06 17:38:42', '');
+INSERT INTO `sys_menu`
+VALUES (1102, '模板分组', 1114, 3, '/tool/code/metadata/template_group', '/tool/code/metadata/templateGroup/index', '1',
+        'C', '0', '0', 'gen:group:list', '#', 'admin', '2018-03-01 00:00:00', 'admin', '2023-11-07 09:29:39',
+        '模板分组菜单');
+INSERT INTO `sys_menu`
+VALUES (1103, '模板分组查询', 1102, 1, '#', '', '1', 'F', '0', '0', 'gen:group:query', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1104, '模板分组新增', 1102, 2, '#', '', '1', 'F', '0', '0', 'gen:group:add', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1105, '模板分组修改', 1102, 3, '#', '', '1', 'F', '0', '0', 'gen:group:edit', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1106, '模板分组删除', 1102, 4, '#', '', '1', 'F', '0', '0', 'gen:group:remove', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1108, '模板管理', 1114, 2, '/tool/code/metadata/template', 'tool/code/metadata/template/index', '1', 'C', '0',
+        '0', 'gen:templateGroup:list', '#', 'admin', '2018-03-01 00:00:00', 'admin', '2023-11-07 09:29:45',
+        '模板管理菜单');
+INSERT INTO `sys_menu`
+VALUES (1109, '模板管理查询', 1108, 1, '#', '', '1', 'F', '0', '0', 'gen:templateGroup:query', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1110, '模板管理新增', 1108, 2, '#', '', '1', 'F', '0', '0', 'gen:templateGroup:add', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1111, '模板管理修改', 1108, 3, '#', '', '1', 'F', '0', '0', 'gen:templateGroup:edit', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1112, '模板管理删除', 1108, 4, '#', '', '1', 'F', '0', '0', 'gen:templateGroup:remove', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1114, '元数据管理', 1100, 3, '/tool/code/metadata', NULL, '1', 'M', '0', '0', '', 'icon-gen-metadata', 'admin',
+        '2023-11-06 17:29:08', '', NULL, '');
+INSERT INTO `sys_menu`
+VALUES (1115, '字段类型管理查询', 1101, 1, '#', '', '1', 'F', '0', '0', 'gen:type:query', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1116, '字段类型管理新增', 1101, 2, '#', '', '1', 'F', '0', '0', 'gen:type:add', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1117, '字段类型管理修改', 1101, 3, '#', '', '1', 'F', '0', '0', 'gen:type:edit', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1118, '字段类型管理删除', 1101, 4, '#', '', '1', 'F', '0', '0', 'gen:type:remove', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+
 
 -- ----------------------------
 -- Table structure for sys_oauth_client_details
@@ -1071,4 +1091,5 @@ CREATE TABLE `undo_log`
 -- Records of undo_log
 -- ----------------------------
 
-SET FOREIGN_KEY_CHECKS = 1;
+SET
+    FOREIGN_KEY_CHECKS = 1;
