@@ -45,9 +45,9 @@ public class GenGroupController extends TWTController {
 	 * 查询代码生成业务模板列表
 	 */
 	@Operation(summary = "查询代码生成业务模板列表")
-	@PreAuthorize("@role.hasPermi('gen:template:list')")
+	@PreAuthorize("@role.hasPermi('gen:templateGroup:list')")
 	@GetMapping("/queryTemplateList")
-	public JsonResult<List<GenTemplate>> queryTemplateList(GenTemplate genTemplate) {
+	public JsonResult<List<GenTemplate>> queryTemplateListAll(GenTemplate genTemplate) {
 		return JsonResult.success(genTemplateService.selectGenTemplateList(genTemplate));
 	}
 
@@ -55,7 +55,7 @@ public class GenGroupController extends TWTController {
 	 * 查询模板分组列表
 	 */
 	@Operation(summary = "查询模板分组分页")
-	@PreAuthorize("@role.hasPermi('gen:metadata:group:list')")
+	@PreAuthorize("@role.hasPermi('gen:group:list')")
 	@GetMapping("/pageQuery")
 	public JsonResult<TableDataInfo<GenGroup>> pageQuery(GenGroup genGroup) {
 		PageUtils.startPage();
@@ -64,22 +64,10 @@ public class GenGroupController extends TWTController {
 	}
 
 	/**
-	 * 导出模板分组列表
-	 */
-	@ResponseExcel(name = "模板分组")
-	@Operation(summary = "导出模板分组列表")
-	@PreAuthorize("@role.hasPermi('gen:metadata:group:export')")
-	@Log(service = "模板分组", businessType = BusinessType.EXPORT)
-	@PostMapping("/export")
-	public List<GenGroup> export(GenGroup genGroup) {
-		return genGroupService.selectGenGroupList(genGroup);
-	}
-
-	/**
 	 * 获取模板分组详细信息
 	 */
 	@Operation(summary = "获取模板分组详细信息")
-	@PreAuthorize("@role.hasPermi('gen:metadata:group:query')")
+	@PreAuthorize("@role.hasPermi('gen:group:query')")
 	@GetMapping(value = "/{id}")
 	public JsonResult<GenGroupDTO> getInfo(@PathVariable("id") Long id) {
 		return JsonResult.success(genGroupService.selectGenGroupById(id));
@@ -89,7 +77,7 @@ public class GenGroupController extends TWTController {
 	 * 新增模板分组
 	 */
 	@Operation(summary = "新增模板分组")
-	@PreAuthorize("@role.hasPermi('gen:metadata:group:add')")
+	@PreAuthorize("@role.hasPermi('gen:group:add')")
 	@Log(service = "模板分组", businessType = BusinessType.INSERT)
 	@PostMapping
 	public JsonResult<String> add(@RequestBody GenGroupDTO genGroupDTO) {
@@ -100,7 +88,7 @@ public class GenGroupController extends TWTController {
 	 * 修改模板分组
 	 */
 	@Operation(summary = "修改模板分组")
-	@PreAuthorize("@role.hasPermi('gen:metadata:group:edit')")
+	@PreAuthorize("@role.hasPermi('gen:group:edit')")
 	@Log(service = "模板分组", businessType = BusinessType.UPDATE)
 	@PutMapping
 	public JsonResult<String> edit(@RequestBody GenGroupDTO genGroupDTO) {
@@ -111,7 +99,7 @@ public class GenGroupController extends TWTController {
 	 * 删除模板分组
 	 */
 	@Operation(summary = "删除模板分组")
-	@PreAuthorize("@role.hasPermi('gen:metadata:group:remove')")
+	@PreAuthorize("@role.hasPermi('gen:group:remove')")
 	@Log(service = "模板分组", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
 	public JsonResult<String> remove(@PathVariable Long[] ids) {

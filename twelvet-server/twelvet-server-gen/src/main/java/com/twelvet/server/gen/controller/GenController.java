@@ -64,7 +64,7 @@ public class GenController extends TWTController {
 	 */
 	@Operation(summary = "查询代码生成列表")
 	@GetMapping("/pageQuery")
-	@PreAuthorize("@role.hasPermi('tool:gen:list')")
+	@PreAuthorize("@role.hasPermi('gen:list')")
 	public JsonResult<TableDataInfo<GenTable>> pageQuery(GenTable genTable) {
 		PageUtils.startPage();
 		List<GenTable> list = genTableService.selectGenTableList(genTable);
@@ -78,7 +78,7 @@ public class GenController extends TWTController {
 	 */
 	@Operation(summary = "获取代码生成信息")
 	@GetMapping(value = "/{tableId}")
-	@PreAuthorize("@role.hasPermi('tool:gen:query')")
+	@PreAuthorize("@role.hasPermi('gen:query')")
 	public AjaxResult getInfo(@PathVariable Long tableId) {
 		GenTable table = genTableService.selectGenTableById(tableId);
 		List<GenTable> tables = genTableService.selectGenTableAll();
@@ -95,7 +95,7 @@ public class GenController extends TWTController {
 	 * @return JsonResult<TableDataInfo>
 	 */
 	@Operation(summary = "查询数据库列表")
-	@PreAuthorize("@role.hasPermi('tool:gen:list')")
+	@PreAuthorize("@role.hasPermi('gen:list')")
 	@GetMapping("/db/list")
 	public JsonResult<TableDataInfo<GenTable>> dataList(GenTable genTable) {
 		PageUtils.startPage();
@@ -122,7 +122,7 @@ public class GenController extends TWTController {
 	 * @return JsonResult<String>
 	 */
 	@Operation(summary = "导入表结构")
-	@PreAuthorize("@role.hasPermi('tool:gen:list')")
+	@PreAuthorize("@role.hasPermi('gen:list')")
 	@Log(service = "代码生成", businessType = BusinessType.IMPORT)
 	@PostMapping("/importTable/{dsName}")
 	public JsonResult<String> importTableSave(@PathVariable String dsName, String tables) {
@@ -139,7 +139,7 @@ public class GenController extends TWTController {
 	 * @return JsonResult<String>
 	 */
 	@Operation(summary = "修改保存代码生成业务")
-	@PreAuthorize("@role.hasPermi('tool:gen:edit')")
+	@PreAuthorize("@role.hasPermi('gen:edit')")
 	@Log(service = "代码生成", businessType = BusinessType.UPDATE)
 	@PutMapping
 	public JsonResult<String> editSave(@Validated @RequestBody GenTable genTable) {
@@ -154,7 +154,7 @@ public class GenController extends TWTController {
 	 * @return JsonResult<String>
 	 */
 	@Operation(summary = "删除代码生成")
-	@PreAuthorize("@role.hasPermi('tool:gen:remove')")
+	@PreAuthorize("@role.hasPermi('gen:remove')")
 	@Log(service = "代码生成", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{tableIds}")
 	public JsonResult<String> remove(@PathVariable Long[] tableIds) {
@@ -168,7 +168,7 @@ public class GenController extends TWTController {
 	 * @return AjaxResult
 	 */
 	@Operation(summary = "预览代码")
-	@PreAuthorize("@role.hasPermi('tool:gen:preview')")
+	@PreAuthorize("@role.hasPermi('gen:preview')")
 	@GetMapping("/preview/{tableId}")
 	public AjaxResult preview(@PathVariable("tableId") Long tableId) {
 		return AjaxResult.success(genTableService.previewCode(tableId));
@@ -181,7 +181,7 @@ public class GenController extends TWTController {
 	 * @throws IOException IOException
 	 */
 	@Operation(summary = "生成代码（下载方式）")
-	@PreAuthorize("@role.hasPermi('tool:gen:code')")
+	@PreAuthorize("@role.hasPermi('gen:code')")
 	@Log(service = "代码生成", businessType = BusinessType.GENCODE)
 	@PostMapping("/download/{tableId}")
 	public void download(HttpServletResponse response, @PathVariable Long tableId) throws IOException {
@@ -195,7 +195,7 @@ public class GenController extends TWTController {
 	 * @return JsonResult<String>
 	 */
 	@Operation(summary = "生成代码（自定义路径）")
-	@PreAuthorize("@role.hasPermi('tool:gen:code')")
+	@PreAuthorize("@role.hasPermi('gen:code')")
 	@Log(service = "代码生成", businessType = BusinessType.GENCODE)
 	@PostMapping("/genCode/{tableId}")
 	public JsonResult<String> genCode(@PathVariable Long tableId) {
@@ -209,7 +209,7 @@ public class GenController extends TWTController {
 	 * @return JsonResult<String>
 	 */
 	@Operation(summary = "同步数据库")
-	@PreAuthorize("@role.hasPermi('tool:gen:edit')")
+	@PreAuthorize("@role.hasPermi('gen:edit')")
 	@Log(service = "代码生成", businessType = BusinessType.UPDATE)
 	@PostMapping("/synchDb/{tableId}")
 	public JsonResult<String> synchDb(@PathVariable Long tableId) {
@@ -224,7 +224,7 @@ public class GenController extends TWTController {
 	 * @throws IOException IOException
 	 */
 	@Operation(summary = "批量生成代码")
-	@PreAuthorize("@role.hasPermi('tool:gen:code')")
+	@PreAuthorize("@role.hasPermi('gen:code')")
 	@Log(service = "代码生成", businessType = BusinessType.GENCODE)
 	@PostMapping("/batchGenCode")
 	public void batchGenCode(HttpServletResponse response, String tableIds) throws IOException {

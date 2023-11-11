@@ -37,7 +37,7 @@ public class GenDatasourceConfController extends TWTController {
 	 * 查询数据源列表
 	 */
 	@Operation(summary = "查询数据源列表")
-	@PreAuthorize("@role.hasPermi('gen:ds_conf:list')")
+	@PreAuthorize("@role.hasPermi('gen:dsConf:list')")
 	@GetMapping("/listQuery")
 	public JsonResult<List<GenDatasourceConf>> listQuery(GenDatasourceConf genDatasourceConf) {
 		return JsonResult.success(genDatasourceConfService.selectGenDatasourceConfList(genDatasourceConf));
@@ -47,7 +47,7 @@ public class GenDatasourceConfController extends TWTController {
 	 * 查询数据源列表
 	 */
 	@Operation(summary = "查询数据源分页")
-	@PreAuthorize("@role.hasPermi('gen:ds_conf:list')")
+	@PreAuthorize("@role.hasPermi('gen:dsConf:list')")
 	@GetMapping("/pageQuery")
 	public JsonResult<TableDataInfo<GenDatasourceConf>> pageQuery(GenDatasourceConf genDatasourceConf) {
 		PageUtils.startPage();
@@ -56,22 +56,10 @@ public class GenDatasourceConfController extends TWTController {
 	}
 
 	/**
-	 * 导出数据源列表
-	 */
-	@ResponseExcel(name = "数据源")
-	@Operation(summary = "导出数据源列表")
-	@PreAuthorize("@role.hasPermi('gen:ds_conf:export')")
-	@Log(service = "数据源", businessType = BusinessType.EXPORT)
-	@PostMapping("/export")
-	public List<GenDatasourceConf> export(GenDatasourceConf genDatasourceConf) {
-		return genDatasourceConfService.selectGenDatasourceConfList(genDatasourceConf);
-	}
-
-	/**
 	 * 获取数据源详细信息
 	 */
 	@Operation(summary = "获取数据源详细信息")
-	@PreAuthorize("@role.hasPermi('gen:ds_conf:query')")
+	@PreAuthorize("@role.hasPermi('gen:dsConf:query')")
 	@GetMapping(value = "/{id}")
 	public JsonResult<GenDatasourceConf> getInfo(@PathVariable("id") Long id) {
 		return JsonResult.success(genDatasourceConfService.selectGenDatasourceConfById(id));
@@ -81,7 +69,7 @@ public class GenDatasourceConfController extends TWTController {
 	 * 新增数据源
 	 */
 	@Operation(summary = "新增数据源")
-	@PreAuthorize("@role.hasPermi('gen:ds_conf:add')")
+	@PreAuthorize("@role.hasPermi('gen:dsConf:add')")
 	@Log(service = "数据源", businessType = BusinessType.INSERT)
 	@PostMapping
 	public JsonResult<String> add(@RequestBody GenDatasourceConf genDatasourceConf) {
@@ -92,7 +80,7 @@ public class GenDatasourceConfController extends TWTController {
 	 * 修改数据源
 	 */
 	@Operation(summary = "修改数据源")
-	@PreAuthorize("@role.hasPermi('gen:ds_conf:edit')")
+	@PreAuthorize("@role.hasPermi('gen:dsConf:edit')")
 	@Log(service = "数据源", businessType = BusinessType.UPDATE)
 	@PutMapping
 	public JsonResult<String> edit(@RequestBody GenDatasourceConf genDatasourceConf) {
@@ -103,7 +91,7 @@ public class GenDatasourceConfController extends TWTController {
 	 * 删除数据源
 	 */
 	@Operation(summary = "删除数据源")
-	@PreAuthorize("@role.hasPermi('gen:ds_conf:remove')")
+	@PreAuthorize("@role.hasPermi('gen:dsConf:remove')")
 	@Log(service = "数据源", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
 	public JsonResult<String> remove(@PathVariable Long[] ids) {

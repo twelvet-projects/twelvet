@@ -579,26 +579,26 @@ INSERT INTO `sys_menu`
 VALUES (1071, '文件管理', 1, 6, '/system/dfs', '/system/dfs/index', '1', 'C', '0', '0', 'dfs:dfs:list', 'icon-DFS',
         'admin', '2019-03-16 11:33:00', 'admin', '2021-04-09 15:15:52', '');
 INSERT INTO `sys_menu`
-VALUES (1072, '代码生成', 1100, 2, '/tool/code/gen', '/tool/code/gen/index', '1', 'C', '0', '0', 'tool:gen:list',
-        'icon-gen-code', 'admin', '2019-03-16 11:33:00', 'admin', '2023-11-04 18:34:17', '');
+VALUES (1072, '代码生成', 1100, 2, '/tool/code/gen', '/tool/code/gen/index', '1', 'C', '0', '0', 'gen:list',
+        'icon-gen-code', 'admin', '2019-03-16 11:33:00', 'admin', '2023-11-11 09:19:27', '');
 INSERT INTO `sys_menu`
-VALUES (1073, '生成查询', 1072, 1, '', NULL, '1', 'F', '0', '0', 'tool:gen:query', '#', 'admin', '2019-03-16 11:33:00',
-        '', NULL, '');
+VALUES (1073, '生成查询', 1072, 1, '', NULL, '1', 'F', '0', '0', 'gen:query', '#', 'admin', '2019-03-16 11:33:00',
+        'admin', '2023-11-11 09:19:34', '');
 INSERT INTO `sys_menu`
-VALUES (1074, '生成修改', 1072, 2, '', NULL, '1', 'F', '0', '0', 'tool:gen:edit', '#', 'admin', '2019-03-16 11:33:00',
-        '', NULL, '');
+VALUES (1074, '生成修改', 1072, 2, '', NULL, '1', 'F', '0', '0', 'gen:edit', '#', 'admin', '2019-03-16 11:33:00',
+        'admin', '2023-11-11 09:19:39', '');
 INSERT INTO `sys_menu`
-VALUES (1075, '导入代码 ', 1072, 3, '', NULL, '1', 'F', '0', '0', 'tool:gen:import', '#', 'admin',
-        '2019-03-16 11:33:00', 'admin', '2021-03-20 23:02:46', '');
+VALUES (1075, '导入代码', 1072, 3, '', NULL, '1', 'F', '0', '0', 'gen:import', '#', 'admin', '2019-03-16 11:33:00',
+        'admin', '2023-11-11 09:19:45', '');
 INSERT INTO `sys_menu`
-VALUES (1076, '生成删除', 1072, 4, '', NULL, '1', 'F', '0', '0', '	 tool:gen:remove', '#', 'admin',
-        '2019-03-16 11:33:00', '', NULL, '');
+VALUES (1076, '生成删除', 1072, 4, '', NULL, '1', 'F', '0', '0', 'gen:remove', '#', 'admin', '2019-03-16 11:33:00',
+        'admin', '2023-11-11 09:19:51', '');
 INSERT INTO `sys_menu`
-VALUES (1077, '预览代码', 1072, 5, '', NULL, '1', 'F', '0', '0', 'tool:gen:preview', '#', 'admin',
-        '2019-03-16 11:33:00', 'admin', '2021-03-20 23:03:30', '');
+VALUES (1077, '预览代码', 1072, 5, '', NULL, '1', 'F', '0', '0', 'gen:preview', '#', 'admin', '2019-03-16 11:33:00',
+        'admin', '2023-11-11 09:19:57', '');
 INSERT INTO `sys_menu`
-VALUES (1078, '生成代码', 1072, 6, '', NULL, '1', 'F', '0', '0', 'tool:gen:code', '#', 'admin', '2019-03-16 11:33:00',
-        'admin', '2021-03-22 11:34:47', '');
+VALUES (1078, '生成代码', 1072, 6, '', NULL, '1', 'F', '0', '0', 'gen:code', '#', 'admin', '2019-03-16 11:33:00',
+        'admin', '2023-11-11 09:20:02', '');
 INSERT INTO `sys_menu`
 VALUES (1080, 'DFS文件删除', 1071, 1, '', NULL, '1', 'F', '0', '0', 'dfs:dfs:remove', '#', 'admin',
         '2019-03-16 11:33:00', '', NULL, '');
@@ -618,84 +618,72 @@ INSERT INTO `sys_menu`
 VALUES (1093, '强退用户', 1092, 1, '', NULL, '1', 'F', '1', '0', 'system:token:remove', '#', 'admin',
         '2019-03-16 11:33:00', 'admin', '2022-12-25 12:08:08', '');
 INSERT INTO `sys_menu`
-VALUES (1094, '数据源', 1100, 1, '/tool/code/ds_conf', 'gen/code/dsConf/index', '1', 'C', '0', '0', 'gen:ds_conf:list',
-        'icon-gen-ds_conf', 'admin', '2018-03-01 00:00:00', 'admin', '2023-11-04 18:34:21', '数据源菜单');
+VALUES (1094, '数据源', 1100, 1, '/tool/code/ds_conf', 'gen/code/dsConf/index', '1', 'C', '0', '0', 'gen:dsConf:list',
+        'icon-gen-ds_conf', 'admin', '2018-03-01 00:00:00', 'admin', '2023-11-11 09:19:03', '数据源菜单');
 INSERT INTO `sys_menu`
-VALUES (1095, '数据源查询', 1094, 1, '#', '', '1', 'F', '0', '0', 'gen:ds_conf:query', '#', 'admin',
-        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+VALUES (1095, '数据源查询', 1094, 1, '#', '', '1', 'F', '0', '0', 'gen:dsConf:query', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2023-11-11 09:18:51', '');
 INSERT INTO `sys_menu`
-VALUES (1096, '数据源新增', 1094, 2, '#', '', '1', 'F', '0', '0', 'gen:ds_conf:add', '#', 'admin',
-        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+VALUES (1096, '数据源新增', 1094, 2, '#', '', '1', 'F', '0', '0', 'gen:dsConf:add', '#', 'admin', '2018-03-01 00:00:00',
+        'admin', '2023-11-11 09:19:08', '');
 INSERT INTO `sys_menu`
-VALUES (1097, '数据源修改', 1094, 3, '#', '', '1', 'F', '0', '0', 'gen:ds_conf:edit', '#', 'admin',
-        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+VALUES (1097, '数据源修改', 1094, 3, '#', '', '1', 'F', '0', '0', 'gen:dsConf:edit', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2023-11-11 09:19:12', '');
 INSERT INTO `sys_menu`
-VALUES (1098, '数据源删除', 1094, 4, '#', '', '1', 'F', '0', '0', 'gen:ds_conf:remove', '#', 'admin',
-        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
-INSERT INTO `sys_menu`
-VALUES (1099, '数据源导出', 1094, 5, '#', '', '1', 'F', '0', '0', 'gen:ds_conf:export', '#', 'admin',
-        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+VALUES (1098, '数据源删除', 1094, 4, '#', '', '1', 'F', '0', '0', 'gen:dsConf:remove', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2023-11-11 09:19:17', '');
 INSERT INTO `sys_menu`
 VALUES (1100, '开发平台', 3, 1, '/tool/code', NULL, '1', 'M', '0', '0', NULL, 'gen', 'admin', '2023-11-04 18:04:01',
         'admin', '2023-11-06 18:00:35', '');
 INSERT INTO `sys_menu`
 VALUES (1101, '字段管理', 1114, 1, '/tool/code/metadata/type', '/Tool/Metadata/Code/Type', '1', 'C', '0', '0',
-        'gen:metadata:type:list', 'icon-gen-Type', 'admin', '2023-11-04 20:46:29', 'admin', '2023-11-06 17:38:42', '');
+        'gen:type:list', 'icon-gen-Type', 'admin', '2023-11-04 20:46:29', 'admin', '2023-11-06 17:38:42', '');
 INSERT INTO `sys_menu`
 VALUES (1102, '模板分组', 1114, 3, '/tool/code/metadata/template_group', '/tool/code/metadata/templateGroup/index', '1',
-        'C', '0', '0', 'gen:metadata:group:list', '#', 'admin', '2018-03-01 00:00:00', 'admin', '2023-11-07 09:29:39',
+        'C', '0', '0', 'gen:group:list', '#', 'admin', '2018-03-01 00:00:00', 'admin', '2023-11-07 09:29:39',
         '模板分组菜单');
 INSERT INTO `sys_menu`
-VALUES (1103, '模板分组查询', 1102, 1, '#', '', '1', 'F', '0', '0', 'gen:metadata:group:query', '#', 'admin',
+VALUES (1103, '模板分组查询', 1102, 1, '#', '', '1', 'F', '0', '0', 'gen:group:query', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
-VALUES (1104, '模板分组新增', 1102, 2, '#', '', '1', 'F', '0', '0', 'gen:metadata:group:add', '#', 'admin',
+VALUES (1104, '模板分组新增', 1102, 2, '#', '', '1', 'F', '0', '0', 'gen:group:add', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
-VALUES (1105, '模板分组修改', 1102, 3, '#', '', '1', 'F', '0', '0', 'gen:metadata:group:edit', '#', 'admin',
+VALUES (1105, '模板分组修改', 1102, 3, '#', '', '1', 'F', '0', '0', 'gen:group:edit', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
-VALUES (1106, '模板分组删除', 1102, 4, '#', '', '1', 'F', '0', '0', 'gen:metadata:group:remove', '#', 'admin',
-        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
-INSERT INTO `sys_menu`
-VALUES (1107, '模板分组导出', 1102, 5, '#', '', '1', 'F', '0', '0', 'gen:metadata:group:export', '#', 'admin',
+VALUES (1106, '模板分组删除', 1102, 4, '#', '', '1', 'F', '0', '0', 'gen:group:remove', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
 VALUES (1108, '模板管理', 1114, 2, '/tool/code/metadata/template', 'tool/code/metadata/template/index', '1', 'C', '0',
-        '0', 'gen:metadata:template_group:list', '#', 'admin', '2018-03-01 00:00:00', 'admin', '2023-11-07 09:29:45',
+        '0', 'gen:templateGroup:list', '#', 'admin', '2018-03-01 00:00:00', 'admin', '2023-11-07 09:29:45',
         '模板管理菜单');
 INSERT INTO `sys_menu`
-VALUES (1109, '模板管理查询', 1108, 1, '#', '', '1', 'F', '0', '0', 'gen:metadata:template_group:query', '#', 'admin',
+VALUES (1109, '模板管理查询', 1108, 1, '#', '', '1', 'F', '0', '0', 'gen:templateGroup:query', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
-VALUES (1110, '模板管理新增', 1108, 2, '#', '', '1', 'F', '0', '0', 'gen:metadata:template_group:add', '#', 'admin',
+VALUES (1110, '模板管理新增', 1108, 2, '#', '', '1', 'F', '0', '0', 'gen:templateGroup:add', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
-VALUES (1111, '模板管理修改', 1108, 3, '#', '', '1', 'F', '0', '0', 'gen:metadata:template_group:edit', '#', 'admin',
+VALUES (1111, '模板管理修改', 1108, 3, '#', '', '1', 'F', '0', '0', 'gen:templateGroup:edit', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
-VALUES (1112, '模板管理删除', 1108, 4, '#', '', '1', 'F', '0', '0', 'gen:metadata:template_group:remove', '#', 'admin',
-        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
-INSERT INTO `sys_menu`
-VALUES (1113, '模板管理导出', 1108, 5, '#', '', '1', 'F', '0', '0', 'gen:metadata:template_group:export', '#', 'admin',
+VALUES (1112, '模板管理删除', 1108, 4, '#', '', '1', 'F', '0', '0', 'gen:templateGroup:remove', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
 VALUES (1114, '元数据管理', 1100, 3, '/tool/code/metadata', NULL, '1', 'M', '0', '0', '', 'icon-gen-metadata', 'admin',
         '2023-11-06 17:29:08', '', NULL, '');
 INSERT INTO `sys_menu`
-VALUES (1115, '字段类型管理查询', 1101, 1, '#', '', '1', 'F', '0', '0', 'gen:metadata:type:query', '#', 'admin',
+VALUES (1115, '字段类型管理查询', 1101, 1, '#', '', '1', 'F', '0', '0', 'gen:type:query', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
-VALUES (1116, '字段类型管理新增', 1101, 2, '#', '', '1', 'F', '0', '0', 'gen:metadata:type:add', '#', 'admin',
+VALUES (1116, '字段类型管理新增', 1101, 2, '#', '', '1', 'F', '0', '0', 'gen:type:add', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
-VALUES (1117, '字段类型管理修改', 1101, 3, '#', '', '1', 'F', '0', '0', 'gen:metadata:type:edit', '#', 'admin',
+VALUES (1117, '字段类型管理修改', 1101, 3, '#', '', '1', 'F', '0', '0', 'gen:type:edit', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
-VALUES (1118, '字段类型管理删除', 1101, 4, '#', '', '1', 'F', '0', '0', 'gen:metadata:type:remove', '#', 'admin',
-        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
-INSERT INTO `sys_menu`
-VALUES (1119, '字段类型管理导出', 1101, 5, '#', '', '1', 'F', '0', '0', 'gen:metadata:type:export', '#', 'admin',
+VALUES (1118, '字段类型管理删除', 1101, 4, '#', '', '1', 'F', '0', '0', 'gen:type:remove', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 
 

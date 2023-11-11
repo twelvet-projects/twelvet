@@ -46,18 +46,6 @@ public class GenTemplateController extends TWTController {
 	}
 
 	/**
-	 * 导出代码生成业务模板列表
-	 */
-	@ResponseExcel(name = "代码生成业务模板")
-	@Operation(summary = "导出代码生成业务模板列表")
-	@PreAuthorize("@role.hasPermi('gen:template:export')")
-	@Log(service = "代码生成业务模板", businessType = BusinessType.EXPORT)
-	@PostMapping("/export")
-	public List<GenTemplate> export(GenTemplate genTemplate) {
-		return genTemplateService.selectGenTemplateList(genTemplate);
-	}
-
-	/**
 	 * 获取代码生成业务模板详细信息
 	 */
 	@Operation(summary = "获取代码生成业务模板详细信息")
