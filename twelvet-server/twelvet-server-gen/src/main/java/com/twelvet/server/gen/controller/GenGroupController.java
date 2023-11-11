@@ -10,7 +10,6 @@ import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.server.gen.service.IGenGroupService;
-import com.twelvet.server.gen.service.IGenTemplateService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +32,14 @@ public class GenGroupController extends TWTController {
 	@Autowired
 	private IGenGroupService genGroupService;
 
-	@Autowired
-	private IGenTemplateService genTemplateService;
-
 	/**
-	 * 查询代码生成业务模板列表
+	 * 查询代码生成业务所有模板列表
 	 */
-	@Operation(summary = "查询代码生成业务模板列表")
-	@PreAuthorize("@role.hasPermi('gen:templateGroup:list')")
+	@Operation(summary = "查询代码生成业务所有模板列表")
+	@PreAuthorize("@role.hasPermi('gen:group:list')")
 	@GetMapping("/queryTemplateList")
-	public JsonResult<List<GenTemplate>> queryTemplateListAll(GenTemplate genTemplate) {
-		return JsonResult.success(genTemplateService.selectGenTemplateList(genTemplate));
+	public JsonResult<List<GenTemplate>> selectGenTemplateAll() {
+		return JsonResult.success(genGroupService.selectGenTemplateAll());
 	}
 
 	/**

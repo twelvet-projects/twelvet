@@ -31,6 +31,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
 
+    <select id="selectGenTemplateAll" resultMap="GenTemplateResult">
+        <include refid="selectGenTemplateVo"/>
+    </select>
+
     <select id="selectGenTemplateById" parameterType="Long" resultMap="GenTemplateResult">
         <include refid="selectGenTemplateVo"/>
         where id = #{id}

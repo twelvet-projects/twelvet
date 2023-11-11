@@ -47,10 +47,10 @@ public class GenController extends TWTController {
 	private IGenTableColumnService genTableColumnService;
 
 	/**
-	 * 查询代码生成业务模板列表
+	 * 查询代码生成业务所有模板分组列表
 	 */
-	@Operation(summary = "查询代码生成业务模板列表")
-	@PreAuthorize("@role.hasPermi('gen:group:list')")
+	@Operation(summary = "查询代码生成业务所有模板分组列表")
+	@PreAuthorize("@role.hasPermi('gen:list')")
 	@GetMapping("/selectGenGroupAll")
 	public JsonResult<List<GenGroup>> selectGenGroupAll() {
 		return JsonResult.success(genTableColumnService.selectGenGroupAll());
