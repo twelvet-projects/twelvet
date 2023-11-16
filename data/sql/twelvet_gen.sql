@@ -215,6 +215,7 @@ CREATE TABLE `gen_table`
 (
     `table_id`          bigint(20)                                               NOT NULL AUTO_INCREMENT COMMENT '编号',
     `ds_name`           varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT '数据源别名',
+    `db_type`           varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci  NOT NULL COMMENT '数据源类型',
     `table_name`        varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL     DEFAULT '' COMMENT '表名称',
     `table_comment`     varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL     DEFAULT '' COMMENT '表描述',
     `sub_table_name`    varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci   NULL     DEFAULT NULL COMMENT '关联子表的表名',

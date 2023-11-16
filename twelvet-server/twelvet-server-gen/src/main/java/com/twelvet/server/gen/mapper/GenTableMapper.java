@@ -1,13 +1,14 @@
 package com.twelvet.server.gen.mapper;
 
 import com.twelvet.api.gen.domain.GenTable;
+import com.twelvet.api.gen.domain.GenTableColumn;
 
 import java.util.List;
 
 /**
  * @author twelvet
  * @WebSite twelvet.cn
- * @Description: 业务 数据层
+ * @Description: 代码生成业务表 数据层
  */
 public interface GenTableMapper {
 
@@ -17,20 +18,6 @@ public interface GenTableMapper {
 	 * @return 业务集合
 	 */
 	List<GenTable> selectGenTableList(GenTable genTable);
-
-	/**
-	 * 查询据库列表
-	 * @param genTable 业务信息
-	 * @return 数据库表集合
-	 */
-	List<GenTable> selectDbTableList(GenTable genTable);
-
-	/**
-	 * 查询据库列表
-	 * @param tableNames 表名称组
-	 * @return 数据库表集合
-	 */
-	List<GenTable> selectDbTableListByNames(String[] tableNames);
 
 	/**
 	 * 查询所有表信息

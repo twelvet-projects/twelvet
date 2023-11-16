@@ -5,6 +5,6 @@ package com.twelvet.server.gen.mapper;
  * @WebSite www.twelvet.cn
  * @Description: 支持Mysql代码生成器
  */
-public interface GenTableMysqlMapper extends GenTableMapper {
+public interface GenMysqlMapper extends GenMapper {
 
 }

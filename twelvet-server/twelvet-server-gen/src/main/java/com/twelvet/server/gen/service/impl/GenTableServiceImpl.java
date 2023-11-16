@@ -10,17 +10,18 @@ import com.twelvet.api.gen.domain.GenTemplate;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.datasource.support.DataSourceConstants;
 import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.framework.utils.*;
-import com.twelvet.framework.utils.file.FileUtils;
+import com.twelvet.framework.utils.DateUtils;
+import com.twelvet.framework.utils.JacksonUtils;
+import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.TUtils;
+import com.twelvet.server.gen.mapper.GenMapper;
 import com.twelvet.server.gen.mapper.GenTableColumnMapper;
 import com.twelvet.server.gen.mapper.GenTableMapper;
 import com.twelvet.server.gen.mapper.GenTemplateMapper;
 import com.twelvet.server.gen.service.IGenTableService;
 import com.twelvet.server.gen.utils.GenUtils;
-import com.twelvet.server.gen.utils.VelocityInitializer;
 import com.twelvet.server.gen.utils.VelocityUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.velocity.VelocityContext;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,6 +62,9 @@ public class GenTableServiceImpl implements IGenTableService {
 	@Autowired
 	private TransactionTemplate transactionTemplate;
 
+	@Autowired
+	private GenTableMapper genTableMapper;
+
 	/**
 	 * 查询业务信息
 	 * @param id 业务ID
@@ -68,7 +72,6 @@ public class GenTableServiceImpl implements IGenTableService {
 	 */
 	@Override
 	public GenTable selectGenTableById(Long id) {
-		GenTableMapper genTableMapper = GenUtils.getMapper();
 		GenTable genTable = genTableMapper.selectGenTableById(id);
 		setTableFromOptions(genTable);
 		return genTable;
@@ -81,7 +84,6 @@ public class GenTableServiceImpl implements IGenTableService {
 	 */
 	@Override
 	public List<GenTable> selectGenTableList(GenTable genTable) {
-		GenTableMapper genTableMapper = GenUtils.getMapper();
 		return genTableMapper.selectGenTableList(genTable);
 	}
 
@@ -92,10 +94,10 @@ public class GenTableServiceImpl implements IGenTableService {
 	 */
 	@Override
 	public List<GenTable> selectDbTableList(GenTable genTable) {
-		GenTableMapper genTableMapper = GenUtils.getMapper(genTable.getDsName());
+		GenMapper genMapper = GenUtils.getMapper(genTable.getDsName());
 		// 手动切换数据源
 		DynamicDataSourceContextHolder.push(genTable.getDsName());
-		return genTableMapper.selectDbTableList(genTable);
+		return genMapper.selectDbTableList(genTable);
 	}
 
 	/**
@@ -105,10 +107,10 @@ public class GenTableServiceImpl implements IGenTableService {
 	 */
 	@Override
 	public List<GenTable> selectDbTableListByNames(String dsName, String[] tableNames) {
-		GenTableMapper genTableMapper = GenUtils.getMapper(dsName);
+		GenMapper genMapper = GenUtils.getMapper(dsName);
 		// 手动切换数据源
 		DynamicDataSourceContextHolder.push(dsName);
-		List<GenTable> genTables = genTableMapper.selectDbTableListByNames(tableNames);
+		List<GenTable> genTables = genMapper.selectDbTableListByNames(tableNames);
 		genTables.forEach(genTable -> genTable.setDsName(dsName));
 		return genTables;
 	}
@@ -119,7 +121,6 @@ public class GenTableServiceImpl implements IGenTableService {
 	 */
 	@Override
 	public List<GenTable> selectGenTableAll() {
-		GenTableMapper genTableMapper = GenUtils.getMapper();
 		return genTableMapper.selectGenTableAll();
 	}
 
@@ -130,7 +131,6 @@ public class GenTableServiceImpl implements IGenTableService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void updateGenTable(GenTable genTable) {
-		GenTableMapper genTableMapper = GenUtils.getMapper();
 		String options = JacksonUtils.toJson(genTable.getParams());
 		genTable.setOptions(options);
 		int row = genTableMapper.updateGenTable(genTable);
@@ -148,7 +148,6 @@ public class GenTableServiceImpl implements IGenTableService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void deleteGenTableByIds(Long[] tableIds) {
-		GenTableMapper genTableMapper = GenUtils.getMapper();
 		genTableMapper.deleteGenTableByIds(tableIds);
 		genTableColumnMapper.deleteGenTableColumnByIds(tableIds);
 	}
@@ -168,7 +167,6 @@ public class GenTableServiceImpl implements IGenTableService {
 		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 			@Override
 			protected void doInTransactionWithoutResult(@NotNull TransactionStatus transactionStatus) {
-				GenTableMapper genTableMapper = GenUtils.getMapper();
 				String operName = SecurityUtils.getUsername();
 				try {
 					for (GenTable table : tableList) {
@@ -185,11 +183,12 @@ public class GenTableServiceImpl implements IGenTableService {
 
 		List<GenTableColumn> genTableColumnList = new ArrayList<>();
 		for (GenTable genTable : tableList) {
+			GenMapper genMapper = GenUtils.getMapper(genTable.getDsName());
 			// 手动切换回代码生成器数据源
 			DynamicDataSourceContextHolder.push(genTable.getDsName());
 			String tableName = genTable.getTableName();
 			// 保存列信息
-			List<GenTableColumn> genTableColumns = genTableColumnMapper.selectDbTableColumnsByName(tableName);
+			List<GenTableColumn> genTableColumns = genMapper.selectDbTableColumnsByName(tableName);
 
 			// 手动切换回代码生成器数据源
 			DynamicDataSourceContextHolder.push(DataSourceConstants.DS_MASTER);
@@ -299,15 +298,16 @@ public class GenTableServiceImpl implements IGenTableService {
 	 */
 	@Override
 	public void synchDb(Long tableId) {
-		GenTableMapper genTableMapper = GenUtils.getMapper();
 		GenTable genTable = genTableMapper.selectGenTableById(tableId);
 		List<GenTableColumn> tableColumns = genTable.getColumns();
 
 		List<String> tableColumnNames = tableColumns.stream().map(GenTableColumn::getColumnName).toList();
 
 		// 手动切换数据源
-		DynamicDataSourceContextHolder.push(genTable.getDsName());
-		List<GenTableColumn> dbTableColumns = genTableColumnMapper.selectDbTableColumnsByName(genTable.getTableName());
+		String push = DynamicDataSourceContextHolder.push(genTable.getDsName());
+
+		GenMapper genMapper = GenUtils.getMapper(genTable.getDbType());
+		List<GenTableColumn> dbTableColumns = genMapper.selectDbTableColumnsByName(genTable.getTableName());
 		if (StringUtils.isEmpty(dbTableColumns)) {
 			throw new TWTException("同步数据失败，原表结构不存在");
 		}
@@ -458,7 +458,6 @@ public class GenTableServiceImpl implements IGenTableService {
 	public void setSubTable(GenTable table) {
 		String subTableName = table.getSubTableName();
 		if (StringUtils.isNotEmpty(subTableName)) {
-			GenTableMapper genTableMapper = GenUtils.getMapper();
 			table.setSubTable(genTableMapper.selectGenTableByName(subTableName));
 		}
 	}
@@ -490,7 +489,6 @@ public class GenTableServiceImpl implements IGenTableService {
 	 * @return 数据模型 Map 对象
 	 */
 	private Map<String, Object> getDataModel(Long tableId) {
-		GenTableMapper genTableMapper = GenUtils.getMapper();
 		// 获取表格信息
 		GenTable genTable = genTableMapper.selectGenTableById(tableId);
 		// 设置主子表信息
