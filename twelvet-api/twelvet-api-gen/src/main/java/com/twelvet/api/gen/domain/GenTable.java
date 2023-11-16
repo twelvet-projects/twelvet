@@ -35,6 +35,12 @@ public class GenTable extends BaseEntity {
 	private String dsName;
 
 	/**
+	 * 数据源类型
+	 */
+	@Schema(description = "数据源类型")
+	private String dbType;
+
+	/**
 	 * 表名称
 	 */
 	@Schema(description = "表名称")
@@ -189,6 +195,14 @@ public class GenTable extends BaseEntity {
 
 	public void setDsName(String dsName) {
 		this.dsName = dsName;
+	}
+
+	public String getDbType() {
+		return dbType;
+	}
+
+	public void setDbType(String dbType) {
+		this.dbType = dbType;
 	}
 
 	public String getTableName() {
