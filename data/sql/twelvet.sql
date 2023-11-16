@@ -225,12 +225,15 @@ VALUES (113, 4, 'mssql', 'mssql', 'ds_type', NULL, NULL, 'N', 0, 'admin', '2023-
 INSERT INTO `sys_dict_data`
 VALUES (114, 5, 'pg', 'pg', 'ds_type', NULL, NULL, 'N', 0, 'admin', '2023-11-04 18:51:28', '', NULL, 'pg');
 INSERT INTO `sys_dict_data`
-VALUES (115, 6, '达梦', '达梦', 'ds_type', NULL, NULL, 'N', 0, 'admin', '2023-11-04 18:51:38', '', NULL, '达梦');
+VALUES (115, 6, '达梦', 'dm', 'ds_type', NULL, NULL, 'N', 0, 'admin', '2023-11-04 18:51:38', 'admin',
+        '2023-11-16 13:57:15', '达梦');
 INSERT INTO `sys_dict_data`
 VALUES (116, 1, '主机', '0', 'ds_config_type', NULL, NULL, 'N', 0, 'admin', '2023-11-04 19:04:15', '', NULL, '主机');
 INSERT INTO `sys_dict_data`
 VALUES (117, 1, 'JDBC', '1', 'ds_config_type', NULL, NULL, 'N', 0, 'admin', '2023-11-04 19:04:27', '', NULL, 'JDBC');
-
+INSERT INTO `sys_dict_data`
+VALUES (118, 7, '瀚高', 'highgo', 'ds_type', NULL, NULL, 'N', 0, 'admin', '2023-11-16 13:58:38', 'admin',
+        '2023-11-16 13:58:42', '瀚高数据库');
 
 -- ----------------------------
 -- Table structure for sys_dict_type
