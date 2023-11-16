@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -244,8 +245,9 @@ public class GenController extends TWTController {
 	 */
 	private void genCode(HttpServletResponse response, byte[] data) throws IOException {
 		response.reset();
-		response.setHeader("Content-Disposition", "attachment; filename=\"twelvet.zip\"");
-		response.setHeader("Content-Length", String.valueOf(data.length));
+		response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION);
+		response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"twelvet.zip\"");
+		response.setHeader(HttpHeaders.CONTENT_LENGTH, String.valueOf(data.length));
 		response.setContentType("application/octet-stream; charset=UTF-8");
 		IOUtils.write(data, response.getOutputStream());
 	}
