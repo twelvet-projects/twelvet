@@ -42,29 +42,29 @@ public class VelocityUtils {
 	 */
 	private static final String CONFIG_PATH = "template/config.json";
 
-	public static void setMenuVelocityContext(VelocityContext context, GenTable genTable) {
+	public static void setMenuVelocityContext(Map<String, Object> dataModel, GenTable genTable) {
 		String options = genTable.getOptions();
 		Map<String, String> paramsObj = JacksonUtils.readValue(options, Map.class);
 		String parentMenuId = getParentMenuId(paramsObj);
-		context.put("parentMenuId", parentMenuId);
+		dataModel.put("parentMenuId", parentMenuId);
 	}
 
-	public static void setTreeVelocityContext(VelocityContext context, GenTable genTable) {
+	public static void setTreeVelocityContext(Map<String, Object> dataModel, GenTable genTable) {
 		String options = genTable.getOptions();
 		Map<String, String> paramsObj = JacksonUtils.readValue(options, Map.class);
 		String treeCode = getTreecode(paramsObj);
 		String treeParentCode = getTreeParentCode(paramsObj);
 		String treeName = getTreeName(paramsObj);
 
-		context.put("treeCode", treeCode);
-		context.put("treeParentCode", treeParentCode);
-		context.put("treeName", treeName);
-		context.put("expandColumn", getExpandColumn(genTable));
+		dataModel.put("treeCode", treeCode);
+		dataModel.put("treeParentCode", treeParentCode);
+		dataModel.put("treeName", treeName);
+		dataModel.put("expandColumn", getExpandColumn(genTable));
 		if (paramsObj.containsKey(GenConstants.TREE_PARENT_CODE)) {
-			context.put("tree_parent_code", paramsObj.get(GenConstants.TREE_PARENT_CODE));
+			dataModel.put("tree_parent_code", paramsObj.get(GenConstants.TREE_PARENT_CODE));
 		}
 		if (paramsObj.containsKey(GenConstants.TREE_NAME)) {
-			context.put("tree_name", paramsObj.get(GenConstants.TREE_NAME));
+			dataModel.put("tree_name", paramsObj.get(GenConstants.TREE_NAME));
 		}
 	}
 

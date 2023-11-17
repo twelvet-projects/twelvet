@@ -522,7 +522,10 @@ public class GenTableServiceImpl implements IGenTableService {
 		dataModel.put("permissionPrefix", VelocityUtils.getPermissionPrefix(moduleName, businessName));
 		dataModel.put("columns", genTable.getColumns());
 		dataModel.put("table", genTable);
-
+		VelocityUtils.setMenuVelocityContext(dataModel, genTable);
+		if (GenConstants.TPL_TREE.equals(genTable.getTplGroupId())) {
+			VelocityUtils.setTreeVelocityContext(dataModel, genTable);
+		}
 		if (GenConstants.TPL_SUB.equals(genTable.getTplGroupId())) {
 			VelocityUtils.setSubVelocityContext(dataModel, genTable);
 		}
