@@ -523,8 +523,7 @@ public class GenTableServiceImpl implements IGenTableService {
 		dataModel.put("columns", genTable.getColumns());
 		dataModel.put("table", genTable);
 		VelocityUtils.setMenuVelocityContext(dataModel, genTable);
-		if (GenConstants.TPL_TREE.equals(genTable.getTplGroupId()))
-		{
+		if (GenConstants.TPL_TREE.equals(genTable.getTplGroupId())) {
 			VelocityUtils.setTreeVelocityContext(dataModel, genTable);
 		}
 		if (GenConstants.TPL_SUB.equals(genTable.getTplGroupId())) {
