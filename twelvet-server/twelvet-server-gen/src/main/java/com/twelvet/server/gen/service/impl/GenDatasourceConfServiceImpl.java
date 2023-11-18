@@ -150,7 +150,7 @@ public class GenDatasourceConfServiceImpl implements IGenDatasourceConfService {
 				genDatasourceConf.getPassword())) {
 		}
 		catch (SQLException e) {
-			log.error("数据源配置 {} , 获取链接失败", genDatasourceConf.getName(), e);
+			log.error("数据源配置 {} , 获取链接失败，请检查账号或数据库驱动正确", genDatasourceConf.getName(), e);
 			throw new RuntimeException("数据库配置错误，链接失败");
 		}
 		return Boolean.TRUE;
