@@ -142,7 +142,7 @@ public class GenTableServiceImpl implements IGenTableService {
 	}
 
 	/**
-	 * 删除业务对象2
+	 * 删除业务对象
 	 * @param tableIds 需要删除的数据ID
 	 */
 	@Override
