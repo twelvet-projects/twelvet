@@ -44,12 +44,6 @@
             <artifactId>twelvet-framework-security</artifactId>
         </dependency>
 
-        <!--postgresql 驱动-->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-        </dependency>
-
     </dependencies>
 
 </project>
