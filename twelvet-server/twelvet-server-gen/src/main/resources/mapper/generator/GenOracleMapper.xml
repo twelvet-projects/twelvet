@@ -56,34 +56,72 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<select id="selectDbTableColumnsByName" parameterType="String" resultMap="GenTableColumnResult">
-		select column_name, (case when (is_nullable = 'no' <![CDATA[ && ]]> column_key != 'PRI') then '1' else null end) as is_required, (case when column_key = 'PRI' then '1' else '0' end) as is_pk, ordinal_position as sort, column_comment, (case when extra = 'auto_increment' then '1' else '0' end) as is_increment, column_type
-		from information_schema.columns where table_schema = (select database()) and table_name = (#{tableName})
-		order by ordinal_position
+		select temp.column_name columnname,
+			   temp.data_type dataType,
+			   temp.comments columnComment,
+			   case temp.constraint_type when 'P' then 'PRI' when 'C' then 'UNI' else '' end "COLUMNKEY",
+			   '' "EXTRA"
+		from (
+				 select col.column_id,
+						col.column_name,
+						col.data_type,
+						colc.comments,
+						uc.constraint_type,
+						-- 去重
+						row_number() over (partition by col.column_name order by uc.constraint_type desc) as row_flg
+				 from user_tab_columns col
+						  left join user_col_comments colc
+									on colc.table_name = col.table_name
+										and colc.column_name = col.column_name
+						  left join user_cons_columns ucc
+									on ucc.table_name = col.table_name
+										and ucc.column_name = col.column_name
+						  left join user_constraints uc
+									on uc.constraint_name = ucc.constraint_name
+				 where col.table_name = upper(#{tableName})
+			 ) temp
+		where temp.row_flg = 1
+		order by temp.column_id
+
 	</select>
 
 	<select id="selectDbTableListByNames" resultMap="GenTableResult">
-		select 'oracle' AS db_type, table_name, table_comment, create_time, update_time from information_schema.tables
-		where table_schema = (select database())
-		and table_name in
+		SELECT
+		dt.table_name tableName,
+		dtc.comments tableComment,
+		dt.last_analyzed createTime
+		FROM
+		user_tables dt,
+		user_tab_comments dtc
+		WHERE
+		dt.table_name = dtc.table_name
+		AND dt.table_name in
 		<foreach collection="array" item="name" open="(" separator="," close=")">
-			#{name}
+			UPPER(#{name})
 		</foreach>
 	</select>
 
 	<select id="selectDbTableList" parameterType="GenTable" resultMap="GenTableResult">
-		select table_name, table_comment, create_time, update_time from information_schema.tables
-		where table_schema = (select database())
+		SELECT
+		dt.table_name tableName,
+		dtc.comments tableComment,
+		dt.last_analyzed createTime
+		FROM
+		user_tables dt,
+		user_tab_comments dtc
+		WHERE
+		dt.table_name = dtc.table_name
 		<if test="tableName != null and tableName != ''">
-			AND lower(table_name) like lower(concat('%', #{tableName}, '%'))
+			AND lower(dt.table_name) like lower(concat('%', #{tableName}, '%'))
 		</if>
 		<if test="tableComment != null and tableComment != ''">
-			AND lower(table_comment) like lower(concat('%', #{tableComment}, '%'))
+			AND lower(dt.table_comment) like lower(concat('%', #{tableComment}, '%'))
 		</if>
-		<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-			AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+		<if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+			AND date_format(dt.last_analyzed,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
 		</if>
-		<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-			AND date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+		<if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+			AND date_format(dt.last_analyzed,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
 		</if>
 	</select>
 
