@@ -324,19 +324,6 @@ const ${BusinessName}: React.FC = () => {
                     });
                 }}
                 rowSelection={{}}
-                beforeSearchSubmit={(params) => {
-                    // 分隔搜索参数
-                    if (params.between) {
-                        const {between} = params
-                        // 移除参数
-                        delete params.between
-
-                        // 适配参数
-                        params.beginTime = between[0]
-                        params.endTime = between[1]
-                    }
-                    return params
-                }}
                 toolBarRender={(action, {selectedRowKeys}) => [
                     <Button key='add' type="default" onClick={refPost}>
                         <PlusOutlined/>
@@ -477,7 +464,7 @@ const ${BusinessName}: React.FC = () => {
                                         rules={[{required: ${isRequired}, message: '${comment}不能为空'}]}
                                         name="${field}"
                                     >
-                                        <DictionariesSelect type='${dictType}' />
+                                        <DictionariesSelect type='${dictType}'/>
                                     </Form.Item>
                                 #elseif($column.htmlType == "checkbox" && $dictType)
                                     <Form.Item
