@@ -36,11 +36,11 @@
 
 ## 🍎 分支说明
 
-| 分支                   | 说明                                                                 | 额外说明                    |
-|----------------------|--------------------------------------------------------------------|-------------------------|
-| master               | java8 + springboot 2.7.x + springcloud 2021 + spring cloud alibaba | 将于2023年11月18号停止维护，进入修复期 |
-| master-boot-3        | java17 + springboot 3.x + springcloud 2022 + spring cloud alibaba  | 主要版本                    |
-| spring-cloud-tencent | java17 + springboot 3.x + springcloud 2022 + spring cloud tencent  | 示范分支，不支持兼容过多新特性         |
+| 分支                   | 说明                                                                 | 额外说明            |
+|----------------------|--------------------------------------------------------------------|-----------------|
+| master               | java17 + springboot 3.x + springcloud 2022 + spring cloud alibaba  | 主要版本            |
+| jdk8                 | java8 + springboot 2.7.x + springcloud 2021 + spring cloud alibaba | jdk8            |
+| spring-cloud-tencent | java17 + springboot 3.x + springcloud 2022 + spring cloud tencent  | 示范分支，不支持兼容过多新特性 |
 
 ## 项目结构
 
