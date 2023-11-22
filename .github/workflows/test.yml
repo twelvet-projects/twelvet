@@ -33,14 +33,32 @@ jobs:
         run: cd docker && chmod 751 ./deploy.sh && ./deploy.sh init
 
       - name: Start Base
-        run: cd docker && ./deploy.sh base
+        run: |
+          cd docker
+          docker-compose up -d twelvet-mysql twelvet-redis
+          sleep 60
+          docker-compose up -d twelvet-nacos
 
       - name: Start Server
-        run: cd docker && ./deploy.sh server
+        run: |
+          sleep 30
+          cd docker
+          docker-compose up -d twelvet-gateway twelvet-auth twelvet-server-system
+
+      - name: Check Server twelvet-mysql
+        run: |
+          docker logs --tail 500 twelvet-mysql
+
+      - name: Check Server twelvet-redis
+        run: |
+          docker logs --tail 500 twelvet-redis
+
+      - name: Check Server twelvet-nacos
+        run: |
+          docker logs --tail 500 twelvet-nacos
 
       - name: Check Server twelvet-gateway
         run: |
-          sleep 30
           docker logs --tail 500 twelvet-gateway
 
       - name: Check Server twelvet-auth
