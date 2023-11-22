@@ -2,6 +2,8 @@
 
 # 🚀twelvet
 
+# JDK >= 8
+
 [![AUR](https://img.shields.io/github/license/twelvet-projects/twelvet)](https://github.com/twelvet-projects/twelvet/blob/master/LICENSE)
 [![](https://img.shields.io/badge/Author-TwelveT-orange.svg)](https://twelvet.cn)
 [![](https://img.shields.io/badge/version-2.7.5-success)](https://github.com/twelvet-projects/twelvet)
@@ -9,8 +11,6 @@
 [![GitHub forks](https://img.shields.io/github/forks/twelvet-projects/twelvet.svg?style=social&label=Fork)](https://github.com/twelvet-projects/twelvet/network/members)
 [![star](https://gitee.com/twelvet/twelvet/badge/star.svg?theme=white)](https://gitee.com/twelvet/twelvet/stargazers)
 [![fork](https://gitee.com/twelvet/twelvet/badge/fork.svg?theme=white)](https://gitee.com/twelvet/twelvet/members)
-
-### This version will be deprecated following the timeline of Spring Boot on 2023-11-18. There will be no further feature updates, although bug fixes will continue to be addressed. We strongly encourage you to upgrade to the Spring Boot 3 branch as soon as possible.
 
 A permission management system based on Spring Cloud Alibaba that integrates popular libraries on the market and can act
 as a framework for rapid development.
