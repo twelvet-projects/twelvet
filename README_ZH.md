@@ -1,5 +1,4 @@
-[English](https://github.com/twelvet-projects/twelvet/blob/master/README.md) | [English](https://github.com/twelvet-projects/twelvet/blob/master/README_EN.md)
-
+[中文](https://github.com/twelvet-projects/twelvet/blob/master/README_ZH.md) | [English](https://github.com/twelvet-projects/twelvet/blob/master/README.md)
 # 🚀twelvet
 
 # JDK >= 8
