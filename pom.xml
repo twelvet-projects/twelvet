@@ -48,7 +48,7 @@
 
         <spring-boot-admin.version>3.1.8</spring-boot-admin.version>
         <spring-boot.mybatis>3.0.2</spring-boot.mybatis>
-        <spring.authorization.version>3.1.4</spring.authorization.version>
+        <spring.authorization.version>3.1.5</spring.authorization.version>
 
         <swagger.core.version>2.2.16</swagger.core.version>
         <springdoc.version>2.2.0</springdoc.version>
