@@ -43,11 +43,12 @@ Official blog: https://twelvet.cn
 
 ## 🍎 Branch Description
 
-| Branch               | Description                                                        |
-|----------------------|--------------------------------------------------------------------|
-| master               | java8 + springboot 2.7.x + springcloud 2021 + spring cloud alibaba |
-| master-boot-3        | java17 + springboot 3.x + springcloud 2022 + spring cloud alibaba  |
-| spring-cloud-tencent | java17 + springboot 3.x + springcloud 2022 + spring cloud tencent  |
+| Branch               | Description                                                        | Additional Description                                                          |
+|----------------------|--------------------------------------------------------------------|---------------------------------------------------------------------------------|
+| master               | java17 + springboot 3.x + springcloud 2022 + spring cloud alibaba  | master                                                                          |
+| jdk8                 | java8 + springboot 2.7.x + springcloud 2021 + spring cloud alibaba | jdk8                                                                            |
+| spring-cloud-tencent | java17 + springboot 3.x + springcloud 2022 + spring cloud tencent  | Demonstration branch, does not support compatibility with too many new features |
+
 
 ## System Module
 
