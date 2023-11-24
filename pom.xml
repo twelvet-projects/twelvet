@@ -46,7 +46,7 @@
         <spring-cloud.version>2022.0.4</spring-cloud.version>
         <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
         <spring-boot-admin.version>3.1.8</spring-boot-admin.version>
-        <spring-boot.mybatis>3.0.2</spring-boot.mybatis>
+        <spring-boot.mybatis>3.0.3</spring-boot.mybatis>
         <spring.authorization.version>3.1.5</spring.authorization.version>
 
         <swagger.core.version>2.2.16</swagger.core.version>
