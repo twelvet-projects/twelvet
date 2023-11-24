@@ -5,7 +5,7 @@ import cn.hutool.http.HttpUtil;
 import com.twelvet.framework.log.vo.SysLogVO;
 import com.twelvet.framework.utils.http.IpUtils;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
+import org.springframework.core.StandardReflectionParameterNameDiscoverer;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -71,7 +71,7 @@ public class SysLogUtils {
 	 * @return 装载参数的容器
 	 */
 	public static EvaluationContext getContext(Object[] arguments, Method signatureMethod) {
-		String[] parameterNames = new LocalVariableTableParameterNameDiscoverer().getParameterNames(signatureMethod);
+		String[] parameterNames = new StandardReflectionParameterNameDiscoverer().getParameterNames(signatureMethod);
 		EvaluationContext context = new StandardEvaluationContext();
 		if (parameterNames == null) {
 			return context;
