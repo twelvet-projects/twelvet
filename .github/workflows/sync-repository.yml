@@ -35,6 +35,7 @@ jobs:
           - twelvet-ai
           - twelvet-mall-ui
           - twelvet-mall
+          - netty-websocket-spring-boot-starter
 #   gitlab:
 #     runs-on: ubuntu-latest
 #     steps:
