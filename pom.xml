@@ -60,7 +60,7 @@
         <commons.io.version>2.14.0</commons.io.version>
         <velocity.version>2.3</velocity.version>
         <hutool.version>5.8.22</hutool.version>
-        <redisson.version>3.23.5</redisson.version>
+        <redisson.version>3.24.3</redisson.version>
         <jasypt.version>3.0.5</jasypt.version>
 
         <xss-spring-boot-starter.version>3.1.5.1</xss-spring-boot-starter.version>
