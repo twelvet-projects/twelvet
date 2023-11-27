@@ -3,15 +3,9 @@ name: test
 on:
   workflow_dispatch:
   push:
-<<<<<<< HEAD
-    branches: [ master, jdk8, dev ]
-  pull_request:
-    branches: [ master, jdk8, dev ]
-=======
     branches: [ master, dev, jdk8 ]
   pull_request:
     branches: [ master, dev, jdk8 ]
->>>>>>> master
 
 jobs:
   build:
