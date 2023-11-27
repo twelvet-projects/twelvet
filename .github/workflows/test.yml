@@ -3,9 +3,9 @@ name: test
 on:
   workflow_dispatch:
   push:
-    branches: [ master, jdk8 ]
+    branches: [ master, jdk8, dev ]
   pull_request:
-    branches: [ master, jdk8 ]
+    branches: [ master, jdk8, dev ]
 
 jobs:
   build:
