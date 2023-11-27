@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +26,7 @@ import java.util.Map;
  */
 @SuppressWarnings("all")
 @Configuration
-public class RedisConfig extends CachingConfigurerSupport {
+public class RedisConfig implements CachingConfigurer {
 
 	/**
 	 * 配置缓存信息
