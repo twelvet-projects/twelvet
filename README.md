@@ -6,7 +6,7 @@
 
 [![AUR](https://img.shields.io/github/license/twelvet-projects/twelvet)](https://github.com/twelvet-projects/twelvet/blob/master/LICENSE)
 [![](https://img.shields.io/badge/Author-TwelveT-orange.svg)](https://twelvet.cn)
-[![](https://img.shields.io/badge/version-2.7.5-success)](https://github.com/twelvet-projects/twelvet)
+[![](https://img.shields.io/badge/version-3.2.0-success)](https://github.com/twelvet-projects/twelvet)
 [![GitHub stars](https://img.shields.io/github/stars/twelvet-projects/twelvet.svg?style=social&label=Stars)](https://github.com/twelvet-projects/twelvet/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/twelvet-projects/twelvet.svg?style=social&label=Fork)](https://github.com/twelvet-projects/twelvet/network/members)
 [![star](https://gitee.com/twelvet/twelvet/badge/star.svg?theme=white)](https://gitee.com/twelvet/twelvet/stargazers)
