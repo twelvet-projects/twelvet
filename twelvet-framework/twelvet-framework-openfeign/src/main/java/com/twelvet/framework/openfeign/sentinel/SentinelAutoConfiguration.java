@@ -27,5 +27,4 @@ public class SentinelAutoConfiguration {
 		return TwSentinelFeign.builder();
 	}
 
-
 }

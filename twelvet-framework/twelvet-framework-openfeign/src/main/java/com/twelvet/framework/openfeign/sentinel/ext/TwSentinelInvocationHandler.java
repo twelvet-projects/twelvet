@@ -64,22 +64,24 @@ public class TwSentinelInvocationHandler implements InvocationHandler {
 
 	@Override
 	public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
-        switch (method.getName()) {
-            case EQUALS -> {
-                try {
-                    Object otherHandler = args.length > 0 && args[0] != null ? Proxy.getInvocationHandler(args[0]) : null;
-                    return equals(otherHandler);
-                } catch (IllegalArgumentException e) {
-                    return false;
-                }
-            }
-            case HASH_CODE -> {
-                return hashCode();
-            }
-            case TO_STRING -> {
-                return toString();
-            }
-        }
+		switch (method.getName()) {
+			case EQUALS -> {
+				try {
+					Object otherHandler = args.length > 0 && args[0] != null ? Proxy.getInvocationHandler(args[0])
+							: null;
+					return equals(otherHandler);
+				}
+				catch (IllegalArgumentException e) {
+					return false;
+				}
+			}
+			case HASH_CODE -> {
+				return hashCode();
+			}
+			case TO_STRING -> {
+				return toString();
+			}
+		}
 
 		Object result;
 		InvocationHandlerFactory.MethodHandler methodHandler = this.dispatch.get(method);

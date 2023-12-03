@@ -162,10 +162,11 @@ public class TWTTokenEndpoint {
 			return AjaxResult.success();
 		}
 		// 清空用户信息
-		/*使用 evictIfPresent 替换 evict，立即删除
-		1. evict 异步或延迟执行
-		2. evictIfPresent 立即删除
-		https://docs.spring.io/spring-framework/docs/6.1.x/javadoc-api/org/springframework/cache/Cache.html*/
+		/*
+		 * 使用 evictIfPresent 替换 evict，立即删除 1. evict 异步或延迟执行 2. evictIfPresent 立即删除
+		 * https://docs.spring.io/spring-framework/docs/6.1.x/javadoc-api/org/
+		 * springframework/cache/Cache.html
+		 */
 		cacheManager.getCache(CacheConstants.USER_DETAILS).evictIfPresent(authorization.getPrincipalName());
 		// 清空access token
 		authorizationService.remove(authorization);
