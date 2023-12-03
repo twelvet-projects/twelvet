@@ -48,6 +48,7 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--spring-cloud-commons-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-commons</artifactId>

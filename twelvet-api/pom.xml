@@ -31,6 +31,18 @@
             <optional>true</optional>
         </dependency>
 
+        <!--loadbalancer-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+
+        <!--caffeine 替换LB 默认缓存实现-->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+        </dependency>
+
         <!--twelvet通用核心-->
         <dependency>
             <groupId>com.twelvet</groupId>

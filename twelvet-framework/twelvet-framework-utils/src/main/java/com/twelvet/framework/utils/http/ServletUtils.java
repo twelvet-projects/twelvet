@@ -15,10 +15,8 @@ import jakarta.servlet.http.HttpSession;
 import java.io.*;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 /**
  * @author twelvet
@@ -70,7 +68,8 @@ public class ServletUtils {
 	 */
 	public static Optional<HttpServletRequest> getRequest() {
 		return Optional
-			.ofNullable(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+			.of(((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes()))
+				.getRequest());
 	}
 
 	/**
@@ -95,9 +94,7 @@ public class ServletUtils {
 	 * @return ServletRequestAttributes
 	 */
 	public static ServletRequestAttributes getRequestAttributes() {
-		ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
-			.getRequestAttributes();
-		return requestAttributes;
+		return (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 	}
 
 	/**
@@ -124,7 +121,7 @@ public class ServletUtils {
 	public static Map<String, String> getMapParam(HttpServletRequest httpServletRequest) {
 		Map<String, String> map = new HashMap<>(6);
 		// 获取所有参数名称
-		Enumeration enu = httpServletRequest.getParameterNames();
+		Enumeration<String> enu = httpServletRequest.getParameterNames();
 		// 遍历hash
 		while (enu.hasMoreElements()) {
 			String paramName = (String) enu.nextElement();
@@ -133,7 +130,7 @@ public class ServletUtils {
 			// 是否存在参数
 			if (paramValues.length == 1) {
 				String paramValue = paramValues[0];
-				if (paramValue.length() != 0) {
+				if (!paramValue.isEmpty()) {
 					map.put(paramName, paramValue);
 				}
 			}
@@ -191,7 +188,7 @@ public class ServletUtils {
 		try {
 
 			httpServletResponse.setCharacterEncoding(CharsetKit.UTF_8);
-			filename = URLEncoder.encode(filename, CharsetKit.UTF_8);
+			filename = URLEncoder.encode(filename, StandardCharsets.UTF_8);
 			// Url编码，前台需自行还原
 			filename = "attachment; filename=" + filename;
 			// 设置Excel导出的名称
@@ -253,12 +250,7 @@ public class ServletUtils {
 	 * @return 编码后的内容
 	 */
 	public static String urlEncode(String str) {
-		try {
-			return URLEncoder.encode(str, "UTF-8");
-		}
-		catch (UnsupportedEncodingException e) {
-			return "";
-		}
+		return URLEncoder.encode(str, StandardCharsets.UTF_8);
 	}
 
 	/**
@@ -267,12 +259,7 @@ public class ServletUtils {
 	 * @return 解码后的内容
 	 */
 	public static String urlDecode(String str) {
-		try {
-			return URLDecoder.decode(str, "UTF-8");
-		}
-		catch (UnsupportedEncodingException e) {
-			return "";
-		}
+		return URLDecoder.decode(str, StandardCharsets.UTF_8);
 	}
 
 }
