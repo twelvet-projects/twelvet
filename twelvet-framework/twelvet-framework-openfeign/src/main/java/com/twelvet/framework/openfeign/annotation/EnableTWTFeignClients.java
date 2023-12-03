@@ -1,4 +1,4 @@
-package com.twelvet.framework.core.annotation;
+package com.twelvet.framework.openfeign.annotation;
 
 import com.twelvet.framework.core.config.JavaTimeModule;
 import org.springframework.cloud.openfeign.EnableFeignClients;

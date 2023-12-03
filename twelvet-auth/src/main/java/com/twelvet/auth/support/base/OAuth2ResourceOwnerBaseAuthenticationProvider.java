@@ -137,7 +137,7 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 			authorizedScopes = new LinkedHashSet<>(resouceOwnerBaseAuthenticationScopes.getScopes());
 		}
 		else {
-			throw new ScopeException(OAuth2ErrorCodesExpand.SCOPE_IS_EMPTY);
+			authorizedScopes = new LinkedHashSet<>();
 		}
 
 		Map<String, Object> reqParameters = resouceOwnerBaseAuthenticationScopes.getAdditionalParameters();

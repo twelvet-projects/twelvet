@@ -1,6 +1,6 @@
 package com.twelvet.server.job;
 
-import com.twelvet.framework.core.annotation.EnableTWTFeignClients;
+import com.twelvet.framework.openfeign.annotation.EnableTWTFeignClients;
 import com.twelvet.framework.core.annotation.EnableTwelveTConfig;
 import com.twelvet.framework.security.annotation.EnableTWTResourceServer;
 import com.twelvet.framework.swagger.annotation.EnableTwelveTSwagger2;
