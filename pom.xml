@@ -63,6 +63,7 @@
         <redisson.version>3.24.3</redisson.version>
         <jasypt.version>3.0.5</jasypt.version>
         <jaxb.version>2.3.5</jaxb.version>
+        <jaxb-api.version>2.3.1</jaxb-api.version>
 
         <xss-spring-boot-starter.version>3.1.5.1</xss-spring-boot-starter.version>
         <excel-spring-boot-starter.version>3.1.1</excel-spring-boot-starter.version>
@@ -354,11 +355,18 @@
             <optional>true</optional> <!-- 表示依赖不会传递 -->
         </dependency>
 
-        <!-- JAVA 17 -->
+        <!--兼容 java 17-->
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-impl</artifactId>
             <version>${jaxb.version}</version>
+        </dependency>
+
+        <!--兼容 java 17-->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>${jaxb-api.version}</version>
         </dependency>
 
         <!--配置文件加解密-->
