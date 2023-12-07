@@ -58,6 +58,12 @@
             <artifactId>knife4j-spring-boot-starter</artifactId>
         </dependency>
 
+        <!--openfeign模块-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-openfeign</artifactId>
+        </dependency>
+
         <!--twelvet core-->
         <dependency>
             <groupId>com.twelvet</groupId>
