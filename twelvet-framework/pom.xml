@@ -23,6 +23,7 @@
         <module>twelvet-framework-swagger</module>
         <module>twelvet-framework-datascope</module>
         <module>twelvet-framework-jdbc</module>
+        <module>twelvet-framework-openfeign</module>
     </modules>
 
     <dependencies>

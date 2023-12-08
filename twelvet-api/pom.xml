@@ -31,6 +31,12 @@
             <optional>true</optional>
         </dependency>
 
+        <!--openfeign-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-openfeign</artifactId>
+        </dependency>
+
         <!--twelvet通用核心-->
         <dependency>
             <groupId>com.twelvet</groupId>

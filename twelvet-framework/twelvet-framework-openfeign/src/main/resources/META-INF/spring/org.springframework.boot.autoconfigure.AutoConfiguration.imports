@@ -1,0 +1,2 @@
+com.twelvet.framework.openfeign.TwFeignAutoConfiguration
+com.twelvet.framework.openfeign.sentinel.SentinelAutoConfiguration

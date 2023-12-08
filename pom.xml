@@ -248,6 +248,13 @@
                 <version>${twelvet.version}</version>
             </dependency>
 
+            <!--openfeign模块-->
+            <dependency>
+                <groupId>com.twelvet</groupId>
+                <artifactId>twelvet-framework-openfeign</artifactId>
+                <version>${twelvet.version}</version>
+            </dependency>
+
             <!--日志模块-->
             <dependency>
                 <groupId>com.twelvet</groupId>
@@ -369,18 +376,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
-        </dependency>
-
-        <!--loadbalancer-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
-        </dependency>
-
-        <!--caffeine 替换LB 默认缓存实现-->
-        <dependency>
-            <groupId>com.github.ben-manes.caffeine</groupId>
-            <artifactId>caffeine</artifactId>
         </dependency>
 
         <!--配置文件加解密-->
