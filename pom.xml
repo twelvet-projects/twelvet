@@ -47,7 +47,7 @@
         <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
         <spring-boot-admin.version>3.1.8</spring-boot-admin.version>
         <mybatis.version>3.0.3</mybatis.version>
-        <spring-authorization.version>3.2.0</spring-authorization.version>
+        <spring-authorization.version>1.2.0</spring-authorization.version>
 
         <swagger-core.version>2.2.16</swagger-core.version>
         <springdoc.version>2.2.0</springdoc.version>
@@ -109,8 +109,8 @@
 
             <!-- Spring Authorization Server -->
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-oauth2-authorization-server</artifactId>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-oauth2-authorization-server</artifactId>
                 <version>${spring-authorization.version}</version>
             </dependency>
 
