@@ -49,8 +49,8 @@
         <mybatis.version>3.0.3</mybatis.version>
         <spring-authorization.version>1.2.1</spring-authorization.version>
 
-        <swagger-core.version>2.2.16</swagger-core.version>
-        <springdoc.version>2.2.0</springdoc.version>
+        <swagger-core.version>2.2.20</swagger-core.version>
+        <springdoc.version>2.3.0</springdoc.version>
         <knife4j.version>3.0.3</knife4j.version>
 
         <dynamic-datasource.version>4.2.0</dynamic-datasource.version>
