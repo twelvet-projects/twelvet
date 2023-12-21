@@ -56,11 +56,11 @@
         <dynamic-datasource.version>4.2.0</dynamic-datasource.version>
         <shardingsphere-jdbc.version>5.4.1</shardingsphere-jdbc.version>
 
-        <pagehelper.boot.version>2.0.0</pagehelper.boot.version>
-        <commons.io.version>2.14.0</commons.io.version>
+        <pagehelper.boot.version>2.1.0</pagehelper.boot.version>
+        <commons.io.version>2.15.1</commons.io.version>
         <velocity.version>2.3</velocity.version>
-        <hutool.version>5.8.22</hutool.version>
-        <redisson.version>3.24.3</redisson.version>
+        <hutool.version>5.8.23</hutool.version>
+        <redisson.version>3.25.2</redisson.version>
         <jasypt.version>3.0.5</jasypt.version>
         <jaxb.version>2.3.5</jaxb.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
