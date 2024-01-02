@@ -277,7 +277,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	 * 判断是否有子节点
 	 */
 	private boolean hasChild(List<SysDept> list, SysDept t) {
-		return getChildList(list, t).size() > 0;
+		return !getChildList(list, t).isEmpty();
 	}
 
 }
