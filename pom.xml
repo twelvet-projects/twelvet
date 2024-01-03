@@ -191,6 +191,13 @@
                 <version>${swagger-core.version}</version>
             </dependency>
 
+            <!--Swagger springdoc -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+
             <!--Excel-->
             <dependency>
                 <groupId>com.pig4cloud.excel</groupId>
@@ -217,13 +224,6 @@
                 <groupId>com.pig4cloud.plugin</groupId>
                 <artifactId>oss-spring-boot-starter</artifactId>
                 <version>${oss-spring-boot-starter.version}</version>
-            </dependency>
-
-            <!--springdoc -->
-            <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
-                <version>${springdoc.version}</version>
             </dependency>
 
             <!--多数据源-->
