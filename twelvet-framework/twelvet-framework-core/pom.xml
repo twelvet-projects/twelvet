@@ -32,6 +32,7 @@
         <dependency>
             <groupId>com.twelvet</groupId>
             <artifactId>twelvet-framework-swagger</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!--工具模块-->
