@@ -28,6 +28,12 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
+        <!--Swagger-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-swagger</artifactId>
+        </dependency>
+
         <!--工具模块-->
         <dependency>
             <groupId>com.twelvet</groupId>
