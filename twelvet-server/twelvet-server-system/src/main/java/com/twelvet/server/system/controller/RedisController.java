@@ -38,7 +38,7 @@ public class RedisController {
 	public AjaxResult getInfo() {
 		Properties info = (Properties) redisTemplate.execute((RedisCallback<Object>) RedisServerCommands::info);
 		Properties commandStats = (Properties) redisTemplate
-			.execute((RedisCallback<Object>) connection -> connection.info("commandstats"));
+			.execute((RedisCallback<Object>) connection -> connection.serverCommands().info("commandstats"));
 		Object dbSize = redisTemplate.execute((RedisCallback<Object>) RedisServerCommands::dbSize);
 
 		Map<String, Object> result = new HashMap<>(4);
