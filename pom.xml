@@ -53,7 +53,7 @@
         <springdoc.version>2.3.0</springdoc.version>
         <knife4j.version>3.0.3</knife4j.version>
 
-        <dynamic-datasource.version>4.2.0</dynamic-datasource.version>
+        <dynamic-datasource.version>4.3.0</dynamic-datasource.version>
         <shardingsphere-jdbc.version>5.4.1</shardingsphere-jdbc.version>
 
         <pagehelper.boot.version>2.1.0</pagehelper.boot.version>
