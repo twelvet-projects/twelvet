@@ -44,7 +44,7 @@
 
         <spring-boot-dependencies.version>2.7.18</spring-boot-dependencies.version>
         <spring-cloud.version>2021.0.8</spring-cloud.version>
-        <spring-cloud-alibaba.version>2021.0.5.0</spring-cloud-alibaba.version>
+        <spring-cloud-alibaba.version>2021.0.6.0</spring-cloud-alibaba.version>
         <spring-boot-admin.version>2.7.13</spring-boot-admin.version>
         <spring-boot.mybatis>2.3.2</spring-boot.mybatis>
         <spring-authorization.version>0.4.5</spring-authorization.version>
