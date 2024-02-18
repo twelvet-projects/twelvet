@@ -48,13 +48,13 @@
     </resultMap>
 
     <sql id="selectUserVo">
-        select u.user_id, u.dept_id, u.username, u.nick_name, u.email, u.avatar, u.phonenumber, u.sex, u.status, u.del_flag, u.login_ip, u.login_date,u.remark,
-        d.dept_id, d.parent_id, d.dept_name, d.order_num, d.leader, d.status as dept_status,
-        r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope, r.status as role_status
+        select u.user_id, u.dept_id, u.username, u.password, u.nick_name, u.email, u.avatar, u.phonenumber, u.sex, u.status, u.del_flag, u.login_ip, u.login_date,u.remark,
+               d.dept_id, d.parent_id, d.dept_name, d.order_num, d.leader, d.status as dept_status,
+               r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope, r.status as role_status
         from sys_user u
-		    left join sys_dept d on u.dept_id = d.dept_id
-		    left join sys_user_role ur on u.user_id = ur.user_id
-		    left join sys_role r on r.role_id = ur.role_id
+                 left join sys_dept d on u.dept_id = d.dept_id
+                 left join sys_user_role ur on u.user_id = ur.user_id
+                 left join sys_role r on r.role_id = ur.role_id
     </sql>
 
     <select id="selectUserList" parameterType="SysUser" resultMap="SysUserResult">
@@ -87,7 +87,8 @@
     </select>
 
     <select id="selectUserByUserName" parameterType="String" resultMap="SysUserResult">
-        select * from sys_user where username = #{username}
+        <include refid="selectUserVo"/>
+        where u.username = #{userName} and u.del_flag = '0'
     </select>
 
     <select id="selectUserById" parameterType="Long" resultMap="SysUserResult">
@@ -96,16 +97,16 @@
     </select>
 
     <select id="checkUserNameUnique" parameterType="String" resultType="int">
-		select count(1) from sys_user where username = #{username}
-	</select>
+        select count(1) from sys_user where username = #{username}
+    </select>
 
     <select id="checkPhoneUnique" parameterType="String" resultMap="SysUserResult">
-		select user_id, phonenumber from sys_user where phonenumber = #{phonenumber}
-	</select>
+        select user_id, phonenumber from sys_user where phonenumber = #{phonenumber}
+    </select>
 
     <select id="checkEmailUnique" parameterType="String" resultMap="SysUserResult">
-		select user_id, email from sys_user where email = #{email}
-	</select>
+        select user_id, email from sys_user where email = #{email}
+    </select>
 
     <insert id="insertUser" parameterType="SysUser" useGeneratedKeys="true" keyProperty="userId">
         insert into sys_user(
@@ -160,20 +161,20 @@
     </update>
 
     <update id="updateUserStatus" parameterType="SysUser">
- 		update sys_user set status = #{status} where user_id = #{userId}
-	</update>
+        update sys_user set status = #{status} where user_id = #{userId}
+    </update>
 
     <update id="updateUserAvatar" parameterType="SysUser">
- 		update sys_user set avatar = #{avatar} where username = #{userName}
-	</update>
+        update sys_user set avatar = #{avatar} where username = #{userName}
+    </update>
 
     <update id="resetUserPwd" parameterType="SysUser">
- 		update sys_user set password = #{password} where username = #{userName}
-	</update>
+        update sys_user set password = #{password} where username = #{userName}
+    </update>
 
     <delete id="deleteUserById" parameterType="Long">
- 		delete from sys_user where user_id = #{userId}
- 	</delete>
+        delete from sys_user where user_id = #{userId}
+    </delete>
 
     <delete id="deleteUserByIds" parameterType="Long">
         update sys_user set del_flag = '2' where user_id in
