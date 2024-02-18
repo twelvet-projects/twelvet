@@ -96,7 +96,9 @@ public class SysUserServiceImpl implements ISysUserService {
 	 */
 	@Override
 	public SysUser selectUserById(Long userId) {
-		return sysUserMapper.selectUserById(userId);
+		SysUser sysUser = sysUserMapper.selectUserById(userId);
+		sysUser.setPassword(null);
+		return sysUser;
 	}
 
 	/**
