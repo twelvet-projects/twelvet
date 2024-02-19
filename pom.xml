@@ -61,7 +61,7 @@
         <pagehelper.boot.version>2.1.0</pagehelper.boot.version>
         <commons.io.version>2.14.0</commons.io.version>
         <velocity.version>2.3</velocity.version>
-        <hutool.version>5.8.23</hutool.version>
+        <hutool.version>5.8.26</hutool.version>
         <redisson.version>3.24.3</redisson.version>
         <qiniu.version>7.12.1</qiniu.version>
         <jasypt.version>3.0.5</jasypt.version>
