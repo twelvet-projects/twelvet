@@ -1,7 +1,7 @@
 [中文](https://github.com/twelvet-projects/twelvet/blob/master/README_ZH.md) | [English](https://github.com/twelvet-projects/twelvet/blob/master/README.md)
 # 🚀twelvet
 
-# JDK >= 8
+# JDK >= 17
 
 [![AUR](https://img.shields.io/github/license/twelvet-projects/twelvet)](https://github.com/twelvet-projects/twelvet/blob/master/LICENSE)
 [![](https://img.shields.io/badge/Author-TwelveT-orange.svg)](https://twelvet.cn)
@@ -142,9 +142,36 @@ chmod 751 deploy.sh
 ./deploy.sh nginx
 ```
 
-## TwelveT微服务交流群
+## 开源共建
 
-QQ群： [![加入QQ群](https://img.shields.io/badge/985830229-blue.svg)](https://jq.qq.com/?_wv=1027&k=cznM6Q00) 点击按钮入群。
+### 开源协议
+
+twelvet 开源软件遵循 [Apache 2.0 协议](https://www.apache.org/licenses/LICENSE-2.0.html)。
+允许商业使用，但务必保留类作者、Copyright 信息。
+
+### 其他说明
+
+1. 欢迎提交 [PR](https://github.com/twelvet-projects/twelvet/pulls)，注意对应提交对应分支
+   代码规范 [spring-javaformat](https://github.com/spring-io/spring-javaformat)
+
+   <details>
+    <summary>代码规范说明</summary>
+
+    1. 由于 <a href="https://github.com/spring-io/spring-javaformat" target="_blank">spring-javaformat</a>
+       强制所有代码按照指定格式排版，未按此要求提交的代码将不能通过合并（打包）
+    2. 如果使用 IntelliJ IDEA
+       开发，请安装自动格式化软件 <a href="https://repo1.maven.org/maven2/io/spring/javaformat/spring-javaformat-intellij-idea-plugin/" target="_blank">
+       spring-javaformat-intellij-idea-plugin</a>
+    3. 其他开发工具，请参考 <a href="https://github.com/spring-io/spring-javaformat" target="_blank">
+       spring-javaformat</a>
+       说明，或`提交代码前`在项目根目录运行下列命令（需要开发者电脑支持`mvn`命令）进行代码格式化
+       ```
+       mvn spring-javaformat:apply
+       ```
+   </details>
+
+2. 欢迎提交 [issue](https://github.com/twelvet-projects/twelvet/issues)，请写清楚遇到问题的原因、开发环境、复显步骤。
 
 ## 🤝鸣谢
+
 感谢jetbrains提供的许可证[![jetbrains](https://cloud.twelvet.cn/jetbrains.png)](https://www.jetbrains.com?from=https://github.com/twelvet-projects/twelvet)
