@@ -154,6 +154,36 @@ chmod 751 deploy.sh
 ./deploy.sh nginx
 ```
 
+## Open Source Collaboration
+
+### Open Source License
+
+The Twelvet open-source software follows the MIT License [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0.html)。
+Permits commercial use, but requires the preservation of the original author and copyright information.
+
+### Other terms
+
+1. Welcome to contribute [PR](https://github.com/twelvet-projects/twelvet/pulls)，Make sure to submit to the corresponding branch
+   Code conventions [spring-javaformat](https://github.com/spring-io/spring-javaformat)
+
+   <details>
+    <summary>Code style guidelines</summary>
+
+    1. Due to <a href="https://github.com/spring-io/spring-javaformat" target="_blank">spring-javaformat</a>
+        the requirement of enforcing a specific code formatting, any code that is not submitted according to this requirement will not be able to be merged (packaged)
+    2. If you are using IntelliJ IDEA for development, please install the auto-formatting plugin. <a href="https://repo1.maven.org/maven2/io/spring/javaformat/spring-javaformat-intellij-idea-plugin/" target="_blank">
+       spring-javaformat-intellij-idea-plugin</a>
+    3. For other development tools, please refer to their respective documentation or community for instructions on configuring automatic code formatting. <a href="https://github.com/spring-io/spring-javaformat" target="_blank">
+       spring-javaformat</a>
+       Before committing code, please run the following command in the project root directory (requires developer's computer to support the mvn command) to format the code.
+       ```
+       mvn spring-javaformat:apply
+       ```
+   </details>
+
+2. Welcome to contribute [issue](https://github.com/twelvet-projects/twelvet/issues)，Please provide clear explanations of the issue, development environment, and steps to reproduce.
+
+
 ## 🤝Thank You
 
 Thanks to jetbrains for the
