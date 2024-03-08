@@ -217,77 +217,77 @@
             <dependency>
                 <groupId>com.twelvet</groupId>
                 <artifactId>twelvet-framework-datasource</artifactId>
-                <version>2.7.18</version>
+                <version>${twelvet.version}</version>
             </dependency>
 
             <!--公共安全配置模块-->
             <dependency>
                 <groupId>com.twelvet</groupId>
                 <artifactId>twelvet-framework-security</artifactId>
-                <version>2.7.18</version>
+                <version>${twelvet.version}</version>
             </dependency>
 
             <!--twelvet通用核心-->
             <dependency>
                 <groupId>com.twelvet</groupId>
                 <artifactId>twelvet-framework-core</artifactId>
-                <version>2.7.18</version>
+                <version>${twelvet.version}</version>
             </dependency>
 
             <!--Redis缓存模块-->
             <dependency>
                 <groupId>com.twelvet</groupId>
                 <artifactId>twelvet-framework-redis</artifactId>
-                <version>2.7.18</version>
+                <version>${twelvet.version}</version>
             </dependency>
 
             <!--twelvet通用工具-->
             <dependency>
                 <groupId>com.twelvet</groupId>
                 <artifactId>twelvet-framework-utils</artifactId>
-                <version>2.7.18</version>
+                <version>${twelvet.version}</version>
             </dependency>
 
             <!--openfeign模块-->
             <dependency>
                 <groupId>com.twelvet</groupId>
                 <artifactId>twelvet-framework-openfeign</artifactId>
-                <version>2.7.18</version>
+                <version>${twelvet.version}</version>
             </dependency>
 
             <!--日志模块-->
             <dependency>
                 <groupId>com.twelvet</groupId>
                 <artifactId>twelvet-framework-log</artifactId>
-                <version>2.7.18</version>
+                <version>${twelvet.version}</version>
             </dependency>
 
             <!-- 数据权限 -->
             <dependency>
                 <groupId>com.twelvet</groupId>
                 <artifactId>twelvet-framework-datascope</artifactId>
-                <version>2.7.18</version>
+                <version>${twelvet.version}</version>
             </dependency>
 
             <!-- 接口文档模块 -->
             <dependency>
                 <groupId>com.twelvet</groupId>
                 <artifactId>twelvet-framework-swagger</artifactId>
-                <version>2.7.18</version>
+                <version>${twelvet.version}</version>
             </dependency>
 
             <!-- jdbc -->
             <dependency>
                 <groupId>com.twelvet</groupId>
                 <artifactId>twelvet-framework-jdbc</artifactId>
-                <version>2.7.18</version>
+                <version>${twelvet.version}</version>
             </dependency>
 
             <!--system API-->
             <dependency>
                 <groupId>com.twelvet</groupId>
                 <artifactId>twelvet-api-system</artifactId>
-                <version>2.7.18</version>
+                <version>${twelvet.version}</version>
             </dependency>
 
             <!--Excel-->
@@ -322,28 +322,28 @@
             <dependency>
                 <groupId>com.twelvet</groupId>
                 <artifactId>twelvet-api-job</artifactId>
-                <version>2.7.18</version>
+                <version>${twelvet.version}</version>
             </dependency>
 
             <!--DFS API-->
             <dependency>
                 <groupId>com.twelvet</groupId>
                 <artifactId>twelvet-api-dfs</artifactId>
-                <version>2.7.18</version>
+                <version>${twelvet.version}</version>
             </dependency>
 
             <!--Gen API-->
             <dependency>
                 <groupId>com.twelvet</groupId>
                 <artifactId>twelvet-api-gen</artifactId>
-                <version>2.7.18</version>
+                <version>${twelvet.version}</version>
             </dependency>
 
             <!--Auth API-->
             <dependency>
                 <groupId>com.twelvet</groupId>
                 <artifactId>twelvet-api-auth</artifactId>
-                <version>2.7.18</version>
+                <version>${twelvet.version}</version>
             </dependency>
 
             <!--七牛云oss-->
