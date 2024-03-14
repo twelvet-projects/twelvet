@@ -52,7 +52,7 @@
         <snakeyaml.version>1.33</snakeyaml.version>
 
         <swagger-core.version>2.2.20</swagger-core.version>
-        <springdoc.version>1.7.0</springdoc.version>
+        <springdoc.version>1.8.0</springdoc.version>
         <knife4j.version>3.0.3</knife4j.version>
 
         <dynamic-datasource.version>4.2.0</dynamic-datasource.version>
