@@ -73,7 +73,7 @@
 
         <docker.plugin.version>0.32.0</docker.plugin.version>
         <spring.checkstyle.plugin>0.0.39</spring.checkstyle.plugin>
-        <git.commit.plugin>8.0.1</git.commit.plugin>
+        <git.commit.plugin>8.0.2</git.commit.plugin>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
     </properties>
 
