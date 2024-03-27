@@ -119,7 +119,7 @@ CREATE TABLE `sys_dict_data`
     `remark`      varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
     PRIMARY KEY (`dict_code`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 110
+  AUTO_INCREMENT = 121
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '字典数据表'
   ROW_FORMAT = DYNAMIC;
@@ -234,6 +234,10 @@ VALUES (117, 1, 'JDBC', '1', 'ds_config_type', NULL, NULL, 'N', 0, 'admin', '202
 INSERT INTO `sys_dict_data`
 VALUES (118, 7, '瀚高', 'highgo', 'ds_type', NULL, NULL, 'N', 0, 'admin', '2023-11-16 13:58:38', 'admin',
         '2023-11-16 13:58:42', '瀚高数据库');
+INSERT INTO `sys_dict_data`
+VALUES (119, 1, '中文', 'zh_CN', 'i18n', NULL, NULL, 'N', 0, 'admin', '2024-03-26 21:16:31', '', NULL, NULL);
+INSERT INTO `sys_dict_data`
+VALUES (120, 2, 'English', 'en', 'i18n', NULL, NULL, 'N', 0, 'admin', '2024-03-26 21:17:03', '', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_dict_type
@@ -253,7 +257,7 @@ CREATE TABLE `sys_dict_type`
     PRIMARY KEY (`dict_id`) USING BTREE,
     UNIQUE INDEX `dict_type` (`dict_type`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 104
+  AUTO_INCREMENT = 107
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '字典类型表'
   ROW_FORMAT = DYNAMIC;
@@ -289,6 +293,8 @@ VALUES (104, '代码生成器支持的数据库类型', 'ds_type', 0, 'admin', '
         '代码生成器支持的数据库类型');
 INSERT INTO `sys_dict_type`
 VALUES (105, '数据库链接类型', 'ds_config_type', 0, 'admin', '2023-11-04 19:03:57', '', NULL, '数据库链接类型');
+INSERT INTO `sys_dict_type`
+VALUES (106, '国际化', 'i18n', 0, 'admin', '2024-03-26 21:15:49', '', NULL, '国际化i18n');
 
 
 -- ----------------------------
