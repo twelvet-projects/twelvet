@@ -1096,6 +1096,29 @@ CREATE TABLE `undo_log`
   COLLATE = utf8mb4_general_ci COMMENT = 'AT transaction mode undo table'
   ROW_FORMAT = DYNAMIC;
 
+
+-- ----------------------------
+-- Table structure for i18n
+-- ----------------------------
+DROP TABLE IF EXISTS `i18n`;
+CREATE TABLE `i18n`
+(
+    `i18n_id`     bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT 'ID',
+    `code`        varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL DEFAULT '' COMMENT '唯一Code',
+    `type`        varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL DEFAULT '' COMMENT '语言类型：zh_CN,en...',
+    `value`       text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci         NOT NULL COMMENT '翻译值',
+    `create_time` datetime                                                      NOT NULL COMMENT '创建时间',
+    `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT '' COMMENT '更新者',
+    `update_time` datetime                                                      NOT NULL COMMENT '更新时间',
+    `remark`      varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT NULL COMMENT '备注',
+    PRIMARY KEY (`i18n_id`) USING BTREE,
+    UNIQUE INDEX `un_code_type` (`code`, `type`) USING BTREE COMMENT 'Code翻译唯一'
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 0
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = '国际化表'
+  ROW_FORMAT = DYNAMIC;
+
 -- ----------------------------
 -- Records of undo_log
 -- ----------------------------
