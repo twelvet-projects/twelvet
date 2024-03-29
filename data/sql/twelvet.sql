@@ -235,7 +235,7 @@ INSERT INTO `sys_dict_data`
 VALUES (118, 7, '瀚高', 'highgo', 'ds_type', NULL, NULL, 'N', 0, 'admin', '2023-11-16 13:58:38', 'admin',
         '2023-11-16 13:58:42', '瀚高数据库');
 INSERT INTO `sys_dict_data`
-VALUES (119, 1, '中文', 'zh_CN', 'i18n', NULL, NULL, 'N', 0, 'admin', '2024-03-26 21:16:31', '', NULL, NULL);
+VALUES (119, 1, '简体中文', 'zh_CN', 'i18n', NULL, NULL, 'N', 0, 'admin', '2024-03-26 21:16:31', '', NULL, NULL);
 INSERT INTO `sys_dict_data`
 VALUES (120, 2, 'English', 'en', 'i18n', NULL, NULL, 'N', 0, 'admin', '2024-03-26 21:17:03', '', NULL, NULL);
 
