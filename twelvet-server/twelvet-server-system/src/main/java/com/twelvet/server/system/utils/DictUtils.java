@@ -23,7 +23,7 @@ public class DictUtils {
 	}
 
 	/**
-	 * 设置cache key
+	 * 获取cache key
 	 * @param configKey 参数键
 	 * @return 缓存键key
 	 */
