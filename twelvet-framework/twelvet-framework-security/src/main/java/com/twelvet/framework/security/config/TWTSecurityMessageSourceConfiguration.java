@@ -20,7 +20,7 @@ public class TWTSecurityMessageSourceConfiguration implements WebMvcConfigurer {
 	@Bean
 	public MessageSource securityMessageSource() {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-		messageSource.addBasenames("classpath:i18n/errors/messages");
+		messageSource.addBasenames("classpath:i18n/security/twelvet");
 		messageSource.setDefaultLocale(Locale.CHINA);
 		return messageSource;
 	}
