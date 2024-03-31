@@ -1,15 +1,15 @@
 DROP
-    DATABASE IF EXISTS `twelvet_nacos`;
+DATABASE IF EXISTS `twelvet_nacos`;
 
 CREATE
-    DATABASE `twelvet_nacos` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+DATABASE `twelvet_nacos` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 SET NAMES utf8;
 SET
-    FOREIGN_KEY_CHECKS = 0;
+FOREIGN_KEY_CHECKS = 0;
 
 USE
-    `twelvet_nacos`;
+`twelvet_nacos`;
 
 -- ----------------------------
 -- Table structure for config_info
@@ -17,23 +17,23 @@ USE
 DROP TABLE IF EXISTS `config_info`;
 CREATE TABLE `config_info`
 (
-    `id`                 bigint(20)                                       NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `id`                 bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
     `data_id`            varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
-    `group_id`           varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT NULL,
-    `content`            longtext CHARACTER SET utf8 COLLATE utf8_bin     NOT NULL COMMENT 'content',
-    `md5`                varchar(32) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL COMMENT 'md5',
+    `group_id`           varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
+    `content`            longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'content',
+    `md5`                varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'md5',
     `gmt_create`         datetime                                         NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT '创建时间',
     `gmt_modified`       datetime                                         NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT '修改时间',
-    `src_user`           text CHARACTER SET utf8 COLLATE utf8_bin         NULL COMMENT 'source user',
-    `src_ip`             varchar(20) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL COMMENT 'source ip',
-    `app_name`           varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT NULL,
-    `tenant_id`          varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT '' COMMENT '租户字段',
-    `c_desc`             varchar(256) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT NULL,
-    `c_use`              varchar(64) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL,
-    `effect`             varchar(64) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL,
-    `type`               varchar(64) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL,
-    `c_schema`           text CHARACTER SET utf8 COLLATE utf8_bin         NULL,
-    `encrypted_data_key` text CHARACTER SET utf8 COLLATE utf8_bin         NOT NULL COMMENT '秘钥',
+    `src_user`           text CHARACTER SET utf8 COLLATE utf8_bin NULL COMMENT 'source user',
+    `src_ip`             varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'source ip',
+    `app_name`           varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
+    `tenant_id`          varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '' COMMENT '租户字段',
+    `c_desc`             varchar(256) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
+    `c_use`              varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
+    `effect`             varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
+    `type`               varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
+    `c_schema`           text CHARACTER SET utf8 COLLATE utf8_bin NULL,
+    `encrypted_data_key` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '秘钥',
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_configinfo_datagrouptenant` (`data_id`, `group_id`, `tenant_id`) USING BTREE
 ) ENGINE = InnoDB
@@ -47,9 +47,9 @@ CREATE TABLE `config_info`
 -- ----------------------------
 INSERT INTO `config_info`
 VALUES (1, 'twelvet-app-dev.yml', 'DEFAULT_GROUP',
-        '# 配置文件加密根密码\njasypt:\n  encryptor:\n    password: twelvet\n    algorithm: PBEWithMD5AndDES\n    iv-generator-classname: org.jasypt.iv.NoIvGenerator\n\n# 服务调用超时时间(ms)\nribbon:\n  ReadTimeout: 8000\n  ConnectTimeout: 8000\n\n# 认证配置\nsecurity:\n  oauth2:\n    # 配置Resource Client_id信息\n    client:\n      client-id: twelvet\n      client-secret: 123456\n      scope: server\n    resource:\n      loadBalanced: true\n      token-info-uri: http://twelvet-auth/oauth/check_token\n    ignore:\n      urls:\n        - /error\n        - /actuator/**\n        - /v3/api-docs\nspring:\n  cache:\n    type: redis\n  jackson:\n    default-property-inclusion: non_null\n    time-zone: GMT+8\n  cloud:\n    openfeign:\n      sentinel:\n        enabled: true\n      okhttp:\n        enabled: false\n      httpclient:\n        enabled: false\n      compression:\n        request:\n          enabled: true\n        response:\n          enabled: true\n    # 配置sentinel控制台\n    sentinel:\n      # 取消控制台懒加载\n      eager: true\n      transport:\n        # 控制台地址：Port端口\n        dashboard: twelvet-sentinel:8101\n\n# 暴露监控端点\nmanagement:\n  endpoints:\n    web:\n      exposure:\n        include: \'*\'\n\n# Mybatis配置\nmybatis:\n  # 搜索指定包别名\n  typeAliasesPackage: com.twelvet.api.*.domain\n  # 配置mapper的扫描，找到所有的mapper.xml映射文件\n  mapperLocations: classpath*:mapper/**/*Mapper.xml\n  # Mybatis开启日志打印\n  configuration:\n    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl\n\n# 分布式事务配置\nseata:\n  # 未配置分布式事务,不要打开,会报错，且spring.datasource.dynami.seata需要同时开启\n  enabled: false\n  application-id: ${twelvet.name}\n  # 事务分组,nacos配置上必须相对应的配置\n  tx-service-group: ${twelvet.name}-group\n  # 开启自动数据源代理\n  enable-auto-data-source-proxy: true\n  config:\n    type: nacos\n    nacos:\n      server-addr: http://nacos.twelvet.cn\n      namespace: 60ca01e2-221e-47af-b7e5-64f2a7336973\n      group: DEFAULT_GROUP\n  registry:\n    type: nacos\n    nacos:\n      server-addr: http://nacos.twelvet.cn\n      application: seata-server\n      group: DEFAULT_GROUP\n      namespace: 60ca01e2-221e-47af-b7e5-64f2a7336973\n      cluster: DEFAULT\n\n# swagger 配置\nswagger:\n  enabled: true\n  title: TwelveT Swagger API\n  gateway: http://${GATEWAY_HOST:twelvet-gateway}:${GATEWAY-PORT:8080}\n  token-url: ${swagger.gateway}/auth/oauth2/token\n  scope: server\n  services:\n    twelvet-auth: auth\n    twelvet-server-system: system',
-        '96ec49528413d882567b029665b32370', '2020-06-04 12:38:30', '2023-12-08 18:06:53', 'nacos', '127.0.0.1', '',
-        'eeb43899-8a88-4f5b-b0e0-d7c8fd09b86e', '公共配置', 'null', 'null', 'yaml', 'null', '');
+        '# 配置文件加密根密码\njasypt:\n  encryptor:\n    password: twelvet\n    algorithm: PBEWithMD5AndDES\n    iv-generator-classname: org.jasypt.iv.NoIvGenerator\n\n# 服务调用超时时间(ms)\nribbon:\n  ReadTimeout: 8000\n  ConnectTimeout: 8000\n\n# 认证配置\nsecurity:\n  oauth2:\n    # 配置Resource Client_id信息\n    client:\n      client-id: twelvet\n      client-secret: 123456\n      scope: server\n    resource:\n      loadBalanced: true\n      token-info-uri: http://twelvet-auth/oauth/check_token\n    ignore:\n      urls:\n        - /error\n        - /actuator/**\n        - /v3/api-docs\nspring:\n  # 资源信息\n  messages:\n    # 国际化资源文件路径\n    basename: i18n/system/twelvet,i18n/security/twelvet\n    # 缓存持续时间(秒)\n    cache-duration: 1800\n  cache:\n    type: redis\n  jackson:\n    default-property-inclusion: non_null\n    time-zone: GMT+8\n  cloud:\n    openfeign:\n      sentinel:\n        enabled: true\n      okhttp:\n        enabled: false\n      httpclient:\n        enabled: false\n      compression:\n        request:\n          enabled: true\n        response:\n          enabled: true\n    # 配置sentinel控制台\n    sentinel:\n      # 取消控制台懒加载\n      eager: true\n      transport:\n        # 控制台地址：Port端口\n        dashboard: twelvet-sentinel:8101\n\n# 暴露监控端点\nmanagement:\n  endpoints:\n    web:\n      exposure:\n        include: \' *\'\n\n# Mybatis配置\nmybatis:\n  # 搜索指定包别名\n  typeAliasesPackage: com.twelvet.api.*.domain\n  # 配置mapper的扫描，找到所有的mapper.xml映射文件\n  mapperLocations: classpath*:mapper/**/*Mapper.xml\n  # Mybatis开启日志打印\n  configuration:\n    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl\n\n# 分布式事务配置\nseata:\n  # 未配置分布式事务,不要打开,会报错，且spring.datasource.dynami.seata需要同时开启\n  enabled: false\n  application-id: ${twelvet.name}\n  # 事务分组,nacos配置上必须相对应的配置\n  tx-service-group: ${twelvet.name}-group\n  # 开启自动数据源代理\n  enable-auto-data-source-proxy: true\n  config:\n    type: nacos\n    nacos:\n      server-addr: http://nacos.twelvet.cn\n      namespace: 60ca01e2-221e-47af-b7e5-64f2a7336973\n      group: DEFAULT_GROUP\n  registry:\n    type: nacos\n    nacos:\n      server-addr: http://nacos.twelvet.cn\n      application: seata-server\n      group: DEFAULT_GROUP\n      namespace: 60ca01e2-221e-47af-b7e5-64f2a7336973\n      cluster: DEFAULT\n\n# swagger 配置\nswagger:\n  enabled: true\n  title: TwelveT Swagger API\n  gateway: http://${GATEWAY_HOST:twelvet-gateway}:${GATEWAY-PORT:8080}\n  token-url: ${swagger.gateway}/auth/oauth2/token\n  scope: server\n  services:\n    twelvet-auth: auth\n    twelvet-server-system: system',
+        '66f760256bbf2d785990cb3f8cd8b81e', '2020-06-04 12:38:30', '2024-03-30 19:12:33', 'nacos', '0:0:0:0:0:0:0:1',
+        '', 'eeb43899-8a88-4f5b-b0e0-d7c8fd09b86e', '公共配置', 'null', 'null', 'yaml', 'null', '');
 INSERT INTO `config_info`
 VALUES (2, 'twelvet-auth-dev.yml', 'DEFAULT_GROUP',
         'spring: \n  # 模板引擎配置\n  freemarker:\n    allow-request-override: false\n    allow-session-override: false\n    check-template-location: true\n    expose-request-attributes: false\n    expose-session-attributes: false\n    expose-spring-macro-helpers: true\n    prefer-file-system-access: true\n    # 后缀名\n    suffix: .ftl  \n    content-type: text/html\n    enabled: true\n    # 缓存配置\n    cache: true \n    # 模板加载路径 按需配置\n    template-loader-path: classpath:/templates/ \n    charset: UTF-8\n  data:\n    redis:\n      host: twelvet-redis\n      port: 6379\n      # 连接超时时间\n      timeout: 30s\n      lettuce:\n        pool:\n          # 连接池中的最小空闲连接\n          min-idle: 0\n          # 连接池中的最大空闲连接\n          max-idle: 8\n          # 连接池的最大数据库连接数\n          max-active: 8\n          # #连接池最大阻塞等待时间（使用负值表示没有限制）\n          max-wait: -1ms\n  \nswagger:\n  title: TwelveT Swagger API\n  version: 2.7.0\n  description: 授权中心服务\n  license: Powered By TwelveT\n  licenseUrl: https://twelvet.cn\n  terms-of-service-url: https://twelvet.cn\n  contact:\n    name: TwelveT\n    email: 2471835953@qq.com\n    url: https://twelvet.cn\n  authorization:\n    name: password\n    token-url-list:\n      - http://${GATEWAY_HOST:localhost}:${GATEWAY_PORT:88}/auth/oauth/token',
