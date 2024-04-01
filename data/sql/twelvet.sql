@@ -237,7 +237,7 @@ VALUES (118, 7, '瀚高', 'highgo', 'ds_type', NULL, NULL, 'N', 0, 'admin', '202
 INSERT INTO `sys_dict_data`
 VALUES (119, 1, '简体中文', 'zh_CN', 'i18n', NULL, NULL, 'N', 0, 'admin', '2024-03-26 21:16:31', '', NULL, NULL);
 INSERT INTO `sys_dict_data`
-VALUES (120, 2, 'English', 'en', 'i18n', NULL, NULL, 'N', 0, 'admin', '2024-03-26 21:17:03', '', NULL, NULL);
+VALUES (120, 2, 'English US', 'en_US', 'i18n', NULL, NULL, 'N', 0, 'admin', '2024-03-26 21:17:03', '', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_dict_type
@@ -1104,8 +1104,8 @@ DROP TABLE IF EXISTS `i18n`;
 CREATE TABLE `i18n`
 (
     `i18n_id`     bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT 'ID',
-    `code`        varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL DEFAULT '' COMMENT '唯一Code',
-    `type`        varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL DEFAULT '' COMMENT '语言类型：zh_CN,en...',
+    `code`        varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '唯一Code',
+    `type`        varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL DEFAULT '' COMMENT '语言类型：zh_CN,en_US...',
     `value`       text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci         NOT NULL COMMENT '翻译值',
     `create_time` datetime                                                      NOT NULL COMMENT '创建时间',
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT '' COMMENT '更新者',
@@ -1118,7 +1118,6 @@ CREATE TABLE `i18n`
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = '国际化表'
   ROW_FORMAT = DYNAMIC;
-
 -- ----------------------------
 -- Records of undo_log
 -- ----------------------------
