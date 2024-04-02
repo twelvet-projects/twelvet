@@ -1130,6 +1130,9 @@ CREATE TABLE `i18n`
   COLLATE = utf8mb4_general_ci COMMENT = '国际化表'
   ROW_FORMAT = DYNAMIC;
 
+-- ----------------------------
+-- Records of i18n
+-- ----------------------------
 INSERT INTO `i18n`
 VALUES (1, 'system.menu.index', 'zh_CN', '欢迎页', '2024-03-31 11:32:29', 'admin', '2024-03-31 11:32:29', '欢迎页');
 INSERT INTO `i18n`
