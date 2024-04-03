@@ -6,6 +6,7 @@ import com.twelvet.api.system.domain.vo.MetaVo;
 import com.twelvet.api.system.domain.vo.RouterVo;
 import com.twelvet.api.system.domain.vo.TreeSelect;
 import com.twelvet.framework.core.constants.UserConstants;
+import com.twelvet.framework.core.locale.I18nUtils;
 import com.twelvet.framework.datasource.annotation.ShardingDatasource;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.StringUtils;
@@ -62,7 +63,11 @@ public class SysMenuServiceImpl implements ISysMenuService {
 			menu.getParams().put("userId", userId);
 			menuList = menuMapper.selectMenuListByUserId(menu);
 		}
-		return menuList;
+		return menuList.stream().peek(item -> {
+			String menuName = item.getMenuName();
+			menuName = I18nUtils.getLocale(menuName);
+			item.setMenuName(menuName);
+		}).toList();
 	}
 
 	/**
@@ -118,14 +123,15 @@ public class SysMenuServiceImpl implements ISysMenuService {
 	public List<RouterVo> buildMenus(List<SysMenu> menus) {
 		List<RouterVo> routers = new LinkedList<>();
 		for (SysMenu menu : menus) {
+			String menuName = I18nUtils.getLocale(menu.getMenuName());
 			RouterVo router = new RouterVo();
 			router.setHidden(menu.getVisible().equals("1"));
-			router.setName(menu.getMenuName());
+			router.setName(menuName);
 			router.setPath(getRouterPath(menu));
 			router.setComponent(getComponent(menu));
 			router.setIcon(menu.getIcon());
 			router.setMenuType(menu.getMenuType());
-			router.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon()));
+			router.setMeta(new MetaVo(menuName, menu.getIcon()));
 			List<SysMenu> cMenus = menu.getRoutes();
 			if (!cMenus.isEmpty() && UserConstants.TYPE_DIR.equals(menu.getMenuType())) {
 				router.setAlwaysShow(true);

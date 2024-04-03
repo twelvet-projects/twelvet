@@ -53,6 +53,20 @@
             <artifactId>excel-spring-boot-starter</artifactId>
         </dependency>
 
+        <!--twelvet Redis-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-redis</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--caffeine-->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
 </project>

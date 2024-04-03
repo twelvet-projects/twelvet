@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twelvet.server.system.mapper.I18nMapper">
+    
+    <resultMap type="I18n" id="I18nResult">
+        <result property="i18nId"    column="i18n_id"    />
+        <result property="code"    column="code"    />
+        <result property="type"    column="type"    />
+        <result property="value"    column="value"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectI18nVo">
+        select i18n_id, code, type, value, create_time, update_by, update_time, remark from i18n
+    </sql>
+
+    <select id="selectI18nList" parameterType="I18n" resultMap="I18nResult">
+        <include refid="selectI18nVo"/>
+        <where>  
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="value != null  and value != ''"> and value = #{value}</if>
+        </where>
+    </select>
+    
+    <select id="selectI18nByI18nId" parameterType="Long" resultMap="I18nResult">
+        <include refid="selectI18nVo"/>
+        where i18n_id = #{i18nId}
+    </select>
+        
+    <insert id="insertI18n" parameterType="I18n" useGeneratedKeys="true" keyProperty="i18nId">
+        insert into i18n
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="code != null and code != ''">code,</if>
+            <if test="type != null and type != ''">type,</if>
+            <if test="value != null and value != ''">value,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="code != null and code != ''">#{code},</if>
+            <if test="type != null and type != ''">#{type},</if>
+            <if test="value != null and value != ''">#{value},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateI18n" parameterType="I18n">
+        update i18n
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="code != null and code != ''">code = #{code},</if>
+            <if test="type != null and type != ''">type = #{type},</if>
+            <if test="value != null and value != ''">value = #{value},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where i18n_id = #{i18nId}
+    </update>
+
+    <delete id="deleteI18nByI18nId" parameterType="Long">
+        delete from i18n where i18n_id = #{i18nId}
+    </delete>
+
+    <delete id="deleteI18nByI18nIds" parameterType="String">
+        delete from i18n where i18n_id in 
+        <foreach item="i18nId" collection="array" open="(" separator="," close=")">
+            #{i18nId}
+        </foreach>
+    </delete>
+</mapper>

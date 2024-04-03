@@ -43,6 +43,7 @@
             <if test="status != null">
                 AND status = #{status}
             </if>
+            <if test="menuType != null  and menuType != ''">and menu_type = #{menuType}</if>
         </where>
         order by parent_id, order_num
     </select>

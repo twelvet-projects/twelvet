@@ -1,15 +1,10 @@
 package com.twelvet.framework.redis.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.stereotype.Component;
 
-import java.io.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +21,15 @@ public class RedisService {
 
 	@Autowired
 	public RedisTemplate redisTemplate;
+
+	/**
+	 * 判断是否存在key
+	 * @param key 需要查询的key
+	 * @return 是否存在
+	 */
+	public Boolean hashKey(final String key) {
+		return redisTemplate.hasKey(key);
+	}
 
 	/**
 	 * 缓存基本的对象，Integer、String、实体类等

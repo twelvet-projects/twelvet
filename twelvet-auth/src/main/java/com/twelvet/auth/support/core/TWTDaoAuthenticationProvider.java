@@ -60,7 +60,6 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 	private UserDetailsPasswordService userDetailsPasswordService;
 
 	public TWTDaoAuthenticationProvider() {
-		setMessageSource(SpringUtil.getBean("securityMessageSource"));
 		setPasswordEncoder(PasswordEncoderFactories.createDelegatingPasswordEncoder());
 	}
 

@@ -23,12 +23,12 @@ public class DictUtils {
 	}
 
 	/**
-	 * 设置cache key
+	 * 获取cache key
 	 * @param configKey 参数键
 	 * @return 缓存键key
 	 */
 	public static String getCacheKey(String configKey) {
-		return CacheConstants.SYS_DICT_KEY + configKey;
+		return CacheConstants.SYS_DICT_KEY + "::" + configKey;
 	}
 
 }

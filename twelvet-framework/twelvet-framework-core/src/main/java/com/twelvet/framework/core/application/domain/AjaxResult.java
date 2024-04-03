@@ -1,5 +1,7 @@
 package com.twelvet.framework.core.application.domain;
 
+import com.twelvet.framework.core.locale.I18nUtils;
+import com.twelvet.framework.core.locale.constants.LocaleSystemConstants;
 import com.twelvet.framework.utils.TUtils;
 import org.springframework.http.HttpStatus;
 
@@ -71,7 +73,7 @@ public class AjaxResult extends LinkedHashMap<String, Object> {
 	 * @return 成功消息
 	 */
 	public static AjaxResult success() {
-		return AjaxResult.success("操作成功");
+		return AjaxResult.success(I18nUtils.getLocale(LocaleSystemConstants.SYS_SUCCESS));
 	}
 
 	/**
@@ -79,7 +81,7 @@ public class AjaxResult extends LinkedHashMap<String, Object> {
 	 * @return 成功消息
 	 */
 	public static AjaxResult success(Object data) {
-		return AjaxResult.success("操作成功", data);
+		return AjaxResult.success(I18nUtils.getLocale(LocaleSystemConstants.SYS_SUCCESS), data);
 	}
 
 	/**
@@ -106,7 +108,7 @@ public class AjaxResult extends LinkedHashMap<String, Object> {
 	 * @return JsonResult
 	 */
 	public static AjaxResult error() {
-		return AjaxResult.error("操作失败");
+		return AjaxResult.error(I18nUtils.getLocale(LocaleSystemConstants.SYS_ERROR));
 	}
 
 	/**
