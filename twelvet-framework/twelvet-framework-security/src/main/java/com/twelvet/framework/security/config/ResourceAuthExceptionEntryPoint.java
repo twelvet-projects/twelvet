@@ -26,6 +26,12 @@ public class ResourceAuthExceptionEntryPoint implements AuthenticationEntryPoint
 
 	private static final Logger log = LoggerFactory.getLogger(ResourceAuthExceptionEntryPoint.class);
 
+	private final MessageSource messageSource;
+
+	public ResourceAuthExceptionEntryPoint(MessageSource messageSource) {
+		this.messageSource = messageSource;
+	}
+
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) {
@@ -43,7 +49,9 @@ public class ResourceAuthExceptionEntryPoint implements AuthenticationEntryPoint
 			if (authException instanceof InvalidBearerTokenException
 					|| authException instanceof InsufficientAuthenticationException) {
 				code = HttpStatus.HTTP_OK;
-				result.setMsg("Request token has expired");
+				result
+					.setMsg(this.messageSource.getMessage("OAuth2ResourceOwnerBaseAuthenticationProvider.tokenExpired",
+							null, LocaleContextHolder.getLocale()));
 			}
 
 			ServletUtils.render(code, JacksonUtils.getInstance().writeValueAsString(result));

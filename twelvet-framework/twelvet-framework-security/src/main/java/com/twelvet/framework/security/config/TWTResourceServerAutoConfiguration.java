@@ -40,7 +40,7 @@ public class TWTResourceServerAutoConfiguration {
 	 */
 	@Bean
 	public ResourceAuthExceptionEntryPoint resourceAuthExceptionEntryPoint(MessageSource securityMessageSource) {
-		return new ResourceAuthExceptionEntryPoint();
+		return new ResourceAuthExceptionEntryPoint(securityMessageSource);
 	}
 
 	/**
