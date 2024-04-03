@@ -1,14 +1,19 @@
 package com.twelvet.framework.redis.service;
 
 import cn.hutool.extra.spring.SpringUtil;
+import com.twelvet.framework.utils.SpringContextHolder;
 import org.redisson.api.*;
 import org.redisson.config.Config;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 
 import java.time.Duration;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,70 +23,18 @@ import java.util.stream.Stream;
  * @WebSite twelvet.cn
  * @Description: redis缓存工具
  */
+@SuppressWarnings(value = { "unchecked", "rawtypes" })
 public class RedisUtils {
 
-	private static final RedissonClient CLIENT = SpringUtil.getBean(RedissonClient.class);
-
-	public static NameMapper getNameMapper() {
-		Config config = CLIENT.getConfig();
-		if (config.isClusterConfig()) {
-			return config.useClusterServers().getNameMapper();
-		}
-		return config.useSingleServer().getNameMapper();
-	}
+	private static final RedisTemplate redisTemplate = SpringContextHolder.getBean("redisTemplate");
 
 	/**
-	 * 限流
-	 * @param key 限流key
-	 * @param rateType 限流类型
-	 * @param rate 速率
-	 * @param rateInterval 速率间隔
-	 * @return -1 表示失败
+	 * 判断是否存在key
+	 * @param key 需要查询的key
+	 * @return 是否存在
 	 */
-	public static long rateLimiter(String key, RateType rateType, int rate, int rateInterval) {
-		RRateLimiter rateLimiter = CLIENT.getRateLimiter(key);
-		rateLimiter.trySetRate(rateType, rate, rateInterval, RateIntervalUnit.SECONDS);
-		if (rateLimiter.tryAcquire()) {
-			return rateLimiter.availablePermits();
-		}
-		else {
-			return -1L;
-		}
-	}
-
-	/**
-	 * 获取客户端实例
-	 */
-	public static RedissonClient getClient() {
-		return CLIENT;
-	}
-
-	/**
-	 * 发布通道消息
-	 * @param channelKey 通道key
-	 * @param msg 发送数据
-	 * @param consumer 自定义处理
-	 */
-	public static <T> void publish(String channelKey, T msg, Consumer<T> consumer) {
-		RTopic topic = CLIENT.getTopic(channelKey);
-		topic.publish(msg);
-		consumer.accept(msg);
-	}
-
-	public static <T> void publish(String channelKey, T msg) {
-		RTopic topic = CLIENT.getTopic(channelKey);
-		topic.publish(msg);
-	}
-
-	/**
-	 * 订阅通道接收消息
-	 * @param channelKey 通道key
-	 * @param clazz 消息类型
-	 * @param consumer 自定义处理
-	 */
-	public static <T> void subscribe(String channelKey, Class<T> clazz, Consumer<T> consumer) {
-		RTopic topic = CLIENT.getTopic(channelKey);
-		topic.addListener(clazz, (channel, msg) -> consumer.accept(msg));
+	public static Boolean hashKey(final String key) {
+		return redisTemplate.hasKey(key);
 	}
 
 	/**
@@ -90,56 +43,28 @@ public class RedisUtils {
 	 * @param value 缓存的值
 	 */
 	public static <T> void setCacheObject(final String key, final T value) {
-		setCacheObject(key, value, false);
-	}
-
-	/**
-	 * 缓存基本的对象，保留当前对象 TTL 有效期
-	 * @param key 缓存的键值
-	 * @param value 缓存的值
-	 * @param isSaveTtl 是否保留TTL有效期(例如: set之前ttl剩余90 set之后还是为90)
-	 * @since Redis 6.X 以上使用 setAndKeepTTL 兼容 5.X 方案
-	 */
-	public static <T> void setCacheObject(final String key, final T value, final boolean isSaveTtl) {
-		RBucket<T> bucket = CLIENT.getBucket(key);
-		if (isSaveTtl) {
-			try {
-				bucket.setAndKeepTTL(value);
-			}
-			catch (Exception e) {
-				long timeToLive = bucket.remainTimeToLive();
-				setCacheObject(key, value, Duration.ofMillis(timeToLive));
-			}
-		}
-		else {
-			bucket.set(value);
-		}
+		redisTemplate.opsForValue().set(key, value);
 	}
 
 	/**
 	 * 缓存基本的对象，Integer、String、实体类等
 	 * @param key 缓存的键值
 	 * @param value 缓存的值
-	 * @param duration 时间
+	 * @param timeout 时间
+	 * @param timeUnit 时间颗粒度
 	 */
-	public static <T> void setCacheObject(final String key, final T value, final Duration duration) {
-		RBatch batch = CLIENT.createBatch();
-		RBucketAsync<T> bucket = batch.getBucket(key);
-		bucket.setAsync(value);
-		bucket.expireAsync(duration);
-		batch.execute();
+	public static <T> void setCacheObject(final String key, final T value, final long timeout,
+			final TimeUnit timeUnit) {
+		redisTemplate.opsForValue().set(key, value, timeout, timeUnit);
 	}
 
 	/**
-	 * 注册对象监听器
-	 * <p>
-	 * key 监听器需开启 `notify-keyspace-events` 等 redis 相关配置
-	 * @param key 缓存的键值
-	 * @param listener 监听器配置
+	 * 获得key剩余存活时间
+	 * @param key 缓存键值
+	 * @return 剩余存活时间
 	 */
-	public static <T> void addObjectListener(final String key, final ObjectListener listener) {
-		RBucket<T> result = CLIENT.getBucket(key);
-		result.addListener(listener);
+	public static long geteExpire(final String key) {
+		return redisTemplate.getExpire(key, TimeUnit.SECONDS);
 	}
 
 	/**
@@ -149,18 +74,18 @@ public class RedisUtils {
 	 * @return true=设置成功；false=设置失败
 	 */
 	public static boolean expire(final String key, final long timeout) {
-		return expire(key, Duration.ofSeconds(timeout));
+		return expire(key, timeout, TimeUnit.SECONDS);
 	}
 
 	/**
 	 * 设置有效时间
 	 * @param key Redis键
-	 * @param duration 超时时间
+	 * @param timeout 超时时间
+	 * @param unit 时间单位
 	 * @return true=设置成功；false=设置失败
 	 */
-	public static boolean expire(final String key, final Duration duration) {
-		RBucket rBucket = CLIENT.getBucket(key);
-		return rBucket.expire(duration);
+	public static boolean expire(final String key, final long timeout, final TimeUnit unit) {
+		return redisTemplate.expire(key, timeout, unit);
 	}
 
 	/**
@@ -169,38 +94,25 @@ public class RedisUtils {
 	 * @return 缓存键值对应的数据
 	 */
 	public static <T> T getCacheObject(final String key) {
-		RBucket<T> rBucket = CLIENT.getBucket(key);
-		return rBucket.get();
-	}
-
-	/**
-	 * 获得key剩余存活时间
-	 * @param key 缓存键值
-	 * @return 剩余存活时间
-	 */
-	public static <T> long getTimeToLive(final String key) {
-		RBucket<T> rBucket = CLIENT.getBucket(key);
-		return rBucket.remainTimeToLive();
+		ValueOperations<String, T> operation = redisTemplate.opsForValue();
+		return operation.get(key);
 	}
 
 	/**
 	 * 删除单个对象
-	 * @param key 缓存的键值
+	 * @param key
 	 */
 	public static boolean deleteObject(final String key) {
-		return CLIENT.getBucket(key).delete();
+		return redisTemplate.delete(key);
 	}
 
 	/**
 	 * 删除集合对象
 	 * @param collection 多个对象
+	 * @return
 	 */
-	public static void deleteObject(final Collection collection) {
-		RBatch batch = CLIENT.createBatch();
-		collection.forEach(t -> {
-			batch.getBucket(t.toString()).deleteAsync();
-		});
-		batch.execute();
+	public static long deleteObject(final Collection collection) {
+		return redisTemplate.delete(collection);
 	}
 
 	/**
@@ -209,21 +121,9 @@ public class RedisUtils {
 	 * @param dataList 待缓存的List数据
 	 * @return 缓存的对象
 	 */
-	public static <T> boolean setCacheList(final String key, final List<T> dataList) {
-		RList<T> rList = CLIENT.getList(key);
-		return rList.addAll(dataList);
-	}
-
-	/**
-	 * 注册List监听器
-	 * <p>
-	 * key 监听器需开启 `notify-keyspace-events` 等 redis 相关配置
-	 * @param key 缓存的键值
-	 * @param listener 监听器配置
-	 */
-	public static <T> void addListListener(final String key, final ObjectListener listener) {
-		RList<T> rList = CLIENT.getList(key);
-		rList.addListener(listener);
+	public static <T> long setCacheList(final String key, final List<T> dataList) {
+		Long count = redisTemplate.opsForList().rightPushAll(key, dataList);
+		return count == null ? 0 : count;
 	}
 
 	/**
@@ -232,8 +132,7 @@ public class RedisUtils {
 	 * @return 缓存键值对应的数据
 	 */
 	public static <T> List<T> getCacheList(final String key) {
-		RList<T> rList = CLIENT.getList(key);
-		return rList.readAll();
+		return redisTemplate.opsForList().range(key, 0, -1);
 	}
 
 	/**
@@ -242,65 +141,38 @@ public class RedisUtils {
 	 * @param dataSet 缓存的数据
 	 * @return 缓存数据的对象
 	 */
-	public static <T> boolean setCacheSet(final String key, final Set<T> dataSet) {
-		RSet<T> rSet = CLIENT.getSet(key);
-		return rSet.addAll(dataSet);
-	}
-
-	/**
-	 * 注册Set监听器
-	 * <p>
-	 * key 监听器需开启 `notify-keyspace-events` 等 redis 相关配置
-	 * @param key 缓存的键值
-	 * @param listener 监听器配置
-	 */
-	public static <T> void addSetListener(final String key, final ObjectListener listener) {
-		RSet<T> rSet = CLIENT.getSet(key);
-		rSet.addListener(listener);
+	public static <T> long setCacheSet(final String key, final Set<T> dataSet) {
+		Long count = redisTemplate.opsForSet().add(key, dataSet);
+		return count == null ? 0 : count;
 	}
 
 	/**
 	 * 获得缓存的set
-	 * @param key 缓存的key
-	 * @return set对象
+	 * @param key
+	 * @return
 	 */
 	public static <T> Set<T> getCacheSet(final String key) {
-		RSet<T> rSet = CLIENT.getSet(key);
-		return rSet.readAll();
+		return redisTemplate.opsForSet().members(key);
 	}
 
 	/**
 	 * 缓存Map
-	 * @param key 缓存的键值
-	 * @param dataMap 缓存的数据
+	 * @param key
+	 * @param dataMap
 	 */
 	public static <T> void setCacheMap(final String key, final Map<String, T> dataMap) {
 		if (dataMap != null) {
-			RMap<String, T> rMap = CLIENT.getMap(key);
-			rMap.putAll(dataMap);
+			redisTemplate.opsForHash().putAll(key, dataMap);
 		}
 	}
 
 	/**
-	 * 注册Map监听器
-	 * <p>
-	 * key 监听器需开启 `notify-keyspace-events` 等 redis 相关配置
-	 * @param key 缓存的键值
-	 * @param listener 监听器配置
-	 */
-	public static <T> void addMapListener(final String key, final ObjectListener listener) {
-		RMap<String, T> rMap = CLIENT.getMap(key);
-		rMap.addListener(listener);
-	}
-
-	/**
 	 * 获得缓存的Map
-	 * @param key 缓存的键值
-	 * @return map对象
+	 * @param key
+	 * @return
 	 */
 	public static <T> Map<String, T> getCacheMap(final String key) {
-		RMap<String, T> rMap = CLIENT.getMap(key);
-		return rMap.getAll(rMap.keySet());
+		return redisTemplate.opsForHash().entries(key);
 	}
 
 	/**
@@ -310,8 +182,7 @@ public class RedisUtils {
 	 * @param value 值
 	 */
 	public static <T> void setCacheMapValue(final String key, final String hKey, final T value) {
-		RMap<String, T> rMap = CLIENT.getMap(key);
-		rMap.put(hKey, value);
+		redisTemplate.opsForHash().put(key, hKey, value);
 	}
 
 	/**
@@ -321,19 +192,8 @@ public class RedisUtils {
 	 * @return Hash中的对象
 	 */
 	public static <T> T getCacheMapValue(final String key, final String hKey) {
-		RMap<String, T> rMap = CLIENT.getMap(key);
-		return rMap.get(hKey);
-	}
-
-	/**
-	 * 删除Hash中的数据
-	 * @param key Redis键
-	 * @param hKey Hash键
-	 * @return Hash中的对象
-	 */
-	public static <T> T delCacheMapValue(final String key, final String hKey) {
-		RMap<String, T> rMap = CLIENT.getMap(key);
-		return rMap.remove(hKey);
+		HashOperations<String, String, T> opsForHash = redisTemplate.opsForHash();
+		return opsForHash.get(key, hKey);
 	}
 
 	/**
@@ -342,49 +202,8 @@ public class RedisUtils {
 	 * @param hKeys Hash键集合
 	 * @return Hash对象集合
 	 */
-	public static <K, V> Map<K, V> getMultiCacheMapValue(final String key, final Set<K> hKeys) {
-		RMap<K, V> rMap = CLIENT.getMap(key);
-		return rMap.getAll(hKeys);
-	}
-
-	/**
-	 * 设置原子值
-	 * @param key Redis键
-	 * @param value 值
-	 */
-	public static void setAtomicValue(String key, long value) {
-		RAtomicLong atomic = CLIENT.getAtomicLong(key);
-		atomic.set(value);
-	}
-
-	/**
-	 * 获取原子值
-	 * @param key Redis键
-	 * @return 当前值
-	 */
-	public static long getAtomicValue(String key) {
-		RAtomicLong atomic = CLIENT.getAtomicLong(key);
-		return atomic.get();
-	}
-
-	/**
-	 * 递增原子值
-	 * @param key Redis键
-	 * @return 当前值
-	 */
-	public static long incrAtomicValue(String key) {
-		RAtomicLong atomic = CLIENT.getAtomicLong(key);
-		return atomic.incrementAndGet();
-	}
-
-	/**
-	 * 递减原子值
-	 * @param key Redis键
-	 * @return 当前值
-	 */
-	public static long decrAtomicValue(String key) {
-		RAtomicLong atomic = CLIENT.getAtomicLong(key);
-		return atomic.decrementAndGet();
+	public static <T> List<T> getMultiCacheMapValue(final String key, final Collection<Object> hKeys) {
+		return redisTemplate.opsForHash().multiGet(key, hKeys);
 	}
 
 	/**
@@ -393,25 +212,35 @@ public class RedisUtils {
 	 * @return 对象列表
 	 */
 	public static Collection<String> keys(final String pattern) {
-		Stream<String> stream = CLIENT.getKeys().getKeysStreamByPattern(getNameMapper().map(pattern));
-		return stream.map(key -> getNameMapper().unmap(key)).collect(Collectors.toList());
+		return redisTemplate.keys(pattern);
 	}
 
 	/**
-	 * 删除缓存的基本对象列表
-	 * @param pattern 字符串前缀
+	 * 向队列右则推送数据
+	 * @param key 队列键名
+	 * @param values 推送的数据
+	 * @param <T>
 	 */
-	public static void deleteKeys(final String pattern) {
-		CLIENT.getKeys().deleteByPattern(getNameMapper().map(pattern));
+	public static <T> void rPush(final String key, final T... values) {
+		redisTemplate.opsForList().rightPushAll(key, values);
 	}
 
 	/**
-	 * 检查redis中是否存在key
-	 * @param key 键
+	 * 从队列左则提取数据
+	 * @param key 队列键名
+	 * @return 数组中的最左数据
 	 */
-	public static Boolean hasKey(String key) {
-		RKeys rKeys = CLIENT.getKeys();
-		return rKeys.countExists(getNameMapper().map(key)) > 0;
+	public static <T> T lPop(final String key) {
+		return (T) redisTemplate.opsForList().leftPop(key);
+	}
+
+	/**
+	 * 获取列表长度
+	 * @param key 查询key
+	 * @return Long
+	 */
+	public static Long lSize(String key) {
+		return redisTemplate.opsForList().size(key);
 	}
 
 }

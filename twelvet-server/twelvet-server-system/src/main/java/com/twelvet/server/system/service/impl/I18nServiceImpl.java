@@ -1,29 +1,23 @@
 package com.twelvet.server.system.service.impl;
 
-import java.util.List;
-import java.util.Date;
-
+import com.twelvet.api.i18n.domain.I18n;
 import com.twelvet.api.system.domain.SysDictData;
-import com.twelvet.api.system.domain.SysMenu;
 import com.twelvet.framework.core.locale.constants.LocaleCacheConstants;
-import com.twelvet.framework.core.locale.constants.LocaleSystemConstants;
-import com.twelvet.framework.redis.service.RedisService;
 import com.twelvet.framework.redis.service.RedisUtils;
+import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.DateUtils;
+import com.twelvet.server.system.mapper.I18nMapper;
 import com.twelvet.server.system.mapper.SysDictDataMapper;
-import com.twelvet.server.system.mapper.SysMenuMapper;
-import com.twelvet.server.system.utils.DictUtils;
+import com.twelvet.server.system.service.II18nService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.twelvet.framework.security.utils.SecurityUtils;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import com.twelvet.server.system.mapper.I18nMapper;
-import com.twelvet.api.i18n.domain.I18n;
-import com.twelvet.server.system.service.II18nService;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 国际化Service业务层处理
@@ -51,7 +45,7 @@ public class I18nServiceImpl implements II18nService, ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		String hashFormat = String.format("%s::%s", LocaleCacheConstants.LOCALE, LocaleCacheConstants.ZH_CN);
-		if (!RedisUtils.getClient().getBucket(hashFormat).isExists()) {
+		if (!RedisUtils.hashKey(hashFormat)) {
 			log.info("Detected i18n deficiency, initializing");
 			List<I18n> i18ns = i18nMapper.selectI18nList(new I18n());
 			for (I18n i18n : i18ns) {
@@ -64,11 +58,10 @@ public class I18nServiceImpl implements II18nService, ApplicationRunner {
 		}
 
 		// 处理i18n支持语言缓存
-		if (!RedisUtils.getClient().getBucket(LocaleCacheConstants.CACHE_DICT_CODE).isExists()) {
+		if (!RedisUtils.hashKey(LocaleCacheConstants.CACHE_DICT_CODE)) {
 			List<SysDictData> sysDictData = dictDataMapper.selectDictDataByType(LocaleCacheConstants.DICT_CODE);
 			RedisUtils.setCacheObject(LocaleCacheConstants.CACHE_DICT_CODE, sysDictData);
 		}
-
 	}
 
 	/**
