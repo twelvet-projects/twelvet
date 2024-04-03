@@ -1,1 +1,3 @@
+com.twelvet.framework.core.config.properties.MessageSourceProperties
+com.twelvet.framework.core.config.MessageSourceConfig
 com.twelvet.framework.core.handler.TWTExceptionHandler

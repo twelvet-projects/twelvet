@@ -1,2 +1,1 @@
-com.twelvet.framework.redis.service.RedisService
 com.twelvet.framework.redis.service.configure.RedisTemplateConfiguration
