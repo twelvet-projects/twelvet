@@ -60,7 +60,7 @@
         <commons.io.version>2.15.1</commons.io.version>
         <velocity.version>2.3</velocity.version>
         <hutool.version>5.8.27</hutool.version>
-        <redisson.version>3.27.1</redisson.version>
+        <redisson.version>3.28.0</redisson.version>
         <jasypt.version>3.0.5</jasypt.version>
         <jaxb.version>2.3.5</jaxb.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
