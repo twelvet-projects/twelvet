@@ -45,7 +45,7 @@ public class WebLogFilter implements Filter {
 		HttpServletRequest servletRequest = (HttpServletRequest) request;
 
 		// 忽略列表日志输出
-		if (IGNORES.contains(servletRequest.getRequestURI())) {
+		if (!ServletUtils.isAjax() || IGNORES.contains(servletRequest.getRequestURI())) {
 			chain.doFilter(request, response);
 			return;
 		}
