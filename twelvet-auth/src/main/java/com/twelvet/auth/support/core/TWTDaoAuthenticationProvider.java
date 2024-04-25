@@ -4,9 +4,11 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.twelvet.framework.core.constants.SecurityConstants;
+import com.twelvet.framework.core.locale.I18nUtils;
 import com.twelvet.framework.security.service.TwUserDetailsService;
 import com.twelvet.framework.security.service.impl.TwTUserDetailsServiceImpl;
 import com.twelvet.framework.utils.http.ServletUtils;
+import org.springframework.context.MessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -60,7 +62,7 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 	private UserDetailsPasswordService userDetailsPasswordService;
 
 	public TWTDaoAuthenticationProvider() {
-		setMessageSource(SpringUtil.getBean("securityMessageSource"));
+		setMessageSource(SpringUtil.getBean(MessageSource.class));
 		setPasswordEncoder(PasswordEncoderFactories.createDelegatingPasswordEncoder());
 	}
 
@@ -84,20 +86,20 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 				return;
 			}
 			this.logger.debug("Failed to authenticate since phone code does not match stored value");
-			throw new BadCredentialsException(this.messages
-				.getMessage("AbstractUserDetailsAuthenticationProvider.smsBadCredentials", "Bad credentials"));
+			throw new BadCredentialsException(I18nUtils
+				.getLocale("AbstractUserDetailsAuthenticationProvider.smsBadCredentials", "Bad credentials"));
 		}
 
 		if (authentication.getCredentials() == null) {
 			this.logger.debug("Failed to authenticate since no credentials provided");
-			throw new BadCredentialsException(this.messages
-				.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
+			throw new BadCredentialsException(
+					I18nUtils.getLocale("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
 		}
 		String presentedPassword = authentication.getCredentials().toString();
 		if (!this.passwordEncoder.matches(presentedPassword, userDetails.getPassword())) {
 			this.logger.debug("Failed to authenticate since password does not match stored value");
-			throw new BadCredentialsException(this.messages
-				.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
+			throw new BadCredentialsException(
+					I18nUtils.getLocale("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
 		}
 	}
 

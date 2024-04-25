@@ -126,11 +126,12 @@ public class MessageSourceConfig extends AbstractMessageSource implements Applic
 		}
 
 		// 进行本地缓存
-		if (!message.equals(code)) {
+		if (!message.equals(code) && TUtils.isNotEmpty(args) && args.length > 0) {
+			message = createMessageFormat(message, useLocale).format(args);
 			cache.put(format, message);
 		}
 
-		return createMessageFormat(message, useLocale).format(args);
+		return message;
 
 	}
 
