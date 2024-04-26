@@ -1,6 +1,7 @@
 package com.twelvet.api.system.feign.factory;
 
 import com.twelvet.api.system.feign.RemoteUserService;
+import com.twelvet.framework.core.domain.R;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ public class RemoteUserFallbackFactory implements FallbackFactory<RemoteUserServ
 	@Override
 	public RemoteUserService create(Throwable throwable) {
 		log.error("用户服务调用失败:{}", throwable.getMessage());
-		return (username) -> null;
+		return (username) -> R.fail();
 	}
 
 }
