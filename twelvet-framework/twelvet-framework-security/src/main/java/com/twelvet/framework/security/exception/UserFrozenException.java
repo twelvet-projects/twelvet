@@ -8,14 +8,14 @@ import org.springframework.security.core.AuthenticationException;
  * @WebSite twelvet.cn
  * @Description: 用户已被冻结
  */
-public class UserFrozenException extends AccessDeniedException {
-
-	public UserFrozenException(String msg) {
-		super(msg);
-	}
+public class UserFrozenException extends AuthenticationException {
 
 	public UserFrozenException(String msg, Throwable cause) {
 		super(msg, cause);
+	}
+
+	public UserFrozenException(String msg) {
+		super(msg);
 	}
 
 }

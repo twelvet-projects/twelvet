@@ -6,17 +6,18 @@ import com.twelvet.api.system.model.UserInfo;
 import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.core.domain.utils.ResUtils;
+import com.twelvet.framework.core.locale.I18nUtils;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.security.domain.LoginUser;
+import com.twelvet.framework.security.exception.SmsCodeException;
 import com.twelvet.framework.security.exception.UserFrozenException;
 import com.twelvet.framework.security.service.TwUserDetailsService;
-import com.twelvet.framework.utils.TUtils;
+import com.twelvet.framework.utils.http.ServletUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -53,21 +54,24 @@ public class TwTSmsDetailsServiceImpl implements TwUserDetailsService {
 
 	/**
 	 * 用户名称登录
-	 * @param username String
+	 * @param mobile String
 	 * @return UserDetails
 	 */
 	@Override
-	public UserDetails loadUserByUsername(String username) {
+	public UserDetails loadUserByUsername(String mobile) {
+		checkCode(mobile);
+		mobile = "admin";
+		// TODO 此处为模拟登录，需要进行接入SMS
 		Cache cache = cacheManager.getCache(CacheConstants.USER_DETAILS);
-		if (cache != null && cache.get(username) != null) {
-			return (LoginUser) cache.get(username).get();
+		if (cache != null && cache.get(mobile) != null) {
+			return (LoginUser) cache.get(mobile).get();
 		}
-		R<UserInfo> userResult = remoteUserService.getUserInfo(username);
-		auth(userResult, username);
+		R<UserInfo> userResult = remoteUserService.getUserInfo(mobile);
+		auth(userResult, mobile);
 		UserDetails userDetails = getUserDetails(userResult);
 
 		if (cache != null) {
-			cache.put(username, userDetails);
+			cache.put(mobile, userDetails);
 		}
 		return userDetails;
 	}
@@ -87,6 +91,20 @@ public class TwTSmsDetailsServiceImpl implements TwUserDetailsService {
 			log.info("{}： 用户已被冻结.", username);
 			throw new UserFrozenException("账号已被冻结");
 		}
+	}
+
+	/**
+	 * 检查code是否正确
+	 */
+	public void checkCode(String mobile) {
+		String code = ServletUtils.getRequest().get().getParameter(SecurityConstants.CODE);
+		// TODO 实现手机验证码校验
+		if ("1234".equals(code)) {
+			// return;
+			throw new SmsCodeException(I18nUtils.getLocale("system.code.error"));
+		}
+		log.debug("Failed to authenticate since phone code does not match stored value");
+		throw new SmsCodeException(I18nUtils.getLocale("system.code.error"));
 	}
 
 	@Override
