@@ -101,7 +101,7 @@ public class TwTSmsDetailsServiceImpl implements TwUserDetailsService {
 		// TODO 实现手机验证码校验
 		if ("1234".equals(code)) {
 			// return;
-			throw new SmsCodeException(I18nUtils.getLocale("system.code.error"));
+			throw new SmsCodeException("已完成SMS模拟登录，但为了安全起见，请自行接入SMS！！！");
 		}
 		log.debug("Failed to authenticate since phone code does not match stored value");
 		throw new SmsCodeException(I18nUtils.getLocale("system.code.error"));

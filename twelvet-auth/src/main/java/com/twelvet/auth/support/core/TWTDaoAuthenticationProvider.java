@@ -140,7 +140,7 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 			mitigateAgainstTimingAttack(authentication);
 			throw ex;
 		}
-		catch (UserFrozenException | SmsCodeException | InternalAuthenticationServiceException ex) {
+		catch (AuthenticationException ex) {
 			throw ex;
 		}
 		catch (Exception ex) {
