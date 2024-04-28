@@ -81,7 +81,7 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 	protected void additionalAuthenticationChecks(UserDetails userDetails,
 			UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
 		String grantType = ServletUtils.getRequest().get().getParameter(OAuth2ParameterNames.GRANT_TYPE);
-		if(!AuthorizationGrantType.PASSWORD.getValue().equals(grantType)){
+		if (!AuthorizationGrantType.PASSWORD.getValue().equals(grantType)) {
 			return;
 		}
 		if (authentication.getCredentials() == null) {
