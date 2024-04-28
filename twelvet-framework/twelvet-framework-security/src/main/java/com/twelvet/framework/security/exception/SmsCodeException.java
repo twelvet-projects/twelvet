@@ -1,6 +1,5 @@
 package com.twelvet.framework.security.exception;
 
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
@@ -8,15 +7,15 @@ import org.springframework.security.oauth2.core.OAuth2Error;
 /**
  * @author twelvet
  * @WebSite twelvet.cn
- * @Description: 用户已被冻结
+ * @Description: 自定义手机登录处理
  */
-public class UserFrozenException extends AuthenticationException {
+public class SmsCodeException extends AuthenticationException {
 
-	public UserFrozenException(String msg, Throwable cause) {
+	public SmsCodeException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public UserFrozenException(String msg) {
+	public SmsCodeException(String msg) {
 		super(msg);
 	}
 

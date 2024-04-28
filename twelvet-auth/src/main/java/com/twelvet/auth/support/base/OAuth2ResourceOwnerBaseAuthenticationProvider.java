@@ -1,12 +1,13 @@
 package com.twelvet.auth.support.base;
 
-import cn.hutool.extra.spring.SpringUtil;
+import com.twelvet.framework.core.locale.I18nUtils;
+import com.twelvet.framework.security.constants.Oauth2ErrorConstants;
+import com.twelvet.framework.security.exception.SmsCodeException;
+import com.twelvet.framework.security.exception.UserFrozenException;
 import com.twelvet.framework.security.utils.OAuth2ErrorCodesExpand;
 import com.twelvet.framework.security.utils.ScopeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -27,7 +28,10 @@ import org.springframework.util.CollectionUtils;
 
 import java.security.Principal;
 import java.time.Instant;
-import java.util.*;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.function.Supplier;
 
 /**
@@ -42,17 +46,11 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 
 	private static final String ERROR_URI = "https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.2.1";
 
-	@Autowired
-	private OAuth2AuthorizationService authorizationService;
+	private final OAuth2AuthorizationService authorizationService;
 
-	@Autowired
-	private OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
+	private final OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
 
-	@Autowired
-	private AuthenticationManager authenticationManager;
-
-	@Autowired
-	private MessageSourceAccessor messages;
+	private final AuthenticationManager authenticationManager;
 
 	@Deprecated
 	private Supplier<String> refreshTokenGenerator;
@@ -240,37 +238,47 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 			AuthenticationException authenticationException) {
 		if (authenticationException instanceof UsernameNotFoundException) {
 			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodesExpand.USERNAME_NOT_FOUND,
-					this.messages.getMessage("JdbcDaoImpl.notFound", new Object[] { authentication.getName() },
+					I18nUtils.getLocale("JdbcDaoImpl.notFound", new Object[] { authentication.getName() },
 							"Username {0} not found"),
 					""));
 		}
 		if (authenticationException instanceof BadCredentialsException) {
-			return new OAuth2AuthenticationException(
-					new OAuth2Error(OAuth2ErrorCodesExpand.BAD_CREDENTIALS, this.messages.getMessage(
-							"AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"), ""));
+			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodesExpand.BAD_CREDENTIALS,
+					I18nUtils.getLocale("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"),
+					""));
 		}
 		if (authenticationException instanceof LockedException) {
-			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodesExpand.USER_LOCKED, this.messages
-				.getMessage("AbstractUserDetailsAuthenticationProvider.locked", "User account is locked"), ""));
+			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodesExpand.USER_LOCKED,
+					I18nUtils.getLocale("AbstractUserDetailsAuthenticationProvider.locked", "User account is locked"),
+					""));
 		}
 		if (authenticationException instanceof DisabledException) {
 			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodesExpand.USER_DISABLE,
-					this.messages.getMessage("AbstractUserDetailsAuthenticationProvider.disabled", "User is disabled"),
-					""));
+					I18nUtils.getLocale("AbstractUserDetailsAuthenticationProvider.disabled", "User is disabled"), ""));
 		}
 		if (authenticationException instanceof AccountExpiredException) {
-			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodesExpand.USER_EXPIRED, this.messages
-				.getMessage("AbstractUserDetailsAuthenticationProvider.expired", "User account has expired"), ""));
+			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodesExpand.USER_EXPIRED, I18nUtils
+				.getLocale("AbstractUserDetailsAuthenticationProvider.expired", "User account has expired"), ""));
 		}
 		if (authenticationException instanceof CredentialsExpiredException) {
 			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodesExpand.CREDENTIALS_EXPIRED,
-					this.messages.getMessage("AbstractUserDetailsAuthenticationProvider.credentialsExpired",
+					I18nUtils.getLocale("AbstractUserDetailsAuthenticationProvider.credentialsExpired",
 							"User credentials have expired"),
 					""));
 		}
 		if (authenticationException instanceof ScopeException) {
 			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodes.INVALID_SCOPE,
-					this.messages.getMessage("AbstractAccessDecisionManager.accessDenied", "invalid_scope"), ""));
+					I18nUtils.getLocale("AbstractAccessDecisionManager.accessDenied", "invalid_scope"), ""));
+		}
+		if (authenticationException instanceof SmsCodeException) {
+			String message = authenticationException.getMessage();
+
+			return new OAuth2AuthenticationException(
+					new OAuth2Error(Oauth2ErrorConstants.SMS_CODE_ERROR, authenticationException.getMessage(), ""));
+		}
+		if (authenticationException instanceof UserFrozenException) {
+			return new OAuth2AuthenticationException(
+					new OAuth2Error(Oauth2ErrorConstants.USER_FREEZE, authenticationException.getMessage(), ""));
 		}
 		return new OAuth2AuthenticationException(OAuth2ErrorCodesExpand.UN_KNOW_LOGIN_ERROR);
 	}

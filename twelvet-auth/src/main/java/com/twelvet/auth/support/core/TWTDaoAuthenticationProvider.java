@@ -1,12 +1,14 @@
 package com.twelvet.auth.support.core;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.twelvet.framework.core.constants.SecurityConstants;
+import com.twelvet.framework.core.locale.I18nUtils;
+import com.twelvet.framework.security.exception.SmsCodeException;
+import com.twelvet.framework.security.exception.UserFrozenException;
 import com.twelvet.framework.security.service.TwUserDetailsService;
-import com.twelvet.framework.security.service.impl.TwTUserDetailsServiceImpl;
 import com.twelvet.framework.utils.http.ServletUtils;
+import org.springframework.context.MessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -20,6 +22,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.web.authentication.www.BasicAuthenticationConverter;
 import org.springframework.util.Assert;
@@ -60,7 +63,10 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 	private UserDetailsPasswordService userDetailsPasswordService;
 
 	public TWTDaoAuthenticationProvider() {
+		setMessageSource(SpringUtil.getBean(MessageSource.class));
 		setPasswordEncoder(PasswordEncoderFactories.createDelegatingPasswordEncoder());
+		// 开启隐藏找不到用户提示
+		setHideUserNotFoundExceptions(true);
 	}
 
 	/**
@@ -74,23 +80,14 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 	@Override
 	protected void additionalAuthenticationChecks(UserDetails userDetails,
 			UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
-
 		String grantType = ServletUtils.getRequest().get().getParameter(OAuth2ParameterNames.GRANT_TYPE);
-		if (StrUtil.equals(SecurityConstants.SMS, grantType)) { // sms 模式校验Code
-			String code = ServletUtils.getRequest().get().getParameter(SecurityConstants.CODE);
-			// TODO 实现手机验证码校验
-			if ("1234".equals(code)) {
-				return;
-			}
-			this.logger.debug("Failed to authenticate since phone code does not match stored value");
-			throw new BadCredentialsException(this.messages
-				.getMessage("AbstractUserDetailsAuthenticationProvider.smsBadCredentials", "Bad credentials"));
+		if(!AuthorizationGrantType.PASSWORD.getValue().equals(grantType)){
+			return;
 		}
-
 		if (authentication.getCredentials() == null) {
 			this.logger.debug("Failed to authenticate since no credentials provided");
-			throw new BadCredentialsException(this.messages
-				.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
+			throw new BadCredentialsException(
+					I18nUtils.getLocale("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
 		}
 		String presentedPassword = authentication.getCredentials().toString();
 		// 检验密码是否正确
@@ -147,10 +144,11 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 			mitigateAgainstTimingAttack(authentication);
 			throw ex;
 		}
-		catch (InternalAuthenticationServiceException ex) {
+		catch (AuthenticationException ex) {
 			throw ex;
 		}
 		catch (Exception ex) {
+			this.logger.debug("Unknown login error thrown");
 			throw new InternalAuthenticationServiceException(ex.getMessage(), ex);
 		}
 	}
