@@ -62,7 +62,7 @@
         <commons.io.version>2.16.1</commons.io.version>
         <velocity.version>2.3</velocity.version>
         <hutool.version>5.8.27</hutool.version>
-        <redisson.version>3.28.0</redisson.version>
+        <redisson.version>3.29.0</redisson.version>
         <qiniu.version>7.12.1</qiniu.version>
         <jasypt.version>3.0.5</jasypt.version>
 
@@ -133,6 +133,13 @@
             <dependency>
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+
+            <!--降级redisson，以此兼容Spring Boot 2.7.x https://github.com/redisson/redisson/issues/4675 -->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-data-27</artifactId>
                 <version>${redisson.version}</version>
             </dependency>
 

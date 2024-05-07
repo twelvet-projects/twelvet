@@ -26,6 +26,19 @@
         <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson-spring-boot-starter</artifactId>
+            <!--排除redisson-spring-data-32 Spring Boot 3.2.x专属版本-->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.redisson</groupId>
+                    <artifactId>redisson-spring-data-32</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--降级redisson，以此兼容Spring Boot 2.7.x https://github.com/redisson/redisson/issues/4675 -->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-data-27</artifactId>
         </dependency>
 
         <!--aspectj-->
