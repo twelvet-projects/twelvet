@@ -1,15 +1,15 @@
 DROP
-DATABASE IF EXISTS `twelvet_nacos`;
+    DATABASE IF EXISTS `twelvet_nacos`;
 
 CREATE
-DATABASE `twelvet_nacos` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+    DATABASE `twelvet_nacos` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 SET NAMES utf8;
 SET
-FOREIGN_KEY_CHECKS = 0;
+    FOREIGN_KEY_CHECKS = 0;
 
 USE
-`twelvet_nacos`;
+    `twelvet_nacos`;
 
 -- ----------------------------
 -- Table structure for config_info
@@ -17,23 +17,23 @@ USE
 DROP TABLE IF EXISTS `config_info`;
 CREATE TABLE `config_info`
 (
-    `id`                 bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `id`                 bigint(20)                                       NOT NULL AUTO_INCREMENT COMMENT 'id',
     `data_id`            varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'data_id',
-    `group_id`           varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
-    `content`            longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'content',
-    `md5`                varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'md5',
+    `group_id`           varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT NULL,
+    `content`            longtext CHARACTER SET utf8 COLLATE utf8_bin     NOT NULL COMMENT 'content',
+    `md5`                varchar(32) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL COMMENT 'md5',
     `gmt_create`         datetime                                         NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT '创建时间',
     `gmt_modified`       datetime                                         NOT NULL DEFAULT '2010-05-05 00:00:00' COMMENT '修改时间',
-    `src_user`           text CHARACTER SET utf8 COLLATE utf8_bin NULL COMMENT 'source user',
-    `src_ip`             varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT 'source ip',
-    `app_name`           varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
-    `tenant_id`          varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT '' COMMENT '租户字段',
-    `c_desc`             varchar(256) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
-    `c_use`              varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
-    `effect`             varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
-    `type`               varchar(64) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
-    `c_schema`           text CHARACTER SET utf8 COLLATE utf8_bin NULL,
-    `encrypted_data_key` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '秘钥',
+    `src_user`           text CHARACTER SET utf8 COLLATE utf8_bin         NULL COMMENT 'source user',
+    `src_ip`             varchar(20) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL COMMENT 'source ip',
+    `app_name`           varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT NULL,
+    `tenant_id`          varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT '' COMMENT '租户字段',
+    `c_desc`             varchar(256) CHARACTER SET utf8 COLLATE utf8_bin NULL     DEFAULT NULL,
+    `c_use`              varchar(64) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL,
+    `effect`             varchar(64) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL,
+    `type`               varchar(64) CHARACTER SET utf8 COLLATE utf8_bin  NULL     DEFAULT NULL,
+    `c_schema`           text CHARACTER SET utf8 COLLATE utf8_bin         NULL,
+    `encrypted_data_key` text CHARACTER SET utf8 COLLATE utf8_bin         NOT NULL COMMENT '秘钥',
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `uk_configinfo_datagrouptenant` (`data_id`, `group_id`, `tenant_id`) USING BTREE
 ) ENGINE = InnoDB
@@ -52,14 +52,14 @@ VALUES (1, 'twelvet-app-dev.yml', 'DEFAULT_GROUP',
         '', 'eeb43899-8a88-4f5b-b0e0-d7c8fd09b86e', '公共配置', 'null', 'null', 'yaml', 'null', '');
 INSERT INTO `config_info`
 VALUES (2, 'twelvet-auth-dev.yml', 'DEFAULT_GROUP',
-        'spring: \n  # 模板引擎配置\n  freemarker:\n    allow-request-override: false\n    allow-session-override: false\n    check-template-location: true\n    expose-request-attributes: false\n    expose-session-attributes: false\n    expose-spring-macro-helpers: true\n    prefer-file-system-access: true\n    # 后缀名\n    suffix: .ftl  \n    content-type: text/html\n    enabled: true\n    # 缓存配置\n    cache: true \n    # 模板加载路径 按需配置\n    template-loader-path: classpath:/templates/ \n    charset: UTF-8\n  data:\n    redis:\n      host: twelvet-redis\n      port: 6379\n      # 连接超时时间\n      timeout: 30s\n      lettuce:\n        pool:\n          # 连接池中的最小空闲连接\n          min-idle: 0\n          # 连接池中的最大空闲连接\n          max-idle: 8\n          # 连接池的最大数据库连接数\n          max-active: 8\n          # #连接池最大阻塞等待时间（使用负值表示没有限制）\n          max-wait: -1ms\n  \nswagger:\n  title: TwelveT Swagger API\n  version: 2.7.0\n  description: 授权中心服务\n  license: Powered By TwelveT\n  licenseUrl: https://twelvet.cn\n  terms-of-service-url: https://twelvet.cn\n  contact:\n    name: TwelveT\n    email: 2471835953@qq.com\n    url: https://twelvet.cn\n  authorization:\n    name: password\n    token-url-list:\n      - http://${GATEWAY_HOST:localhost}:${GATEWAY_PORT:88}/auth/oauth/token',
-        'd349f9d0d3f2e3c634d4fd5474ef8d6e', '2020-06-07 19:45:01', '2023-07-08 09:23:13', 'nacos', '127.0.0.1', '',
-        'eeb43899-8a88-4f5b-b0e0-d7c8fd09b86e', '认证服务器配置', 'null', 'null', 'yaml', 'null', '');
+        'spring: \n  # 模板引擎配置\n  freemarker:\n    allow-request-override: false\n    allow-session-override: false\n    check-template-location: true\n    expose-request-attributes: false\n    expose-session-attributes: false\n    expose-spring-macro-helpers: true\n    prefer-file-system-access: true\n    # 后缀名\n    suffix: .ftl  \n    content-type: text/html\n    enabled: true\n    # 缓存配置\n    cache: true \n    # 模板加载路径 按需配置\n    template-loader-path: classpath:/templates/ \n    charset: UTF-8\n  redis:\n    host: twelvet-redis\n    port: 6379\n    # 连接超时时间\n    timeout: 30s\n    lettuce:\n      pool:\n        # 连接池中的最小空闲连接\n        min-idle: 0\n        # 连接池中的最大空闲连接\n        max-idle: 8\n        # 连接池的最大数据库连接数\n        max-active: 8\n        # #连接池最大阻塞等待时间（使用负值表示没有限制）\n        max-wait: -1ms\n  \nswagger:\n  title: TwelveT Swagger API\n  version: 2.7.0\n  description: 授权中心服务\n  license: Powered By TwelveT\n  licenseUrl: https://twelvet.cn\n  terms-of-service-url: https://twelvet.cn\n  contact:\n    name: TwelveT\n    email: 2471835953@qq.com\n    url: https://twelvet.cn\n  authorization:\n    name: password\n    token-url-list:\n      - http://${GATEWAY_HOST:localhost}:${GATEWAY_PORT:88}/auth/oauth/token',
+        '1c82324abdf788680491a24f27a6e94f', '2020-06-07 19:45:01', '2024-05-06 16:21:00', 'nacos', '0:0:0:0:0:0:0:1',
+        '', 'eeb43899-8a88-4f5b-b0e0-d7c8fd09b86e', '认证服务器配置', 'null', 'null', 'yaml', 'null', '');
 INSERT INTO `config_info`
 VALUES (3, 'twelvet-server-system-dev.yml', 'DEFAULT_GROUP',
-        'spring: \n  datasource:\n    dynamic:\n      hikari:\n        # 连接测试查询\n        connection-test-query: SELECT 1 FROM DUAL\n        # 连接最大存活时间.不等于0且小于30秒，会被重置为默认值30分钟.设置应该比mysql设置的超时时间短\n        max-lifetime: 540000\n        # 只有空闲连接数大于最大连接数且空闲时间超过该值，才会被释放\n        idle-timeout: 500000\n        # 最小空闲连接，默认值10，小于0或大于maximum-pool-size，都会重置为maximum-pool-size\n        minimum-idle: 10\n        # 最大连接数，小于等于0会被重置为默认值10；大于零小于1会被重置为minimum-idle的值\n        maximum-pool-size: 12\n        # 连接超时时间:毫秒，小于250毫秒，否则被重置为默认值30秒\n        connection-timeout: 60000\n      # 设置默认的数据源或者数据源组,默认值即为master\n      primary: master \n      datasource:\n        # 主库数据源\n        master:\n          driver-class-name: com.mysql.cj.jdbc.Driver\n          url: jdbc:mysql://twelvet-mysql:3306/twelvet?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8\n          username: root\n          password: 123456\n        # shardingSphere:\n        #   driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver\n        #   url: jdbc:shardingsphere:classpath:sharding-jdbc.yml\n        # 从库数据源\n        # slave:\n        # username:\n        # password:\n        # url:\n        # driver-class-name:\n      # 开启seata代理，开启后默认每个数据源都代理,分布式事务必须开启,否则关闭\n      seata: false\n  data:\n    redis:\n      host: twelvet-redis\n      port: 6379\n      # 连接超时时间\n      timeout: 30s\n      lettuce:\n        pool:\n          # 连接池中的最小空闲连接\n          min-idle: 0\n          # 连接池中的最大空闲连接\n          max-idle: 8\n          # 连接池的最大数据库连接数\n          max-active: 8\n          # #连接池最大阻塞等待时间（使用负值表示没有限制）\n          max-wait: -1ms\n\nswagger:\n  title: TwelveT Swagger API\n  version: 2.7.0\n  description: 系统服务\n  license: Powered By TwelveT\n  licenseUrl: https://twelvet.cn\n  terms-of-service-url: https://twelvet.cn\n  contact:\n    name: TwelveT\n    email: 2471835953@qq.com\n    url: https://twelvet.cn\n  authorization:\n    name: password\n    token-url-list:\n      - http://${GATEWAY_HOST:localhost}:${GATEWAY_PORT:88}/auth/oauth/token',
-        '1bc9d082f91ac6ae41f6d2766c590ff3', '2020-06-07 19:45:29', '2023-12-08 18:06:33', 'nacos', '127.0.0.1', '',
-        'eeb43899-8a88-4f5b-b0e0-d7c8fd09b86e', '系统模块', 'null', 'null', 'yaml', 'null', '');
+        'spring: \n  datasource:\n    dynamic:\n      hikari:\n        # 连接测试查询\n        connection-test-query: SELECT 1 FROM DUAL\n        # 连接最大存活时间.不等于0且小于30秒，会被重置为默认值30分钟.设置应该比mysql设置的超时时间短\n        max-lifetime: 540000\n        # 只有空闲连接数大于最大连接数且空闲时间超过该值，才会被释放\n        idle-timeout: 500000\n        # 最小空闲连接，默认值10，小于0或大于maximum-pool-size，都会重置为maximum-pool-size\n        minimum-idle: 10\n        # 最大连接数，小于等于0会被重置为默认值10；大于零小于1会被重置为minimum-idle的值\n        maximum-pool-size: 12\n        # 连接超时时间:毫秒，小于250毫秒，否则被重置为默认值30秒\n        connection-timeout: 60000\n      # 设置默认的数据源或者数据源组,默认值即为master\n      primary: master \n      datasource:\n        # 主库数据源\n        master:\n          driver-class-name: com.mysql.cj.jdbc.Driver\n          url: jdbc:mysql://twelvet-mysql:3306/twelvet?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8\n          username: root\n          password: 123456\n        # shardingSphere:\n        #   driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver\n        #   url: jdbc:shardingsphere:classpath:sharding-jdbc.yml\n        # 从库数据源\n        # slave:\n        # username:\n        # password:\n        # url:\n        # driver-class-name:\n      # 开启seata代理，开启后默认每个数据源都代理,分布式事务必须开启,否则关闭\n      seata: false\n  redis:\n    host: twelvet-redis\n    port: 6379\n    # 连接超时时间\n    timeout: 30s\n    lettuce:\n      pool:\n        # 连接池中的最小空闲连接\n        min-idle: 0\n        # 连接池中的最大空闲连接\n        max-idle: 8\n        # 连接池的最大数据库连接数\n        max-active: 8\n        # #连接池最大阻塞等待时间（使用负值表示没有限制）\n        max-wait: -1ms\n\nswagger:\n  title: TwelveT Swagger API\n  version: 2.7.0\n  description: 系统服务\n  license: Powered By TwelveT\n  licenseUrl: https://twelvet.cn\n  terms-of-service-url: https://twelvet.cn\n  contact:\n    name: TwelveT\n    email: 2471835953@qq.com\n    url: https://twelvet.cn\n  authorization:\n    name: password\n    token-url-list:\n      - http://${GATEWAY_HOST:localhost}:${GATEWAY_PORT:88}/auth/oauth/token',
+        '7a3e4313517e61090d8089a3ea6285d2', '2020-06-07 19:45:29', '2024-05-06 16:18:11', 'nacos', '0:0:0:0:0:0:0:1',
+        '', 'eeb43899-8a88-4f5b-b0e0-d7c8fd09b86e', '系统模块', 'null', 'null', 'yaml', 'null', '');
 INSERT INTO `config_info`
 VALUES (4, 'twelvet-gateway-dev.yml', 'DEFAULT_GROUP',
         'spring: \n  cloud:\n    gateway:\n      globalcors:\n        corsConfigurations:\n          \'[/**]\':\n            allowedOriginPatterns: \"*\"\n            allowed-methods: \"*\"\n            allowed-headers: \"*\"\n            allow-credentials: true\n            exposedHeaders: \"Content-Disposition,Content-Type,Cache-Control\"\n      loadbalancer: \n        use404: true\n      discovery:\n        locator:\n          # 开启服务名称小写匹配\n          lowerCaseServiceId: true\n          # 开启动态创建路由（不用每个都写死）\n          enabled: true\n      # 路由配置\n      routes:\n        # 认证中心\n        - id: twelvet-auth\n          uri: lb://twelvet-auth\n          predicates:\n            - Path=/auth/**\n          filters:\n            - StripPrefix=1\n        # 系统模块\n        - id: twelvet-server-system\n          # 匹配后提供服务的路由地址\n          uri: lb://twelvet-server-system\n           # 断言，路径匹配的进行路由\n          predicates:\n            - Path=/system/**\n          filters:\n            # 转发请求时去除路由前缀（system）\n            - StripPrefix=1\n            # 请求重写，将内部开放服务重写(重要配置，请勿轻易修改，否则将暴露用户信息API)\n            - RewritePath=/user/info(?<segment>/?.*), /from-user-info$\\{segment}\n        # 定时任务\n        - id: twelvet-server-job\n          uri: lb://twelvet-server-job\n          predicates:\n            - Path=/job/**\n          filters:\n            - StripPrefix=1\n        # DFS文件系统\n        - id: twelvet-server-dfs\n          uri: lb://twelvet-server-dfs\n          predicates:\n            - Path=/dfs/**\n          filters:\n            - StripPrefix=1\n            # 请求重写，不允许直接上传文件\n            - RewritePath=/upload(?<segment>/?.*), /from-upload$\\{segment}\n        # 代码生成器\n        - id: twelvet-server-gen\n          uri: lb://twelvet-server-gen\n          predicates:\n            - Path=/gen/**\n          filters:\n            - StripPrefix=1\n\n      ',
@@ -152,9 +152,9 @@ VALUES (24, 'service.vgroupMapping.twelvet-dfs-group', 'DEFAULT_GROUP', 'default
         NULL, NULL, NULL, 'text', NULL, '');
 INSERT INTO `config_info`
 VALUES (25, 'twelvet-server-gen-dev.yml', 'DEFAULT_GROUP',
-        '# spring配置\nspring: \n  datasource:\n    type: com.zaxxer.hikari.HikariDataSource\n    driver-class-name: com.mysql.cj.jdbc.Driver\n    url: jdbc:mysql://twelvet-mysql:3306/twelvet_gen?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8\n    username: root\n    password: 123456\n  data:\n    redis:\n      host: twelvet-redis\n      port: 6379\n      # 连接超时时间\n      timeout: 30s\n      lettuce:\n        pool:\n          # 连接池中的最小空闲连接\n          min-idle: 0\n          # 连接池中的最大空闲连接\n          max-idle: 8\n          # 连接池的最大数据库连接数\n          max-active: 8\n          # #连接池最大阻塞等待时间（使用负值表示没有限制）\n          max-wait: -1ms\n\n# 代码生成\ngen: \n  # 作者\n  author: TwelveT\n  # 默认生成包路径 system 需改成自己的模块名称 如 system monitor tool\n  packageName: com.twelvet.server.system\n  # 自动去除表前缀，默认是false\n  autoRemovePre: false\n  # 表前缀（生成类名不会包含表前缀，多个用逗号分隔）\n  tablePrefix: sys_\n\nswagger:\n  title: TwelveT Swagger API\n  version: 2.7.0\n  description: CRUD服务\n  license: Powered By TwelveT\n  licenseUrl: https://twelvet.cn\n  terms-of-service-url: https://twelvet.cn\n  contact:\n    name: TwelveT\n    email: 2471835953@qq.com\n    url: https://twelvet.cn\n  authorization:\n    name: password\n    token-url-list:\n      - http://${GATEWAY_HOST:localhost}:${GATEWAY_PORT:88}/auth/oauth/token\n# 开启Swagger增强模式\nknife4j:\n  enable: true',
-        '4efc6784481ad333d791959c1d0677c7', '2021-03-20 13:04:24', '2023-11-05 10:55:34', 'nacos', '127.0.0.1', '',
-        'eeb43899-8a88-4f5b-b0e0-d7c8fd09b86e', '代码生成器', 'null', 'null', 'yaml', 'null', '');
+        '# spring配置\nspring: \n  datasource:\n    type: com.zaxxer.hikari.HikariDataSource\n    driver-class-name: com.mysql.cj.jdbc.Driver\n    url: jdbc:mysql://twelvet-mysql:3306/twelvet_gen?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8\n    username: root\n    password: 123456\n  redis:\n    host: twelvet-redis\n    port: 6379\n    # 连接超时时间\n    timeout: 30s\n    lettuce:\n      pool:\n        # 连接池中的最小空闲连接\n        min-idle: 0\n        # 连接池中的最大空闲连接\n        max-idle: 8\n        # 连接池的最大数据库连接数\n        max-active: 8\n        # #连接池最大阻塞等待时间（使用负值表示没有限制）\n        max-wait: -1ms\n\n# 代码生成\ngen: \n  # 作者\n  author: TwelveT\n  # 默认生成包路径 system 需改成自己的模块名称 如 system monitor tool\n  packageName: com.twelvet.server.system\n  # 自动去除表前缀，默认是false\n  autoRemovePre: false\n  # 表前缀（生成类名不会包含表前缀，多个用逗号分隔）\n  tablePrefix: sys_\n\nswagger:\n  title: TwelveT Swagger API\n  version: 2.7.0\n  description: CRUD服务\n  license: Powered By TwelveT\n  licenseUrl: https://twelvet.cn\n  terms-of-service-url: https://twelvet.cn\n  contact:\n    name: TwelveT\n    email: 2471835953@qq.com\n    url: https://twelvet.cn\n  authorization:\n    name: password\n    token-url-list:\n      - http://${GATEWAY_HOST:localhost}:${GATEWAY_PORT:88}/auth/oauth/token\n# 开启Swagger增强模式\nknife4j:\n  enable: true',
+        'c299c834c99c83456ef1a03b911dff7c', '2021-03-20 13:04:24', '2024-05-06 16:20:20', 'nacos', '0:0:0:0:0:0:0:1',
+        '', 'eeb43899-8a88-4f5b-b0e0-d7c8fd09b86e', '代码生成器', 'null', 'null', 'yaml', 'null', '');
 
 -- ----------------------------
 -- Table structure for config_info_aggr
