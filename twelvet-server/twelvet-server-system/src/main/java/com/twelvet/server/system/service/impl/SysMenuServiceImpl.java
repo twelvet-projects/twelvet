@@ -258,12 +258,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 	 * @return 路由名称
 	 */
 	private String getRouteName(SysMenu menu) {
-		String routerName = menu.getPath();
-		// 非外链并且是一级目录（类型为目录）
-		if (isMenuFrame(menu)) {
-			routerName = StringUtils.EMPTY;
-		}
-		return routerName;
+		return menu.getPath();
 	}
 
 	/**
