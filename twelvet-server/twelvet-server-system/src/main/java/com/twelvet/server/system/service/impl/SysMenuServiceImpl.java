@@ -272,12 +272,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 	 * @return 路由地址
 	 */
 	private String getRouterPath(SysMenu menu) {
-		String routerPath = menu.getPath();
-		// 非外链并且是一级目录（类型为目录）
-		if (isMenuFrame(menu)) {
-			routerPath = "/";
-		}
-		return routerPath;
+		return menu.getPath();
 	}
 
 	/**
