@@ -58,8 +58,8 @@ public class AuthorizationServerConfiguration {
 				// 登录失败处理器
 				.errorResponseHandler(new TWTAuthenticationFailureEventHandler());
 		})
-				// Enable OpenID Connect 1.0
-				//.oidc(Customizer.withDefaults())
+			// Enable OpenID Connect 1.0
+			// .oidc(Customizer.withDefaults())
 			// 个性化客户端认证
 			.clientAuthentication(oAuth2ClientAuthenticationConfigurer -> {
 				oAuth2ClientAuthenticationConfigurer
