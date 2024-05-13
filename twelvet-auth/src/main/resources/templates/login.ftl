@@ -42,6 +42,9 @@
                 <div class='form-group'>
                     <input type="submit" class='btn btn-primary' style='width:100%' value='Sign In'>
                 </div>
+                <#list registrationIdList as registrationId>
+                    <a style="margin-right: 20px" href="/oauth2/authorization/${registrationId}">${registrationId}</a>
+                </#list>
                 <#if error??>
                     <p style="color: red;text-align: center ">${error}</p>
                 </#if>

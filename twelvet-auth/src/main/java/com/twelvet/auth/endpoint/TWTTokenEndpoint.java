@@ -4,16 +4,13 @@ import cn.hutool.core.util.StrUtil;
 import com.twelvet.api.system.domain.SysClientDetails;
 import com.twelvet.api.system.feign.RemoteOauth2ClientDetailsService;
 import com.twelvet.framework.core.application.domain.AjaxResult;
-import com.twelvet.framework.core.constants.SecurityConstants;
-import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.core.domain.utils.ResUtils;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
-import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.exception.OAuthClientException;
 import com.twelvet.framework.security.utils.OAuth2EndpointUtils;
 import com.twelvet.framework.security.utils.OAuth2ErrorCodesExpand;
-import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.SpringContextHolder;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -25,6 +22,8 @@ import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.security.authentication.event.LogoutSuccessEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
@@ -34,14 +33,14 @@ import org.springframework.security.oauth2.core.http.converter.OAuth2ErrorHttpMe
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
-import org.springframework.security.oauth2.server.authorization.authentication.OAuth2AuthorizationCodeRequestAuthenticationException;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import jakarta.servlet.http.HttpServletResponse;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -62,6 +61,9 @@ public class TWTTokenEndpoint {
 	private OAuth2AuthorizationService authorizationService;
 
 	@Autowired
+	private ClientRegistrationRepository clientRegistrationRepository;
+
+	@Autowired
 	private RemoteOauth2ClientDetailsService remoteOauth2ClientDetailsService;
 
 	@Autowired
@@ -79,6 +81,11 @@ public class TWTTokenEndpoint {
 	@GetMapping("/login")
 	public ModelAndView require(ModelAndView modelAndView, @RequestParam(required = false) String error) {
 		modelAndView.setViewName("/login");
+		List<String> registrationIdList = new ArrayList<>();
+		((InMemoryClientRegistrationRepository) clientRegistrationRepository).forEach(item -> {
+			registrationIdList.add(item.getRegistrationId());
+		});
+		modelAndView.addObject("registrationIdList", registrationIdList);
 		modelAndView.addObject("error", error);
 		return modelAndView;
 	}

@@ -29,6 +29,7 @@ import org.springframework.security.oauth2.server.authorization.web.authenticati
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationConverter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.Arrays;
 
@@ -47,6 +48,7 @@ public class AuthorizationServerConfiguration {
 	@Order(Ordered.HIGHEST_PRECEDENCE)
 	public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
 		OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer();
+
 		// 个性化认证授权端点
 		http.with(authorizationServerConfigurer.tokenEndpoint((tokenEndpoint) -> {
 			// 注入自定义的授权认证Converter
@@ -56,6 +58,8 @@ public class AuthorizationServerConfiguration {
 				// 登录失败处理器
 				.errorResponseHandler(new TWTAuthenticationFailureEventHandler());
 		})
+				// Enable OpenID Connect 1.0
+				//.oidc(Customizer.withDefaults())
 			// 个性化客户端认证
 			.clientAuthentication(oAuth2ClientAuthenticationConfigurer -> {
 				oAuth2ClientAuthenticationConfigurer

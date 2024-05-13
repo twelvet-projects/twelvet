@@ -44,19 +44,33 @@ spring:
   security:
     oauth2:
       client:
+        # 注册第三方客户端
         registration:
           gitee:
             # 关联OAuth2 Server
             provider: gitee
-            client-id: ae3e66546a8ff8cd67050a5558dcd6b4b25a474cb6607b9b1a09bf921d1f10ae
-            client-secret: 1dd8a3e087a2c3ea54232f8a160f018b8ec28fbc23d06a876340c12e561681c2
+            client-id: 3050796d8930eec5b
+            client-secret: 77ca2fee35950
             # 授权类型
             authorization-grant-type: authorization_code
             # 授权范围
             scope: user_info
             # 回调地址
             redirect-uri: '{baseUrl}/{action}/oauth2/code/{registrationId}'
-            client-name: Gitee
+            client-name: gitee
+          github:
+            # 关联OAuth2 Server
+            provider: github
+            client-id: ffc6b9
+            client-secret: 7d00bc26
+            # 授权类型
+            authorization-grant-type: authorization_code
+            # 授权范围
+            scope: user_info
+            # 回调地址
+            redirect-uri: '{baseUrl}/{action}/oauth2/code/{registrationId}'
+            client-name: github
+        # 第三方信息换取配置(默认Google、GitHub、Facebook 和 Okta内置)
         provider:
           gitee:
             # 登录地址
