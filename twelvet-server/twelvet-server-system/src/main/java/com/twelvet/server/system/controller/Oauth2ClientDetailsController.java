@@ -21,7 +21,7 @@ import java.util.List;
 
 /**
  * @author twelvet
- * @WebSite twelvet.cnR
+ * @WebSite twelvet.cn
  * @Description: 终端配置 信息操作处理
  */
 @Tag(description = "Oauth2ClientDetailsController", name = "终端配置")
