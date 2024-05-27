@@ -7,7 +7,7 @@
     <groupId>com.twelvet</groupId>
     <artifactId>twelvet</artifactId>
     <packaging>pom</packaging>
-    <version>3.2.3</version>
+    <version>3.3.0</version>
 
     <name>twelvet</name>
     <url>https://twelvet.cn</url>
@@ -35,14 +35,14 @@
     </developers>
 
     <properties>
-        <twelvet.version>3.2.3</twelvet.version>
+        <twelvet.version>3.3.0</twelvet.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
 
-        <spring-boot-dependencies.version>3.2.5</spring-boot-dependencies.version>
+        <spring-boot-dependencies.version>3.3.0</spring-boot-dependencies.version>
         <spring-cloud.version>2023.0.1</spring-cloud.version>
         <spring-cloud-alibaba.version>2023.0.1.0</spring-cloud-alibaba.version>
         <spring-boot-admin.version>3.2.3</spring-boot-admin.version>
@@ -194,7 +194,7 @@
             <!--Swagger springdoc -->
             <dependency>
                 <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+                    <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
                 <version>${springdoc.version}</version>
             </dependency>
 
