@@ -1,15 +1,11 @@
-DROP
-DATABASE IF EXISTS `twelvet_nacos`;
+DROP DATABASE IF EXISTS `twelvet_nacos`;
 
-CREATE
-DATABASE `twelvet_nacos` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE `twelvet_nacos` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 SET NAMES utf8;
-SET
-FOREIGN_KEY_CHECKS = 0;
+SET FOREIGN_KEY_CHECKS = 0;
 
-USE
-`twelvet_nacos`;
+USE `twelvet_nacos`;
 
 -- ----------------------------
 -- Table structure for config_info
