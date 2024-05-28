@@ -5,6 +5,7 @@ import com.twelvet.framework.core.application.domain.BaseEntity;
 import com.twelvet.framework.core.constants.UserConstants;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -34,7 +35,7 @@ public class SysDictData extends BaseEntity {
 	 */
 	@Schema(description = "字典排序")
 	@ExcelProperty(value = "字典排序")
-	private Long dictSort;
+	private Integer dictSort;
 
 	/**
 	 * 字典标签
@@ -91,11 +92,12 @@ public class SysDictData extends BaseEntity {
 		this.dictCode = dictCode;
 	}
 
-	public Long getDictSort() {
+	@NotNull(message = "显示顺序不能为空")
+	public Integer getDictSort() {
 		return dictSort;
 	}
 
-	public void setDictSort(Long dictSort) {
+	public void setDictSort(Integer dictSort) {
 		this.dictSort = dictSort;
 	}
 

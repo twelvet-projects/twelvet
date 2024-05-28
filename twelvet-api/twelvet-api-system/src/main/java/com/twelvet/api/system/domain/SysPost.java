@@ -4,6 +4,7 @@ import com.alibaba.excel.annotation.ExcelProperty;
 import com.twelvet.framework.core.application.domain.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -47,7 +48,7 @@ public class SysPost extends BaseEntity {
 	 */
 	@Schema(description = "岗位排序")
 	@ExcelProperty(value = "岗位排序")
-	private String postSort;
+	private Integer postSort;
 
 	/**
 	 * 状态（0正常 1停用）
@@ -90,12 +91,12 @@ public class SysPost extends BaseEntity {
 		this.postName = postName;
 	}
 
-	@NotBlank(message = "显示顺序不能为空")
-	public String getPostSort() {
+	@NotNull(message = "显示顺序不能为空")
+	public Integer getPostSort() {
 		return postSort;
 	}
 
-	public void setPostSort(String postSort) {
+	public void setPostSort(Integer postSort) {
 		this.postSort = postSort;
 	}
 

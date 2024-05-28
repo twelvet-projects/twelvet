@@ -2,6 +2,7 @@ package com.twelvet.api.system.domain;
 
 import com.twelvet.framework.core.application.domain.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serial;
 import java.util.Arrays;
@@ -39,7 +40,7 @@ public class SysRole extends BaseEntity {
 	 * 角色排序
 	 */
 	@Schema(description = "角色排序")
-	private String roleSort;
+	private Integer roleSort;
 
 	/**
 	 * 数据范围（1：所有数据权限；2：自定义数据权限；3：本部门数据权限；4：本部门及以下数据权限）
@@ -117,11 +118,12 @@ public class SysRole extends BaseEntity {
 		this.roleKey = roleKey;
 	}
 
-	public String getRoleSort() {
+	@NotNull(message = "显示顺序不能为空")
+	public Integer getRoleSort() {
 		return roleSort;
 	}
 
-	public void setRoleSort(String roleSort) {
+	public void setRoleSort(Integer roleSort) {
 		this.roleSort = roleSort;
 	}
 
