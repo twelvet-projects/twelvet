@@ -1,15 +1,11 @@
-DROP
-    DATABASE IF EXISTS `twelvet_gen`;
+DROP DATABASE IF EXISTS `twelvet_gen`;
 
-CREATE
-    DATABASE `twelvet_gen` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE `twelvet_gen` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 SET NAMES utf8mb4;
-SET
-    FOREIGN_KEY_CHECKS = 0;
+SET FOREIGN_KEY_CHECKS = 0;
 
-USE
-    `twelvet_gen`;
+USE `twelvet_gen`;
 
 -- ----------------------------
 -- Table structure for gen_datasource_conf
