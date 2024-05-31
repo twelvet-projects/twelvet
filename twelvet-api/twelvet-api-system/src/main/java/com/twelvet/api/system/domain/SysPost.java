@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -45,7 +46,7 @@ public class SysPost extends BaseEntity {
 	 */
 	@Schema(description = "岗位排序")
 	@ExcelProperty(value = "岗位排序")
-	private Long postSort;
+	private Integer postSort;
 
 	/**
 	 * 状态（0正常 1停用）
@@ -88,11 +89,12 @@ public class SysPost extends BaseEntity {
 		this.postName = postName;
 	}
 
-	public Long getPostSort() {
+	@NotNull(message = "显示顺序不能为空")
+	public Integer getPostSort() {
 		return postSort;
 	}
 
-	public void setPostSort(Long postSort) {
+	public void setPostSort(Integer postSort) {
 		this.postSort = postSort;
 	}
 
