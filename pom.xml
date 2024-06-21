@@ -53,7 +53,7 @@
         <springdoc.version>2.5.0</springdoc.version>
         <knife4j.version>3.0.3</knife4j.version>
 
-        <dynamic-datasource.version>4.3.2</dynamic-datasource.version>
+        <dynamic-datasource.version>4.3.1</dynamic-datasource.version>
         <shardingsphere-jdbc.version>5.4.1</shardingsphere-jdbc.version>
 
         <pagehelper.boot.version>2.1.0</pagehelper.boot.version>
@@ -72,7 +72,7 @@
 
         <docker.plugin.version>0.32.0</docker.plugin.version>
         <spring.checkstyle.plugin>0.0.39</spring.checkstyle.plugin>
-        <git.commit.plugin>8.0.2</git.commit.plugin>
+        <git.commit.plugin>9.0.0</git.commit.plugin>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
     </properties>
 
