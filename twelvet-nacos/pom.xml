@@ -14,7 +14,7 @@
     <description>nacos 注册配置中心</description>
 
     <properties>
-        <nacos.version>2.2.4</nacos.version>
+        <nacos.version>2.3.2-OEM</nacos.version>
         <spring-boot-dependencies.version>2.7.18</spring-boot-dependencies.version>
         <spring-cloud.version>2021.0.8</spring-cloud.version>
         <spring-boot-admin.version>2.7.16</spring-boot-admin.version>
@@ -45,7 +45,7 @@
             <!-- SpringBoot Admin -->
             <dependency>
                 <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <artifactId>spring-boot-admin-starter-client</artifactId>
                 <version>${spring-boot-admin.version}</version>
             </dependency>
 
@@ -54,36 +54,43 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.springboot.nacos</groupId>
+            <groupId>group.springframework.nacos</groupId>
             <artifactId>nacos-config</artifactId>
             <version>${nacos.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-jasper</artifactId>
-        </dependency>
 
         <dependency>
-            <groupId>io.springboot.nacos</groupId>
+            <groupId>group.springframework.nacos</groupId>
             <artifactId>nacos-naming</artifactId>
             <version>${nacos.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>io.springboot.nacos</groupId>
+            <groupId>group.springframework.nacos</groupId>
             <artifactId>nacos-istio</artifactId>
             <version>${nacos.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>io.springboot.nacos</groupId>
-            <artifactId>nacos-plugin-default-impl</artifactId>
+            <groupId>group.springframework.nacos</groupId>
+            <artifactId>nacos-default-plugin-all</artifactId>
+            <version>${nacos.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>group.springframework.nacos</groupId>
+            <artifactId>nacos-prometheus</artifactId>
             <version>${nacos.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
         </dependency>
 
     </dependencies>

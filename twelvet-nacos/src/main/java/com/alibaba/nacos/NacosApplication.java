@@ -17,8 +17,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 public class NacosApplication {
 
-	private final static Logger log = LoggerFactory.getLogger(NacosApplication.class);
-
 	public static void main(String[] args) {
 		if (initEnv()) {
 			SpringApplication.run(NacosApplication.class, args);
