@@ -11,6 +11,7 @@ import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.security.annotation.AuthIgnore;
 import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.StringUtils;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,8 @@ import java.util.stream.Collectors;
  * @WebSite twelvet.cn
  * @Description: 统一管理API
  */
-@Tag(description = "TokenEndpointApi", name = "TokenEndpointApi")
+@Hidden
+@Tag(description = "TokenEndpointApi", name = "Token管理API")
 @RestController
 @RequestMapping("/api/token")
 public class TokenEndpointApi {

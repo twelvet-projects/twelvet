@@ -10,6 +10,8 @@ import com.twelvet.framework.security.exception.OAuthClientException;
 import com.twelvet.framework.security.utils.OAuth2EndpointUtils;
 import com.twelvet.framework.security.utils.OAuth2ErrorCodesExpand;
 import com.twelvet.framework.utils.SpringContextHolder;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
@@ -49,6 +51,7 @@ import java.util.Set;
  * @WebSite twelvet.cn
  * @Description: 统一登录管理
  */
+@Tag(description = "TWTTokenEndpoint", name = "OAuth2登录优化管理")
 @RestController
 @RequestMapping("/token")
 public class TWTTokenEndpoint {
@@ -78,6 +81,7 @@ public class TWTTokenEndpoint {
 	 * @param error 表单登录失败处理回调的错误信息
 	 * @return ModelAndView
 	 */
+	@Operation(summary = "表单登录")
 	@GetMapping("/login")
 	public ModelAndView require(ModelAndView modelAndView, @RequestParam(required = false) String error) {
 		modelAndView.setViewName("/login");
@@ -90,6 +94,7 @@ public class TWTTokenEndpoint {
 		return modelAndView;
 	}
 
+	@Operation(summary = "确认授权")
 	@GetMapping("/confirm_access")
 	public ModelAndView confirm(Principal principal, ModelAndView modelAndView,
 			@RequestParam(OAuth2ParameterNames.CLIENT_ID) String clientId,
@@ -112,6 +117,7 @@ public class TWTTokenEndpoint {
 	 * 退出并删除token
 	 * @param authHeader Authorization
 	 */
+	@Operation(summary = "退出登录")
 	@DeleteMapping("/logout")
 	public AjaxResult logout(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authHeader) {
 		if (StrUtil.isBlank(authHeader)) {
@@ -161,6 +167,7 @@ public class TWTTokenEndpoint {
 	 * 令牌管理调用
 	 * @param token token
 	 */
+	@Operation(summary = "删除指定token")
 	@DeleteMapping("/{token}")
 	public AjaxResult removeToken(@PathVariable("token") String token) {
 		OAuth2Authorization authorization = authorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
