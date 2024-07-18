@@ -1,4 +1,4 @@
-package com.twelvet.framework.swagger.config;
+package com.twelvet.framework.swagger.properties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +15,6 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties("swagger")
 public class SwaggerProperties {
-
-	/**
-	 * 是否开启swagger
-	 */
-	private Boolean enabled = true;
 
 	/**
 	 * swagger会解析的包路径
@@ -75,14 +70,6 @@ public class SwaggerProperties {
 	 * 服务转发配置
 	 */
 	private Map<String, String> services;
-
-	public Boolean getEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
-	}
 
 	public String getBasePackage() {
 		return basePackage;

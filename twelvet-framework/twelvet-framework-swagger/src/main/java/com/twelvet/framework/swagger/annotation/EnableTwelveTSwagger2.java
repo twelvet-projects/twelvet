@@ -1,6 +1,6 @@
 package com.twelvet.framework.swagger.annotation;
 
-import com.twelvet.framework.swagger.config.SwaggerProperties;
+import com.twelvet.framework.swagger.properties.SwaggerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 import java.lang.annotation.*;
@@ -15,7 +15,6 @@ import java.lang.annotation.*;
 @Documented
 @Inherited
 @EnableConfigurationProperties(SwaggerProperties.class)
-// @Import({ SwaggerAutoConfiguration.class })
 public @interface EnableTwelveTSwagger2 {
 
 }
