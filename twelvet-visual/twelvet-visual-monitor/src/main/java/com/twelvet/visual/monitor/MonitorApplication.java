@@ -1,4 +1,4 @@
-package com.twelvet.vosual.monitor;
+package com.twelvet.visual.monitor;
 
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.SpringApplication;

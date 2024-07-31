@@ -1,4 +1,4 @@
-package com.twelvet.vosual.monitor.config;
+package com.twelvet.visual.monitor.config;
 
 import de.codecentric.boot.admin.server.config.AdminServerProperties;
 import org.springframework.context.annotation.Bean;
