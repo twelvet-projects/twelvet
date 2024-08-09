@@ -35,14 +35,14 @@ port() {
 
 # 启动基础环境（必须）
 base() {
-  docker-compose up -d twelvet-mysql twelvet-redis
+  docker compose up -d twelvet-mysql twelvet-redis
   sleep 30
-  docker-compose up -d twelvet-nacos
+  docker compose up -d twelvet-nacos
 }
 
 # 启动程序模块（必须）
 server() {
-  docker-compose up -d twelvet-gateway twelvet-auth twelvet-server-system
+  docker compose up -d twelvet-gateway twelvet-auth twelvet-server-system
 }
 
 # 启动nginx（必须）
@@ -62,17 +62,17 @@ nginx() {
     echo "前端已初始化"
   fi
 
-  docker-compose up -d twelvet-nginx
+  docker compose up -d twelvet-nginx
 }
 
 # 关闭所有环境/模块
 stop() {
-  docker-compose stop
+  docker compose stop
 }
 
 # 删除所有环境/模块
 rm() {
-  docker-compose rm
+  docker compose rm
 }
 
 # 根据输入参数，选择执行对应方法，不输入则执行使用说明
