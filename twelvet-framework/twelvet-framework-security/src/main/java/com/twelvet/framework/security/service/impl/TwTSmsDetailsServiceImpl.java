@@ -8,6 +8,7 @@ import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.core.domain.utils.ResUtils;
 import com.twelvet.framework.core.locale.I18nUtils;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
+import com.twelvet.framework.security.constants.Oauth2ClientEnums;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.exception.SmsCodeException;
 import com.twelvet.framework.security.exception.UserFrozenException;
@@ -30,11 +31,6 @@ public class TwTSmsDetailsServiceImpl implements TwUserDetailsService {
 
 	private static final Logger log = LoggerFactory.getLogger(TwTSmsDetailsServiceImpl.class);
 
-	/**
-	 * 仅支持后台登录
-	 */
-	private final static String PLAT_FORM = "admin";
-
 	@Autowired
 	private RemoteUserService remoteUserService;
 
@@ -42,14 +38,14 @@ public class TwTSmsDetailsServiceImpl implements TwUserDetailsService {
 	private CacheManager cacheManager;
 
 	/**
-	 * 识别是否使用此登录器
+	 * 识别是否使用此登录器(使用clientId判断仅支持当前的clientId使用)
 	 * @param clientId 目标客户端
 	 * @param grantType 登录类型
 	 * @return boolean
 	 */
 	@Override
 	public boolean support(String clientId, String grantType) {
-		return SecurityConstants.SMS.equals(grantType);
+		return Oauth2ClientEnums.TWELVET.getClientId().equals(clientId) && SecurityConstants.SMS.equals(grantType);
 	}
 
 	/**

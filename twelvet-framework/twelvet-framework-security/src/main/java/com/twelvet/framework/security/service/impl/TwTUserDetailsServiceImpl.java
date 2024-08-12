@@ -7,6 +7,7 @@ import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.core.domain.utils.ResUtils;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
+import com.twelvet.framework.security.constants.Oauth2ClientEnums;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.exception.UserFrozenException;
 import com.twelvet.framework.security.service.TwUserDetailsService;
@@ -32,11 +33,6 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 	private static final Logger log = LoggerFactory.getLogger(TwTUserDetailsServiceImpl.class);
 
 	/**
-	 * 仅支持后台登录
-	 */
-	private final static String PLAT_FORM = "admin";
-
-	/**
 	 * 登录类型
 	 */
 	private final static String GRAN_TYPE = "password";
@@ -48,14 +44,15 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 	private CacheManager cacheManager;
 
 	/**
-	 * 识别是否使用此登录器
+	 * 识别是否使用此登录器(使用clientId判断仅支持当前的clientId使用)
 	 * @param clientId 目标客户端
 	 * @param grantType 登录类型
 	 * @return boolean
 	 */
 	@Override
 	public boolean support(String clientId, String grantType) {
-		return AuthorizationGrantType.PASSWORD.getValue().equals(grantType);
+		return Oauth2ClientEnums.TWELVET.getClientId().equals(clientId)
+				&& AuthorizationGrantType.PASSWORD.getValue().equals(grantType);
 	}
 
 	/**
