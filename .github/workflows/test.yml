@@ -35,15 +35,15 @@ jobs:
       - name: Start Base
         run: |
           cd docker
-          docker-compose up -d twelvet-mysql twelvet-redis
+          docker compose up -d twelvet-mysql twelvet-redis
           sleep 60
-          docker-compose up -d twelvet-nacos
+          docker compose up -d twelvet-nacos
 
       - name: Start Server
         run: |
           sleep 30
           cd docker
-          docker-compose up -d twelvet-gateway twelvet-auth twelvet-server-system
+          docker compose up -d twelvet-gateway twelvet-auth twelvet-server-system
 
       - name: Check Server twelvet-mysql
         run: |
