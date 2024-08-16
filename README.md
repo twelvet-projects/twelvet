@@ -37,7 +37,7 @@ Backend source code: https://github.com/twelvet-projects/twelvet
 
 Frontend source code: https://github.com/twelvet-s/twelvet-ui
 
-Technical documents: https://twelvet.cn/docs/
+Technical documents: https://doc.twelvet.cn/
 
 Official blog: https://twelvet.cn
 

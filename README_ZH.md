@@ -29,7 +29,7 @@
 
 前端源码：https://github.com/twelvet-s/twelvet-ui
 
-技术文档：https://twelvet.cn/docs/
+技术文档：https://doc.twelvet.cn/
 
 官方博客：https://twelvet.cn
 
