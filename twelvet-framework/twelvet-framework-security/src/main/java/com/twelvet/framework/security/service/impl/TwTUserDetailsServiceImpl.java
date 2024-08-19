@@ -7,6 +7,7 @@ import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.core.domain.utils.ResUtils;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
+import com.twelvet.framework.security.constants.Oauth2ClientEnums;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.exception.UserFrozenException;
 import com.twelvet.framework.security.service.TwUserDetailsService;
@@ -55,7 +56,8 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 	 */
 	@Override
 	public boolean support(String clientId, String grantType) {
-		return AuthorizationGrantType.PASSWORD.getValue().equals(grantType);
+		return Oauth2ClientEnums.TWELVET.getClientId().equals(clientId)
+				&& AuthorizationGrantType.PASSWORD.getValue().equals(grantType);
 	}
 
 	/**
