@@ -9,7 +9,7 @@ package com.twelvet.framework.security.constants;
  */
 public enum Oauth2ClientEnums {
 
-	TWELVET("twelvet", "省级"),
+	TWELVET("twelvet", "twelvet"),
 
 	;
 
