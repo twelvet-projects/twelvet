@@ -2,6 +2,15 @@ server:
   port: 8085
 
 spring:
+  ai:
+    openai:
+      api-key: 1asdajsiodjoiasd
+      base-url: https://api.openai-hk.com
+      chat:
+        options:
+          model: gpt-4o-mini
+      embedding:
+        enabled: true
   application:
     # 应用名称
     name: @artifactId@
@@ -29,9 +38,9 @@ spring:
         group: DEFAULT_GROUP
         # 共享配置
         # shared-configs:
-          # - data-id: twelvet-app-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
-    # 暂时修复因sentinel导致的无法启动
-    # openfeign:
+        # - data-id: twelvet-app-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+      # 暂时修复因sentinel导致的无法启动
+      # openfeign:
       #lazy-attributes-resolution: true
   config:
     import:

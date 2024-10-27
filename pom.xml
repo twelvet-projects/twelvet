@@ -70,6 +70,8 @@
         <oss-spring-boot-starter.version>3.0.0</oss-spring-boot-starter.version>
         <idempotent-spring-boot-starter.version>0.4.0</idempotent-spring-boot-starter.version>
 
+        <spring-ai-bom.version>1.0.0-SNAPSHOT</spring-ai-bom.version>
+
         <docker.plugin.version>0.32.0</docker.plugin.version>
         <spring.checkstyle.plugin>0.0.39</spring.checkstyle.plugin>
         <git.commit.plugin>9.0.0</git.commit.plugin>
@@ -224,6 +226,15 @@
                 <groupId>com.pig4cloud.plugin</groupId>
                 <artifactId>oss-spring-boot-starter</artifactId>
                 <version>${oss-spring-boot-starter.version}</version>
+            </dependency>
+
+            <!--Spring AI-->
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring-ai-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
 
             <!--多数据源-->

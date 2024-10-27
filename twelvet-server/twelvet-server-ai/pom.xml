@@ -32,6 +32,12 @@
             <artifactId>twelvet-framework-security</artifactId>
         </dependency>
 
+        <!--Spring AI-->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-openai-spring-boot-starter</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

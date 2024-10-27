@@ -23,8 +23,8 @@ public interface ServiceNameConstants {
 	String FILE_SERVICE = "twelvet-server-dfs";
 
 	/**
-	 * MQ服务的serviceId
+	 * AI服务的serviceId
 	 */
-	String MQ_SERVICE = "twelvet-server-mq";
+	String AI_SERVICE = "twelvet-server-ai";
 
 }
