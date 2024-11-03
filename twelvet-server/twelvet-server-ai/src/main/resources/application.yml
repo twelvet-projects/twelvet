@@ -3,14 +3,10 @@ server:
 
 spring:
   ai:
-    openai:
-      api-key: 1asdajsiodjoiasd
-      base-url: https://api.openai-hk.com
-      chat:
-        options:
-          model: gpt-4o-mini
-      embedding:
-        enabled: true
+    # alibaba AI
+    dashscope:
+      # https://bailian.console.aliyun.com/?apiKey=1#/api-key
+      api-key: sk-726fd2
   application:
     # 应用名称
     name: @artifactId@
