@@ -1,3 +1,4 @@
+/*
 package com.twelvet.server.ai.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,4 +15,4 @@ public class JacksonConfig {
         objectMapper.registerModule(new JavaTimeModule());
         return objectMapper;
     }
-}
+}*/
