@@ -2,11 +2,6 @@ server:
   port: 8085
 
 spring:
-  ai:
-    # alibaba AI
-    dashscope:
-      # https://bailian.console.aliyun.com/?apiKey=1#/api-key
-      api-key: sk-726fd2
   application:
     # 应用名称
     name: @artifactId@
