@@ -11,6 +11,7 @@ import com.twelvet.framework.core.application.domain.JsonResult;
 import com.twelvet.framework.security.annotation.AuthIgnore;
 import com.twelvet.server.ai.domian.MessageVO;
 import com.twelvet.server.ai.domian.params.MessageParams;
+import com.twelvet.server.ai.mapper.TestMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * AI助手Controller
@@ -53,6 +55,9 @@ public class AIChatController {
 
     @Autowired
     private VectorStore vectorStore;
+
+    @Autowired
+    private TestMapper testMapper;
 
 
     @Operation(summary = "回答用户问题")
@@ -114,6 +119,15 @@ public class AIChatController {
         /*return vectorStore.similaritySearch(SearchRequest
                 .query(message)
                 .withTopK(2));*/
+    }
+
+    @AuthIgnore(value = false)
+    @Operation(summary = "测试mysql数据库")
+    @GetMapping("/test-mysql")
+    public void testMysql(){
+        List<Map<String, Object>> maps = testMapper.selectI18nByI18nId();
+        System.out.println(maps);
+
     }
 
 }

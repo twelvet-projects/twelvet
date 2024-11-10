@@ -38,6 +38,12 @@
             <artifactId>spring-ai-alibaba-starter</artifactId>
         </dependency>
 
+        <!--PGSql Vector 向量数据库-->
+        <!--<dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-pgvector-store-spring-boot-starter</artifactId>
+        </dependency>-->
+
     </dependencies>
 
 </project>
