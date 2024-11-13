@@ -1,12 +1,14 @@
 package com.twelvet.server.ai.controller;
 
 import com.alibaba.cloud.ai.advisor.DocumentRetrievalAdvisor;
+import com.alibaba.cloud.ai.advisor.RetrievalRerankAdvisor;
 import com.alibaba.cloud.ai.dashscope.api.DashScopeApi;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
 import com.alibaba.cloud.ai.dashscope.embedding.DashScopeEmbeddingModel;
 import com.alibaba.cloud.ai.dashscope.rag.DashScopeDocumentRetrievalAdvisor;
 import com.alibaba.cloud.ai.dashscope.rag.DashScopeDocumentRetriever;
 import com.alibaba.cloud.ai.dashscope.rag.DashScopeDocumentRetrieverOptions;
+import com.alibaba.cloud.ai.model.RerankModel;
 import com.twelvet.framework.core.application.domain.JsonResult;
 import com.twelvet.framework.security.annotation.AuthIgnore;
 import com.twelvet.server.ai.domian.MessageVO;
@@ -59,6 +61,9 @@ public class AIChatController {
     @Autowired
     private TestMapper testMapper;
 
+    @Autowired
+    private RerankModel rerankModel;
+
 
     @Operation(summary = "回答用户问题")
     @PostMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
@@ -69,7 +74,7 @@ public class AIChatController {
 
 
         ChatClient chatClient = ChatClient.builder(chatModel)
-                .defaultAdvisors(new DocumentRetrievalAdvisor(retriever))
+                .defaultAdvisors(new RetrievalRerankAdvisor(vectorStore, rerankModel))
                 .build();
 
         return chatClient
@@ -96,10 +101,10 @@ public class AIChatController {
     @AuthIgnore(value = false)
     @Operation(summary = "向量化文本")
     @GetMapping("/embedding")
-    public JsonResult embedding(@RequestParam String answer) {
+    public JsonResult embedding(@RequestParam String message) {
         // 2. 文档向量化
         List<Document> docs = List.of(
-                new Document(answer)
+                new Document(message)
         );
 
          vectorStore.add(docs);

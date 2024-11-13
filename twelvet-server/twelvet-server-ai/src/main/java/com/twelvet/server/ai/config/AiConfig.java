@@ -9,10 +9,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AiConfig {
 
-    @Bean
+    /*@Bean
     public DashScopeCloudStore store(DashScopeApi dashscopeApi) {
         return new DashScopeCloudStore(
                 dashscopeApi, new DashScopeStoreOptions("twelvet"));
-    }
+    }*/
 
 }
