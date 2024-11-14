@@ -2,20 +2,6 @@ server:
   port: 8085
 
 spring:
-  datasource:
-    # 向量数据库的支持
-    url: jdbc:postgresql://192.168.116.130:5432/twelvet_ai
-    username: age
-    password: AgeVector
-    driver-class-name: org.postgresql.Driver
-  ai:
-    vectorstore:
-      pgvector:
-        index-type: HNSW
-        distance-type: COSINE_DISTANCE
-        dimensions: 1536
-        # 初始化
-        initialize-schema: true
   application:
     # 应用名称
     name: @artifactId@
