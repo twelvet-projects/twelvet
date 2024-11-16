@@ -20,6 +20,7 @@
         <module>twelvet-api-dfs</module>
         <module>twelvet-api-gen</module>
         <module>twelvet-api-auth</module>
+        <module>twelvet-api-ai</module>
     </modules>
 
     <dependencies>

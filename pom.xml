@@ -350,6 +350,13 @@
                 <version>${twelvet.version}</version>
             </dependency>
 
+            <!--AI API-->
+            <dependency>
+                <groupId>com.twelvet</groupId>
+                <artifactId>twelvet-api-ai</artifactId>
+                <version>${twelvet.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
