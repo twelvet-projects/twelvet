@@ -1754,5 +1754,4 @@ VALUES (208, 'system.menu.system.i18n.export', 'en_US', 'Internationalization Ex
 -- Records of undo_log
 -- ----------------------------
 
-SET
-    FOREIGN_KEY_CHECKS = 1;
+SET FOREIGN_KEY_CHECKS = 1;
