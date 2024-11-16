@@ -382,14 +382,14 @@ INSERT INTO `sys_menu`
 VALUES (2, 'system.menu.human', 0, 3, '/human', NULL, '1', 'M', '0', '0', '', 'icon-human-resources', 'admin',
         '2019-03-16 11:33:00', 'admin', '2024-03-30 20:46:39', '系统监控目录');
 INSERT INTO `sys_menu`
-VALUES (3, 'system.menu.tool', 0, 5, '/tool', NULL, '1', 'M', '0', '0', '', 'icon-tool-box', 'admin',
-        '2019-03-16 11:33:00', 'admin', '2024-03-30 20:46:58', '系统工具目录');
+VALUES (3, 'system.menu.tool', 0, 6, '/tool', NULL, '1', 'M', '0', '0', '', 'icon-tool-box', 'admin',
+        '2019-03-16 11:33:00', 'admin', '2024-10-26 18:50:51', '系统工具目录');
 INSERT INTO `sys_menu`
-VALUES (4, 'system.menu.log', 0, 4, '/log', '', '1', 'M', '0', '0', '', 'icon-log', 'admin', '2019-03-16 11:33:00',
-        'admin', '2024-03-30 20:46:46', '日志管理菜单');
+VALUES (4, 'system.menu.log', 0, 5, '/log', '', '1', 'M', '0', '0', '', 'icon-log', 'admin', '2019-03-16 11:33:00',
+        'admin', '2024-10-26 18:54:18', '日志管理菜单');
 INSERT INTO `sys_menu`
-VALUES (5, 'TwelveT', 0, 6, 'https://twelvet.cn', NULL, '0', 'M', '0', '0', '', 'icon-system', 'admin',
-        '2019-03-16 11:33:00', 'admin', '2023-03-06 00:21:15', '若依官网地址');
+VALUES (5, 'TwelveT', 0, 7, 'https://twelvet.cn', NULL, '0', 'M', '0', '0', '', 'icon-system', 'admin',
+        '2019-03-16 11:33:00', 'admin', '2024-10-26 18:50:59', '若依官网地址');
 INSERT INTO `sys_menu`
 VALUES (100, 'system.menu.human.team', 2, 1, '/human/staff', '/human/staff/index', '1', 'C', '0', '0',
         'system:user:list', 'icon-team', 'admin', '2019-03-16 11:33:00', 'admin', '2024-03-31 09:34:38',
@@ -700,6 +700,66 @@ VALUES (1123, 'system.menu.system.i18n.remove', 1119, 4, '#', '', '1', 'F', '0',
 INSERT INTO `sys_menu`
 VALUES (1124, 'system.menu.system.i18n.export', 1119, 5, '#', '', '1', 'F', '0', '0', 'system:i18n:export', '#',
         'admin', '2018-03-01 00:00:00', 'admin', '2024-03-31 11:17:22', '');
+INSERT INTO `sys_menu`
+VALUES (1125, 'AI知识库', 0, 4, '/ai', NULL, '1', 'M', '0', '0', NULL, 'icon-ai', 'admin', '2024-10-26 18:50:42',
+        'admin', '2024-10-26 18:54:14', '');
+INSERT INTO `sys_menu`
+VALUES (1126, 'AI助手', 1125, 1, '/ai/chat', '/AI/Chat', '1', 'C', '0', '0', 'ai:chat', 'icon-ai-chat', 'admin',
+        '2024-10-26 19:15:17', '', NULL, '');
+INSERT INTO `sys_menu`
+VALUES (1127, 'AI知识库文档', 1125, 1, 'doc', 'system/doc/index', '1', 'C', '0', '0', 'ai:doc:list', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2024-11-16 20:30:05', 'AI知识库文档菜单');
+INSERT INTO `sys_menu`
+VALUES (1128, 'AI知识库文档查询', 1127, 1, '#', '', '1', 'F', '0', '0', 'ai:doc:query', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1129, 'AI知识库文档新增', 1127, 2, '#', '', '1', 'F', '0', '0', 'ai:doc:add', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1130, 'AI知识库文档修改', 1127, 3, '#', '', '1', 'F', '0', '0', 'ai:doc:edit', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1131, 'AI知识库文档删除', 1127, 4, '#', '', '1', 'F', '0', '0', 'ai:doc:remove', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1132, 'AI知识库文档导出', 1127, 5, '#', '', '1', 'F', '0', '0', 'ai:doc:export', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1133, 'AI知识库文档分片', 1125, 1, 'slice', 'system/slice/index', '1', 'C', '0', '0', 'ai:slice:list', '#',
+        'admin', '2018-03-01 00:00:00', 'admin', '2024-11-16 20:30:12', 'AI知识库文档分片菜单');
+INSERT INTO `sys_menu`
+VALUES (1134, 'AI知识库文档分片查询', 1133, 1, '#', '', '1', 'F', '0', '0', 'ai:slice:query', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1135, 'AI知识库文档分片新增', 1133, 2, '#', '', '1', 'F', '0', '0', 'ai:slice:add', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1136, 'AI知识库文档分片修改', 1133, 3, '#', '', '1', 'F', '0', '0', 'ai:slice:edit', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1137, 'AI知识库文档分片删除', 1133, 4, '#', '', '1', 'F', '0', '0', 'ai:slice:remove', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1138, 'AI知识库文档分片导出', 1133, 5, '#', '', '1', 'F', '0', '0', 'ai:slice:export', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1139, 'AI知识库', 1125, 1, 'model', 'system/model/index', '1', 'C', '0', '0', 'ai:model:list', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2024-11-16 20:30:17', 'AI知识库菜单');
+INSERT INTO `sys_menu`
+VALUES (1140, 'AI知识库查询', 1139, 1, '#', '', '1', 'F', '0', '0', 'ai:model:query', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1141, 'AI知识库新增', 1139, 2, '#', '', '1', 'F', '0', '0', 'ai:model:add', '#', 'admin', '2018-03-01 00:00:00',
+        'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1142, 'AI知识库修改', 1139, 3, '#', '', '1', 'F', '0', '0', 'ai:model:edit', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1143, 'AI知识库删除', 1139, 4, '#', '', '1', 'F', '0', '0', 'ai:model:remove', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1144, 'AI知识库导出', 1139, 5, '#', '', '1', 'F', '0', '0', 'ai:model:export', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 
 
 
