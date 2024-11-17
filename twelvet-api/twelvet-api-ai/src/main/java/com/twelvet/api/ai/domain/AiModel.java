@@ -7,6 +7,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.io.Serial;
+
 /**
  * AI知识库对象 ai_model
  *
@@ -17,6 +19,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(description = "AI知识库对象")
 public class AiModel extends BaseEntity {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/** 知识库ID */

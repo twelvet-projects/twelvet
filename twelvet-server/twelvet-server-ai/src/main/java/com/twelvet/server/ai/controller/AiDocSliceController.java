@@ -1,22 +1,20 @@
 package com.twelvet.server.ai.controller;
 
-import java.util.List;
-
 import com.twelvet.api.ai.domain.AiDocSlice;
-import com.twelvet.server.ai.service.IAiDocSliceService;
-
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.Operation;
-import com.twelvet.framework.log.annotation.Log;
-import com.twelvet.framework.log.enums.BusinessType;
-import com.twelvet.framework.core.application.page.TableDataInfo;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.JsonResult;
-import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
+import com.twelvet.framework.core.application.page.TableDataInfo;
+import com.twelvet.framework.jdbc.web.utils.PageUtils;
+import com.twelvet.framework.log.annotation.Log;
+import com.twelvet.framework.log.enums.BusinessType;
+import com.twelvet.server.ai.service.IAiDocSliceService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import com.twelvet.framework.jdbc.web.utils.PageUtils;
+
+import java.util.List;
 
 /**
  * AI知识库文档分片Controller
@@ -44,6 +42,7 @@ public class AiDocSliceController extends TWTController {
 		List<AiDocSlice> list = aiDocSliceService.selectAiDocSliceList(aiDocSlice);
 		return JsonResult.success(PageUtils.getDataTable(list));
 	}
+
 	/**
 	 * 删除AI知识库文档分片
 	 */

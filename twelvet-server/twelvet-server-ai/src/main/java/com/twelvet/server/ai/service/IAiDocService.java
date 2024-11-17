@@ -1,6 +1,7 @@
 package com.twelvet.server.ai.service;
 
 import com.twelvet.api.ai.domain.AiDoc;
+import com.twelvet.api.ai.domain.dto.AiDocDTO;
 
 import java.util.List;
 
@@ -29,10 +30,10 @@ public interface IAiDocService {
 
 	/**
 	 * 新增AI知识库文档
-	 * @param aiDoc AI知识库文档
+	 * @param aiDocDTO AI知识库文档
 	 * @return 结果
 	 */
-	public int insertAiDoc(AiDoc aiDoc);
+	public int insertAiDoc(AiDocDTO aiDocDTO);
 
 	/**
 	 * 修改AI知识库文档

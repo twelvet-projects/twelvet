@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -19,56 +20,68 @@ import java.io.Serializable;
 @Schema(description = "AI知识库文档DTO")
 public class AiDocDTO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	@Serial
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 文档ID
-     */
-    @Schema(description = "文档ID")
-    private Long docId;
+	/**
+	 * 文档ID
+	 */
+	@Schema(description = "文档ID")
+	private Long docId;
 
-    /**
-     * 知识库ID
-     */
-    @Schema(description = "知识库ID")
-    private Long modelId;
+	/**
+	 * 知识库ID
+	 */
+	@Schema(description = "知识库ID")
+	private Long modelId;
 
-    /**
-     * 文档名称
-     */
-    @Schema(description = "文档名称")
-    private String docName;
+	/**
+	 * 文档名称
+	 */
+	@Schema(description = "文档名称")
+	private String docName;
 
-    public void setDocId(Long docId) {
-        this.docId = docId;
-    }
+	/** 内容 */
+	@Schema(description = "内容")
+	@ExcelProperty(value = "内容")
+	private String content;
 
-    public Long getDocId() {
-        return docId;
-    }
+	public void setDocId(Long docId) {
+		this.docId = docId;
+	}
 
-    public void setModelId(Long modelId) {
-        this.modelId = modelId;
-    }
+	public Long getDocId() {
+		return docId;
+	}
 
-    public Long getModelId() {
-        return modelId;
-    }
+	public void setModelId(Long modelId) {
+		this.modelId = modelId;
+	}
 
-    public void setDocName(String docName) {
-        this.docName = docName;
-    }
+	public Long getModelId() {
+		return modelId;
+	}
 
-    public String getDocName() {
-        return docName;
-    }
+	public void setDocName(String docName) {
+		this.docName = docName;
+	}
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("docId", getDocId())
-                .append("modelId", getModelId())
-                .append("docName", getDocName())
-                .toString();
-    }
+	public String getDocName() {
+		return docName;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	@Override
+	public String toString() {
+		return "AiDocDTO{" + "docId=" + docId + ", modelId=" + modelId + ", docName='" + docName + '\'' + ", content='"
+				+ content + '\'' + '}';
+	}
 
 }

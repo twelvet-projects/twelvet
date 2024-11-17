@@ -69,6 +69,7 @@
         <excel-spring-boot-starter.version>3.3.1</excel-spring-boot-starter.version>
         <oss-spring-boot-starter.version>3.0.0</oss-spring-boot-starter.version>
         <idempotent-spring-boot-starter.version>0.4.0</idempotent-spring-boot-starter.version>
+        <sensitive-word.version>0.22.0</sensitive-word.version>
 
         <spring-ai-bom.version>1.0.0-M3</spring-ai-bom.version>
         <ai-alibaba.version>1.0.0-M3.1</ai-alibaba.version>
@@ -243,6 +244,13 @@
                 <groupId>com.pig4cloud.plugin</groupId>
                 <artifactId>oss-spring-boot-starter</artifactId>
                 <version>${oss-spring-boot-starter.version}</version>
+            </dependency>
+
+            <!--敏感词过滤工具-->
+            <dependency>
+                <groupId>com.github.houbb</groupId>
+                <artifactId>sensitive-word</artifactId>
+                <version>${sensitive-word.version}</version>
             </dependency>
 
             <!--多数据源-->
