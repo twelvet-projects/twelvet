@@ -1,16 +1,15 @@
 package com.twelvet.server.ai.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.alibaba.cloud.ai.dashscope.api.DashScopeApi;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
-import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatOptions;
-import com.alibaba.cloud.ai.dashscope.rag.DashScopeDocumentRetrievalAdvisor;
 import com.twelvet.api.ai.domain.dto.MessageDTO;
 import com.twelvet.api.ai.domain.vo.MessageVO;
 import com.twelvet.server.ai.service.AIChatService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.prompt.Prompt;
@@ -45,6 +44,9 @@ public class AIChatServiceImpl implements AIChatService {
     @Autowired
     private VectorStore vectorStore;
 
+    @Autowired
+    private AiMessageChatMemory aiMessageChatMemory;
+
     /**
      * 发起聊天
      *
@@ -59,17 +61,18 @@ public class AIChatServiceImpl implements AIChatService {
         Filter.Expression filter = filterExpressionBuilder
                 .eq("modelId", 1)
                 .build();
-        List<Document> docs = vectorStore.similaritySearch(
-                SearchRequest
-                        // 搜索向量内容
-                        .query(messageDTO.getContent())
-                        // 向量匹配最多条数
-                        .withTopK(5)
-                        // 匹配相似度准度
-                        .withSimilarityThreshold(SearchRequest.SIMILARITY_THRESHOLD_ACCEPT_ALL)
-                        // 过滤元数据
-                        .withFilterExpression(filter)
-        );
+        SearchRequest searchRequest = SearchRequest
+                // 搜索向量内容
+                .query(messageDTO.getContent())
+                // 向量匹配最多条数
+                .withTopK(5)
+                // 匹配相似度准度
+                .withSimilarityThreshold(SearchRequest.SIMILARITY_THRESHOLD_ACCEPT_ALL)
+                // 过滤元数据
+                .withFilterExpression(filter);
+
+
+        List<Document> docs = vectorStore.similaritySearch(searchRequest);
 
         if (CollectionUtil.isNotEmpty(docs)) {
             for (Document document : docs) {
@@ -87,27 +90,85 @@ public class AIChatServiceImpl implements AIChatService {
         List<String> context = docs.stream().map(Document::getContent).toList();
         // 创建系统提示词
         SystemPromptTemplate promptTemplate = new SystemPromptTemplate("""
-                Context information is below.
+                下面是上下文信息
                 ---------------------
-                {context}
+                {question_answer_context}
                 ---------------------
-                Given the context information and not prior knowledge, answer the question.
-                You need to respond with content in context first, and then respond with your own database. When the given context doesn't help you answer the question, just say "I don't know."
+                给定的上下文和提供的历史信息，而不是事先的知识，回复用户的意见。如果答案不在上下文中，告诉用户你不能回答这个问题。
                 """);
         // 填充数据
-        Message systemMessage = promptTemplate.createMessage(Map.of("context", context));
+        Message systemMessage = promptTemplate.createMessage(Map.of("question_answer_context", context));
 
         // 用户发起提问
-        UserMessage userMessage = new UserMessage(messageDTO.getContent());
-        Prompt prompt = new Prompt(List.of(systemMessage, userMessage));
+//        UserMessage userMessage = new UserMessage(messageDTO.getContent());
+        // TODO 加入历史对话，或实现下方
+        Prompt prompt = new Prompt(List.of(systemMessage));
 
-        return chatModel
-                .stream(prompt)
+        // 自定义使用不同的大模型
+        // 用户提问文本
+        // 用户提问图片/语音
+        //promptUserSpec.media();
+        // 使用历史消息
+        // useChatHistory(advisorSpec, input.getMessage().getSessionId());
+        // 使用向量数据库
+
+        return ChatClient
+                // 自定义使用不同的大模型
+                .create(chatModel)
+                .prompt(prompt)
+                .user(promptUserSpec -> {
+                    // 用户提问文本
+                    promptUserSpec.text(messageDTO.getContent());
+
+                    // 用户提问图片/语音
+                    //promptUserSpec.media();
+                })
+                .advisors(advisorSpec -> {
+                    // 使用历史消息
+                    useChatHistory(advisorSpec, "1");
+
+                    // 使用向量数据库
+                    //useVectorStore(advisorSpec, searchRequest);
+                })
+                .stream()
+                .chatResponse()
                 .map(chatResponse -> {
                     MessageVO messageVO = new MessageVO();
                     messageVO.setContent(chatResponse.getResult().getOutput().getContent());
                     return messageVO;
                 });
+    }
+
+    /**
+     * 用户历史对话
+     *
+     * @param advisorSpec
+     * @param sessionId
+     */
+    public void useChatHistory(ChatClient.AdvisorSpec advisorSpec, String sessionId) {
+        // 1. 如果需要存储会话和消息到数据库，自己可以实现ChatMemory接口，这里使用自己实现的AiMessageChatMemory，数据库存储。
+        // 2. 传入会话id，MessageChatMemoryAdvisor会根据会话id去查找消息。
+        // 3. 只需要携带最近10条消息
+        // MessageChatMemoryAdvisor会在消息发送给大模型之前，从ChatMemory中获取会话的历史消息，然后一起发送给大模型。
+        advisorSpec.advisors(new MessageChatMemoryAdvisor(aiMessageChatMemory, sessionId, 10));
+    }
+
+    /**
+     * 创建向量搜索提示词
+     *
+     * @param advisorSpec   AdvisorSpec
+     * @param searchRequest SearchRequest
+     */
+    public void useVectorStore(ChatClient.AdvisorSpec advisorSpec, SearchRequest searchRequest) {
+        // question_answer_context是一个占位符，会替换成向量数据库中查询到的文档。QuestionAnswerAdvisor会替换。
+        String promptWithContext = """
+                下面是上下文信息
+                ---------------------
+                {question_answer_context}
+                ---------------------
+                给定的上下文和提供的历史信息，而不是事先的知识，回复用户的意见。如果答案不在上下文中，告诉用户你不能回答这个问题。
+                """;
+        advisorSpec.advisors(new QuestionAnswerAdvisor(vectorStore, searchRequest, promptWithContext));
     }
 
 }
