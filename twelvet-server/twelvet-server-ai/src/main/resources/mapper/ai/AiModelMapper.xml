@@ -11,10 +11,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="multiRound"    column="multi_round"    />
         <result property="topK"    column="top_k"    />
         <result property="modelSort"    column="model_sort"    />
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
     <sql id="selectAiModelVo">
-        select model_id, model_name, welcome_msg, multi_round, top_k, model_sort from ai_model
+        select model_id,
+               model_name,
+               welcome_msg,
+               multi_round,
+               top_k,
+               model_sort,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from ai_model
     </sql>
 
     <select id="selectAiModelList" parameterType="AiModel" resultMap="AiModelResult">
@@ -41,6 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="multiRound != null">multi_round,</if>
             <if test="topK != null">top_k,</if>
             <if test="modelSort != null">model_sort,</if>
+            create_time,
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="modelName != null">#{modelName},</if>
@@ -48,6 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="multiRound != null">#{multiRound},</if>
             <if test="topK != null">#{topK},</if>
             <if test="modelSort != null">#{modelSort},</if>
+            sysdate(),
          </trim>
     </insert>
 
@@ -59,6 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="multiRound != null">multi_round = #{multiRound},</if>
             <if test="topK != null">top_k = #{topK},</if>
             <if test="modelSort != null">model_sort = #{modelSort},</if>
+            update_time = sysdate(),
         </trim>
         where model_id = #{modelId}
     </update>

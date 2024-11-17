@@ -1,22 +1,22 @@
 package com.twelvet.server.ai.controller;
 
-import java.util.List;
-
+import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
 import com.twelvet.api.ai.domain.AiModel;
-import com.twelvet.server.ai.service.IAiModelService;
-
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.Operation;
-import com.twelvet.framework.log.annotation.Log;
-import com.twelvet.framework.log.enums.BusinessType;
-import com.twelvet.framework.core.application.page.TableDataInfo;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.JsonResult;
-import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
+import com.twelvet.framework.core.application.page.TableDataInfo;
+import com.twelvet.framework.jdbc.web.utils.PageUtils;
+import com.twelvet.framework.log.annotation.Log;
+import com.twelvet.framework.log.enums.BusinessType;
+import com.twelvet.framework.security.utils.SecurityUtils;
+import com.twelvet.server.ai.service.IAiModelService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import com.twelvet.framework.jdbc.web.utils.PageUtils;
+
+import java.util.List;
 
 /**
  * AI知识库Controller
@@ -43,6 +43,16 @@ public class AiModelController extends TWTController {
 		PageUtils.startPage();
 		List<AiModel> list = aiModelService.selectAiModelList(aiModel);
 		return JsonResult.success(PageUtils.getDataTable(list));
+	}
+
+	/**
+	 * 查询AI知识库列表
+	 */
+	@Operation(summary = "查询AI知识库列表")
+	@PreAuthorize("@role.hasPermi('ai:model:list')")
+	@GetMapping("/list")
+	public JsonResult<List<AiModel>> listQuery(AiModel aiModel) {
+		return JsonResult.success(aiModelService.selectAiModelList(aiModel));
 	}
 
 	/**
@@ -75,6 +85,7 @@ public class AiModelController extends TWTController {
 	@Log(service = "AI知识库", businessType = BusinessType.INSERT)
 	@PostMapping
 	public JsonResult<String> add(@RequestBody AiModel aiModel) {
+		aiModel.setCreateBy(SecurityUtils.getUsername());
 		return json(aiModelService.insertAiModel(aiModel));
 	}
 
@@ -86,6 +97,7 @@ public class AiModelController extends TWTController {
 	@Log(service = "AI知识库", businessType = BusinessType.UPDATE)
 	@PutMapping
 	public JsonResult<String> edit(@RequestBody AiModel aiModel) {
+		aiModel.setUpdateBy(SecurityUtils.getUsername());
 		return json(aiModelService.updateAiModel(aiModel));
 	}
 

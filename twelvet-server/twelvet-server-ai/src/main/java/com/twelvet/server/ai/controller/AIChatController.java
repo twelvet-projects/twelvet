@@ -11,7 +11,7 @@ import com.alibaba.cloud.ai.model.RerankModel;
 import com.twelvet.framework.core.application.domain.JsonResult;
 import com.twelvet.framework.security.annotation.AuthIgnore;
 import com.twelvet.api.ai.domain.vo.MessageVO;
-import com.twelvet.api.ai.domain.params.MessageParams;
+import com.twelvet.api.ai.domain.dto.MessageDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
@@ -58,7 +58,7 @@ public class AIChatController {
 
 	@Operation(summary = "回答用户问题")
 	@PostMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-	public Flux<MessageVO> genAnswer(@RequestBody MessageParams messageParams) {
+	public Flux<MessageVO> genAnswer(@RequestBody MessageDTO messageDTO) {
 		DocumentRetriever retriever = new DashScopeDocumentRetriever(dashscopeApi,
 				DashScopeDocumentRetrieverOptions.builder().withIndexName("twelvet").build());
 
@@ -66,7 +66,7 @@ public class AIChatController {
 			.defaultAdvisors(new RetrievalRerankAdvisor(vectorStore, rerankModel))
 			.build();
 
-		return chatClient.prompt().user(messageParams.getContent()).stream().chatResponse().map(chatResponse -> {
+		return chatClient.prompt().user(messageDTO.getContent()).stream().chatResponse().map(chatResponse -> {
 			MessageVO messageVO = new MessageVO();
 			messageVO.setContent(chatResponse.getResult().getOutput().getContent());
 			// 获取引用的文档

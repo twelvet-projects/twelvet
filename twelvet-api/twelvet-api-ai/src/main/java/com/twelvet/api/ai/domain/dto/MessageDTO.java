@@ -1,4 +1,4 @@
-package com.twelvet.api.ai.domain.params;
+package com.twelvet.api.ai.domain.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @Description: AI助手聊天params
  */
 @Schema(description = "AI助手聊天params")
-public class MessageParams implements Serializable {
+public class MessageDTO implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;

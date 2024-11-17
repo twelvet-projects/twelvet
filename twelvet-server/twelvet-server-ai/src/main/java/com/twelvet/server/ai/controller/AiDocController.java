@@ -3,6 +3,7 @@ package com.twelvet.server.ai.controller;
 import java.util.List;
 
 import com.twelvet.api.ai.domain.AiDoc;
+import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.server.ai.service.IAiDocService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -46,6 +47,16 @@ public class AiDocController extends TWTController {
 	}
 
 	/**
+	 * 查询AI知识库文档列表
+	 */
+	@Operation(summary = "查询AI知识库文档列表")
+	@PreAuthorize("@role.hasPermi('ai:doc:list')")
+	@GetMapping("/list")
+	public JsonResult<List<AiDoc>> listQuery(AiDoc aiDoc) {
+		return JsonResult.success(aiDocService.selectAiDocList(aiDoc));
+	}
+
+	/**
 	 * 导出AI知识库文档列表
 	 */
 	@ResponseExcel(name = "AI知识库文档")
@@ -75,18 +86,8 @@ public class AiDocController extends TWTController {
 	@Log(service = "AI知识库文档", businessType = BusinessType.INSERT)
 	@PostMapping
 	public JsonResult<String> add(@RequestBody AiDoc aiDoc) {
+		aiDoc.setCreateBy(SecurityUtils.getUsername());
 		return json(aiDocService.insertAiDoc(aiDoc));
-	}
-
-	/**
-	 * 修改AI知识库文档
-	 */
-	@Operation(summary = "修改AI知识库文档")
-	@PreAuthorize("@role.hasPermi('ai:doc:edit')")
-	@Log(service = "AI知识库文档", businessType = BusinessType.UPDATE)
-	@PutMapping
-	public JsonResult<String> edit(@RequestBody AiDoc aiDoc) {
-		return json(aiDocService.updateAiDoc(aiDoc));
 	}
 
 	/**

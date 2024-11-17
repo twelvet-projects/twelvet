@@ -20,6 +20,10 @@ CREATE TABLE `ai_model`
     `multi_round` int(4)                                                       NOT NULL DEFAULT 0 COMMENT '上下文记忆会话数',
     `top_k`       int(4)                                                       NOT NULL DEFAULT 1 COMMENT '向量匹配条数',
     `model_sort`  int(4)                                                       NULL     DEFAULT 0 COMMENT '知识库排序',
+    `create_by`   varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '' COMMENT '创建者',
+    `create_time` datetime                                               NULL DEFAULT NULL COMMENT '创建时间',
+    `update_by`   varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '' COMMENT '更新者',
+    `update_time` datetime                                               NULL DEFAULT NULL COMMENT '更新时间',
     PRIMARY KEY (`model_id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
@@ -36,6 +40,10 @@ CREATE TABLE `ai_doc`
     `doc_id`   bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '文档ID',
     `model_id` bigint(20)                                                    NOT NULL COMMENT '知识库ID',
     `doc_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '文档名称',
+    `create_by`   varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '' COMMENT '创建者',
+    `create_time` datetime                                               NULL DEFAULT NULL COMMENT '创建时间',
+    `update_by`   varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '' COMMENT '更新者',
+    `update_time` datetime                                               NULL DEFAULT NULL COMMENT '更新时间',
     PRIMARY KEY (`doc_id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1

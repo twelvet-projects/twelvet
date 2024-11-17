@@ -44,51 +44,6 @@ public class AiDocSliceController extends TWTController {
 		List<AiDocSlice> list = aiDocSliceService.selectAiDocSliceList(aiDocSlice);
 		return JsonResult.success(PageUtils.getDataTable(list));
 	}
-
-	/**
-	 * 导出AI知识库文档分片列表
-	 */
-	@ResponseExcel(name = "AI知识库文档分片")
-	@Operation(summary = "导出AI知识库文档分片列表")
-	@PreAuthorize("@role.hasPermi('ai:slice:export')")
-	@Log(service = "AI知识库文档分片", businessType = BusinessType.EXPORT)
-	@PostMapping("/export")
-	public List<AiDocSlice> export(AiDocSlice aiDocSlice) {
-		return aiDocSliceService.selectAiDocSliceList(aiDocSlice);
-	}
-
-	/**
-	 * 获取AI知识库文档分片详细信息
-	 */
-	@Operation(summary = "获取AI知识库文档分片详细信息")
-	@PreAuthorize("@role.hasPermi('ai:slice:query')")
-	@GetMapping(value = "/{sliceId}")
-	public JsonResult<AiDocSlice> getInfo(@PathVariable("sliceId") Long sliceId) {
-		return JsonResult.success(aiDocSliceService.selectAiDocSliceBySliceId(sliceId));
-	}
-
-	/**
-	 * 新增AI知识库文档分片
-	 */
-	@Operation(summary = "新增AI知识库文档分片")
-	@PreAuthorize("@role.hasPermi('ai:slice:add')")
-	@Log(service = "AI知识库文档分片", businessType = BusinessType.INSERT)
-	@PostMapping
-	public JsonResult<String> add(@RequestBody AiDocSlice aiDocSlice) {
-		return json(aiDocSliceService.insertAiDocSlice(aiDocSlice));
-	}
-
-	/**
-	 * 修改AI知识库文档分片
-	 */
-	@Operation(summary = "修改AI知识库文档分片")
-	@PreAuthorize("@role.hasPermi('ai:slice:edit')")
-	@Log(service = "AI知识库文档分片", businessType = BusinessType.UPDATE)
-	@PutMapping
-	public JsonResult<String> edit(@RequestBody AiDocSlice aiDocSlice) {
-		return json(aiDocSliceService.updateAiDocSlice(aiDocSlice));
-	}
-
 	/**
 	 * 删除AI知识库文档分片
 	 */
