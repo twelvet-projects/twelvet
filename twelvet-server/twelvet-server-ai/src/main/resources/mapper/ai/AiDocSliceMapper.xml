@@ -23,6 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="docId != null "> and doc_id = #{docId}</if>
             <if test="sliceName != null  and sliceName != ''"> and slice_name like concat('%', #{sliceName}, '%')</if>
             <if test="content != null  and content != ''"> and content = #{content}</if>
+            and del_flag = 0
         </where>
     </select>
     
@@ -47,6 +48,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 
+    <!-- 批量插入语句 -->
+    <insert id="insertBatch" parameterType="List">
+        INSERT INTO ai_doc_slice (model_id, doc_id, slice_name, content)
+        VALUES
+        <foreach collection="aiDocSliceList" item="aiDocSlice" separator=",">
+            (#{aiDocSlice.modelId}, #{aiDocSlice.docId}, #{aiDocSlice.sliceName}, #{aiDocSlice.content})
+        </foreach>
+    </insert>
+
     <update id="updateAiDocSlice" parameterType="AiDocSlice">
         update ai_doc_slice
         <trim prefix="SET" suffixOverrides=",">
@@ -59,13 +69,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAiDocSliceBySliceId" parameterType="Long">
-        delete from ai_doc_slice where slice_id = #{sliceId}
+        update ai_doc_slice set del_flag = 0 where slice_id = #{sliceId}
     </delete>
 
-    <delete id="deleteAiDocSliceBySliceIds" parameterType="String">
-        delete from ai_doc_slice where slice_id in 
+    <delete id="deleteAiDocSliceBySliceIds" parameterType="Long">
+        update ai_doc_slice set del_flag = 0 where slice_id in
         <foreach item="sliceId" collection="array" open="(" separator="," close=")">
             #{sliceId}
         </foreach>
     </delete>
+
+    <delete id="deleteAiDocSliceByDocIds" parameterType="Long">
+        update ai_doc_slice set del_flag = 0 where doc_id in
+        <foreach item="docId" collection="array" open="(" separator="," close=")">
+            #{docId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteAiDocSliceByModelIds" parameterType="Long">
+        update ai_doc_slice set del_flag = 0 where model_id in
+        <foreach item="modelId" collection="array" open="(" separator="," close=")">
+            #{modelId}
+        </foreach>
+    </delete>
+
 </mapper>

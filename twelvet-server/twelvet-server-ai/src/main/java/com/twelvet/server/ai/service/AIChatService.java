@@ -13,12 +13,11 @@ import reactor.core.publisher.Flux;
  */
 public interface AIChatService {
 
-    /**
-     * 发起聊天
-     *
-     * @param messageDTO MessageDTO
-     * @return 流式数据返回
-     */
-    Flux<MessageVO> chatStream(MessageDTO messageDTO);
+	/**
+	 * 发起聊天
+	 * @param messageDTO MessageDTO
+	 * @return 流式数据返回
+	 */
+	Flux<MessageVO> chatStream(MessageDTO messageDTO);
 
 }

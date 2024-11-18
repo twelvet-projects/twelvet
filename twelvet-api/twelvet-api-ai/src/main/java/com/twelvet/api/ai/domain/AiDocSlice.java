@@ -22,29 +22,46 @@ public class AiDocSlice extends BaseEntity {
 	@Serial
 	private static final long serialVersionUID = 1L;
 
-	/** 分片ID */
+	/**
+	 * 分片ID
+	 */
 	@Schema(description = "分片ID")
 	private Long sliceId;
 
-	/** 知识库ID */
+	/**
+	 * 知识库ID
+	 */
 	@Schema(description = "知识库ID")
 	@ExcelProperty(value = "知识库ID")
 	private Long modelId;
 
-	/** 文档ID */
+	/**
+	 * 文档ID
+	 */
 	@Schema(description = "文档ID")
 	@ExcelProperty(value = "文档ID")
 	private Long docId;
 
-	/** 分片名称 */
+	/**
+	 * 分片名称
+	 */
 	@Schema(description = "分片名称")
 	@ExcelProperty(value = "分片名称")
 	private String sliceName;
 
-	/** 分片内容 */
+	/**
+	 * 分片内容
+	 */
 	@Schema(description = "分片内容")
 	@ExcelProperty(value = "分片内容")
 	private String content;
+
+	/**
+	 * 是否删除 0：正常，0：删除
+	 */
+	@Schema(description = "是否删除 0：正常，0：删除")
+	@ExcelProperty(value = "是否删除 0：正常，0：删除")
+	private Boolean delFlag;
 
 	public void setSliceId(Long sliceId) {
 		this.sliceId = sliceId;
@@ -86,6 +103,14 @@ public class AiDocSlice extends BaseEntity {
 		return content;
 	}
 
+	public Boolean getDelFlag() {
+		return delFlag;
+	}
+
+	public void setDelFlag(Boolean delFlag) {
+		this.delFlag = delFlag;
+	}
+
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("sliceId", getSliceId())
@@ -93,6 +118,7 @@ public class AiDocSlice extends BaseEntity {
 			.append("docId", getDocId())
 			.append("sliceName", getSliceName())
 			.append("content", getContent())
+			.append("delFlag", getDelFlag())
 			.toString();
 	}
 

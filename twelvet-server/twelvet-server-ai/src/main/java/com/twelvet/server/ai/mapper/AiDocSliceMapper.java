@@ -38,6 +38,13 @@ public interface AiDocSliceMapper {
 	public int insertAiDocSlice(AiDocSlice aiDocSlice);
 
 	/**
+	 * 批量新增AI知识库文档分片
+	 * @param aiDocSliceList AI知识库文档分片列表
+	 * @return 结果
+	 */
+	public int insertBatch(List<AiDocSlice> aiDocSliceList);
+
+	/**
 	 * 修改AI知识库文档分片
 	 * @param aiDocSlice AI知识库文档分片
 	 * @return 结果
@@ -57,5 +64,19 @@ public interface AiDocSliceMapper {
 	 * @return 结果
 	 */
 	public int deleteAiDocSliceBySliceIds(Long[] sliceIds);
+
+	/**
+	 * 根据文档ID批量删除AI知识库文档分片
+	 * @param docIds 需要删除的文档ID
+	 * @return 结果
+	 */
+	public int deleteAiDocSliceByDocIds(Long[] docIds);
+
+	/**
+	 * 根据知识库ID批量删除AI知识库文档分片
+	 * @param modelIds 需要删除的知识库ID
+	 * @return 结果
+	 */
+	public int deleteAiDocSliceByModelIds(Long[] modelIds);
 
 }

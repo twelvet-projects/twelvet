@@ -3,10 +3,14 @@ package com.twelvet.server.ai.service.impl;
 import java.util.List;
 
 import com.twelvet.api.ai.domain.AiModel;
+import com.twelvet.server.ai.mapper.AiDocMapper;
+import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.mapper.AiModelMapper;
 import com.twelvet.server.ai.service.IAiModelService;
+import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * AI知识库Service业务层处理
@@ -20,6 +24,15 @@ public class AiModelServiceImpl implements IAiModelService {
 
 	@Autowired
 	private AiModelMapper aiModelMapper;
+
+	@Autowired
+	private AiDocMapper aiDocMapper;
+
+	@Autowired
+	private AiDocSliceMapper aiDocSliceMapper;
+
+	@Autowired
+	private VectorStore vectorStore;
 
 	/**
 	 * 查询AI知识库
@@ -66,19 +79,19 @@ public class AiModelServiceImpl implements IAiModelService {
 	 * @param modelIds 需要删除的AI知识库主键
 	 * @return 结果
 	 */
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int deleteAiModelByModelIds(Long[] modelIds) {
-		return aiModelMapper.deleteAiModelByModelIds(modelIds);
-	}
+		int i = aiModelMapper.deleteAiModelByModelIds(modelIds);
 
-	/**
-	 * 删除AI知识库信息
-	 * @param modelId AI知识库主键
-	 * @return 结果
-	 */
-	@Override
-	public int deleteAiModelByModelId(Long modelId) {
-		return aiModelMapper.deleteAiModelByModelId(modelId);
+		// TODO 删除向量数据库向量
+		// vectorStore.add();
+
+		// 批量删除文档
+		aiDocMapper.deleteAiDocByModelIds(modelIds);
+		// 批量删除分片
+		aiDocSliceMapper.deleteAiDocSliceByModelIds(modelIds);
+		return i;
 	}
 
 }

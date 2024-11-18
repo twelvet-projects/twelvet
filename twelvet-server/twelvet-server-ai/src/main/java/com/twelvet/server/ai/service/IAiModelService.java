@@ -48,11 +48,4 @@ public interface IAiModelService {
 	 */
 	public int deleteAiModelByModelIds(Long[] modelIds);
 
-	/**
-	 * 删除AI知识库信息
-	 * @param modelId AI知识库主键
-	 * @return 结果
-	 */
-	public int deleteAiModelByModelId(Long modelId);
-
 }

@@ -39,6 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="multiRound != null "> and multi_round = #{multiRound}</if>
             <if test="topK != null "> and top_k = #{topK}</if>
             <if test="modelSort != null "> and model_sort = #{modelSort}</if>
+            and del_flag = 0
         </where>
     </select>
     
@@ -81,11 +82,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAiModelByModelId" parameterType="Long">
-        delete from ai_model where model_id = #{modelId}
+        update ai_model set del_flag = 0 where model_id = #{modelId}
     </delete>
 
-    <delete id="deleteAiModelByModelIds" parameterType="String">
-        delete from ai_model where model_id in 
+    <delete id="deleteAiModelByModelIds" parameterType="Long">
+        update ai_model set del_flag = 0 where model_id in
         <foreach item="modelId" collection="array" open="(" separator="," close=")">
             #{modelId}
         </foreach>

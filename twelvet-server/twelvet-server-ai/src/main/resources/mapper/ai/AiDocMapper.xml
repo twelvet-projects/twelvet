@@ -24,12 +24,13 @@
         <where>
             <if test="modelId != null ">and model_id = #{modelId}</if>
             <if test="docName != null  and docName != ''">and doc_name like concat('%', #{docName}, '%')</if>
+            and del_flag = 0
         </where>
     </select>
 
     <select id="selectAiDocByDocId" parameterType="Long" resultMap="AiDocResult">
         <include refid="selectAiDocVo"/>
-        where doc_id = #{docId}
+        where doc_id = #{docId} and del_flag = 0
     </select>
 
     <insert id="insertAiDoc" parameterType="AiDoc" useGeneratedKeys="true" keyProperty="docId">
@@ -62,10 +63,17 @@
         where doc_id = #{docId}
     </delete>
 
-    <delete id="deleteAiDocByDocIds" parameterType="String">
-        delete from ai_doc where doc_id in
+    <delete id="deleteAiDocByDocIds" parameterType="Long">
+        update ai_doc set del_flag = 0 where doc_id in
         <foreach item="docId" collection="array" open="(" separator="," close=")">
             #{docId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteAiDocByModelIds" parameterType="Long">
+        update ai_doc set del_flag = 0 where model_id in
+        <foreach item="modelId" collection="array" open="(" separator="," close=")">
+            #{modelId}
         </foreach>
     </delete>
 </mapper>

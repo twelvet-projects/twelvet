@@ -49,11 +49,4 @@ public interface IAiDocService {
 	 */
 	public int deleteAiDocByDocIds(Long[] docIds);
 
-	/**
-	 * 删除AI知识库文档信息
-	 * @param docId AI知识库文档主键
-	 * @return 结果
-	 */
-	public int deleteAiDocByDocId(Long docId);
-
 }

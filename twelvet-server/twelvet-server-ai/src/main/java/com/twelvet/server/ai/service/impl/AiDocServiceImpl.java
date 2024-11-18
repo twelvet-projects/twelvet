@@ -1,7 +1,5 @@
 package com.twelvet.server.ai.service.impl;
 
-import java.util.*;
-
 import cn.hutool.core.collection.CollectionUtil;
 import com.twelvet.api.ai.domain.AiDoc;
 import com.twelvet.api.ai.domain.AiDocSlice;
@@ -12,11 +10,15 @@ import com.twelvet.server.ai.mapper.AiDocMapper;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.service.IAiDocService;
 import org.springframework.ai.document.Document;
-import org.springframework.ai.reader.TextReader;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * AI知识库文档Service业务层处理
@@ -74,7 +76,7 @@ public class AiDocServiceImpl implements IAiDocService {
 		aiDoc.setCreateTime(nowDate);
 		aiDoc.setUpdateTime(nowDate);
 
-		aiDocMapper.insertAiDoc(aiDoc);
+		int i = aiDocMapper.insertAiDoc(aiDoc);
 
 		Long modelId = aiDoc.getModelId();
 		Long docId = aiDoc.getDocId();
@@ -82,37 +84,35 @@ public class AiDocServiceImpl implements IAiDocService {
 		// https://docs.spring.io/spring-ai/reference/api/etl-pipeline.html#_parameters_4
 		TokenTextSplitter splitter = new TokenTextSplitter(800, 350, 5, 10000, Boolean.TRUE);
 
-		List<Document> docs = splitter.apply(List.of(new Document(aiDocDTO.getContent())));
+		Document document = new Document(aiDocDTO.getContent());
+		List<Document> docs = splitter.split(document);
 
 		List<AiDocSlice> docSliceArrayList = new ArrayList<>();
-		for (Document document : docs) {
+		for (Document doc : docs) {
 			AiDocSlice aiDocSlice = new AiDocSlice();
 			aiDocSlice.setModelId(modelId);
 			aiDocSlice.setDocId(docId);
 			aiDocSlice.setSliceName(aiDoc.getDocName());
-			aiDocSlice.setContent(document.getContent());
+			aiDocSlice.setContent(doc.getContent());
 			aiDocSlice.setCreateBy(username);
 			aiDocSlice.setCreateTime(nowDate);
 			aiDocSlice.setUpdateTime(nowDate);
 
 			docSliceArrayList.add(aiDocSlice);
 
-			Map<String, Object> metadata = document.getMetadata();
+			Map<String, Object> metadata = doc.getMetadata();
 			metadata.put("modelId", modelId);
 			metadata.put("docId", docId);
 			metadata.put("sliceId", "1");
 		}
 
 		if (CollectionUtil.isNotEmpty(docSliceArrayList)) {
-			for (AiDocSlice aiDocSlice : docSliceArrayList) {
-				aiDocSliceMapper.insertAiDocSlice(aiDocSlice);
-			}
+			aiDocSliceMapper.insertBatch(docSliceArrayList);
 		}
 
 		vectorStore.add(docs);
 
-		return 0;
-		// return aiDocMapper.insertAiDoc(aiDoc);
+		return i;
 	}
 
 	/**
@@ -132,17 +132,15 @@ public class AiDocServiceImpl implements IAiDocService {
 	 */
 	@Override
 	public int deleteAiDocByDocIds(Long[] docIds) {
-		return aiDocMapper.deleteAiDocByDocIds(docIds);
-	}
+		int i = aiDocMapper.deleteAiDocByDocIds(docIds);
 
-	/**
-	 * 删除AI知识库文档信息
-	 * @param docId AI知识库文档主键
-	 * @return 结果
-	 */
-	@Override
-	public int deleteAiDocByDocId(Long docId) {
-		return aiDocMapper.deleteAiDocByDocId(docId);
+		// TODO 删除向量数据库向量
+		// vectorStore.add();
+
+		// 批量删除知识库分片
+		aiDocSliceMapper.deleteAiDocSliceByDocIds(docIds);
+
+		return i;
 	}
 
 }

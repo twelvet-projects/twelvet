@@ -22,34 +22,53 @@ public class AiModel extends BaseEntity {
 	@Serial
 	private static final long serialVersionUID = 1L;
 
-	/** 知识库ID */
+	/**
+	 * 知识库ID
+	 */
 	@Schema(description = "知识库ID")
 	private Long modelId;
 
-	/** 知识库名称 */
+	/**
+	 * 知识库名称
+	 */
 	@Schema(description = "知识库名称")
 	@ExcelProperty(value = "知识库名称")
 	private String modelName;
 
-	/** 欢迎语 */
+	/**
+	 * 欢迎语
+	 */
 	@Schema(description = "欢迎语")
 	@ExcelProperty(value = "欢迎语")
 	private String welcomeMsg;
 
-	/** 上下文记忆会话数 */
+	/**
+	 * 上下文记忆会话数
+	 */
 	@Schema(description = "上下文记忆会话数")
 	@ExcelProperty(value = "上下文记忆会话数")
 	private Integer multiRound;
 
-	/** 向量匹配条数 */
+	/**
+	 * 向量匹配条数
+	 */
 	@Schema(description = "向量匹配条数")
 	@ExcelProperty(value = "向量匹配条数")
 	private Integer topK;
 
-	/** 知识库排序 */
+	/**
+	 * 知识库排序
+	 */
 	@Schema(description = "知识库排序")
 	@ExcelProperty(value = "知识库排序")
 	private Integer modelSort;
+
+	/**
+	 * 是否删除 0：正常，0：删除
+	 */
+	@Schema(description = "是否删除 0：正常，0：删除")
+	@ExcelProperty(value = "是否删除 0：正常，0：删除")
+	private Boolean delFlag;
 
 	public void setModelId(Long modelId) {
 		this.modelId = modelId;
@@ -99,6 +118,14 @@ public class AiModel extends BaseEntity {
 		return modelSort;
 	}
 
+	public Boolean getDelFlag() {
+		return delFlag;
+	}
+
+	public void setDelFlag(Boolean delFlag) {
+		this.delFlag = delFlag;
+	}
+
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("modelId", getModelId())
@@ -107,6 +134,7 @@ public class AiModel extends BaseEntity {
 			.append("multiRound", getMultiRound())
 			.append("topK", getTopK())
 			.append("modelSort", getModelSort())
+			.append("delFlag", getDelFlag())
 			.toString();
 	}
 

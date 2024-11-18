@@ -28,13 +28,6 @@ public interface IAiDocSliceService {
 	public List<AiDocSlice> selectAiDocSliceList(AiDocSlice aiDocSlice);
 
 	/**
-	 * 新增AI知识库文档分片
-	 * @param aiDocSlice AI知识库文档分片
-	 * @return 结果
-	 */
-	public int insertAiDocSlice(AiDocSlice aiDocSlice);
-
-	/**
 	 * 修改AI知识库文档分片
 	 * @param aiDocSlice AI知识库文档分片
 	 * @return 结果
@@ -47,12 +40,5 @@ public interface IAiDocSliceService {
 	 * @return 结果
 	 */
 	public int deleteAiDocSliceBySliceIds(Long[] sliceIds);
-
-	/**
-	 * 删除AI知识库文档分片信息
-	 * @param sliceId AI知识库文档分片主键
-	 * @return 结果
-	 */
-	public int deleteAiDocSliceBySliceId(Long sliceId);
 
 }

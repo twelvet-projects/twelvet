@@ -22,19 +22,32 @@ public class AiDoc extends BaseEntity {
 	@Serial
 	private static final long serialVersionUID = 1L;
 
-	/** 文档ID */
+	/**
+	 * 文档ID
+	 */
 	@Schema(description = "文档ID")
 	private Long docId;
 
-	/** 知识库ID */
+	/**
+	 * 知识库ID
+	 */
 	@Schema(description = "知识库ID")
 	@ExcelProperty(value = "知识库ID")
 	private Long modelId;
 
-	/** 文档名称 */
+	/**
+	 * 文档名称
+	 */
 	@Schema(description = "文档名称")
 	@ExcelProperty(value = "文档名称")
 	private String docName;
+
+	/**
+	 * 是否删除 0：正常，0：删除
+	 */
+	@Schema(description = "是否删除 0：正常，0：删除")
+	@ExcelProperty(value = "是否删除 0：正常，0：删除")
+	private Boolean delFlag;
 
 	public void setDocId(Long docId) {
 		this.docId = docId;
@@ -60,11 +73,20 @@ public class AiDoc extends BaseEntity {
 		return docName;
 	}
 
+	public Boolean getDelFlag() {
+		return delFlag;
+	}
+
+	public void setDelFlag(Boolean delFlag) {
+		this.delFlag = delFlag;
+	}
+
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("docId", getDocId())
 			.append("modelId", getModelId())
 			.append("docName", getDocName())
+			.append("delFlag", getDelFlag())
 			.toString();
 	}
 

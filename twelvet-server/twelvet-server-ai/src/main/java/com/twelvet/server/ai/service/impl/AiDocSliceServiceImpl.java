@@ -42,16 +42,6 @@ public class AiDocSliceServiceImpl implements IAiDocSliceService {
 	}
 
 	/**
-	 * 新增AI知识库文档分片
-	 * @param aiDocSlice AI知识库文档分片
-	 * @return 结果
-	 */
-	@Override
-	public int insertAiDocSlice(AiDocSlice aiDocSlice) {
-		return aiDocSliceMapper.insertAiDocSlice(aiDocSlice);
-	}
-
-	/**
 	 * 修改AI知识库文档分片
 	 * @param aiDocSlice AI知识库文档分片
 	 * @return 结果
@@ -68,17 +58,10 @@ public class AiDocSliceServiceImpl implements IAiDocSliceService {
 	 */
 	@Override
 	public int deleteAiDocSliceBySliceIds(Long[] sliceIds) {
-		return aiDocSliceMapper.deleteAiDocSliceBySliceIds(sliceIds);
-	}
-
-	/**
-	 * 删除AI知识库文档分片信息
-	 * @param sliceId AI知识库文档分片主键
-	 * @return 结果
-	 */
-	@Override
-	public int deleteAiDocSliceBySliceId(Long sliceId) {
-		return aiDocSliceMapper.deleteAiDocSliceBySliceId(sliceId);
+		int i = aiDocSliceMapper.deleteAiDocSliceBySliceIds(sliceIds);
+		// TODO 删除向量数据库向量
+		// vectorStore.add();
+		return i;
 	}
 
 }

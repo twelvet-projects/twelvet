@@ -44,14 +44,14 @@ import java.util.Map;
 @RequestMapping("/chat")
 public class AIChatController {
 
-    @Autowired
-    private AIChatService aiChatService;
+	@Autowired
+	private AIChatService aiChatService;
 
-    @Operation(summary = "回答用户问题")
-    @PreAuthorize("@role.hasPermi('ai:chat')")
-    @PostMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<MessageVO> genAnswer(@RequestBody MessageDTO messageDTO) {
-        return aiChatService.chatStream(messageDTO);
-    }
+	@Operation(summary = "回答用户问题")
+	@PreAuthorize("@role.hasPermi('ai:chat')")
+	@PostMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	public Flux<MessageVO> genAnswer(@RequestBody MessageDTO messageDTO) {
+		return aiChatService.chatStream(messageDTO);
+	}
 
 }
