@@ -11,10 +11,10 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.messages.Message;
-import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
 import org.springframework.ai.document.Document;
+import org.springframework.ai.model.Content;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.ai.vectorstore.filter.Filter;
@@ -25,6 +25,7 @@ import reactor.core.publisher.Flux;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * AI助手服务
@@ -87,17 +88,21 @@ public class AIChatServiceImpl implements AIChatService {
         }
 
         // 获取documents里的content
-        List<String> context = docs.stream().map(Document::getContent).toList();
+        String documentContext = docs.stream()
+                .map(Content::getContent)
+                .collect(Collectors.joining(System.lineSeparator()));
         // 创建系统提示词
         SystemPromptTemplate promptTemplate = new SystemPromptTemplate("""
-                下面是上下文信息
+                Context information is below.
                 ---------------------
                 {question_answer_context}
                 ---------------------
-                给定的上下文和提供的历史信息，而不是事先的知识，回复用户的意见。如果答案不在上下文中，告诉用户你不能回答这个问题。
+                Given the context and provided history information and not prior knowledge,
+                reply to the user comment. If the answer is not in the context, inform
+                the user that you can't answer the question.
                 """);
         // 填充数据
-        Message systemMessage = promptTemplate.createMessage(Map.of("question_answer_context", context));
+        Message systemMessage = promptTemplate.createMessage(Map.of("question_answer_context", documentContext));
 
         // 用户发起提问
 //        UserMessage userMessage = new UserMessage(messageDTO.getContent());
