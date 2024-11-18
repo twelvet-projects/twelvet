@@ -105,7 +105,7 @@ public class AIChatServiceImpl implements AIChatService {
         Message systemMessage = promptTemplate.createMessage(Map.of("question_answer_context", documentContext));
 
         // 用户发起提问
-//        UserMessage userMessage = new UserMessage(messageDTO.getContent());
+        // UserMessage userMessage = new UserMessage(messageDTO.getContent());
         // TODO 加入历史对话，或实现下方
         Prompt prompt = new Prompt(List.of(systemMessage));
 
