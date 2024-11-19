@@ -106,21 +106,6 @@ public class AIChatServiceImpl implements AIChatService {
 		// TODO 加入历史对话，或实现下方
 		Prompt prompt = new Prompt(List.of(systemMessage));
 
-<<<<<<< HEAD
-		// 自定义使用不同的大模型
-		// 用户提问文本
-		// 用户提问图片/语音
-		// promptUserSpec.media();
-		// 使用历史消息
-		// useChatHistory(advisorSpec, input.getMessage().getSessionId());
-		// 使用向量数据库
-=======
-        // 用户发起提问
-        // UserMessage userMessage = new UserMessage(messageDTO.getContent());
-        // TODO 加入历史对话，或实现下方
-        Prompt prompt = new Prompt(List.of(systemMessage));
->>>>>>> ef667470925e40a516f4ea30f1657eaaf4338c71
-
 		return ChatClient
 			// 自定义使用不同的大模型
 			.create(chatModel)
