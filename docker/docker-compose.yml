@@ -1,6 +1,9 @@
 version: '3'
 services:
   twelvet-mysql:
+    # 加入网络
+    networks:
+      - twelvet-network
     container_name: twelvet-mysql
     restart: always
     image: twelvet-mysql
@@ -13,18 +16,21 @@ services:
       - ./mysql/logs:/logs
       - ./mysql/data:/var/lib/mysql
     command: [
-        'mysqld',
-        '--innodb-buffer-pool-size=80M',
-        '--character-set-server=utf8mb4',
-        '--collation-server=utf8mb4_unicode_ci',
-        '--default-time-zone=+8:00',
-        '--lower-case-table-names=1'
+      'mysqld',
+      '--innodb-buffer-pool-size=80M',
+      '--character-set-server=utf8mb4',
+      '--collation-server=utf8mb4_unicode_ci',
+      '--default-time-zone=+8:00',
+      '--lower-case-table-names=1'
     ]
     environment:
       MYSQL_ROOT_HOST: "%"
       MYSQL_ROOT_PASSWORD: 123456
 
   twelvet-redis:
+    # 加入网络
+    networks:
+      - twelvet-network
     container_name: twelvet-redis
     restart: always
     image: twelvet-redis
@@ -39,6 +45,9 @@ services:
     command: redis-server /home/twelvet/redis/redis.conf
 
   twelvet-nacos:
+    # 加入网络
+    networks:
+      - twelvet-network
     container_name: twelvet-nacos
     image: twelvet-nacos
     ports:
@@ -59,6 +68,9 @@ services:
       - TZ=Asia/Shanghai
 
   twelvet-nginx:
+    # 加入网络
+    networks:
+      - twelvet-network
     container_name: twelvet-nginx
     restart: always
     image: twelvet-nginx
@@ -79,6 +91,9 @@ services:
       - twelvet-gateway
 
   twelvet-gateway:
+    # 加入网络
+    networks:
+      - twelvet-network
     container_name: twelvet-gateway
     image: twelvet-gateway
     restart: always
@@ -94,6 +109,9 @@ services:
       - "8080:8080"
 
   twelvet-auth:
+    # 加入网络
+    networks:
+      - twelvet-network
     container_name: twelvet-auth
     image: twelvet-auth
     restart: always
@@ -107,6 +125,9 @@ services:
       dockerfile: dockerfile
 
   twelvet-server-system:
+    # 加入网络
+    networks:
+      - twelvet-network
     container_name: twelvet-server-system
     image: twelvet-server-system
     restart: always
@@ -120,6 +141,9 @@ services:
       dockerfile: dockerfile
 
   twelvet-server-job:
+    # 加入网络
+    networks:
+      - twelvet-network
     container_name: twelvet-server-job
     image: twelvet-server-job
     restart: always
@@ -133,6 +157,9 @@ services:
       dockerfile: dockerfile
 
   twelvet-server-dfs:
+    # 加入网络
+    networks:
+      - twelvet-network
     container_name: twelvet-server-dfs
     image: twelvet-server-dfs
     restart: always
@@ -146,6 +173,9 @@ services:
       dockerfile: dockerfile
 
   twelvet-visual-monitor:
+    # 加入网络
+    networks:
+      - twelvet-network
     container_name: twelvet-visual-monitor
     image: twelvet-visual-monitor
     restart: always
@@ -157,3 +187,7 @@ services:
     build:
       context: ./twelvet/visual/monitor
       dockerfile: dockerfile
+# 共享网络
+networks:
+  twelvet-network:
+    external: true
