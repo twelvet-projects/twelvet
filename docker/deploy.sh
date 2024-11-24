@@ -35,12 +35,12 @@ port() {
 
 # 启动基础环境（必须）
 base() {
+  docker network create twelvet-network
   docker-compose up -d twelvet-mysql twelvet-redis
 }
 
 # 启动程序模块（必须）
 server() {
-  docker network create twelvet-network
   docker-compose up -d twelvet-nacos twelvet-gateway twelvet-auth twelvet-server-system
 }
 
