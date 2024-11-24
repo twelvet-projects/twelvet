@@ -157,3 +157,8 @@ services:
     build:
       context: ./twelvet/visual/monitor
       dockerfile: dockerfile
+
+networks:
+  frontend:
+    # 网络互通
+    external: true
