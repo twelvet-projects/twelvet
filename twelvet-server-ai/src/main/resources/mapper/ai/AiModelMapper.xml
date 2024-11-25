@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twelvet.server.ai.mapper.AiModelMapper">
+    
+    <resultMap type="AiModel" id="AiModelResult">
+        <result property="modelId"    column="model_id"    />
+        <result property="modelName"    column="model_name"    />
+        <result property="welcomeMsg"    column="welcome_msg"    />
+        <result property="multiRound"    column="multi_round"    />
+        <result property="topK"    column="top_k"    />
+        <result property="modelSort"    column="model_sort"    />
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectAiModelVo">
+        select model_id,
+               model_name,
+               welcome_msg,
+               multi_round,
+               top_k,
+               model_sort,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from ai_model
+    </sql>
+
+    <select id="selectAiModelList" parameterType="AiModel" resultMap="AiModelResult">
+        <include refid="selectAiModelVo"/>
+        <where>  
+            <if test="modelName != null  and modelName != ''"> and model_name like concat('%', #{modelName}, '%')</if>
+            <if test="welcomeMsg != null  and welcomeMsg != ''"> and welcome_msg = #{welcomeMsg}</if>
+            <if test="multiRound != null "> and multi_round = #{multiRound}</if>
+            <if test="topK != null "> and top_k = #{topK}</if>
+            <if test="modelSort != null "> and model_sort = #{modelSort}</if>
+            and del_flag = 0
+        </where>
+    </select>
+    
+    <select id="selectAiModelByModelId" parameterType="Long" resultMap="AiModelResult">
+        <include refid="selectAiModelVo"/>
+        where model_id = #{modelId}
+    </select>
+        
+    <insert id="insertAiModel" parameterType="AiModel" useGeneratedKeys="true" keyProperty="modelId">
+        insert into ai_model
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="modelName != null">model_name,</if>
+            <if test="welcomeMsg != null and welcomeMsg != ''">welcome_msg,</if>
+            <if test="multiRound != null">multi_round,</if>
+            <if test="topK != null">top_k,</if>
+            <if test="modelSort != null">model_sort,</if>
+            create_time,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="modelName != null">#{modelName},</if>
+            <if test="welcomeMsg != null and welcomeMsg != ''">#{welcomeMsg},</if>
+            <if test="multiRound != null">#{multiRound},</if>
+            <if test="topK != null">#{topK},</if>
+            <if test="modelSort != null">#{modelSort},</if>
+            sysdate(),
+         </trim>
+    </insert>
+
+    <update id="updateAiModel" parameterType="AiModel">
+        update ai_model
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="modelName != null">model_name = #{modelName},</if>
+            <if test="welcomeMsg != null and welcomeMsg != ''">welcome_msg = #{welcomeMsg},</if>
+            <if test="multiRound != null">multi_round = #{multiRound},</if>
+            <if test="topK != null">top_k = #{topK},</if>
+            <if test="modelSort != null">model_sort = #{modelSort},</if>
+            update_time = sysdate(),
+        </trim>
+        where model_id = #{modelId}
+    </update>
+
+    <delete id="deleteAiModelByModelId" parameterType="Long">
+        update ai_model set del_flag = 0 where model_id = #{modelId}
+    </delete>
+
+    <delete id="deleteAiModelByModelIds" parameterType="Long">
+        update ai_model set del_flag = 0 where model_id in
+        <foreach item="modelId" collection="array" open="(" separator="," close=")">
+            #{modelId}
+        </foreach>
+    </delete>
+</mapper>

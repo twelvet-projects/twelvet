@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twelvet.server.ai.mapper.AiDocSliceMapper">
+    
+    <resultMap type="AiDocSlice" id="AiDocSliceResult">
+        <result property="sliceId"    column="slice_id"    />
+        <result property="modelId"    column="model_id"    />
+        <result property="docId"    column="doc_id"    />
+        <result property="sliceName"    column="slice_name"    />
+        <result property="content"    column="content"    />
+    </resultMap>
+
+    <sql id="selectAiDocSliceVo">
+        select slice_id, model_id, doc_id, slice_name, content from ai_doc_slice
+    </sql>
+
+    <select id="selectAiDocSliceList" parameterType="AiDocSlice" resultMap="AiDocSliceResult">
+        <include refid="selectAiDocSliceVo"/>
+        <where>  
+            <if test="modelId != null "> and model_id = #{modelId}</if>
+            <if test="docId != null "> and doc_id = #{docId}</if>
+            <if test="sliceName != null  and sliceName != ''"> and slice_name like concat('%', #{sliceName}, '%')</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            and del_flag = 0
+        </where>
+    </select>
+    
+    <select id="selectAiDocSliceBySliceId" parameterType="Long" resultMap="AiDocSliceResult">
+        <include refid="selectAiDocSliceVo"/>
+        where slice_id = #{sliceId}
+    </select>
+        
+    <insert id="insertAiDocSlice" parameterType="AiDocSlice" useGeneratedKeys="true" keyProperty="sliceId">
+        insert into ai_doc_slice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="modelId != null">model_id,</if>
+            <if test="docId != null">doc_id,</if>
+            <if test="sliceName != null">slice_name,</if>
+            <if test="content != null">content,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="modelId != null">#{modelId},</if>
+            <if test="docId != null">#{docId},</if>
+            <if test="sliceName != null">#{sliceName},</if>
+            <if test="content != null">#{content},</if>
+         </trim>
+    </insert>
+
+    <!-- 批量插入语句 -->
+    <insert id="insertBatch" parameterType="List">
+        INSERT INTO ai_doc_slice (model_id, doc_id, slice_name, content)
+        VALUES
+        <foreach collection="aiDocSliceList" item="aiDocSlice" separator=",">
+            (#{aiDocSlice.modelId}, #{aiDocSlice.docId}, #{aiDocSlice.sliceName}, #{aiDocSlice.content})
+        </foreach>
+    </insert>
+
+    <update id="updateAiDocSlice" parameterType="AiDocSlice">
+        update ai_doc_slice
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="modelId != null">model_id = #{modelId},</if>
+            <if test="docId != null">doc_id = #{docId},</if>
+            <if test="sliceName != null">slice_name = #{sliceName},</if>
+            <if test="content != null">content = #{content},</if>
+        </trim>
+        where slice_id = #{sliceId}
+    </update>
+
+    <delete id="deleteAiDocSliceBySliceId" parameterType="Long">
+        update ai_doc_slice set del_flag = 0 where slice_id = #{sliceId}
+    </delete>
+
+    <delete id="deleteAiDocSliceBySliceIds" parameterType="Long">
+        update ai_doc_slice set del_flag = 0 where slice_id in
+        <foreach item="sliceId" collection="array" open="(" separator="," close=")">
+            #{sliceId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteAiDocSliceByDocIds" parameterType="Long">
+        update ai_doc_slice set del_flag = 0 where doc_id in
+        <foreach item="docId" collection="array" open="(" separator="," close=")">
+            #{docId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteAiDocSliceByModelIds" parameterType="Long">
+        update ai_doc_slice set del_flag = 0 where model_id in
+        <foreach item="modelId" collection="array" open="(" separator="," close=")">
+            #{modelId}
+        </foreach>
+    </delete>
+
+</mapper>

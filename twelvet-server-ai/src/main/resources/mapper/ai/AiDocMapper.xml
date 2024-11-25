@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twelvet.server.ai.mapper.AiDocMapper">
+
+    <resultMap type="AiDoc" id="AiDocResult">
+        <result property="docId" column="doc_id"/>
+        <result property="modelId" column="model_id"/>
+        <result property="docName" column="doc_name"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectAiDocVo">
+        select doc_id, model_id, doc_name, create_by, create_time, update_by, update_time
+        from ai_doc
+    </sql>
+
+    <select id="selectAiDocList" parameterType="AiDoc" resultMap="AiDocResult">
+        <include refid="selectAiDocVo"/>
+        <where>
+            <if test="modelId != null ">and model_id = #{modelId}</if>
+            <if test="docName != null  and docName != ''">and doc_name like concat('%', #{docName}, '%')</if>
+            and del_flag = 0
+        </where>
+    </select>
+
+    <select id="selectAiDocByDocId" parameterType="Long" resultMap="AiDocResult">
+        <include refid="selectAiDocVo"/>
+        where doc_id = #{docId} and del_flag = 0
+    </select>
+
+    <insert id="insertAiDoc" parameterType="AiDoc" useGeneratedKeys="true" keyProperty="docId">
+        insert into ai_doc
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="modelId != null">model_id,</if>
+            <if test="docName != null">doc_name,</if>
+            create_time,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="modelId != null">#{modelId},</if>
+            <if test="docName != null">#{docName},</if>
+            sysdate(),
+        </trim>
+    </insert>
+
+    <update id="updateAiDoc" parameterType="AiDoc">
+        update ai_doc
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="modelId != null">model_id = #{modelId},</if>
+            <if test="docName != null">doc_name = #{docName},</if>
+            update_time = sysdate(),
+        </trim>
+        where doc_id = #{docId}
+    </update>
+
+    <delete id="deleteAiDocByDocId" parameterType="Long">
+        delete
+        from ai_doc
+        where doc_id = #{docId}
+    </delete>
+
+    <delete id="deleteAiDocByDocIds" parameterType="Long">
+        update ai_doc set del_flag = 0 where doc_id in
+        <foreach item="docId" collection="array" open="(" separator="," close=")">
+            #{docId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteAiDocByModelIds" parameterType="Long">
+        update ai_doc set del_flag = 0 where model_id in
+        <foreach item="modelId" collection="array" open="(" separator="," close=")">
+            #{modelId}
+        </foreach>
+    </delete>
+</mapper>
