@@ -1,9 +1,11 @@
 package com.twelvet.server.job.util;
 
+import cn.hutool.core.collection.CollUtil;
 import com.twelvet.api.job.domain.SysJob;
 import com.twelvet.framework.utils.TUtils;
 import com.twelvet.framework.utils.SpringContextHolder;
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.StrUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -46,7 +48,7 @@ public class JobInvokeUtil {
 	private static void invokeMethod(Object bean, String methodName, List<Object[]> methodParams)
 			throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException {
-		if (TUtils.isNotEmpty(methodParams) && methodParams.size() > 0) {
+		if (CollUtil.isNotEmpty(methodParams)) {
 			Method method = bean.getClass().getDeclaredMethod(methodName, getMethodParamsType(methodParams));
 			method.invoke(bean, getMethodParamsValue(methodParams));
 		}
@@ -92,7 +94,7 @@ public class JobInvokeUtil {
 	 */
 	public static List<Object[]> getMethodParams(String invokeTarget) {
 		String methodStr = StringUtils.substringBetween(invokeTarget, "(", ")");
-		if (StringUtils.isEmpty(methodStr)) {
+		if (StrUtils.isEmpty(methodStr)) {
 			return null;
 		}
 		String[] methodParams = methodStr.split(",");

@@ -2,6 +2,7 @@ package com.twelvet.framework.redis.service.aspect;
 
 import com.twelvet.framework.redis.service.annotation.TwSynchronized;
 import com.twelvet.framework.utils.TUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.After;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 /**
  * @author twelvet
@@ -105,7 +107,7 @@ public class TwSynchronizedAspect {
 		MethodSignature methodSignature = (MethodSignature) signature;
 		Method method = methodSignature.getMethod();
 
-		if (TUtils.isNotEmpty(method)) {
+		if (Objects.nonNull(method)) {
 			return method.getAnnotation(TwSynchronized.class);
 		}
 		return null;

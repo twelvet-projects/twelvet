@@ -1,6 +1,6 @@
 package com.twelvet.framework.utils.html;
 
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.StrUtils;
 import com.twelvet.framework.utils.exception.TWTUtilsException;
 
 /**
@@ -74,7 +74,7 @@ public class EscapeUtil {
 	private static String encode(String text) {
 		int len;
 		if ((text == null) || ((len = text.length()) == 0)) {
-			return StringUtils.EMPTY;
+			return StrUtils.EMPTY;
 		}
 		StringBuilder buffer = new StringBuilder(len + (len >> 2));
 		char c;
@@ -96,7 +96,7 @@ public class EscapeUtil {
 	 * @return 解码后的字符串
 	 */
 	public static String decode(String content) {
-		if (StringUtils.isEmpty(content)) {
+		if (StrUtils.isEmpty(content)) {
 			return content;
 		}
 

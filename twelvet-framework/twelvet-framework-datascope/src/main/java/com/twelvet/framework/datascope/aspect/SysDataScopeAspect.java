@@ -5,8 +5,9 @@ import com.twelvet.framework.core.application.domain.BaseEntity;
 import com.twelvet.framework.datascope.annotation.SysDataScope;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.StrUtils;
 import com.twelvet.framework.utils.TUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Aspect;
@@ -16,6 +17,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 /**
  * @author twelvet
@@ -76,7 +78,7 @@ public class SysDataScopeAspect {
 		}
 		// 获取当前的用户
 		LoginUser loginUser = SecurityUtils.getLoginUser();
-		if (StringUtils.isNotNull(loginUser)) {
+		if (StrUtils.isNotNull(loginUser)) {
 			// 如果是超级管理员，则不过滤数据
 			if (!SecurityUtils.isAdmin(loginUser.getUserId())) {
 				dataScopeFilter(joinPoint, loginUser, controllerDataScope.deptAlias(), controllerDataScope.userAlias());
@@ -101,21 +103,21 @@ public class SysDataScopeAspect {
 				break;
 			}
 			else if (DATA_SCOPE_CUSTOM.equals(dataScope)) {
-				sqlString.append(StringUtils.format(
+				sqlString.append(StrUtils.format(
 						" OR {}.dept_id IN ( SELECT dept_id FROM sys_role_dept WHERE role_id = {} ) ", deptAlias,
 						role.getRoleId()));
 			}
 			else if (DATA_SCOPE_DEPT.equals(dataScope)) {
-				sqlString.append(StringUtils.format(" OR {}.dept_id = {} ", deptAlias, user.getDeptId()));
+				sqlString.append(StrUtils.format(" OR {}.dept_id = {} ", deptAlias, user.getDeptId()));
 			}
 			else if (DATA_SCOPE_DEPT_AND_CHILD.equals(dataScope)) {
-				sqlString.append(StringUtils.format(
+				sqlString.append(StrUtils.format(
 						" OR {}.dept_id IN ( SELECT dept_id FROM sys_dept WHERE dept_id = {} or find_in_set( {} , ancestors ) )",
 						deptAlias, user.getDeptId(), user.getDeptId()));
 			}
 			else if (DATA_SCOPE_SELF.equals(dataScope)) {
 				if (StringUtils.isNotBlank(userAlias)) {
-					sqlString.append(StringUtils.format(" OR {}.user_id = {} ", userAlias, user.getUserId()));
+					sqlString.append(StrUtils.format(" OR {}.user_id = {} ", userAlias, user.getUserId()));
 				}
 				else {
 					// 数据权限为仅本人且没有userAlias别名不查询任何数据
@@ -126,7 +128,7 @@ public class SysDataScopeAspect {
 
 		if (StringUtils.isNotBlank(sqlString.toString())) {
 			Object params = joinPoint.getArgs()[0];
-			if (StringUtils.isNotNull(params) && params instanceof BaseEntity baseEntity) {
+			if (StrUtils.isNotNull(params) && params instanceof BaseEntity baseEntity) {
 				baseEntity.getParams().put(DATA_SCOPE, " AND (" + sqlString.substring(4) + ")");
 			}
 		}
@@ -142,7 +144,7 @@ public class SysDataScopeAspect {
 		MethodSignature methodSignature = (MethodSignature) signature;
 		Method method = methodSignature.getMethod();
 
-		if (TUtils.isNotEmpty(method)) {
+		if (Objects.nonNull(method)) {
 			return method.getAnnotation(SysDataScope.class);
 		}
 		return null;

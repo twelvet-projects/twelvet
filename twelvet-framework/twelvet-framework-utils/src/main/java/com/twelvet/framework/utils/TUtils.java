@@ -38,25 +38,4 @@ public class TUtils {
 			// 拒绝策略
 			new ThreadPoolExecutor.CallerRunsPolicy());
 
-	/**
-	 * 判断一个对象是否为空
-	 * @param object Object
-	 * @return true：为空 false：非空
-	 */
-	public static boolean isEmpty(Object object) {
-		if (object instanceof String) {
-			return StringUtils.EMPTY.equals(object.toString().trim());
-		}
-		return object == null;
-	}
-
-	/**
-	 * 判断不为空
-	 * @param object Object
-	 * @return true：不为空 false：为空
-	 */
-	public static boolean isNotEmpty(Object object) {
-		return !isEmpty(object);
-	}
-
 }

@@ -1,7 +1,8 @@
 package com.twelvet.framework.core.application.page;
 
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.StrUtils;
 import com.twelvet.framework.utils.TUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author twelvet
@@ -32,10 +33,10 @@ public class PageDomain {
 	private String isAsc;
 
 	public String getOrderBy() {
-		if (TUtils.isEmpty(orderByColumn)) {
+		if (StringUtils.isEmpty(orderByColumn)) {
 			return null;
 		}
-		return StringUtils.toUnderScoreCase(orderByColumn) + " " + isAsc;
+		return StrUtils.toUnderScoreCase(orderByColumn) + " " + isAsc;
 	}
 
 	public Integer getCurrent() {

@@ -10,7 +10,7 @@ import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.security.annotation.AuthIgnore;
 import com.twelvet.framework.utils.SpringContextHolder;
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.StrUtils;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -97,7 +97,7 @@ public class TokenEndpointApi {
 
 		// 根据分页参数获取对应数据
 		String key = String.format("%s::*", CacheConstants.PROJECT_OAUTH_ACCESS);
-		if (StringUtils.isNotEmpty(username)) {
+		if (StrUtils.isNotEmpty(username)) {
 			key = String.format("%s::*%s*", CacheConstants.PROJECT_OAUTH_ACCESS, username);
 		}
 		Set<String> keys = redisTemplate.keys(key);

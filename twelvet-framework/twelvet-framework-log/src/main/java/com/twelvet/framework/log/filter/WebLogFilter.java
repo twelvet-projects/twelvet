@@ -3,13 +3,12 @@ package com.twelvet.framework.log.filter;
 import com.twelvet.framework.core.constants.Constants;
 import com.twelvet.framework.utils.DateUtils;
 import com.twelvet.framework.utils.JacksonUtils;
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.StrUtils;
 import com.twelvet.framework.utils.TUtils;
 import com.twelvet.framework.utils.http.ServletUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
@@ -52,7 +51,7 @@ public class WebLogFilter implements Filter {
 		}
 
 		String contentType = request.getContentType();
-		if (!TUtils.isEmpty(contentType)) {
+		if (!StrUtils.isEmpty(contentType)) {
 			if (contentType.startsWith(MediaType.MULTIPART_FORM_DATA_VALUE)
 					|| contentType.startsWith(MediaType.APPLICATION_FORM_URLENCODED_VALUE)) {
 				chain.doFilter(request, response);
@@ -67,7 +66,7 @@ public class WebLogFilter implements Filter {
 
 		String reqJson = requestWrapper.getBody();
 		Map<String, String[]> map = request.getParameterMap();
-		if (map != null && !map.isEmpty() && StringUtils.isEmpty(reqJson)) {
+		if (map != null && !map.isEmpty() && StrUtils.isEmpty(reqJson)) {
 			reqJson = mapToString(map);
 		}
 		requestWrapper.setAttribute("jsonParam", reqJson);

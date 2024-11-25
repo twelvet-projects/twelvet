@@ -13,9 +13,9 @@ import java.util.Map;
  * @WebSite twelvet.cn
  * @Description: 字符串工具类
  */
-public class StringUtils extends org.apache.commons.lang3.StringUtils {
+public class StrUtils {
 
-	public StringUtils() {
+	public StrUtils() {
 		throw new TWTUtilsException("This is a utility class and cannot be instantiated");
 	}
 

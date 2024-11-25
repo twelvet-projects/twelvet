@@ -1,5 +1,6 @@
 package com.twelvet.framework.security.service;
 
+import cn.hutool.core.collection.CollUtil;
 import com.twelvet.api.system.domain.SysUser;
 import com.twelvet.api.system.model.UserInfo;
 import com.twelvet.framework.core.domain.R;
@@ -49,7 +50,7 @@ public interface TwUserDetailsService extends UserDetailsService, Ordered {
 		UserInfo info = result.getData();
 
 		Set<String> dbAuthsSet = new HashSet<>();
-		if (TUtils.isNotEmpty(info.getRoles())) {
+		if (CollUtil.isNotEmpty(info.getRoles())) {
 			// 获取角色
 			dbAuthsSet.addAll(info.getRoles());
 			// 获取权限

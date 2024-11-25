@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -46,7 +47,7 @@ public class SysUserApi extends TWTController {
 	@GetMapping("/info/{username}")
 	public R<UserInfo> info(@PathVariable("username") String username) {
 		SysUser sysUser = iSysUserService.selectUserByUserName(username, false);
-		if (TUtils.isEmpty(sysUser)) {
+		if (Objects.isNull(sysUser)) {
 			return R.fail("用户名或密码错误");
 		}
 		// 角色集合

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author twelvet
@@ -108,9 +109,9 @@ public class SysPostServiceImpl implements ISysPostService {
 	 */
 	@Override
 	public String checkPostNameUnique(SysPost post) {
-		Long postId = TUtils.isEmpty(post.getPostId()) ? -1L : post.getPostId();
+		Long postId = Objects.isNull(post.getPostId()) ? -1L : post.getPostId();
 		SysPost info = postMapper.checkPostNameUnique(post.getPostName());
-		if (TUtils.isNotEmpty(info) && info.getPostId().longValue() != postId.longValue()) {
+		if (Objects.nonNull(info) && info.getPostId().longValue() != postId.longValue()) {
 			return UserConstants.NOT_UNIQUE;
 		}
 		return UserConstants.UNIQUE;
@@ -123,9 +124,9 @@ public class SysPostServiceImpl implements ISysPostService {
 	 */
 	@Override
 	public String checkPostCodeUnique(SysPost post) {
-		Long postId = TUtils.isEmpty(post.getPostId()) ? -1L : post.getPostId();
+		Long postId = Objects.isNull(post.getPostId()) ? -1L : post.getPostId();
 		SysPost info = postMapper.checkPostCodeUnique(post.getPostCode());
-		if (TUtils.isNotEmpty(info) && info.getPostId().longValue() != postId.longValue()) {
+		if (Objects.nonNull(info) && info.getPostId().longValue() != postId.longValue()) {
 			return UserConstants.NOT_UNIQUE;
 		}
 		return UserConstants.UNIQUE;

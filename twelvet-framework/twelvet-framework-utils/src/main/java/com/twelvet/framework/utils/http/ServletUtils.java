@@ -2,7 +2,7 @@ package com.twelvet.framework.utils.http;
 
 import com.twelvet.framework.utils.CharsetKit;
 import com.twelvet.framework.utils.Convert;
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.StrUtils;
 import com.twelvet.framework.utils.exception.TWTUtilsException;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -228,13 +228,13 @@ public class ServletUtils {
 		}
 
 		String uri = request.getRequestURI();
-		if (StringUtils.inStringIgnoreCase(uri, ".json", ".xml")) {
+		if (StrUtils.inStringIgnoreCase(uri, ".json", ".xml")) {
 			return true;
 		}
 
 		String ajax = request.getParameter("__ajax");
 
-		return StringUtils.inStringIgnoreCase(ajax, "json", "xml");
+		return StrUtils.inStringIgnoreCase(ajax, "json", "xml");
 	}
 
 	/**

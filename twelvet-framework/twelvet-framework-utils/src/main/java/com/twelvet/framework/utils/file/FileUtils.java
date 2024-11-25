@@ -183,7 +183,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 * @return 后缀
 	 */
 	public static String getSuffix(String path) {
-		if (TUtils.isEmpty(path)) {
+		if (StringUtils.isEmpty(path)) {
 			return "";
 		}
 		return path.substring(path.lastIndexOf(".") + 1);

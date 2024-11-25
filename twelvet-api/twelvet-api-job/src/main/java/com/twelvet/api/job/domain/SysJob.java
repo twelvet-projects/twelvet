@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.twelvet.framework.core.application.domain.BaseEntity;
 import com.twelvet.framework.core.constants.ScheduleConstants;
 import com.twelvet.framework.utils.CronUtils;
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.StrUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -130,7 +130,7 @@ public class SysJob extends BaseEntity {
 
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date getNextValidTime() {
-		if (StringUtils.isNotEmpty(cronExpression)) {
+		if (StrUtils.isNotEmpty(cronExpression)) {
 			return CronUtils.getNextExecution(cronExpression);
 		}
 		return null;

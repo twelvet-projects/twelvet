@@ -2,6 +2,7 @@ package com.twelvet.framework.utils.sql;
 
 import com.twelvet.framework.utils.TUtils;
 import com.twelvet.framework.utils.exception.TWTUtilsException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author twelvet
@@ -25,7 +26,7 @@ public class SqlUtils {
 	 * @return 返回处理数据
 	 */
 	public static String escapeOrderBySql(String value) {
-		if (TUtils.isNotEmpty(value) && !isValidOrderBySql(value)) {
+		if (StringUtils.isNotEmpty(value) && !isValidOrderBySql(value)) {
 			throw new TWTUtilsException("参数不符合规范，不能进行查询");
 		}
 		return value;

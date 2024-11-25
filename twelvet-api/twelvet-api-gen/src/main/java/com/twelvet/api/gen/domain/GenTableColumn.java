@@ -1,10 +1,12 @@
 package com.twelvet.api.gen.domain;
 
 import com.twelvet.framework.core.application.domain.BaseEntity;
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.StrUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import jakarta.validation.constraints.NotBlank;
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.Serial;
 
 /**
@@ -369,12 +371,12 @@ public class GenTableColumn extends BaseEntity {
 	public String readConverterExp() {
 		String remarks = StringUtils.substringBetween(this.columnComment, "（", "）");
 		StringBuffer sb = new StringBuffer();
-		if (StringUtils.isNotEmpty(remarks)) {
+		if (StrUtils.isNotEmpty(remarks)) {
 			for (String value : remarks.split(" ")) {
-				if (StringUtils.isNotEmpty(value)) {
+				if (StrUtils.isNotEmpty(value)) {
 					Object startStr = value.subSequence(0, 1);
 					String endStr = value.substring(1);
-					sb.append("").append(startStr).append("=").append(endStr).append(",");
+					sb.append(startStr).append("=").append(endStr).append(",");
 				}
 			}
 			return sb.deleteCharAt(sb.length() - 1).toString();

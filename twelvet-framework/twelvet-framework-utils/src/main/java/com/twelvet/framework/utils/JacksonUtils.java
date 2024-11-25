@@ -158,7 +158,7 @@ public class JacksonUtils {
 	 */
 	@Nullable
 	public static <T> T readValue(@Nullable String jsonString, Class<T> valueType) {
-		if (StringUtils.isEmpty(jsonString)) {
+		if (StrUtils.isEmpty(jsonString)) {
 			return null;
 		}
 		try {
@@ -218,7 +218,7 @@ public class JacksonUtils {
 	 */
 	@Nullable
 	public static <T> T readValue(@Nullable String jsonString, TypeReference<T> typeReference) {
-		if (StringUtils.isEmpty(jsonString)) {
+		if (StrUtils.isEmpty(jsonString)) {
 			return null;
 		}
 		try {
@@ -278,7 +278,7 @@ public class JacksonUtils {
 	 */
 	@Nullable
 	public static <T> T readValue(@Nullable String jsonString, JavaType javaType) {
-		if (StringUtils.isEmpty(jsonString)) {
+		if (StrUtils.isEmpty(jsonString)) {
 			return null;
 		}
 		try {

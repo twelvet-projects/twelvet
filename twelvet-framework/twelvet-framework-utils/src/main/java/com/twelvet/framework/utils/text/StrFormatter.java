@@ -1,7 +1,7 @@
 package com.twelvet.framework.utils.text;
 
 import com.twelvet.framework.utils.Convert;
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.StrUtils;
 import com.twelvet.framework.utils.exception.TWTUtilsException;
 
 /**
@@ -36,7 +36,7 @@ public class StrFormatter {
 	 * @return 结果
 	 */
 	public static String format(final String strPattern, final Object... argArray) {
-		if (StringUtils.isEmpty(strPattern) || StringUtils.isEmpty(argArray)) {
+		if (StrUtils.isEmpty(strPattern) || StrUtils.isEmpty(argArray)) {
 			return strPattern;
 		}
 		final int strPatternLength = strPattern.length();

@@ -8,11 +8,12 @@ import com.twelvet.framework.core.application.page.TableDataInfo;
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.StrUtils;
 import com.twelvet.framework.utils.TUtils;
 import com.twelvet.server.system.service.ISysClientDetailsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -69,7 +70,7 @@ public class Oauth2ClientDetailsController extends TWTController {
 	@PostMapping
 	public JsonResult<String> insert(@RequestBody SysClientDetails sysClientDetails) {
 		String clientId = sysClientDetails.getClientId();
-		if (StringUtils.isNotNull(sysClientDetailsService.selectSysClientDetailsById(clientId))) {
+		if (StrUtils.isNotNull(sysClientDetailsService.selectSysClientDetailsById(clientId))) {
 			return JsonResult.error("新增终端'" + clientId + "'失败，编号已存在");
 		}
 		sysClientDetails.setClientSecret(sysClientDetails.getClientSecret());
@@ -87,7 +88,7 @@ public class Oauth2ClientDetailsController extends TWTController {
 	@PutMapping
 	public JsonResult<String> update(@RequestBody SysClientDetails sysClientDetails) {
 		// 重新设置密码
-		if (TUtils.isNotEmpty(sysClientDetails.getClientSecret())) {
+		if (StringUtils.isNotEmpty(sysClientDetails.getClientSecret())) {
 			sysClientDetails.setClientSecret(sysClientDetails.getClientSecret());
 		}
 

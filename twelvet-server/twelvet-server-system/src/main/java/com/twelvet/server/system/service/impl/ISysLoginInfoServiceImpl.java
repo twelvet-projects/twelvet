@@ -6,10 +6,12 @@ import com.twelvet.framework.utils.TUtils;
 import com.twelvet.server.system.mapper.SysLoginInfoMapper;
 import com.twelvet.server.system.mapper.SysUserMapper;
 import com.twelvet.server.system.service.ISysLoginInfoService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author twelvet
@@ -61,9 +63,9 @@ public class ISysLoginInfoServiceImpl implements ISysLoginInfoService {
 	public int insertLoginInfo(SysLoginInfo loginInfo) {
 		String userName = loginInfo.getUserName();
 
-		if (TUtils.isNotEmpty(userName)) {
+		if (StringUtils.isNotEmpty(userName)) {
 			SysUser sysUser = sysUserMapper.selectUserByUserName(userName);
-			if (TUtils.isNotEmpty(sysUser)) {
+			if (Objects.nonNull(sysUser)) {
 				Long deptId = sysUser.getDeptId();
 				loginInfo.setDeptId(deptId);
 				return sysLoginInfoMapper.insertLoginInfo(loginInfo);

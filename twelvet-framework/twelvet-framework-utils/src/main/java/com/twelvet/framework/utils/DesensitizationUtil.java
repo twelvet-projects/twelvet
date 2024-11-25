@@ -1,6 +1,7 @@
 package com.twelvet.framework.utils;
 
 import com.twelvet.framework.utils.constants.CharConstants;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.lang.Nullable;
 
 import java.util.Arrays;
@@ -70,8 +71,8 @@ public class DesensitizationUtil {
 	 */
 	@Nullable
 	public static String email(@Nullable final String email) {
-		if (StringUtils.isEmpty(email)) {
-			return StringUtils.EMPTY;
+		if (StrUtils.isEmpty(email)) {
+			return StrUtils.EMPTY;
 		}
 		final int index = email.indexOf(CharConstants.AT);
 		if (index <= 1) {
@@ -109,8 +110,8 @@ public class DesensitizationUtil {
 	 */
 	@Nullable
 	public static String right(@Nullable final String sensitiveStr) {
-		if (StringUtils.isEmpty(sensitiveStr)) {
-			return StringUtils.EMPTY;
+		if (StrUtils.isEmpty(sensitiveStr)) {
+			return StrUtils.EMPTY;
 		}
 		int length = sensitiveStr.length();
 		return sensitive(sensitiveStr, length / 2, 0);
@@ -123,8 +124,8 @@ public class DesensitizationUtil {
 	 */
 	@Nullable
 	public static String left(@Nullable final String sensitiveStr) {
-		if (StringUtils.isEmpty(sensitiveStr)) {
-			return StringUtils.EMPTY;
+		if (StrUtils.isEmpty(sensitiveStr)) {
+			return StrUtils.EMPTY;
 		}
 		int length = sensitiveStr.length();
 		return sensitive(sensitiveStr, 0, length / 2);
@@ -137,12 +138,12 @@ public class DesensitizationUtil {
 	 */
 	@Nullable
 	public static String middle(@Nullable final String sensitiveStr) {
-		if (StringUtils.isEmpty(sensitiveStr)) {
-			return StringUtils.EMPTY;
+		if (StrUtils.isEmpty(sensitiveStr)) {
+			return StrUtils.EMPTY;
 		}
 		int length = sensitiveStr.length();
 		if (length < 3) {
-			return StringUtils.leftPad(StringUtils.EMPTY, length, CharConstants.STAR);
+			return StringUtils.leftPad(StrUtils.EMPTY, length, CharConstants.STAR);
 		}
 		char[] chars = new char[length];
 		int last = length - 1;
@@ -214,8 +215,8 @@ public class DesensitizationUtil {
 		if (str == null) {
 			return null;
 		}
-		if (StringUtils.isEmpty(str)) {
-			return StringUtils.EMPTY;
+		if (StrUtils.isEmpty(str)) {
+			return StrUtils.EMPTY;
 		}
 		int length = str.length();
 		// 全部脱敏

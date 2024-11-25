@@ -12,7 +12,7 @@ import com.twelvet.framework.datasource.support.DataSourceConstants;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.DateUtils;
 import com.twelvet.framework.utils.JacksonUtils;
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.StrUtils;
 import com.twelvet.framework.utils.TUtils;
 import com.twelvet.server.gen.mapper.GenMapper;
 import com.twelvet.server.gen.mapper.GenTableColumnMapper;
@@ -21,8 +21,9 @@ import com.twelvet.server.gen.mapper.GenTemplateMapper;
 import com.twelvet.server.gen.service.IGenTableService;
 import com.twelvet.server.gen.utils.GenUtils;
 import com.twelvet.server.gen.utils.VelocityUtils;
+import jakarta.validation.constraints.NotNull;
 import org.apache.commons.io.IOUtils;
-import org.jetbrains.annotations.NotNull;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +36,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -308,7 +306,7 @@ public class GenTableServiceImpl implements IGenTableService {
 		// 手动切换数据源
 		DynamicDataSourceContextHolder.push(genTable.getDsName());
 		List<GenTableColumn> dbTableColumns = genMapper.selectDbTableColumnsByName(genTable.getTableName());
-		if (StringUtils.isEmpty(dbTableColumns)) {
+		if (StrUtils.isEmpty(dbTableColumns)) {
 			throw new TWTException("同步数据失败，原表结构不存在");
 		}
 		List<String> dbTableColumnNames = dbTableColumns.stream().map(GenTableColumn::getColumnName).toList();
@@ -333,7 +331,7 @@ public class GenTableServiceImpl implements IGenTableService {
 				List<GenTableColumn> delColumns = tableColumns.stream()
 					.filter(column -> !dbTableColumnNames.contains(column.getColumnName()))
 					.collect(Collectors.toList());
-				if (StringUtils.isNotEmpty(delColumns)) {
+				if (StrUtils.isNotEmpty(delColumns)) {
 					genTableColumnMapper.deleteGenTableColumns(delColumns);
 				}
 			}
@@ -404,20 +402,20 @@ public class GenTableServiceImpl implements IGenTableService {
 		if (GenConstants.TPL_TREE.equals(genTable.getTplGroupId())) {
 			String options = JacksonUtils.toJson(genTable.getParams());
 			Map<String, String> paramsObj = JacksonUtils.readValue(options, Map.class);
-			if (StringUtils.isEmpty(paramsObj.get(GenConstants.TREE_CODE))) {
+			if (StrUtils.isEmpty(paramsObj.get(GenConstants.TREE_CODE))) {
 				throw new TWTException("树编码字段不能为空");
 			}
-			else if (StringUtils.isEmpty(paramsObj.get(GenConstants.TREE_PARENT_CODE))) {
+			else if (StrUtils.isEmpty(paramsObj.get(GenConstants.TREE_PARENT_CODE))) {
 				throw new TWTException("树父编码字段不能为空");
 			}
-			else if (StringUtils.isEmpty(paramsObj.get(GenConstants.TREE_NAME))) {
+			else if (StrUtils.isEmpty(paramsObj.get(GenConstants.TREE_NAME))) {
 				throw new TWTException("树名称字段不能为空");
 			}
 			else if (GenConstants.TPL_SUB.equals(genTable.getTplGroupId())) {
-				if (StringUtils.isEmpty(genTable.getSubTableName())) {
+				if (StrUtils.isEmpty(genTable.getSubTableName())) {
 					throw new TWTException("关联子表的表名不能为空");
 				}
-				else if (StringUtils.isEmpty(genTable.getSubTableFkName())) {
+				else if (StrUtils.isEmpty(genTable.getSubTableFkName())) {
 					throw new TWTException("子表关联的外键名不能为空");
 				}
 			}
@@ -435,7 +433,7 @@ public class GenTableServiceImpl implements IGenTableService {
 				break;
 			}
 		}
-		if (StringUtils.isNull(table.getPkColumn())) {
+		if (StrUtils.isNull(table.getPkColumn())) {
 			table.setPkColumn(table.getColumns().get(0));
 		}
 		if (GenConstants.TPL_SUB.equals(table.getTplGroupId())) {
@@ -445,7 +443,7 @@ public class GenTableServiceImpl implements IGenTableService {
 					break;
 				}
 			}
-			if (StringUtils.isNull(table.getSubTable().getPkColumn())) {
+			if (StrUtils.isNull(table.getSubTable().getPkColumn())) {
 				table.getSubTable().setPkColumn(table.getSubTable().getColumns().get(0));
 			}
 		}
@@ -457,7 +455,7 @@ public class GenTableServiceImpl implements IGenTableService {
 	 */
 	public void setSubTable(GenTable table) {
 		String subTableName = table.getSubTableName();
-		if (StringUtils.isNotEmpty(subTableName)) {
+		if (StrUtils.isNotEmpty(subTableName)) {
 			table.setSubTable(genTableMapper.selectGenTableByName(subTableName));
 		}
 	}
@@ -468,7 +466,7 @@ public class GenTableServiceImpl implements IGenTableService {
 	 */
 	public void setTableFromOptions(GenTable genTable) {
 		Map<String, String> paramsObj = JacksonUtils.readValue(genTable.getOptions(), Map.class);
-		if (TUtils.isNotEmpty(paramsObj)) {
+		if (Objects.nonNull(paramsObj)) {
 			String treeCode = paramsObj.get(GenConstants.TREE_CODE);
 			String treeParentCode = paramsObj.get(GenConstants.TREE_PARENT_CODE);
 			String treeName = paramsObj.get(GenConstants.TREE_NAME);
@@ -506,7 +504,7 @@ public class GenTableServiceImpl implements IGenTableService {
 		// 填充数据模型
 		dataModel.put("tplGroupId", genTable.getTplGroupId());
 		dataModel.put("tableName", genTable.getTableName());
-		dataModel.put("functionName", StringUtils.isNotEmpty(functionName) ? functionName : "【请填写功能名称】");
+		dataModel.put("functionName", StrUtils.isNotEmpty(functionName) ? functionName : "【请填写功能名称】");
 		dataModel.put("ClassName", genTable.getClassName());
 		dataModel.put("className", StringUtils.uncapitalize(genTable.getClassName()));
 		dataModel.put("moduleName", moduleName);

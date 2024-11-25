@@ -5,8 +5,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import com.baomidou.dynamic.datasource.creator.DataSourceProperty;
 import com.baomidou.dynamic.datasource.creator.DefaultDataSourceCreator;
@@ -15,7 +13,7 @@ import com.twelvet.framework.datasource.enums.DsConfTypeEnum;
 import com.twelvet.framework.datasource.enums.DsJdbcUrlEnum;
 import com.twelvet.framework.utils.DateUtils;
 import com.twelvet.framework.utils.SpringContextHolder;
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.StrUtils;
 import org.jasypt.encryption.StringEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -101,7 +99,7 @@ public class GenDatasourceConfServiceImpl implements IGenDatasourceConfService {
 	public int updateGenDatasourceConf(GenDatasourceConf genDatasourceConf) {
 		GenDatasourceConf genDatasourceConfDb = genDatasourceConfMapper
 			.selectGenDatasourceConfById(genDatasourceConf.getId());
-		if (StringUtils.isEmpty(genDatasourceConf.getPassword())) {
+		if (StrUtils.isEmpty(genDatasourceConf.getPassword())) {
 			genDatasourceConf.setPassword(stringEncryptor.decrypt(genDatasourceConfDb.getPassword()));
 		}
 		if (!checkDataSource(genDatasourceConf)) {

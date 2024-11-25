@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 /**
  * @author twelvet
  * @WebSite twelvet.cn
@@ -44,7 +46,7 @@ public class TokenController extends TWTController {
 		PageDomain pageDomain = TableSupport.buildPageRequest();
 		Integer current = pageDomain.getCurrent();
 		Integer pageSize = pageDomain.getPageSize();
-		if (TUtils.isNotEmpty(current) && TUtils.isNotEmpty(pageSize)) {
+		if (Objects.nonNull(current) && Objects.nonNull(pageSize)) {
 			tokenDTO.setCurrent(current);
 			tokenDTO.setPageSize(pageSize);
 		}

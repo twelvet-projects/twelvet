@@ -7,10 +7,11 @@ import jakarta.validation.constraints.NotBlank;
 
 import com.twelvet.api.gen.constant.GenConstants;
 import com.twelvet.framework.core.application.domain.BaseEntity;
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.StrUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author twelvet

@@ -1,15 +1,17 @@
 package com.twelvet.auth.support.handler;
 
 import com.twelvet.api.system.domain.SysLoginInfo;
+import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.log.event.SysLoginLogEvent;
 import com.twelvet.framework.log.utils.SysLogUtils;
 import com.twelvet.framework.log.vo.SysLogVO;
-import com.twelvet.framework.core.constants.SecurityConstants;
-import com.twelvet.framework.utils.TUtils;
 import com.twelvet.framework.utils.DateUtils;
 import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.http.IpUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -22,8 +24,6 @@ import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -50,7 +50,7 @@ public class TWTAuthenticationFailureEventHandler implements AuthenticationFailu
 		String username = request.getParameter(OAuth2ParameterNames.USERNAME);
 
 		log.error("用户：{} 登录失败，异常：", username, exception);
-		if (TUtils.isNotEmpty(username)) {
+		if (StringUtils.isNotEmpty(username)) {
 			SysLoginInfo sysLoginInfo = new SysLoginInfo();
 			SysLogVO sysLog = SysLogUtils.getSysLog();
 			sysLoginInfo.setUserName(username);

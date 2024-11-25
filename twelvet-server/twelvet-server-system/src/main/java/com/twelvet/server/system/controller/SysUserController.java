@@ -13,7 +13,7 @@ import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.StrUtils;
 import com.twelvet.framework.utils.TUtils;
 import com.twelvet.server.system.service.ISysPermissionService;
 import com.twelvet.server.system.service.ISysPostService;
@@ -27,10 +27,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -145,7 +142,7 @@ public class SysUserController extends TWTController {
 		res.put("roles", SysUser.isAdmin(userId) ? roles
 				: roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
 		res.put("posts", iSysPostService.selectPostAll());
-		if (TUtils.isNotEmpty(userId)) {
+		if (Objects.nonNull(userId)) {
 			res.put("staff", iSysUserService.selectUserById(userId));
 			res.put("postIds", iSysPostService.selectPostListByUserId(userId));
 			res.put("roleIds", iSysRoleService.selectRoleListByUserId(userId));
@@ -189,11 +186,11 @@ public class SysUserController extends TWTController {
 	public JsonResult<String> edit(@Validated @RequestBody SysUser user) {
 		iSysUserService.checkUserAllowed(user);
 		iSysUserService.checkUserDataScope(user.getUserId());
-		if (StringUtils.isNotEmpty(user.getPhonenumber())
+		if (StrUtils.isNotEmpty(user.getPhonenumber())
 				&& UserConstants.NOT_UNIQUE.equals(iSysUserService.checkPhoneUnique(user))) {
 			return JsonResult.error("修改用户'" + user.getUsername() + "'失败，手机号码已存在");
 		}
-		else if (StringUtils.isNotEmpty(user.getEmail())
+		else if (StrUtils.isNotEmpty(user.getEmail())
 				&& UserConstants.NOT_UNIQUE.equals(iSysUserService.checkEmailUnique(user))) {
 			return JsonResult.error("修改用户'" + user.getUsername() + "'失败，邮箱账号已存在");
 		}

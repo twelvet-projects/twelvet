@@ -52,7 +52,7 @@ public class CharsetKit {
 	 * @return Charset
 	 */
 	public static Charset charset(String charset) {
-		return StringUtils.isEmpty(charset) ? Charset.defaultCharset() : Charset.forName(charset);
+		return StrUtils.isEmpty(charset) ? Charset.defaultCharset() : Charset.forName(charset);
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class CharsetKit {
 			srcCharset = StandardCharsets.UTF_8;
 		}
 
-		if (StringUtils.isEmpty(source) || srcCharset.equals(destCharset)) {
+		if (StrUtils.isEmpty(source) || srcCharset.equals(destCharset)) {
 			return source;
 		}
 		return new String(source.getBytes(srcCharset), destCharset);

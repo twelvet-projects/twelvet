@@ -9,14 +9,16 @@ import com.twelvet.framework.datascope.annotation.SysDataScope;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.TUtils;
 import com.twelvet.framework.utils.SpringContextHolder;
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.StrUtils;
 import com.twelvet.server.system.mapper.SysDeptMapper;
 import com.twelvet.server.system.service.ISysDeptService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -136,9 +138,9 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	 */
 	@Override
 	public String checkDeptNameUnique(SysDept dept) {
-		Long deptId = TUtils.isEmpty(dept.getDeptId()) ? -1L : dept.getDeptId();
+		Long deptId = Objects.isNull(dept.getDeptId()) ? -1L : dept.getDeptId();
 		SysDept info = deptMapper.checkDeptNameUnique(dept.getDeptName(), dept.getParentId());
-		if (TUtils.isNotEmpty(info) && info.getDeptId().longValue() != deptId.longValue()) {
+		if (Objects.nonNull(info) && info.getDeptId().longValue() != deptId.longValue()) {
 			return UserConstants.NOT_UNIQUE;
 		}
 		return UserConstants.UNIQUE;
@@ -154,7 +156,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
 			SysDept dept = new SysDept();
 			dept.setDeptId(deptId);
 			List<SysDept> depts = SpringContextHolder.getAopProxy(this).selectDeptList(dept);
-			if (StringUtils.isEmpty(depts)) {
+			if (StrUtils.isEmpty(depts)) {
 				throw new TWTException("没有权限访问部门数据！");
 			}
 		}
@@ -192,7 +194,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	public int updateDept(SysDept dept) {
 		SysDept newParentDept = deptMapper.selectDeptById(dept.getParentId());
 		SysDept oldDept = deptMapper.selectDeptById(dept.getDeptId());
-		if (TUtils.isNotEmpty(newParentDept) && TUtils.isNotEmpty(oldDept)) {
+		if (Objects.nonNull(newParentDept) && Objects.nonNull(oldDept)) {
 			String newAncestors = newParentDept.getAncestors() + "," + newParentDept.getDeptId();
 			String oldAncestors = oldDept.getAncestors();
 			dept.setAncestors(newAncestors);
@@ -266,7 +268,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	private List<SysDept> getChildList(List<SysDept> list, SysDept t) {
 		List<SysDept> tlist = new ArrayList<SysDept>();
 		for (SysDept n : list) {
-			if (TUtils.isNotEmpty(n.getParentId()) && n.getParentId().longValue() == t.getDeptId().longValue()) {
+			if (Objects.nonNull(n.getParentId()) && n.getParentId().longValue() == t.getDeptId().longValue()) {
 				tlist.add(n);
 			}
 		}

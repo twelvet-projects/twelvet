@@ -1,11 +1,7 @@
 package com.twelvet.server.job.task;
 
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.StrUtils;
 import org.springframework.stereotype.Component;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * @author twelvet
@@ -16,7 +12,7 @@ import java.util.Date;
 public class TWTTask {
 
 	public void twtMultipleParams(String s, Boolean b, Long l, Double d, Integer i) {
-		System.out.println(StringUtils.format("执行多参方法： 字符串类型{}，布尔类型{}，长整型{}，浮点型{}，整形{}", s, b, l, d, i));
+		System.out.println(StrUtils.format("执行多参方法： 字符串类型{}，布尔类型{}，长整型{}，浮点型{}，整形{}", s, b, l, d, i));
 	}
 
 	public void twtParams(String params) {

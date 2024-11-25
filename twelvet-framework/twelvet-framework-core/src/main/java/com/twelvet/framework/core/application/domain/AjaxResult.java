@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 
 import java.io.Serial;
 import java.util.LinkedHashMap;
+import java.util.Objects;
 
 /**
  * @author twelvet
@@ -63,7 +64,7 @@ public class AjaxResult extends LinkedHashMap<String, Object> {
 	public AjaxResult(int code, String msg, Object data) {
 		super.put(CODE_TAG, code);
 		super.put(MSG_TAG, msg);
-		if (!TUtils.isEmpty(data)) {
+		if (!Objects.isNull(data)) {
 			super.put(DATA_TAG, data);
 		}
 	}

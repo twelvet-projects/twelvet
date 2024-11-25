@@ -9,11 +9,12 @@ import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.core.locale.I18nUtils;
 import com.twelvet.framework.datasource.annotation.ShardingDatasource;
 import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.StrUtils;
 import com.twelvet.framework.utils.TUtils;
 import com.twelvet.server.system.mapper.SysMenuMapper;
 import com.twelvet.server.system.mapper.SysRoleMenuMapper;
 import com.twelvet.server.system.service.ISysMenuService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -80,7 +81,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 		List<String> perms = menuMapper.selectMenuPermsByUserId(userId);
 		Set<String> permsSet = new HashSet<>();
 		for (String perm : perms) {
-			if (TUtils.isNotEmpty(perm)) {
+			if (StringUtils.isNotEmpty(perm)) {
 				permsSet.addAll(Arrays.asList(perm.trim().split(",")));
 			}
 		}
@@ -244,9 +245,9 @@ public class SysMenuServiceImpl implements ISysMenuService {
 	 */
 	@Override
 	public String checkMenuNameUnique(SysMenu menu) {
-		long menuId = TUtils.isEmpty(menu.getMenuId()) ? -1L : menu.getMenuId();
+		long menuId = Objects.isNull(menu.getMenuId()) ? -1L : menu.getMenuId();
 		SysMenu info = menuMapper.checkMenuNameUnique(menu.getMenuName(), menu.getParentId());
-		if (TUtils.isNotEmpty(info) && info.getMenuId() != menuId) {
+		if (Objects.nonNull(info) && info.getMenuId() != menuId) {
 			return UserConstants.NOT_UNIQUE;
 		}
 		return UserConstants.UNIQUE;
@@ -261,7 +262,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 		String routerName = menu.getPath();
 		// 非外链并且是一级目录（类型为目录）
 		if (isMenuFrame(menu)) {
-			routerName = StringUtils.EMPTY;
+			routerName = StrUtils.EMPTY;
 		}
 		return routerName;
 	}
@@ -282,7 +283,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 	 */
 	private String getComponent(SysMenu menu) {
 		String component = UserConstants.LAYOUT;
-		if (TUtils.isNotEmpty(menu.getComponent()) && !isMenuFrame(menu)) {
+		if (StringUtils.isNotEmpty(menu.getComponent()) && !isMenuFrame(menu)) {
 			component = menu.getComponent();
 		}
 		return component;

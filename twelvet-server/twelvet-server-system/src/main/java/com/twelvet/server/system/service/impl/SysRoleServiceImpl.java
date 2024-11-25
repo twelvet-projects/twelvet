@@ -10,7 +10,7 @@ import com.twelvet.framework.datascope.annotation.SysDataScope;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.SpringContextHolder;
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.StrUtils;
 import com.twelvet.framework.utils.TUtils;
 import com.twelvet.server.system.mapper.SysRoleDeptMapper;
 import com.twelvet.server.system.mapper.SysRoleMapper;
@@ -68,7 +68,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
 		List<SysRole> perms = sysRoleMapper.selectRolePermissionByUserId(userId);
 		Set<String> permsSet = new HashSet<>();
 		for (SysRole perm : perms) {
-			if (TUtils.isNotEmpty(perm)) {
+			if (Objects.nonNull(perm)) {
 				permsSet.addAll(Arrays.asList(perm.getRoleKey().trim().split(",")));
 			}
 		}
@@ -111,9 +111,9 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	 */
 	@Override
 	public String checkRoleNameUnique(SysRole role) {
-		Long roleId = TUtils.isEmpty(role.getRoleId()) ? -1L : role.getRoleId();
+		Long roleId = Objects.isNull(role.getRoleId()) ? -1L : role.getRoleId();
 		SysRole info = sysRoleMapper.checkRoleNameUnique(role.getRoleName());
-		if (TUtils.isNotEmpty(info) && info.getRoleId().longValue() != roleId.longValue()) {
+		if (Objects.nonNull(info) && info.getRoleId().longValue() != roleId.longValue()) {
 			return UserConstants.NOT_UNIQUE;
 		}
 		return UserConstants.UNIQUE;
@@ -126,9 +126,9 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	 */
 	@Override
 	public String checkRoleKeyUnique(SysRole role) {
-		long roleId = TUtils.isEmpty(role.getRoleId()) ? -1L : role.getRoleId();
+		long roleId = Objects.isNull(role.getRoleId()) ? -1L : role.getRoleId();
 		SysRole info = sysRoleMapper.checkRoleKeyUnique(role.getRoleKey());
-		if (TUtils.isNotEmpty(info) && info.getRoleId() != roleId) {
+		if (Objects.nonNull(info) && info.getRoleId() != roleId) {
 			return UserConstants.NOT_UNIQUE;
 		}
 		return UserConstants.UNIQUE;
@@ -140,7 +140,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	 */
 	@Override
 	public void checkRoleAllowed(SysRole role) {
-		if (TUtils.isNotEmpty(role.getRoleId()) && role.isAdmin()) {
+		if (Objects.nonNull(role.getRoleId()) && role.isAdmin()) {
 			throw new TWTException("不允许操作超级管理员角色");
 		}
 	}
@@ -155,7 +155,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
 			SysRole role = new SysRole();
 			role.setRoleId(roleId);
 			List<SysRole> roles = SpringContextHolder.getAopProxy(this).selectRoleList(role);
-			if (StringUtils.isEmpty(roles)) {
+			if (StrUtils.isEmpty(roles)) {
 				throw new TWTException("没有权限访问角色数据！");
 			}
 		}

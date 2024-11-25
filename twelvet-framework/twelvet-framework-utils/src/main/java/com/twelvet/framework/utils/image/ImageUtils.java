@@ -1,6 +1,6 @@
 package com.twelvet.framework.utils.image;
 
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.StrUtils;
 import com.twelvet.framework.utils.exception.TWTUtilsException;
 
 import javax.imageio.ImageIO;
@@ -51,7 +51,7 @@ public class ImageUtils {
 	 * @return BufferedImage
 	 */
 	public static BufferedImage read(String url) {
-		return StringUtils.isHttpUrl(url) ? readUrl(url) : read(new File(url));
+		return StrUtils.isHttpUrl(url) ? readUrl(url) : read(new File(url));
 	}
 
 	/**

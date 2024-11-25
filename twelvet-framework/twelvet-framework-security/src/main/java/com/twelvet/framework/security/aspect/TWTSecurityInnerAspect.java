@@ -2,8 +2,9 @@ package com.twelvet.framework.security.aspect;
 
 import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.security.annotation.AuthIgnore;
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.StrUtils;
 import com.twelvet.framework.utils.http.ServletUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

@@ -10,6 +10,7 @@ import org.springframework.util.Assert;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author twelvet
@@ -43,7 +44,7 @@ public class CustomOAuth2UserService<R extends OAuth2UserRequest, U extends OAut
 
 		OAuth2UserService<R, U> oAuth2UserService = userServiceMap.get(registrationId);
 
-		if (TUtils.isEmpty(oAuth2UserService)) {
+		if (Objects.isNull(oAuth2UserService)) {
 			// 采用默认换取方式
 			oAuth2UserService = (OAuth2UserService<R, U>) defaultOAuth2UserService;
 		}

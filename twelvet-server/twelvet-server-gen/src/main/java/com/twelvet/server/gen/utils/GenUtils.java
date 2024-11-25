@@ -1,13 +1,7 @@
 package com.twelvet.server.gen.utils;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import com.twelvet.api.gen.constant.GenConstants;
 import com.twelvet.api.gen.domain.GenDatasourceConf;
 import com.twelvet.api.gen.domain.GenFieldType;
 import com.twelvet.api.gen.domain.GenTable;
@@ -15,15 +9,19 @@ import com.twelvet.api.gen.domain.GenTableColumn;
 import com.twelvet.framework.datasource.enums.DsJdbcUrlEnum;
 import com.twelvet.framework.datasource.support.DataSourceConstants;
 import com.twelvet.framework.utils.SpringContextHolder;
-import com.twelvet.framework.utils.StringUtils;
+import com.twelvet.framework.utils.StrUtils;
 import com.twelvet.server.gen.config.GenConfig;
-import com.twelvet.api.gen.constant.GenConstants;
 import com.twelvet.server.gen.mapper.GenDatasourceConfMapper;
 import com.twelvet.server.gen.mapper.GenFieldTypeMapper;
 import com.twelvet.server.gen.mapper.GenMapper;
-import com.twelvet.server.gen.mapper.GenTableMapper;
 import org.apache.commons.lang3.RegExUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationContext;
+
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author twelvet
@@ -62,7 +60,7 @@ public class GenUtils {
 			column.setTableId(table.getTableId());
 			column.setCreateBy(table.getCreateBy());
 			// 设置java字段名
-			column.setJavaField(StringUtils.toCamelCase(columnName));
+			column.setJavaField(StrUtils.toCamelCase(columnName));
 
 			// 获取字段对应的类型
 			GenFieldType fieldTypeMapping = fieldTypeMap.getOrDefault(dataType, null);
@@ -162,11 +160,11 @@ public class GenUtils {
 	public static String convertClassName(String tableName) {
 		boolean autoRemovePre = GenConfig.getAutoRemovePre();
 		String tablePrefix = GenConfig.getTablePrefix();
-		if (autoRemovePre && StringUtils.isNotEmpty(tablePrefix)) {
+		if (autoRemovePre && StrUtils.isNotEmpty(tablePrefix)) {
 			String[] searchList = StringUtils.split(tablePrefix, ",");
 			tableName = replaceFirst(tableName, searchList);
 		}
-		return StringUtils.convertToCamelCase(tableName);
+		return StrUtils.convertToCamelCase(tableName);
 	}
 
 	/**
