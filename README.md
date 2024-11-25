@@ -137,8 +137,14 @@ Memory > 16
 Maven, Docker, Docker-compose, Node, and Yarn need to be installed manually.
 
 ```shell
-# mvn
-mvn clean && mvn install
+# mvn twelvet
+cd ./twelvet && mvn clean && mvn install
+# mvn twelvet-auth
+cd ../twelvet-auth && mvn clean && mvn install
+# mvn twelvet-gateway
+cd ../twelvet-gateway && mvn clean && mvn install
+# mvn twelvet-server-system
+cd ../twelvet-server-system && mvn clean && mvn install
 # Enter the script directory
 cd ./docker
 # Set executable permissions

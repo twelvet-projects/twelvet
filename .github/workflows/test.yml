@@ -3,9 +3,9 @@ name: test
 on:
   workflow_dispatch:
   push:
-    branches: [ master, dev, jdk8 ]
+    branches: [ master, jdk8 ]
   pull_request:
-    branches: [ master, dev, jdk8 ]
+    branches: [ master, jdk8 ]
 
 jobs:
   build:
@@ -26,8 +26,21 @@ jobs:
       - name: mvn spring-javaformat:validate
         run: mvn spring-javaformat:validate
 
-      - name: mvn clean install
-        run: mvn clean install
+      - name: mvn clean install twelvet
+        run: |
+            cd ./twelvet mvn clean install
+
+      - name: mvn clean install twelvet-auth
+        run: |
+          cd ./twelvet-auth mvn clean install
+
+      - name: mvn clean install twelvet-gateway
+        run: |
+          cd ./twelvet-gateway mvn clean install
+
+      - name: mvn clean install twelvet-server-system
+        run: |
+          cd ./twelvet-server-system mvn clean install
 
       - name: init
         run: cd docker && chmod 751 ./deploy.sh && ./deploy.sh init

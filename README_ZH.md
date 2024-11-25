@@ -125,8 +125,14 @@ com.twelvet
 需要自行安装maven、docker、docker-compose、node、yarn
 
 ```shell
-# mvn
-mvn clean && mvn install
+# mvn twelvet
+cd ./twelvet && mvn clean && mvn install
+# mvn twelvet-auth
+cd ../twelvet-auth && mvn clean && mvn install
+# mvn twelvet-gateway
+cd ../twelvet-gateway && mvn clean && mvn install
+# mvn twelvet-server-system
+cd ../twelvet-server-system && mvn clean && mvn install
 # 进入脚本目录
 cd ./docker
 # 可执行权限
