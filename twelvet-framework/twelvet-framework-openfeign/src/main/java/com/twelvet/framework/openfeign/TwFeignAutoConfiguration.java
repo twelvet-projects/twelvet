@@ -1,8 +1,6 @@
 package com.twelvet.framework.openfeign;
 
 import com.alibaba.cloud.sentinel.feign.SentinelFeignAutoConfiguration;
-import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
-import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.RequestOriginParser;
 import com.twelvet.framework.openfeign.sentinel.ext.TwSentinelFeign;
 import feign.Feign;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
