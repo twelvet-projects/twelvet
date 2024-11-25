@@ -23,6 +23,10 @@ jobs:
           distribution: zulu
           cache: maven
 
+      - name: mvn clean install twelvet
+        run: |
+          cd ./twelvet && mvn clean install
+
       - name: mvn spring-javaformat:validate
         run: |
           cd ./twelvet && mvn spring-javaformat:validate
@@ -35,10 +39,6 @@ jobs:
           cd ../twelvet-server-system && mvn spring-javaformat:validate
           cd ../twelvet-visual-monitor && mvn spring-javaformat:validate
           cd ../twelvet-visual-sentinel && mvn spring-javaformat:validate
-
-      - name: mvn clean install twelvet
-        run: |
-          cd ./twelvet && mvn clean install
 
       - name: mvn clean install twelvet-auth
         run: |
