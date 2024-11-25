@@ -9,18 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>twelvet-server</artifactId>
-    <description>系统核心服务</description>
-
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>twelvet-server-system</module>
-        <module>twelvet-server-job</module>
-        <module>twelvet-server-dfs</module>
-        <module>twelvet-server-gen</module>
-        <module>twelvet-server-ai</module>
-    </modules>
+    <artifactId>twelvet-server-job</artifactId>
+    <description>分布式定时任务</description>
 
     <dependencies>
 
@@ -64,6 +54,42 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
+
+        <!-- Quartz -->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.mchange</groupId>
+                    <artifactId>c3p0</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--job API-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-api-job</artifactId>
+        </dependency>
+
+        <!--默认采用多数据-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-datasource</artifactId>
+        </dependency>
+
+        <!-- jdbc -->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-jdbc</artifactId>
+        </dependency>
+
+        <!-- 安全模块 -->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-security</artifactId>
         </dependency>
 
     </dependencies>

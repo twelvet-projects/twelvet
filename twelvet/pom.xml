@@ -428,13 +428,8 @@
 
 
     <modules>
-        <module>twelvet-auth</module>
-        <module>twelvet-gateway</module>
         <module>twelvet-framework</module>
         <module>twelvet-api</module>
-        <module>twelvet-server</module>
-        <module>twelvet-visual</module>
-        <module>twelvet-nacos</module>
     </modules>
 
     <build>
