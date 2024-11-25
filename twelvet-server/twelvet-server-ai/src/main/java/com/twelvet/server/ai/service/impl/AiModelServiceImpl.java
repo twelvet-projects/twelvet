@@ -2,7 +2,7 @@ package com.twelvet.server.ai.service.impl;
 
 import java.util.List;
 
-import com.twelvet.server.ai.domain.AiModel;
+import com.twelvet.api.ai.domain.AiModel;
 import com.twelvet.server.ai.mapper.AiDocMapper;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.mapper.AiModelMapper;

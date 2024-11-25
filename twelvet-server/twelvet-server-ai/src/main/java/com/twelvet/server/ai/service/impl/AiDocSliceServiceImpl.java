@@ -2,7 +2,7 @@ package com.twelvet.server.ai.service.impl;
 
 import java.util.List;
 
-import com.twelvet.server.ai.domain.AiDocSlice;
+import com.twelvet.api.ai.domain.AiDocSlice;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.service.IAiDocSliceService;
 import org.springframework.beans.factory.annotation.Autowired;

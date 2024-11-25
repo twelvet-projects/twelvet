@@ -1,6 +1,6 @@
 package com.twelvet.server.ai.service;
 
-import com.twelvet.server.ai.domain.AiModel;
+import com.twelvet.api.ai.domain.AiModel;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.twelvet.server.ai.service;
 
-import com.twelvet.server.ai.domain.AiDoc;
-import com.twelvet.server.ai.domain.dto.AiDocDTO;
+import com.twelvet.api.ai.domain.AiDoc;
+import com.twelvet.api.ai.domain.dto.AiDocDTO;
 
 import java.util.List;
 

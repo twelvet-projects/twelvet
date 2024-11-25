@@ -1,4 +1,4 @@
-package com.twelvet.server.ai.domain.dto;
+package com.twelvet.api.ai.domain.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

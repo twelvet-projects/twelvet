@@ -2,7 +2,7 @@ package com.twelvet.server.ai.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.twelvet.framework.datasource.support.DataSourceConstants;
-import com.twelvet.server.ai.domain.AiDoc;
+import com.twelvet.api.ai.domain.AiDoc;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.twelvet.server.ai.domain.vo;
+package com.twelvet.api.ai.domain.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

@@ -2,8 +2,8 @@ package com.twelvet.server.ai.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
-import com.twelvet.server.ai.domain.dto.MessageDTO;
-import com.twelvet.server.ai.domain.vo.MessageVO;
+import com.twelvet.api.ai.domain.dto.MessageDTO;
+import com.twelvet.api.ai.domain.vo.MessageVO;
 import com.twelvet.server.ai.service.AIChatService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

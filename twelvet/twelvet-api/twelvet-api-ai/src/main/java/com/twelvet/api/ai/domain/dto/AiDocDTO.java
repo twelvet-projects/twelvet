@@ -1,4 +1,4 @@
-package com.twelvet.server.ai.domain.dto;
+package com.twelvet.api.ai.domain.dto;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.twelvet.framework.core.application.domain.BaseEntity;

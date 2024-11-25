@@ -1,7 +1,7 @@
 package com.twelvet.server.ai.controller;
 
-import com.twelvet.server.ai.domain.dto.MessageDTO;
-import com.twelvet.server.ai.domain.vo.MessageVO;
+import com.twelvet.api.ai.domain.dto.MessageDTO;
+import com.twelvet.api.ai.domain.vo.MessageVO;
 import com.twelvet.server.ai.service.AIChatService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

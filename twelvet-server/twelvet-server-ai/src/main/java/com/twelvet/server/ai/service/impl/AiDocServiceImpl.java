@@ -1,9 +1,9 @@
 package com.twelvet.server.ai.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.twelvet.server.ai.domain.AiDoc;
-import com.twelvet.server.ai.domain.AiDocSlice;
-import com.twelvet.server.ai.domain.dto.AiDocDTO;
+import com.twelvet.api.ai.domain.AiDoc;
+import com.twelvet.api.ai.domain.AiDocSlice;
+import com.twelvet.api.ai.domain.dto.AiDocDTO;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.DateUtils;
 import com.twelvet.server.ai.mapper.AiDocMapper;

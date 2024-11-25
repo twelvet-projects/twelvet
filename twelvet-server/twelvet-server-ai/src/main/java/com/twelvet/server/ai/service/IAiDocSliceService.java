@@ -1,6 +1,6 @@
 package com.twelvet.server.ai.service;
 
-import com.twelvet.server.ai.domain.AiDocSlice;
+import com.twelvet.api.ai.domain.AiDocSlice;
 
 import java.util.List;
 

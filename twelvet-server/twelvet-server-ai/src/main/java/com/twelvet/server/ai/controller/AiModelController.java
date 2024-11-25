@@ -1,7 +1,7 @@
 package com.twelvet.server.ai.controller;
 
 import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
-import com.twelvet.server.ai.domain.AiModel;
+import com.twelvet.api.ai.domain.AiModel;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.JsonResult;
 import com.twelvet.framework.core.application.page.TableDataInfo;
