@@ -14,7 +14,7 @@
 
     <properties>
         <spring-boot-dependencies.version>2.7.18</spring-boot-dependencies.version>
-        <spring-cloud.version>2021.0.8</spring-cloud.version>
+        <spring-cloud.version>2021.0.9</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.5.0</spring-cloud-alibaba.version>
         <curator.version>4.0.1</curator.version>
     </properties>
