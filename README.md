@@ -146,7 +146,7 @@ cd ../twelvet-gateway && mvn clean && mvn install
 # mvn twelvet-server-system
 cd ../twelvet-server-system && mvn clean && mvn install
 # Enter the script directory
-cd ./docker
+cd ../docker
 # Set executable permissions
 chmod 751 deploy.sh
 # Perform startup (execute parameters as needed, [init | port | base | server | stop | rm])
