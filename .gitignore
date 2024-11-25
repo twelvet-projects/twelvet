@@ -20,7 +20,7 @@ target/
 
 ### IntelliJ IDEA ###
 !.idea/icon.png
-.idea
+
 *.iws
 *.iml
 *.ipr
