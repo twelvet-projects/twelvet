@@ -172,6 +172,22 @@ services:
       context: ./twelvet/server/dfs
       dockerfile: dockerfile
 
+  twelvet-server-ai:
+    # 加入网络
+    networks:
+      - twelvet-network
+    container_name: twelvet-server-ai
+    image: twelvet-server-ai
+    restart: always
+    depends_on:
+      - twelvet-nacos
+    environment:
+      - MODE=standalone
+      - TZ=Asia/Shanghai
+    build:
+      context: ./twelvet/server/ai
+      dockerfile: dockerfile
+
   twelvet-visual-monitor:
     # 加入网络
     networks:

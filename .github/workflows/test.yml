@@ -33,12 +33,12 @@ jobs:
           cd ../twelvet-auth && mvn spring-javaformat:validate
           cd ../twelvet-gateway && mvn spring-javaformat:validate
           cd ../twelvet-nacos && mvn spring-javaformat:validate
-          cd ../twelvet-server-dfs && mvn spring-javaformat:validate
-          cd ../twelvet-server-gen && mvn spring-javaformat:validate
-          cd ../twelvet-server-job && mvn spring-javaformat:validate
-          cd ../twelvet-server-system && mvn spring-javaformat:validate
-          cd ../twelvet-visual-monitor && mvn spring-javaformat:validate
-          cd ../twelvet-visual-sentinel && mvn spring-javaformat:validate
+          cd ../twelvet-server/twelvet-server-dfs && mvn spring-javaformat:validate
+          cd ../twelvet-server/twelvet-server-gen && mvn spring-javaformat:validate
+          cd ../twelvet-server/twelvet-server-job && mvn spring-javaformat:validate
+          cd ../twelvet-server/twelvet-server-system && mvn spring-javaformat:validate
+          cd ../twelvet-visual/twelvet-visual-monitor && mvn spring-javaformat:validate
+          cd ../twelvet-visual/twelvet-visual-sentinel && mvn spring-javaformat:validate
 
       - name: mvn clean install twelvet-auth
         run: |
@@ -50,7 +50,7 @@ jobs:
 
       - name: mvn clean install twelvet-server-system
         run: |
-          cd ./twelvet-server-system && mvn clean install
+          cd ./twelvet-server/twelvet-server-system && mvn clean install
 
       - name: init
         run: cd docker && chmod 751 ./deploy.sh && ./deploy.sh init

@@ -21,7 +21,7 @@ init() {
   cp ../twelvet-auth/target/twelvet-auth.jar ./twelvet/auth/jar
 
   echo "begin copy twelvet-server-system "
-  cp ../twelvet-server-system/target/twelvet-server-system.jar ./twelvet/server/system/jar
+  cp ../twelvet-server/twelvet-server-system/target/twelvet-server-system.jar ./twelvet/server/system/jar
 }
 
 # 开启所需端口

@@ -16,10 +16,10 @@ pipeline {
       }
     }
 
-    stage('archiveArtifacts twelvet-server-gen') {
+    stage('archiveArtifacts twelvet-server-job') {
       steps {
         dir('twelvet-server') {
-          archiveArtifacts artifacts: '**/twelvet-server-gen/target/*.jar', fingerprint: true
+          archiveArtifacts artifacts: '**/twelvet-server-job/target/*.jar', fingerprint: true
         }
       }
     }
@@ -36,8 +36,8 @@ node {
       remote.password = password
       remote.allowAnyHosts = true
       stage('push to twelvet') {
-        sshPut remote: remote, from: 'twelvet-server-gen/target/twelvet-server-gen.jar', into: '/twelvet/docker/twelvet/server/gen/jar/'
-        sshCommand remote: remote, command: 'docker-compose -f /twelvet/docker/docker-compose.yml restart twelvet-server-gen'
+        sshPut remote: remote, from: 'twelvet-server/twelvet-server-job/target/twelvet-server-job.jar', into: '/twelvet/docker/twelvet/server/job/jar/'
+        sshCommand remote: remote, command: 'docker-compose -f /twelvet/docker/docker-compose.yml restart twelvet-server-job'
       }
     }
   }
