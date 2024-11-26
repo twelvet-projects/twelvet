@@ -135,8 +135,8 @@ public class AIChatServiceImpl implements AIChatService {
 
 	/**
 	 * 用户历史对话
-	 * @param advisorSpec
-	 * @param sessionId
+	 * @param advisorSpec ChatClient.AdvisorSpec
+	 * @param sessionId String
 	 */
 	public void useChatHistory(ChatClient.AdvisorSpec advisorSpec, String sessionId) {
 		// 1. 如果需要存储会话和消息到数据库，自己可以实现ChatMemory接口，这里使用自己实现的AiMessageChatMemory，数据库存储。

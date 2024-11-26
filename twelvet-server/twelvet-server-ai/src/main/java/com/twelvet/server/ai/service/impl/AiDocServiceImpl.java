@@ -1,6 +1,7 @@
 package com.twelvet.server.ai.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.twelvet.api.ai.constant.RAGEnums;
 import com.twelvet.api.ai.domain.AiDoc;
 import com.twelvet.api.ai.domain.AiDocSlice;
 import com.twelvet.api.ai.domain.dto.AiDocDTO;
@@ -101,9 +102,9 @@ public class AiDocServiceImpl implements IAiDocService {
 			docSliceArrayList.add(aiDocSlice);
 
 			Map<String, Object> metadata = doc.getMetadata();
-			metadata.put("modelId", modelId);
-			metadata.put("docId", docId);
-			metadata.put("sliceId", "1");
+			metadata.put(RAGEnums.VectorMetadataEnums.MODEL_ID.getCode(), modelId);
+			metadata.put(RAGEnums.VectorMetadataEnums.DOC_ID.getCode(), docId);
+			metadata.put(RAGEnums.VectorMetadataEnums.SLICE_ID.getCode(), "1");
 		}
 
 		if (CollectionUtil.isNotEmpty(docSliceArrayList)) {
