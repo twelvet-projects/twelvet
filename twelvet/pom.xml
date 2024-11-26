@@ -47,7 +47,7 @@
         <spring-cloud-alibaba-dependencies>2023.0.1.3</spring-cloud-alibaba-dependencies>
 
         <swagger-core.version>2.2.26</swagger-core.version>
-        <springdoc.version>2.6.0</springdoc.version>
+        <springdoc.version>2.7.0</springdoc.version>
         <knife4j.version>3.0.3</knife4j.version>
 
         <dynamic-datasource.version>4.3.1</dynamic-datasource.version>
@@ -55,7 +55,6 @@
 
         <spring-boot-admin.version>3.3.6</spring-boot-admin.version>
         <mybatis.version>3.0.3</mybatis.version>
-        <spring-authorization.version>1.3.2</spring-authorization.version>
         <pagehelper.boot.version>2.1.0</pagehelper.boot.version>
         <commons.io.version>2.17.0</commons.io.version>
         <velocity.version>2.4</velocity.version>
@@ -125,13 +124,6 @@
                 <groupId>com.alibaba.cloud.ai</groupId>
                 <artifactId>spring-ai-alibaba-starter</artifactId>
                 <version>${ai-alibaba.version}</version>
-            </dependency>
-
-            <!-- Spring Authorization Server -->
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-oauth2-authorization-server</artifactId>
-                <version>${spring-authorization.version}</version>
             </dependency>
 
             <!-- SpringBoot Admin -->
