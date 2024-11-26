@@ -144,7 +144,7 @@ cd ../twelvet-auth && mvn clean && mvn install
 # mvn twelvet-gateway
 cd ../twelvet-gateway && mvn clean && mvn install
 # mvn twelvet-server-system
-cd ../twelvet-server-system && mvn clean && mvn install
+cd ../twelvet-server/twelvet-server-system && mvn clean && mvn install
 # Enter the script directory
 cd ../docker
 # Set executable permissions
