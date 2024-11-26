@@ -37,6 +37,7 @@ jobs:
           cd ../twelvet-server-gen && mvn spring-javaformat:validate
           cd ../twelvet-server-job && mvn spring-javaformat:validate
           cd ../twelvet-server-system && mvn spring-javaformat:validate
+          cd ../twelvet-server-ai && mvn spring-javaformat:validate
           cd ../../twelvet-visual/twelvet-visual-monitor && mvn spring-javaformat:validate
           cd ../../twelvet-visual/twelvet-visual-sentinel && mvn spring-javaformat:validate
 
