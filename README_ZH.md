@@ -134,7 +134,7 @@ cd ../twelvet-gateway && mvn clean && mvn install
 # mvn twelvet-server-system
 cd ../twelvet-server/twelvet-server-system && mvn clean && mvn install
 # 进入脚本目录
-cd ../docker
+cd ../../docker
 # 可执行权限
 chmod 751 deploy.sh
 # 执行启动（按需执行参数，[init|port|base|server|stop|rm]）
