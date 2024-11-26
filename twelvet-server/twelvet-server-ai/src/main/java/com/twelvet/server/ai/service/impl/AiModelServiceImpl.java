@@ -85,7 +85,7 @@ public class AiModelServiceImpl implements IAiModelService {
 		int i = aiModelMapper.deleteAiModelByModelIds(modelIds);
 
 		// TODO 删除向量数据库向量
-		// vectorStore.add();
+		// vectorStore.delete();
 
 		// 批量删除文档
 		aiDocMapper.deleteAiDocByModelIds(modelIds);

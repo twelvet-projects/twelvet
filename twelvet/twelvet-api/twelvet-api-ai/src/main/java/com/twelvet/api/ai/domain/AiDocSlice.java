@@ -43,6 +43,13 @@ public class AiDocSlice extends BaseEntity {
 	private Long docId;
 
 	/**
+	 * 向量ID
+	 */
+	@Schema(description = "向量ID")
+	@ExcelProperty(value = "向量ID")
+	private String vectorId;
+
+	/**
 	 * 分片名称
 	 */
 	@Schema(description = "分片名称")
@@ -87,6 +94,14 @@ public class AiDocSlice extends BaseEntity {
 		return docId;
 	}
 
+	public String getVectorId() {
+		return vectorId;
+	}
+
+	public void setVectorId(String vectorId) {
+		this.vectorId = vectorId;
+	}
+
 	public void setSliceName(String sliceName) {
 		this.sliceName = sliceName;
 	}
@@ -116,6 +131,7 @@ public class AiDocSlice extends BaseEntity {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("sliceId", getSliceId())
 			.append("modelId", getModelId())
 			.append("docId", getDocId())
+			.append("vectorId", getVectorId())
 			.append("sliceName", getSliceName())
 			.append("content", getContent())
 			.append("delFlag", getDelFlag())

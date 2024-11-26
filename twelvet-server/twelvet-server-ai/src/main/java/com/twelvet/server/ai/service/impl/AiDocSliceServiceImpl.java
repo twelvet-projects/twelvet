@@ -7,6 +7,7 @@ import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.service.IAiDocSliceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * AI知识库文档分片Service业务层处理
@@ -56,11 +57,12 @@ public class AiDocSliceServiceImpl implements IAiDocSliceService {
 	 * @param sliceIds 需要删除的AI知识库文档分片主键
 	 * @return 结果
 	 */
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int deleteAiDocSliceBySliceIds(Long[] sliceIds) {
 		int i = aiDocSliceMapper.deleteAiDocSliceBySliceIds(sliceIds);
 		// TODO 删除向量数据库向量
-		// vectorStore.add();
+		// vectorStore.delete();
 		return i;
 	}
 

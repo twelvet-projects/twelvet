@@ -15,6 +15,7 @@ import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -100,11 +101,6 @@ public class AiDocServiceImpl implements IAiDocService {
 			aiDocSlice.setUpdateTime(nowDate);
 
 			docSliceArrayList.add(aiDocSlice);
-
-			Map<String, Object> metadata = doc.getMetadata();
-			metadata.put(RAGEnums.VectorMetadataEnums.MODEL_ID.getCode(), modelId);
-			metadata.put(RAGEnums.VectorMetadataEnums.DOC_ID.getCode(), docId);
-			metadata.put(RAGEnums.VectorMetadataEnums.SLICE_ID.getCode(), "1");
 		}
 
 		if (CollectionUtil.isNotEmpty(docSliceArrayList)) {
@@ -131,12 +127,13 @@ public class AiDocServiceImpl implements IAiDocService {
 	 * @param docIds 需要删除的AI知识库文档主键
 	 * @return 结果
 	 */
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int deleteAiDocByDocIds(Long[] docIds) {
 		int i = aiDocMapper.deleteAiDocByDocIds(docIds);
 
 		// TODO 删除向量数据库向量
-		// vectorStore.add();
+		// vectorStore.delete();
 
 		// 批量删除知识库分片
 		aiDocSliceMapper.deleteAiDocSliceByDocIds(docIds);
