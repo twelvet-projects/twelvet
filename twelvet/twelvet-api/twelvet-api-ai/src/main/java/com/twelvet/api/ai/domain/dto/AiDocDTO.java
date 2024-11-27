@@ -2,6 +2,7 @@ package com.twelvet.api.ai.domain.dto;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.twelvet.framework.core.application.domain.BaseEntity;
+import jakarta.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -26,12 +27,14 @@ public class AiDocDTO implements Serializable {
 	/**
 	 * 文档ID
 	 */
+	@NotNull(message = "文档ID不能为空")
 	@Schema(description = "文档ID")
 	private Long docId;
 
 	/**
 	 * 知识库ID
 	 */
+	@NotNull(message = "知识库ID不能为空")
 	@Schema(description = "知识库ID")
 	private Long modelId;
 

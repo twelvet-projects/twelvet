@@ -1,10 +1,12 @@
 package com.twelvet.server.ai.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
 import com.twelvet.api.ai.constant.RAGEnums;
 import com.twelvet.api.ai.domain.AiDoc;
 import com.twelvet.api.ai.domain.AiDocSlice;
 import com.twelvet.api.ai.domain.dto.AiDocDTO;
+import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.DateUtils;
 import com.twelvet.server.ai.mapper.AiDocMapper;
@@ -71,6 +73,14 @@ public class AiDocServiceImpl implements IAiDocService {
 		Date nowDate = DateUtils.getNowDate();
 		String username = SecurityUtils.getUsername();
 
+		if (StrUtil.isBlank(aiDocDTO.getDocName())) {
+			throw new TWTException("文档名称不能为空");
+		}
+
+		if (StrUtil.isBlank(aiDocDTO.getContent())) {
+			throw new TWTException("文档内容不能为空");
+		}
+
 		AiDoc aiDoc = new AiDoc();
 		aiDoc.setDocName(aiDocDTO.getDocName());
 		aiDoc.setModelId(aiDocDTO.getModelId());
@@ -89,7 +99,7 @@ public class AiDocServiceImpl implements IAiDocService {
 		Document document = new Document(aiDocDTO.getContent());
 		List<Document> docs = splitter.split(document);
 
-		List<AiDocSlice> docSliceArrayList = new ArrayList<>();
+		List<AiDocSlice> docSliceList = new ArrayList<>();
 		for (Document doc : docs) {
 			AiDocSlice aiDocSlice = new AiDocSlice();
 			aiDocSlice.setModelId(modelId);
@@ -100,11 +110,11 @@ public class AiDocServiceImpl implements IAiDocService {
 			aiDocSlice.setCreateTime(nowDate);
 			aiDocSlice.setUpdateTime(nowDate);
 
-			docSliceArrayList.add(aiDocSlice);
+			docSliceList.add(aiDocSlice);
 		}
 
-		if (CollectionUtil.isNotEmpty(docSliceArrayList)) {
-			aiDocSliceMapper.insertBatch(docSliceArrayList);
+		if (CollectionUtil.isNotEmpty(docSliceList)) {
+			aiDocSliceMapper.insertBatch(docSliceList);
 		}
 
 		vectorStore.add(docs);

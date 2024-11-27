@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -84,7 +85,7 @@ public class AiDocController extends TWTController {
 	@PreAuthorize("@role.hasPermi('ai:doc:add')")
 	@Log(service = "AI知识库文档", businessType = BusinessType.INSERT)
 	@PostMapping
-	public JsonResult<String> add(@RequestBody AiDocDTO aiDocDTO) {
+	public JsonResult<String> add(@Validated @RequestBody AiDocDTO aiDocDTO) {
 		return json(aiDocService.insertAiDoc(aiDocDTO));
 	}
 
