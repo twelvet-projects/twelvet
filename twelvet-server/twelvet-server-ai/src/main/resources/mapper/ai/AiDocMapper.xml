@@ -37,13 +37,19 @@
         insert into ai_doc
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="modelId != null">model_id,</if>
-            <if test="docName != null">doc_name,</if>
-            create_time,
+            <if test="docName != null and createBy != '' ">doc_name,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null and updateBy != ''">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="modelId != null">#{modelId},</if>
-            <if test="docName != null">#{docName},</if>
-            sysdate(),
+            <if test="docName != null and docName != ''">#{docName},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
         </trim>
     </insert>
 
@@ -51,7 +57,8 @@
         update ai_doc
         <trim prefix="SET" suffixOverrides=",">
             <if test="modelId != null">model_id = #{modelId},</if>
-            <if test="docName != null">doc_name = #{docName},</if>
+            <if test="docName != null and docName != ''">doc_name = #{docName},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
             update_time = sysdate(),
         </trim>
         where doc_id = #{docId}

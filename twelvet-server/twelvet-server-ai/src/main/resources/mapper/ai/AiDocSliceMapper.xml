@@ -1,29 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.twelvet.server.ai.mapper.AiDocSliceMapper">
 
     <resultMap type="AiDocSlice" id="AiDocSliceResult">
-        <result property="sliceId"    column="slice_id"    />
-        <result property="modelId"    column="model_id"    />
-        <result property="docId"    column="doc_id"    />
-        <result property="vectorId"    column="vector_id"    />
-        <result property="sliceName"    column="slice_name"    />
-        <result property="content"    column="content"    />
+        <result property="sliceId" column="slice_id"/>
+        <result property="modelId" column="model_id"/>
+        <result property="docId" column="doc_id"/>
+        <result property="vectorId" column="vector_id"/>
+        <result property="sliceName" column="slice_name"/>
+        <result property="content" column="content"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
     <sql id="selectAiDocSliceVo">
-        select slice_id, model_id, doc_id, vector_id, slice_name, content from ai_doc_slice
+        select slice_id,
+               model_id,
+               doc_id,
+               vector_id,
+               slice_name,
+               content,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from ai_doc_slice
     </sql>
 
     <select id="selectAiDocSliceList" parameterType="AiDocSlice" resultMap="AiDocSliceResult">
         <include refid="selectAiDocSliceVo"/>
         <where>
-            <if test="modelId != null "> and model_id = #{modelId}</if>
-            <if test="docId != null "> and doc_id = #{docId}</if>
-            <if test="sliceName != null  and sliceName != ''"> and slice_name like concat('%', #{sliceName}, '%')</if>
-            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="modelId != null ">and model_id = #{modelId}</if>
+            <if test="docId != null ">and doc_id = #{docId}</if>
+            <if test="sliceName != null  and sliceName != ''">and slice_name like concat('%', #{sliceName}, '%')</if>
+            <if test="content != null  and content != ''">and content = #{content}</if>
             and del_flag = 0
         </where>
     </select>
@@ -41,22 +55,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="vectorId != null">vector_id,</if>
             <if test="sliceName != null">slice_name,</if>
             <if test="content != null">content,</if>
-         </trim>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null and updateBy != ''">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="modelId != null">#{modelId},</if>
             <if test="docId != null">#{docId},</if>
             <if test="vectorId != null">#{vectorId},</if>
             <if test="sliceName != null">#{sliceName},</if>
             <if test="content != null">#{content},</if>
-         </trim>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
     </insert>
 
     <!-- 批量插入语句 -->
-    <insert id="insertBatch" parameterType="List">
-        INSERT INTO ai_doc_slice (model_id, doc_id, slice_name, content)
+    <insert id="insertAiDocSliceBatch" parameterType="List">
+        INSERT INTO ai_doc_slice (model_id, doc_id, vector_id, slice_name, content)
         VALUES
         <foreach collection="aiDocSliceList" item="aiDocSlice" separator=",">
-            (#{aiDocSlice.modelId}, #{aiDocSlice.docId}, #{aiDocSlice.sliceName}, #{aiDocSlice.content})
+            (#{aiDocSlice.modelId}, #{aiDocSlice.docId}, #{aiDocSlice.vectorId}, #{aiDocSlice.sliceName}, #{aiDocSlice.content})
         </foreach>
     </insert>
 
@@ -67,12 +89,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="docId != null">doc_id = #{docId},</if>
             <if test="sliceName != null">slice_name = #{sliceName},</if>
             <if test="content != null">content = #{content},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null and updateTime != ''">update_time = #{updateTime},</if>
         </trim>
         where slice_id = #{sliceId}
     </update>
 
     <delete id="deleteAiDocSliceBySliceId" parameterType="Long">
-        update ai_doc_slice set del_flag = 0 where slice_id = #{sliceId}
+        update ai_doc_slice
+        set del_flag = 0
+        where slice_id = #{sliceId}
     </delete>
 
     <delete id="deleteAiDocSliceBySliceIds" parameterType="Long">

@@ -56,7 +56,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="multiRound != null">multi_round,</if>
             <if test="topK != null">top_k,</if>
             <if test="modelSort != null">model_sort,</if>
-            create_time,
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null and updateBy != ''">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="modelName != null">#{modelName},</if>
@@ -64,7 +67,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="multiRound != null">#{multiRound},</if>
             <if test="topK != null">#{topK},</if>
             <if test="modelSort != null">#{modelSort},</if>
-            sysdate(),
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
          </trim>
     </insert>
 
@@ -76,7 +82,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="multiRound != null">multi_round = #{multiRound},</if>
             <if test="topK != null">top_k = #{topK},</if>
             <if test="modelSort != null">model_sort = #{modelSort},</if>
-            update_time = sysdate(),
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null and updateTime != ''">update_time = #{updateTime},</if>
         </trim>
         where model_id = #{modelId}
     </update>

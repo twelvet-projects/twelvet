@@ -21,48 +21,48 @@ public interface AiDocMapper {
 	 * @param docId AI知识库文档主键
 	 * @return AI知识库文档
 	 */
-	public AiDoc selectAiDocByDocId(Long docId);
+	AiDoc selectAiDocByDocId(Long docId);
 
 	/**
 	 * 查询AI知识库文档列表
 	 * @param aiDoc AI知识库文档
 	 * @return AI知识库文档集合
 	 */
-	public List<AiDoc> selectAiDocList(AiDoc aiDoc);
+	List<AiDoc> selectAiDocList(AiDoc aiDoc);
 
 	/**
 	 * 新增AI知识库文档
 	 * @param aiDoc AI知识库文档
 	 * @return 结果
 	 */
-	public int insertAiDoc(AiDoc aiDoc);
+	int insertAiDoc(AiDoc aiDoc);
 
 	/**
 	 * 修改AI知识库文档
 	 * @param aiDoc AI知识库文档
 	 * @return 结果
 	 */
-	public int updateAiDoc(AiDoc aiDoc);
+	int updateAiDoc(AiDoc aiDoc);
 
 	/**
 	 * 删除AI知识库文档
 	 * @param docId AI知识库文档主键
 	 * @return 结果
 	 */
-	public int deleteAiDocByDocId(Long docId);
+	int deleteAiDocByDocId(Long docId);
 
 	/**
 	 * 批量删除AI知识库文档
 	 * @param docIds 需要删除的数据主键集合
 	 * @return 结果
 	 */
-	public int deleteAiDocByDocIds(Long[] docIds);
+	int deleteAiDocByDocIds(Long[] docIds);
 
 	/**
 	 * 根据知识库ID批量删除AI知识库文档
 	 * @param modelIds 需要删除的知识库ID
 	 * @return 结果
 	 */
-	public int deleteAiDocByModelIds(Long[] modelIds);
+	int deleteAiDocByModelIds(Long[] modelIds);
 
 }

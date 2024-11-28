@@ -1,8 +1,11 @@
 package com.twelvet.server.ai.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import com.twelvet.api.ai.domain.AiModel;
+import com.twelvet.framework.security.utils.SecurityUtils;
+import com.twelvet.framework.utils.DateUtils;
 import com.twelvet.server.ai.mapper.AiDocMapper;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.mapper.AiModelMapper;
@@ -61,6 +64,13 @@ public class AiModelServiceImpl implements IAiModelService {
 	 */
 	@Override
 	public int insertAiModel(AiModel aiModel) {
+		Date nowDate = DateUtils.getNowDate();
+		String username = SecurityUtils.getUsername();
+
+		aiModel.setCreateBy(username);
+		aiModel.setCreateTime(nowDate);
+		aiModel.setUpdateTime(nowDate);
+		aiModel.setUpdateBy(username);
 		return aiModelMapper.insertAiModel(aiModel);
 	}
 
@@ -71,6 +81,10 @@ public class AiModelServiceImpl implements IAiModelService {
 	 */
 	@Override
 	public int updateAiModel(AiModel aiModel) {
+		Date nowDate = DateUtils.getNowDate();
+
+		aiModel.setUpdateBy(SecurityUtils.getUsername());
+		aiModel.setUpdateTime(nowDate);
 		return aiModelMapper.updateAiModel(aiModel);
 	}
 

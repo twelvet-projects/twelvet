@@ -44,17 +44,6 @@ public class AiDocSliceController extends TWTController {
 	}
 
 	/**
-	 * 修改AI知识库文档分片
-	 */
-	@Operation(summary = "修改AI知识库文档分片")
-	@PreAuthorize("@role.hasPermi('system:slice:edit')")
-	@Log(service = "AI知识库文档分片", businessType = BusinessType.UPDATE)
-	@PutMapping
-	public JsonResult<String> edit(@RequestBody AiDocSlice aiDocSlice) {
-		return json(aiDocSliceService.updateAiDocSlice(aiDocSlice));
-	}
-
-	/**
 	 * 删除AI知识库文档分片
 	 */
 	@Operation(summary = "删除AI知识库文档分片")

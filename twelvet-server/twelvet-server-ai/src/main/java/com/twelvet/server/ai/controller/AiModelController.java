@@ -85,7 +85,6 @@ public class AiModelController extends TWTController {
 	@Log(service = "AI知识库", businessType = BusinessType.INSERT)
 	@PostMapping
 	public JsonResult<String> add(@RequestBody AiModel aiModel) {
-		aiModel.setCreateBy(SecurityUtils.getUsername());
 		return json(aiModelService.insertAiModel(aiModel));
 	}
 
@@ -97,7 +96,6 @@ public class AiModelController extends TWTController {
 	@Log(service = "AI知识库", businessType = BusinessType.UPDATE)
 	@PutMapping
 	public JsonResult<String> edit(@RequestBody AiModel aiModel) {
-		aiModel.setUpdateBy(SecurityUtils.getUsername());
 		return json(aiModelService.updateAiModel(aiModel));
 	}
 

@@ -21,41 +21,41 @@ public interface AiModelMapper {
 	 * @param modelId AI知识库主键
 	 * @return AI知识库
 	 */
-	public AiModel selectAiModelByModelId(Long modelId);
+	AiModel selectAiModelByModelId(Long modelId);
 
 	/**
 	 * 查询AI知识库列表
 	 * @param aiModel AI知识库
 	 * @return AI知识库集合
 	 */
-	public List<AiModel> selectAiModelList(AiModel aiModel);
+	List<AiModel> selectAiModelList(AiModel aiModel);
 
 	/**
 	 * 新增AI知识库
 	 * @param aiModel AI知识库
 	 * @return 结果
 	 */
-	public int insertAiModel(AiModel aiModel);
+	int insertAiModel(AiModel aiModel);
 
 	/**
 	 * 修改AI知识库
 	 * @param aiModel AI知识库
 	 * @return 结果
 	 */
-	public int updateAiModel(AiModel aiModel);
+	int updateAiModel(AiModel aiModel);
 
 	/**
 	 * 删除AI知识库
 	 * @param modelId AI知识库主键
 	 * @return 结果
 	 */
-	public int deleteAiModelByModelId(Long modelId);
+	int deleteAiModelByModelId(Long modelId);
 
 	/**
 	 * 批量删除AI知识库
 	 * @param modelIds 需要删除的数据主键集合
 	 * @return 结果
 	 */
-	public int deleteAiModelByModelIds(Long[] modelIds);
+	int deleteAiModelByModelIds(Long[] modelIds);
 
 }

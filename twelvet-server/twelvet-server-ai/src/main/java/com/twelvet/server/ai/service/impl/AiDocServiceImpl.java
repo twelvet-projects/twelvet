@@ -86,6 +86,7 @@ public class AiDocServiceImpl implements IAiDocService {
 		aiDoc.setModelId(aiDocDTO.getModelId());
 		aiDoc.setCreateBy(username);
 		aiDoc.setCreateTime(nowDate);
+		aiDoc.setUpdateBy(username);
 		aiDoc.setUpdateTime(nowDate);
 
 		int i = aiDocMapper.insertAiDoc(aiDoc);
@@ -104,17 +105,20 @@ public class AiDocServiceImpl implements IAiDocService {
 			AiDocSlice aiDocSlice = new AiDocSlice();
 			aiDocSlice.setModelId(modelId);
 			aiDocSlice.setDocId(docId);
+			aiDocSlice.setVectorId(doc.getId());
 			aiDocSlice.setSliceName(aiDoc.getDocName());
 			aiDocSlice.setContent(doc.getContent());
 			aiDocSlice.setCreateBy(username);
 			aiDocSlice.setCreateTime(nowDate);
+			aiDocSlice.setUpdateBy(username);
 			aiDocSlice.setUpdateTime(nowDate);
 
 			docSliceList.add(aiDocSlice);
 		}
 
+		// 优先添加数据库，队列处理向量化
 		if (CollectionUtil.isNotEmpty(docSliceList)) {
-			aiDocSliceMapper.insertBatch(docSliceList);
+			aiDocSliceMapper.insertAiDocSliceBatch(docSliceList);
 		}
 
 		vectorStore.add(docs);
