@@ -59,6 +59,13 @@ public interface AiDocSliceMapper {
 	int deleteAiDocSliceBySliceId(Long sliceId);
 
 	/**
+	 * 批量查询AI知识库文档分片对应向量化ID
+	 * @param sliceIds 需要查询的数据主键集合
+	 * @return 结果
+	 */
+	List<String> selectAiDocSliceVectorIdBySliceIds(Long[] sliceIds);
+
+	/**
 	 * 批量删除AI知识库文档分片
 	 * @param sliceIds 需要删除的数据主键集合
 	 * @return 结果
@@ -66,11 +73,25 @@ public interface AiDocSliceMapper {
 	int deleteAiDocSliceBySliceIds(Long[] sliceIds);
 
 	/**
+	 * 根据文档ID批量查询AI知识库文档分片对应向量化ID
+	 * @param docIds 需要查询的文档ID
+	 * @return 结果
+	 */
+	List<String> selectAiDocSliceVectorIdByDocIds(Long[] docIds);
+
+	/**
 	 * 根据文档ID批量删除AI知识库文档分片
 	 * @param docIds 需要删除的文档ID
 	 * @return 结果
 	 */
 	int deleteAiDocSliceByDocIds(Long[] docIds);
+
+	/**
+	 * 根据知识库ID批量查询AI知识库文档分片对应向量化ID
+	 * @param modelIds 需要查询的知识库ID
+	 * @return 结果
+	 */
+	List<String> selectAiDocSliceVectorIdByModelIds(Long[] modelIds);
 
 	/**
 	 * 根据知识库ID批量删除AI知识库文档分片

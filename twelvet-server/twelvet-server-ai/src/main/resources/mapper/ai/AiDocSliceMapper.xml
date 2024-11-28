@@ -78,7 +78,8 @@
         INSERT INTO ai_doc_slice (model_id, doc_id, vector_id, slice_name, content)
         VALUES
         <foreach collection="aiDocSliceList" item="aiDocSlice" separator=",">
-            (#{aiDocSlice.modelId}, #{aiDocSlice.docId}, #{aiDocSlice.vectorId}, #{aiDocSlice.sliceName}, #{aiDocSlice.content})
+            (#{aiDocSlice.modelId}, #{aiDocSlice.docId}, #{aiDocSlice.vectorId}, #{aiDocSlice.sliceName},
+            #{aiDocSlice.content})
         </foreach>
     </insert>
 
@@ -101,6 +102,13 @@
         where slice_id = #{sliceId}
     </delete>
 
+    <select id="selectAiDocSliceVectorIdBySliceIds" parameterType="Long" resultType="String">
+        SELECT vector_id FROM `ai_doc_slice` where slice_id in
+        <foreach item="sliceId" collection="array" open="(" separator="," close=")">
+            #{sliceId}
+        </foreach>
+    </select>
+
     <delete id="deleteAiDocSliceBySliceIds" parameterType="Long">
         update ai_doc_slice set del_flag = 0 where slice_id in
         <foreach item="sliceId" collection="array" open="(" separator="," close=")">
@@ -108,12 +116,26 @@
         </foreach>
     </delete>
 
+    <select id="selectAiDocSliceVectorIdByDocIds" parameterType="Long" resultType="String">
+        SELECT vector_id FROM `ai_doc_slice` where doc_id in
+        <foreach item="docId" collection="array" open="(" separator="," close=")">
+            #{docId}
+        </foreach>
+    </select>
+
     <delete id="deleteAiDocSliceByDocIds" parameterType="Long">
         update ai_doc_slice set del_flag = 0 where doc_id in
         <foreach item="docId" collection="array" open="(" separator="," close=")">
             #{docId}
         </foreach>
     </delete>
+
+    <select id="selectAiDocSliceVectorIdByModelIds" parameterType="Long" resultType="String">
+        SELECT vector_id FROM `ai_doc_slice` where model_id in
+        <foreach item="modelId" collection="array" open="(" separator="," close=")">
+            #{modelId}
+        </foreach>
+    </select>
 
     <delete id="deleteAiDocSliceByModelIds" parameterType="Long">
         update ai_doc_slice set del_flag = 0 where model_id in

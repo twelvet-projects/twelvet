@@ -2,9 +2,11 @@ package com.twelvet.server.ai.service.impl;
 
 import java.util.List;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.twelvet.api.ai.domain.AiDocSlice;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.service.IAiDocSliceService;
+import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,9 @@ public class AiDocSliceServiceImpl implements IAiDocSliceService {
 
 	@Autowired
 	private AiDocSliceMapper aiDocSliceMapper;
+
+	@Autowired
+	private VectorStore vectorStore;
 
 	/**
 	 * 查询AI知识库文档分片
@@ -61,8 +66,12 @@ public class AiDocSliceServiceImpl implements IAiDocSliceService {
 	@Override
 	public int deleteAiDocSliceBySliceIds(Long[] sliceIds) {
 		int i = aiDocSliceMapper.deleteAiDocSliceBySliceIds(sliceIds);
-		// TODO 删除向量数据库向量
-		// vectorStore.delete();
+
+		List<String> vectorIdList = aiDocSliceMapper.selectAiDocSliceVectorIdBySliceIds(sliceIds);
+		// 删除向量数据库向量
+		if(CollectionUtil.isNotEmpty(vectorIdList)) {
+			vectorStore.delete(vectorIdList);
+		}
 		return i;
 	}
 

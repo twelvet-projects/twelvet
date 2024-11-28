@@ -3,6 +3,7 @@ package com.twelvet.server.ai.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.twelvet.api.ai.domain.AiModel;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.DateUtils;
@@ -98,8 +99,11 @@ public class AiModelServiceImpl implements IAiModelService {
 	public int deleteAiModelByModelIds(Long[] modelIds) {
 		int i = aiModelMapper.deleteAiModelByModelIds(modelIds);
 
-		// TODO 删除向量数据库向量
-		// vectorStore.delete();
+		List<String> vectorIdList = aiDocSliceMapper.selectAiDocSliceVectorIdByModelIds(modelIds);
+		// 删除向量数据库向量
+		if(CollectionUtil.isNotEmpty(vectorIdList)) {
+			vectorStore.delete(vectorIdList);
+		}
 
 		// 批量删除文档
 		aiDocMapper.deleteAiDocByModelIds(modelIds);

@@ -121,8 +121,6 @@ public class AiDocServiceImpl implements IAiDocService {
 			aiDocSliceMapper.insertAiDocSliceBatch(docSliceList);
 		}
 
-		vectorStore.add(docs);
-
 		return i;
 	}
 
@@ -146,8 +144,11 @@ public class AiDocServiceImpl implements IAiDocService {
 	public int deleteAiDocByDocIds(Long[] docIds) {
 		int i = aiDocMapper.deleteAiDocByDocIds(docIds);
 
-		// TODO 删除向量数据库向量
-		// vectorStore.delete();
+		List<String> vectorIdList = aiDocSliceMapper.selectAiDocSliceVectorIdByDocIds(docIds);
+		// 删除向量数据库向量
+        if(CollectionUtil.isNotEmpty(vectorIdList)) {
+            vectorStore.delete(vectorIdList);
+        }
 
 		// 批量删除知识库分片
 		aiDocSliceMapper.deleteAiDocSliceByDocIds(docIds);
