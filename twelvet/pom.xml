@@ -58,7 +58,7 @@
         <pagehelper.boot.version>2.1.0</pagehelper.boot.version>
         <commons.io.version>2.17.0</commons.io.version>
         <velocity.version>2.4</velocity.version>
-        <hutool.version>5.8.33</hutool.version>
+        <hutool.version>5.8.34</hutool.version>
         <redisson.version>3.30.0</redisson.version>
         <jasypt.version>3.0.5</jasypt.version>
         <jaxb.version>2.3.5</jaxb.version>
