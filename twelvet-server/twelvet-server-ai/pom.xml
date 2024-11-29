@@ -110,6 +110,12 @@
             <artifactId>spring-ai-tika-document-reader</artifactId>
         </dependency>
 
+        <!--rocketmq-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-rocketmq</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
