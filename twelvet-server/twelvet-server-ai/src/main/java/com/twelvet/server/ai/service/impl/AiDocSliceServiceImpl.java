@@ -69,7 +69,7 @@ public class AiDocSliceServiceImpl implements IAiDocSliceService {
 
 		List<String> vectorIdList = aiDocSliceMapper.selectAiDocSliceVectorIdBySliceIds(sliceIds);
 		// 删除向量数据库向量
-		if(CollectionUtil.isNotEmpty(vectorIdList)) {
+		if (CollectionUtil.isNotEmpty(vectorIdList)) {
 			vectorStore.delete(vectorIdList);
 		}
 		return i;

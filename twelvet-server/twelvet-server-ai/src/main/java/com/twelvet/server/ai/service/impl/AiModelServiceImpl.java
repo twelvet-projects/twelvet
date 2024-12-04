@@ -101,7 +101,7 @@ public class AiModelServiceImpl implements IAiModelService {
 
 		List<String> vectorIdList = aiDocSliceMapper.selectAiDocSliceVectorIdByModelIds(modelIds);
 		// 删除向量数据库向量
-		if(CollectionUtil.isNotEmpty(vectorIdList)) {
+		if (CollectionUtil.isNotEmpty(vectorIdList)) {
 			vectorStore.delete(vectorIdList);
 		}
 
