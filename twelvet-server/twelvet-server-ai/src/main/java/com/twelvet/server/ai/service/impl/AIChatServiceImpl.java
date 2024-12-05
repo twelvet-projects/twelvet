@@ -4,6 +4,8 @@ import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
 import com.twelvet.api.ai.domain.dto.MessageDTO;
 import com.twelvet.api.ai.domain.vo.MessageVO;
+import com.twelvet.server.ai.fun.MockWeatherService;
+import com.twelvet.server.ai.fun.vo.ActorsFilms;
 import com.twelvet.server.ai.service.AIChatService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +15,7 @@ import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
+import org.springframework.ai.converter.BeanOutputConverter;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.model.Content;
 import org.springframework.ai.vectorstore.SearchRequest;
@@ -20,11 +23,13 @@ import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.ai.vectorstore.filter.Filter;
 import org.springframework.ai.vectorstore.filter.FilterExpressionBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -124,6 +129,56 @@ public class AIChatServiceImpl implements AIChatService {
 				// 使用向量数据库
 				// useVectorStore(advisorSpec, searchRequest);
 			})
+			.stream()
+			.chatResponse()
+			.map(chatResponse -> {
+				MessageVO messageVO = new MessageVO();
+				messageVO.setContent(chatResponse.getResult().getOutput().getContent());
+				return messageVO;
+			});
+	}
+
+	/**
+	 * 格式化输出
+	 * @param messageDTO
+	 * @return
+	 */
+	@Override
+	public Flux<MessageVO> formatTest(MessageDTO messageDTO) {
+		BeanOutputConverter<List<ActorsFilms>> converter = new BeanOutputConverter<>(
+				new ParameterizedTypeReference<List<ActorsFilms>>() {
+				});
+
+		return ChatClient
+			// 自定义使用不同的大模型
+			.create(chatModel)
+			.prompt()
+			.user(u -> u.text("""
+					  Generate the filmography for a random {actor}.
+					  {format}
+					""").param("actor", messageDTO.getContent()).param("format", converter.getFormat()))
+			.stream()
+			.chatResponse()
+			.map(chatResponse -> {
+				MessageVO messageVO = new MessageVO();
+				messageVO.setContent(chatResponse.getResult().getOutput().getContent());
+				return messageVO;
+			});
+	}
+
+	/**
+	 * 工具调用
+	 * @param messageDTO
+	 * @return
+	 */
+	@Override
+	public Flux<MessageVO> funTest(MessageDTO messageDTO) {
+		return ChatClient
+			// 自定义使用不同的大模型
+			.create(chatModel)
+			.prompt()
+			.function("getWeather", "根据城市查询天气", new MockWeatherService())
+			.user(messageDTO.getContent())
 			.stream()
 			.chatResponse()
 			.map(chatResponse -> {

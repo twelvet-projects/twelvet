@@ -36,4 +36,16 @@ public class AIChatController {
 		return aiChatService.chatStream(messageDTO);
 	}
 
+	@Operation(summary = "格式化输出")
+	@PostMapping("/format")
+	public Flux<MessageVO> formatTest(@RequestBody MessageDTO messageDTO) {
+		return aiChatService.formatTest(messageDTO);
+	}
+
+	@Operation(summary = "工具调用")
+	@PostMapping("/fun")
+	public Flux<MessageVO> funTest(@RequestBody MessageDTO messageDTO) {
+		return aiChatService.funTest(messageDTO);
+	}
+
 }
