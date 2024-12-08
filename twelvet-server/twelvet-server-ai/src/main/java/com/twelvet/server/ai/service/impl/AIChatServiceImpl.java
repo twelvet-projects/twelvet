@@ -6,6 +6,7 @@ import com.twelvet.api.ai.domain.dto.MessageDTO;
 import com.twelvet.api.ai.domain.vo.MessageVO;
 import com.twelvet.server.ai.fun.MockWeatherService;
 import com.twelvet.server.ai.fun.vo.ActorsFilms;
+import com.twelvet.server.ai.fun.vo.Request;
 import com.twelvet.server.ai.service.AIChatService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -177,7 +178,7 @@ public class AIChatServiceImpl implements AIChatService {
 			// 自定义使用不同的大模型
 			.create(chatModel)
 			.prompt()
-			.function("getWeather", "根据城市查询天气", new MockWeatherService())
+			.function("mockWeatherService", "根据城市查询天气", Request.class, new MockWeatherService())
 			.user(messageDTO.getContent())
 			.stream()
 			.chatResponse()

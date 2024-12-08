@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import com.twelvet.server.ai.fun.vo.ResponseVO;
 import com.twelvet.server.ai.fun.vo.Request;
+import org.springframework.context.annotation.Description;
+import org.springframework.stereotype.Service;
 
 /**
  * Title Mock weather service.<br>
@@ -16,6 +18,8 @@ import com.twelvet.server.ai.fun.vo.Request;
  * @author yuanci.ytb
  * @since 2024/8/16 11:29
  */
+@Description("根据城市查询指定时间的天气")
+@Service
 public class MockWeatherService implements Function<Request, ResponseVO> {
 
 	@Override
