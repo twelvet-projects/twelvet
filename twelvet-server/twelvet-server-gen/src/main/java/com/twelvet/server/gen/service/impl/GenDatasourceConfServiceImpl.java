@@ -1,30 +1,29 @@
 package com.twelvet.server.gen.service.impl;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.List;
-
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import com.baomidou.dynamic.datasource.creator.DataSourceProperty;
 import com.baomidou.dynamic.datasource.creator.DefaultDataSourceCreator;
 import com.baomidou.dynamic.datasource.creator.druid.DruidConfig;
+import com.twelvet.api.gen.domain.GenDatasourceConf;
 import com.twelvet.framework.datasource.enums.DsConfTypeEnum;
 import com.twelvet.framework.datasource.enums.DsJdbcUrlEnum;
-import com.twelvet.framework.utils.DateUtils;
+import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.StrUtils;
+import com.twelvet.server.gen.mapper.GenDatasourceConfMapper;
+import com.twelvet.server.gen.service.IGenDatasourceConfService;
 import org.jasypt.encryption.StringEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.twelvet.framework.security.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
-import com.twelvet.server.gen.mapper.GenDatasourceConfMapper;
-import com.twelvet.api.gen.domain.GenDatasourceConf;
-import com.twelvet.server.gen.service.IGenDatasourceConfService;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 数据源Service业务层处理
@@ -83,7 +82,7 @@ public class GenDatasourceConfServiceImpl implements IGenDatasourceConfService {
 
 		// 更新数据库配置
 		genDatasourceConf.setPassword(stringEncryptor.encrypt(genDatasourceConf.getPassword()));
-		genDatasourceConf.setCreateTime(DateUtils.getNowDate());
+		genDatasourceConf.setCreateTime(LocalDateTime.now());
 		String loginUsername = SecurityUtils.getUsername();
 		genDatasourceConf.setCreateBy(loginUsername);
 		genDatasourceConf.setUpdateBy(loginUsername);
@@ -114,7 +113,7 @@ public class GenDatasourceConfServiceImpl implements IGenDatasourceConfService {
 
 		// 更新数据库配置
 		genDatasourceConf.setPassword(stringEncryptor.encrypt(genDatasourceConf.getPassword()));
-		genDatasourceConf.setUpdateTime(DateUtils.getNowDate());
+		genDatasourceConf.setUpdateTime(LocalDateTime.now());
 		String loginUsername = SecurityUtils.getUsername();
 		genDatasourceConf.setCreateBy(loginUsername);
 		genDatasourceConf.setUpdateBy(loginUsername);

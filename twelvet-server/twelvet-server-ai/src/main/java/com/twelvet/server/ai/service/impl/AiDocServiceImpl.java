@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,14 +35,17 @@ import java.util.Map;
 @Service
 public class AiDocServiceImpl implements IAiDocService {
 
-	@Autowired
-	private AiDocMapper aiDocMapper;
+	private final AiDocMapper aiDocMapper;
 
-	@Autowired
-	private AiDocSliceMapper aiDocSliceMapper;
+	private final AiDocSliceMapper aiDocSliceMapper;
 
-	@Autowired
-	private VectorStore vectorStore;
+	private final VectorStore vectorStore;
+
+	public AiDocServiceImpl(AiDocMapper aiDocMapper, AiDocSliceMapper aiDocSliceMapper, VectorStore vectorStore) {
+		this.aiDocMapper = aiDocMapper;
+		this.aiDocSliceMapper = aiDocSliceMapper;
+		this.vectorStore = vectorStore;
+	}
 
 	/**
 	 * 查询AI知识库文档
@@ -70,7 +74,7 @@ public class AiDocServiceImpl implements IAiDocService {
 	 */
 	@Override
 	public int insertAiDoc(AiDocDTO aiDocDTO) {
-		Date nowDate = DateUtils.getNowDate();
+		LocalDateTime nowDate = LocalDateTime.now();
 		String username = SecurityUtils.getUsername();
 
 		if (StrUtil.isBlank(aiDocDTO.getDocName())) {

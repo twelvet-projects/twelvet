@@ -21,11 +21,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AiDocSliceServiceImpl implements IAiDocSliceService {
 
-	@Autowired
-	private AiDocSliceMapper aiDocSliceMapper;
+	private final AiDocSliceMapper aiDocSliceMapper;
 
-	@Autowired
-	private VectorStore vectorStore;
+	private final VectorStore vectorStore;
+
+	public AiDocSliceServiceImpl(AiDocSliceMapper aiDocSliceMapper, VectorStore vectorStore) {
+		this.aiDocSliceMapper = aiDocSliceMapper;
+		this.vectorStore = vectorStore;
+	}
 
 	/**
 	 * 查询AI知识库文档分片

@@ -1,5 +1,6 @@
 package com.twelvet.server.ai.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -26,17 +27,21 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AiModelServiceImpl implements IAiModelService {
 
-	@Autowired
-	private AiModelMapper aiModelMapper;
+	private final AiModelMapper aiModelMapper;
 
-	@Autowired
-	private AiDocMapper aiDocMapper;
+	private final AiDocMapper aiDocMapper;
 
-	@Autowired
-	private AiDocSliceMapper aiDocSliceMapper;
+	private final AiDocSliceMapper aiDocSliceMapper;
 
-	@Autowired
-	private VectorStore vectorStore;
+	private final VectorStore vectorStore;
+
+	public AiModelServiceImpl(AiModelMapper aiModelMapper, AiDocMapper aiDocMapper, AiDocSliceMapper aiDocSliceMapper,
+			VectorStore vectorStore) {
+		this.aiModelMapper = aiModelMapper;
+		this.aiDocMapper = aiDocMapper;
+		this.aiDocSliceMapper = aiDocSliceMapper;
+		this.vectorStore = vectorStore;
+	}
 
 	/**
 	 * 查询AI知识库
@@ -65,7 +70,7 @@ public class AiModelServiceImpl implements IAiModelService {
 	 */
 	@Override
 	public int insertAiModel(AiModel aiModel) {
-		Date nowDate = DateUtils.getNowDate();
+		LocalDateTime nowDate = LocalDateTime.now();
 		String username = SecurityUtils.getUsername();
 
 		aiModel.setCreateBy(username);
@@ -82,7 +87,7 @@ public class AiModelServiceImpl implements IAiModelService {
 	 */
 	@Override
 	public int updateAiModel(AiModel aiModel) {
-		Date nowDate = DateUtils.getNowDate();
+		LocalDateTime nowDate = LocalDateTime.now();
 
 		aiModel.setUpdateBy(SecurityUtils.getUsername());
 		aiModel.setUpdateTime(nowDate);

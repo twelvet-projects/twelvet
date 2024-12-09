@@ -10,6 +10,7 @@ import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.server.ai.fun.MockWeatherService;
 import com.twelvet.server.ai.fun.vo.ActorsFilms;
 import com.twelvet.server.ai.fun.vo.Request;
+import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.mapper.AiModelMapper;
 import com.twelvet.server.ai.service.AIChatService;
 import org.slf4j.Logger;
@@ -49,17 +50,24 @@ public class AIChatServiceImpl implements AIChatService {
 
 	private final static Logger log = LoggerFactory.getLogger(AIChatServiceImpl.class);
 
-	@Autowired
-	private DashScopeChatModel chatModel;
+	private final DashScopeChatModel chatModel;
 
-	@Autowired
-	private VectorStore vectorStore;
+	private final VectorStore vectorStore;
 
-	@Autowired
-	private AiMessageChatMemory aiMessageChatMemory;
+	private final AiMessageChatMemory aiMessageChatMemory;
 
-	@Autowired
-	private AiModelMapper aiModelMapper;
+	private final AiModelMapper aiModelMapper;
+
+	private final AiDocSliceMapper aiDocSliceMapper;
+
+	public AIChatServiceImpl(DashScopeChatModel chatModel, VectorStore vectorStore,
+			AiMessageChatMemory aiMessageChatMemory, AiModelMapper aiModelMapper, AiDocSliceMapper aiDocSliceMapper) {
+		this.chatModel = chatModel;
+		this.vectorStore = vectorStore;
+		this.aiMessageChatMemory = aiMessageChatMemory;
+		this.aiModelMapper = aiModelMapper;
+		this.aiDocSliceMapper = aiDocSliceMapper;
+	}
 
 	/**
 	 * 发起聊天
