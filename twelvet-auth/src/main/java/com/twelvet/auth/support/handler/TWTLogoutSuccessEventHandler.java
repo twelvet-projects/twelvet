@@ -16,6 +16,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 /**
  * @author twelvet
  * @WebSite twelvet.cn
@@ -50,7 +52,7 @@ public class TWTLogoutSuccessEventHandler implements ApplicationListener<LogoutS
 		sysLoginInfo.setMsg("退出成功");
 		sysLoginInfo.setIpaddr(IpUtils.getIpAddr());
 		// 发送异步日志事件
-		sysLoginInfo.setCreateTime(DateUtils.getNowDate());
+		sysLoginInfo.setCreateTime(LocalDateTime.now());
 		sysLoginInfo.setCreateBy(username);
 		sysLoginInfo.setUpdateBy(username);
 		SpringContextHolder.publishEvent(new SysLoginLogEvent(sysLoginInfo));

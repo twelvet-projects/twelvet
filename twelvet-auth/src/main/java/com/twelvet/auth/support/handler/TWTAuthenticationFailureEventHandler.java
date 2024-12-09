@@ -25,6 +25,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 /**
  * @author twelvet
@@ -58,7 +59,7 @@ public class TWTAuthenticationFailureEventHandler implements AuthenticationFailu
 			sysLoginInfo.setStatus(SecurityConstants.LOGIN_FAIL);
 			sysLoginInfo.setMsg(exception.getLocalizedMessage());
 			// 发送异步日志事件
-			sysLoginInfo.setCreateTime(DateUtils.getNowDate());
+			sysLoginInfo.setCreateTime(LocalDateTime.now());
 			sysLoginInfo.setCreateBy(username);
 			sysLoginInfo.setUpdateBy(username);
 			SpringContextHolder.publishEvent(new SysLoginLogEvent(sysLoginInfo));

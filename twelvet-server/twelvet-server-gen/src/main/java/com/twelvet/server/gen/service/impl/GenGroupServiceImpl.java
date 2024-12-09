@@ -5,7 +5,6 @@ import com.twelvet.api.gen.domain.GenTemplate;
 import com.twelvet.api.gen.domain.GenTemplateGroup;
 import com.twelvet.api.gen.domain.dto.GenGroupDTO;
 import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.framework.utils.DateUtils;
 import com.twelvet.server.gen.mapper.GenGroupMapper;
 import com.twelvet.server.gen.mapper.GenTemplateGroupMapper;
 import com.twelvet.server.gen.mapper.GenTemplateMapper;
@@ -15,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -75,7 +75,7 @@ public class GenGroupServiceImpl implements IGenGroupService {
 		GenGroup genGroup = new GenGroup();
 		genGroup.setGroupName(genGroupDTO.getGroupName());
 		genGroup.setGroupDesc(genGroupDTO.getGroupDesc());
-		genGroup.setCreateTime(DateUtils.getNowDate());
+		genGroup.setCreateTime(LocalDateTime.now());
 		String loginUsername = SecurityUtils.getUsername();
 		genGroup.setCreateBy(loginUsername);
 		genGroup.setUpdateBy(loginUsername);
@@ -105,7 +105,7 @@ public class GenGroupServiceImpl implements IGenGroupService {
 		genGroup.setId(id);
 		genGroup.setGroupName(genGroupDTO.getGroupName());
 		genGroup.setGroupDesc(genGroupDTO.getGroupDesc());
-		genGroup.setUpdateTime(DateUtils.getNowDate());
+		genGroup.setUpdateTime(LocalDateTime.now());
 		String loginUsername = SecurityUtils.getUsername();
 		genGroup.setCreateBy(loginUsername);
 		genGroup.setUpdateBy(loginUsername);

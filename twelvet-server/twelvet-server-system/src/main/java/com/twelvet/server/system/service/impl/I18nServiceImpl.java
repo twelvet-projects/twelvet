@@ -16,6 +16,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -91,7 +92,7 @@ public class I18nServiceImpl implements II18nService, ApplicationRunner {
 	 */
 	@Override
 	public int insertI18n(I18n i18n) {
-		Date nowDate = DateUtils.getNowDate();
+		LocalDateTime nowDate = LocalDateTime.now();
 		i18n.setCreateTime(nowDate);
 		i18n.setUpdateTime(nowDate);
 		String loginUsername = SecurityUtils.getUsername();
@@ -110,7 +111,7 @@ public class I18nServiceImpl implements II18nService, ApplicationRunner {
 	 */
 	@Override
 	public int updateI18n(I18n i18n) {
-		i18n.setUpdateTime(DateUtils.getNowDate());
+		i18n.setUpdateTime(LocalDateTime.now());
 		String loginUsername = SecurityUtils.getUsername();
 		i18n.setCreateBy(loginUsername);
 		i18n.setUpdateBy(loginUsername);

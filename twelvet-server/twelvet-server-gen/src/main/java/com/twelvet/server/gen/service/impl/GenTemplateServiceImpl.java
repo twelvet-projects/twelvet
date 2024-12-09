@@ -2,12 +2,12 @@ package com.twelvet.server.gen.service.impl;
 
 import com.twelvet.api.gen.domain.GenTemplate;
 import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.framework.utils.DateUtils;
 import com.twelvet.server.gen.mapper.GenTemplateMapper;
 import com.twelvet.server.gen.service.IGenTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -49,7 +49,7 @@ public class GenTemplateServiceImpl implements IGenTemplateService {
 	 */
 	@Override
 	public int insertGenTemplate(GenTemplate genTemplate) {
-		genTemplate.setCreateTime(DateUtils.getNowDate());
+		genTemplate.setCreateTime(LocalDateTime.now());
 		String loginUsername = SecurityUtils.getUsername();
 		genTemplate.setCreateBy(loginUsername);
 		genTemplate.setUpdateBy(loginUsername);
@@ -63,7 +63,7 @@ public class GenTemplateServiceImpl implements IGenTemplateService {
 	 */
 	@Override
 	public int updateGenTemplate(GenTemplate genTemplate) {
-		genTemplate.setUpdateTime(DateUtils.getNowDate());
+		genTemplate.setUpdateTime(LocalDateTime.now());
 		String loginUsername = SecurityUtils.getUsername();
 		genTemplate.setCreateBy(loginUsername);
 		genTemplate.setUpdateBy(loginUsername);

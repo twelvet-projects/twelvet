@@ -27,6 +27,7 @@ import org.springframework.util.CollectionUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
 
@@ -68,7 +69,7 @@ public class TWTAuthenticationSuccessEventHandler implements AuthenticationSucce
 			sysLoginInfo.setIpaddr(IpUtils.getIpAddr());
 			sysLoginInfo.setMsg("登录成功");
 			// 发送异步日志事件
-			sysLoginInfo.setCreateTime(DateUtils.getNowDate());
+			sysLoginInfo.setCreateTime(LocalDateTime.now());
 			sysLoginInfo.setCreateBy(username);
 			sysLoginInfo.setUpdateBy(username);
 			SpringContextHolder.publishEvent(new SysLoginLogEvent(sysLoginInfo));
