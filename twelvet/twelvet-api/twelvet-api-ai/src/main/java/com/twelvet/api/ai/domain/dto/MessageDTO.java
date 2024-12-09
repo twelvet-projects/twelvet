@@ -21,16 +21,10 @@ public class MessageDTO implements Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 知识库ID
-	 */
 	@NotNull(message = "知识库ID不能为空")
 	@Schema(description = "知识库ID")
 	private Long modelId;
 
-	/**
-	 * 提问内容
-	 */
 	@NotBlank(message = "提问内容不能为空")
 	@Schema(description = "提问内容")
 	private String content;
@@ -53,9 +47,7 @@ public class MessageDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "MessageDTO{" +
-				"modelId=" + modelId +
-				", content='" + content + '\'' +
-				'}';
+		return "MessageDTO{" + "modelId=" + modelId + ", content='" + content + '\'' + '}';
 	}
+
 }
