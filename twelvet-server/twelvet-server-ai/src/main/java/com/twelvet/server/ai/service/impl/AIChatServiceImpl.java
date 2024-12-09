@@ -2,11 +2,15 @@ package com.twelvet.server.ai.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
+import com.twelvet.api.ai.constant.RAGEnums;
+import com.twelvet.api.ai.domain.AiModel;
 import com.twelvet.api.ai.domain.dto.MessageDTO;
 import com.twelvet.api.ai.domain.vo.MessageVO;
+import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.server.ai.fun.MockWeatherService;
 import com.twelvet.server.ai.fun.vo.ActorsFilms;
 import com.twelvet.server.ai.fun.vo.Request;
+import com.twelvet.server.ai.mapper.AiModelMapper;
 import com.twelvet.server.ai.service.AIChatService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,6 +58,9 @@ public class AIChatServiceImpl implements AIChatService {
 	@Autowired
 	private AiMessageChatMemory aiMessageChatMemory;
 
+	@Autowired
+	private AiModelMapper aiModelMapper;
+
 	/**
 	 * 发起聊天
 	 * @param messageDTO MessageDTO
@@ -61,15 +68,23 @@ public class AIChatServiceImpl implements AIChatService {
 	 */
 	@Override
 	public Flux<MessageVO> chatStream(MessageDTO messageDTO) {
+
+		AiModel aiModel = aiModelMapper.selectAiModelByModelId(messageDTO.getModelId());
+		if (Objects.isNull(aiModel)) {
+			throw new TWTException("此知识库不存在");
+		}
+
 		// 指定过滤元数据
 		FilterExpressionBuilder filterExpressionBuilder = new FilterExpressionBuilder();
 		// 从向量数据库中搜索相似文档
-		Filter.Expression filter = filterExpressionBuilder.eq("modelId", 1).build();
+		Filter.Expression filter = filterExpressionBuilder
+			.eq(RAGEnums.VectorMetadataEnums.MODEL_ID.getCode(), aiModel.getModelId())
+			.build();
 		SearchRequest searchRequest = SearchRequest
 			// 搜索向量内容
 			.query(messageDTO.getContent())
 			// 向量匹配最多条数
-			.withTopK(5)
+			.withTopK(aiModel.getTopK())
 			// 匹配相似度准度
 			.withSimilarityThreshold(SearchRequest.SIMILARITY_THRESHOLD_ACCEPT_ALL)
 			// 过滤元数据
