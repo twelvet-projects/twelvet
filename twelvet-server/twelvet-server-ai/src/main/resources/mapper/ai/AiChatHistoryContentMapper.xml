@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twelvet.server.ai.mapper.AiChatHistoryContentMapper">
+    
+    <resultMap type="AiChatHistoryContent" id="AiChatHistoryContentResult">
+        <result property="chatHistoryContentId"    column="chat_history_content_id"    />
+        <result property="chatHistoryId"    column="chat_history_id"    />
+        <result property="content"    column="content"    />
+    </resultMap>
+
+    <sql id="selectAiChatHistoryContentVo">
+        select chat_history_content_id, chat_history_id, content from ai_chat_history_content
+    </sql>
+
+    <select id="selectAiChatHistoryContentList" parameterType="AiChatHistoryContent" resultMap="AiChatHistoryContentResult">
+        <include refid="selectAiChatHistoryContentVo"/>
+        <where>  
+            <if test="chatHistoryId != null "> and chat_history_id = #{chatHistoryId}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+        </where>
+    </select>
+    
+    <select id="selectAiChatHistoryContentByChatHistoryContentId" parameterType="Long" resultMap="AiChatHistoryContentResult">
+        <include refid="selectAiChatHistoryContentVo"/>
+        where chat_history_content_id = #{chatHistoryContentId}
+    </select>
+        
+    <insert id="insertAiChatHistoryContent" parameterType="AiChatHistoryContent" useGeneratedKeys="true" keyProperty="chatHistoryContentId">
+        insert into ai_chat_history_content
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="chatHistoryId != null">chat_history_id,</if>
+            <if test="content != null and content != ''">content,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="chatHistoryId != null">#{chatHistoryId},</if>
+            <if test="content != null and content != ''">#{content},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAiChatHistoryContent" parameterType="AiChatHistoryContent">
+        update ai_chat_history_content
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="chatHistoryId != null">chat_history_id = #{chatHistoryId},</if>
+            <if test="content != null and content != ''">content = #{content},</if>
+        </trim>
+        where chat_history_content_id = #{chatHistoryContentId}
+    </update>
+
+    <delete id="deleteAiChatHistoryContentByChatHistoryContentId" parameterType="Long">
+        delete from ai_chat_history_content where chat_history_content_id = #{chatHistoryContentId}
+    </delete>
+
+    <delete id="deleteAiChatHistoryContentByChatHistoryContentIds" parameterType="String">
+        delete from ai_chat_history_content where chat_history_content_id in 
+        <foreach item="chatHistoryContentId" collection="array" open="(" separator="," close=")">
+            #{chatHistoryContentId}
+        </foreach>
+    </delete>
+</mapper>

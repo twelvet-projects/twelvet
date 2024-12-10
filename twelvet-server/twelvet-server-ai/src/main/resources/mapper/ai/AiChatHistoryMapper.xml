@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twelvet.server.ai.mapper.AiChatHistoryMapper">
+    
+    <resultMap type="AiChatHistory" id="AiChatHistoryResult">
+        <result property="chatHistoryId"    column="chat_history_id"    />
+        <result property="msgId"    column="msg_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="sendUserId"    column="send_user_id"    />
+        <result property="sendUserName"    column="send_user_name"    />
+        <result property="createByType"    column="create_by_type"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectAiChatHistoryVo">
+        select chat_history_id, msg_id, user_id, send_user_id, send_user_name, create_by_type, create_time, del_flag from ai_chat_history
+    </sql>
+
+    <select id="selectAiChatHistoryList" parameterType="AiChatHistory" resultMap="AiChatHistoryResult">
+        <include refid="selectAiChatHistoryVo"/>
+        <where>  
+            <if test="msgId != null  and msgId != ''"> and msg_id = #{msgId}</if>
+            <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
+            <if test="sendUserId != null  and sendUserId != ''"> and send_user_id = #{sendUserId}</if>
+            <if test="sendUserName != null  and sendUserName != ''"> and send_user_name like concat('%', #{sendUserName}, '%')</if>
+            <if test="createByType != null  and createByType != ''"> and create_by_type = #{createByType}</if>
+        </where>
+    </select>
+    
+    <select id="selectAiChatHistoryByChatHistoryId" parameterType="Long" resultMap="AiChatHistoryResult">
+        <include refid="selectAiChatHistoryVo"/>
+        where chat_history_id = #{chatHistoryId}
+    </select>
+        
+    <insert id="insertAiChatHistory" parameterType="AiChatHistory" useGeneratedKeys="true" keyProperty="chatHistoryId">
+        insert into ai_chat_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="msgId != null and msgId != ''">msg_id,</if>
+            <if test="userId != null and userId != ''">user_id,</if>
+            <if test="sendUserId != null and sendUserId != ''">send_user_id,</if>
+            <if test="sendUserName != null and sendUserName != ''">send_user_name,</if>
+            <if test="createByType != null and createByType != ''">create_by_type,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="delFlag != null">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="msgId != null and msgId != ''">#{msgId},</if>
+            <if test="userId != null and userId != ''">#{userId},</if>
+            <if test="sendUserId != null and sendUserId != ''">#{sendUserId},</if>
+            <if test="sendUserName != null and sendUserName != ''">#{sendUserName},</if>
+            <if test="createByType != null and createByType != ''">#{createByType},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAiChatHistory" parameterType="AiChatHistory">
+        update ai_chat_history
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="msgId != null and msgId != ''">msg_id = #{msgId},</if>
+            <if test="userId != null and userId != ''">user_id = #{userId},</if>
+            <if test="sendUserId != null and sendUserId != ''">send_user_id = #{sendUserId},</if>
+            <if test="sendUserName != null and sendUserName != ''">send_user_name = #{sendUserName},</if>
+            <if test="createByType != null and createByType != ''">create_by_type = #{createByType},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where chat_history_id = #{chatHistoryId}
+    </update>
+
+    <delete id="deleteAiChatHistoryByChatHistoryId" parameterType="Long">
+        delete from ai_chat_history where chat_history_id = #{chatHistoryId}
+    </delete>
+
+    <delete id="deleteAiChatHistoryByChatHistoryIds" parameterType="String">
+        delete from ai_chat_history where chat_history_id in 
+        <foreach item="chatHistoryId" collection="array" open="(" separator="," close=")">
+            #{chatHistoryId}
+        </foreach>
+    </delete>
+</mapper>

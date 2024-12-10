@@ -10,6 +10,8 @@ import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.server.ai.fun.MockWeatherService;
 import com.twelvet.server.ai.fun.vo.ActorsFilms;
 import com.twelvet.server.ai.fun.vo.Request;
+import com.twelvet.server.ai.mapper.AiChatHistoryContentMapper;
+import com.twelvet.server.ai.mapper.AiChatHistoryMapper;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.mapper.AiModelMapper;
 import com.twelvet.server.ai.service.AIChatService;
@@ -33,6 +35,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -60,13 +63,20 @@ public class AIChatServiceImpl implements AIChatService {
 
 	private final AiDocSliceMapper aiDocSliceMapper;
 
+	private final AiChatHistoryMapper aiChatHistoryMapper;
+
+	private final AiChatHistoryContentMapper aiChatHistoryContentMapper;
+
 	public AIChatServiceImpl(DashScopeChatModel chatModel, VectorStore vectorStore,
-			AiMessageChatMemory aiMessageChatMemory, AiModelMapper aiModelMapper, AiDocSliceMapper aiDocSliceMapper) {
+			AiMessageChatMemory aiMessageChatMemory, AiModelMapper aiModelMapper, AiDocSliceMapper aiDocSliceMapper,
+			AiChatHistoryMapper aiChatHistoryMapper, AiChatHistoryContentMapper aiChatHistoryContentMapper) {
 		this.chatModel = chatModel;
 		this.vectorStore = vectorStore;
 		this.aiMessageChatMemory = aiMessageChatMemory;
 		this.aiModelMapper = aiModelMapper;
 		this.aiDocSliceMapper = aiDocSliceMapper;
+		this.aiChatHistoryMapper = aiChatHistoryMapper;
+		this.aiChatHistoryContentMapper = aiChatHistoryContentMapper;
 	}
 
 	/**
@@ -81,6 +91,9 @@ public class AIChatServiceImpl implements AIChatService {
 		if (Objects.isNull(aiModel)) {
 			throw new TWTException("此知识库不存在");
 		}
+
+		LocalDateTime userNow = LocalDateTime.now();
+		// TODO 储存用户提问
 
 		// 指定过滤元数据
 		FilterExpressionBuilder filterExpressionBuilder = new FilterExpressionBuilder();
@@ -134,6 +147,10 @@ public class AIChatServiceImpl implements AIChatService {
 		// UserMessage userMessage = new UserMessage(messageDTO.getContent());
 		// TODO 加入历史对话，或实现下方
 		Prompt prompt = new Prompt(List.of(systemMessage));
+
+		// TODO 储存AI回答
+		// 回复时间必须保证在用户提问时间之前（重新获取时间，并且增加1毫秒），保证排序
+		LocalDateTime replyNow = LocalDateTime.now().plusNanos(1_000_000);
 
 		return ChatClient
 			// 自定义使用不同的大模型
