@@ -34,7 +34,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.core.publisher.SignalType;
 
+import java.net.SocketException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -123,7 +126,7 @@ public class AIChatServiceImpl implements AIChatService {
 		else { // 无法匹配返回找不到相关信息
 			MessageVO messageVO = new MessageVO();
 			messageVO.setContent("知识库未匹配相关问题，请重新提问");
-			return Flux.just(messageVO);
+			// return Flux.just(messageVO);
 		}
 
 		// 获取documents里的content
@@ -152,6 +155,9 @@ public class AIChatServiceImpl implements AIChatService {
 		// 回复时间必须保证在用户提问时间之前（重新获取时间，并且增加1毫秒），保证排序
 		LocalDateTime replyNow = LocalDateTime.now().plusNanos(1_000_000);
 
+		// ai回复内容
+		StringBuffer aiContent = new StringBuffer();
+
 		return ChatClient
 			// 自定义使用不同的大模型
 			.create(chatModel)
@@ -174,8 +180,22 @@ public class AIChatServiceImpl implements AIChatService {
 			.chatResponse()
 			.map(chatResponse -> {
 				MessageVO messageVO = new MessageVO();
-				messageVO.setContent(chatResponse.getResult().getOutput().getContent());
+				String content = chatResponse.getResult().getOutput().getContent();
+				messageVO.setContent(content);
+				// 储存AI回复内容
+				aiContent.append(content);
 				return messageVO;
+			})
+			.doFinally(signalType -> {
+				if (signalType == SignalType.CANCEL) { // 取消链接时
+					log.info("AI回复被取消，内容：{}", aiContent);
+				}
+				else if (signalType == SignalType.ON_COMPLETE) { // 完成输出时
+					log.info("AI回复完成，内容：{}", aiContent);
+				}
+				else if (signalType == SignalType.ON_ERROR) { // 发生错误时
+					System.out.println("Stream terminated with an error.");
+				}
 			});
 	}
 

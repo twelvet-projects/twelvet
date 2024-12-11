@@ -1,7 +1,7 @@
 package com.twelvet.api.job.domain;
 
 import com.twelvet.framework.core.application.domain.BaseEntity;
-import com.alibaba.excel.annotation.ExcelProperty;
+import cn.idev.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;

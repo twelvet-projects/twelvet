@@ -1,6 +1,6 @@
 package com.twelvet.api.system.domain;
 
-import com.alibaba.excel.annotation.ExcelProperty;
+import cn.idev.excel.annotation.ExcelProperty;
 import com.twelvet.framework.core.application.domain.BaseEntity;
 import com.twelvet.framework.core.constants.UserConstants;
 import io.swagger.v3.oas.annotations.media.Schema;
