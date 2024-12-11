@@ -1,6 +1,7 @@
-package com.twelvet.api.ai.domain;
+package com.twelvet.api.ai.domain.vo;
 
 import cn.idev.excel.annotation.ExcelProperty;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.twelvet.api.ai.constant.RAGEnums;
 import com.twelvet.framework.core.application.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -9,6 +10,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serial;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * AI聊天记录对象 ai_chat_history
@@ -17,112 +20,122 @@ import java.io.Serial;
  * @WebSite twelvet.cn
  * @date 2024-12-10
  */
-@Schema(description = "AI聊天记录对象")
-public class AiChatHistory extends BaseEntity {
+@Schema(description = "AI聊天记录对象VO")
+public class AiChatHistoryVO implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
 
-	/** ID */
-	@Schema(description = "ID")
-	private Long chatHistoryId;
-
-	/** 消息唯一id */
+	/**
+	 * 消息唯一id
+	 */
 	@Schema(description = "消息唯一id")
 	@ExcelProperty(value = "消息唯一id")
 	private String msgId;
 
-	/** 归属的消息用户ID */
+	/**
+	 * 归属的消息用户ID
+	 */
 	@Schema(description = "归属的消息用户ID")
 	@ExcelProperty(value = "归属的消息用户ID")
 	private String userId;
 
-	/** 消息发送人ID */
+	/**
+	 * 消息发送人ID
+	 */
 	@Schema(description = "消息发送人ID")
 	@ExcelProperty(value = "消息发送人ID")
 	private String sendUserId;
 
-	/** 消息发送人名称 */
+	/**
+	 * 消息发送人名称
+	 */
 	@Schema(description = "消息发送人名称")
 	@ExcelProperty(value = "消息发送人名称")
 	private String sendUserName;
 
-	/** 发送消息用户类型 */
+	/**
+	 * 发送消息用户类型
+	 */
 	@Schema(description = "发送消息用户类型")
 	@ExcelProperty(value = "发送消息用户类型")
 	private RAGEnums.UserTypeEnums createByType;
 
-	/** 1:已删除，0：未删除 */
-	@Schema(description = "1:已删除，0：未删除")
-	private Boolean delFlag;
+	/**
+	 * 消息内容
+	 */
+	@Schema(description = "消息内容")
+	@ExcelProperty(value = "消息内容")
+	private String content;
 
-	public void setChatHistoryId(Long chatHistoryId) {
-		this.chatHistoryId = chatHistoryId;
-	}
+	/**
+	 * 创建时间
+	 */
+	@Schema(description = "创建时间")
+	@ExcelProperty("创建时间")
+	private LocalDateTime createTime;
 
-	public Long getChatHistoryId() {
-		return chatHistoryId;
+	public String getMsgId() {
+		return msgId;
 	}
 
 	public void setMsgId(String msgId) {
 		this.msgId = msgId;
 	}
 
-	public String getMsgId() {
-		return msgId;
+	public String getUserId() {
+		return userId;
 	}
 
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getSendUserId() {
+		return sendUserId;
 	}
 
 	public void setSendUserId(String sendUserId) {
 		this.sendUserId = sendUserId;
 	}
 
-	public String getSendUserId() {
-		return sendUserId;
+	public String getSendUserName() {
+		return sendUserName;
 	}
 
 	public void setSendUserName(String sendUserName) {
 		this.sendUserName = sendUserName;
 	}
 
-	public String getSendUserName() {
-		return sendUserName;
+	public RAGEnums.UserTypeEnums getCreateByType() {
+		return createByType;
 	}
 
 	public void setCreateByType(RAGEnums.UserTypeEnums createByType) {
 		this.createByType = createByType;
 	}
 
-	public RAGEnums.UserTypeEnums getCreateByType() {
-		return createByType;
+	public String getContent() {
+		return content;
 	}
 
-	public void setDelFlag(Boolean delFlag) {
-		this.delFlag = delFlag;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
-	public Boolean getDelFlag() {
-		return delFlag;
+	public LocalDateTime getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(LocalDateTime createTime) {
+		this.createTime = createTime;
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("chatHistoryId", getChatHistoryId())
-			.append("msgId", getMsgId())
-			.append("userId", getUserId())
-			.append("sendUserId", getSendUserId())
-			.append("sendUserName", getSendUserName())
-			.append("createByType", getCreateByType())
-			.append("createTime", getCreateTime())
-			.append("delFlag", getDelFlag())
-			.toString();
+		return "AiChatHistoryDTO{" + ", msgId='" + msgId + '\'' + ", userId='" + userId + '\'' + ", sendUserId='"
+				+ sendUserId + '\'' + ", sendUserName='" + sendUserName + '\'' + ", createByType='" + createByType
+				+ '\'' + ", content='" + content + '\'' + ", createTime=" + createTime + '}';
 	}
 
 }

@@ -19,8 +19,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class AiChatHistoryContentServiceImpl implements IAiChatHistoryContentService {
 
-	@Autowired
-	private AiChatHistoryContentMapper aiChatHistoryContentMapper;
+	private final AiChatHistoryContentMapper aiChatHistoryContentMapper;
+
+	public AiChatHistoryContentServiceImpl(AiChatHistoryContentMapper aiChatHistoryContentMapper) {
+		this.aiChatHistoryContentMapper = aiChatHistoryContentMapper;
+	}
 
 	/**
 	 * 查询AI会话内容详情

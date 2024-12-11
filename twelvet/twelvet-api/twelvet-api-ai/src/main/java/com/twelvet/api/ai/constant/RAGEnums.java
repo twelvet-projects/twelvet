@@ -37,4 +37,32 @@ public class RAGEnums {
 
 	}
 
+	/**
+	 * 聊天用户类型
+	 */
+	public enum UserTypeEnums {
+
+		USER("USER", "用户"), AI("AI", "AI")
+
+		;
+
+		private final String code;
+
+		private final String desc;
+
+		UserTypeEnums(String code, String desc) {
+			this.code = code;
+			this.desc = desc;
+		}
+
+		public String getCode() {
+			return code;
+		}
+
+		public String getDesc() {
+			return desc;
+		}
+
+	}
+
 }
