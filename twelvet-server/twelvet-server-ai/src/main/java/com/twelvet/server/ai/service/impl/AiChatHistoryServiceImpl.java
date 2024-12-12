@@ -1,16 +1,21 @@
 package com.twelvet.server.ai.service.impl;
 
 import java.time.LocalDateTime;
+
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import com.google.common.collect.Maps;
 
 import com.twelvet.api.ai.domain.AiChatHistory;
 import com.twelvet.api.ai.domain.AiChatHistoryContent;
 import com.twelvet.api.ai.domain.dto.AiChatHistoryDTO;
+import com.twelvet.api.ai.domain.vo.AiChatHistoryVO;
 import com.twelvet.server.ai.mapper.AiChatHistoryContentMapper;
 import com.twelvet.server.ai.mapper.AiChatHistoryMapper;
 import com.twelvet.server.ai.service.IAiChatHistoryService;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -35,12 +40,16 @@ public class AiChatHistoryServiceImpl implements IAiChatHistoryService {
 
 	/**
 	 * 查询AI聊天记录列表
-	 * @param aiChatHistory AI聊天记录
-	 * @return AI聊天记录
+	 * @param userId 用户ID
+	 * @param multiRound 记忆上下文数量
+	 * @return AI聊天记录集合
 	 */
 	@Override
-	public List<AiChatHistory> selectAiChatHistoryList(AiChatHistory aiChatHistory) {
-		return aiChatHistoryMapper.selectAiChatHistoryList(aiChatHistory);
+	public List<AiChatHistoryVO> selectAiChatHistoryListByUserId(String userId, Integer multiRound) {
+		if (multiRound <= 0) {
+			return CollUtil.newArrayList();
+		}
+		return aiChatHistoryMapper.selectAiChatHistoryListByUserId(userId, multiRound);
 	}
 
 	/**

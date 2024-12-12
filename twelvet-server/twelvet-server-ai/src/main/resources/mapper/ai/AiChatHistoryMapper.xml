@@ -19,20 +19,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select chat_history_id, msg_id, user_id, send_user_id, send_user_name, create_by_type, create_time, del_flag from ai_chat_history
     </sql>
 
-    <select id="selectAiChatHistoryList" parameterType="AiChatHistory" resultMap="AiChatHistoryResult">
-        <include refid="selectAiChatHistoryVo"/>
-        <where>  
-            <if test="msgId != null  and msgId != ''"> and msg_id = #{msgId}</if>
-            <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
-            <if test="sendUserId != null  and sendUserId != ''"> and send_user_id = #{sendUserId}</if>
-            <if test="sendUserName != null  and sendUserName != ''"> and send_user_name like concat('%', #{sendUserName}, '%')</if>
-            <if test="createByType != null  and createByType != ''"> and create_by_type = #{createByType}</if>
-        </where>
-    </select>
-    
-    <select id="selectAiChatHistoryByChatHistoryId" parameterType="Long" resultMap="AiChatHistoryResult">
-        <include refid="selectAiChatHistoryVo"/>
-        where chat_history_id = #{chatHistoryId}
+    <select id="selectAiChatHistoryListByUserId" parameterType="AiChatHistory" resultType="AiChatHistoryVO">
+        SELECT ch.create_by_type,
+               chc.content
+        FROM ai_chat_history AS ch
+                 LEFT JOIN ai_chat_history_content AS chc ON chc.chat_history_id = ch.chat_history_id
+        WHERE ch.user_id = #{userId}
+        ORDER BY create_time asc LIMIT #{multiRound}
     </select>
         
     <insert id="insertAiChatHistory" parameterType="AiChatHistory" useGeneratedKeys="true" keyProperty="chatHistoryId">
@@ -42,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="userId != null and userId != ''">user_id,</if>
             <if test="sendUserId != null and sendUserId != ''">send_user_id,</if>
             <if test="sendUserName != null and sendUserName != ''">send_user_name,</if>
-            <if test="createByType != null and createByType != ''">create_by_type,</if>
+            <if test="createByType != null">create_by_type,</if>
             <if test="createTime != null">create_time,</if>
             <if test="delFlag != null">del_flag,</if>
          </trim>
@@ -51,34 +44,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="userId != null and userId != ''">#{userId},</if>
             <if test="sendUserId != null and sendUserId != ''">#{sendUserId},</if>
             <if test="sendUserName != null and sendUserName != ''">#{sendUserName},</if>
-            <if test="createByType != null and createByType != ''">#{createByType},</if>
+            <if test="createByType != null">#{createByType},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="delFlag != null">#{delFlag},</if>
          </trim>
     </insert>
-
-    <update id="updateAiChatHistory" parameterType="AiChatHistory">
-        update ai_chat_history
-        <trim prefix="SET" suffixOverrides=",">
-            <if test="msgId != null and msgId != ''">msg_id = #{msgId},</if>
-            <if test="userId != null and userId != ''">user_id = #{userId},</if>
-            <if test="sendUserId != null and sendUserId != ''">send_user_id = #{sendUserId},</if>
-            <if test="sendUserName != null and sendUserName != ''">send_user_name = #{sendUserName},</if>
-            <if test="createByType != null and createByType != ''">create_by_type = #{createByType},</if>
-            <if test="createTime != null">create_time = #{createTime},</if>
-            <if test="delFlag != null">del_flag = #{delFlag},</if>
-        </trim>
-        where chat_history_id = #{chatHistoryId}
-    </update>
-
-    <delete id="deleteAiChatHistoryByChatHistoryId" parameterType="Long">
-        delete from ai_chat_history where chat_history_id = #{chatHistoryId}
-    </delete>
-
-    <delete id="deleteAiChatHistoryByChatHistoryIds" parameterType="String">
-        delete from ai_chat_history where chat_history_id in 
-        <foreach item="chatHistoryId" collection="array" open="(" separator="," close=")">
-            #{chatHistoryId}
-        </foreach>
-    </delete>
 </mapper>

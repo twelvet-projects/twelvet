@@ -29,10 +29,4 @@ public interface AIChatService {
 	 */
 	Flux<MessageVO> formatTest(MessageDTO messageDTO);
 
-	/**
-	 * 工具调用
-	 * @param messageDTO
-	 */
-	Flux<MessageVO> funTest(MessageDTO messageDTO);
-
 }

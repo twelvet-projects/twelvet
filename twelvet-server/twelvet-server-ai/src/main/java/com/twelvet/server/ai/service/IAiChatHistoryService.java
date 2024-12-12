@@ -2,6 +2,7 @@ package com.twelvet.server.ai.service;
 
 import com.twelvet.api.ai.domain.AiChatHistory;
 import com.twelvet.api.ai.domain.dto.AiChatHistoryDTO;
+import com.twelvet.api.ai.domain.vo.AiChatHistoryVO;
 
 import java.util.List;
 
@@ -16,10 +17,11 @@ public interface IAiChatHistoryService {
 
 	/**
 	 * 查询AI聊天记录列表
-	 * @param aiChatHistory AI聊天记录
+	 * @param userId 用户ID
+	 * @param multiRound 记忆上下文数量
 	 * @return AI聊天记录集合
 	 */
-	public List<AiChatHistory> selectAiChatHistoryList(AiChatHistory aiChatHistory);
+	public List<AiChatHistoryVO> selectAiChatHistoryListByUserId(String userId, Integer multiRound);
 
 	/**
 	 * 新增AI聊天记录

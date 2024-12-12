@@ -27,34 +27,6 @@ public class AiChatHistoryVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 消息唯一id
-	 */
-	@Schema(description = "消息唯一id")
-	@ExcelProperty(value = "消息唯一id")
-	private String msgId;
-
-	/**
-	 * 归属的消息用户ID
-	 */
-	@Schema(description = "归属的消息用户ID")
-	@ExcelProperty(value = "归属的消息用户ID")
-	private String userId;
-
-	/**
-	 * 消息发送人ID
-	 */
-	@Schema(description = "消息发送人ID")
-	@ExcelProperty(value = "消息发送人ID")
-	private String sendUserId;
-
-	/**
-	 * 消息发送人名称
-	 */
-	@Schema(description = "消息发送人名称")
-	@ExcelProperty(value = "消息发送人名称")
-	private String sendUserName;
-
-	/**
 	 * 发送消息用户类型
 	 */
 	@Schema(description = "发送消息用户类型")
@@ -67,45 +39,6 @@ public class AiChatHistoryVO implements Serializable {
 	@Schema(description = "消息内容")
 	@ExcelProperty(value = "消息内容")
 	private String content;
-
-	/**
-	 * 创建时间
-	 */
-	@Schema(description = "创建时间")
-	@ExcelProperty("创建时间")
-	private LocalDateTime createTime;
-
-	public String getMsgId() {
-		return msgId;
-	}
-
-	public void setMsgId(String msgId) {
-		this.msgId = msgId;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getSendUserId() {
-		return sendUserId;
-	}
-
-	public void setSendUserId(String sendUserId) {
-		this.sendUserId = sendUserId;
-	}
-
-	public String getSendUserName() {
-		return sendUserName;
-	}
-
-	public void setSendUserName(String sendUserName) {
-		this.sendUserName = sendUserName;
-	}
 
 	public RAGEnums.UserTypeEnums getCreateByType() {
 		return createByType;
@@ -123,19 +56,9 @@ public class AiChatHistoryVO implements Serializable {
 		this.content = content;
 	}
 
-	public LocalDateTime getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(LocalDateTime createTime) {
-		this.createTime = createTime;
-	}
-
 	@Override
 	public String toString() {
-		return "AiChatHistoryDTO{" + ", msgId='" + msgId + '\'' + ", userId='" + userId + '\'' + ", sendUserId='"
-				+ sendUserId + '\'' + ", sendUserName='" + sendUserName + '\'' + ", createByType='" + createByType
-				+ '\'' + ", content='" + content + '\'' + ", createTime=" + createTime + '}';
+		return "AiChatHistoryVO{" + "createByType=" + createByType + ", content='" + content + '\'' + '}';
 	}
 
 }
