@@ -1,8 +1,8 @@
 package com.twelvet.server.ai.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
-import com.twelvet.framework.datasource.support.DataSourceConstants;
 import com.twelvet.api.ai.domain.AiDocSlice;
+import com.twelvet.server.ai.constant.AIDataSourceConstants;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * @WebSite twelvet.cn
  * @date 2024-11-16
  */
-@DS(DataSourceConstants.DS_MASTER)
+@DS(AIDataSourceConstants.DS_MASTER)
 public interface AiDocSliceMapper {
 
 	/**

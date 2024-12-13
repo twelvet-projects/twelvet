@@ -2,6 +2,7 @@ package com.twelvet.server.ai.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.twelvet.api.ai.constant.RAGEnums;
 import com.twelvet.api.ai.domain.AiModel;
 import com.twelvet.api.ai.domain.dto.AiChatHistoryDTO;
@@ -11,6 +12,9 @@ import com.twelvet.api.ai.domain.vo.MessageVO;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.utils.SecurityUtils;
+import com.twelvet.framework.utils.TUtils;
+import com.twelvet.server.ai.constant.AIDataSourceConstants;
+import com.twelvet.server.ai.constant.RAGConstants;
 import com.twelvet.server.ai.fun.MockWeatherService;
 import com.twelvet.server.ai.fun.vo.ActorsFilms;
 import com.twelvet.server.ai.fun.vo.Request;
@@ -21,8 +25,6 @@ import com.twelvet.server.ai.service.IAiChatHistoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
-import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.UserMessage;
@@ -42,6 +44,7 @@ import reactor.core.publisher.SignalType;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 /**
@@ -56,11 +59,9 @@ public class AIChatServiceImpl implements AIChatService {
 
 	private final static Logger log = LoggerFactory.getLogger(AIChatServiceImpl.class);
 
-	private final DashScopeChatModel chatModel;
+	private final DashScopeChatModel dashScopeChatModel;
 
 	private final VectorStore vectorStore;
-
-	private final AiMessageChatMemory aiMessageChatMemory;
 
 	private final AiModelMapper aiModelMapper;
 
@@ -68,12 +69,11 @@ public class AIChatServiceImpl implements AIChatService {
 
 	private final IAiChatHistoryService aiChatHistoryService;
 
-	public AIChatServiceImpl(DashScopeChatModel chatModel, VectorStore vectorStore,
-			AiMessageChatMemory aiMessageChatMemory, AiModelMapper aiModelMapper, AiDocSliceMapper aiDocSliceMapper,
+	public AIChatServiceImpl(DashScopeChatModel dashScopeChatModel, VectorStore vectorStore,
+			AiModelMapper aiModelMapper, AiDocSliceMapper aiDocSliceMapper,
 			IAiChatHistoryService aiChatHistoryService) {
-		this.chatModel = chatModel;
+		this.dashScopeChatModel = dashScopeChatModel;
 		this.vectorStore = vectorStore;
-		this.aiMessageChatMemory = aiMessageChatMemory;
 		this.aiModelMapper = aiModelMapper;
 		this.aiDocSliceMapper = aiDocSliceMapper;
 		this.aiChatHistoryService = aiChatHistoryService;
@@ -87,66 +87,82 @@ public class AIChatServiceImpl implements AIChatService {
 	@Override
 	public Flux<MessageVO> chatStream(MessageDTO messageDTO) {
 		LoginUser loginUser = SecurityUtils.getLoginUser();
+		String userId = String.valueOf(loginUser.getUserId());
 
 		AiModel aiModel = aiModelMapper.selectAiModelByModelId(messageDTO.getModelId());
 		if (Objects.isNull(aiModel)) {
 			throw new TWTException("此知识库不存在");
 		}
 
-		LocalDateTime userNow = LocalDateTime.now();
-		String userId = String.valueOf(loginUser.getUserId());
 		// 储存用户提问
-		AiChatHistoryDTO userAIChatHistoryDTO = new AiChatHistoryDTO();
-		// TODO 生成唯一消息ID
-		String userMsgId = UUID.randomUUID().toString();
-		userAIChatHistoryDTO.setMsgId(userMsgId);
-		userAIChatHistoryDTO.setUserId(userId);
-		userAIChatHistoryDTO.setSendUserId(userId);
-		userAIChatHistoryDTO.setSendUserName(loginUser.getUsername());
-		// 设置消息归属人
-		userAIChatHistoryDTO.setCreateByType(RAGEnums.UserTypeEnums.USER);
-		userAIChatHistoryDTO.setContent(messageDTO.getContent());
-		userAIChatHistoryDTO.setCreateTime(userNow);
-		aiChatHistoryService.insertAiChatHistory(userAIChatHistoryDTO);
+		CompletableFuture<Void> saveUserChatCompletableFuture = CompletableFuture.runAsync(() -> {
+			LocalDateTime userNow = LocalDateTime.now();
+			// 储存用户提问
+			AiChatHistoryDTO userAIChatHistoryDTO = new AiChatHistoryDTO();
+			// TODO 生成唯一消息ID
+			String userMsgId = UUID.randomUUID().toString();
+			userAIChatHistoryDTO.setMsgId(userMsgId);
+			userAIChatHistoryDTO.setUserId(userId);
+			userAIChatHistoryDTO.setSendUserId(userId);
+			userAIChatHistoryDTO.setSendUserName(loginUser.getUsername());
+			// 设置消息归属人
+			userAIChatHistoryDTO.setCreateByType(RAGEnums.UserTypeEnums.USER);
+			userAIChatHistoryDTO.setContent(messageDTO.getContent());
+			userAIChatHistoryDTO.setCreateTime(userNow);
 
-		// 用户发起提问
-		// UserMessage userMessage = new UserMessage(messageDTO.getContent());
-		// TODO 加入历史对话，或实现下方
-		// 使用历史消息
-		List<Message> messages = new ArrayList<>();
-		List<AiChatHistoryVO> aiChatHistoryList = aiChatHistoryService.selectAiChatHistoryListByUserId(userId,
-				aiModel.getMultiRound());
-		for (AiChatHistoryVO aiChatHistoryVO : aiChatHistoryList) {
-			RAGEnums.UserTypeEnums createByType = aiChatHistoryVO.getCreateByType();
-			String content = aiChatHistoryVO.getContent();
-			if (RAGEnums.UserTypeEnums.USER.equals(createByType)) {
-				messages.add(new UserMessage(content));
-			}
-			else if (RAGEnums.UserTypeEnums.AI.equals(createByType)) {
-				messages.add(new AssistantMessage(content));
-			}
-			else {
-				throw new TWTException("无法匹配对应的会话用户类型");
-			}
-		}
+			// CompletableFuture，手动切换数据源
+			DynamicDataSourceContextHolder.push(AIDataSourceConstants.DS_MASTER);
+			aiChatHistoryService.insertAiChatHistory(userAIChatHistoryDTO);
+		}, TUtils.threadPoolExecutor);
 
-		// 指定过滤元数据
-		FilterExpressionBuilder filterExpressionBuilder = new FilterExpressionBuilder();
-		// 从向量数据库中搜索相似文档
-		Filter.Expression filter = filterExpressionBuilder
-			.eq(RAGEnums.VectorMetadataEnums.MODEL_ID.getCode(), aiModel.getModelId())
-			.build();
-		SearchRequest searchRequest = SearchRequest
-			// 搜索向量内容
-			.query(messageDTO.getContent())
-			// 向量匹配最多条数
-			.withTopK(aiModel.getTopK())
-			// 匹配相似度准度
-			.withSimilarityThreshold(SearchRequest.SIMILARITY_THRESHOLD_ACCEPT_ALL)
-			// 过滤元数据
-			.withFilterExpression(filter);
+		// 历史消息搜索
+		CompletableFuture<List<Message>> messagesCompletableFuture = CompletableFuture.supplyAsync(() -> {
+			// 加入历史对话
+			List<Message> messages = new ArrayList<>();
+			List<AiChatHistoryVO> aiChatHistoryList = aiChatHistoryService.selectAiChatHistoryListByUserId(userId,
+					aiModel.getMultiRound());
+			for (AiChatHistoryVO aiChatHistoryVO : aiChatHistoryList) {
+				RAGEnums.UserTypeEnums createByType = aiChatHistoryVO.getCreateByType();
+				String content = aiChatHistoryVO.getContent();
+				if (RAGEnums.UserTypeEnums.USER.equals(createByType)) {
+					messages.add(new UserMessage(content));
+				}
+				else if (RAGEnums.UserTypeEnums.AI.equals(createByType)) {
+					messages.add(new AssistantMessage(content));
+				}
+				else {
+					throw new TWTException("无法匹配对应的会话用户类型");
+				}
+			}
+			return messages;
+		}, TUtils.threadPoolExecutor);
 
-		List<Document> docs = vectorStore.similaritySearch(searchRequest);
+		// 向量库搜索
+		CompletableFuture<List<Document>> vectorCompletableFuture = CompletableFuture.supplyAsync(() -> {
+			// 指定过滤元数据
+			FilterExpressionBuilder filterExpressionBuilder = new FilterExpressionBuilder();
+			// 从向量数据库中搜索相似文档
+			Filter.Expression filter = filterExpressionBuilder
+				.eq(RAGEnums.VectorMetadataEnums.MODEL_ID.getCode(), aiModel.getModelId())
+				.build();
+			SearchRequest searchRequest = SearchRequest
+				// 搜索向量内容
+				.query(messageDTO.getContent())
+				// 向量匹配最多条数
+				.withTopK(aiModel.getTopK())
+				// 匹配相似度准度
+				.withSimilarityThreshold(SearchRequest.SIMILARITY_THRESHOLD_ACCEPT_ALL)
+				// 过滤元数据
+				.withFilterExpression(filter);
+
+			return vectorStore.similaritySearch(searchRequest);
+		}, TUtils.threadPoolExecutor);
+
+		CompletableFuture.allOf(saveUserChatCompletableFuture, vectorCompletableFuture, messagesCompletableFuture)
+			.join();
+
+		List<Document> docs = vectorCompletableFuture.join();
+		List<Message> messages = messagesCompletableFuture.join();
 
 		if (CollectionUtil.isNotEmpty(docs)) {
 			// 获取切片ID
@@ -167,15 +183,7 @@ public class AIChatServiceImpl implements AIChatService {
 				.map(Content::getContent)
 				.collect(Collectors.joining(System.lineSeparator()));
 			// 创建系统提示词
-			SystemPromptTemplate promptTemplate = new SystemPromptTemplate("""
-					Context information is below.
-					---------------------
-					{question_answer_context}
-					---------------------
-					Given the context and provided history information and not prior knowledge,
-					reply to the user comment. If the answer is not in the context, inform
-					the user that you can't answer the question.
-					""");
+			SystemPromptTemplate promptTemplate = new SystemPromptTemplate(RAGConstants.RAG_SYSTEM_PROMPT);
 			// 填充数据
 			Message systemMessage = promptTemplate.createMessage(Map.of("question_answer_context", documentContext));
 			messages.add(systemMessage);
@@ -195,19 +203,20 @@ public class AIChatServiceImpl implements AIChatService {
 		Prompt prompt = new Prompt(messages);
 		return ChatClient
 			// 自定义使用不同的大模型
-			.create(chatModel)
+			.create(dashScopeChatModel)
 			.prompt(prompt)
+			// 功能选择
+			/*
+			 * .options(
+			 *
+			 * DashScopeChatOptions.builder() // 开启联网搜索 .withEnableSearch(true) .build() )
+			 */
 			.user(promptUserSpec -> {
 				// 用户提问文本
 				promptUserSpec.text(messageDTO.getContent());
 
 				// 用户提问图片/语音
 				// promptUserSpec.media();
-			})
-			.advisors(advisorSpec -> {
-
-				// 使用向量数据库
-				// useVectorStore(advisorSpec, searchRequest);
 			})
 			// 注册function
 			.function("mockWeatherService", "根据城市查询天气", Request.class, new MockWeatherService())
@@ -223,7 +232,7 @@ public class AIChatServiceImpl implements AIChatService {
 			})
 			.doFinally(signalType -> {
 				if (Arrays.asList(SignalType.CANCEL, SignalType.ON_COMPLETE).contains(signalType)) { // 取消链接时或完成输出时
-																										// 储存AI提问
+					// 储存AI提问
 					AiChatHistoryDTO aiChatHistoryDTO = new AiChatHistoryDTO();
 					// TODO 生成唯一消息ID
 					String aiMsgId = UUID.randomUUID().toString();
@@ -235,6 +244,8 @@ public class AIChatServiceImpl implements AIChatService {
 					aiChatHistoryDTO.setCreateByType(RAGEnums.UserTypeEnums.AI);
 					aiChatHistoryDTO.setContent(aiContent.toString());
 					aiChatHistoryDTO.setCreateTime(replyNow);
+					// CompletableFuture，手动切换数据源
+					DynamicDataSourceContextHolder.push(AIDataSourceConstants.DS_MASTER);
 					aiChatHistoryService.insertAiChatHistory(aiChatHistoryDTO);
 				}
 			});
@@ -253,7 +264,7 @@ public class AIChatServiceImpl implements AIChatService {
 
 		return ChatClient
 			// 自定义使用不同的大模型
-			.create(chatModel)
+			.create(dashScopeChatModel)
 			.prompt()
 			.user(u -> u.text("""
 					  Generate the filmography for a random {actor}.
@@ -266,36 +277,6 @@ public class AIChatServiceImpl implements AIChatService {
 				messageVO.setContent(chatResponse.getResult().getOutput().getContent());
 				return messageVO;
 			});
-	}
-
-	/**
-	 * 用户历史对话
-	 * @param advisorSpec ChatClient.AdvisorSpec
-	 * @param sessionId String
-	 */
-	public void useChatHistory(ChatClient.AdvisorSpec advisorSpec, Integer sessionId) {
-		// 1. 如果需要存储会话和消息到数据库，自己可以实现ChatMemory接口，这里使用自己实现的AiMessageChatMemory，数据库存储。
-		// 2. 传入会话id，MessageChatMemoryAdvisor会根据会话id去查找消息。
-		// 3. 只需要携带最近10条消息
-		// MessageChatMemoryAdvisor会在消息发送给大模型之前，从ChatMemory中获取会话的历史消息，然后一起发送给大模型。
-		advisorSpec.advisors(new MessageChatMemoryAdvisor(aiMessageChatMemory, "", sessionId));
-	}
-
-	/**
-	 * 创建向量搜索提示词
-	 * @param advisorSpec AdvisorSpec
-	 * @param searchRequest SearchRequest
-	 */
-	public void useVectorStore(ChatClient.AdvisorSpec advisorSpec, SearchRequest searchRequest) {
-		// question_answer_context是一个占位符，会替换成向量数据库中查询到的文档。QuestionAnswerAdvisor会替换。
-		String promptWithContext = """
-				下面是上下文信息
-				---------------------
-				{question_answer_context}
-				---------------------
-				给定的上下文和提供的历史信息，而不是事先的知识，回复用户的意见。如果答案不在上下文中，告诉用户你不能回答这个问题。
-				""";
-		advisorSpec.advisors(new QuestionAnswerAdvisor(vectorStore, searchRequest, promptWithContext));
 	}
 
 }

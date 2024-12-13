@@ -14,6 +14,7 @@ import com.twelvet.server.ai.mapper.AiChatHistoryContentMapper;
 import com.twelvet.server.ai.mapper.AiChatHistoryMapper;
 import com.twelvet.server.ai.service.IAiChatHistoryService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.List;
@@ -57,6 +58,7 @@ public class AiChatHistoryServiceImpl implements IAiChatHistoryService {
 	 * @param aiChatHistoryDTO AI聊天记录
 	 * @return 结果
 	 */
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public Long insertAiChatHistory(AiChatHistoryDTO aiChatHistoryDTO) {
 		// 插入聊天信息
