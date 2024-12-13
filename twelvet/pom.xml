@@ -63,6 +63,7 @@
         <jasypt.version>3.0.5</jasypt.version>
         <jaxb.version>2.3.5</jaxb.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
+        <yitter-idgenerator.version>1.0.6</yitter-idgenerator.version>
 
         <xss-spring-boot-starter.version>3.1.5.1</xss-spring-boot-starter.version>
         <excel-spring-boot-starter.version>3.4.0</excel-spring-boot-starter.version>
@@ -243,6 +244,13 @@
                 <groupId>com.github.houbb</groupId>
                 <artifactId>sensitive-word</artifactId>
                 <version>${sensitive-word.version}</version>
+            </dependency>
+
+            <!--分布式雪花算法ID生成器-->
+            <dependency>
+                <groupId>com.github.yitter</groupId>
+                <artifactId>yitter-idgenerator</artifactId>
+                <version>${yitter-idgenerator.version}</version>
             </dependency>
 
             <!--多数据源-->

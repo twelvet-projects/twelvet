@@ -30,32 +30,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertAiChatHistoryContent" parameterType="AiChatHistoryContent" useGeneratedKeys="true" keyProperty="chatHistoryContentId">
         insert into ai_chat_history_content
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            chat_history_content_id,
             <if test="chatHistoryId != null">chat_history_id,</if>
             <if test="content != null and content != ''">content,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{chatHistoryContentId},
             <if test="chatHistoryId != null">#{chatHistoryId},</if>
             <if test="content != null and content != ''">#{content},</if>
          </trim>
     </insert>
-
-    <update id="updateAiChatHistoryContent" parameterType="AiChatHistoryContent">
-        update ai_chat_history_content
-        <trim prefix="SET" suffixOverrides=",">
-            <if test="chatHistoryId != null">chat_history_id = #{chatHistoryId},</if>
-            <if test="content != null and content != ''">content = #{content},</if>
-        </trim>
-        where chat_history_content_id = #{chatHistoryContentId}
-    </update>
-
-    <delete id="deleteAiChatHistoryContentByChatHistoryContentId" parameterType="Long">
-        delete from ai_chat_history_content where chat_history_content_id = #{chatHistoryContentId}
-    </delete>
-
-    <delete id="deleteAiChatHistoryContentByChatHistoryContentIds" parameterType="String">
-        delete from ai_chat_history_content where chat_history_content_id in 
-        <foreach item="chatHistoryContentId" collection="array" open="(" separator="," close=")">
-            #{chatHistoryContentId}
-        </foreach>
-    </delete>
 </mapper>

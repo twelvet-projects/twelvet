@@ -67,6 +67,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--分布式雪花算法ID生成器-->
+        <dependency>
+            <groupId>com.github.yitter</groupId>
+            <artifactId>yitter-idgenerator</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

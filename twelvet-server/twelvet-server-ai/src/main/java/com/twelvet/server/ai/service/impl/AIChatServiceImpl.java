@@ -2,7 +2,9 @@ package com.twelvet.server.ai.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
+import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatOptions;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import com.github.yitter.idgen.YitIdHelper;
 import com.twelvet.api.ai.constant.RAGEnums;
 import com.twelvet.api.ai.domain.AiModel;
 import com.twelvet.api.ai.domain.dto.AiChatHistoryDTO;
@@ -99,8 +101,8 @@ public class AIChatServiceImpl implements AIChatService {
 			LocalDateTime userNow = LocalDateTime.now();
 			// 储存用户提问
 			AiChatHistoryDTO userAIChatHistoryDTO = new AiChatHistoryDTO();
-			// TODO 生成唯一消息ID
-			String userMsgId = UUID.randomUUID().toString();
+			// 生成唯一消息雪花ID
+			String userMsgId = String.valueOf(YitIdHelper.nextId());
 			userAIChatHistoryDTO.setMsgId(userMsgId);
 			userAIChatHistoryDTO.setUserId(userId);
 			userAIChatHistoryDTO.setSendUserId(userId);
@@ -206,11 +208,11 @@ public class AIChatServiceImpl implements AIChatService {
 			.create(dashScopeChatModel)
 			.prompt(prompt)
 			// 功能选择
-			/*
-			 * .options(
-			 *
-			 * DashScopeChatOptions.builder() // 开启联网搜索 .withEnableSearch(true) .build() )
-			 */
+			// .options(
+			// DashScopeChatOptions.builder()
+			// // 开启联网搜索
+			// .withEnableSearch(true).build()
+			// )
 			.user(promptUserSpec -> {
 				// 用户提问文本
 				promptUserSpec.text(messageDTO.getContent());
@@ -234,8 +236,8 @@ public class AIChatServiceImpl implements AIChatService {
 				if (Arrays.asList(SignalType.CANCEL, SignalType.ON_COMPLETE).contains(signalType)) { // 取消链接时或完成输出时
 					// 储存AI提问
 					AiChatHistoryDTO aiChatHistoryDTO = new AiChatHistoryDTO();
-					// TODO 生成唯一消息ID
-					String aiMsgId = UUID.randomUUID().toString();
+					// 生成唯一消息雪花ID
+					String aiMsgId = String.valueOf(YitIdHelper.nextId());
 					aiChatHistoryDTO.setMsgId(aiMsgId);
 					aiChatHistoryDTO.setUserId(userId);
 					aiChatHistoryDTO.setSendUserId(userId);

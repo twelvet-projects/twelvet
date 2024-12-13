@@ -31,6 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertAiChatHistory" parameterType="AiChatHistory" useGeneratedKeys="true" keyProperty="chatHistoryId">
         insert into ai_chat_history
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            chat_history_id,
             <if test="msgId != null and msgId != ''">msg_id,</if>
             <if test="userId != null and userId != ''">user_id,</if>
             <if test="sendUserId != null and sendUserId != ''">send_user_id,</if>
@@ -40,6 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="delFlag != null">del_flag,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{chatHistoryId},
             <if test="msgId != null and msgId != ''">#{msgId},</if>
             <if test="userId != null and userId != ''">#{userId},</if>
             <if test="sendUserId != null and sendUserId != ''">#{sendUserId},</if>

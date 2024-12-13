@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
+import com.github.yitter.idgen.YitIdHelper;
 import com.google.common.collect.Maps;
 
 import com.twelvet.api.ai.domain.AiChatHistory;
@@ -63,6 +64,7 @@ public class AiChatHistoryServiceImpl implements IAiChatHistoryService {
 	public Long insertAiChatHistory(AiChatHistoryDTO aiChatHistoryDTO) {
 		// 插入聊天信息
 		AiChatHistory aiChatHistory = new AiChatHistory();
+		aiChatHistory.setChatHistoryId(YitIdHelper.nextId());
 		aiChatHistory.setMsgId(aiChatHistoryDTO.getMsgId());
 		aiChatHistory.setUserId(aiChatHistoryDTO.getUserId());
 		aiChatHistory.setSendUserId(aiChatHistoryDTO.getSendUserId());
@@ -74,6 +76,7 @@ public class AiChatHistoryServiceImpl implements IAiChatHistoryService {
 
 		// 插入聊天内容
 		AiChatHistoryContent aiChatHistoryContent = new AiChatHistoryContent();
+		aiChatHistoryContent.setChatHistoryContentId(YitIdHelper.nextId());
 		aiChatHistoryContent.setChatHistoryId(aiChatHistory.getChatHistoryId());
 		aiChatHistoryContent.setContent(aiChatHistoryDTO.getContent());
 		aiChatHistoryContentMapper.insertAiChatHistoryContent(aiChatHistoryContent);
