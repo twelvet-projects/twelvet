@@ -121,19 +121,21 @@ public class AIChatServiceImpl implements AIChatService {
 		CompletableFuture<List<Message>> messagesCompletableFuture = CompletableFuture.supplyAsync(() -> {
 			// 加入历史对话
 			List<Message> messages = new ArrayList<>();
-			List<AiChatHistoryVO> aiChatHistoryList = aiChatHistoryService.selectAiChatHistoryListByUserId(userId,
-					aiModel.getMultiRound());
-			for (AiChatHistoryVO aiChatHistoryVO : aiChatHistoryList) {
-				RAGEnums.UserTypeEnums createByType = aiChatHistoryVO.getCreateByType();
-				String content = aiChatHistoryVO.getContent();
-				if (RAGEnums.UserTypeEnums.USER.equals(createByType)) {
-					messages.add(new UserMessage(content));
-				}
-				else if (RAGEnums.UserTypeEnums.AI.equals(createByType)) {
-					messages.add(new AssistantMessage(content));
-				}
-				else {
-					throw new TWTException("无法匹配对应的会话用户类型");
+			if (Boolean.TRUE.equals(messageDTO.getCarryContextFlag())) {
+				List<AiChatHistoryVO> aiChatHistoryList = aiChatHistoryService.selectAiChatHistoryListByUserId(userId,
+						aiModel.getMultiRound());
+				for (AiChatHistoryVO aiChatHistoryVO : aiChatHistoryList) {
+					RAGEnums.UserTypeEnums createByType = aiChatHistoryVO.getCreateByType();
+					String content = aiChatHistoryVO.getContent();
+					if (RAGEnums.UserTypeEnums.USER.equals(createByType)) {
+						messages.add(new UserMessage(content));
+					}
+					else if (RAGEnums.UserTypeEnums.AI.equals(createByType)) {
+						messages.add(new AssistantMessage(content));
+					}
+					else {
+						throw new TWTException("无法匹配对应的会话用户类型");
+					}
 				}
 			}
 			return messages;
@@ -199,6 +201,8 @@ public class AIChatServiceImpl implements AIChatService {
 		// 储存AI回答
 		// 回复时间必须保证在用户提问时间之前（重新获取时间，并且增加1毫秒），保证排序
 		LocalDateTime replyNow = LocalDateTime.now().plusNanos(1_000_000);
+		// 生成唯一消息雪花ID
+		String aiMsgId = String.valueOf(YitIdHelper.nextId());
 		// ai回复内容
 		StringBuffer aiContent = new StringBuffer();
 
@@ -227,6 +231,7 @@ public class AIChatServiceImpl implements AIChatService {
 			.map(chatResponse -> {
 				MessageVO messageVO = new MessageVO();
 				String content = chatResponse.getResult().getOutput().getContent();
+				messageVO.setMsgId(aiMsgId);
 				messageVO.setContent(content);
 				// 储存AI回复内容
 				aiContent.append(content);
@@ -236,8 +241,6 @@ public class AIChatServiceImpl implements AIChatService {
 				if (Arrays.asList(SignalType.CANCEL, SignalType.ON_COMPLETE).contains(signalType)) { // 取消链接时或完成输出时
 					// 储存AI提问
 					AiChatHistoryDTO aiChatHistoryDTO = new AiChatHistoryDTO();
-					// 生成唯一消息雪花ID
-					String aiMsgId = String.valueOf(YitIdHelper.nextId());
 					aiChatHistoryDTO.setMsgId(aiMsgId);
 					aiChatHistoryDTO.setUserId(userId);
 					aiChatHistoryDTO.setSendUserId(userId);
@@ -250,34 +253,6 @@ public class AIChatServiceImpl implements AIChatService {
 					DynamicDataSourceContextHolder.push(AIDataSourceConstants.DS_MASTER);
 					aiChatHistoryService.insertAiChatHistory(aiChatHistoryDTO);
 				}
-			});
-	}
-
-	/**
-	 * 格式化输出
-	 * @param messageDTO
-	 * @return
-	 */
-	@Override
-	public Flux<MessageVO> formatTest(MessageDTO messageDTO) {
-		BeanOutputConverter<List<ActorsFilms>> converter = new BeanOutputConverter<>(
-				new ParameterizedTypeReference<List<ActorsFilms>>() {
-				});
-
-		return ChatClient
-			// 自定义使用不同的大模型
-			.create(dashScopeChatModel)
-			.prompt()
-			.user(u -> u.text("""
-					  Generate the filmography for a random {actor}.
-					  {format}
-					""").param("actor", messageDTO.getContent()).param("format", converter.getFormat()))
-			.stream()
-			.chatResponse()
-			.map(chatResponse -> {
-				MessageVO messageVO = new MessageVO();
-				messageVO.setContent(chatResponse.getResult().getOutput().getContent());
-				return messageVO;
 			});
 	}
 

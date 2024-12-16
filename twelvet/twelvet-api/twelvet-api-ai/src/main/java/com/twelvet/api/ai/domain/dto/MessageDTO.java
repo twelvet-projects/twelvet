@@ -29,6 +29,9 @@ public class MessageDTO implements Serializable {
 	@Schema(description = "提问内容")
 	private String content;
 
+	@Schema(description = "是否携带上下文记忆")
+	private Boolean carryContextFlag;
+
 	public @NotNull(message = "知识库ID不能为空") Long getModelId() {
 		return modelId;
 	}
@@ -45,9 +48,20 @@ public class MessageDTO implements Serializable {
 		this.content = content;
 	}
 
-	@Override
-	public String toString() {
-		return "MessageDTO{" + "modelId=" + modelId + ", content='" + content + '\'' + '}';
+	public Boolean getCarryContextFlag() {
+		return carryContextFlag;
 	}
 
+	public void setCarryContextFlag(Boolean carryContextFlag) {
+		this.carryContextFlag = carryContextFlag;
+	}
+
+	@Override
+	public String toString() {
+		return "MessageDTO{" +
+				"modelId=" + modelId +
+				", content='" + content + '\'' +
+				", carryContextFlag=" + carryContextFlag +
+				'}';
+	}
 }

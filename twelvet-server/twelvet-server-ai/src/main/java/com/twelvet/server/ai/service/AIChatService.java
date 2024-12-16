@@ -23,10 +23,4 @@ public interface AIChatService {
 	 */
 	Flux<MessageVO> chatStream(MessageDTO messageDTO);
 
-	/**
-	 * 格式化输出
-	 * @param messageDTO
-	 */
-	Flux<MessageVO> formatTest(MessageDTO messageDTO);
-
 }
