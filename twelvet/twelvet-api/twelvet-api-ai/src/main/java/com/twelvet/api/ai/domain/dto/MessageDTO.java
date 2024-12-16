@@ -58,10 +58,8 @@ public class MessageDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "MessageDTO{" +
-				"modelId=" + modelId +
-				", content='" + content + '\'' +
-				", carryContextFlag=" + carryContextFlag +
-				'}';
+		return "MessageDTO{" + "modelId=" + modelId + ", content='" + content + '\'' + ", carryContextFlag="
+				+ carryContextFlag + '}';
 	}
+
 }

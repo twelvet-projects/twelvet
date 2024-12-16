@@ -35,9 +35,7 @@ public class MessageVO {
 
 	@Override
 	public String toString() {
-		return "MessageVO{" +
-				"msgId='" + msgId + '\'' +
-				", content='" + content + '\'' +
-				'}';
+		return "MessageVO{" + "msgId='" + msgId + '\'' + ", content='" + content + '\'' + '}';
 	}
+
 }
