@@ -71,14 +71,14 @@
     </delete>
 
     <delete id="deleteAiDocByDocIds" parameterType="Long">
-        update ai_doc set del_flag = 0 where doc_id in
+        update ai_doc set del_flag = 1 where doc_id in
         <foreach item="docId" collection="array" open="(" separator="," close=")">
             #{docId}
         </foreach>
     </delete>
 
     <delete id="deleteAiDocByModelIds" parameterType="Long">
-        update ai_doc set del_flag = 0 where model_id in
+        update ai_doc set del_flag = 1 where model_id in
         <foreach item="modelId" collection="array" open="(" separator="," close=")">
             #{modelId}
         </foreach>

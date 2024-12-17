@@ -65,7 +65,6 @@ public class AiDocSliceServiceImpl implements IAiDocSliceService {
 	 * @param sliceIds 需要删除的AI知识库文档分片主键
 	 * @return 结果
 	 */
-	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int deleteAiDocSliceBySliceIds(Long[] sliceIds) {
 		int i = aiDocSliceMapper.deleteAiDocSliceBySliceIds(sliceIds);

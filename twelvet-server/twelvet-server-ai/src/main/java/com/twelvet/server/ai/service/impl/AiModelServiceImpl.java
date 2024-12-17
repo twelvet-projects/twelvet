@@ -99,21 +99,20 @@ public class AiModelServiceImpl implements IAiModelService {
 	 * @param modelIds 需要删除的AI知识库主键
 	 * @return 结果
 	 */
-	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int deleteAiModelByModelIds(Long[] modelIds) {
 		int i = aiModelMapper.deleteAiModelByModelIds(modelIds);
 
 		List<String> vectorIdList = aiDocSliceMapper.selectAiDocSliceVectorIdByModelIds(modelIds);
-		// 删除向量数据库向量
-		if (CollectionUtil.isNotEmpty(vectorIdList)) {
-			vectorStore.delete(vectorIdList);
-		}
-
 		// 批量删除文档
 		aiDocMapper.deleteAiDocByModelIds(modelIds);
 		// 批量删除分片
 		aiDocSliceMapper.deleteAiDocSliceByModelIds(modelIds);
+
+		// 删除向量数据库向量
+		if (CollectionUtil.isNotEmpty(vectorIdList)) {
+			vectorStore.delete(vectorIdList);
+		}
 		return i;
 	}
 

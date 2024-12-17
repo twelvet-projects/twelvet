@@ -143,7 +143,6 @@ public class AiDocServiceImpl implements IAiDocService {
 	 * @param docIds 需要删除的AI知识库文档主键
 	 * @return 结果
 	 */
-	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int deleteAiDocByDocIds(Long[] docIds) {
 		int i = aiDocMapper.deleteAiDocByDocIds(docIds);

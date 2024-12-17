@@ -90,11 +90,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAiModelByModelId" parameterType="Long">
-        update ai_model set del_flag = 0 where model_id = #{modelId}
+        update ai_model set del_flag = 1 where model_id = #{modelId}
     </delete>
 
     <delete id="deleteAiModelByModelIds" parameterType="Long">
-        update ai_model set del_flag = 0 where model_id in
+        update ai_model set del_flag = 1 where model_id in
         <foreach item="modelId" collection="array" open="(" separator="," close=")">
             #{modelId}
         </foreach>
