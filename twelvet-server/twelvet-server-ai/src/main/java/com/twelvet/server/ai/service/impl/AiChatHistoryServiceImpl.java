@@ -4,21 +4,26 @@ import java.time.LocalDateTime;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
 import com.github.yitter.idgen.YitIdHelper;
 import com.google.common.collect.Maps;
 
 import com.twelvet.api.ai.domain.AiChatHistory;
 import com.twelvet.api.ai.domain.AiChatHistoryContent;
 import com.twelvet.api.ai.domain.dto.AiChatHistoryDTO;
+import com.twelvet.api.ai.domain.dto.SearchAiChatHistoryDTO;
 import com.twelvet.api.ai.domain.vo.AiChatHistoryVO;
 import com.twelvet.server.ai.mapper.AiChatHistoryContentMapper;
 import com.twelvet.server.ai.mapper.AiChatHistoryMapper;
 import com.twelvet.server.ai.service.IAiChatHistoryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * AI聊天记录Service业务层处理
@@ -29,6 +34,8 @@ import java.util.List;
  */
 @Service
 public class AiChatHistoryServiceImpl implements IAiChatHistoryService {
+
+	private final static Logger log = LoggerFactory.getLogger(AiChatHistoryServiceImpl.class);
 
 	private final AiChatHistoryMapper aiChatHistoryMapper;
 
@@ -42,16 +49,20 @@ public class AiChatHistoryServiceImpl implements IAiChatHistoryService {
 
 	/**
 	 * 查询AI聊天记录列表
-	 * @param userId 用户ID
-	 * @param multiRound 记忆上下文数量
+	 * @param searchAiChatHistoryDTO 搜索聊天记录
 	 * @return AI聊天记录集合
 	 */
 	@Override
-	public List<AiChatHistoryVO> selectAiChatHistoryListByUserId(String userId, Integer multiRound) {
-		if (multiRound <= 0) {
+	public List<AiChatHistoryVO> selectAiChatHistoryListByUserId(SearchAiChatHistoryDTO searchAiChatHistoryDTO) {
+		if (StrUtil.isBlank(searchAiChatHistoryDTO.getUserId()) || Objects.isNull(searchAiChatHistoryDTO.getModelId())
+				|| Objects.isNull(searchAiChatHistoryDTO.getMultiRound())) {
+			log.error("搜索参数不完整：{}", searchAiChatHistoryDTO);
 			return CollUtil.newArrayList();
 		}
-		return aiChatHistoryMapper.selectAiChatHistoryListByUserId(userId, multiRound);
+		if (searchAiChatHistoryDTO.getMultiRound() <= 0) {
+			return CollUtil.newArrayList();
+		}
+		return aiChatHistoryMapper.selectAiChatHistoryListByUserId(searchAiChatHistoryDTO);
 	}
 
 	/**
@@ -67,6 +78,7 @@ public class AiChatHistoryServiceImpl implements IAiChatHistoryService {
 		aiChatHistory.setChatHistoryId(YitIdHelper.nextId());
 		aiChatHistory.setMsgId(aiChatHistoryDTO.getMsgId());
 		aiChatHistory.setUserId(aiChatHistoryDTO.getUserId());
+		aiChatHistory.setModelId(aiChatHistoryDTO.getModelId());
 		aiChatHistory.setSendUserId(aiChatHistoryDTO.getSendUserId());
 		aiChatHistory.setSendUserName(aiChatHistoryDTO.getSendUserName());
 		aiChatHistory.setCreateByType(aiChatHistoryDTO.getCreateByType());

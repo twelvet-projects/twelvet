@@ -79,9 +79,10 @@ CREATE TABLE `ai_doc_slice`
 DROP TABLE IF EXISTS `ai_chat_history`;
 CREATE TABLE `ai_chat_history`
 (
-    `chat_history_id` bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT 'ID',
+    `chat_history_id` bigint                                                        NOT NULL AUTO_INCREMENT COMMENT 'ID',
     `msg_id`          varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '消息唯一id',
     `user_id`         varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '归属的消息用户ID',
+    `model_id`        bigint(20)                                                    NOT NULL COMMENT '知识库ID',
     `send_user_id`    varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '消息发送人ID',
     `send_user_name`  varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '消息发送人名称',
     `create_by_type`  varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '发送消息用户类型',
@@ -101,7 +102,7 @@ DROP TABLE IF EXISTS `ai_chat_history_content`;
 CREATE TABLE `ai_chat_history_content`
 (
     `chat_history_content_id` bigint(20)                                            NOT NULL AUTO_INCREMENT COMMENT 'ID',
-    `chat_history_id`         bigint(20)                                            NOT NULL COMMENT 'AI客服会话记录ID',
+    `chat_history_id`         bigint                                                NOT NULL COMMENT 'AI客服会话记录ID',
     `content`                 text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '消息内容',
     PRIMARY KEY (`chat_history_content_id`) USING BTREE,
     UNIQUE INDEX `idx_chi` (`chat_history_id` ASC) USING BTREE

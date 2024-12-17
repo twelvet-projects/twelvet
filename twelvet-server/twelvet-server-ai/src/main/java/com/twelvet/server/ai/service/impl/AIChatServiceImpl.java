@@ -9,6 +9,7 @@ import com.twelvet.api.ai.constant.RAGEnums;
 import com.twelvet.api.ai.domain.AiModel;
 import com.twelvet.api.ai.domain.dto.AiChatHistoryDTO;
 import com.twelvet.api.ai.domain.dto.MessageDTO;
+import com.twelvet.api.ai.domain.dto.SearchAiChatHistoryDTO;
 import com.twelvet.api.ai.domain.vo.AiChatHistoryVO;
 import com.twelvet.api.ai.domain.vo.MessageVO;
 import com.twelvet.framework.core.exception.TWTException;
@@ -96,49 +97,59 @@ public class AIChatServiceImpl implements AIChatService {
 			throw new TWTException("此知识库不存在");
 		}
 
-		// 储存用户提问
-		CompletableFuture<Void> saveUserChatCompletableFuture = CompletableFuture.runAsync(() -> {
-			LocalDateTime userNow = LocalDateTime.now();
-			// 储存用户提问
-			AiChatHistoryDTO userAIChatHistoryDTO = new AiChatHistoryDTO();
-			// 生成唯一消息雪花ID
-			String userMsgId = String.valueOf(YitIdHelper.nextId());
-			userAIChatHistoryDTO.setMsgId(userMsgId);
-			userAIChatHistoryDTO.setUserId(userId);
-			userAIChatHistoryDTO.setSendUserId(userId);
-			userAIChatHistoryDTO.setSendUserName(loginUser.getUsername());
-			// 设置消息归属人
-			userAIChatHistoryDTO.setCreateByType(RAGEnums.UserTypeEnums.USER);
-			userAIChatHistoryDTO.setContent(messageDTO.getContent());
-			userAIChatHistoryDTO.setCreateTime(userNow);
-
-			// CompletableFuture，手动切换数据源
-			DynamicDataSourceContextHolder.push(AIDataSourceConstants.DS_MASTER);
-			aiChatHistoryService.insertAiChatHistory(userAIChatHistoryDTO);
-		}, TUtils.threadPoolExecutor);
-
-		// 历史消息搜索
+		// 历史消息搜索，并且插入用户提问消息
 		CompletableFuture<List<Message>> messagesCompletableFuture = CompletableFuture.supplyAsync(() -> {
-			// 加入历史对话
-			List<Message> messages = new ArrayList<>();
-			if (Boolean.TRUE.equals(messageDTO.getCarryContextFlag())) {
-				List<AiChatHistoryVO> aiChatHistoryList = aiChatHistoryService.selectAiChatHistoryListByUserId(userId,
-						aiModel.getMultiRound());
-				for (AiChatHistoryVO aiChatHistoryVO : aiChatHistoryList) {
-					RAGEnums.UserTypeEnums createByType = aiChatHistoryVO.getCreateByType();
-					String content = aiChatHistoryVO.getContent();
-					if (RAGEnums.UserTypeEnums.USER.equals(createByType)) {
-						messages.add(new UserMessage(content));
-					}
-					else if (RAGEnums.UserTypeEnums.AI.equals(createByType)) {
-						messages.add(new AssistantMessage(content));
-					}
-					else {
-						throw new TWTException("无法匹配对应的会话用户类型");
+			try {
+				// CompletableFuture，手动切换数据源
+				DynamicDataSourceContextHolder.push(AIDataSourceConstants.DS_MASTER);
+				// 加入历史对话
+				List<Message> messages = new ArrayList<>();
+				// 执行历史消息搜索
+				if (Boolean.TRUE.equals(messageDTO.getCarryContextFlag())) {
+					SearchAiChatHistoryDTO searchAiChatHistoryDTO = new SearchAiChatHistoryDTO();
+					searchAiChatHistoryDTO.setUserId(userId);
+					searchAiChatHistoryDTO.setMultiRound(aiModel.getMultiRound());
+					searchAiChatHistoryDTO.setModelId(aiModel.getModelId());
+					List<AiChatHistoryVO> aiChatHistoryList = aiChatHistoryService
+						.selectAiChatHistoryListByUserId(searchAiChatHistoryDTO);
+					for (AiChatHistoryVO aiChatHistoryVO : aiChatHistoryList) {
+						RAGEnums.UserTypeEnums createByType = aiChatHistoryVO.getCreateByType();
+						String content = aiChatHistoryVO.getContent();
+						if (RAGEnums.UserTypeEnums.USER.equals(createByType)) {
+							messages.add(new UserMessage(content));
+						}
+						else if (RAGEnums.UserTypeEnums.AI.equals(createByType)) {
+							messages.add(new AssistantMessage(content));
+						}
+						else {
+							throw new TWTException("无法匹配对应的会话用户类型");
+						}
 					}
 				}
+
+				// 搜索完成插入用户提问消息
+				LocalDateTime userNow = LocalDateTime.now();
+				// 储存用户提问
+				AiChatHistoryDTO userAIChatHistoryDTO = new AiChatHistoryDTO();
+				// 生成唯一消息雪花ID
+				String userMsgId = String.valueOf(YitIdHelper.nextId());
+				userAIChatHistoryDTO.setMsgId(userMsgId);
+				userAIChatHistoryDTO.setUserId(userId);
+				userAIChatHistoryDTO.setModelId(aiModel.getModelId());
+				userAIChatHistoryDTO.setSendUserId(userId);
+				userAIChatHistoryDTO.setSendUserName(loginUser.getUsername());
+				// 设置消息归属人
+				userAIChatHistoryDTO.setCreateByType(RAGEnums.UserTypeEnums.USER);
+				userAIChatHistoryDTO.setContent(messageDTO.getContent());
+				userAIChatHistoryDTO.setCreateTime(userNow);
+				aiChatHistoryService.insertAiChatHistory(userAIChatHistoryDTO);
+
+				return messages;
 			}
-			return messages;
+			finally {
+				// 清理使用
+				DynamicDataSourceContextHolder.poll();
+			}
 		}, TUtils.threadPoolExecutor);
 
 		// 向量库搜索
@@ -162,8 +173,7 @@ public class AIChatServiceImpl implements AIChatService {
 			return vectorStore.similaritySearch(searchRequest);
 		}, TUtils.threadPoolExecutor);
 
-		CompletableFuture.allOf(saveUserChatCompletableFuture, vectorCompletableFuture, messagesCompletableFuture)
-			.join();
+		CompletableFuture.allOf(vectorCompletableFuture, messagesCompletableFuture).join();
 
 		List<Document> docs = vectorCompletableFuture.join();
 		List<Message> messages = messagesCompletableFuture.join();
@@ -243,15 +253,23 @@ public class AIChatServiceImpl implements AIChatService {
 					AiChatHistoryDTO aiChatHistoryDTO = new AiChatHistoryDTO();
 					aiChatHistoryDTO.setMsgId(aiMsgId);
 					aiChatHistoryDTO.setUserId(userId);
+					aiChatHistoryDTO.setModelId(aiModel.getModelId());
 					aiChatHistoryDTO.setSendUserId(userId);
 					aiChatHistoryDTO.setSendUserName(loginUser.getUsername());
 					// 设置消息归属人
 					aiChatHistoryDTO.setCreateByType(RAGEnums.UserTypeEnums.AI);
 					aiChatHistoryDTO.setContent(aiContent.toString());
 					aiChatHistoryDTO.setCreateTime(replyNow);
-					// CompletableFuture，手动切换数据源
-					DynamicDataSourceContextHolder.push(AIDataSourceConstants.DS_MASTER);
-					aiChatHistoryService.insertAiChatHistory(aiChatHistoryDTO);
+					try {
+						// CompletableFuture，手动切换数据源
+						DynamicDataSourceContextHolder.push(AIDataSourceConstants.DS_MASTER);
+						aiChatHistoryService.insertAiChatHistory(aiChatHistoryDTO);
+					}
+					finally {
+						// 清理使用
+						DynamicDataSourceContextHolder.poll();
+					}
+
 				}
 			});
 	}

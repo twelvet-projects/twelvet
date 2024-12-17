@@ -14,13 +14,13 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * AI聊天记录对象 ai_chat_history
+ * 插入AI聊天记录对象 ai_chat_history
  *
  * @author TwelveT
  * @WebSite twelvet.cn
  * @date 2024-12-10
  */
-@Schema(description = "AI聊天记录对象DTO")
+@Schema(description = "插入AI聊天记录对象DTO")
 public class AiChatHistoryDTO implements Serializable {
 
 	@Serial
@@ -39,6 +39,13 @@ public class AiChatHistoryDTO implements Serializable {
 	@Schema(description = "归属的消息用户ID")
 	@ExcelProperty(value = "归属的消息用户ID")
 	private String userId;
+
+	/**
+	 * 知识库ID
+	 */
+	@Schema(description = "知识库ID")
+	@ExcelProperty(value = "知识库ID")
+	private Long modelId;
 
 	/**
 	 * 消息发送人ID
@@ -91,6 +98,14 @@ public class AiChatHistoryDTO implements Serializable {
 		this.userId = userId;
 	}
 
+	public Long getModelId() {
+		return modelId;
+	}
+
+	public void setModelId(Long modelId) {
+		this.modelId = modelId;
+	}
+
 	public String getSendUserId() {
 		return sendUserId;
 	}
@@ -133,9 +148,9 @@ public class AiChatHistoryDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "AiChatHistoryDTO{" + ", msgId='" + msgId + '\'' + ", userId='" + userId + '\'' + ", sendUserId='"
-				+ sendUserId + '\'' + ", sendUserName='" + sendUserName + '\'' + ", createByType='" + createByType
-				+ '\'' + ", content='" + content + '\'' + ", createTime=" + createTime + '}';
+		return "AiChatHistoryDTO{" + "msgId='" + msgId + '\'' + ", userId='" + userId + '\'' + ", modelId=" + modelId
+				+ ", sendUserId='" + sendUserId + '\'' + ", sendUserName='" + sendUserName + '\'' + ", createByType="
+				+ createByType + ", content='" + content + '\'' + ", createTime=" + createTime + '}';
 	}
 
 }

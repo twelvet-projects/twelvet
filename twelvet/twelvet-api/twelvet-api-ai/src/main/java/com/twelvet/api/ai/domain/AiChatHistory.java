@@ -23,93 +23,122 @@ public class AiChatHistory extends BaseEntity {
 	@Serial
 	private static final long serialVersionUID = 1L;
 
-	/** ID */
+	/**
+	 * ID
+	 */
 	@Schema(description = "ID")
 	private Long chatHistoryId;
 
-	/** 消息唯一id */
+	/**
+	 * 消息唯一id
+	 */
 	@Schema(description = "消息唯一id")
 	@ExcelProperty(value = "消息唯一id")
 	private String msgId;
 
-	/** 归属的消息用户ID */
+	/**
+	 * 归属的消息用户ID
+	 */
 	@Schema(description = "归属的消息用户ID")
 	@ExcelProperty(value = "归属的消息用户ID")
 	private String userId;
 
-	/** 消息发送人ID */
+	/**
+	 * 知识库ID
+	 */
+	@Schema(description = "知识库ID")
+	@ExcelProperty(value = "知识库ID")
+	private Long modelId;
+
+	/**
+	 * 消息发送人ID
+	 */
 	@Schema(description = "消息发送人ID")
 	@ExcelProperty(value = "消息发送人ID")
 	private String sendUserId;
 
-	/** 消息发送人名称 */
+	/**
+	 * 消息发送人名称
+	 */
 	@Schema(description = "消息发送人名称")
 	@ExcelProperty(value = "消息发送人名称")
 	private String sendUserName;
 
-	/** 发送消息用户类型 */
+	/**
+	 * 发送消息用户类型
+	 */
 	@Schema(description = "发送消息用户类型")
 	@ExcelProperty(value = "发送消息用户类型")
 	private RAGEnums.UserTypeEnums createByType;
 
-	/** 1:已删除，0：未删除 */
+	/**
+	 * 1:已删除，0：未删除
+	 */
 	@Schema(description = "1:已删除，0：未删除")
 	private Boolean delFlag;
-
-	public void setChatHistoryId(Long chatHistoryId) {
-		this.chatHistoryId = chatHistoryId;
-	}
 
 	public Long getChatHistoryId() {
 		return chatHistoryId;
 	}
 
-	public void setMsgId(String msgId) {
-		this.msgId = msgId;
+	public void setChatHistoryId(Long chatHistoryId) {
+		this.chatHistoryId = chatHistoryId;
 	}
 
 	public String getMsgId() {
 		return msgId;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setMsgId(String msgId) {
+		this.msgId = msgId;
 	}
 
 	public String getUserId() {
 		return userId;
 	}
 
-	public void setSendUserId(String sendUserId) {
-		this.sendUserId = sendUserId;
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public Long getModelId() {
+		return modelId;
+	}
+
+	public void setModelId(Long modelId) {
+		this.modelId = modelId;
 	}
 
 	public String getSendUserId() {
 		return sendUserId;
 	}
 
-	public void setSendUserName(String sendUserName) {
-		this.sendUserName = sendUserName;
+	public void setSendUserId(String sendUserId) {
+		this.sendUserId = sendUserId;
 	}
 
 	public String getSendUserName() {
 		return sendUserName;
 	}
 
-	public void setCreateByType(RAGEnums.UserTypeEnums createByType) {
-		this.createByType = createByType;
+	public void setSendUserName(String sendUserName) {
+		this.sendUserName = sendUserName;
 	}
 
 	public RAGEnums.UserTypeEnums getCreateByType() {
 		return createByType;
 	}
 
-	public void setDelFlag(Boolean delFlag) {
-		this.delFlag = delFlag;
+	public void setCreateByType(RAGEnums.UserTypeEnums createByType) {
+		this.createByType = createByType;
 	}
 
 	public Boolean getDelFlag() {
 		return delFlag;
+	}
+
+	public void setDelFlag(Boolean delFlag) {
+		this.delFlag = delFlag;
 	}
 
 	@Override
@@ -117,6 +146,7 @@ public class AiChatHistory extends BaseEntity {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("chatHistoryId", getChatHistoryId())
 			.append("msgId", getMsgId())
 			.append("userId", getUserId())
+			.append("modelId", getModelId())
 			.append("sendUserId", getSendUserId())
 			.append("sendUserName", getSendUserName())
 			.append("createByType", getCreateByType())
