@@ -11,10 +11,7 @@
         <result property="vectorId" column="vector_id"/>
         <result property="sliceName" column="slice_name"/>
         <result property="content" column="content"/>
-        <result property="createBy" column="create_by"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateBy" column="update_by"/>
-        <result property="updateTime" column="update_time"/>
+        <result property="delFlag" column="del_flag"/>
     </resultMap>
 
     <sql id="selectAiDocSliceVo">
@@ -24,10 +21,7 @@
                vector_id,
                slice_name,
                content,
-               create_by,
-               create_time,
-               update_by,
-               update_time
+               del_flag
         from ai_doc_slice
     </sql>
 
@@ -55,10 +49,7 @@
             <if test="vectorId != null">vector_id,</if>
             <if test="sliceName != null">slice_name,</if>
             <if test="content != null">content,</if>
-            <if test="createBy != null and createBy != ''">create_by,</if>
-            <if test="createTime != null">create_time,</if>
-            <if test="updateBy != null and updateBy != ''">update_by,</if>
-            <if test="updateTime != null">update_time,</if>
+            <if test="delFlag != null">del_flag,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="modelId != null">#{modelId},</if>
@@ -66,10 +57,7 @@
             <if test="vectorId != null">#{vectorId},</if>
             <if test="sliceName != null">#{sliceName},</if>
             <if test="content != null">#{content},</if>
-            <if test="createBy != null and createBy != ''">#{createBy},</if>
-            <if test="createTime != null">#{createTime},</if>
-            <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
-            <if test="updateTime != null">#{updateTime},</if>
+            <if test="delFlag != null">#{delFlag},</if>
         </trim>
     </insert>
 
@@ -90,8 +78,6 @@
             <if test="docId != null">doc_id = #{docId},</if>
             <if test="sliceName != null">slice_name = #{sliceName},</if>
             <if test="content != null">content = #{content},</if>
-            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
-            <if test="updateTime != null and updateTime != ''">update_time = #{updateTime},</if>
         </trim>
         where slice_id = #{sliceId}
     </update>
