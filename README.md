@@ -28,11 +28,6 @@ The initial intention of the system is to be able to quickly meet the business n
 more time. It will be used to incubate some practical functional points. We hope that they are lightweight, highly
 portable functional plugins.
 
-At the same time, we hope that more developers can quickly obtain better solutions in it, and try to reduce our learning
-costs as much as possible. Therefore, we should invest more time in other more meaningful things. We know the importance
-of knowledge, but we don't just want a single "knowledge". Go feel / care for more brilliance, no matter people, things,
-or objects, they will become your best inspiration.
-
 Backend source code: https://github.com/twelvet-projects/twelvet
 
 Frontend source code: https://github.com/twelvet-s/twelvet-ui
@@ -61,6 +56,7 @@ com.twelvet
 │       └── twelvet-api-system                             // System interface
 │       └── twelvet-api-dfs                                // DFS interface
 │       └── twelvet-api-job                                // Scheduled task interface
+│       └── twelvet-api-ai                                  // AI interface
 ├── twelvet-framework       // Core module
 │       └── twelvet-framework-core                         // Core module
 │       └── twelvet-framework-log                          // Logging
@@ -75,6 +71,7 @@ com.twelvet
 │       └── twelvet-server-job                             // Scheduled task [8082]
 │       └── twelvet-server-dfs                             // DFS service [8083]
 │       └── twelvet-server-gen                             // Code generation [8084]
+│       └── twelvet-server-ai                               // AI module [8085]
 ├── twelvet-visual        // Graphic Management Module
 |       └── twelvet-visual-sentinel                        // sentinel [8101]
 │       └── twelvet-visual-monitor                         // Monitoring center [8102]
@@ -103,21 +100,26 @@ com.twelvet
 14. Swagger gateway aggregation document.
 15. Sentinel flow restriction center.
 16. Nacos registration + configuration center.
+17. RAG knowledge base
 
 ## Demonstration
 
 <table>
     <tr>
-        <td><img src="https://twelvet.cn/assets/images/twelvet/1.png"/></td>
-        <td><img src="https://twelvet.cn/assets/images/twelvet/2.png"/></td>
+        <td><img src="https://static.twelvet.cn/twelvet/1.jpg"/></td>
+        <td><img src="https://static.twelvet.cn/twelvet/2.jpg"/></td>
     </tr>
     <tr>
-        <td><img src="https://twelvet.cn/assets/images/twelvet/3.png"/></td>
-        <td><img src="https://twelvet.cn/assets/images/twelvet/4.png"/></td>
+        <td><img src="https://static.twelvet.cn/twelvet/3.jpg"/></td>
+        <td><img src="https://static.twelvet.cn/twelvet/4.jpg"/></td>
     </tr>
     <tr>
-        <td><img src="https://twelvet.cn/assets/images/twelvet/5.png"/></td>
-        <td><img src="https://twelvet.cn/assets/images/twelvet/6.png"/></td>
+        <td><img src="https://static.twelvet.cn/twelvet/5.jpg"/></td>
+        <td><img src="https://static.twelvet.cn/twelvet/6.jpg"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://static.twelvet.cn/twelvet/7.jpg"/></td>
+        <td><img src="https://static.twelvet.cn/twelvet/8.jpg"/></td>
     </tr>
 </table>
 
@@ -129,7 +131,7 @@ Demonstration address：[https://cloud.twelvet.cn](https://cloud.twelvet.cn)
 
 ## Architecture Diagram
 
-<img src="https://twelvet.cn/assets/images/twelvet/map.png"/>
+<img src="https://static.twelvet.cn/twelvet/framework.png"/>
 
 ## ✈️✈️✈️ Quickly start Microservices
 
@@ -164,31 +166,37 @@ chmod 751 deploy.sh
 
 ### Open Source License
 
-The Twelvet open-source software follows the MIT License [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0.html)。
+The Twelvet open-source software follows the MIT
+License [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0.html)。
 Permits commercial use, but requires the preservation of the original author and copyright information.
 
 ### Other terms
 
-1. Welcome to contribute [PR](https://github.com/twelvet-projects/twelvet/pulls)，Make sure to submit to the corresponding branch
+1. Welcome to contribute [PR](https://github.com/twelvet-projects/twelvet/pulls)，Make sure to submit to the
+   corresponding branch
    Code conventions [spring-javaformat](https://github.com/spring-io/spring-javaformat)
 
    <details>
     <summary>Code style guidelines</summary>
 
     1. Due to <a href="https://github.com/spring-io/spring-javaformat" target="_blank">spring-javaformat</a>
-        the requirement of enforcing a specific code formatting, any code that is not submitted according to this requirement will not be able to be merged (packaged)
-    2. If you are using IntelliJ IDEA for development, please install the auto-formatting plugin. <a href="https://repo1.maven.org/maven2/io/spring/javaformat/spring-javaformat-intellij-idea-plugin/" target="_blank">
+       the requirement of enforcing a specific code formatting, any code that is not submitted according to this
+       requirement will not be able to be merged (packaged)
+    2. If you are using IntelliJ IDEA for development, please install the auto-formatting
+       plugin. <a href="https://repo1.maven.org/maven2/io/spring/javaformat/spring-javaformat-intellij-idea-plugin/" target="_blank">
        spring-javaformat-intellij-idea-plugin</a>
-    3. For other development tools, please refer to their respective documentation or community for instructions on configuring automatic code formatting. <a href="https://github.com/spring-io/spring-javaformat" target="_blank">
+    3. For other development tools, please refer to their respective documentation or community for instructions on
+       configuring automatic code formatting. <a href="https://github.com/spring-io/spring-javaformat" target="_blank">
        spring-javaformat</a>
-       Before committing code, please run the following command in the project root directory (requires developer's computer to support the mvn command) to format the code.
+       Before committing code, please run the following command in the project root directory (requires developer's
+       computer to support the mvn command) to format the code.
        ```
        mvn spring-javaformat:apply
        ```
    </details>
 
-2. Welcome to contribute [issue](https://github.com/twelvet-projects/twelvet/issues)，Please provide clear explanations of the issue, development environment, and steps to reproduce.
-
+2. Welcome to contribute [issue](https://github.com/twelvet-projects/twelvet/issues)，Please provide clear explanations
+   of the issue, development environment, and steps to reproduce.
 
 ## 🤝Thank You
 
