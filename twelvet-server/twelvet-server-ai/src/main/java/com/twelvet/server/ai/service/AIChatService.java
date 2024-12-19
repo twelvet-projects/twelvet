@@ -23,4 +23,18 @@ public interface AIChatService {
 	 */
 	Flux<MessageVO> chatStream(MessageDTO messageDTO);
 
+	/**
+	 * tts文字转语音
+	 * @param messageDTO MessageDTO
+	 * @return 流式数据返回
+	 */
+	Flux<MessageVO> tts(MessageDTO messageDTO);
+
+	/**
+	 * stt语音转文字
+	 * @param messageDTO MessageDTO
+	 * @return 流式数据返回
+	 */
+	Flux<MessageVO> stt(MessageDTO messageDTO);
+
 }

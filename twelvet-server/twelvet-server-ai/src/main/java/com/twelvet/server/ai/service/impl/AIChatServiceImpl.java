@@ -1,8 +1,8 @@
 package com.twelvet.server.ai.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.alibaba.cloud.ai.dashscope.audio.DashScopeAudioSpeechOptions;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
-import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatOptions;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.github.yitter.idgen.YitIdHelper;
 import com.twelvet.api.ai.constant.RAGEnums;
@@ -19,7 +19,6 @@ import com.twelvet.framework.utils.TUtils;
 import com.twelvet.server.ai.constant.AIDataSourceConstants;
 import com.twelvet.server.ai.constant.RAGConstants;
 import com.twelvet.server.ai.fun.MockWeatherService;
-import com.twelvet.server.ai.fun.vo.ActorsFilms;
 import com.twelvet.server.ai.fun.vo.Request;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.mapper.AiModelMapper;
@@ -33,14 +32,12 @@ import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
-import org.springframework.ai.converter.BeanOutputConverter;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.model.Content;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.ai.vectorstore.filter.Filter;
 import org.springframework.ai.vectorstore.filter.FilterExpressionBuilder;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.SignalType;
@@ -272,6 +269,31 @@ public class AIChatServiceImpl implements AIChatService {
 
 				}
 			});
+	}
+
+	/**
+	 * tts文字转语音
+	 * @param messageDTO MessageDTO
+	 * @return 流式数据返回
+	 */
+	@Override
+	public Flux<MessageVO> tts(MessageDTO messageDTO) {
+		DashScopeAudioSpeechOptions dashScopeAudioSpeechOptions = new DashScopeAudioSpeechOptions.Builder()
+			.withModel("cosyvoice-v1")
+			.withText(messageDTO.getContent())
+			.build();
+
+		return null;
+	}
+
+	/**
+	 * stt语音转文字
+	 * @param messageDTO MessageDTO
+	 * @return 流式数据返回
+	 */
+	@Override
+	public Flux<MessageVO> stt(MessageDTO messageDTO) {
+		return null;
 	}
 
 }
