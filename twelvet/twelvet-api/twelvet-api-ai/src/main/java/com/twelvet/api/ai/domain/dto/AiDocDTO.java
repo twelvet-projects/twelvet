@@ -80,8 +80,8 @@ public class AiDocDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "AiDocDTO{" + "docId=" + docId + ", knowledgeId=" + knowledgeId + ", docName='" + docName + '\'' + ", content='"
-				+ content + '\'' + '}';
+		return "AiDocDTO{" + "docId=" + docId + ", knowledgeId=" + knowledgeId + ", docName='" + docName + '\''
+				+ ", content='" + content + '\'' + '}';
 	}
 
 }

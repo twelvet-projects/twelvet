@@ -31,8 +31,8 @@ public class AiKnowledgeServiceImpl implements IAiKnowledgeService {
 
 	private final VectorStore vectorStore;
 
-	public AiKnowledgeServiceImpl(AiKnowledgeMapper aiKnowledgeMapper, AiDocMapper aiDocMapper, AiDocSliceMapper aiDocSliceMapper,
-								  VectorStore vectorStore) {
+	public AiKnowledgeServiceImpl(AiKnowledgeMapper aiKnowledgeMapper, AiDocMapper aiDocMapper,
+			AiDocSliceMapper aiDocSliceMapper, VectorStore vectorStore) {
 		this.aiKnowledgeMapper = aiKnowledgeMapper;
 		this.aiDocMapper = aiDocMapper;
 		this.aiDocSliceMapper = aiDocSliceMapper;

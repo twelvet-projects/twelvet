@@ -49,7 +49,8 @@ public class AiChatHistoryServiceImpl implements IAiChatHistoryService {
 	 */
 	@Override
 	public List<AiChatHistoryVO> selectAiChatHistoryListByUserId(SearchAiChatHistoryDTO searchAiChatHistoryDTO) {
-		if (StrUtil.isBlank(searchAiChatHistoryDTO.getUserId()) || Objects.isNull(searchAiChatHistoryDTO.getKnowledgeId())
+		if (StrUtil.isBlank(searchAiChatHistoryDTO.getUserId())
+				|| Objects.isNull(searchAiChatHistoryDTO.getKnowledgeId())
 				|| Objects.isNull(searchAiChatHistoryDTO.getMultiRound())) {
 			log.error("搜索参数不完整：{}", searchAiChatHistoryDTO);
 			return CollUtil.newArrayList();

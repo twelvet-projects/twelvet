@@ -144,9 +144,10 @@ public class AiChatHistoryDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "AiChatHistoryDTO{" + "msgId='" + msgId + '\'' + ", userId='" + userId + '\'' + ", knowledgeId=" + knowledgeId
-				+ ", sendUserId='" + sendUserId + '\'' + ", sendUserName='" + sendUserName + '\'' + ", createByType="
-				+ createByType + ", content='" + content + '\'' + ", createTime=" + createTime + '}';
+		return "AiChatHistoryDTO{" + "msgId='" + msgId + '\'' + ", userId='" + userId + '\'' + ", knowledgeId="
+				+ knowledgeId + ", sendUserId='" + sendUserId + '\'' + ", sendUserName='" + sendUserName + '\''
+				+ ", createByType=" + createByType + ", content='" + content + '\'' + ", createTime=" + createTime
+				+ '}';
 	}
 
 }

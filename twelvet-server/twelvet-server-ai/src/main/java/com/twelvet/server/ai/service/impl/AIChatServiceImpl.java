@@ -87,8 +87,9 @@ public class AIChatServiceImpl implements AIChatService {
 	private static final String AUDIO_RESOURCES_URL = "https://dashscope.oss-cn-beijing.aliyuncs.com/samples/audio/paraformer/hello_world_female2.wav";
 
 	public AIChatServiceImpl(DashScopeChatModel dashScopeChatModel, VectorStore vectorStore,
-							 AiKnowledgeMapper aiKnowledgeMapper, AiDocSliceMapper aiDocSliceMapper, IAiChatHistoryService aiChatHistoryService,
-							 SpeechSynthesisModel speechSynthesisModel, AudioTranscriptionModel transcriptionModel) {
+			AiKnowledgeMapper aiKnowledgeMapper, AiDocSliceMapper aiDocSliceMapper,
+			IAiChatHistoryService aiChatHistoryService, SpeechSynthesisModel speechSynthesisModel,
+			AudioTranscriptionModel transcriptionModel) {
 		this.dashScopeChatModel = dashScopeChatModel;
 		this.vectorStore = vectorStore;
 		this.aiKnowledgeMapper = aiKnowledgeMapper;
