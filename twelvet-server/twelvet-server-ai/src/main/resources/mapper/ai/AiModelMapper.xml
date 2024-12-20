@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twelvet.server.ai.mapper.AiModelMapper">
+    
+    <resultMap type="AiModel" id="AiModelResult">
+        <result property="modelId"    column="model_id"    />
+        <result property="modelSupplier"    column="model_supplier"    />
+        <result property="model"    column="model"    />
+        <result property="modelType"    column="model_type"    />
+        <result property="alias"    column="alias"    />
+        <result property="apiKey"    column="api_key"    />
+        <result property="baseUrl"    column="base_url"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectAiModelVo">
+        select model_id, model_supplier, model, model_type, alias, api_key, base_url, create_by, create_time, update_by, update_time, del_flag from ai_model
+    </sql>
+
+    <select id="selectAiModelList" parameterType="AiModel" resultMap="AiModelResult">
+        <include refid="selectAiModelVo"/>
+        <where>  
+            <if test="modelSupplier != null  and modelSupplier != ''"> and model_supplier = #{modelSupplier}</if>
+            <if test="model != null  and model != ''"> and model = #{model}</if>
+            <if test="modelType != null  and modelType != ''"> and model_type = #{modelType}</if>
+            <if test="alias != null  and alias != ''"> and alias = #{alias}</if>
+            <if test="apiKey != null  and apiKey != ''"> and api_key = #{apiKey}</if>
+            <if test="baseUrl != null  and baseUrl != ''"> and base_url = #{baseUrl}</if>
+        </where>
+    </select>
+    
+    <select id="selectAiModelByModelId" parameterType="Long" resultMap="AiModelResult">
+        <include refid="selectAiModelVo"/>
+        where model_id = #{modelId}
+    </select>
+        
+    <insert id="insertAiModel" parameterType="AiModel" useGeneratedKeys="true" keyProperty="modelId">
+        insert into ai_model
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="modelSupplier != null">model_supplier,</if>
+            <if test="model != null">model,</if>
+            <if test="modelType != null">model_type,</if>
+            <if test="alias != null">alias,</if>
+            <if test="apiKey != null">api_key,</if>
+            <if test="baseUrl != null and baseUrl != ''">base_url,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null and updateBy != ''">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="delFlag != null">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="modelSupplier != null">#{modelSupplier},</if>
+            <if test="model != null">#{model},</if>
+            <if test="modelType != null">#{modelType},</if>
+            <if test="alias != null">#{alias},</if>
+            <if test="apiKey != null">#{apiKey},</if>
+            <if test="baseUrl != null and baseUrl != ''">#{baseUrl},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAiModel" parameterType="AiModel">
+        update ai_model
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="modelSupplier != null">model_supplier = #{modelSupplier},</if>
+            <if test="model != null">model = #{model},</if>
+            <if test="modelType != null">model_type = #{modelType},</if>
+            <if test="alias != null">alias = #{alias},</if>
+            <if test="apiKey != null">api_key = #{apiKey},</if>
+            <if test="baseUrl != null and baseUrl != ''">base_url = #{baseUrl},</if>
+            <if test="createBy != null and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where model_id = #{modelId}
+    </update>
+
+    <delete id="deleteAiModelByModelId" parameterType="Long">
+        delete from ai_model where model_id = #{modelId}
+    </delete>
+
+    <delete id="deleteAiModelByModelIds" parameterType="String">
+        delete from ai_model where model_id in 
+        <foreach item="modelId" collection="array" open="(" separator="," close=")">
+            #{modelId}
+        </foreach>
+    </delete>
+</mapper>
