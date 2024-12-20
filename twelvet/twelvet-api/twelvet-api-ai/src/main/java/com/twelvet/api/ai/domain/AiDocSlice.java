@@ -33,7 +33,7 @@ public class AiDocSlice extends BaseEntity {
 	 */
 	@Schema(description = "知识库ID")
 	@ExcelProperty(value = "知识库ID")
-	private Long modelId;
+	private Long knowledgeId;
 
 	/**
 	 * 文档ID
@@ -78,12 +78,12 @@ public class AiDocSlice extends BaseEntity {
 		return sliceId;
 	}
 
-	public void setModelId(Long modelId) {
-		this.modelId = modelId;
+	public void setKnowledgeId(Long knowledgeId) {
+		this.knowledgeId = knowledgeId;
 	}
 
-	public Long getModelId() {
-		return modelId;
+	public Long getKnowledgeId() {
+		return knowledgeId;
 	}
 
 	public void setDocId(Long docId) {
@@ -129,7 +129,7 @@ public class AiDocSlice extends BaseEntity {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("sliceId", getSliceId())
-			.append("modelId", getModelId())
+			.append("knowledge", getKnowledgeId())
 			.append("docId", getDocId())
 			.append("vectorId", getVectorId())
 			.append("sliceName", getSliceName())

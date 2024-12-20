@@ -6,7 +6,7 @@
 
     <resultMap type="AiDocSlice" id="AiDocSliceResult">
         <result property="sliceId" column="slice_id"/>
-        <result property="modelId" column="model_id"/>
+        <result property="knowledgeId" column="knowledge_id"/>
         <result property="docId" column="doc_id"/>
         <result property="vectorId" column="vector_id"/>
         <result property="sliceName" column="slice_name"/>
@@ -16,7 +16,7 @@
 
     <sql id="selectAiDocSliceVo">
         select slice_id,
-               model_id,
+               knowledge_id,
                doc_id,
                vector_id,
                slice_name,
@@ -28,7 +28,7 @@
     <select id="selectAiDocSliceList" parameterType="AiDocSlice" resultMap="AiDocSliceResult">
         <include refid="selectAiDocSliceVo"/>
         <where>
-            <if test="modelId != null ">and model_id = #{modelId}</if>
+            <if test="knowledgeId != null ">and knowledge_id = #{knowledgeId}</if>
             <if test="docId != null ">and doc_id = #{docId}</if>
             <if test="sliceName != null  and sliceName != ''">and slice_name like concat('%', #{sliceName}, '%')</if>
             <if test="content != null  and content != ''">and content = #{content}</if>
@@ -44,7 +44,7 @@
     <insert id="insertAiDocSlice" parameterType="AiDocSlice" useGeneratedKeys="true" keyProperty="sliceId">
         insert into ai_doc_slice
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="modelId != null">model_id,</if>
+            <if test="knowledgeId != null">knowledge_id,</if>
             <if test="docId != null">doc_id,</if>
             <if test="vectorId != null">vector_id,</if>
             <if test="sliceName != null">slice_name,</if>
@@ -52,7 +52,7 @@
             <if test="delFlag != null">del_flag,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="modelId != null">#{modelId},</if>
+            <if test="knowledgeId != null">#{knowledgeId},</if>
             <if test="docId != null">#{docId},</if>
             <if test="vectorId != null">#{vectorId},</if>
             <if test="sliceName != null">#{sliceName},</if>
@@ -63,10 +63,10 @@
 
     <!-- 批量插入语句 -->
     <insert id="insertAiDocSliceBatch" parameterType="List">
-        INSERT INTO ai_doc_slice (model_id, doc_id, vector_id, slice_name, content)
+        INSERT INTO ai_doc_slice (knowledge_id, doc_id, vector_id, slice_name, content)
         VALUES
         <foreach collection="aiDocSliceList" item="aiDocSlice" separator=",">
-            (#{aiDocSlice.modelId}, #{aiDocSlice.docId}, #{aiDocSlice.vectorId}, #{aiDocSlice.sliceName},
+            (#{aiDocSlice.knowledgeId}, #{aiDocSlice.docId}, #{aiDocSlice.vectorId}, #{aiDocSlice.sliceName},
             #{aiDocSlice.content})
         </foreach>
     </insert>
@@ -74,7 +74,7 @@
     <update id="updateAiDocSlice" parameterType="AiDocSlice">
         update ai_doc_slice
         <trim prefix="SET" suffixOverrides=",">
-            <if test="modelId != null">model_id = #{modelId},</if>
+            <if test="knowledgeId != null">knowledge_id = #{knowledgeId},</if>
             <if test="docId != null">doc_id = #{docId},</if>
             <if test="sliceName != null">slice_name = #{sliceName},</if>
             <if test="content != null">content = #{content},</if>
@@ -116,17 +116,17 @@
         </foreach>
     </delete>
 
-    <select id="selectAiDocSliceVectorIdByModelIds" parameterType="Long" resultType="String">
-        SELECT vector_id FROM `ai_doc_slice` where model_id in
-        <foreach item="modelId" collection="array" open="(" separator="," close=")">
-            #{modelId}
+    <select id="selectAiDocSliceVectorIdByKnowledgeIds" parameterType="Long" resultType="String">
+        SELECT vector_id FROM `ai_doc_slice` where knowledge_id in
+        <foreach item="knowledgeId" collection="array" open="(" separator="," close=")">
+            #{knowledgeId}
         </foreach>
     </select>
 
-    <delete id="deleteAiDocSliceByModelIds" parameterType="Long">
-        update ai_doc_slice set del_flag = 1 where model_id in
-        <foreach item="modelId" collection="array" open="(" separator="," close=")">
-            #{modelId}
+    <delete id="deleteAiDocSliceByKnowledgeIds" parameterType="Long">
+        update ai_doc_slice set del_flag = 1 where knowledge_id in
+        <foreach item="knowledgeId" collection="array" open="(" separator="," close=")">
+            #{knowledgeId}
         </foreach>
     </delete>
 

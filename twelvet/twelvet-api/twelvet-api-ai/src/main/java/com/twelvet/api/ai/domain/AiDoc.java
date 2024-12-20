@@ -33,7 +33,7 @@ public class AiDoc extends BaseEntity {
 	 */
 	@Schema(description = "知识库ID")
 	@ExcelProperty(value = "知识库ID")
-	private Long modelId;
+	private Long knowledgeId;
 
 	/**
 	 * 文档名称
@@ -57,12 +57,12 @@ public class AiDoc extends BaseEntity {
 		return docId;
 	}
 
-	public void setModelId(Long modelId) {
-		this.modelId = modelId;
+	public void setKnowledgeId(Long knowledgeId) {
+		this.knowledgeId = knowledgeId;
 	}
 
-	public Long getModelId() {
-		return modelId;
+	public Long getKnowledgeId() {
+		return knowledgeId;
 	}
 
 	public void setDocName(String docName) {
@@ -84,7 +84,7 @@ public class AiDoc extends BaseEntity {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("docId", getDocId())
-			.append("modelId", getModelId())
+			.append("knowledgeId", getKnowledgeId())
 			.append("docName", getDocName())
 			.append("delFlag", getDelFlag())
 			.toString();

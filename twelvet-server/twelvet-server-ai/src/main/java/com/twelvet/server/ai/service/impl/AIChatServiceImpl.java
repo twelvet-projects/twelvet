@@ -11,7 +11,7 @@ import org.springframework.core.io.UrlResource;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.github.yitter.idgen.YitIdHelper;
 import com.twelvet.api.ai.constant.RAGEnums;
-import com.twelvet.api.ai.domain.AiModel;
+import com.twelvet.api.ai.domain.AiKnowledge;
 import com.twelvet.api.ai.domain.dto.AiChatHistoryDTO;
 import com.twelvet.api.ai.domain.dto.MessageDTO;
 import com.twelvet.api.ai.domain.dto.SearchAiChatHistoryDTO;
@@ -26,7 +26,7 @@ import com.twelvet.server.ai.constant.RAGConstants;
 import com.twelvet.server.ai.fun.MockWeatherService;
 import com.twelvet.server.ai.fun.vo.Request;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
-import com.twelvet.server.ai.mapper.AiModelMapper;
+import com.twelvet.server.ai.mapper.AiKnowledgeMapper;
 import com.twelvet.server.ai.service.AIChatService;
 import com.twelvet.server.ai.service.IAiChatHistoryService;
 import lombok.SneakyThrows;
@@ -71,7 +71,7 @@ public class AIChatServiceImpl implements AIChatService {
 
 	private final VectorStore vectorStore;
 
-	private final AiModelMapper aiModelMapper;
+	private final AiKnowledgeMapper aiKnowledgeMapper;
 
 	private final AiDocSliceMapper aiDocSliceMapper;
 
@@ -87,11 +87,11 @@ public class AIChatServiceImpl implements AIChatService {
 	private static final String AUDIO_RESOURCES_URL = "https://dashscope.oss-cn-beijing.aliyuncs.com/samples/audio/paraformer/hello_world_female2.wav";
 
 	public AIChatServiceImpl(DashScopeChatModel dashScopeChatModel, VectorStore vectorStore,
-			AiModelMapper aiModelMapper, AiDocSliceMapper aiDocSliceMapper, IAiChatHistoryService aiChatHistoryService,
-			SpeechSynthesisModel speechSynthesisModel, AudioTranscriptionModel transcriptionModel) {
+							 AiKnowledgeMapper aiKnowledgeMapper, AiDocSliceMapper aiDocSliceMapper, IAiChatHistoryService aiChatHistoryService,
+							 SpeechSynthesisModel speechSynthesisModel, AudioTranscriptionModel transcriptionModel) {
 		this.dashScopeChatModel = dashScopeChatModel;
 		this.vectorStore = vectorStore;
-		this.aiModelMapper = aiModelMapper;
+		this.aiKnowledgeMapper = aiKnowledgeMapper;
 		this.aiDocSliceMapper = aiDocSliceMapper;
 		this.aiChatHistoryService = aiChatHistoryService;
 		this.speechSynthesisModel = speechSynthesisModel;
@@ -108,8 +108,8 @@ public class AIChatServiceImpl implements AIChatService {
 		LoginUser loginUser = SecurityUtils.getLoginUser();
 		String userId = String.valueOf(loginUser.getUserId());
 
-		AiModel aiModel = aiModelMapper.selectAiModelByModelId(messageDTO.getModelId());
-		if (Objects.isNull(aiModel)) {
+		AiKnowledge aiKnowledge = aiKnowledgeMapper.selectAiKnowledgeByKnowledgeId(messageDTO.getKnowledgeId());
+		if (Objects.isNull(aiKnowledge)) {
 			throw new TWTException("此知识库不存在");
 		}
 
@@ -124,8 +124,8 @@ public class AIChatServiceImpl implements AIChatService {
 				if (Boolean.TRUE.equals(messageDTO.getCarryContextFlag())) {
 					SearchAiChatHistoryDTO searchAiChatHistoryDTO = new SearchAiChatHistoryDTO();
 					searchAiChatHistoryDTO.setUserId(userId);
-					searchAiChatHistoryDTO.setMultiRound(aiModel.getMultiRound());
-					searchAiChatHistoryDTO.setModelId(aiModel.getModelId());
+					searchAiChatHistoryDTO.setMultiRound(aiKnowledge.getMultiRound());
+					searchAiChatHistoryDTO.setKnowledgeId(aiKnowledge.getKnowledgeId());
 					List<AiChatHistoryVO> aiChatHistoryList = aiChatHistoryService
 						.selectAiChatHistoryListByUserId(searchAiChatHistoryDTO);
 					for (AiChatHistoryVO aiChatHistoryVO : aiChatHistoryList) {
@@ -151,7 +151,7 @@ public class AIChatServiceImpl implements AIChatService {
 				String userMsgId = String.valueOf(YitIdHelper.nextId());
 				userAIChatHistoryDTO.setMsgId(userMsgId);
 				userAIChatHistoryDTO.setUserId(userId);
-				userAIChatHistoryDTO.setModelId(aiModel.getModelId());
+				userAIChatHistoryDTO.setKnowledgeId(aiKnowledge.getKnowledgeId());
 				userAIChatHistoryDTO.setSendUserId(userId);
 				userAIChatHistoryDTO.setSendUserName(loginUser.getUsername());
 				// 设置消息归属人
@@ -174,13 +174,13 @@ public class AIChatServiceImpl implements AIChatService {
 			FilterExpressionBuilder filterExpressionBuilder = new FilterExpressionBuilder();
 			// 从向量数据库中搜索相似文档
 			Filter.Expression filter = filterExpressionBuilder
-				.eq(RAGEnums.VectorMetadataEnums.MODEL_ID.getCode(), aiModel.getModelId())
+				.eq(RAGEnums.VectorMetadataEnums.KNOWLEDGE_ID.getCode(), aiKnowledge.getKnowledgeId())
 				.build();
 			SearchRequest searchRequest = SearchRequest
 				// 搜索向量内容
 				.query(messageDTO.getContent())
 				// 向量匹配最多条数
-				.withTopK(aiModel.getTopK())
+				.withTopK(aiKnowledge.getTopK())
 				// 匹配相似度准度
 				.withSimilarityThreshold(SearchRequest.SIMILARITY_THRESHOLD_ACCEPT_ALL)
 				// 过滤元数据
@@ -269,7 +269,7 @@ public class AIChatServiceImpl implements AIChatService {
 					AiChatHistoryDTO aiChatHistoryDTO = new AiChatHistoryDTO();
 					aiChatHistoryDTO.setMsgId(aiMsgId);
 					aiChatHistoryDTO.setUserId(userId);
-					aiChatHistoryDTO.setModelId(aiModel.getModelId());
+					aiChatHistoryDTO.setKnowledgeId(aiKnowledge.getKnowledgeId());
 					aiChatHistoryDTO.setSendUserId(userId);
 					aiChatHistoryDTO.setSendUserName(loginUser.getUsername());
 					// 设置消息归属人

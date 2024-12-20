@@ -14,18 +14,42 @@ USE `twelvet_ai`;
 DROP TABLE IF EXISTS `ai_model`;
 CREATE TABLE `ai_model`
 (
-    `model_id`    bigint(20)                                                   NOT NULL AUTO_INCREMENT COMMENT '知识库ID',
-    `model_name`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT NULL COMMENT '知识库名称',
+    `model_id`    bigint(20)                                                   NOT NULL AUTO_INCREMENT COMMENT '模型ID',
+    `model_name`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT NULL COMMENT '模型名称',
     `welcome_msg` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci        NOT NULL COMMENT '欢迎语',
     `multi_round` int(4)                                                       NOT NULL DEFAULT 0 COMMENT '上下文记忆会话数',
     `top_k`       int(4)                                                       NOT NULL DEFAULT 1 COMMENT '向量匹配条数',
-    `model_sort`  int(4)                                                       NOT NULL DEFAULT 0 COMMENT '知识库排序',
+    `model_sort`  int(4)                                                       NOT NULL DEFAULT 0 COMMENT '模型排序',
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '创建者',
     `create_time` datetime                                                     NOT NULL COMMENT '创建时间',
     `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '更新者',
     `update_time` datetime                                                     NOT NULL COMMENT '更新时间',
     `del_flag`    tinyint(1)                                                   NOT NULL DEFAULT 0 COMMENT '是否删除 0：正常，0：删除',
     PRIMARY KEY (`model_id`) USING BTREE
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = 'AI大模型'
+  ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for ai_rag
+-- ----------------------------
+DROP TABLE IF EXISTS `ai_knowledge`;
+CREATE TABLE `ai_knowledge`
+(
+    `knowledge_id`   bigint(20)                                                   NOT NULL AUTO_INCREMENT COMMENT '知识库ID',
+    `knowledge_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT NULL COMMENT '知识库名称',
+    `welcome_msg`    text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci        NOT NULL COMMENT '欢迎语',
+    `multi_round`    int(4)                                                       NOT NULL DEFAULT 0 COMMENT '上下文记忆会话数',
+    `top_k`          int(4)                                                       NOT NULL DEFAULT 1 COMMENT '向量匹配条数',
+    `knowledge_sort` int(4)                                                       NOT NULL DEFAULT 0 COMMENT '知识库排序',
+    `create_by`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '创建者',
+    `create_time`    datetime                                                     NOT NULL COMMENT '创建时间',
+    `update_by`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '更新者',
+    `update_time`    datetime                                                     NOT NULL COMMENT '更新时间',
+    `del_flag`       tinyint(1)                                                   NOT NULL DEFAULT 0 COMMENT '是否删除 0：正常，0：删除',
+    PRIMARY KEY (`knowledge_id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
   CHARACTER SET = utf8mb4
@@ -38,14 +62,14 @@ CREATE TABLE `ai_model`
 DROP TABLE IF EXISTS `ai_doc`;
 CREATE TABLE `ai_doc`
 (
-    `doc_id`      bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '文档ID',
-    `model_id`    bigint(20)                                                    NOT NULL COMMENT '知识库ID',
-    `doc_name`    varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文档名称',
-    `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '创建者',
-    `create_time` datetime                                                      NOT NULL COMMENT '创建时间',
-    `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '更新者',
-    `update_time` datetime                                                      NOT NULL COMMENT '更新时间',
-    `del_flag`    tinyint(1)                                                    NOT NULL DEFAULT 0 COMMENT '是否删除 0：正常，0：删除',
+    `doc_id`       bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '文档ID',
+    `knowledge_id` bigint(20)                                                    NOT NULL COMMENT '知识库ID',
+    `doc_name`     varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文档名称',
+    `create_by`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '创建者',
+    `create_time`  datetime                                                      NOT NULL COMMENT '创建时间',
+    `update_by`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '更新者',
+    `update_time`  datetime                                                      NOT NULL COMMENT '更新时间',
+    `del_flag`     tinyint(1)                                                    NOT NULL DEFAULT 0 COMMENT '是否删除 0：正常，0：删除',
     PRIMARY KEY (`doc_id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
@@ -59,13 +83,13 @@ CREATE TABLE `ai_doc`
 DROP TABLE IF EXISTS `ai_doc_slice`;
 CREATE TABLE `ai_doc_slice`
 (
-    `slice_id`   bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '分片ID',
-    `model_id`   bigint(20)                                                    NOT NULL COMMENT '知识库ID',
-    `doc_id`     bigint(20)                                                    NOT NULL COMMENT '文档ID',
-    `vector_id`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL DEFAULT 0 COMMENT '向量ID',
-    `slice_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '分片名称',
-    `content`    text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci         NOT NULL COMMENT '分片内容',
-    `del_flag`   tinyint(1)                                                    NOT NULL DEFAULT 0 COMMENT '是否删除 0：正常，0：删除',
+    `slice_id`     bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '分片ID',
+    `knowledge_id` bigint(20)                                                    NOT NULL COMMENT '知识库ID',
+    `doc_id`       bigint(20)                                                    NOT NULL COMMENT '文档ID',
+    `vector_id`    varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL DEFAULT 0 COMMENT '向量ID',
+    `slice_name`   varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '分片名称',
+    `content`      text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci         NOT NULL COMMENT '分片内容',
+    `del_flag`     tinyint(1)                                                    NOT NULL DEFAULT 0 COMMENT '是否删除 0：正常，0：删除',
     PRIMARY KEY (`slice_id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
@@ -82,7 +106,7 @@ CREATE TABLE `ai_chat_history`
     `chat_history_id` bigint                                                        NOT NULL AUTO_INCREMENT COMMENT 'ID',
     `msg_id`          varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '消息唯一id',
     `user_id`         varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '归属的消息用户ID',
-    `model_id`        bigint(20)                                                    NOT NULL COMMENT '知识库ID',
+    `knowledge_id`    bigint(20)                                                    NOT NULL COMMENT '知识库ID',
     `send_user_id`    varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '消息发送人ID',
     `send_user_name`  varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '消息发送人名称',
     `create_by_type`  varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '发送消息用户类型',

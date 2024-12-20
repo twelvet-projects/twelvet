@@ -88,16 +88,16 @@ public interface AiDocSliceMapper {
 
 	/**
 	 * 根据知识库ID批量查询AI知识库文档分片对应向量化ID
-	 * @param modelIds 需要查询的知识库ID
+	 * @param knowledgeIds 需要查询的知识库ID
 	 * @return 结果
 	 */
-	List<String> selectAiDocSliceVectorIdByModelIds(Long[] modelIds);
+	List<String> selectAiDocSliceVectorIdByKnowledgeIds(Long[] knowledgeIds);
 
 	/**
 	 * 根据知识库ID批量删除AI知识库文档分片
-	 * @param modelIds 需要删除的知识库ID
+	 * @param knowledgeIds 需要删除的知识库ID
 	 * @return 结果
 	 */
-	int deleteAiDocSliceByModelIds(Long[] modelIds);
+	int deleteAiDocSliceByKnowledgeIds(Long[] knowledgeIds);
 
 }

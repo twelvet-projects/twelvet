@@ -1,10 +1,7 @@
 package com.twelvet.api.ai.domain.dto;
 
 import cn.idev.excel.annotation.ExcelProperty;
-import com.twelvet.framework.core.application.domain.BaseEntity;
 import jakarta.validation.constraints.NotNull;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -36,7 +33,7 @@ public class AiDocDTO implements Serializable {
 	 */
 	@NotNull(message = "知识库ID不能为空")
 	@Schema(description = "知识库ID")
-	private Long modelId;
+	private Long knowledgeId;
 
 	/**
 	 * 文档名称
@@ -57,12 +54,12 @@ public class AiDocDTO implements Serializable {
 		return docId;
 	}
 
-	public void setModelId(Long modelId) {
-		this.modelId = modelId;
+	public void setKnowledgeId(Long knowledgeId) {
+		this.knowledgeId = knowledgeId;
 	}
 
-	public Long getModelId() {
-		return modelId;
+	public Long getKnowledgeId() {
+		return knowledgeId;
 	}
 
 	public void setDocName(String docName) {
@@ -83,7 +80,7 @@ public class AiDocDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "AiDocDTO{" + "docId=" + docId + ", modelId=" + modelId + ", docName='" + docName + '\'' + ", content='"
+		return "AiDocDTO{" + "docId=" + docId + ", knowledgeId=" + knowledgeId + ", docName='" + docName + '\'' + ", content='"
 				+ content + '\'' + '}';
 	}
 

@@ -48,7 +48,7 @@ public class AiChatHistory extends BaseEntity {
 	 */
 	@Schema(description = "知识库ID")
 	@ExcelProperty(value = "知识库ID")
-	private Long modelId;
+	private Long knowledgeId;
 
 	/**
 	 * 消息发送人ID
@@ -101,12 +101,12 @@ public class AiChatHistory extends BaseEntity {
 		this.userId = userId;
 	}
 
-	public Long getModelId() {
-		return modelId;
+	public Long getKnowledgeId() {
+		return knowledgeId;
 	}
 
-	public void setModelId(Long modelId) {
-		this.modelId = modelId;
+	public void setKnowledgeId(Long knowledgeId) {
+		this.knowledgeId = knowledgeId;
 	}
 
 	public String getSendUserId() {
@@ -146,7 +146,7 @@ public class AiChatHistory extends BaseEntity {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("chatHistoryId", getChatHistoryId())
 			.append("msgId", getMsgId())
 			.append("userId", getUserId())
-			.append("modelId", getModelId())
+			.append("knowledgeId", getKnowledgeId())
 			.append("sendUserId", getSendUserId())
 			.append("sendUserName", getSendUserName())
 			.append("createByType", getCreateByType())

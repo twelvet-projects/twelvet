@@ -1,17 +1,11 @@
 package com.twelvet.api.ai.domain.dto;
 
 import cn.idev.excel.annotation.ExcelProperty;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.twelvet.api.ai.constant.RAGEnums;
-import com.twelvet.framework.core.application.domain.BaseEntity;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * 搜索AI聊天记录对象DTO ai_chat_history
@@ -38,7 +32,7 @@ public class SearchAiChatHistoryDTO implements Serializable {
 	 */
 	@Schema(description = "知识库ID")
 	@ExcelProperty(value = "知识库ID")
-	private Long modelId;
+	private Long knowledgeId;
 
 	/**
 	 * 上下文记忆会话数
@@ -55,12 +49,12 @@ public class SearchAiChatHistoryDTO implements Serializable {
 		this.userId = userId;
 	}
 
-	public Long getModelId() {
-		return modelId;
+	public Long getKnowledgeId() {
+		return knowledgeId;
 	}
 
-	public void setModelId(Long modelId) {
-		this.modelId = modelId;
+	public void setKnowledgeId(Long knowledgeId) {
+		this.knowledgeId = knowledgeId;
 	}
 
 	public Integer getMultiRound() {
@@ -73,7 +67,7 @@ public class SearchAiChatHistoryDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "SearchAiChatHistoryDTO{" + "userId='" + userId + '\'' + ", modelId=" + modelId + ", multiRound="
+		return "SearchAiChatHistoryDTO{" + "userId='" + userId + '\'' + ", knowledgeId=" + knowledgeId + ", multiRound="
 				+ multiRound + '}';
 	}
 

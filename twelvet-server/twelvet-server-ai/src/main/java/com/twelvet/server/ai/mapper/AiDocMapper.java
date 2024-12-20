@@ -60,9 +60,9 @@ public interface AiDocMapper {
 
 	/**
 	 * 根据知识库ID批量删除AI知识库文档
-	 * @param modelIds 需要删除的知识库ID
+	 * @param knowledgeIds 需要删除的知识库ID
 	 * @return 结果
 	 */
-	int deleteAiDocByModelIds(Long[] modelIds);
+	int deleteAiDocByKnowledgeIds(Long[] knowledgeIds);
 
 }

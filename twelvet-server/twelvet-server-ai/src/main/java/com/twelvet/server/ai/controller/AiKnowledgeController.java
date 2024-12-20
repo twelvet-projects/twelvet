@@ -1,15 +1,14 @@
 package com.twelvet.server.ai.controller;
 
 import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
-import com.twelvet.api.ai.domain.AiModel;
+import com.twelvet.api.ai.domain.AiKnowledge;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.JsonResult;
 import com.twelvet.framework.core.application.page.TableDataInfo;
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.log.annotation.Log;
 import com.twelvet.framework.log.enums.BusinessType;
-import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.server.ai.service.IAiModelService;
+import com.twelvet.server.ai.service.IAiKnowledgeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,23 +24,23 @@ import java.util.List;
  * @WebSite twelvet.cn
  * @date 2024-11-16
  */
-@Tag(description = "AiModelController", name = "AI知识库")
+@Tag(description = "AiKnowledgeController", name = "AI知识库")
 @RestController
-@RequestMapping("/model")
-public class AiModelController extends TWTController {
+@RequestMapping("/knowledge")
+public class AiKnowledgeController extends TWTController {
 
 	@Autowired
-	private IAiModelService aiModelService;
+	private IAiKnowledgeService aiKnowledgeService;
 
 	/**
 	 * 查询AI知识库分页
 	 */
 	@Operation(summary = "查询AI知识库分页")
-	@PreAuthorize("@role.hasPermi('ai:model:list')")
+	@PreAuthorize("@role.hasPermi('ai:knowledge:list')")
 	@GetMapping("/pageQuery")
-	public JsonResult<TableDataInfo<AiModel>> pageQuery(AiModel aiModel) {
+	public JsonResult<TableDataInfo<AiKnowledge>> pageQuery(AiKnowledge aiKnowledge) {
 		PageUtils.startPage();
-		List<AiModel> list = aiModelService.selectAiModelList(aiModel);
+		List<AiKnowledge> list = aiKnowledgeService.selectAiknowledgeList(aiKnowledge);
 		return JsonResult.success(PageUtils.getDataTable(list));
 	}
 
@@ -49,10 +48,10 @@ public class AiModelController extends TWTController {
 	 * 查询AI知识库列表
 	 */
 	@Operation(summary = "查询AI知识库列表")
-	@PreAuthorize("@role.hasPermi('ai:model:list')")
+	@PreAuthorize("@role.hasPermi('ai:knowledge:list')")
 	@GetMapping("/list")
-	public JsonResult<List<AiModel>> listQuery(AiModel aiModel) {
-		return JsonResult.success(aiModelService.selectAiModelList(aiModel));
+	public JsonResult<List<AiKnowledge>> listQuery(AiKnowledge aiKnowledge) {
+		return JsonResult.success(aiKnowledgeService.selectAiknowledgeList(aiKnowledge));
 	}
 
 	/**
@@ -60,54 +59,54 @@ public class AiModelController extends TWTController {
 	 */
 	@ResponseExcel(name = "AI知识库")
 	@Operation(summary = "导出AI知识库列表")
-	@PreAuthorize("@role.hasPermi('ai:model:export')")
+	@PreAuthorize("@role.hasPermi('ai:knowledge:export')")
 	@Log(service = "AI知识库", businessType = BusinessType.EXPORT)
 	@PostMapping("/export")
-	public List<AiModel> export(AiModel aiModel) {
-		return aiModelService.selectAiModelList(aiModel);
+	public List<AiKnowledge> export(AiKnowledge aiKnowledge) {
+		return aiKnowledgeService.selectAiknowledgeList(aiKnowledge);
 	}
 
 	/**
 	 * 获取AI知识库详细信息
 	 */
 	@Operation(summary = "获取AI知识库详细信息")
-	@PreAuthorize("@role.hasPermi('ai:model:query')")
-	@GetMapping(value = "/{modelId}")
-	public JsonResult<AiModel> getInfo(@PathVariable("modelId") Long modelId) {
-		return JsonResult.success(aiModelService.selectAiModelByModelId(modelId));
+	@PreAuthorize("@role.hasPermi('ai:knowledge:query')")
+	@GetMapping(value = "/{knowledgeId}")
+	public JsonResult<AiKnowledge> getInfo(@PathVariable("knowledgeId") Long knowledgeId) {
+		return JsonResult.success(aiKnowledgeService.selectAiKnowledgeByKnowledgeId(knowledgeId));
 	}
 
 	/**
 	 * 新增AI知识库
 	 */
 	@Operation(summary = "新增AI知识库")
-	@PreAuthorize("@role.hasPermi('ai:model:add')")
+	@PreAuthorize("@role.hasPermi('ai:knowledge:add')")
 	@Log(service = "AI知识库", businessType = BusinessType.INSERT)
 	@PostMapping
-	public JsonResult<String> add(@RequestBody AiModel aiModel) {
-		return json(aiModelService.insertAiModel(aiModel));
+	public JsonResult<String> add(@RequestBody AiKnowledge aiKnowledge) {
+		return json(aiKnowledgeService.insertAiKnowledge(aiKnowledge));
 	}
 
 	/**
 	 * 修改AI知识库
 	 */
 	@Operation(summary = "修改AI知识库")
-	@PreAuthorize("@role.hasPermi('ai:model:edit')")
+	@PreAuthorize("@role.hasPermi('ai:knowledge:edit')")
 	@Log(service = "AI知识库", businessType = BusinessType.UPDATE)
 	@PutMapping
-	public JsonResult<String> edit(@RequestBody AiModel aiModel) {
-		return json(aiModelService.updateAiModel(aiModel));
+	public JsonResult<String> edit(@RequestBody AiKnowledge aiKnowledge) {
+		return json(aiKnowledgeService.updateAiKnowledge(aiKnowledge));
 	}
 
 	/**
 	 * 删除AI知识库
 	 */
 	@Operation(summary = "删除AI知识库")
-	@PreAuthorize("@role.hasPermi('ai:model:remove')")
+	@PreAuthorize("@role.hasPermi('ai:knowledge:remove')")
 	@Log(service = "AI知识库", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{modelIds}")
-	public JsonResult<String> remove(@PathVariable Long[] modelIds) {
-		return json(aiModelService.deleteAiModelByModelIds(modelIds));
+	@DeleteMapping("/{knowledgeIds}")
+	public JsonResult<String> remove(@PathVariable Long[] knowledgeIds) {
+		return json(aiKnowledgeService.deleteAiKnowledgeByKnowledgeIds(knowledgeIds));
 	}
 
 }

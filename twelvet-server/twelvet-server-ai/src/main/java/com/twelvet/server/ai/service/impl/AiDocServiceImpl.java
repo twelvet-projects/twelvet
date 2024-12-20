@@ -2,28 +2,22 @@ package com.twelvet.server.ai.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
-import com.twelvet.api.ai.constant.RAGEnums;
 import com.twelvet.api.ai.domain.AiDoc;
 import com.twelvet.api.ai.domain.AiDocSlice;
 import com.twelvet.api.ai.domain.dto.AiDocDTO;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.framework.utils.DateUtils;
 import com.twelvet.server.ai.mapper.AiDocMapper;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.service.IAiDocService;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * AI知识库文档Service业务层处理
@@ -87,7 +81,7 @@ public class AiDocServiceImpl implements IAiDocService {
 
 		AiDoc aiDoc = new AiDoc();
 		aiDoc.setDocName(aiDocDTO.getDocName());
-		aiDoc.setModelId(aiDocDTO.getModelId());
+		aiDoc.setKnowledgeId(aiDocDTO.getKnowledgeId());
 		aiDoc.setCreateBy(username);
 		aiDoc.setCreateTime(nowDate);
 		aiDoc.setUpdateBy(username);
@@ -95,7 +89,7 @@ public class AiDocServiceImpl implements IAiDocService {
 
 		int i = aiDocMapper.insertAiDoc(aiDoc);
 
-		Long modelId = aiDoc.getModelId();
+		Long knowledgeId = aiDoc.getKnowledgeId();
 		Long docId = aiDoc.getDocId();
 
 		// https://docs.spring.io/spring-ai/reference/api/etl-pipeline.html#_parameters_4
@@ -107,7 +101,7 @@ public class AiDocServiceImpl implements IAiDocService {
 		List<AiDocSlice> docSliceList = new ArrayList<>();
 		for (Document doc : docs) {
 			AiDocSlice aiDocSlice = new AiDocSlice();
-			aiDocSlice.setModelId(modelId);
+			aiDocSlice.setKnowledgeId(knowledgeId);
 			aiDocSlice.setDocId(docId);
 			aiDocSlice.setVectorId(doc.getId());
 			aiDocSlice.setSliceName(aiDoc.getDocName());

@@ -1,14 +1,11 @@
 package com.twelvet.api.ai.domain.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * @author twelvet
@@ -23,7 +20,7 @@ public class MessageDTO implements Serializable {
 
 	@NotNull(message = "知识库ID不能为空")
 	@Schema(description = "知识库ID")
-	private Long modelId;
+	private Long knowledgeId;
 
 	@NotBlank(message = "提问内容不能为空")
 	@Schema(description = "提问内容")
@@ -32,12 +29,12 @@ public class MessageDTO implements Serializable {
 	@Schema(description = "是否携带上下文记忆")
 	private Boolean carryContextFlag;
 
-	public @NotNull(message = "知识库ID不能为空") Long getModelId() {
-		return modelId;
+	public @NotNull(message = "知识库ID不能为空") Long getKnowledgeId() {
+		return knowledgeId;
 	}
 
-	public void setModelId(@NotNull(message = "知识库ID不能为空") Long modelId) {
-		this.modelId = modelId;
+	public void setKnowledgeId(@NotNull(message = "知识库ID不能为空") Long knowledgeId) {
+		this.knowledgeId = knowledgeId;
 	}
 
 	public @NotBlank(message = "提问内容不能为空") String getContent() {
@@ -58,7 +55,7 @@ public class MessageDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "MessageDTO{" + "modelId=" + modelId + ", content='" + content + '\'' + ", carryContextFlag="
+		return "MessageDTO{" + "knowledgeId=" + knowledgeId + ", content='" + content + '\'' + ", carryContextFlag="
 				+ carryContextFlag + '}';
 	}
 

@@ -10,14 +10,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serial;
 
 /**
- * AI知识库对象 ai_model
+ * AI知识库对象 ai_knowledge
  *
  * @author TwelveT
  * @WebSite twelvet.cn
  * @date 2024-11-16
  */
 @Schema(description = "AI知识库对象")
-public class AiModel extends BaseEntity {
+public class AiKnowledge extends BaseEntity {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
@@ -26,14 +26,14 @@ public class AiModel extends BaseEntity {
 	 * 知识库ID
 	 */
 	@Schema(description = "知识库ID")
-	private Long modelId;
+	private Long knowledgeId;
 
 	/**
 	 * 知识库名称
 	 */
 	@Schema(description = "知识库名称")
 	@ExcelProperty(value = "知识库名称")
-	private String modelName;
+	private String knowledgeName;
 
 	/**
 	 * 欢迎语
@@ -61,7 +61,7 @@ public class AiModel extends BaseEntity {
 	 */
 	@Schema(description = "知识库排序")
 	@ExcelProperty(value = "知识库排序")
-	private Integer modelSort;
+	private Integer knowledgeSort;
 
 	/**
 	 * 是否删除 0：正常，0：删除
@@ -70,20 +70,20 @@ public class AiModel extends BaseEntity {
 	@ExcelProperty(value = "是否删除 0：正常，0：删除")
 	private Boolean delFlag;
 
-	public void setModelId(Long modelId) {
-		this.modelId = modelId;
+	public void setKnowledgeId(Long knowledgeId) {
+		this.knowledgeId = knowledgeId;
 	}
 
-	public Long getModelId() {
-		return modelId;
+	public Long getKnowledgeId() {
+		return knowledgeId;
 	}
 
-	public void setModelName(String modelName) {
-		this.modelName = modelName;
+	public void setKnowledgeName(String knowledgeName) {
+		this.knowledgeName = knowledgeName;
 	}
 
-	public String getModelName() {
-		return modelName;
+	public String getKnowledgeName() {
+		return knowledgeName;
 	}
 
 	public void setWelcomeMsg(String welcomeMsg) {
@@ -110,12 +110,12 @@ public class AiModel extends BaseEntity {
 		return topK;
 	}
 
-	public void setModelSort(Integer modelSort) {
-		this.modelSort = modelSort;
+	public void setKnowledgeSort(Integer knowledgeSort) {
+		this.knowledgeSort = knowledgeSort;
 	}
 
-	public Integer getModelSort() {
-		return modelSort;
+	public Integer getKnowledgeSort() {
+		return knowledgeSort;
 	}
 
 	public Boolean getDelFlag() {
@@ -128,12 +128,12 @@ public class AiModel extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("modelId", getModelId())
-			.append("modelName", getModelName())
+		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("knowledgeId", getKnowledgeId())
+			.append("knowledgeName", getKnowledgeName())
 			.append("welcomeMsg", getWelcomeMsg())
 			.append("multiRound", getMultiRound())
 			.append("topK", getTopK())
-			.append("modelSort", getModelSort())
+			.append("knowledgeSort", getKnowledgeSort())
 			.append("delFlag", getDelFlag())
 			.toString();
 	}

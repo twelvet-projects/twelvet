@@ -1,11 +1,7 @@
 package com.twelvet.api.ai.domain.dto;
 
 import cn.idev.excel.annotation.ExcelProperty;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.twelvet.api.ai.constant.RAGEnums;
-import com.twelvet.framework.core.application.domain.BaseEntity;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -45,7 +41,7 @@ public class AiChatHistoryDTO implements Serializable {
 	 */
 	@Schema(description = "知识库ID")
 	@ExcelProperty(value = "知识库ID")
-	private Long modelId;
+	private Long knowledgeId;
 
 	/**
 	 * 消息发送人ID
@@ -98,12 +94,12 @@ public class AiChatHistoryDTO implements Serializable {
 		this.userId = userId;
 	}
 
-	public Long getModelId() {
-		return modelId;
+	public Long getKnowledgeId() {
+		return knowledgeId;
 	}
 
-	public void setModelId(Long modelId) {
-		this.modelId = modelId;
+	public void setKnowledgeId(Long knowledgeId) {
+		this.knowledgeId = knowledgeId;
 	}
 
 	public String getSendUserId() {
@@ -148,7 +144,7 @@ public class AiChatHistoryDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "AiChatHistoryDTO{" + "msgId='" + msgId + '\'' + ", userId='" + userId + '\'' + ", modelId=" + modelId
+		return "AiChatHistoryDTO{" + "msgId='" + msgId + '\'' + ", userId='" + userId + '\'' + ", knowledgeId=" + knowledgeId
 				+ ", sendUserId='" + sendUserId + '\'' + ", sendUserName='" + sendUserName + '\'' + ", createByType="
 				+ createByType + ", content='" + content + '\'' + ", createTime=" + createTime + '}';
 	}

@@ -1,12 +1,8 @@
 package com.twelvet.server.ai.service.impl;
 
-import java.time.LocalDateTime;
-
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.github.yitter.idgen.YitIdHelper;
-import com.google.common.collect.Maps;
 
 import com.twelvet.api.ai.domain.AiChatHistory;
 import com.twelvet.api.ai.domain.AiChatHistoryContent;
@@ -21,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -54,7 +49,7 @@ public class AiChatHistoryServiceImpl implements IAiChatHistoryService {
 	 */
 	@Override
 	public List<AiChatHistoryVO> selectAiChatHistoryListByUserId(SearchAiChatHistoryDTO searchAiChatHistoryDTO) {
-		if (StrUtil.isBlank(searchAiChatHistoryDTO.getUserId()) || Objects.isNull(searchAiChatHistoryDTO.getModelId())
+		if (StrUtil.isBlank(searchAiChatHistoryDTO.getUserId()) || Objects.isNull(searchAiChatHistoryDTO.getKnowledgeId())
 				|| Objects.isNull(searchAiChatHistoryDTO.getMultiRound())) {
 			log.error("搜索参数不完整：{}", searchAiChatHistoryDTO);
 			return CollUtil.newArrayList();
@@ -78,7 +73,7 @@ public class AiChatHistoryServiceImpl implements IAiChatHistoryService {
 		aiChatHistory.setChatHistoryId(YitIdHelper.nextId());
 		aiChatHistory.setMsgId(aiChatHistoryDTO.getMsgId());
 		aiChatHistory.setUserId(aiChatHistoryDTO.getUserId());
-		aiChatHistory.setModelId(aiChatHistoryDTO.getModelId());
+		aiChatHistory.setKnowledgeId(aiChatHistoryDTO.getKnowledgeId());
 		aiChatHistory.setSendUserId(aiChatHistoryDTO.getSendUserId());
 		aiChatHistory.setSendUserName(aiChatHistoryDTO.getSendUserName());
 		aiChatHistory.setCreateByType(aiChatHistoryDTO.getCreateByType());

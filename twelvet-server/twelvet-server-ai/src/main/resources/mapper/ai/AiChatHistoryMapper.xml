@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="chatHistoryId"    column="chat_history_id"    />
         <result property="msgId"    column="msg_id"    />
         <result property="userId"    column="user_id"    />
-        <result property="modelId"    column="model_id"    />
+        <result property="knowledgeId"    column="knowledge_id"    />
         <result property="sendUserId"    column="send_user_id"    />
         <result property="sendUserName"    column="send_user_name"    />
         <result property="createByType"    column="create_by_type"    />
@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAiChatHistoryVo">
-        select chat_history_id, msg_id, user_id, model_id, send_user_id, send_user_name, create_by_type, create_time, del_flag from ai_chat_history
+        select chat_history_id, msg_id, user_id, knowledge_id, send_user_id, send_user_name, create_by_type, create_time, del_flag from ai_chat_history
     </sql>
 
     <select id="selectAiChatHistoryListByUserId" parameterType="SearchAiChatHistoryDTO" resultType="AiChatHistoryVO">
@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM ai_chat_history AS ch
                  LEFT JOIN ai_chat_history_content AS chc ON chc.chat_history_id = ch.chat_history_id
         WHERE ch.user_id = #{userId}
-        and ch.model_id = #{modelId}
+        and ch.knowledge_id = #{knowledgeId}
         ORDER BY create_time asc LIMIT #{multiRound}
     </select>
         
@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             chat_history_id,
             <if test="msgId != null and msgId != ''">msg_id,</if>
             <if test="userId != null and userId != ''">user_id,</if>
-            <if test="modelId != null">model_id,</if>
+            <if test="knowledgeId != null">knowledge_id,</if>
             <if test="sendUserId != null and sendUserId != ''">send_user_id,</if>
             <if test="sendUserName != null and sendUserName != ''">send_user_name,</if>
             <if test="createByType != null">create_by_type,</if>
@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{chatHistoryId},
             <if test="msgId != null and msgId != ''">#{msgId},</if>
             <if test="userId != null and userId != ''">#{userId},</if>
-            <if test="modelId != null">#{modelId},</if>
+            <if test="knowledgeId != null">#{knowledgeId},</if>
             <if test="sendUserId != null and sendUserId != ''">#{sendUserId},</if>
             <if test="sendUserName != null and sendUserName != ''">#{sendUserName},</if>
             <if test="createByType != null">#{createByType},</if>
