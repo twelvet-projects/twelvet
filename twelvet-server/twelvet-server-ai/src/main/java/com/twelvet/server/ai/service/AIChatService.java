@@ -1,11 +1,10 @@
 package com.twelvet.server.ai.service;
 
+import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisResponse;
 import com.twelvet.api.ai.domain.dto.MessageDTO;
 import com.twelvet.api.ai.domain.vo.MessageVO;
-import com.twelvet.server.ai.fun.vo.ActorsFilms;
+import org.springframework.ai.audio.transcription.AudioTranscriptionResponse;
 import reactor.core.publisher.Flux;
-
-import java.util.List;
 
 /**
  * AI助手服务
@@ -28,13 +27,13 @@ public interface AIChatService {
 	 * @param messageDTO MessageDTO
 	 * @return 流式数据返回
 	 */
-	Flux<MessageVO> tts(MessageDTO messageDTO);
+	SpeechSynthesisResponse tts(MessageDTO messageDTO);
 
 	/**
 	 * stt语音转文字
 	 * @param messageDTO MessageDTO
 	 * @return 流式数据返回
 	 */
-	Flux<MessageVO> stt(MessageDTO messageDTO);
+	AudioTranscriptionResponse stt(MessageDTO messageDTO);
 
 }

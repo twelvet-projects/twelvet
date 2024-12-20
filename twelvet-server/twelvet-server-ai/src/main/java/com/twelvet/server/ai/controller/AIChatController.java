@@ -1,13 +1,16 @@
 package com.twelvet.server.ai.controller;
 
+import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisResponse;
 import com.twelvet.api.ai.domain.dto.MessageDTO;
 import com.twelvet.api.ai.domain.vo.MessageVO;
 import com.twelvet.server.ai.service.AIChatService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.ai.audio.transcription.AudioTranscriptionResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
@@ -34,7 +37,7 @@ public class AIChatController {
 	@Operation(summary = "回答用户问题")
 	@PreAuthorize("@role.hasPermi('ai:chat')")
 	@PostMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-	public Flux<MessageVO> chatStream(@RequestBody MessageDTO messageDTO) {
+	public Flux<MessageVO> chatStream(@Validated @RequestBody MessageDTO messageDTO) {
 		return aiChatService.chatStream(messageDTO);
 	}
 
@@ -46,7 +49,7 @@ public class AIChatController {
 	@Operation(summary = "回答用户问题")
 	@PreAuthorize("@role.hasPermi('ai:chat')")
 	@PostMapping("/tts")
-	public Flux<MessageVO> tts(@RequestBody MessageDTO messageDTO) {
+	public SpeechSynthesisResponse tts(@RequestBody MessageDTO messageDTO) {
 		return aiChatService.tts(messageDTO);
 	}
 
@@ -58,7 +61,7 @@ public class AIChatController {
 	@Operation(summary = "回答用户问题")
 	@PreAuthorize("@role.hasPermi('ai:chat')")
 	@PostMapping("/stt")
-	public Flux<MessageVO> stt(@RequestBody MessageDTO messageDTO) {
+	public AudioTranscriptionResponse stt(@RequestBody MessageDTO messageDTO) {
 		return aiChatService.stt(messageDTO);
 	}
 

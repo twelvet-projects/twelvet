@@ -1,8 +1,13 @@
 package com.twelvet.server.ai.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.alibaba.cloud.ai.dashscope.audio.DashScopeAudioSpeechOptions;
+import com.alibaba.cloud.ai.dashscope.audio.DashScopeAudioTranscriptionOptions;
+import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisModel;
+import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisPrompt;
+import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisResponse;
+import com.alibaba.cloud.ai.dashscope.audio.transcription.AudioTranscriptionModel;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
+import org.springframework.core.io.UrlResource;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.github.yitter.idgen.YitIdHelper;
 import com.twelvet.api.ai.constant.RAGEnums;
@@ -24,8 +29,11 @@ import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.mapper.AiModelMapper;
 import com.twelvet.server.ai.service.AIChatService;
 import com.twelvet.server.ai.service.IAiChatHistoryService;
+import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.ai.audio.transcription.AudioTranscriptionPrompt;
+import org.springframework.ai.audio.transcription.AudioTranscriptionResponse;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.Message;
@@ -69,14 +77,25 @@ public class AIChatServiceImpl implements AIChatService {
 
 	private final IAiChatHistoryService aiChatHistoryService;
 
+	private final SpeechSynthesisModel speechSynthesisModel;
+
+	private final AudioTranscriptionModel transcriptionModel;
+
+	/**
+	 * stt音频地址
+	 */
+	private static final String AUDIO_RESOURCES_URL = "https://dashscope.oss-cn-beijing.aliyuncs.com/samples/audio/paraformer/hello_world_female2.wav";
+
 	public AIChatServiceImpl(DashScopeChatModel dashScopeChatModel, VectorStore vectorStore,
-			AiModelMapper aiModelMapper, AiDocSliceMapper aiDocSliceMapper,
-			IAiChatHistoryService aiChatHistoryService) {
+			AiModelMapper aiModelMapper, AiDocSliceMapper aiDocSliceMapper, IAiChatHistoryService aiChatHistoryService,
+			SpeechSynthesisModel speechSynthesisModel, AudioTranscriptionModel transcriptionModel) {
 		this.dashScopeChatModel = dashScopeChatModel;
 		this.vectorStore = vectorStore;
 		this.aiModelMapper = aiModelMapper;
 		this.aiDocSliceMapper = aiDocSliceMapper;
 		this.aiChatHistoryService = aiChatHistoryService;
+		this.speechSynthesisModel = speechSynthesisModel;
+		this.transcriptionModel = transcriptionModel;
 	}
 
 	/**
@@ -277,13 +296,11 @@ public class AIChatServiceImpl implements AIChatService {
 	 * @return 流式数据返回
 	 */
 	@Override
-	public Flux<MessageVO> tts(MessageDTO messageDTO) {
-		DashScopeAudioSpeechOptions dashScopeAudioSpeechOptions = new DashScopeAudioSpeechOptions.Builder()
-			.withModel("cosyvoice-v1")
-			.withText(messageDTO.getContent())
-			.build();
+	public SpeechSynthesisResponse tts(MessageDTO messageDTO) {
+		SpeechSynthesisResponse response = speechSynthesisModel
+			.call(new SpeechSynthesisPrompt(messageDTO.getContent()));
 
-		return null;
+		return response;
 	}
 
 	/**
@@ -291,9 +308,14 @@ public class AIChatServiceImpl implements AIChatService {
 	 * @param messageDTO MessageDTO
 	 * @return 流式数据返回
 	 */
+	@SneakyThrows
 	@Override
-	public Flux<MessageVO> stt(MessageDTO messageDTO) {
-		return null;
+	public AudioTranscriptionResponse stt(MessageDTO messageDTO) {
+		AudioTranscriptionResponse response = transcriptionModel
+			.call(new AudioTranscriptionPrompt(new UrlResource(AUDIO_RESOURCES_URL),
+					DashScopeAudioTranscriptionOptions.builder().withModel("sensevoice-v1").build()));
+
+		return response;
 	}
 
 }
