@@ -724,24 +724,6 @@ INSERT INTO `sys_menu`
 VALUES (1132, 'AI知识库文档导出', 1127, 5, '#', '', '1', 'F', '0', '0', 'ai:doc:export', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
-VALUES (1133, 'AI知识库文档分片', 1125, 4, 'slice', 'system/slice/index', '1', 'C', '0', '0', 'ai:slice:list', '#',
-        'admin', '2018-03-01 00:00:00', 'admin', '2024-12-20 18:16:40', 'AI知识库文档分片菜单');
-INSERT INTO `sys_menu`
-VALUES (1134, 'AI知识库文档分片查询', 1133, 1, '#', '', '1', 'F', '0', '0', 'ai:slice:query', '#', 'admin',
-        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
-INSERT INTO `sys_menu`
-VALUES (1135, 'AI知识库文档分片新增', 1133, 2, '#', '', '1', 'F', '0', '0', 'ai:slice:add', '#', 'admin',
-        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
-INSERT INTO `sys_menu`
-VALUES (1136, 'AI知识库文档分片修改', 1133, 3, '#', '', '1', 'F', '0', '0', 'ai:slice:edit', '#', 'admin',
-        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
-INSERT INTO `sys_menu`
-VALUES (1137, 'AI知识库文档分片删除', 1133, 4, '#', '', '1', 'F', '0', '0', 'ai:slice:remove', '#', 'admin',
-        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
-INSERT INTO `sys_menu`
-VALUES (1138, 'AI知识库文档分片导出', 1133, 5, '#', '', '1', 'F', '0', '0', 'ai:slice:export', '#', 'admin',
-        '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
-INSERT INTO `sys_menu`
 VALUES (1139, 'AI知识库', 1125, 2, 'knowledge', 'system/knowledge/index', '1', 'C', '0', '0', 'ai:knowledge:list', '#',
         'admin', '2018-03-01 00:00:00', 'admin', '2024-12-20 18:16:24', 'AI知识库菜单');
 INSERT INTO `sys_menu`
