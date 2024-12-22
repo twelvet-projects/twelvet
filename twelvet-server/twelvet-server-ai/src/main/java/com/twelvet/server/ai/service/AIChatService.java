@@ -1,9 +1,10 @@
 package com.twelvet.server.ai.service;
 
-import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisResponse;
+import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisOutput;
 import com.twelvet.api.ai.domain.dto.MessageDTO;
+import com.twelvet.api.ai.domain.dto.SttDTO;
+import com.twelvet.api.ai.domain.dto.TtsDTO;
 import com.twelvet.api.ai.domain.vo.MessageVO;
-import org.springframework.ai.audio.transcription.AudioTranscriptionResponse;
 import reactor.core.publisher.Flux;
 
 /**
@@ -23,17 +24,24 @@ public interface AIChatService {
 	Flux<MessageVO> chatStream(MessageDTO messageDTO);
 
 	/**
-	 * tts文字转语音
+	 * 多模态回答用户问题
 	 * @param messageDTO MessageDTO
 	 * @return 流式数据返回
 	 */
-	SpeechSynthesisResponse tts(MessageDTO messageDTO);
+	Flux<MessageVO> multiChatStream(MessageDTO messageDTO);
+
+	/**
+	 * tts文字转语音
+	 * @param ttsDTO MessageDTO
+	 * @return 流式数据返回
+	 */
+	SpeechSynthesisOutput tts(TtsDTO ttsDTO);
 
 	/**
 	 * stt语音转文字
-	 * @param messageDTO MessageDTO
+	 * @param sttDTO MessageDTO
 	 * @return 流式数据返回
 	 */
-	AudioTranscriptionResponse stt(MessageDTO messageDTO);
+	String stt(SttDTO sttDTO);
 
 }

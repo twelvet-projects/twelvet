@@ -1,20 +1,19 @@
 package com.twelvet.server.ai.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.alibaba.cloud.ai.dashscope.api.DashScopeSpeechSynthesisApi;
 import com.alibaba.cloud.ai.dashscope.audio.DashScopeAudioTranscriptionOptions;
-import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisModel;
-import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisPrompt;
-import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisResponse;
+import com.alibaba.cloud.ai.dashscope.audio.DashScopeSpeechSynthesisOptions;
+import com.alibaba.cloud.ai.dashscope.audio.synthesis.*;
 import com.alibaba.cloud.ai.dashscope.audio.transcription.AudioTranscriptionModel;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
-import org.springframework.core.io.UrlResource;
+import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatOptions;
+import com.alibaba.cloud.ai.dashscope.chat.MessageFormat;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.github.yitter.idgen.YitIdHelper;
 import com.twelvet.api.ai.constant.RAGEnums;
 import com.twelvet.api.ai.domain.AiKnowledge;
-import com.twelvet.api.ai.domain.dto.AiChatHistoryDTO;
-import com.twelvet.api.ai.domain.dto.MessageDTO;
-import com.twelvet.api.ai.domain.dto.SearchAiChatHistoryDTO;
+import com.twelvet.api.ai.domain.dto.*;
 import com.twelvet.api.ai.domain.vo.AiChatHistoryVO;
 import com.twelvet.api.ai.domain.vo.MessageVO;
 import com.twelvet.framework.core.exception.TWTException;
@@ -38,18 +37,24 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.UserMessage;
+import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.model.Content;
+import org.springframework.ai.model.Media;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.ai.vectorstore.filter.Filter;
 import org.springframework.ai.vectorstore.filter.FilterExpressionBuilder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MimeTypeUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.SignalType;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -79,24 +84,29 @@ public class AIChatServiceImpl implements AIChatService {
 
 	private final SpeechSynthesisModel speechSynthesisModel;
 
-	private final AudioTranscriptionModel transcriptionModel;
+	private final AudioTranscriptionModel audioTranscriptionModel;
 
 	/**
-	 * stt音频地址
+	 * 多模态测试图片地址
 	 */
-	private static final String AUDIO_RESOURCES_URL = "https://dashscope.oss-cn-beijing.aliyuncs.com/samples/audio/paraformer/hello_world_female2.wav";
+	private final static String MULTI_IMAGE_FILE_URL = "https://static.twelvet.cn/ai/dog_and_girl.jpeg";
+
+	/**
+	 * 多模态测试视频地址
+	 */
+	private final static String MULTI_VIDEO_FILE_URL = "https://static.twelvet.cn/ai/video.mp4";
 
 	public AIChatServiceImpl(DashScopeChatModel dashScopeChatModel, VectorStore vectorStore,
 			AiKnowledgeMapper aiKnowledgeMapper, AiDocSliceMapper aiDocSliceMapper,
 			IAiChatHistoryService aiChatHistoryService, SpeechSynthesisModel speechSynthesisModel,
-			AudioTranscriptionModel transcriptionModel) {
+			AudioTranscriptionModel audioTranscriptionModel) {
 		this.dashScopeChatModel = dashScopeChatModel;
 		this.vectorStore = vectorStore;
 		this.aiKnowledgeMapper = aiKnowledgeMapper;
 		this.aiDocSliceMapper = aiDocSliceMapper;
 		this.aiChatHistoryService = aiChatHistoryService;
 		this.speechSynthesisModel = speechSynthesisModel;
-		this.transcriptionModel = transcriptionModel;
+		this.audioTranscriptionModel = audioTranscriptionModel;
 	}
 
 	/**
@@ -233,24 +243,44 @@ public class AIChatServiceImpl implements AIChatService {
 		// ai回复内容
 		StringBuffer aiContent = new StringBuffer();
 
+		// 加入用户提问
+		if (Boolean.TRUE) { // 纯文本提问
+			UserMessage userMessage = new UserMessage(messageDTO.getContent());
+			messages.add(userMessage);
+		}
+		else { // 多模态提问
+			try {
+				// TODO 需要等待官方解决BUG
+				List<Media> mediaList = List
+					.of(new Media(MimeTypeUtils.IMAGE_PNG, new URI(MULTI_IMAGE_FILE_URL).toURL()));
+				UserMessage userMessage = new UserMessage(messageDTO.getContent(), mediaList);
+				// 设置文件格式
+				userMessage.getMetadata().put(DashScopeChatModel.MESSAGE_FORMAT, MessageFormat.IMAGE);
+
+				messages.add(userMessage);
+			}
+			catch (Exception e) {
+				log.error("创建多模态提问失败", e);
+				throw new TWTException("创建多模态提问失败");
+			}
+		}
+
 		Prompt prompt = new Prompt(messages);
+
+		DashScopeChatOptions dashScopeChatOptions = DashScopeChatOptions.builder()
+			.withModel("qwen-max")
+			// 开启联网搜索会对function造成影响
+			.withEnableSearch(Boolean.FALSE)
+			// 关联注册方法
+			// .withFunction("mockWeatherService")
+			.build();
+
 		return ChatClient
 			// 自定义使用不同的大模型
 			.create(dashScopeChatModel)
 			.prompt(prompt)
 			// 功能选择
-			// .options(
-			// DashScopeChatOptions.builder()
-			// // 开启联网搜索
-			// .withEnableSearch(true).build()
-			// )
-			.user(promptUserSpec -> {
-				// 用户提问文本
-				promptUserSpec.text(messageDTO.getContent());
-
-				// 用户提问图片/语音
-				// promptUserSpec.media();
-			})
+			.options(dashScopeChatOptions)
 			// 注册function
 			.function("mockWeatherService", "根据城市查询天气", Request.class, new MockWeatherService())
 			.stream()
@@ -292,31 +322,94 @@ public class AIChatServiceImpl implements AIChatService {
 	}
 
 	/**
-	 * tts文字转语音
+	 * 多模态回答用户问题
 	 * @param messageDTO MessageDTO
 	 * @return 流式数据返回
 	 */
 	@Override
-	public SpeechSynthesisResponse tts(MessageDTO messageDTO) {
-		SpeechSynthesisResponse response = speechSynthesisModel
-			.call(new SpeechSynthesisPrompt(messageDTO.getContent()));
+	public Flux<MessageVO> multiChatStream(MessageDTO messageDTO) {
 
-		return response;
+		try {
+			UserMessage userMessage;
+			if (Boolean.TRUE) { // 图片
+				List<Media> mediaList = List
+					.of(new Media(MimeTypeUtils.IMAGE_JPEG, new URI(MULTI_IMAGE_FILE_URL).toURL()));
+				userMessage = new UserMessage(messageDTO.getContent(), mediaList);
+				// 设置文件格式
+				userMessage.getMetadata().put(DashScopeChatModel.MESSAGE_FORMAT, MessageFormat.IMAGE);
+			}
+			else { // 视频
+				// TODO 目前非真正的视频识别，以下实现不可用，官方例子为把视频切成图片进行识别
+				List<Media> mediaList = List
+					.of(new Media(MimeTypeUtils.IMAGE_JPEG, new URI(MULTI_VIDEO_FILE_URL).toURL()));
+				userMessage = new UserMessage(messageDTO.getContent(), mediaList);
+				// 设置文件格式
+				userMessage.getMetadata().put(DashScopeChatModel.MESSAGE_FORMAT, MessageFormat.VIDEO);
+			}
+
+			ChatResponse response = dashScopeChatModel.call(new Prompt(userMessage,
+					DashScopeChatOptions.builder()
+						.withModel("qwen-vl-max-latest")
+						.withMultiModel(Boolean.TRUE)
+						.build()));
+
+			MessageVO messageVO = new MessageVO();
+			messageVO.setContent(response.getResult().getOutput().getContent());
+			return Flux.just(messageVO);
+
+		}
+		catch (Exception e) {
+			log.error("创建多模态提问失败", e);
+			throw new TWTException("创建多模态提问失败");
+		}
+	}
+
+	/**
+	 * tts文字转语音
+	 * @param ttsDTO MessageDTO
+	 * @return 流式数据返回
+	 */
+	@Override
+	public SpeechSynthesisOutput tts(TtsDTO ttsDTO) {
+		SpeechSynthesisMessage speechSynthesisMessage = new SpeechSynthesisMessage(ttsDTO.getContent());
+
+		DashScopeSpeechSynthesisOptions dashScopeSpeechSynthesisOptions = DashScopeSpeechSynthesisOptions.builder()
+			// 不同模型可能不支持字级别音素边界
+			.withModel("sambert-zhichu-v1")
+			.withResponseFormat(DashScopeSpeechSynthesisApi.ResponseFormat.WAV)
+			.withEnableWordTimestamp(Boolean.TRUE)
+			.withEnablePhonemeTimestamp(Boolean.TRUE)
+			.build();
+
+		SpeechSynthesisPrompt speechSynthesisPrompt = new SpeechSynthesisPrompt(speechSynthesisMessage,
+				dashScopeSpeechSynthesisOptions);
+
+		// TODO 采用的websocket请求，存在BUG关闭后无法再使用
+		SpeechSynthesisResponse response = speechSynthesisModel.call(speechSynthesisPrompt);
+
+		return response.getResult().getOutput();
 	}
 
 	/**
 	 * stt语音转文字
-	 * @param messageDTO MessageDTO
+	 * @param sttDTO MessageDTO
 	 * @return 流式数据返回
 	 */
 	@SneakyThrows
 	@Override
-	public AudioTranscriptionResponse stt(MessageDTO messageDTO) {
-		AudioTranscriptionResponse response = transcriptionModel
-			.call(new AudioTranscriptionPrompt(new UrlResource(AUDIO_RESOURCES_URL),
-					DashScopeAudioTranscriptionOptions.builder().withModel("sensevoice-v1").build()));
+	public String stt(SttDTO sttDTO) {
+		DashScopeAudioTranscriptionOptions dashScopeAudioTranscriptionOptions = DashScopeAudioTranscriptionOptions
+			.builder()
+			.withModel("paraformer-v2")
+			.build();
 
-		return response;
+		AudioTranscriptionPrompt audioTranscriptionPrompt = new AudioTranscriptionPrompt(
+				// TODO 不支持直接的文件流，只能上传到OSS传入地址的方式
+				sttDTO.getAudio().getResource(), dashScopeAudioTranscriptionOptions);
+
+		AudioTranscriptionResponse response = audioTranscriptionModel.call(audioTranscriptionPrompt);
+
+		return response.getResult().getOutput();
 	}
 
 }
