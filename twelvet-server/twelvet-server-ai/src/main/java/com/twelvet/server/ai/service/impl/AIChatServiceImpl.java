@@ -339,7 +339,7 @@ public class AIChatServiceImpl implements AIChatService {
 				userMessage.getMetadata().put(DashScopeChatModel.MESSAGE_FORMAT, MessageFormat.IMAGE);
 			}
 			else { // 视频
-				// TODO 目前非真正的视频识别，以下实现不可用，官方例子为把视频切成图片进行识别
+					// TODO 目前非真正的视频识别，以下实现不可用，官方例子为把视频切成图片进行识别
 				List<Media> mediaList = List
 					.of(new Media(MimeTypeUtils.IMAGE_JPEG, new URI(MULTI_VIDEO_FILE_URL).toURL()));
 				userMessage = new UserMessage(messageDTO.getContent(), mediaList);
