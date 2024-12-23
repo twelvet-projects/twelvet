@@ -58,6 +58,18 @@ public class AIChatController {
 	}
 
 	/**
+	 * OCR格式化识别
+	 * @param messageDTO MessageDTO
+	 * @return 流式输出回复
+	 */
+	@Operation(summary = "OCR格式化识别")
+	@PreAuthorize("@role.hasPermi('ai:chat')")
+	@PostMapping(value = "/ocr", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	public Flux<MessageVO> ocrChatStream(@Validated @RequestBody MessageDTO messageDTO) {
+		return aiChatService.ocrChatStream(messageDTO);
+	}
+
+	/**
 	 * tts文字转语音
 	 * @param ttsDTO MessageDTO
 	 * @return 流式输出回复

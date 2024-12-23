@@ -10,15 +10,18 @@ import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatOptions;
 import com.alibaba.cloud.ai.dashscope.chat.MessageFormat;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import com.github.houbb.sensitive.word.bs.SensitiveWordBs;
 import com.github.yitter.idgen.YitIdHelper;
 import com.twelvet.api.ai.constant.RAGEnums;
 import com.twelvet.api.ai.domain.AiKnowledge;
 import com.twelvet.api.ai.domain.dto.*;
+import com.twelvet.api.ai.domain.ocr.InvoiceOCR;
 import com.twelvet.api.ai.domain.vo.AiChatHistoryVO;
 import com.twelvet.api.ai.domain.vo.MessageVO;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.utils.SecurityUtils;
+import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.framework.utils.TUtils;
 import com.twelvet.server.ai.constant.AIDataSourceConstants;
 import com.twelvet.server.ai.constant.RAGConstants;
@@ -28,7 +31,6 @@ import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.mapper.AiKnowledgeMapper;
 import com.twelvet.server.ai.service.AIChatService;
 import com.twelvet.server.ai.service.IAiChatHistoryService;
-import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.audio.transcription.AudioTranscriptionPrompt;
@@ -40,6 +42,7 @@ import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
+import org.springframework.ai.converter.BeanOutputConverter;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.model.Content;
 import org.springframework.ai.model.Media;
@@ -47,14 +50,13 @@ import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.ai.vectorstore.filter.Filter;
 import org.springframework.ai.vectorstore.filter.FilterExpressionBuilder;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.SignalType;
 
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -86,10 +88,17 @@ public class AIChatServiceImpl implements AIChatService {
 
 	private final AudioTranscriptionModel audioTranscriptionModel;
 
+	private final SensitiveWordBs sensitiveWordBs;
+
 	/**
 	 * 多模态测试图片地址
 	 */
 	private final static String MULTI_IMAGE_FILE_URL = "https://static.twelvet.cn/ai/dog_and_girl.jpeg";
+
+	/**
+	 * OCR识别
+	 */
+	private final static String OCR_IMAGE_FILE_URL = "https://static.twelvet.cn/ai/ocr.jpg";
 
 	/**
 	 * 多模态测试视频地址
@@ -99,7 +108,7 @@ public class AIChatServiceImpl implements AIChatService {
 	public AIChatServiceImpl(DashScopeChatModel dashScopeChatModel, VectorStore vectorStore,
 			AiKnowledgeMapper aiKnowledgeMapper, AiDocSliceMapper aiDocSliceMapper,
 			IAiChatHistoryService aiChatHistoryService, SpeechSynthesisModel speechSynthesisModel,
-			AudioTranscriptionModel audioTranscriptionModel) {
+			AudioTranscriptionModel audioTranscriptionModel, SensitiveWordBs sensitiveWordBs) {
 		this.dashScopeChatModel = dashScopeChatModel;
 		this.vectorStore = vectorStore;
 		this.aiKnowledgeMapper = aiKnowledgeMapper;
@@ -107,6 +116,7 @@ public class AIChatServiceImpl implements AIChatService {
 		this.aiChatHistoryService = aiChatHistoryService;
 		this.speechSynthesisModel = speechSynthesisModel;
 		this.audioTranscriptionModel = audioTranscriptionModel;
+		this.sensitiveWordBs = sensitiveWordBs;
 	}
 
 	/**
@@ -119,9 +129,19 @@ public class AIChatServiceImpl implements AIChatService {
 		LoginUser loginUser = SecurityUtils.getLoginUser();
 		String userId = String.valueOf(loginUser.getUserId());
 
+		// 检查是否存在敏感词
+		if (sensitiveWordBs.contains(messageDTO.getContent())) {
+			log.error("用户输入内容检查出敏感词");
+			MessageVO messageVO = new MessageVO();
+			messageVO.setContent("用户内容存在敏感词");
+			return Flux.just(messageVO);
+		}
+
 		AiKnowledge aiKnowledge = aiKnowledgeMapper.selectAiKnowledgeByKnowledgeId(messageDTO.getKnowledgeId());
 		if (Objects.isNull(aiKnowledge)) {
-			throw new TWTException("此知识库不存在");
+			MessageVO messageVO = new MessageVO();
+			messageVO.setContent("此知识库不存在");
+			return Flux.just(messageVO);
 		}
 
 		// 历史消息搜索，并且插入用户提问消息
@@ -230,9 +250,11 @@ public class AIChatServiceImpl implements AIChatService {
 			messages.add(systemMessage);
 		}
 		else { // 无法匹配返回找不到相关信息
-			MessageVO messageVO = new MessageVO();
-			messageVO.setContent("知识库未匹配相关问题，请重新提问");
-			// return Flux.just(messageVO);
+			if (Boolean.FALSE) { // TODO 需要获取配置是否找不到直接取消对话
+				MessageVO messageVO = new MessageVO();
+				messageVO.setContent("知识库未匹配相关问题，请重新提问");
+				return Flux.just(messageVO);
+			}
 		}
 
 		// 储存AI回答
@@ -347,11 +369,18 @@ public class AIChatServiceImpl implements AIChatService {
 				userMessage.getMetadata().put(DashScopeChatModel.MESSAGE_FORMAT, MessageFormat.VIDEO);
 			}
 
-			ChatResponse response = dashScopeChatModel.call(new Prompt(userMessage,
-					DashScopeChatOptions.builder()
-						.withModel("qwen-vl-max-latest")
-						.withMultiModel(Boolean.TRUE)
-						.build()));
+			Prompt prompt = new Prompt(userMessage, DashScopeChatOptions.builder()
+				// 选择支持图片识别的模型
+				.withModel("qwen-vl-max-latest")
+				.withMultiModel(Boolean.TRUE)
+				.build());
+
+			ChatResponse response = ChatClient
+				// 自定义使用不同的大模型
+				.create(dashScopeChatModel)
+				.prompt(prompt)
+				.call()
+				.chatResponse();
 
 			MessageVO messageVO = new MessageVO();
 			messageVO.setContent(response.getResult().getOutput().getContent());
@@ -361,6 +390,56 @@ public class AIChatServiceImpl implements AIChatService {
 		catch (Exception e) {
 			log.error("创建多模态提问失败", e);
 			throw new TWTException("创建多模态提问失败");
+		}
+	}
+
+	/**
+	 * OCR格式化识别
+	 * @param messageDTO MessageDTO
+	 * @return 流式数据返回
+	 */
+	@Override
+	public Flux<MessageVO> ocrChatStream(MessageDTO messageDTO) {
+		try {
+
+			ParameterizedTypeReference<InvoiceOCR> parameterizedTypeReference = new ParameterizedTypeReference<>() {
+			};
+			BeanOutputConverter<InvoiceOCR> converter = new BeanOutputConverter<>(parameterizedTypeReference);
+
+			// 编写ocr识别提示词
+			String ocrContent = String.format("""
+					读取发票中的金额和发票编号等关键信息
+					%s
+					""", converter.getFormat());
+
+			List<Media> mediaList = List.of(new Media(MimeTypeUtils.IMAGE_JPEG, new URI(OCR_IMAGE_FILE_URL).toURL()));
+			UserMessage userMessage = new UserMessage(ocrContent, mediaList);
+			// 设置文件格式
+			userMessage.getMetadata().put(DashScopeChatModel.MESSAGE_FORMAT, MessageFormat.IMAGE);
+
+			Prompt prompt = new Prompt(userMessage, DashScopeChatOptions.builder()
+				// 选择支持图片识别的模型
+				.withModel("qwen-vl-max-latest")
+				.withMultiModel(Boolean.TRUE)
+				.build());
+
+			ChatResponse flux = ChatClient
+				// 自定义使用不同的大模型
+				.create(dashScopeChatModel)
+				.prompt(prompt)
+				.call()
+				.chatResponse();
+
+			InvoiceOCR convert = converter
+				.convert(String.join("", Objects.requireNonNull(flux.getResult().getOutput().getContent())));
+			MessageVO messageVO = new MessageVO();
+			messageVO.setContent(JacksonUtils.toJson(convert));
+			return Flux.just(messageVO);
+
+		}
+		catch (Exception e) {
+			log.error("创建OCR识别失败", e);
+			throw new TWTException("创建OCR识别失败");
 		}
 	}
 
@@ -395,7 +474,6 @@ public class AIChatServiceImpl implements AIChatService {
 	 * @param sttDTO MessageDTO
 	 * @return 流式数据返回
 	 */
-	@SneakyThrows
 	@Override
 	public String stt(SttDTO sttDTO) {
 		DashScopeAudioTranscriptionOptions dashScopeAudioTranscriptionOptions = DashScopeAudioTranscriptionOptions

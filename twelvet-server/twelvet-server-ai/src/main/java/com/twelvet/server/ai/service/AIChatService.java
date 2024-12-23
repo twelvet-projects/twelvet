@@ -31,6 +31,13 @@ public interface AIChatService {
 	Flux<MessageVO> multiChatStream(MessageDTO messageDTO);
 
 	/**
+	 * OCR格式化识别
+	 * @param messageDTO MessageDTO
+	 * @return 流式数据返回
+	 */
+	Flux<MessageVO> ocrChatStream(MessageDTO messageDTO);
+
+	/**
 	 * tts文字转语音
 	 * @param ttsDTO MessageDTO
 	 * @return 流式数据返回
