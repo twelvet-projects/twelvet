@@ -38,6 +38,20 @@ public interface AIChatService {
 	Flux<MessageVO> ocrChatStream(MessageDTO messageDTO);
 
 	/**
+	 * 文生图
+	 * @param messageDTO MessageDTO
+	 * @return 流式数据返回
+	 */
+	Flux<MessageVO> ttiChatStream(MessageDTO messageDTO);
+
+	/**
+	 * 文生视频
+	 * @param messageDTO MessageDTO
+	 * @return 流式数据返回
+	 */
+	Flux<MessageVO> itvChatStream(MessageDTO messageDTO);
+
+	/**
 	 * tts文字转语音
 	 * @param ttsDTO MessageDTO
 	 * @return 流式数据返回

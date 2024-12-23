@@ -70,6 +70,30 @@ public class AIChatController {
 	}
 
 	/**
+	 * 文生图
+	 * @param messageDTO MessageDTO
+	 * @return 流式输出回复
+	 */
+	@Operation(summary = "文生图")
+	@PreAuthorize("@role.hasPermi('ai:chat')")
+	@PostMapping(value = "/tti", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	public Flux<MessageVO> ttiChatStream(@Validated @RequestBody MessageDTO messageDTO) {
+		return aiChatService.ttiChatStream(messageDTO);
+	}
+
+	/**
+	 * 图生视频
+	 * @param messageDTO MessageDTO
+	 * @return 流式输出回复
+	 */
+	@Operation(summary = "图生视频")
+	@PreAuthorize("@role.hasPermi('ai:chat')")
+	@PostMapping(value = "/itv", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	public Flux<MessageVO> itvChatStream(@Validated @RequestBody MessageDTO messageDTO) {
+		return aiChatService.itvChatStream(messageDTO);
+	}
+
+	/**
 	 * tts文字转语音
 	 * @param ttsDTO MessageDTO
 	 * @return 流式输出回复

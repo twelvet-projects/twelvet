@@ -2,13 +2,21 @@ package com.twelvet.server.ai.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.cloud.ai.dashscope.api.DashScopeSpeechSynthesisApi;
+import com.alibaba.cloud.ai.dashscope.audio.DashScopeAudioTranscriptionModel;
 import com.alibaba.cloud.ai.dashscope.audio.DashScopeAudioTranscriptionOptions;
+import com.alibaba.cloud.ai.dashscope.audio.DashScopeSpeechSynthesisModel;
 import com.alibaba.cloud.ai.dashscope.audio.DashScopeSpeechSynthesisOptions;
 import com.alibaba.cloud.ai.dashscope.audio.synthesis.*;
 import com.alibaba.cloud.ai.dashscope.audio.transcription.AudioTranscriptionModel;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatOptions;
 import com.alibaba.cloud.ai.dashscope.chat.MessageFormat;
+import com.alibaba.cloud.ai.dashscope.image.DashScopeImageModel;
+import com.alibaba.cloud.ai.dashscope.image.DashScopeImageOptions;
+import com.alibaba.dashscope.aigc.imagesynthesis.ImageSynthesis;
+import com.alibaba.dashscope.aigc.imagesynthesis.ImageSynthesisParam;
+import com.alibaba.dashscope.aigc.imagesynthesis.ImageSynthesisResult;
+import com.alibaba.dashscope.exception.NoApiKeyException;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.github.houbb.sensitive.word.bs.SensitiveWordBs;
 import com.github.yitter.idgen.YitIdHelper;
@@ -44,12 +52,16 @@ import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
 import org.springframework.ai.converter.BeanOutputConverter;
 import org.springframework.ai.document.Document;
+import org.springframework.ai.image.ImageMessage;
+import org.springframework.ai.image.ImagePrompt;
+import org.springframework.ai.image.ImageResponse;
 import org.springframework.ai.model.Content;
 import org.springframework.ai.model.Media;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.ai.vectorstore.filter.Filter;
 import org.springframework.ai.vectorstore.filter.FilterExpressionBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
@@ -74,7 +86,25 @@ public class AIChatServiceImpl implements AIChatService {
 
 	private final static Logger log = LoggerFactory.getLogger(AIChatServiceImpl.class);
 
+	/**
+	 * 文字model
+	 */
 	private final DashScopeChatModel dashScopeChatModel;
+
+	/**
+	 * 图像model
+	 */
+	private final DashScopeImageModel dashScopeImageModel;
+
+	/**
+	 * 语音转文字model
+	 */
+	private final DashScopeAudioTranscriptionModel dashScopeAudioTranscriptionModel;
+
+	/**
+	 * TTS model
+	 */
+	private final DashScopeSpeechSynthesisModel dashScopeSpeechSynthesisModel;
 
 	private final VectorStore vectorStore;
 
@@ -108,7 +138,9 @@ public class AIChatServiceImpl implements AIChatService {
 	public AIChatServiceImpl(DashScopeChatModel dashScopeChatModel, VectorStore vectorStore,
 			AiKnowledgeMapper aiKnowledgeMapper, AiDocSliceMapper aiDocSliceMapper,
 			IAiChatHistoryService aiChatHistoryService, SpeechSynthesisModel speechSynthesisModel,
-			AudioTranscriptionModel audioTranscriptionModel, SensitiveWordBs sensitiveWordBs) {
+			AudioTranscriptionModel audioTranscriptionModel, SensitiveWordBs sensitiveWordBs,
+			DashScopeImageModel dashScopeImageModel, DashScopeAudioTranscriptionModel dashScopeAudioTranscriptionModel,
+			DashScopeSpeechSynthesisModel dashScopeSpeechSynthesisModel) {
 		this.dashScopeChatModel = dashScopeChatModel;
 		this.vectorStore = vectorStore;
 		this.aiKnowledgeMapper = aiKnowledgeMapper;
@@ -117,6 +149,9 @@ public class AIChatServiceImpl implements AIChatService {
 		this.speechSynthesisModel = speechSynthesisModel;
 		this.audioTranscriptionModel = audioTranscriptionModel;
 		this.sensitiveWordBs = sensitiveWordBs;
+		this.dashScopeImageModel = dashScopeImageModel;
+		this.dashScopeAudioTranscriptionModel = dashScopeAudioTranscriptionModel;
+		this.dashScopeSpeechSynthesisModel = dashScopeSpeechSynthesisModel;
 	}
 
 	/**
@@ -361,7 +396,7 @@ public class AIChatServiceImpl implements AIChatService {
 				userMessage.getMetadata().put(DashScopeChatModel.MESSAGE_FORMAT, MessageFormat.IMAGE);
 			}
 			else { // 视频
-					// TODO 目前非真正的视频识别，以下实现不可用，官方例子为把视频切成图片进行识别
+				// TODO 目前非真正的视频识别，以下实现不可用，官方例子为把视频切成图片进行识别
 				List<Media> mediaList = List
 					.of(new Media(MimeTypeUtils.IMAGE_JPEG, new URI(MULTI_VIDEO_FILE_URL).toURL()));
 				userMessage = new UserMessage(messageDTO.getContent(), mediaList);
@@ -441,6 +476,42 @@ public class AIChatServiceImpl implements AIChatService {
 			log.error("创建OCR识别失败", e);
 			throw new TWTException("创建OCR识别失败");
 		}
+	}
+
+	/**
+	 * 文生图
+	 * @param messageDTO MessageDTO
+	 * @return 流式数据返回
+	 */
+	@Override
+	public Flux<MessageVO> ttiChatStream(MessageDTO messageDTO) {
+		ImageMessage userMessage = new ImageMessage(messageDTO.getContent());
+
+		DashScopeImageOptions dashScopeImageOptions = DashScopeImageOptions.builder()
+			// 选择支持图片识别的模型
+			.withModel("flux-schnell")
+			.withWidth(1024)
+			.withHeight(1024)
+			.build();
+
+		ImagePrompt prompt = new ImagePrompt(userMessage, dashScopeImageOptions);
+
+		ImageResponse response = dashScopeImageModel.call(prompt);
+
+		MessageVO messageVO = new MessageVO();
+		messageVO.setContent(JacksonUtils.toJson(response.getResult()));
+
+		return Flux.just(messageVO);
+	}
+
+	/**
+	 * 文生视频
+	 * @param messageDTO MessageDTO
+	 * @return 流式数据返回
+	 */
+	@Override
+	public Flux<MessageVO> itvChatStream(MessageDTO messageDTO) {
+		return null;
 	}
 
 	/**
