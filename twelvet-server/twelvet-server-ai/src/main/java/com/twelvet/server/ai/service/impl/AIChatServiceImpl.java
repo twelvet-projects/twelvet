@@ -301,11 +301,11 @@ public class AIChatServiceImpl implements AIChatService {
 		StringBuffer aiContent = new StringBuffer();
 
 		// 加入用户提问
-		if (Boolean.TRUE) { // 纯文本提问
+		if (RAGEnums.ChatTypeEnums.TEXT.equals(messageDTO.getChatType())) { // 纯文本提问
 			UserMessage userMessage = new UserMessage(messageDTO.getContent());
 			messages.add(userMessage);
 		}
-		else { // 多模态提问
+		else if (RAGEnums.ChatTypeEnums.IMAGES.equals(messageDTO.getChatType())) { // 图片提问
 			try {
 				// TODO 需要等待官方解决BUG
 				List<Media> mediaList = List
@@ -318,7 +318,9 @@ public class AIChatServiceImpl implements AIChatService {
 			}
 			catch (Exception e) {
 				log.error("创建多模态提问失败", e);
-				throw new TWTException("创建多模态提问失败");
+				MessageVO messageVO = new MessageVO();
+				messageVO.setContent("创建多模态提问失败");
+				return Flux.just(messageVO);
 			}
 		}
 
@@ -331,6 +333,10 @@ public class AIChatServiceImpl implements AIChatService {
 			// 关联注册方法
 			// .withFunction("mockWeatherService")
 			.build();
+
+		if (Boolean.TRUE.equals(messageDTO.getInternetFlag())) { // 是否开启联网
+			dashScopeChatOptions.setEnableSearch(Boolean.TRUE);
+		}
 
 		return ChatClient
 			// 自定义使用不同的大模型

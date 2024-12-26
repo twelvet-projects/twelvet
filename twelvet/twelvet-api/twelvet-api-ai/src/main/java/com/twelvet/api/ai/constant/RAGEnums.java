@@ -65,4 +65,32 @@ public class RAGEnums {
 
 	}
 
+	/**
+	 * 聊天内容类型
+	 */
+	public enum ChatTypeEnums {
+
+		TEXT("TEXT", "文本"), IMAGES("IMAGES", "图片")
+
+		;
+
+		private final String code;
+
+		private final String desc;
+
+		ChatTypeEnums(String code, String desc) {
+			this.code = code;
+			this.desc = desc;
+		}
+
+		public String getCode() {
+			return code;
+		}
+
+		public String getDesc() {
+			return desc;
+		}
+
+	}
+
 }
