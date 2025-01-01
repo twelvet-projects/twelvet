@@ -10,6 +10,34 @@ package com.twelvet.api.ai.constant;
 public class RAGEnums {
 
 	/**
+	 * 知识库数据来源类型
+	 */
+	public enum DocSourceTypeEnums {
+
+		INPUT("INPUT", "录入"), UPLOAD("UPLOAD", "上传")
+
+		;
+
+		private final String code;
+
+		private final String desc;
+
+		DocSourceTypeEnums(String code, String desc) {
+			this.code = code;
+			this.desc = desc;
+		}
+
+		public String getCode() {
+			return code;
+		}
+
+		public String getDesc() {
+			return desc;
+		}
+
+	}
+
+	/**
 	 * 储存向量metadata枚举
 	 */
 	public enum VectorMetadataEnums {

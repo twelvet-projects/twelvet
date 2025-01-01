@@ -1,9 +1,9 @@
 package com.twelvet.api.ai.domain.dto;
 
 import cn.idev.excel.annotation.ExcelProperty;
-import jakarta.validation.constraints.NotNull;
-
+import com.twelvet.api.ai.constant.RAGEnums;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -22,18 +22,18 @@ public class AiDocDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 文档ID
-	 */
-	@NotNull(message = "文档ID不能为空")
-	@Schema(description = "文档ID")
-	private Long docId;
-
-	/**
 	 * 知识库ID
 	 */
-	@NotNull(message = "知识库ID不能为空")
-	@Schema(description = "知识库ID")
+	@NotNull(message = "知识库不能为空")
+	@Schema(description = "知识库")
 	private Long knowledgeId;
+
+	/**
+	 * 来源类型
+	 */
+	@NotNull(message = "来源类型不能为空")
+	@Schema(description = "来源类型")
+	private RAGEnums.DocSourceTypeEnums sourceType;
 
 	/**
 	 * 文档名称
@@ -46,28 +46,28 @@ public class AiDocDTO implements Serializable {
 	@ExcelProperty(value = "内容")
 	private String content;
 
-	public void setDocId(Long docId) {
-		this.docId = docId;
-	}
-
-	public Long getDocId() {
-		return docId;
-	}
-
-	public void setKnowledgeId(Long knowledgeId) {
-		this.knowledgeId = knowledgeId;
-	}
-
-	public Long getKnowledgeId() {
+	public @NotNull(message = "知识库ID不能为空") Long getKnowledgeId() {
 		return knowledgeId;
 	}
 
-	public void setDocName(String docName) {
-		this.docName = docName;
+	public void setKnowledgeId(@NotNull(message = "知识库ID不能为空") Long knowledgeId) {
+		this.knowledgeId = knowledgeId;
+	}
+
+	public RAGEnums.DocSourceTypeEnums getSourceType() {
+		return sourceType;
+	}
+
+	public void setSourceType(RAGEnums.DocSourceTypeEnums sourceType) {
+		this.sourceType = sourceType;
 	}
 
 	public String getDocName() {
 		return docName;
+	}
+
+	public void setDocName(String docName) {
+		this.docName = docName;
 	}
 
 	public String getContent() {
@@ -80,8 +80,8 @@ public class AiDocDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "AiDocDTO{" + "docId=" + docId + ", knowledgeId=" + knowledgeId + ", docName='" + docName + '\''
-				+ ", content='" + content + '\'' + '}';
+		return "AiDocDTO{" + ", knowledgeId=" + knowledgeId + ", sourceType=" + sourceType + ", docName='" + docName
+				+ '\'' + ", content='" + content + '\'' + '}';
 	}
 
 }

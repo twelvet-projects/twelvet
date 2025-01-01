@@ -2,6 +2,7 @@ package com.twelvet.server.ai.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
+import com.twelvet.api.ai.constant.RAGEnums;
 import com.twelvet.api.ai.domain.AiDoc;
 import com.twelvet.api.ai.domain.AiDocSlice;
 import com.twelvet.api.ai.domain.dto.AiDocDTO;
@@ -11,6 +12,10 @@ import com.twelvet.server.ai.mapper.AiDocMapper;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.service.IAiDocService;
 import org.springframework.ai.document.Document;
+import org.springframework.ai.reader.ExtractedTextFormatter;
+import org.springframework.ai.reader.pdf.PagePdfDocumentReader;
+import org.springframework.ai.reader.pdf.config.PdfDocumentReaderConfig;
+import org.springframework.ai.reader.tika.TikaDocumentReader;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Service;
@@ -71,12 +76,20 @@ public class AiDocServiceImpl implements IAiDocService {
 		LocalDateTime nowDate = LocalDateTime.now();
 		String username = SecurityUtils.getUsername();
 
-		if (StrUtil.isBlank(aiDocDTO.getDocName())) {
-			throw new TWTException("文档名称不能为空");
-		}
+		if (RAGEnums.DocSourceTypeEnums.INPUT.equals(aiDocDTO.getSourceType())) { // 处理录入类型数据
+			if (StrUtil.isBlank(aiDocDTO.getDocName())) {
+				throw new TWTException("文档名称不能为空");
+			}
 
-		if (StrUtil.isBlank(aiDocDTO.getContent())) {
-			throw new TWTException("文档内容不能为空");
+			if (StrUtil.isBlank(aiDocDTO.getContent())) {
+				throw new TWTException("文档内容不能为空");
+			}
+		}
+		else if (RAGEnums.DocSourceTypeEnums.UPLOAD.equals(aiDocDTO.getSourceType())) { // 处理上传文件
+			TikaDocumentReader tikaDocumentReader = new TikaDocumentReader("https://static.twelvet.cn/ai/README_ZH.md");
+		}
+		else {
+			throw new TWTException("非法来源类型");
 		}
 
 		AiDoc aiDoc = new AiDoc();
@@ -120,16 +133,6 @@ public class AiDocServiceImpl implements IAiDocService {
 		}
 
 		return i;
-	}
-
-	/**
-	 * 修改AI知识库文档
-	 * @param aiDoc AI知识库文档
-	 * @return 结果
-	 */
-	@Override
-	public int updateAiDoc(AiDoc aiDoc) {
-		return aiDocMapper.updateAiDoc(aiDoc);
 	}
 
 	/**
