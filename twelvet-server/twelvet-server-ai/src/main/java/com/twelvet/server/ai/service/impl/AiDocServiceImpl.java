@@ -87,6 +87,7 @@ public class AiDocServiceImpl implements IAiDocService {
 		}
 		else if (RAGEnums.DocSourceTypeEnums.UPLOAD.equals(aiDocDTO.getSourceType())) { // 处理上传文件
 			TikaDocumentReader tikaDocumentReader = new TikaDocumentReader("https://static.twelvet.cn/ai/README_ZH.md");
+			List<Document> documents = tikaDocumentReader.get();
 		}
 		else {
 			throw new TWTException("非法来源类型");
