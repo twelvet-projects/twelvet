@@ -26,12 +26,11 @@ public class AITest {
 	private final static Logger log = LoggerFactory.getLogger(AITest.class);
 
 	/**
-	 * 工作ID获取测试
+	 * 测试文件识别
 	 */
 	@Test
-	public void getWorkIdTest() {
-		TikaDocumentReader tikaDocumentReader = new TikaDocumentReader("https://static.twelvet.cn/ai/README_ZH.md",
-				ExtractedTextFormatter.builder().withNumberOfTopPagesToSkipBeforeDelete(1).build());
+	public void tikaTest() {
+		TikaDocumentReader tikaDocumentReader = new TikaDocumentReader("https://static.twelvet.cn/ai/README.pdf");
 		List<Document> read = tikaDocumentReader.get();
 		log.info("分析成功");
 	}

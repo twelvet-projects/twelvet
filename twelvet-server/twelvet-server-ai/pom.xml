@@ -98,12 +98,6 @@
             <artifactId>spring-ai-pgvector-store-spring-boot-starter</artifactId>
         </dependency>
 
-        <!--PDF阅读器-->
-        <dependency>
-            <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-pdf-document-reader</artifactId>
-        </dependency>
-
         <!--DOCX、PPTX、HTML...阅读器-->
         <dependency>
             <groupId>org.springframework.ai</groupId>
