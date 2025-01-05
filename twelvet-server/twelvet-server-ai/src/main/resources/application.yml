@@ -33,19 +33,7 @@ spring:
       # 暂时修复因sentinel导致的无法启动
       # openfeign:
       #lazy-attributes-resolution: true
-    stream:
-      rocketmq:
-        binder:
-          name-server: twelvet-rocketmq:9876
-      bindings:
-        # 测试
-        TEST_MQ_INPUT:
-          destination: TEST_MQ
-          contentType: application/json
-        # 测试
-        TEST_OUTPUT:
-          destination: TEST_MQ
-          contentType: application/json
+
   config:
     import:
       - optional:nacos:twelvet-app-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}

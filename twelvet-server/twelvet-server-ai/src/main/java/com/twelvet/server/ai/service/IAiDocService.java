@@ -33,7 +33,7 @@ public interface IAiDocService {
 	 * @param aiDocDTO AI知识库文档
 	 * @return 结果
 	 */
-	public int insertAiDoc(AiDocDTO aiDocDTO);
+	public Boolean insertAiDoc(AiDocDTO aiDocDTO);
 
 	/**
 	 * 批量删除AI知识库文档

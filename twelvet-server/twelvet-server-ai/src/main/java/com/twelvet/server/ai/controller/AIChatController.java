@@ -1,18 +1,20 @@
 package com.twelvet.server.ai.controller;
 
 import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisOutput;
-import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisResult;
+import com.twelvet.api.ai.domain.dto.AiDocDTO;
 import com.twelvet.api.ai.domain.dto.MessageDTO;
 import com.twelvet.api.ai.domain.dto.SttDTO;
 import com.twelvet.api.ai.domain.dto.TtsDTO;
 import com.twelvet.api.ai.domain.vo.MessageVO;
+import com.twelvet.framework.core.application.domain.JsonResult;
 import com.twelvet.framework.core.domain.R;
 import com.twelvet.server.ai.service.AIChatService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.ai.audio.transcription.AudioTranscriptionResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.http.MediaType;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +34,17 @@ public class AIChatController {
 
 	@Autowired
 	private AIChatService aiChatService;
+
+	@Autowired
+	private StreamBridge streamBridge;
+
+	@PostMapping("/mq")
+	public JsonResult<String> mq() {
+		AiDocDTO aiDocDTO = new AiDocDTO();
+		aiDocDTO.setContent("测试消息");
+		streamBridge.send("addRAGDocChannel-out-0", MessageBuilder.withPayload(aiDocDTO).build());
+		return JsonResult.success();
+	}
 
 	/**
 	 * 回答用户问题

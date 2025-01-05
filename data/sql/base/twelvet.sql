@@ -234,6 +234,12 @@ INSERT INTO `sys_dict_data`
 VALUES (119, 1, '简体中文', 'zh_CN', 'i18n', NULL, NULL, 'N', 0, 'admin', '2024-03-26 21:16:31', '', NULL, NULL);
 INSERT INTO `sys_dict_data`
 VALUES (120, 2, 'English US', 'en_US', 'i18n', NULL, NULL, 'N', 0, 'admin', '2024-03-26 21:17:03', '', NULL, NULL);
+INSERT INTO `sys_dict_data`
+VALUES (121, 1, '录入', 'INPUT', 'rag_source_type', NULL, NULL, 'N', 0, 'admin', '2025-01-02 21:56:09', '', NULL,
+        '录入的资料');
+INSERT INTO `sys_dict_data`
+VALUES (122, 2, '上传', 'UPLOAD', 'rag_source_type', NULL, NULL, 'N', 0, 'admin', '2025-01-02 21:56:28', '', NULL,
+        '上传的资料');
 
 -- ----------------------------
 -- Table structure for sys_dict_type
@@ -291,7 +297,8 @@ INSERT INTO `sys_dict_type`
 VALUES (105, '数据库链接类型', 'ds_config_type', 0, 'admin', '2023-11-04 19:03:57', '', NULL, '数据库链接类型');
 INSERT INTO `sys_dict_type`
 VALUES (106, '国际化', 'i18n', 0, 'admin', '2024-03-26 21:15:49', '', NULL, '国际化i18n');
-
+INSERT INTO `sys_dict_type`
+VALUES (107, 'RAG资源来源类型', 'rag_source_type', 0, 'admin', '2025-01-02 21:55:19', '', NULL, 'RAG资源来源类型');
 
 -- ----------------------------
 -- Table structure for sys_job_log

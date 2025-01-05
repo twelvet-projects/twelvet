@@ -65,6 +65,7 @@ CREATE TABLE `ai_doc`
 (
     `doc_id`       bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '文档ID',
     `knowledge_id` bigint(20)                                                    NOT NULL COMMENT '知识库ID',
+    `source_type`  varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '来源类型，枚举：RAGEnums.DocSourceTypeEnums',
     `doc_name`     varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文档名称',
     `create_by`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '创建者',
     `create_time`  datetime                                                      NOT NULL COMMENT '创建时间',

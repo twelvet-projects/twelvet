@@ -7,6 +7,7 @@
     <resultMap type="AiDoc" id="AiDocResult">
         <result property="docId" column="doc_id"/>
         <result property="knowledgeId" column="knowledge_id"/>
+        <result property="sourceType" column="source_type"/>
         <result property="docName" column="doc_name"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
@@ -15,7 +16,7 @@
     </resultMap>
 
     <sql id="selectAiDocVo">
-        select doc_id, knowledge_id, doc_name, create_by, create_time, update_by, update_time
+        select doc_id, knowledge_id, source_type, doc_name, create_by, create_time, update_by, update_time
         from ai_doc
     </sql>
 
@@ -37,6 +38,7 @@
         insert into ai_doc
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="knowledgeId != null">knowledge_id,</if>
+            <if test="sourceType != null">source_type,</if>
             <if test="docName != null and createBy != '' ">doc_name,</if>
             <if test="createBy != null and createBy != ''">create_by,</if>
             <if test="createTime != null">create_time,</if>
@@ -45,6 +47,7 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="knowledgeId != null">#{knowledgeId},</if>
+            <if test="sourceType != null">#{sourceType},</if>
             <if test="docName != null and docName != ''">#{docName},</if>
             <if test="createBy != null and createBy != ''">#{createBy},</if>
             <if test="createTime != null">#{createTime},</if>

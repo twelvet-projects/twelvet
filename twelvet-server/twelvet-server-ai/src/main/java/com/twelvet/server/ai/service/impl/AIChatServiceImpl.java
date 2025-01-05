@@ -13,10 +13,6 @@ import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatOptions;
 import com.alibaba.cloud.ai.dashscope.chat.MessageFormat;
 import com.alibaba.cloud.ai.dashscope.image.DashScopeImageModel;
 import com.alibaba.cloud.ai.dashscope.image.DashScopeImageOptions;
-import com.alibaba.dashscope.aigc.imagesynthesis.ImageSynthesis;
-import com.alibaba.dashscope.aigc.imagesynthesis.ImageSynthesisParam;
-import com.alibaba.dashscope.aigc.imagesynthesis.ImageSynthesisResult;
-import com.alibaba.dashscope.exception.NoApiKeyException;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.github.houbb.sensitive.word.bs.SensitiveWordBs;
 import com.github.yitter.idgen.YitIdHelper;
@@ -61,7 +57,6 @@ import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.ai.vectorstore.filter.Filter;
 import org.springframework.ai.vectorstore.filter.FilterExpressionBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
@@ -531,7 +526,7 @@ public class AIChatServiceImpl implements AIChatService {
 
 		DashScopeSpeechSynthesisOptions dashScopeSpeechSynthesisOptions = DashScopeSpeechSynthesisOptions.builder()
 			// 不同模型可能不支持字级别音素边界
-			.withModel("sambert-zhichu-v1")
+			.withModel("sambert-zhimiao-emo-v1")
 			.withResponseFormat(DashScopeSpeechSynthesisApi.ResponseFormat.WAV)
 			.withEnableWordTimestamp(Boolean.TRUE)
 			.withEnablePhonemeTimestamp(Boolean.TRUE)

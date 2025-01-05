@@ -19,7 +19,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * AI知识库文档Service业务层处理
@@ -69,7 +71,7 @@ public class AiDocServiceImpl implements IAiDocService {
 	 * @return 结果
 	 */
 	@Override
-	public int insertAiDoc(AiDocDTO aiDocDTO) {
+	public Boolean insertAiDoc(AiDocDTO aiDocDTO) {
 		LocalDateTime nowDate = LocalDateTime.now();
 		String username = SecurityUtils.getUsername();
 
@@ -81,56 +83,75 @@ public class AiDocServiceImpl implements IAiDocService {
 			if (StrUtil.isBlank(aiDocDTO.getContent())) {
 				throw new TWTException("文档内容不能为空");
 			}
+
+			AiDoc aiDoc = new AiDoc();
+			aiDoc.setDocName(aiDocDTO.getDocName());
+			aiDoc.setKnowledgeId(aiDocDTO.getKnowledgeId());
+			aiDoc.setSourceType(RAGEnums.DocSourceTypeEnums.INPUT);
+			aiDoc.setCreateBy(username);
+			aiDoc.setCreateTime(nowDate);
+			aiDoc.setUpdateBy(username);
+			aiDoc.setUpdateTime(nowDate);
+
+			aiDocMapper.insertAiDoc(aiDoc);
+
+			Long knowledgeId = aiDoc.getKnowledgeId();
+			Long docId = aiDoc.getDocId();
+
+			// https://docs.spring.io/spring-ai/reference/api/etl-pipeline.html#_parameters_4
+			TokenTextSplitter splitter = new TokenTextSplitter(800, 350, 5, 10000, Boolean.TRUE);
+
+			Map<String, Object> metadata = new HashMap<>();
+			metadata.put(RAGEnums.VectorMetadataEnums.KNOWLEDGE_ID.getCode(), aiDocDTO.getKnowledgeId());
+			metadata.put(RAGEnums.VectorMetadataEnums.DOC_ID.getCode(), aiDoc.getDocId());
+
+			Document document = new Document(aiDocDTO.getContent(), metadata);
+			List<Document> docs = splitter.split(document);
+
+			List<AiDocSlice> docSliceList = new ArrayList<>();
+			for (Document doc : docs) {
+				AiDocSlice aiDocSlice = new AiDocSlice();
+				aiDocSlice.setKnowledgeId(knowledgeId);
+				aiDocSlice.setDocId(docId);
+				aiDocSlice.setVectorId(doc.getId());
+				aiDocSlice.setSliceName(aiDoc.getDocName());
+				aiDocSlice.setContent(doc.getContent());
+				aiDocSlice.setCreateBy(username);
+				aiDocSlice.setCreateTime(nowDate);
+				aiDocSlice.setUpdateBy(username);
+				aiDocSlice.setUpdateTime(nowDate);
+
+				docSliceList.add(aiDocSlice);
+			}
+
+			if (CollectionUtil.isNotEmpty(docSliceList)) {
+				// 插入切片
+				aiDocSliceMapper.insertAiDocSliceBatch(docSliceList);
+
+				// TODO 插入向量保存切片ID
+				vectorStore.add(docs);
+			}
 		}
 		else if (RAGEnums.DocSourceTypeEnums.UPLOAD.equals(aiDocDTO.getSourceType())) { // 处理上传文件
 			TikaDocumentReader tikaDocumentReader = new TikaDocumentReader("https://static.twelvet.cn/ai/README_ZH.md");
 			List<Document> documents = tikaDocumentReader.get();
+
+			// TODO 发送MQ进行处理插入
+			AiDoc aiDoc = new AiDoc();
+			aiDoc.setDocName(aiDocDTO.getDocName());
+			aiDoc.setKnowledgeId(aiDocDTO.getKnowledgeId());
+			aiDoc.setSourceType(RAGEnums.DocSourceTypeEnums.UPLOAD);
+			aiDoc.setCreateBy(username);
+			aiDoc.setCreateTime(nowDate);
+			aiDoc.setUpdateBy(username);
+			aiDoc.setUpdateTime(nowDate);
+
 		}
 		else {
 			throw new TWTException("非法来源类型");
 		}
 
-		AiDoc aiDoc = new AiDoc();
-		aiDoc.setDocName(aiDocDTO.getDocName());
-		aiDoc.setKnowledgeId(aiDocDTO.getKnowledgeId());
-		aiDoc.setCreateBy(username);
-		aiDoc.setCreateTime(nowDate);
-		aiDoc.setUpdateBy(username);
-		aiDoc.setUpdateTime(nowDate);
-
-		int i = aiDocMapper.insertAiDoc(aiDoc);
-
-		Long knowledgeId = aiDoc.getKnowledgeId();
-		Long docId = aiDoc.getDocId();
-
-		// https://docs.spring.io/spring-ai/reference/api/etl-pipeline.html#_parameters_4
-		TokenTextSplitter splitter = new TokenTextSplitter(800, 350, 5, 10000, Boolean.TRUE);
-
-		Document document = new Document(aiDocDTO.getContent());
-		List<Document> docs = splitter.split(document);
-
-		List<AiDocSlice> docSliceList = new ArrayList<>();
-		for (Document doc : docs) {
-			AiDocSlice aiDocSlice = new AiDocSlice();
-			aiDocSlice.setKnowledgeId(knowledgeId);
-			aiDocSlice.setDocId(docId);
-			aiDocSlice.setVectorId(doc.getId());
-			aiDocSlice.setSliceName(aiDoc.getDocName());
-			aiDocSlice.setContent(doc.getContent());
-			aiDocSlice.setCreateBy(username);
-			aiDocSlice.setCreateTime(nowDate);
-			aiDocSlice.setUpdateBy(username);
-			aiDocSlice.setUpdateTime(nowDate);
-
-			docSliceList.add(aiDocSlice);
-		}
-
-		// 优先添加数据库，队列处理向量化
-		if (CollectionUtil.isNotEmpty(docSliceList)) {
-			aiDocSliceMapper.insertAiDocSliceBatch(docSliceList);
-		}
-
-		return i;
+		return Boolean.TRUE;
 	}
 
 	/**
