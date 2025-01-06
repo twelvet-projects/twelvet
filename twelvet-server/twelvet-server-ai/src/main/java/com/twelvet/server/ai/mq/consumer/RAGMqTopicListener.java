@@ -23,7 +23,7 @@ public class RAGMqTopicListener {
 	private final static Logger log = LoggerFactory.getLogger(RAGMqTopicListener.class);
 
 	@Bean
-	public Consumer<AiDocDTO> addRAGDocChannel() {
+	public Consumer<String> addRAGDocChannel() {
 		return message -> {
 			log.info("收到消息: {}", message);
 		};

@@ -42,7 +42,7 @@ public class AIChatController {
 	public JsonResult<String> mq() {
 		AiDocDTO aiDocDTO = new AiDocDTO();
 		aiDocDTO.setContent("测试消息");
-		streamBridge.send("addRAGDocChannel-out-0", MessageBuilder.withPayload(aiDocDTO).build());
+		streamBridge.send("addRAGDocChannel-out-0", MessageBuilder.withPayload("测试消息").build());
 		return JsonResult.success();
 	}
 
