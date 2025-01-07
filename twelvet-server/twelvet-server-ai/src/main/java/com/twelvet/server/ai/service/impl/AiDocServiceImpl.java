@@ -43,7 +43,8 @@ public class AiDocServiceImpl implements IAiDocService {
 
 	private final StreamBridge streamBridge;
 
-	public AiDocServiceImpl(AiDocMapper aiDocMapper, AiDocSliceMapper aiDocSliceMapper, VectorStore vectorStore, StreamBridge streamBridge) {
+	public AiDocServiceImpl(AiDocMapper aiDocMapper, AiDocSliceMapper aiDocSliceMapper, VectorStore vectorStore,
+			StreamBridge streamBridge) {
 		this.aiDocMapper = aiDocMapper;
 		this.aiDocSliceMapper = aiDocSliceMapper;
 		this.vectorStore = vectorStore;

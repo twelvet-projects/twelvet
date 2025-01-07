@@ -40,7 +40,7 @@ public class AITest {
 	public void sendMqTest() {
 		AiDocDTO aiDocDTO = new AiDocDTO();
 		aiDocDTO.setContent("测试消息");
-		streamBridge.send("addRAGDocChannel-out-0", MessageBuilder.withPayload("消息测试").build());
+		streamBridge.send("addRAGDocChannel-out-0", MessageBuilder.withPayload(aiDocDTO).build());
 		log.info("消息发送成功");
 	}
 
