@@ -15,6 +15,8 @@ import org.springframework.ai.document.Document;
 import org.springframework.ai.reader.tika.TikaDocumentReader;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -39,10 +41,13 @@ public class AiDocServiceImpl implements IAiDocService {
 
 	private final VectorStore vectorStore;
 
-	public AiDocServiceImpl(AiDocMapper aiDocMapper, AiDocSliceMapper aiDocSliceMapper, VectorStore vectorStore) {
+	private final StreamBridge streamBridge;
+
+	public AiDocServiceImpl(AiDocMapper aiDocMapper, AiDocSliceMapper aiDocSliceMapper, VectorStore vectorStore, StreamBridge streamBridge) {
 		this.aiDocMapper = aiDocMapper;
 		this.aiDocSliceMapper = aiDocSliceMapper;
 		this.vectorStore = vectorStore;
+		this.streamBridge = streamBridge;
 	}
 
 	/**

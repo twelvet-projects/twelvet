@@ -35,17 +35,6 @@ public class AIChatController {
 	@Autowired
 	private AIChatService aiChatService;
 
-	@Autowired
-	private StreamBridge streamBridge;
-
-	@PostMapping("/mq")
-	public JsonResult<String> mq() {
-		AiDocDTO aiDocDTO = new AiDocDTO();
-		aiDocDTO.setContent("测试消息");
-		streamBridge.send("addRAGDocChannel-out-0", MessageBuilder.withPayload(aiDocDTO).build());
-		return JsonResult.success();
-	}
-
 	/**
 	 * 回答用户问题
 	 * @param messageDTO MessageDTO
