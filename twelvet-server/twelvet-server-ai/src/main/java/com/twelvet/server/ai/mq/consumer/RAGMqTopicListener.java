@@ -17,15 +17,15 @@ import java.util.function.Consumer;
  * @WebSite twelvet.cn
  * @date 2025-01-04
  */
-@Component
+@Configuration
 public class RAGMqTopicListener {
 
 	private final static Logger log = LoggerFactory.getLogger(RAGMqTopicListener.class);
 
 	@Bean
-	public Consumer<String> addRAGDocChannel() {
+	public Consumer<Message<AiDocDTO>> addRAGDocChannel() {
 		return message -> {
-			log.info("收到消息: {}", message);
+			log.info("收到消息: {}", message.getPayload());
 		};
 	}
 
