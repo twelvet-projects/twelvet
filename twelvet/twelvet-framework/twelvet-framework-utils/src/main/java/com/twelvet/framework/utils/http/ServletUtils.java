@@ -4,6 +4,8 @@ import com.twelvet.framework.utils.CharsetKit;
 import com.twelvet.framework.utils.Convert;
 import com.twelvet.framework.utils.StrUtils;
 import com.twelvet.framework.utils.exception.TWTUtilsException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -28,6 +30,8 @@ public class ServletUtils {
 	public ServletUtils() {
 		throw new TWTUtilsException("This is a utility class and cannot be instantiated");
 	}
+
+	private final static Logger log = LoggerFactory.getLogger(ServletUtils.class);
 
 	public static final String METHOD_DELETE = "DELETE";
 
@@ -57,7 +61,7 @@ public class ServletUtils {
 			response.getWriter().print(json);
 		}
 		catch (IOException e) {
-			e.printStackTrace();
+			log.error("IO错误", e);
 		}
 	}
 
@@ -155,7 +159,7 @@ public class ServletUtils {
 			return stringBuilder.toString();
 		}
 		catch (IOException e) {
-			e.printStackTrace();
+			log.error("IO错误", e);
 			return "";
 		}
 	}
