@@ -11,8 +11,9 @@ import org.springframework.messaging.MessageChannel;
  */
 public interface RAGChannel {
 
-	MessageChannel DOC_INPUT();
-
-	MessageChannel DOC_OUTPUT();
+	/**
+	 * 添加rag文档
+	 */
+	String ADD_RAG_DOC = "addRAGDocChannel-out-0";
 
 }

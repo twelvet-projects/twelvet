@@ -3,6 +3,7 @@ package com.twelvet;
 import com.twelvet.api.ai.domain.dto.AiDocDTO;
 import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.server.ai.AiApplication;
+import com.twelvet.server.ai.mq.RAGChannel;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.redisson.api.RAtomicLong;
@@ -40,7 +41,7 @@ public class AITest {
 	public void sendMqTest() {
 		AiDocDTO aiDocDTO = new AiDocDTO();
 		aiDocDTO.setContent("测试消息");
-		streamBridge.send("addRAGDocChannel-out-0", MessageBuilder.withPayload(aiDocDTO).build());
+		streamBridge.send(RAGChannel.ADD_RAG_DOC, MessageBuilder.withPayload(aiDocDTO).build());
 		log.info("消息发送成功");
 	}
 
