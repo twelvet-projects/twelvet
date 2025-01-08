@@ -54,7 +54,6 @@ public class ServletUtils {
 			response.setCharacterEncoding(CharsetKit.UTF_8);
 			response.setStatus(code);
 			response.setContentType("application/json; charset=utf-8");
-			response.setCharacterEncoding("utf-8");
 			response.getWriter().print(json);
 		}
 		catch (IOException e) {
