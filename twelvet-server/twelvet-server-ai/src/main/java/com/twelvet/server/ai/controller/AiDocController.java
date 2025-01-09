@@ -85,9 +85,8 @@ public class AiDocController extends TWTController {
 	@PreAuthorize("@role.hasPermi('ai:doc:add')")
 	@Log(service = "AI知识库文档", businessType = BusinessType.INSERT)
 	@PostMapping
-	public JsonResult<?> add(@Validated @RequestBody AiDocDTO aiDocDTO) {
-		aiDocService.insertAiDoc(aiDocDTO);
-		return JsonResult.success();
+	public JsonResult<Boolean> add(@Validated @RequestBody AiDocDTO aiDocDTO) {
+		return JsonResult.success(aiDocService.insertAiDoc(aiDocDTO));
 	}
 
 	/**

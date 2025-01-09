@@ -10,6 +10,7 @@ import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.server.ai.mapper.AiDocMapper;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
+import com.twelvet.server.ai.mq.RAGChannel;
 import com.twelvet.server.ai.service.IAiDocService;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.reader.tika.TikaDocumentReader;
@@ -17,6 +18,7 @@ import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.function.StreamBridge;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -135,22 +137,15 @@ public class AiDocServiceImpl implements IAiDocService {
 				aiDocSliceMapper.insertAiDocSliceBatch(docSliceList);
 
 				// TODO 插入向量保存切片ID
-				vectorStore.add(docs);
+				streamBridge.send(RAGChannel.ADD_RAG_DOC, MessageBuilder.withPayload(aiDocDTO).build());
 			}
 		}
 		else if (RAGEnums.DocSourceTypeEnums.UPLOAD.equals(aiDocDTO.getSourceType())) { // 处理上传文件
 			TikaDocumentReader tikaDocumentReader = new TikaDocumentReader("https://static.twelvet.cn/ai/README_ZH.md");
 			List<Document> documents = tikaDocumentReader.get();
 
-			// TODO 发送MQ进行处理插入
-			AiDoc aiDoc = new AiDoc();
-			aiDoc.setDocName(aiDocDTO.getDocName());
-			aiDoc.setKnowledgeId(aiDocDTO.getKnowledgeId());
-			aiDoc.setSourceType(RAGEnums.DocSourceTypeEnums.UPLOAD);
-			aiDoc.setCreateBy(username);
-			aiDoc.setCreateTime(nowDate);
-			aiDoc.setUpdateBy(username);
-			aiDoc.setUpdateTime(nowDate);
+			// 发送MQ进行处理插入
+			streamBridge.send(RAGChannel.ADD_RAG_DOC, MessageBuilder.withPayload(aiDocDTO).build());
 
 		}
 		else {
