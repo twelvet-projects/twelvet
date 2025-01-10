@@ -28,8 +28,11 @@ import java.util.List;
 @RequestMapping("/slice")
 public class AiDocSliceController extends TWTController {
 
-	@Autowired
-	private IAiDocSliceService aiDocSliceService;
+	private final IAiDocSliceService aiDocSliceService;
+
+	public AiDocSliceController(IAiDocSliceService aiDocSliceService) {
+		this.aiDocSliceService = aiDocSliceService;
+	}
 
 	/**
 	 * 查询AI知识库文档分片分页

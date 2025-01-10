@@ -32,8 +32,11 @@ import com.twelvet.framework.jdbc.web.utils.PageUtils;
 @RequestMapping("/model")
 public class AiModelController extends TWTController {
 
-	@Autowired
-	private IAiModelService aiModelService;
+	private final IAiModelService aiModelService;
+
+	public AiModelController(IAiModelService aiModelService) {
+		this.aiModelService = aiModelService;
+	}
 
 	/**
 	 * 查询AI大模型分页

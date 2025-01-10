@@ -32,8 +32,11 @@ import reactor.core.publisher.Flux;
 @RequestMapping("/chat")
 public class AIChatController {
 
-	@Autowired
-	private AIChatService aiChatService;
+	private final AIChatService aiChatService;
+
+	public AIChatController(AIChatService aiChatService) {
+		this.aiChatService = aiChatService;
+	}
 
 	/**
 	 * 回答用户问题

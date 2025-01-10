@@ -29,8 +29,11 @@ import java.util.List;
 @RequestMapping("/knowledge")
 public class AiKnowledgeController extends TWTController {
 
-	@Autowired
-	private IAiKnowledgeService aiKnowledgeService;
+	private final IAiKnowledgeService aiKnowledgeService;
+
+	public AiKnowledgeController(IAiKnowledgeService aiKnowledgeService) {
+		this.aiKnowledgeService = aiKnowledgeService;
+	}
 
 	/**
 	 * 查询AI知识库分页

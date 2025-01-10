@@ -31,8 +31,11 @@ import java.util.List;
 @RequestMapping("/doc")
 public class AiDocController extends TWTController {
 
-	@Autowired
-	private IAiDocService aiDocService;
+	private final IAiDocService aiDocService;
+
+	public AiDocController(IAiDocService aiDocService) {
+		this.aiDocService = aiDocService;
+	}
 
 	/**
 	 * 查询AI知识库文档分页

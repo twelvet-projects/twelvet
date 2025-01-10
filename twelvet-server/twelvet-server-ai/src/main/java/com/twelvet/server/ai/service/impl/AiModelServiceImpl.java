@@ -23,8 +23,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class AiModelServiceImpl implements IAiModelService {
 
-	@Autowired
-	private AiModelMapper aiModelMapper;
+	private final AiModelMapper aiModelMapper;
+
+	public AiModelServiceImpl(AiModelMapper aiModelMapper) {
+		this.aiModelMapper = aiModelMapper;
+	}
 
 	/**
 	 * 查询AI大模型
