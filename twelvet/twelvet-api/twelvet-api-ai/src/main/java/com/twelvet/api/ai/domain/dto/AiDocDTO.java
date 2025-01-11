@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * AI知识库文档对象 ai_doc
@@ -43,14 +44,16 @@ public class AiDocDTO implements Serializable {
 
 	/** 内容 */
 	@Schema(description = "内容")
-	@ExcelProperty(value = "内容")
 	private String content;
 
-	public @NotNull(message = "知识库ID不能为空") Long getKnowledgeId() {
+	@Schema(description = "文件列表")
+	private List<String> fileList;
+
+	public Long getKnowledgeId() {
 		return knowledgeId;
 	}
 
-	public void setKnowledgeId(@NotNull(message = "知识库ID不能为空") Long knowledgeId) {
+	public void setKnowledgeId(Long knowledgeId) {
 		this.knowledgeId = knowledgeId;
 	}
 
@@ -78,10 +81,22 @@ public class AiDocDTO implements Serializable {
 		this.content = content;
 	}
 
-	@Override
-	public String toString() {
-		return "AiDocDTO{" + ", knowledgeId=" + knowledgeId + ", sourceType=" + sourceType + ", docName='" + docName
-				+ '\'' + ", content='" + content + '\'' + '}';
+	public List<String> getFileList() {
+		return fileList;
 	}
 
+	public void setFileList(List<String> fileList) {
+		this.fileList = fileList;
+	}
+
+	@Override
+	public String toString() {
+		return "AiDocDTO{" +
+				"knowledgeId=" + knowledgeId +
+				", sourceType=" + sourceType +
+				", docName='" + docName + '\'' +
+				", content='" + content + '\'' +
+				", fileList=" + fileList +
+				'}';
+	}
 }
