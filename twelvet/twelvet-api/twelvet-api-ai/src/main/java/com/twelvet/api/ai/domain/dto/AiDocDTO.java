@@ -47,21 +47,58 @@ public class AiDocDTO implements Serializable {
 	private String content;
 
 	@Schema(description = "文件列表")
-	private List<String> fileList;
+	private List<FileDTO> fileList;
 
-	public Long getKnowledgeId() {
+	/**
+	 * 文件上传
+	 */
+	public static class FileDTO implements Serializable {
+
+		@Serial
+		private static final long serialVersionUID = 1L;
+
+		@Schema(description = "文件名称")
+		private String fileName;
+
+		@Schema(description = "文件地址")
+		private String fileUrl;
+
+		public String getFileName() {
+			return fileName;
+		}
+
+		public void setFileName(String fileName) {
+			this.fileName = fileName;
+		}
+
+		public String getFileUrl() {
+			return fileUrl;
+		}
+
+		public void setFileUrl(String fileUrl) {
+			this.fileUrl = fileUrl;
+		}
+
+		@Override
+		public String toString() {
+			return "FileDTO{" + "fileName='" + fileName + '\'' + ", fileUrl='" + fileUrl + '\'' + '}';
+		}
+
+	}
+
+	public @NotNull(message = "知识库不能为空") Long getKnowledgeId() {
 		return knowledgeId;
 	}
 
-	public void setKnowledgeId(Long knowledgeId) {
+	public void setKnowledgeId(@NotNull(message = "知识库不能为空") Long knowledgeId) {
 		this.knowledgeId = knowledgeId;
 	}
 
-	public RAGEnums.DocSourceTypeEnums getSourceType() {
+	public @NotNull(message = "来源类型不能为空") RAGEnums.DocSourceTypeEnums getSourceType() {
 		return sourceType;
 	}
 
-	public void setSourceType(RAGEnums.DocSourceTypeEnums sourceType) {
+	public void setSourceType(@NotNull(message = "来源类型不能为空") RAGEnums.DocSourceTypeEnums sourceType) {
 		this.sourceType = sourceType;
 	}
 
@@ -81,11 +118,11 @@ public class AiDocDTO implements Serializable {
 		this.content = content;
 	}
 
-	public List<String> getFileList() {
+	public List<FileDTO> getFileList() {
 		return fileList;
 	}
 
-	public void setFileList(List<String> fileList) {
+	public void setFileList(List<FileDTO> fileList) {
 		this.fileList = fileList;
 	}
 

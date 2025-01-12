@@ -62,7 +62,7 @@
     </insert>
 
     <!-- 批量插入语句 -->
-    <insert id="insertAiDocSliceBatch" parameterType="List">
+    <insert id="insertAiDocSliceBatch" useGeneratedKeys="true" keyProperty="sliceId" parameterType="List">
         INSERT INTO ai_doc_slice (knowledge_id, doc_id, vector_id, slice_name, content)
         VALUES
         <foreach collection="aiDocSliceList" item="aiDocSlice" separator=",">

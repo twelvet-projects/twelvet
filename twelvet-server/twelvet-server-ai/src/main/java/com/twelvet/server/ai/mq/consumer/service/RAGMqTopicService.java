@@ -1,6 +1,6 @@
 package com.twelvet.server.ai.mq.consumer.service;
 
-import com.twelvet.api.ai.domain.dto.AiDocDTO;
+import com.twelvet.server.ai.mq.consumer.domain.dto.AiDocMqDTO;
 import org.springframework.messaging.Message;
 
 /**
@@ -14,8 +14,8 @@ public interface RAGMqTopicService {
 
 	/**
 	 * 处理添加RAG文档消息
-	 * @param message Message<AiDocDTO>
+	 * @param message Message<AddRAGDocDTO>
 	 */
-	void addRAGDocChannel(Message<AiDocDTO> message);
+	void addRAGDocChannel(Message<AiDocMqDTO> message);
 
 }

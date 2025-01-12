@@ -5,12 +5,15 @@ import cn.hutool.core.util.StrUtil;
 import com.twelvet.api.ai.constant.RAGEnums;
 import com.twelvet.api.ai.domain.AiDoc;
 import com.twelvet.api.ai.domain.AiDocSlice;
+import com.twelvet.api.ai.domain.AiKnowledge;
 import com.twelvet.api.ai.domain.dto.AiDocDTO;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.server.ai.mapper.AiDocMapper;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
+import com.twelvet.server.ai.mapper.AiKnowledgeMapper;
 import com.twelvet.server.ai.mq.RAGChannel;
+import com.twelvet.server.ai.mq.consumer.domain.dto.AiDocMqDTO;
 import com.twelvet.server.ai.service.IAiDocService;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.reader.tika.TikaDocumentReader;
@@ -22,10 +25,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * AI知识库文档Service业务层处理
@@ -45,12 +45,15 @@ public class AiDocServiceImpl implements IAiDocService {
 
 	private final StreamBridge streamBridge;
 
+	private final AiKnowledgeMapper aiKnowledgeMapper;
+
 	public AiDocServiceImpl(AiDocMapper aiDocMapper, AiDocSliceMapper aiDocSliceMapper, VectorStore vectorStore,
-			StreamBridge streamBridge) {
+			StreamBridge streamBridge, AiKnowledgeMapper aiKnowledgeMapper) {
 		this.aiDocMapper = aiDocMapper;
 		this.aiDocSliceMapper = aiDocSliceMapper;
 		this.vectorStore = vectorStore;
 		this.streamBridge = streamBridge;
+		this.aiKnowledgeMapper = aiKnowledgeMapper;
 	}
 
 	/**
@@ -80,9 +83,6 @@ public class AiDocServiceImpl implements IAiDocService {
 	 */
 	@Override
 	public Boolean insertAiDoc(AiDocDTO aiDocDTO) {
-		LocalDateTime nowDate = LocalDateTime.now();
-		String username = SecurityUtils.getUsername();
-
 		if (RAGEnums.DocSourceTypeEnums.INPUT.equals(aiDocDTO.getSourceType())) { // 处理录入类型数据
 			if (StrUtil.isBlank(aiDocDTO.getDocName())) {
 				throw new TWTException("文档名称不能为空");
@@ -91,71 +91,33 @@ public class AiDocServiceImpl implements IAiDocService {
 			if (StrUtil.isBlank(aiDocDTO.getContent())) {
 				throw new TWTException("文档内容不能为空");
 			}
-
-			AiDoc aiDoc = new AiDoc();
-			aiDoc.setDocName(aiDocDTO.getDocName());
-			aiDoc.setKnowledgeId(aiDocDTO.getKnowledgeId());
-			aiDoc.setSourceType(RAGEnums.DocSourceTypeEnums.INPUT);
-			aiDoc.setCreateBy(username);
-			aiDoc.setCreateTime(nowDate);
-			aiDoc.setUpdateBy(username);
-			aiDoc.setUpdateTime(nowDate);
-
-			aiDocMapper.insertAiDoc(aiDoc);
-
-			Long knowledgeId = aiDoc.getKnowledgeId();
-			Long docId = aiDoc.getDocId();
-
-			// https://docs.spring.io/spring-ai/reference/api/etl-pipeline.html#_parameters_4
-			TokenTextSplitter splitter = new TokenTextSplitter(800, 350, 5, 10000, Boolean.TRUE);
-
-			Map<String, Object> metadata = new HashMap<>();
-			metadata.put(RAGEnums.VectorMetadataEnums.KNOWLEDGE_ID.getCode(), aiDocDTO.getKnowledgeId());
-			metadata.put(RAGEnums.VectorMetadataEnums.DOC_ID.getCode(), aiDoc.getDocId());
-
-			Document document = new Document(aiDocDTO.getContent(), metadata);
-			List<Document> docs = splitter.split(document);
-
-			List<AiDocSlice> docSliceList = new ArrayList<>();
-			for (Document doc : docs) {
-				AiDocSlice aiDocSlice = new AiDocSlice();
-				aiDocSlice.setKnowledgeId(knowledgeId);
-				aiDocSlice.setDocId(docId);
-				aiDocSlice.setVectorId(doc.getId());
-				aiDocSlice.setSliceName(aiDoc.getDocName());
-				aiDocSlice.setContent(doc.getContent());
-				aiDocSlice.setCreateBy(username);
-				aiDocSlice.setCreateTime(nowDate);
-				aiDocSlice.setUpdateBy(username);
-				aiDocSlice.setUpdateTime(nowDate);
-
-				docSliceList.add(aiDocSlice);
-			}
-
-			if (CollectionUtil.isNotEmpty(docSliceList)) {
-				// 插入切片
-				aiDocSliceMapper.insertAiDocSliceBatch(docSliceList);
-
-				// TODO 插入向量保存切片ID
-				streamBridge.send(RAGChannel.ADD_RAG_DOC, MessageBuilder.withPayload(aiDocDTO).build());
-			}
 		}
 		else if (RAGEnums.DocSourceTypeEnums.UPLOAD.equals(aiDocDTO.getSourceType())) { // 处理上传文件
 
 			if (CollectionUtil.isEmpty(aiDocDTO.getFileList())) {
 				throw new TWTException("文件列表不能为空");
 			}
-
-			TikaDocumentReader tikaDocumentReader = new TikaDocumentReader("https://static.twelvet.cn/ai/README_ZH.md");
-			List<Document> documents = tikaDocumentReader.get();
-
-			// 发送MQ进行处理插入
-			streamBridge.send(RAGChannel.ADD_RAG_DOC, MessageBuilder.withPayload(aiDocDTO).build());
-
 		}
 		else {
 			throw new TWTException("非法来源类型");
 		}
+
+		Long knowledgeId = aiDocDTO.getKnowledgeId();
+		AiKnowledge aiKnowledge = aiKnowledgeMapper.selectAiKnowledgeByKnowledgeId(knowledgeId);
+		if (Objects.isNull(aiKnowledge)) {
+			throw new TWTException("不存在此知识库");
+		}
+
+		String username = SecurityUtils.getUsername();
+		AiDocMqDTO aiDocMqDTO = new AiDocMqDTO();
+		aiDocMqDTO.setDocName(aiDocDTO.getDocName());
+		aiDocMqDTO.setContent(aiDocDTO.getContent());
+		aiDocMqDTO.setKnowledgeId(knowledgeId);
+		aiDocMqDTO.setSourceType(aiDocDTO.getSourceType());
+		aiDocMqDTO.setFileList(aiDocDTO.getFileList());
+
+		aiDocMqDTO.setOperatorBy(username);
+		streamBridge.send(RAGChannel.ADD_RAG_DOC, MessageBuilder.withPayload(aiDocMqDTO).build());
 
 		return Boolean.TRUE;
 	}

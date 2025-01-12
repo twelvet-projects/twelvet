@@ -261,10 +261,12 @@ public class AIChatServiceImpl implements AIChatService {
 			for (Document document : docs) {
 				Map<String, Object> metadata = document.getMetadata();
 				// 储存命中次数
-				Long sliceId = (Long) metadata.get(RAGEnums.VectorMetadataEnums.SLICE_ID.getCode());
-				if (Objects.nonNull(sliceId) && !sliceIdList.contains(sliceId)) {
-					sliceIdList.add(sliceId);
-				}
+				/*
+				 * Long sliceId = (Long)
+				 * metadata.get(RAGEnums.VectorMetadataEnums.SLICE_ID.getCode()); if
+				 * (Objects.nonNull(sliceId) && !sliceIdList.contains(sliceId)) {
+				 * sliceIdList.add(sliceId); }
+				 */
 			}
 			// TODO 进行加1处理切片
 

@@ -50,7 +50,7 @@ public class AITest {
 	 */
 	@Test
 	public void tikaTest() {
-		TikaDocumentReader tikaDocumentReader = new TikaDocumentReader("https://static.twelvet.cn/ai/video.mp4");
+		TikaDocumentReader tikaDocumentReader = new TikaDocumentReader("https://static.twelvet.cn/ai/README_ZH.md");
 		List<Document> read = tikaDocumentReader.get();
 		read.forEach(document -> {
 			log.info("分析成功");
