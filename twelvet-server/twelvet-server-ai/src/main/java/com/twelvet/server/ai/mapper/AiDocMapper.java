@@ -38,6 +38,13 @@ public interface AiDocMapper {
 	int insertAiDoc(AiDoc aiDoc);
 
 	/**
+	 * 批量新增AI知识库文档
+	 * @param aiDocList AI知识库文档
+	 * @return 结果
+	 */
+	int insertAiDocBatch(List<AiDoc> aiDocList);
+
+	/**
 	 * 修改AI知识库文档
 	 * @param aiDoc AI知识库文档
 	 * @return 结果

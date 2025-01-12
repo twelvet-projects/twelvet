@@ -42,7 +42,7 @@ public interface AiDocSliceMapper {
 	 * @param aiDocSliceList AI知识库文档分片列表
 	 * @return 结果
 	 */
-	void insertAiDocSliceBatch(List<AiDocSlice> aiDocSliceList);
+	int insertAiDocSliceBatch(List<AiDocSlice> aiDocSliceList);
 
 	/**
 	 * 修改AI知识库文档分片

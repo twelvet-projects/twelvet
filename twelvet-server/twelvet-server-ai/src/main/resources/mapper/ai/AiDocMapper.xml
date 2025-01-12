@@ -56,6 +56,15 @@
         </trim>
     </insert>
 
+    <insert id="insertAiDocBatch" parameterType="List" useGeneratedKeys="true" keyProperty="docId">
+        INSERT INTO ai_doc ( knowledge_id, source_type, doc_name, create_by, create_time, update_by, update_time )
+        values
+        <foreach collection="aiDocList" item="aiDoc" separator=",">
+            (#{aiDoc.knowledgeId}, #{aiDoc.sourceType}, #{aiDoc.docName}, #{aiDoc.createBy}, #{aiDoc.createTime},
+            #{aiDoc.updateBy}, #{aiDoc.updateTime})
+        </foreach>
+    </insert>
+
     <update id="updateAiDoc" parameterType="AiDoc">
         update ai_doc
         <trim prefix="SET" suffixOverrides=",">

@@ -10,6 +10,7 @@ import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.server.ai.mapper.AiDocMapper;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
+import com.twelvet.server.ai.mq.consumer.domain.AiDocMqVO;
 import com.twelvet.server.ai.mq.consumer.domain.dto.AiDocMqDTO;
 import com.twelvet.server.ai.mq.consumer.service.RAGMqTopicService;
 import org.slf4j.Logger;
@@ -138,8 +139,7 @@ public class RAGMqTopicServiceImpl implements RAGMqTopicService {
 
 			List<AiDocDTO.FileDTO> fileList = aiDocMqDTO.getFileList();
 
-			List<AiDocSlice> docSliceList = new ArrayList<>();
-			List<Document> docList = new ArrayList<>();
+			List<AiDocMqVO> aiDocMqVOList = new ArrayList<>();
 			// 针对文件进行doc插入
 			for (AiDocDTO.FileDTO file : fileList) {
 				String fileName = file.getFileName();
@@ -148,8 +148,12 @@ public class RAGMqTopicServiceImpl implements RAGMqTopicService {
 				TikaDocumentReader tikaDocumentReader = new TikaDocumentReader(fileUrl);
 				List<Document> documents = tikaDocumentReader.get();
 				if (CollectionUtil.isEmpty(documents)) {
-					throw new TWTException("上传文件识别为空，空数据");
+					throw new TWTException("上传文件识别为空数据");
 				}
+
+				AiDocMqVO aiDocMqVO = new AiDocMqVO();
+				List<AiDocSlice> docSliceList = new ArrayList<>();
+				List<Document> docList = new ArrayList<>();
 
 				AiDoc aiDoc = new AiDoc();
 				aiDoc.setDocName(fileName);
@@ -159,10 +163,13 @@ public class RAGMqTopicServiceImpl implements RAGMqTopicService {
 				aiDoc.setCreateTime(nowDate);
 				aiDoc.setUpdateBy(username);
 				aiDoc.setUpdateTime(nowDate);
-				// TODO 需要优化批量插入
-				aiDocMapper.insertAiDoc(aiDoc);
 
-				Long docId = aiDoc.getDocId();
+				// 设置vo信息
+				aiDocMqVO.setAiDoc(aiDoc);
+				aiDocMqVO.setAiDocSliceList(docSliceList);
+				aiDocMqVO.setDocumentList(docList);
+				// 加入集合
+				aiDocMqVOList.add(aiDocMqVO);
 
 				// 切片文档
 				for (Document document : documents) {
@@ -171,12 +178,10 @@ public class RAGMqTopicServiceImpl implements RAGMqTopicService {
 					for (Document doc : docs) {
 						Map<String, Object> metadata = doc.getMetadata();
 						metadata.put(RAGEnums.VectorMetadataEnums.KNOWLEDGE_ID.getCode(), knowledgeId);
-						metadata.put(RAGEnums.VectorMetadataEnums.DOC_ID.getCode(), docId);
 
 						AiDocSlice aiDocSlice = new AiDocSlice();
 						aiDocSlice.setKnowledgeId(knowledgeId);
 						aiDocSlice.setVectorId(doc.getId());
-						aiDocSlice.setDocId(docId);
 						aiDocSlice.setSliceName(fileName);
 						aiDocSlice.setContent(doc.getContent());
 						aiDocSlice.setCreateBy(username);
@@ -192,7 +197,32 @@ public class RAGMqTopicServiceImpl implements RAGMqTopicService {
 				}
 			}
 
-			if (CollectionUtil.isNotEmpty(docSliceList)) {
+			if (CollectionUtil.isNotEmpty(aiDocMqVOList)) {
+
+				List<AiDoc> aiDocList = aiDocMqVOList.stream().map(AiDocMqVO::getAiDoc).toList();
+				// 批量插入文档
+				aiDocMapper.insertAiDocBatch(aiDocList);
+
+				List<AiDocSlice> docSliceList = new ArrayList<>();
+				List<Document> docList = new ArrayList<>();
+
+				for (AiDocMqVO aiDocMqVO : aiDocMqVOList) {
+					AiDoc aiDoc = aiDocMqVO.getAiDoc();
+					Long docId = aiDoc.getDocId();
+
+					List<AiDocSlice> aiDocSliceList = aiDocMqVO.getAiDocSliceList();
+					for (AiDocSlice aiDocSlice : aiDocSliceList) {
+						aiDocSlice.setDocId(docId);
+						docSliceList.add(aiDocSlice);
+					}
+
+					List<Document> documentList = aiDocMqVO.getDocumentList();
+					for (Document document : documentList) {
+						Map<String, Object> metadata = document.getMetadata();
+						metadata.put(RAGEnums.VectorMetadataEnums.DOC_ID.getCode(), docId);
+						docList.add(document);
+					}
+				}
 
 				// 插入切片
 				aiDocSliceMapper.insertAiDocSliceBatch(docSliceList);

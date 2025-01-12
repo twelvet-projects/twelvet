@@ -35,7 +35,7 @@ public class DFSController extends TWTController {
 	 * @return JsonResult<List<SysDfs>>
 	 */
 	@Operation(summary = "多文件上传")
-	@Log(service = "多文件上传", businessType = BusinessType.IMPORT)
+	@Log(service = "多文件上传", businessType = BusinessType.OTHER)
 	@PostMapping("/batchUpload")
 	public JsonResult<List<SysDfs>> batchUpload(MultipartFile[] files) {
 		// 上传并返回访问地址
@@ -51,7 +51,7 @@ public class DFSController extends TWTController {
 	 */
 	@Operation(summary = "单文件上传")
 	@PostMapping("/commonUpload")
-	@Log(service = "单文件上传", businessType = BusinessType.IMPORT)
+	@Log(service = "单文件上传", businessType = BusinessType.OTHER)
 	public JsonResult<String> commonUpload(MultipartFile file) {
 		// 上传并返回访问地址
 		SysDfs sysDfs = sysFileService.uploadFile(file);

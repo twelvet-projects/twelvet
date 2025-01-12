@@ -117,7 +117,8 @@ public class AiDocServiceImpl implements IAiDocService {
 		aiDocMqDTO.setFileList(aiDocDTO.getFileList());
 
 		aiDocMqDTO.setOperatorBy(username);
-		streamBridge.send(RAGChannel.ADD_RAG_DOC, MessageBuilder.withPayload(aiDocMqDTO).build());
+		// streamBridge.send(RAGChannel.ADD_RAG_DOC,
+		// MessageBuilder.withPayload(aiDocMqDTO).build());
 
 		return Boolean.TRUE;
 	}
