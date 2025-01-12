@@ -65,7 +65,7 @@ public class DFSServiceImpl implements IDFSService {
 				long size = file.getSize();
 
 				sysDfs.setSize(size);
-				sysDfs.setPath("/" + key);
+				sysDfs.setPath(key);
 				sysDfs.setType(FileUtils.getSuffix(originalFilename));
 				sysDfs.setFileName(FileUtils.getName(originalFilename));
 				sysDfs.setOriginalFileName(originalFilename);
