@@ -1,14 +1,11 @@
 package com.twelvet.server.ai.service.impl;
 
-import java.util.List;
-
-import com.github.yitter.idgen.YitIdHelper;
 import com.twelvet.api.ai.domain.AiChatHistoryContent;
 import com.twelvet.server.ai.mapper.AiChatHistoryContentMapper;
 import com.twelvet.server.ai.service.IAiChatHistoryContentService;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.twelvet.framework.security.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * AI会话内容详情Service业务层处理

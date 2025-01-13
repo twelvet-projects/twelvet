@@ -4,7 +4,6 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.twelvet.api.ai.constant.RAGEnums;
 import com.twelvet.api.ai.domain.AiDoc;
-import com.twelvet.api.ai.domain.AiDocSlice;
 import com.twelvet.api.ai.domain.AiKnowledge;
 import com.twelvet.api.ai.domain.dto.AiDocDTO;
 import com.twelvet.framework.core.exception.TWTException;
@@ -15,17 +14,13 @@ import com.twelvet.server.ai.mapper.AiKnowledgeMapper;
 import com.twelvet.server.ai.mq.RAGChannel;
 import com.twelvet.server.ai.mq.consumer.domain.dto.AiDocMqDTO;
 import com.twelvet.server.ai.service.IAiDocService;
-import org.springframework.ai.document.Document;
-import org.springframework.ai.reader.tika.TikaDocumentReader;
-import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * AI知识库文档Service业务层处理
@@ -117,8 +112,7 @@ public class AiDocServiceImpl implements IAiDocService {
 		aiDocMqDTO.setFileList(aiDocDTO.getFileList());
 
 		aiDocMqDTO.setOperatorBy(username);
-		// streamBridge.send(RAGChannel.ADD_RAG_DOC,
-		// MessageBuilder.withPayload(aiDocMqDTO).build());
+		streamBridge.send(RAGChannel.ADD_RAG_DOC, MessageBuilder.withPayload(aiDocMqDTO).build());
 
 		return Boolean.TRUE;
 	}

@@ -36,11 +36,7 @@ public class RAGMqTopicListener {
 	public Consumer<Message<AiDocMqDTO>> addRAGDocChannel() {
 		return message -> {
 			log.info("处理添加RAG文档消息: {}", message);
-			long startTime = System.nanoTime();
 			ragMqTopicService.addRAGDocChannel(message);
-			long endTime = System.nanoTime(); // 记录结束时间
-			long duration = endTime - startTime; // 计算持续时间
-			System.out.println("运行时间：" + duration / 1000000);
 		};
 	}
 

@@ -3,7 +3,6 @@ package com.twelvet.server.ai.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.github.yitter.idgen.YitIdHelper;
-
 import com.twelvet.api.ai.domain.AiChatHistory;
 import com.twelvet.api.ai.domain.AiChatHistoryContent;
 import com.twelvet.api.ai.domain.dto.AiChatHistoryDTO;

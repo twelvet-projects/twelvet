@@ -1,8 +1,5 @@
 package com.twelvet.server.ai.service.impl;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import cn.hutool.core.collection.CollectionUtil;
 import com.twelvet.api.ai.domain.AiKnowledge;
 import com.twelvet.framework.security.utils.SecurityUtils;
@@ -12,6 +9,9 @@ import com.twelvet.server.ai.mapper.AiKnowledgeMapper;
 import com.twelvet.server.ai.service.IAiKnowledgeService;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * AI知识库Service业务层处理

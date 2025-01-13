@@ -1,15 +1,13 @@
 package com.twelvet.server.ai.service.impl;
 
-import java.util.List;
-
 import cn.hutool.core.collection.CollectionUtil;
 import com.twelvet.api.ai.domain.AiDocSlice;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.service.IAiDocSliceService;
 import org.springframework.ai.vectorstore.VectorStore;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * AI知识库文档分片Service业务层处理
