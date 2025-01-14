@@ -57,6 +57,20 @@ public class AiKnowledge extends BaseEntity {
 	private Integer topK;
 
 	/**
+	 * 切片值
+	 */
+	@Schema(description = "切片值")
+	@ExcelProperty(value = "切片值")
+	private Integer sliceSize;
+
+	/**
+	 * 匹配率
+	 */
+	@Schema(description = "匹配率")
+	@ExcelProperty(value = "匹配率")
+	private Integer score;
+
+	/**
 	 * 知识库排序
 	 */
 	@Schema(description = "知识库排序")
@@ -70,52 +84,68 @@ public class AiKnowledge extends BaseEntity {
 	@ExcelProperty(value = "是否删除 0：正常，0：删除")
 	private Boolean delFlag;
 
-	public void setKnowledgeId(Long knowledgeId) {
-		this.knowledgeId = knowledgeId;
-	}
-
 	public Long getKnowledgeId() {
 		return knowledgeId;
 	}
 
-	public void setKnowledgeName(String knowledgeName) {
-		this.knowledgeName = knowledgeName;
+	public void setKnowledgeId(Long knowledgeId) {
+		this.knowledgeId = knowledgeId;
 	}
 
 	public String getKnowledgeName() {
 		return knowledgeName;
 	}
 
-	public void setWelcomeMsg(String welcomeMsg) {
-		this.welcomeMsg = welcomeMsg;
+	public void setKnowledgeName(String knowledgeName) {
+		this.knowledgeName = knowledgeName;
 	}
 
 	public String getWelcomeMsg() {
 		return welcomeMsg;
 	}
 
-	public void setMultiRound(Integer multiRound) {
-		this.multiRound = multiRound;
+	public void setWelcomeMsg(String welcomeMsg) {
+		this.welcomeMsg = welcomeMsg;
 	}
 
 	public Integer getMultiRound() {
 		return multiRound;
 	}
 
-	public void setTopK(Integer topK) {
-		this.topK = topK;
+	public void setMultiRound(Integer multiRound) {
+		this.multiRound = multiRound;
 	}
 
 	public Integer getTopK() {
 		return topK;
 	}
 
-	public void setKnowledgeSort(Integer knowledgeSort) {
-		this.knowledgeSort = knowledgeSort;
+	public void setTopK(Integer topK) {
+		this.topK = topK;
+	}
+
+	public Integer getSliceSize() {
+		return sliceSize;
+	}
+
+	public void setSliceSize(Integer sliceSize) {
+		this.sliceSize = sliceSize;
+	}
+
+	public Integer getScore() {
+		return score;
+	}
+
+	public void setScore(Integer score) {
+		this.score = score;
 	}
 
 	public Integer getKnowledgeSort() {
 		return knowledgeSort;
+	}
+
+	public void setKnowledgeSort(Integer knowledgeSort) {
+		this.knowledgeSort = knowledgeSort;
 	}
 
 	public Boolean getDelFlag() {
@@ -133,6 +163,8 @@ public class AiKnowledge extends BaseEntity {
 			.append("welcomeMsg", getWelcomeMsg())
 			.append("multiRound", getMultiRound())
 			.append("topK", getTopK())
+			.append("sliceSize", getSliceSize())
+			.append("score", getScore())
 			.append("knowledgeSort", getKnowledgeSort())
 			.append("delFlag", getDelFlag())
 			.toString();

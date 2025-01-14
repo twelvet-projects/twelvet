@@ -45,6 +45,8 @@ CREATE TABLE `ai_knowledge`
     `multi_round`    int(4)                                                       NOT NULL DEFAULT 0 COMMENT '上下文记忆会话数',
     `top_k`          int(4)                                                       NOT NULL DEFAULT 1 COMMENT '向量匹配条数',
     `knowledge_sort` int(4)                                                       NOT NULL DEFAULT 0 COMMENT '知识库排序',
+    `slice_size`     int(6)                                                       NOT NULL DEFAULT 3000 COMMENT '切片值',
+    `score`          int(3)                                                       NOT NULL DEFAULT 50 COMMENT '匹配率',
     `create_by`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '创建者',
     `create_time`    datetime                                                     NOT NULL COMMENT '创建时间',
     `update_by`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '更新者',

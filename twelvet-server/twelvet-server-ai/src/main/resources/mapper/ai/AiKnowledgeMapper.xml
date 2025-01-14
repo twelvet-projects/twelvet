@@ -10,6 +10,8 @@
         <result property="welcomeMsg" column="welcome_msg"/>
         <result property="multiRound" column="multi_round"/>
         <result property="topK" column="top_k"/>
+        <result property="sliceSize" column="slice_size"/>
+        <result property="score" column="score"/>
         <result property="knowledgeSort" column="knowledge_sort"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
@@ -23,6 +25,8 @@
                welcome_msg,
                multi_round,
                top_k,
+               slice_size,
+               score,
                knowledge_sort,
                create_by,
                create_time,
@@ -40,6 +44,8 @@
             <if test="welcomeMsg != null  and welcomeMsg != ''">and welcome_msg = #{welcomeMsg}</if>
             <if test="multiRound != null ">and multi_round = #{multiRound}</if>
             <if test="topK != null ">and top_k = #{topK}</if>
+            <if test="sliceSize != null ">and slice_size = #{sliceSize}</if>
+            <if test="score != null ">and score = #{score}</if>
             <if test="knowledgeSort != null ">and knowledge_sort = #{knowledgeSort}</if>
             and del_flag = 0
         </where>
@@ -58,6 +64,8 @@
             <if test="welcomeMsg != null and welcomeMsg != ''">welcome_msg,</if>
             <if test="multiRound != null">multi_round,</if>
             <if test="topK != null">top_k,</if>
+            <if test="sliceSize != null">slice_size,</if>
+            <if test="score != null">score,</if>
             <if test="knowledgeSort != null">knowledge_sort,</if>
             <if test="createBy != null and createBy != ''">create_by,</if>
             <if test="createTime != null">create_time,</if>
@@ -69,6 +77,8 @@
             <if test="welcomeMsg != null and welcomeMsg != ''">#{welcomeMsg},</if>
             <if test="multiRound != null">#{multiRound},</if>
             <if test="topK != null">#{topK},</if>
+            <if test="sliceSize != null">#{sliceSize},</if>
+            <if test="score != null">#{score},</if>
             <if test="knowledgeSort != null">#{knowledgeSort},</if>
             <if test="createBy != null and createBy != ''">#{createBy},</if>
             <if test="createTime != null">#{createTime},</if>
@@ -84,6 +94,8 @@
             <if test="welcomeMsg != null and welcomeMsg != ''">welcome_msg = #{welcomeMsg},</if>
             <if test="multiRound != null">multi_round = #{multiRound},</if>
             <if test="topK != null">top_k = #{topK},</if>
+            <if test="sliceSize != null">slice_size = #{sliceSize},</if>
+            <if test="score != null">score = #{score},</if>
             <if test="knowledgeSort != null">knowledge_sort = #{knowledgeSort},</if>
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
