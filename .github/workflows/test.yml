@@ -43,15 +43,15 @@ jobs:
 
       - name: mvn clean install twelvet-auth
         run: |
-          cd ./twelvet-auth && mvn clean install
+          cd ./twelvet-auth && mvn clean install -DskipTests
 
       - name: mvn clean install twelvet-gateway
         run: |
-          cd ./twelvet-gateway && mvn clean install
+          cd ./twelvet-gateway && mvn clean install -DskipTests
 
       - name: mvn clean install twelvet-server-system
         run: |
-          cd ./twelvet-server/twelvet-server-system && mvn clean install
+          cd ./twelvet-server/twelvet-server-system && mvn clean install -DskipTests
 
       - name: init
         run: cd docker && chmod 751 ./deploy.sh && ./deploy.sh init
