@@ -68,7 +68,7 @@ public class AiKnowledge extends BaseEntity {
 	 */
 	@Schema(description = "匹配率")
 	@ExcelProperty(value = "匹配率")
-	private Integer score;
+	private Double score;
 
 	/**
 	 * 知识库排序
@@ -132,11 +132,11 @@ public class AiKnowledge extends BaseEntity {
 		this.sliceSize = sliceSize;
 	}
 
-	public Integer getScore() {
+	public Double getScore() {
 		return score;
 	}
 
-	public void setScore(Integer score) {
+	public void setScore(Double score) {
 		this.score = score;
 	}
 

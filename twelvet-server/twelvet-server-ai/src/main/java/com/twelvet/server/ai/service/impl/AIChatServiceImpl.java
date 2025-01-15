@@ -243,7 +243,7 @@ public class AIChatServiceImpl implements AIChatService {
 				// 向量匹配最多条数
 				.withTopK(aiKnowledge.getTopK())
 				// 匹配相似度准度
-				.withSimilarityThreshold(SearchRequest.SIMILARITY_THRESHOLD_ACCEPT_ALL)
+				.withSimilarityThreshold(aiKnowledge.getScore())
 				// 过滤元数据
 				.withFilterExpression(filter);
 

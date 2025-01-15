@@ -42,11 +42,11 @@ CREATE TABLE `ai_knowledge`
     `knowledge_id`   bigint(20)                                                   NOT NULL AUTO_INCREMENT COMMENT '知识库ID',
     `knowledge_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT NULL COMMENT '知识库名称',
     `welcome_msg`    text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci        NOT NULL COMMENT '欢迎语',
-    `multi_round`    int(4)                                                       NOT NULL DEFAULT 0 COMMENT '上下文记忆会话数',
-    `top_k`          int(4)                                                       NOT NULL DEFAULT 1 COMMENT '向量匹配条数',
-    `knowledge_sort` int(4)                                                       NOT NULL DEFAULT 0 COMMENT '知识库排序',
-    `slice_size`     int(6)                                                       NOT NULL DEFAULT 3000 COMMENT '切片值',
-    `score`          int(3)                                                       NOT NULL DEFAULT 50 COMMENT '匹配率',
+    `multi_round`    int                                                          NOT NULL DEFAULT 0 COMMENT '上下文记忆会话数',
+    `top_k`          int                                                          NOT NULL DEFAULT 1 COMMENT '向量匹配条数',
+    `knowledge_sort` int                                                          NOT NULL DEFAULT 0 COMMENT '知识库排序',
+    `slice_size`     int                                                          NOT NULL DEFAULT 3000 COMMENT '切片值',
+    `score`          double                                                       NOT NULL DEFAULT 0.5 COMMENT '匹配率',
     `create_by`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '创建者',
     `create_time`    datetime                                                     NOT NULL COMMENT '创建时间',
     `update_by`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '更新者',
@@ -107,7 +107,7 @@ CREATE TABLE `ai_doc_slice`
 DROP TABLE IF EXISTS `ai_chat_history`;
 CREATE TABLE `ai_chat_history`
 (
-    `chat_history_id` bigint                                                        NOT NULL AUTO_INCREMENT COMMENT 'ID',
+    `chat_history_id` bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT 'ID',
     `msg_id`          varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '消息唯一id',
     `user_id`         varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '归属的消息用户ID',
     `knowledge_id`    bigint(20)                                                    NOT NULL COMMENT '知识库ID',
@@ -130,7 +130,7 @@ DROP TABLE IF EXISTS `ai_chat_history_content`;
 CREATE TABLE `ai_chat_history_content`
 (
     `chat_history_content_id` bigint(20)                                            NOT NULL AUTO_INCREMENT COMMENT 'ID',
-    `chat_history_id`         bigint                                                NOT NULL COMMENT 'AI客服会话记录ID',
+    `chat_history_id`         bigint(20)                                            NOT NULL COMMENT 'AI客服会话记录ID',
     `content`                 text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '消息内容',
     PRIMARY KEY (`chat_history_content_id`) USING BTREE,
     UNIQUE INDEX `idx_chi` (`chat_history_id` ASC) USING BTREE
