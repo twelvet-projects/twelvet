@@ -1,5 +1,5 @@
-com.twelvet.framework.security.service.impl.TwTUserDetailsServiceImpl
-com.twelvet.framework.security.service.impl.TwTSmsDetailsServiceImpl
+com.twelvet.framework.security.service.manager.TwTUserDetailsServiceImpl
+com.twelvet.framework.security.service.manager.TwTSmsDetailsServiceImpl
 com.twelvet.framework.security.service.impl.TWTRedisOAuth2AuthorizationService
 com.twelvet.framework.security.service.impl.TWTRedisOAuth2AuthorizationConsentService
 com.twelvet.framework.security.service.impl.TWTRemoteRegisteredClientRepository

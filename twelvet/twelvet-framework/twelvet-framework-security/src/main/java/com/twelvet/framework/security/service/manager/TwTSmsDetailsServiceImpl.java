@@ -1,4 +1,4 @@
-package com.twelvet.framework.security.service.impl;
+package com.twelvet.framework.security.service.manager;
 
 import com.twelvet.api.system.domain.SysUser;
 import com.twelvet.api.system.feign.RemoteUserService;
@@ -34,7 +34,7 @@ public class TwTSmsDetailsServiceImpl implements TwUserDetailsService {
 	/**
 	 * 仅支持后台登录
 	 */
-	private final static String PLAT_FORM = "admin";
+	private final static String PLAT_FORM = "manager";
 
 	@Autowired
 	private RemoteUserService remoteUserService;

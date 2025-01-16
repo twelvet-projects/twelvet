@@ -1,4 +1,4 @@
-package com.twelvet.auth.support.password;
+package com.twelvet.auth.support.grant.sms;
 
 import com.twelvet.auth.support.base.OAuth2ResourceOwnerBaseAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -10,11 +10,11 @@ import java.util.Set;
 /**
  * @author twelvet
  * @WebSite twelvet.cn
- * @Description: 密码授权token信息
+ * @Description: 短信登录token信息
  */
-public class OAuth2ResourceOwnerPasswordAuthenticationToken extends OAuth2ResourceOwnerBaseAuthenticationToken {
+public class OAuth2ResourceOwnerSmsAuthenticationToken extends OAuth2ResourceOwnerBaseAuthenticationToken {
 
-	public OAuth2ResourceOwnerPasswordAuthenticationToken(AuthorizationGrantType authorizationGrantType,
+	public OAuth2ResourceOwnerSmsAuthenticationToken(AuthorizationGrantType authorizationGrantType,
 			Authentication clientPrincipal, Set<String> scopes, Map<String, Object> additionalParameters) {
 		super(authorizationGrantType, clientPrincipal, scopes, additionalParameters);
 	}

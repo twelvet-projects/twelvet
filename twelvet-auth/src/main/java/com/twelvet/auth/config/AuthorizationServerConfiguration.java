@@ -4,12 +4,12 @@ import com.twelvet.auth.support.CustomeOAuth2AccessTokenGenerator;
 import com.twelvet.auth.support.core.CustomOAuth2TokenCustomizer;
 import com.twelvet.auth.support.core.FormIdentityLoginConfigurer;
 import com.twelvet.auth.support.core.TWTDaoAuthenticationProvider;
+import com.twelvet.auth.support.grant.password.OAuth2ResourceOwnerPasswordAuthenticationConverter;
+import com.twelvet.auth.support.grant.password.OAuth2ResourceOwnerPasswordAuthenticationProvider;
+import com.twelvet.auth.support.grant.sms.OAuth2ResourceOwnerSmsAuthenticationConverter;
+import com.twelvet.auth.support.grant.sms.OAuth2ResourceOwnerSmsAuthenticationProvider;
 import com.twelvet.auth.support.handler.TWTAuthenticationFailureEventHandler;
 import com.twelvet.auth.support.handler.TWTAuthenticationSuccessEventHandler;
-import com.twelvet.auth.support.password.OAuth2ResourceOwnerPasswordAuthenticationConverter;
-import com.twelvet.auth.support.password.OAuth2ResourceOwnerPasswordAuthenticationProvider;
-import com.twelvet.auth.support.sms.OAuth2ResourceOwnerSmsAuthenticationConverter;
-import com.twelvet.auth.support.sms.OAuth2ResourceOwnerSmsAuthenticationProvider;
 import com.twelvet.framework.core.constants.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -25,11 +25,14 @@ import org.springframework.security.oauth2.server.authorization.settings.Authori
 import org.springframework.security.oauth2.server.authorization.token.DelegatingOAuth2TokenGenerator;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2RefreshTokenGenerator;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
-import org.springframework.security.oauth2.server.authorization.web.authentication.*;
+import org.springframework.security.oauth2.server.authorization.web.authentication.OAuth2AuthorizationCodeAuthenticationConverter;
+import org.springframework.security.oauth2.server.authorization.web.authentication.OAuth2AuthorizationCodeRequestAuthenticationConverter;
+import org.springframework.security.oauth2.server.authorization.web.authentication.OAuth2ClientCredentialsAuthenticationConverter;
+import org.springframework.security.oauth2.server.authorization.web.authentication.OAuth2RefreshTokenAuthenticationConverter;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationConverter;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.DelegatingAuthenticationConverter;
 
 import java.util.Arrays;
 

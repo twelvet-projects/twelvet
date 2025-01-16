@@ -1,4 +1,4 @@
-package com.twelvet.auth.support.sms;
+package com.twelvet.auth.support.grant.sms;
 
 import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.security.utils.OAuth2EndpointUtils;

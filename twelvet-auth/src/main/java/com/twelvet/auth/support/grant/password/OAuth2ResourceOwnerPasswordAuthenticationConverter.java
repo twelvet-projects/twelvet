@@ -1,9 +1,7 @@
-package com.twelvet.auth.support.password;
+package com.twelvet.auth.support.grant.password;
 
 import com.twelvet.framework.security.utils.OAuth2EndpointUtils;
 import com.twelvet.auth.support.base.OAuth2ResourceOwnerBaseAuthenticationConverter;
-import com.twelvet.framework.utils.http.ServletUtils;
-import org.apache.commons.io.IOUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
@@ -12,8 +10,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 
 import jakarta.servlet.http.HttpServletRequest;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+
 import java.util.Map;
 import java.util.Set;
 

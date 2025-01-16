@@ -1,9 +1,8 @@
-package com.twelvet.framework.security.service.impl;
+package com.twelvet.framework.security.service.manager;
 
 import com.twelvet.api.system.domain.SysUser;
 import com.twelvet.api.system.feign.RemoteUserService;
 import com.twelvet.api.system.model.UserInfo;
-import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.core.domain.utils.ResUtils;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
@@ -11,7 +10,6 @@ import com.twelvet.framework.security.constants.Oauth2ClientEnums;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.exception.UserFrozenException;
 import com.twelvet.framework.security.service.TwUserDetailsService;
-import com.twelvet.framework.utils.TUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +33,7 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 	/**
 	 * 仅支持后台登录
 	 */
-	private final static String PLAT_FORM = "admin";
+	private final static String PLAT_FORM = "manager";
 
 	/**
 	 * 登录类型
