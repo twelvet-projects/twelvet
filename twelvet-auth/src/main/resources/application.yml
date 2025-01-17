@@ -41,43 +41,43 @@ spring:
 
 
   # 接入第三方OAuth2登录（开发功能-dev）
-  security:
-    oauth2:
-      client:
-        # 注册第三方客户端
-        registration:
-          gitee:
-            # 关联OAuth2 Server
-            provider: gitee
-            client-id: 3050796d8930eec5b
-            client-secret: 77ca2fee35950
-            # 授权类型
-            authorization-grant-type: authorization_code
-            # 授权范围
-            scope: user_info
-            # 回调地址
-            redirect-uri: '{baseUrl}/{action}/oauth2/code/{registrationId}'
-            client-name: gitee
-          github:
-            # 关联OAuth2 Server
-            provider: github
-            client-id: ffc6b9
-            client-secret: 7d00bc26
-            # 授权类型
-            authorization-grant-type: authorization_code
-            # 授权范围
-            scope: user_info
-            # 回调地址
-            redirect-uri: '{baseUrl}/{action}/oauth2/code/{registrationId}'
-            client-name: github
-        # 第三方信息换取配置(默认Google、GitHub、Facebook 和 Okta内置)
-        provider:
-          gitee:
-            # 登录地址
-            authorization-uri: https://gitee.com/oauth/authorize
-            # 换取token
-            token-uri: https://gitee.com/oauth/token
-            # 取得的user详情中的属性id的值作为Client的已认证的用户的用户名
-            user-name-attribute: id
-            # 获取用户信息
-            user-info-uri: https://gitee.com/api/v5/user
+#  security:
+#    oauth2:
+#      client:
+#        # 注册第三方客户端
+#        registration:
+#          gitee:
+#            # 关联OAuth2 Server
+#            provider: gitee
+#            client-id: 305079
+#            client-secret: 77ca2
+#            # 授权类型
+#            authorization-grant-type: authorization_code
+#            # 授权范围
+#            scope: user_info
+#            # 回调地址
+#            redirect-uri: '{baseUrl}/{action}/oauth2/code/{registrationId}'
+#            client-name: gitee
+#          github:
+#            # 关联OAuth2 Server
+#            provider: github
+#            client-id: ffc6b9
+#            client-secret: 7d00bc26
+#            # 授权类型
+#            authorization-grant-type: authorization_code
+#            # 授权范围
+#            scope: user_info
+#            # 回调地址
+#            redirect-uri: '{baseUrl}/{action}/oauth2/code/{registrationId}'
+#            client-name: github
+#        # 第三方信息换取配置(默认Google、GitHub、Facebook 和 Okta内置)
+#        provider:
+#          gitee:
+#            # 登录地址
+#            authorization-uri: https://gitee.com/oauth/authorize
+#            # 换取token
+#            token-uri: https://gitee.com/oauth/token
+#            # 取得的user详情中的属性id的值作为Client的已认证的用户的用户名
+#            user-name-attribute: id
+#            # 获取用户信息
+#            user-info-uri: https://gitee.com/api/v5/user

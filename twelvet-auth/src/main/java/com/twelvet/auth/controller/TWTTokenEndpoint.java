@@ -1,4 +1,4 @@
-package com.twelvet.auth.endpoint;
+package com.twelvet.auth.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.twelvet.api.system.domain.SysClientDetails;
@@ -24,8 +24,6 @@ import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.security.authentication.event.LogoutSuccessEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
@@ -64,9 +62,6 @@ public class TWTTokenEndpoint {
 	private OAuth2AuthorizationService authorizationService;
 
 	@Autowired
-	private ClientRegistrationRepository clientRegistrationRepository;
-
-	@Autowired
 	private RemoteOauth2ClientDetailsService remoteOauth2ClientDetailsService;
 
 	@Autowired
@@ -86,9 +81,12 @@ public class TWTTokenEndpoint {
 	public ModelAndView require(ModelAndView modelAndView, @RequestParam(required = false) String error) {
 		modelAndView.setViewName("/login");
 		List<String> registrationIdList = new ArrayList<>();
-		((InMemoryClientRegistrationRepository) clientRegistrationRepository).forEach(item -> {
-			registrationIdList.add(item.getRegistrationId());
-		});
+		// 获取有多少第三方登录配置
+		/*
+		 * ((InMemoryClientRegistrationRepository)
+		 * clientRegistrationRepository).forEach(item -> {
+		 * registrationIdList.add(item.getRegistrationId()); });
+		 */
 		modelAndView.addObject("registrationIdList", registrationIdList);
 		modelAndView.addObject("error", error);
 		return modelAndView;
