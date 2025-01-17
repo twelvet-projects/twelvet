@@ -64,6 +64,7 @@
         <jaxb.version>2.3.5</jaxb.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <yitter-idgenerator.version>1.0.6</yitter-idgenerator.version>
+        <just-auth.version>1.16.7</just-auth.version>
 
         <xss-spring-boot-starter.version>3.1.5.1</xss-spring-boot-starter.version>
         <excel-spring-boot-starter.version>3.4.0</excel-spring-boot-starter.version>
@@ -251,6 +252,13 @@
                 <groupId>com.github.yitter</groupId>
                 <artifactId>yitter-idgenerator</artifactId>
                 <version>${yitter-idgenerator.version}</version>
+            </dependency>
+
+            <!--OAuth2第三方接入-->
+            <dependency>
+                <groupId>me.zhyd.oauth</groupId>
+                <artifactId>JustAuth</artifactId>
+                <version>${just-auth.version}</version>
             </dependency>
 
             <!--多数据源-->
