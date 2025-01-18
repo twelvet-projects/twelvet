@@ -1,4 +1,4 @@
-package com.twelvet.auth.endpoint.api;
+package com.twelvet.auth.controller.api;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.TemporalAccessorUtil;
