@@ -1,16 +1,15 @@
-package com.twelvet.auth.support.grant.password;
+package com.twelvet.auth.support.grant.oauth2.github;
 
+import com.twelvet.auth.support.base.OAuth2ResourceOwnerBaseAuthenticationConverter;
 import com.twelvet.framework.security.constants.Oauth2GrantEnums;
 import com.twelvet.framework.security.utils.OAuth2EndpointUtils;
-import com.twelvet.auth.support.base.OAuth2ResourceOwnerBaseAuthenticationConverter;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Map;
 import java.util.Set;
@@ -20,22 +19,23 @@ import java.util.Set;
  * @WebSite twelvet.cn
  * @Description: 密码认证转换器
  */
-public class OAuth2ResourceOwnerPasswordAuthenticationConverter
-		extends OAuth2ResourceOwnerBaseAuthenticationConverter<OAuth2ResourceOwnerPasswordAuthenticationToken> {
+public class OAuth2ResourceOwnerGitHubAuthenticationConverter
+		extends OAuth2ResourceOwnerBaseAuthenticationConverter<OAuth2ResourceOwnerGitHubAuthenticationToken> {
 
 	/**
-	 * 支持密码模式
+	 * 是否支持此convert
 	 * @param grantType 授权类型
+	 * @return
 	 */
 	@Override
 	public boolean support(String grantType) {
-		return Oauth2GrantEnums.PASSWORD.getGrant().equals(grantType);
+		return Oauth2GrantEnums.GITHUB.getGrant().equals(grantType);
 	}
 
 	@Override
-	public OAuth2ResourceOwnerPasswordAuthenticationToken buildToken(Authentication clientPrincipal,
-			Set requestedScopes, Map additionalParameters) {
-		return new OAuth2ResourceOwnerPasswordAuthenticationToken(AuthorizationGrantType.PASSWORD, clientPrincipal,
+	public OAuth2ResourceOwnerGitHubAuthenticationToken buildToken(Authentication clientPrincipal, Set requestedScopes,
+			Map additionalParameters) {
+		return new OAuth2ResourceOwnerGitHubAuthenticationToken(AuthorizationGrantType.PASSWORD, clientPrincipal,
 				requestedScopes, additionalParameters);
 	}
 

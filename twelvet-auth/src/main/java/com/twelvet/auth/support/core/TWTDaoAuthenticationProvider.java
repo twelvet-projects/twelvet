@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.core.locale.I18nUtils;
+import com.twelvet.framework.security.constants.Oauth2GrantEnums;
 import com.twelvet.framework.security.exception.SmsCodeException;
 import com.twelvet.framework.security.exception.UserFrozenException;
 import com.twelvet.framework.security.service.TwUserDetailsService;
@@ -81,7 +82,7 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 	protected void additionalAuthenticationChecks(UserDetails userDetails,
 			UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
 		String grantType = ServletUtils.getRequest().get().getParameter(OAuth2ParameterNames.GRANT_TYPE);
-		if (!AuthorizationGrantType.PASSWORD.getValue().equals(grantType)) {
+		if (!Oauth2GrantEnums.PASSWORD.getGrant().equals(grantType)) {
 			return;
 		}
 		if (authentication.getCredentials() == null) {

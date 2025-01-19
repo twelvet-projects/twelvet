@@ -1,8 +1,9 @@
 package com.twelvet.auth.support.grant.sms;
 
-import com.twelvet.framework.core.constants.SecurityConstants;
-import com.twelvet.framework.security.utils.OAuth2EndpointUtils;
 import com.twelvet.auth.support.base.OAuth2ResourceOwnerBaseAuthenticationConverter;
+import com.twelvet.framework.core.constants.SecurityConstants;
+import com.twelvet.framework.security.constants.Oauth2GrantEnums;
+import com.twelvet.framework.security.utils.OAuth2EndpointUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -28,7 +29,7 @@ public class OAuth2ResourceOwnerSmsAuthenticationConverter
 	 */
 	@Override
 	public boolean support(String grantType) {
-		return SecurityConstants.SMS.equals(grantType);
+		return Oauth2GrantEnums.SMS.getGrant().equals(grantType);
 	}
 
 	@Override
