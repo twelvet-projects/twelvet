@@ -4,6 +4,8 @@ import com.twelvet.auth.support.CustomeOAuth2AccessTokenGenerator;
 import com.twelvet.auth.support.core.CustomOAuth2TokenCustomizer;
 import com.twelvet.auth.support.core.FormIdentityLoginConfigurer;
 import com.twelvet.auth.support.core.TWTDaoAuthenticationProvider;
+import com.twelvet.auth.support.grant.oauth2.github.OAuth2ResourceOwnerGiHubAuthenticationProvider;
+import com.twelvet.auth.support.grant.oauth2.github.OAuth2ResourceOwnerGitHubAuthenticationConverter;
 import com.twelvet.auth.support.grant.password.OAuth2ResourceOwnerPasswordAuthenticationConverter;
 import com.twelvet.auth.support.grant.password.OAuth2ResourceOwnerPasswordAuthenticationProvider;
 import com.twelvet.auth.support.grant.sms.OAuth2ResourceOwnerSmsAuthenticationConverter;
@@ -118,6 +120,9 @@ public class AuthorizationServerConfiguration {
 				new OAuth2ResourceOwnerPasswordAuthenticationConverter(),
 				// 手机模式
 				new OAuth2ResourceOwnerSmsAuthenticationConverter(),
+				// 第三方GitHub登录
+				new OAuth2ResourceOwnerGitHubAuthenticationConverter(),
+
 				// 刷新模式
 				new OAuth2RefreshTokenAuthenticationConverter(),
 				// 授权码模式
@@ -146,12 +151,16 @@ public class AuthorizationServerConfiguration {
 		OAuth2ResourceOwnerSmsAuthenticationProvider resourceOwnerSmsAuthenticationProvider = new OAuth2ResourceOwnerSmsAuthenticationProvider(
 				authenticationManager, authorizationService, oAuth2TokenGenerator());
 
+		OAuth2ResourceOwnerGiHubAuthenticationProvider resourceOwnerGitHubAuthenticationProvider = new OAuth2ResourceOwnerGiHubAuthenticationProvider();
+
 		// 处理 UsernamePasswordAuthenticationToken
 		http.authenticationProvider(new TWTDaoAuthenticationProvider());
 		// 处理 OAuth2ResourceOwnerPasswordAuthenticationToken
 		http.authenticationProvider(resourceOwnerPasswordAuthenticationProvider);
 		// 处理 OAuth2ResourceOwnerSmsAuthenticationToken
 		http.authenticationProvider(resourceOwnerSmsAuthenticationProvider);
+		// 处理 第三方GitHub登录
+		http.authenticationProvider(resourceOwnerGitHubAuthenticationProvider);
 	}
 
 }

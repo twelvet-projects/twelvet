@@ -1,16 +1,23 @@
 package com.twelvet.auth.support.grant.oauth2.github;
 
+import com.alibaba.nacos.shaded.javax.annotation.Nullable;
 import com.twelvet.auth.support.base.OAuth2ResourceOwnerBaseAuthenticationConverter;
+import com.twelvet.auth.support.grant.oauth2.constant.SecurityOauth2Constants;
+import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.security.constants.Oauth2GrantEnums;
 import com.twelvet.framework.security.utils.OAuth2EndpointUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
+import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -19,46 +26,31 @@ import java.util.Set;
  * @WebSite twelvet.cn
  * @Description: 密码认证转换器
  */
-public class OAuth2ResourceOwnerGitHubAuthenticationConverter
-		extends OAuth2ResourceOwnerBaseAuthenticationConverter<OAuth2ResourceOwnerGitHubAuthenticationToken> {
+public class OAuth2ResourceOwnerGitHubAuthenticationConverter implements AuthenticationConverter {
 
-	/**
-	 * 是否支持此convert
-	 * @param grantType 授权类型
-	 * @return
-	 */
+	@Nullable
 	@Override
-	public boolean support(String grantType) {
-		return Oauth2GrantEnums.GITHUB.getGrant().equals(grantType);
-	}
+	public Authentication convert(HttpServletRequest request) {
 
-	@Override
-	public OAuth2ResourceOwnerGitHubAuthenticationToken buildToken(Authentication clientPrincipal, Set requestedScopes,
-			Map additionalParameters) {
-		return new OAuth2ResourceOwnerGitHubAuthenticationToken(AuthorizationGrantType.PASSWORD, clientPrincipal,
-				requestedScopes, additionalParameters);
-	}
+		Authentication clientPrincipal = SecurityContextHolder.getContext().getAuthentication();
 
-	/**
-	 * 校验扩展参数 密码模式密码必须不为空
-	 * @param request 参数列表
-	 */
-	@Override
-	public void checkParams(HttpServletRequest request) {
 		MultiValueMap<String, String> parameters = OAuth2EndpointUtils.getParameters(request);
-		// username (REQUIRED)
-		String username = parameters.getFirst(OAuth2ParameterNames.USERNAME);
-		if (!StringUtils.hasText(username) || parameters.get(OAuth2ParameterNames.USERNAME).size() != 1) {
-			OAuth2EndpointUtils.throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.USERNAME,
-					OAuth2EndpointUtils.ACCESS_TOKEN_REQUEST_ERROR_URI);
+
+		// code (REQUIRED)
+		String code = parameters.getFirst(OAuth2ParameterNames.CODE);
+		if (!StringUtils.hasText(code) || parameters.get(OAuth2ParameterNames.CODE).size() != 1) {
+			throw new OAuth2AuthenticationException(OAuth2ErrorCodes.INVALID_REQUEST);
 		}
 
-		// password (REQUIRED)
-		String password = parameters.getFirst(OAuth2ParameterNames.PASSWORD);
-		if (!StringUtils.hasText(password) || parameters.get(OAuth2ParameterNames.PASSWORD).size() != 1) {
-			OAuth2EndpointUtils.throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.PASSWORD,
-					OAuth2EndpointUtils.ACCESS_TOKEN_REQUEST_ERROR_URI);
-		}
+		Map<String, Object> additionalParameters = new HashMap<>();
+		parameters.forEach((key, value) -> {
+			if (!key.equals(OAuth2ParameterNames.GRANT_TYPE) && !key.equals(OAuth2ParameterNames.CLIENT_ID)
+					&& !key.equals(OAuth2ParameterNames.CODE)) {
+				additionalParameters.put(key, value.get(0));
+			}
+		});
+
+		return new OAuth2ResourceOwnerGitHubAuthenticationToken();
 	}
 
 }

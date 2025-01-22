@@ -34,9 +34,10 @@ public class OAuth2ResourceOwnerPasswordAuthenticationConverter
 
 	@Override
 	public OAuth2ResourceOwnerPasswordAuthenticationToken buildToken(Authentication clientPrincipal,
-			Set requestedScopes, Map additionalParameters) {
-		return new OAuth2ResourceOwnerPasswordAuthenticationToken(AuthorizationGrantType.PASSWORD, clientPrincipal,
-				requestedScopes, additionalParameters);
+			Set<String> requestedScopes, Map<String, Object> additionalParameters) {
+		return new OAuth2ResourceOwnerPasswordAuthenticationToken(
+				new AuthorizationGrantType(Oauth2GrantEnums.PASSWORD.getGrant()), clientPrincipal, requestedScopes,
+				additionalParameters);
 	}
 
 	/**

@@ -33,10 +33,11 @@ public class OAuth2ResourceOwnerSmsAuthenticationConverter
 	}
 
 	@Override
-	public OAuth2ResourceOwnerSmsAuthenticationToken buildToken(Authentication clientPrincipal, Set requestedScopes,
-			Map additionalParameters) {
-		return new OAuth2ResourceOwnerSmsAuthenticationToken(new AuthorizationGrantType(SecurityConstants.SMS),
-				clientPrincipal, requestedScopes, additionalParameters);
+	public OAuth2ResourceOwnerSmsAuthenticationToken buildToken(Authentication clientPrincipal,
+			Set<String> requestedScopes, Map<String, Object> additionalParameters) {
+		return new OAuth2ResourceOwnerSmsAuthenticationToken(
+				new AuthorizationGrantType(Oauth2GrantEnums.SMS.getGrant()), clientPrincipal, requestedScopes,
+				additionalParameters);
 	}
 
 	/**

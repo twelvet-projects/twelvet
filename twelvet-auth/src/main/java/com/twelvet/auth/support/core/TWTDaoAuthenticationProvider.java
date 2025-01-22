@@ -2,13 +2,11 @@ package com.twelvet.auth.support.core;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.core.locale.I18nUtils;
 import com.twelvet.framework.security.constants.Oauth2GrantEnums;
-import com.twelvet.framework.security.exception.SmsCodeException;
-import com.twelvet.framework.security.exception.UserFrozenException;
 import com.twelvet.framework.security.service.TwUserDetailsService;
 import com.twelvet.framework.utils.http.ServletUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.MessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -23,12 +21,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.web.authentication.www.BasicAuthenticationConverter;
 import org.springframework.util.Assert;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Optional;

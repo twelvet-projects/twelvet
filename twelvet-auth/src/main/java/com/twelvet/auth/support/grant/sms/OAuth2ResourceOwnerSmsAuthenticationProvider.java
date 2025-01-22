@@ -2,10 +2,13 @@ package com.twelvet.auth.support.grant.sms;
 
 import com.twelvet.auth.support.base.OAuth2ResourceOwnerBaseAuthenticationProvider;
 import com.twelvet.framework.core.constants.SecurityConstants;
+import com.twelvet.framework.security.constants.Oauth2GrantEnums;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
@@ -51,7 +54,7 @@ public class OAuth2ResourceOwnerSmsAuthenticationProvider
 	public void checkClient(RegisteredClient registeredClient) {
 		assert registeredClient != null;
 		if (!registeredClient.getAuthorizationGrantTypes()
-			.contains(new AuthorizationGrantType(SecurityConstants.SMS))) {
+			.contains(new AuthorizationGrantType(Oauth2GrantEnums.SMS.getGrant()))) {
 			throw new OAuth2AuthenticationException(OAuth2ErrorCodes.UNAUTHORIZED_CLIENT);
 		}
 	}
@@ -60,6 +63,17 @@ public class OAuth2ResourceOwnerSmsAuthenticationProvider
 	public UsernamePasswordAuthenticationToken buildToken(Map<String, Object> reqParameters) {
 		String phone = (String) reqParameters.get(SecurityConstants.SMS_PARAMETER_NAME);
 		return new UsernamePasswordAuthenticationToken(phone, null);
+	}
+
+	/**
+	 * 自定义校验登录，采用不同的登录方式
+	 * @param authentication the authentication request object.
+	 * @return Authentication
+	 * @throws AuthenticationException AuthenticationException
+	 */
+	@Override
+	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+		return super.authenticate(authentication);
 	}
 
 }

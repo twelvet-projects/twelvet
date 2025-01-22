@@ -9,6 +9,7 @@ import com.twelvet.framework.core.domain.utils.ResUtils;
 import com.twelvet.framework.core.locale.I18nUtils;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.security.constants.Oauth2ClientEnums;
+import com.twelvet.framework.security.constants.Oauth2GrantEnums;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.exception.SmsCodeException;
 import com.twelvet.framework.security.exception.UserFrozenException;
@@ -50,7 +51,8 @@ public class TwTSmsDetailsServiceImpl implements TwUserDetailsService {
 	 */
 	@Override
 	public boolean support(String clientId, String grantType) {
-		return Oauth2ClientEnums.TWELVET.getClientId().equals(clientId) && SecurityConstants.SMS.equals(grantType);
+		return Oauth2ClientEnums.TWELVET.getClientId().equals(clientId)
+				&& Oauth2GrantEnums.SMS.getGrant().equals(grantType);
 	}
 
 	/**

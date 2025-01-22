@@ -5,6 +5,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
@@ -60,6 +62,17 @@ public class OAuth2ResourceOwnerPasswordAuthenticationProvider
 		if (!registeredClient.getAuthorizationGrantTypes().contains(AuthorizationGrantType.PASSWORD)) {
 			throw new OAuth2AuthenticationException(OAuth2ErrorCodes.UNAUTHORIZED_CLIENT);
 		}
+	}
+
+	/**
+	 * 自定义校验登录，采用不同的登录方式
+	 * @param authentication the authentication request object.
+	 * @return Authentication
+	 * @throws AuthenticationException AuthenticationException
+	 */
+	@Override
+	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+		return super.authenticate(authentication);
 	}
 
 }

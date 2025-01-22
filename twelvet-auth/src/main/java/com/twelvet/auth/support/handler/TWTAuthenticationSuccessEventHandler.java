@@ -2,14 +2,15 @@ package com.twelvet.auth.support.handler;
 
 import cn.hutool.core.map.MapUtil;
 import com.twelvet.api.system.domain.SysLoginInfo;
+import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.log.event.SysLoginLogEvent;
 import com.twelvet.framework.log.utils.SysLogUtils;
 import com.twelvet.framework.log.vo.SysLogVO;
-import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.security.domain.LoginUser;
-import com.twelvet.framework.utils.DateUtils;
 import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.http.IpUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -24,8 +25,6 @@ import org.springframework.security.oauth2.server.authorization.authentication.O
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.util.CollectionUtils;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
