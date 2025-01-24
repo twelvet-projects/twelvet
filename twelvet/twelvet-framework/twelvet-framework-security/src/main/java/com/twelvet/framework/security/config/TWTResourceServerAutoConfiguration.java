@@ -1,8 +1,7 @@
 package com.twelvet.framework.security.config;
 
-import com.twelvet.framework.security.service.PermissionService;
+import com.twelvet.framework.security.support.service.PermissionService;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;

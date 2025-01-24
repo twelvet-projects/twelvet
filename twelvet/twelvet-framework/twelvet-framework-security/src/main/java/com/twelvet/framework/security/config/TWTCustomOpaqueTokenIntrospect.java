@@ -2,11 +2,11 @@ package com.twelvet.framework.security.config;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.twelvet.framework.security.domain.LoginUser;
-import com.twelvet.framework.security.service.TwUserDetailsService;
+import com.twelvet.framework.security.support.service.TwUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -63,12 +63,13 @@ public class TWTCustomOpaqueTokenIntrospect implements OpaqueTokenIntrospector {
 
 		UserDetails userDetails = null;
 		try {
-			UsernamePasswordAuthenticationToken principal = (UsernamePasswordAuthenticationToken) Objects
-				.requireNonNull(oldAuthorization)
+
+			Authentication principal = (Authentication) Objects.requireNonNull(oldAuthorization)
 				.getAttributes()
 				.get(Principal.class.getName());
-			Object tokenPrincipal = principal.getPrincipal();
-			userDetails = optional.get().loadUserByUser((LoginUser) tokenPrincipal);
+			LoginUser tokenPrincipal = (LoginUser) principal.getPrincipal();
+			// 重新获取最新的授权数据
+			userDetails = optional.get().loadUserByUser(tokenPrincipal);
 		}
 		catch (UsernameNotFoundException usernameNotFoundException) {
 			log.warn("用户不不存在 {}", usernameNotFoundException.getLocalizedMessage());
@@ -77,7 +78,7 @@ public class TWTCustomOpaqueTokenIntrospect implements OpaqueTokenIntrospector {
 		catch (Exception ex) {
 			log.error("资源服务器 introspect Token error {}", ex.getLocalizedMessage());
 		}
-		return (LoginUser) userDetails;
+		return (OAuth2AuthenticatedPrincipal) userDetails;
 	}
 
 }

@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 /**
  * @author twelvet
  * @WebSite twelvet.cn
- * @Description: 安全配置
+ * @Description: 资源服务器安全配置
  */
 @EnableWebSecurity
 public class TWTResourceServerConfiguration {
@@ -48,7 +48,9 @@ public class TWTResourceServerConfiguration {
 			.authenticated())
 			.oauth2ResourceServer(
 					oauth2 -> oauth2.opaqueToken(token -> token.introspector(customOpaqueTokenIntrospector))
+						// 身份验证入口点
 						.authenticationEntryPoint(resourceAuthExceptionEntryPoint)
+						// 从请求中提取 Bearer 令牌的解析器
 						.bearerTokenResolver(twtBearerTokenExtractor))
 			.headers(AbstractHttpConfigurer::disable)
 			.csrf(AbstractHttpConfigurer::disable);

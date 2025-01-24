@@ -1,18 +1,17 @@
 package com.twelvet.auth.config;
 
-import com.twelvet.auth.support.CustomeOAuth2AccessTokenGenerator;
-import com.twelvet.auth.support.core.CustomOAuth2TokenCustomizer;
 import com.twelvet.auth.support.core.FormIdentityLoginConfigurer;
-import com.twelvet.auth.support.core.TWTDaoAuthenticationProvider;
-import com.twelvet.auth.support.grant.oauth2.github.OAuth2ResourceOwnerGiHubAuthenticationProvider;
-import com.twelvet.auth.support.grant.oauth2.github.OAuth2ResourceOwnerGitHubAuthenticationConverter;
-import com.twelvet.auth.support.grant.password.OAuth2ResourceOwnerPasswordAuthenticationConverter;
-import com.twelvet.auth.support.grant.password.OAuth2ResourceOwnerPasswordAuthenticationProvider;
-import com.twelvet.auth.support.grant.sms.OAuth2ResourceOwnerSmsAuthenticationConverter;
-import com.twelvet.auth.support.grant.sms.OAuth2ResourceOwnerSmsAuthenticationProvider;
 import com.twelvet.auth.support.handler.TWTAuthenticationFailureEventHandler;
 import com.twelvet.auth.support.handler.TWTAuthenticationSuccessEventHandler;
 import com.twelvet.framework.core.constants.SecurityConstants;
+import com.twelvet.framework.security.support.CustomeOAuth2AccessTokenGenerator;
+import com.twelvet.framework.security.support.core.CustomOAuth2TokenCustomizer;
+import com.twelvet.framework.security.support.grant.oauth2.github.OAuth2ResourceOwnerGiHubAuthenticationProvider;
+import com.twelvet.framework.security.support.grant.oauth2.github.OAuth2ResourceOwnerGitHubAuthenticationConverter;
+import com.twelvet.framework.security.support.grant.password.OAuth2ResourceOwnerPasswordAuthenticationConverter;
+import com.twelvet.framework.security.support.grant.password.OAuth2ResourceOwnerPasswordAuthenticationProvider;
+import com.twelvet.framework.security.support.grant.sms.OAuth2ResourceOwnerSmsAuthenticationConverter;
+import com.twelvet.framework.security.support.grant.sms.OAuth2ResourceOwnerSmsAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -151,10 +150,9 @@ public class AuthorizationServerConfiguration {
 		OAuth2ResourceOwnerSmsAuthenticationProvider resourceOwnerSmsAuthenticationProvider = new OAuth2ResourceOwnerSmsAuthenticationProvider(
 				authenticationManager, authorizationService, oAuth2TokenGenerator());
 
-		OAuth2ResourceOwnerGiHubAuthenticationProvider resourceOwnerGitHubAuthenticationProvider = new OAuth2ResourceOwnerGiHubAuthenticationProvider();
+		OAuth2ResourceOwnerGiHubAuthenticationProvider resourceOwnerGitHubAuthenticationProvider = new OAuth2ResourceOwnerGiHubAuthenticationProvider(
+				authenticationManager, authorizationService, oAuth2TokenGenerator());
 
-		// 处理 UsernamePasswordAuthenticationToken
-		http.authenticationProvider(new TWTDaoAuthenticationProvider());
 		// 处理 OAuth2ResourceOwnerPasswordAuthenticationToken
 		http.authenticationProvider(resourceOwnerPasswordAuthenticationProvider);
 		// 处理 OAuth2ResourceOwnerSmsAuthenticationToken
