@@ -6,6 +6,11 @@ import com.twelvet.framework.security.constants.Oauth2GrantEnums;
 import com.twelvet.framework.security.support.base.OAuth2ResourceOwnerBaseAuthenticationProvider;
 import com.twelvet.framework.security.support.grant.oauth2.github.constant.SecurityOauth2Constants;
 import com.twelvet.framework.security.support.service.TwUserDetailsService;
+import me.zhyd.oauth.model.AuthCallback;
+import me.zhyd.oauth.model.AuthResponse;
+import me.zhyd.oauth.model.AuthUser;
+import me.zhyd.oauth.request.AuthGithubRequest;
+import me.zhyd.oauth.request.AuthRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -42,24 +47,21 @@ public class OAuth2ResourceOwnerGiHubAuthenticationProvider
 
 	private static final Logger log = LogManager.getLogger(OAuth2ResourceOwnerGiHubAuthenticationProvider.class);
 
-	private final PasswordEncoder passwordEncoder;
-
-	private final MessageSourceAccessor messages;
+	private final AuthRequest authRequest;
 
 	/**
 	 * Constructs an {@code OAuth2AuthorizationCodeAuthenticationProvider} using the
 	 * provided parameters.
-	 * @param authenticationManager
+	 * @param authenticationManager AuthenticationManager
 	 * @param authorizationService the authorization service
 	 * @param tokenGenerator the token generator
 	 * @since 0.2.3
 	 */
 	public OAuth2ResourceOwnerGiHubAuthenticationProvider(AuthenticationManager authenticationManager,
-			OAuth2AuthorizationService authorizationService,
-			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator) {
+			OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
+			AuthRequest authRequest) {
 		super(authenticationManager, authorizationService, tokenGenerator);
-		this.passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-		this.messages = SpringSecurityMessageSource.getAccessor();
+		this.authRequest = authRequest;
 	}
 
 	/**
@@ -87,6 +89,10 @@ public class OAuth2ResourceOwnerGiHubAuthenticationProvider
 		 * System.setProperty("https.proxyHost", "127.0.0.1");
 		 * System.setProperty("https.proxyPort", "7890");
 		 */
+		// 获取第三方登录信息
+		AuthCallback authCallback = AuthCallback.builder().code(code).state(state).build();
+		AuthResponse<AuthUser> authUserAuthResponse = authRequest.login(authCallback);
+		AuthUser authUser = authUserAuthResponse.getData();
 
 		// 获取需要使用的登录器
 		Optional<TwUserDetailsService> optional = userDetailsServiceMap.values()
@@ -99,7 +105,8 @@ public class OAuth2ResourceOwnerGiHubAuthenticationProvider
 		}
 
 		try {
-			UserDetails userDetails = optional.get().loadUserByUsername(code);
+			// GitHub唯一用户ID进行绑定登录
+			UserDetails userDetails = optional.get().loadUserByOAuth2Id(Oauth2GrantEnums.GITHUB, authUser.getUuid());
 			if (Objects.isNull(userDetails)) {
 				log.debug("Failed to authenticate since no credentials provided");
 				throw new BadCredentialsException(I18nUtils

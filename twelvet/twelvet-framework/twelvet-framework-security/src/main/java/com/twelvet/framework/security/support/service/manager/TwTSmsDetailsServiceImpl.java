@@ -32,11 +32,6 @@ public class TwTSmsDetailsServiceImpl implements TwUserDetailsService {
 
 	private static final Logger log = LoggerFactory.getLogger(TwTSmsDetailsServiceImpl.class);
 
-	/**
-	 * 仅支持后台登录
-	 */
-	private final static String PLAT_FORM = "manager";
-
 	@Autowired
 	private RemoteUserService remoteUserService;
 

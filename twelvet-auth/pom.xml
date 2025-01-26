@@ -93,12 +93,6 @@
             <artifactId>mica-xss</artifactId>
         </dependency>
 
-        <!--OAuth2第三方接入-->
-        <dependency>
-            <groupId>me.zhyd.oauth</groupId>
-            <artifactId>JustAuth</artifactId>
-        </dependency>
-
     </dependencies>
 
     <build>

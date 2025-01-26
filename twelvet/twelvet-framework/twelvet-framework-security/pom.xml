@@ -28,6 +28,12 @@
             <artifactId>spring-security-oauth2-jose</artifactId>
         </dependency>
 
+        <!--OAuth2第三方接入-->
+        <dependency>
+            <groupId>me.zhyd.oauth</groupId>
+            <artifactId>JustAuth</artifactId>
+        </dependency>
+
         <!--webmvc-->
         <dependency>
             <groupId>org.springframework</groupId>

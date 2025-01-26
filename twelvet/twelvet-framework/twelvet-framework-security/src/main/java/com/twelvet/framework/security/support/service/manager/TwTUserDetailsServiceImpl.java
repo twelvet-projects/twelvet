@@ -31,16 +31,6 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 
 	private static final Logger log = LoggerFactory.getLogger(TwTUserDetailsServiceImpl.class);
 
-	/**
-	 * 仅支持后台登录
-	 */
-	private final static String PLAT_FORM = "manager";
-
-	/**
-	 * 登录类型
-	 */
-	private final static String GRAN_TYPE = "password";
-
 	@Autowired
 	private RemoteUserService remoteUserService;
 
@@ -77,6 +67,23 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 			cache.put(username, userDetails);
 		}
 		return userDetails;
+	}
+
+	/**
+	 * 根据第三方唯一ID进行获取登录
+	 * @param oauth2GrantEnums 枚举第三方平台
+	 * @param OAuth2Id 第三方唯一ID
+	 * @return UserDetails
+	 * @throws UsernameNotFoundException UsernameNotFoundException
+	 */
+	@Override
+	public UserDetails loadUserByOAuth2Id(Oauth2GrantEnums oauth2GrantEnums, String OAuth2Id)
+			throws UsernameNotFoundException {
+		if (Oauth2GrantEnums.GITHUB.equals(oauth2GrantEnums)) { // GitHub
+			return loadUserByUsername(OAuth2Id);
+		}
+		log.info("Oauth2GrantEnums：{} 不存在.", oauth2GrantEnums);
+		throw new UsernameNotFoundException("错误的登录类型");
 	}
 
 	/**

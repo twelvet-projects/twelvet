@@ -12,6 +12,7 @@ import com.twelvet.framework.security.support.grant.password.OAuth2ResourceOwner
 import com.twelvet.framework.security.support.grant.password.OAuth2ResourceOwnerPasswordAuthenticationProvider;
 import com.twelvet.framework.security.support.grant.sms.OAuth2ResourceOwnerSmsAuthenticationConverter;
 import com.twelvet.framework.security.support.grant.sms.OAuth2ResourceOwnerSmsAuthenticationProvider;
+import me.zhyd.oauth.request.AuthGithubRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,6 +48,9 @@ public class AuthorizationServerConfiguration {
 
 	@Autowired
 	private OAuth2AuthorizationService authorizationService;
+
+	@Autowired
+	private AuthGithubRequest authGithubRequest;
 
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE)
@@ -151,7 +155,7 @@ public class AuthorizationServerConfiguration {
 				authenticationManager, authorizationService, oAuth2TokenGenerator());
 
 		OAuth2ResourceOwnerGiHubAuthenticationProvider resourceOwnerGitHubAuthenticationProvider = new OAuth2ResourceOwnerGiHubAuthenticationProvider(
-				authenticationManager, authorizationService, oAuth2TokenGenerator());
+				authenticationManager, authorizationService, oAuth2TokenGenerator(), authGithubRequest);
 
 		// 处理 OAuth2ResourceOwnerPasswordAuthenticationToken
 		http.authenticationProvider(resourceOwnerPasswordAuthenticationProvider);

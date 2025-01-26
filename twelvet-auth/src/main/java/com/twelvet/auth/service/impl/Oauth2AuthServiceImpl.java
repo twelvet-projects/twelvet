@@ -30,8 +30,4 @@ public class Oauth2AuthServiceImpl implements Oauth2AuthService {
 		return authGithubRequest.authorize(AuthStateUtils.createState());
 	}
 
-	public Object login(AuthCallback callback) {
-		return authGithubRequest.login(callback);
-	}
-
 }

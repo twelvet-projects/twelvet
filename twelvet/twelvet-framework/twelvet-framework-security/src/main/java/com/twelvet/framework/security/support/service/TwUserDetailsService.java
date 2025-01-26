@@ -5,6 +5,7 @@ import com.twelvet.api.system.domain.SysUser;
 import com.twelvet.api.system.model.UserInfo;
 import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.core.constants.SecurityConstants;
+import com.twelvet.framework.security.constants.Oauth2GrantEnums;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.utils.TUtils;
 import org.springframework.core.Ordered;
@@ -12,6 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -40,6 +42,28 @@ public interface TwUserDetailsService extends UserDetailsService, Ordered {
 	default int getOrder() {
 		return 0;
 	}
+
+	/**
+	 * 根据手机号获取登录
+	 * @param phone 手机号
+	 * @return UserDetails
+	 * @throws UsernameNotFoundException UsernameNotFoundException
+	 */
+	default UserDetails loadUserByPhone(String phone) throws UsernameNotFoundException {
+		return null;
+	};
+
+	/**
+	 * 根据第三方唯一ID进行获取登录
+	 * @param oauth2GrantEnums 枚举第三方平台
+	 * @param OAuth2Id 第三方唯一ID
+	 * @return UserDetails
+	 * @throws UsernameNotFoundException UsernameNotFoundException
+	 */
+	default UserDetails loadUserByOAuth2Id(Oauth2GrantEnums oauth2GrantEnums, String OAuth2Id)
+			throws UsernameNotFoundException {
+		return null;
+	};
 
 	/**
 	 * 构建userdetails

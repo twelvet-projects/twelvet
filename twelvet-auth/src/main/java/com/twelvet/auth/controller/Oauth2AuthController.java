@@ -41,13 +41,8 @@ public class Oauth2AuthController extends TWTController {
 
 	@Operation(summary = "测试回调")
 	@GetMapping("/code/{oauthCode}")
-	public JsonResult<Object> login(@PathVariable String oauthCode, AuthCallback callback) {
-		// 设置代理
-		System.setProperty("http.proxyHost", "127.0.0.1");
-		System.setProperty("http.proxyPort", "7890");
-		System.setProperty("https.proxyHost", "127.0.0.1");
-		System.setProperty("https.proxyPort", "7890");
-		return JsonResult.success(oauth2AuthService.login(callback));
+	public JsonResult<AuthCallback> login(@PathVariable String oauthCode, AuthCallback callback) {
+		return JsonResult.success(callback);
 	}
 
 }

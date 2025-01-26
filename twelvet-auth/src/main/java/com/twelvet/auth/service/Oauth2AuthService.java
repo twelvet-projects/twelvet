@@ -17,11 +17,4 @@ public interface Oauth2AuthService {
 	 */
 	String getAuthorize();
 
-	/**
-	 * 测试回调
-	 * @param callback
-	 * @return
-	 */
-	Object login(AuthCallback callback);
-
 }
