@@ -1,10 +1,9 @@
 package com.twelvet.auth.service.impl;
 
 import com.twelvet.auth.service.Oauth2AuthService;
-import me.zhyd.oauth.config.AuthConfig;
-import me.zhyd.oauth.model.AuthCallback;
+import com.twelvet.framework.core.exception.TWTException;
+import com.twelvet.framework.security.constants.Oauth2GrantEnums;
 import me.zhyd.oauth.request.AuthGithubRequest;
-import me.zhyd.oauth.request.AuthRequest;
 import me.zhyd.oauth.utils.AuthStateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,11 +22,15 @@ public class Oauth2AuthServiceImpl implements Oauth2AuthService {
 	private AuthGithubRequest authGithubRequest;
 
 	/**
-	 * 第三方授权地址
-	 * @return 第三方授权地址
+	 * 获取第三方授权地址
+	 * @param oauthCode 需要获取登录的第三方
+	 * @return 返回登录地址
 	 */
-	public String getAuthorize() {
-		return authGithubRequest.authorize(AuthStateUtils.createState());
+	public String getAuthorize(String oauthCode) {
+		if (Oauth2GrantEnums.GITHUB.getGrant().equals(oauthCode)) {
+			return authGithubRequest.authorize(AuthStateUtils.createState());
+		}
+		throw new TWTException("不存在此第三方登录授权方式");
 	}
 
 }

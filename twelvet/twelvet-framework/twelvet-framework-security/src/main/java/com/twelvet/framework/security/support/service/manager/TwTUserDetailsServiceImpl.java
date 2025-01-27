@@ -19,7 +19,6 @@ import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
 /**
  * @author twelvet
@@ -72,15 +71,15 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 	/**
 	 * 根据第三方唯一ID进行获取登录
 	 * @param oauth2GrantEnums 枚举第三方平台
-	 * @param OAuth2Id 第三方唯一ID
+	 * @param oAuth2UserId 第三方唯一ID
 	 * @return UserDetails
 	 * @throws UsernameNotFoundException UsernameNotFoundException
 	 */
 	@Override
-	public UserDetails loadUserByOAuth2Id(Oauth2GrantEnums oauth2GrantEnums, String OAuth2Id)
+	public UserDetails loadUserByOAuth2UserId(Oauth2GrantEnums oauth2GrantEnums, String oAuth2UserId)
 			throws UsernameNotFoundException {
 		if (Oauth2GrantEnums.GITHUB.equals(oauth2GrantEnums)) { // GitHub
-			return loadUserByUsername(OAuth2Id);
+			return loadUserByUsername(oAuth2UserId);
 		}
 		log.info("Oauth2GrantEnums：{} 不存在.", oauth2GrantEnums);
 		throw new UsernameNotFoundException("错误的登录类型");

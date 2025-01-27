@@ -3,7 +3,10 @@ package com.twelvet.auth.controller;
 import com.twelvet.auth.service.Oauth2AuthService;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.JsonResult;
+import com.twelvet.framework.core.locale.I18nUtils;
+import com.twelvet.framework.core.locale.constants.LocaleSystemConstants;
 import com.twelvet.framework.security.annotation.AuthIgnore;
+import com.twelvet.framework.security.constants.Oauth2GrantEnums;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import me.zhyd.oauth.model.AuthCallback;
@@ -34,9 +37,9 @@ public class Oauth2AuthController extends TWTController {
 	 * @return
 	 */
 	@Operation(summary = "获取登录地址")
-	@GetMapping
-	public JsonResult<String> getAuthorize() {
-		return JsonResult.success(oauth2AuthService.getAuthorize());
+	@GetMapping("/{oauthCode}")
+	public JsonResult<String> getAuthorize(@PathVariable String oauthCode) {
+		return JsonResult.success(oauthCode, oauth2AuthService.getAuthorize(oauthCode));
 	}
 
 	@Operation(summary = "测试回调")

@@ -9,21 +9,16 @@ import com.twelvet.framework.security.support.service.TwUserDetailsService;
 import me.zhyd.oauth.model.AuthCallback;
 import me.zhyd.oauth.model.AuthResponse;
 import me.zhyd.oauth.model.AuthUser;
-import me.zhyd.oauth.request.AuthGithubRequest;
 import me.zhyd.oauth.request.AuthRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.core.Ordered;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.SpringSecurityMessageSource;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
@@ -82,13 +77,6 @@ public class OAuth2ResourceOwnerGiHubAuthenticationProvider
 		String clientId = oAuth2ResourceOwnerPasswordAuthenticationToken.getClientPrincipal().getName();
 		String grantType = oAuth2ResourceOwnerPasswordAuthenticationToken.getAuthorizationGrantType().getValue();
 
-		// 设置代理
-		/*
-		 * System.setProperty("http.proxyHost", "127.0.0.1");
-		 * System.setProperty("http.proxyPort", "7890");
-		 * System.setProperty("https.proxyHost", "127.0.0.1");
-		 * System.setProperty("https.proxyPort", "7890");
-		 */
 		// 获取第三方登录信息
 		AuthCallback authCallback = AuthCallback.builder().code(code).state(state).build();
 		AuthResponse<AuthUser> authUserAuthResponse = authRequest.login(authCallback);
@@ -106,7 +94,8 @@ public class OAuth2ResourceOwnerGiHubAuthenticationProvider
 
 		try {
 			// GitHub唯一用户ID进行绑定登录
-			UserDetails userDetails = optional.get().loadUserByOAuth2Id(Oauth2GrantEnums.GITHUB, authUser.getUuid());
+			UserDetails userDetails = optional.get()
+				.loadUserByOAuth2UserId(Oauth2GrantEnums.GITHUB, authUser.getUuid());
 			if (Objects.isNull(userDetails)) {
 				log.debug("Failed to authenticate since no credentials provided");
 				throw new BadCredentialsException(I18nUtils

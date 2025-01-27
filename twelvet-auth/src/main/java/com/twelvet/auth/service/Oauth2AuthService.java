@@ -1,7 +1,5 @@
 package com.twelvet.auth.service;
 
-import me.zhyd.oauth.model.AuthCallback;
-
 /**
  * <p>
  * 第三方登录
@@ -13,8 +11,9 @@ public interface Oauth2AuthService {
 
 	/**
 	 * 获取第三方授权地址
-	 * @return String
+	 * @param oauthCode 需要获取登录的第三方
+	 * @return 返回登录地址
 	 */
-	String getAuthorize();
+	String getAuthorize(String oauthCode);
 
 }

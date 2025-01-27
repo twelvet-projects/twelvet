@@ -3,11 +3,10 @@ package com.twelvet.framework.security.support.service;
 import cn.hutool.core.collection.CollUtil;
 import com.twelvet.api.system.domain.SysUser;
 import com.twelvet.api.system.model.UserInfo;
-import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.core.constants.SecurityConstants;
+import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.security.constants.Oauth2GrantEnums;
 import com.twelvet.framework.security.domain.LoginUser;
-import com.twelvet.framework.utils.TUtils;
 import org.springframework.core.Ordered;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -56,11 +55,11 @@ public interface TwUserDetailsService extends UserDetailsService, Ordered {
 	/**
 	 * 根据第三方唯一ID进行获取登录
 	 * @param oauth2GrantEnums 枚举第三方平台
-	 * @param OAuth2Id 第三方唯一ID
+	 * @param oAuth2UserId 第三方唯一ID
 	 * @return UserDetails
 	 * @throws UsernameNotFoundException UsernameNotFoundException
 	 */
-	default UserDetails loadUserByOAuth2Id(Oauth2GrantEnums oauth2GrantEnums, String OAuth2Id)
+	default UserDetails loadUserByOAuth2UserId(Oauth2GrantEnums oauth2GrantEnums, String oAuth2UserId)
 			throws UsernameNotFoundException {
 		return null;
 	};
