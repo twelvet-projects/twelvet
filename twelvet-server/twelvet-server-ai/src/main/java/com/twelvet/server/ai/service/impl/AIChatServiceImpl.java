@@ -51,7 +51,6 @@ import org.springframework.ai.document.Document;
 import org.springframework.ai.image.ImageMessage;
 import org.springframework.ai.image.ImagePrompt;
 import org.springframework.ai.image.ImageResponse;
-import org.springframework.ai.model.Content;
 import org.springframework.ai.model.Media;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
@@ -237,15 +236,16 @@ public class AIChatServiceImpl implements AIChatService {
 			Filter.Expression filter = filterExpressionBuilder
 				.eq(RAGEnums.VectorMetadataEnums.KNOWLEDGE_ID.getCode(), aiKnowledge.getKnowledgeId())
 				.build();
-			SearchRequest searchRequest = SearchRequest
+			SearchRequest searchRequest = SearchRequest.builder()
 				// 搜索向量内容
 				.query(messageDTO.getContent())
 				// 向量匹配最多条数
-				.withTopK(aiKnowledge.getTopK())
+				.topK(aiKnowledge.getTopK())
 				// 匹配相似度准度
-				.withSimilarityThreshold(aiKnowledge.getScore())
+				.similarityThreshold(aiKnowledge.getScore())
 				// 过滤元数据
-				.withFilterExpression(filter);
+				.filterExpression(filter)
+				.build();
 
 			return vectorStore.similaritySearch(searchRequest);
 		}, TUtils.threadPoolExecutor);
@@ -273,7 +273,7 @@ public class AIChatServiceImpl implements AIChatService {
 			// 加入知识库内容
 			// 获取documents里的content
 			String documentContext = docs.stream()
-				.map(Content::getContent)
+				.map(Document::getText)
 				.collect(Collectors.joining(System.lineSeparator()));
 			// 创建系统提示词
 			SystemPromptTemplate promptTemplate = new SystemPromptTemplate(RAGConstants.RAG_SYSTEM_PROMPT);
@@ -421,7 +421,7 @@ public class AIChatServiceImpl implements AIChatService {
 				.chatResponse();
 
 			MessageVO messageVO = new MessageVO();
-			messageVO.setContent(response.getResult().getOutput().getContent());
+			messageVO.setContent(Objects.requireNonNull(response).getResult().getOutput().getContent());
 			return Flux.just(messageVO);
 
 		}
@@ -468,8 +468,8 @@ public class AIChatServiceImpl implements AIChatService {
 				.call()
 				.chatResponse();
 
-			InvoiceOCR convert = converter
-				.convert(String.join("", Objects.requireNonNull(flux.getResult().getOutput().getContent())));
+			InvoiceOCR convert = converter.convert(String.join("",
+					Objects.requireNonNull(Objects.requireNonNull(flux).getResult().getOutput().getContent())));
 			MessageVO messageVO = new MessageVO();
 			messageVO.setContent(JacksonUtils.toJson(convert));
 			return Flux.just(messageVO);
