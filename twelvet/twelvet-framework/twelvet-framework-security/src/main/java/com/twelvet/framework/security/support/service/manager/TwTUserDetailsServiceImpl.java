@@ -79,6 +79,7 @@ public class TwTUserDetailsServiceImpl implements TwUserDetailsService {
 	public UserDetails loadUserByOAuth2UserId(Oauth2GrantEnums oauth2GrantEnums, String oAuth2UserId)
 			throws UsernameNotFoundException {
 		if (Oauth2GrantEnums.GITHUB.equals(oauth2GrantEnums)) { // GitHub
+			// TODO 实现通过GitHub uuid进行绑定用户信息
 			return loadUserByUsername(oAuth2UserId);
 		}
 		log.info("Oauth2GrantEnums：{} 不存在.", oauth2GrantEnums);
