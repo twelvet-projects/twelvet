@@ -11,10 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import me.zhyd.oauth.model.AuthCallback;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -23,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @since 2025/1/16
  */
-@AuthIgnore(value = false)
 @Tag(description = "Oauth2AuthController", name = "OAuth2登录优化管理")
 @RestController
 @RequestMapping("/login/oauth2")
@@ -34,18 +30,12 @@ public class Oauth2AuthController extends TWTController {
 
 	/**
 	 * 获取登录地址
-	 * @return
+	 * @return String
 	 */
 	@Operation(summary = "获取登录地址")
 	@GetMapping("/{oauthCode}")
 	public JsonResult<String> getAuthorize(@PathVariable String oauthCode) {
 		return JsonResult.success(oauthCode, oauth2AuthService.getAuthorize(oauthCode));
-	}
-
-	@Operation(summary = "测试回调")
-	@GetMapping("/code/{oauthCode}")
-	public JsonResult<AuthCallback> login(@PathVariable String oauthCode, AuthCallback callback) {
-		return JsonResult.success(callback);
 	}
 
 }

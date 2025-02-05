@@ -13,7 +13,9 @@ import com.twelvet.framework.utils.SpringContextHolder;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
@@ -39,10 +41,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author twelvet
@@ -169,6 +168,9 @@ public class TWTTokenEndpoint {
 	@DeleteMapping("/{token}")
 	public AjaxResult removeToken(@PathVariable("token") String token) {
 		OAuth2Authorization authorization = authorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
+		if (Objects.isNull(authorization)) {
+			return AjaxResult.success();
+		}
 		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
 		if (accessToken == null || StrUtil.isBlank(accessToken.getToken().getTokenValue())) {
 			return AjaxResult.success();
@@ -179,8 +181,12 @@ public class TWTTokenEndpoint {
 		 * https://docs.spring.io/spring-framework/docs/6.1.x/javadoc-api/org/
 		 * springframework/cache/Cache.html
 		 */
-		cacheManager.getCache(CacheConstants.USER_DETAILS).evictIfPresent(authorization.getPrincipalName());
-		// 清空access token
+		Cache cache = cacheManager.getCache(CacheConstants.USER_DETAILS);
+		if (Objects.isNull(cache)) {
+			return AjaxResult.success();
+		}
+		cache.evictIfPresent(authorization.getPrincipalName());
+		// 清空access token，会连带refresh token一起清空
 		authorizationService.remove(authorization);
 		// 处理自定义退出事件，保存相关日志
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

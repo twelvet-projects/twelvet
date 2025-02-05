@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.event.LogoutSuccessEvent;
@@ -29,6 +30,7 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -58,10 +60,12 @@ public class TokenEndpointApi {
 	 * @return R<Void>
 	 */
 	@Operation(summary = "删除token")
-	@AuthIgnore
 	@DeleteMapping("/{token}")
 	public R<Void> removeToken(@PathVariable("token") String token) {
 		OAuth2Authorization authorization = authorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
+		if (Objects.isNull(authorization)) {
+			return R.ok();
+		}
 		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
 		if (accessToken == null || StrUtil.isBlank(accessToken.getToken().getTokenValue())) {
 			return R.ok();
@@ -72,7 +76,11 @@ public class TokenEndpointApi {
 		 * https://docs.spring.io/spring-framework/docs/6.1.x/javadoc-api/org/
 		 * springframework/cache/Cache.html
 		 */
-		cacheManager.getCache(CacheConstants.USER_DETAILS).evictIfPresent(authorization.getPrincipalName());
+		Cache cache = cacheManager.getCache(CacheConstants.USER_DETAILS);
+		if (Objects.isNull(cache)) {
+			return R.ok();
+		}
+		cache.evictIfPresent(authorization.getPrincipalName());
 		// 清空access token
 		authorizationService.remove(authorization);
 		// 处理自定义退出事件，保存相关日志
@@ -88,7 +96,6 @@ public class TokenEndpointApi {
 	 * @return R<TableDataInfo>
 	 */
 	@Operation(summary = "分页token 信息")
-	@AuthIgnore
 	@GetMapping("/pageQuery")
 	public R<TableDataInfo<TokenVo>> tokenList(TokenDTO tokenDTO) {
 		String username = tokenDTO.getUsername();

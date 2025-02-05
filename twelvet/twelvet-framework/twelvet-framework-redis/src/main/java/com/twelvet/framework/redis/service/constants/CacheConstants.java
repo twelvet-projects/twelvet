@@ -8,9 +8,14 @@ package com.twelvet.framework.redis.service.constants;
 public interface CacheConstants {
 
 	/**
+	 * 授权安全token前缀
+	 */
+	String AUTHORIZATION = "twelvet_token";
+
+	/**
 	 * oauth 缓存前缀
 	 */
-	String PROJECT_OAUTH_ACCESS = "token::access_token";
+	String PROJECT_OAUTH_ACCESS = AUTHORIZATION + "::access_token";
 
 	/**
 	 * oauth 客户端信息

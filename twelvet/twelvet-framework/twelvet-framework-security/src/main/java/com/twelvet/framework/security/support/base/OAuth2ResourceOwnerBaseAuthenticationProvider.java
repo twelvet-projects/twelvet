@@ -124,6 +124,9 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 				resouceOwnerBaseAuthenticationScopes);
 
 		RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
+		if (Objects.isNull(registeredClient)) {
+			throw new OAuth2AuthenticationException(OAuth2ErrorCodes.UNAUTHORIZED_CLIENT);
+		}
 		checkClient(registeredClient);
 
 		Set<String> authorizedScopes;
@@ -171,23 +174,20 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 			 * .authenticate(authenticationToken);
 			 */
 
-			AuthorizationGrantType authorizationGrantType = new AuthorizationGrantType(
-					Oauth2GrantEnums.PASSWORD.getGrant());
-
 			// @formatter:off
 			DefaultOAuth2TokenContext.Builder tokenContextBuilder = DefaultOAuth2TokenContext.builder()
 					.registeredClient(registeredClient)
 					.principal(authenticationToken)
 					.authorizationServerContext(AuthorizationServerContextHolder.getContext())
 					.authorizedScopes(authorizedScopes)
-					.authorizationGrantType(authorizationGrantType)
+					.authorizationGrantType(resouceOwnerBaseAuthenticationScopes.getAuthorizationGrantType())
 					.authorizationGrant(resouceOwnerBaseAuthenticationScopes);
 			// @formatter:on
 
 			OAuth2Authorization.Builder authorizationBuilder = OAuth2Authorization
 				.withRegisteredClient(registeredClient)
 				.principalName(authenticationToken.getName())
-				.authorizationGrantType(authorizationGrantType)
+				.authorizationGrantType(resouceOwnerBaseAuthenticationScopes.getAuthorizationGrantType())
 				// 0.4.0 新增的方法
 				.authorizedScopes(authorizedScopes);
 

@@ -124,7 +124,7 @@ public class OAuth2ResourceOwnerGiHubAuthenticationProvider
 	public void checkClient(RegisteredClient registeredClient) {
 		assert registeredClient != null;
 		if (!registeredClient.getAuthorizationGrantTypes()
-			.contains(new AuthorizationGrantType(Oauth2GrantEnums.PASSWORD.getGrant()))) {
+			.contains(new AuthorizationGrantType(Oauth2GrantEnums.GITHUB.getGrant()))) {
 			throw new OAuth2AuthenticationException(OAuth2ErrorCodes.UNAUTHORIZED_CLIENT);
 		}
 	}

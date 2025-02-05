@@ -88,9 +88,21 @@ public class AuthorizationServerConfiguration {
 
 		DefaultSecurityFilterChain securityFilterChain = http.authorizeHttpRequests(authorizeRequests -> {
 			// 自定义接口、端点暴露
-			authorizeRequests
-				.requestMatchers("/api/token/*", "/token/**", "/actuator/**", "/assets/**", "/error", "/v3/api-docs",
-						"/login/oauth2/**")
+			authorizeRequests.requestMatchers(
+					// Swagger
+					"/v3/api-docs",
+					// 监控
+					"/actuator/**",
+					// 资源
+					"/assets/**",
+					// 错误信息
+					"/error",
+					// OAuth2
+					"/token/**",
+					// 第三方授权OAuth2
+					"/login/oauth2/**",
+					// api相关，token管理
+					"/api/token/*")
 				.permitAll();
 			authorizeRequests.anyRequest().authenticated();
 		}).build();
