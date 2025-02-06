@@ -63,10 +63,16 @@
             <artifactId>spring-boot-starter-json</artifactId>
         </dependency>
 
-        <!--hutool-->
+        <!--hutool-extra-->
         <dependency>
             <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
+            <artifactId>hutool-extra</artifactId>
+        </dependency>
+
+        <!--hutool-http-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-http</artifactId>
         </dependency>
 
         <!--Excel-->

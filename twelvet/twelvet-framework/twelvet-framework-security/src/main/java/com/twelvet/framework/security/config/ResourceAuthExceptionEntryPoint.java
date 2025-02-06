@@ -1,6 +1,5 @@
 package com.twelvet.framework.security.config;
 
-import cn.hutool.http.HttpStatus;
 import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.core.locale.I18nUtils;
 import com.twelvet.framework.utils.CharsetKit;
@@ -10,9 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
@@ -33,8 +30,8 @@ public class ResourceAuthExceptionEntryPoint implements AuthenticationEntryPoint
 		try {
 			response.setCharacterEncoding(CharsetKit.UTF_8);
 			R<String> result = new R<>();
-			result.setCode(HttpStatus.HTTP_UNAUTHORIZED);
-			int code = HttpStatus.HTTP_UNAUTHORIZED;
+			result.setCode(HttpStatus.UNAUTHORIZED.value());
+			int code = HttpStatus.UNAUTHORIZED.value();
 			if (authException != null) {
 				result.setMsg("error");
 				result.setData(authException.getMessage());
@@ -43,7 +40,7 @@ public class ResourceAuthExceptionEntryPoint implements AuthenticationEntryPoint
 			// 针对令牌过期返回特殊的 424
 			if (authException instanceof InvalidBearerTokenException
 					|| authException instanceof InsufficientAuthenticationException) {
-				code = HttpStatus.HTTP_OK;
+				code = HttpStatus.OK.value();
 				result.setMsg(I18nUtils.getLocale("OAuth2ResourceOwnerBaseAuthenticationProvider.tokenExpired"));
 			}
 
