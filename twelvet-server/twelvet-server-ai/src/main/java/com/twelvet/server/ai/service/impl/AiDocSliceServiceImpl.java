@@ -66,7 +66,7 @@ public class AiDocSliceServiceImpl implements IAiDocSliceService {
 		vectorStore.add(List.of(document));
 
 		aiDocSlice.setContent(aiDocSliceDTO.getContent());
-        aiDocSlice.setVectorId(document.getId());
+		aiDocSlice.setVectorId(document.getId());
 
 		return aiDocSliceMapper.updateAiDocSlice(aiDocSlice);
 	}
