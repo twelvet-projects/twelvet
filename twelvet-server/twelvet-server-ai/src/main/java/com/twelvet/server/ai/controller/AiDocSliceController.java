@@ -1,6 +1,7 @@
 package com.twelvet.server.ai.controller;
 
 import com.twelvet.api.ai.domain.AiDocSlice;
+import com.twelvet.api.ai.domain.dto.AiDocSliceDTO;
 import com.twelvet.framework.core.application.controller.TWTController;
 import com.twelvet.framework.core.application.domain.JsonResult;
 import com.twelvet.framework.core.application.page.TableDataInfo;
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,14 +49,13 @@ public class AiDocSliceController extends TWTController {
 	}
 
 	/**
-	 * 删除AI知识库文档分片
+	 * 查询AI知识库文档分片分页
 	 */
-	@Operation(summary = "删除AI知识库文档分片")
-	@PreAuthorize("@role.hasPermi('ai:slice:remove')")
-	@Log(service = "AI知识库文档分片", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{sliceIds}")
-	public JsonResult<String> remove(@PathVariable Long[] sliceIds) {
-		return json(aiDocSliceService.deleteAiDocSliceBySliceIds(sliceIds));
+	@Operation(summary = "查询AI知识库文档分片分页")
+	@PreAuthorize("@role.hasPermi('ai:slice:list')")
+	@PutMapping
+	public JsonResult<String> pageQuery(@Validated AiDocSliceDTO aiDocSliceDTO) {
+		return json(aiDocSliceService.updateAiDocSlice(aiDocSliceDTO));
 	}
 
 }

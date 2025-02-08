@@ -1,13 +1,17 @@
 package com.twelvet.server.ai.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.twelvet.api.ai.constant.RAGEnums;
 import com.twelvet.api.ai.domain.AiDocSlice;
+import com.twelvet.api.ai.domain.dto.AiDocSliceDTO;
+import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.service.IAiDocSliceService;
+import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * AI知识库文档分片Service业务层处理
@@ -29,16 +33,6 @@ public class AiDocSliceServiceImpl implements IAiDocSliceService {
 	}
 
 	/**
-	 * 查询AI知识库文档分片
-	 * @param sliceId AI知识库文档分片主键
-	 * @return AI知识库文档分片
-	 */
-	@Override
-	public AiDocSlice selectAiDocSliceBySliceId(Long sliceId) {
-		return aiDocSliceMapper.selectAiDocSliceBySliceId(sliceId);
-	}
-
-	/**
 	 * 查询AI知识库文档分片列表
 	 * @param aiDocSlice AI知识库文档分片
 	 * @return AI知识库文档分片
@@ -50,29 +44,30 @@ public class AiDocSliceServiceImpl implements IAiDocSliceService {
 
 	/**
 	 * 修改AI知识库文档分片
-	 * @param aiDocSlice AI知识库文档分片
+	 * @param aiDocSliceDTO AI知识库文档分片
 	 * @return 结果
 	 */
 	@Override
-	public int updateAiDocSlice(AiDocSlice aiDocSlice) {
-		return aiDocSliceMapper.updateAiDocSlice(aiDocSlice);
-	}
+	public int updateAiDocSlice(AiDocSliceDTO aiDocSliceDTO) {
+		AiDocSlice aiDocSlice = aiDocSliceMapper.selectAiDocSliceBySliceId(aiDocSliceDTO.getSliceId());
 
-	/**
-	 * 批量删除AI知识库文档分片
-	 * @param sliceIds 需要删除的AI知识库文档分片主键
-	 * @return 结果
-	 */
-	@Override
-	public int deleteAiDocSliceBySliceIds(Long[] sliceIds) {
-		int i = aiDocSliceMapper.deleteAiDocSliceBySliceIds(sliceIds);
-
-		List<String> vectorIdList = aiDocSliceMapper.selectAiDocSliceVectorIdBySliceIds(sliceIds);
-		// 删除向量数据库向量
-		if (CollectionUtil.isNotEmpty(vectorIdList)) {
-			vectorStore.delete(vectorIdList);
+		if (Objects.isNull(aiDocSlice)) {
+			throw new TWTException("不存在此分片数据，修改失败");
 		}
-		return i;
+
+		// 删除重新添加向量数据
+		String vectorId = aiDocSlice.getVectorId();
+		vectorStore.delete(Collections.singletonList(vectorId));
+		Document document = new Document(aiDocSliceDTO.getContent());
+		Map<String, Object> metadata = document.getMetadata();
+		metadata.put(RAGEnums.VectorMetadataEnums.KNOWLEDGE_ID.getCode(), aiDocSlice.getKnowledgeId());
+		metadata.put(RAGEnums.VectorMetadataEnums.DOC_ID.getCode(), aiDocSlice.getDocId());
+		metadata.put(RAGEnums.VectorMetadataEnums.SLICE_ID.getCode(), aiDocSlice.getDocId());
+		vectorStore.add(List.of(document));
+
+		aiDocSlice.setContent(aiDocSliceDTO.getContent());
+
+		return aiDocSliceMapper.updateAiDocSlice(aiDocSlice);
 	}
 
 }

@@ -98,7 +98,7 @@ public class RAGMqTopicServiceImpl implements RAGMqTopicService {
 				aiDocSlice.setVectorId(doc.getId());
 				aiDocSlice.setDocId(docId);
 				aiDocSlice.setSliceName(aiDoc.getDocName());
-				aiDocSlice.setContent(doc.getContent());
+				aiDocSlice.setContent(doc.getText());
 				aiDocSlice.setCreateBy(username);
 				aiDocSlice.setCreateTime(nowDate);
 				aiDocSlice.setUpdateBy(username);
@@ -180,7 +180,7 @@ public class RAGMqTopicServiceImpl implements RAGMqTopicService {
 						aiDocSlice.setKnowledgeId(knowledgeId);
 						aiDocSlice.setVectorId(doc.getId());
 						aiDocSlice.setSliceName(fileName);
-						aiDocSlice.setContent(doc.getContent());
+						aiDocSlice.setContent(doc.getText());
 						aiDocSlice.setCreateBy(username);
 						aiDocSlice.setCreateTime(nowDate);
 						aiDocSlice.setUpdateBy(username);
