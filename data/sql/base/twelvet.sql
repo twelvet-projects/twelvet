@@ -766,6 +766,15 @@ VALUES (1149, 'AI大模型删除', 1145, 4, '#', '', '1', 'F', '0', '0', 'system
 INSERT INTO `sys_menu`
 VALUES (1150, 'AI大模型导出', 1145, 5, '#', '', '1', 'F', '0', '0', 'system:model:export', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu`
+VALUES (1151, 'AI知识库分片查询', 1127, 6, '', NULL, '1', 'F', '0', '0', 'ai:slice:query', '#', 'admin',
+        '2025-02-08 15:04:55', '', NULL, '');
+INSERT INTO `sys_menu`
+VALUES (1152, 'AI知识库分片列表查询', 1127, 7, '', NULL, '1', 'F', '0', '0', 'ai:slice:list', '#', 'admin',
+        '2025-02-08 15:05:31', '', NULL, '');
+INSERT INTO `sys_menu`
+VALUES (1153, 'AI知识库分片修改', 1127, 8, '', NULL, '1', 'F', '0', '0', 'ai:slice:edit', '#', 'admin',
+        '2025-02-08 15:06:03', '', NULL, '');
 
 -- ----------------------------
 -- Table structure for sys_oauth_client_details
