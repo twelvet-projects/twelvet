@@ -49,10 +49,20 @@ public class AiDocSliceController extends TWTController {
 	}
 
 	/**
-	 * 查询AI知识库文档分片分页
+	 * 查询AI知识库文档分片详情
 	 */
-	@Operation(summary = "查询AI知识库文档分片分页")
-	@PreAuthorize("@role.hasPermi('ai:slice:list')")
+	@Operation(summary = "查询AI知识库文档分片详情")
+	@PreAuthorize("@role.hasPermi('ai:slice:query')")
+	@GetMapping("/{sliceId}")
+	public JsonResult<AiDocSlice> getInfo(@PathVariable Long sliceId) {
+		return JsonResult.success(aiDocSliceService.selectAiDocSliceBySliceId(sliceId));
+	}
+
+	/**
+	 * 修改AI知识库文档分片
+	 */
+	@Operation(summary = "修改AI知识库文档分片")
+	@PreAuthorize("@role.hasPermi('ai:slice:edit')")
 	@PutMapping
 	public JsonResult<String> pageQuery(@Validated AiDocSliceDTO aiDocSliceDTO) {
 		return json(aiDocSliceService.updateAiDocSlice(aiDocSliceDTO));

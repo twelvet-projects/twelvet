@@ -15,6 +15,13 @@ import java.util.List;
 public interface IAiDocSliceService {
 
 	/**
+	 * 查询AI知识库文档分片
+	 * @param sliceId AI知识库文档分片主键
+	 * @return AI知识库文档分片
+	 */
+	public AiDocSlice selectAiDocSliceBySliceId(Long sliceId);
+
+	/**
 	 * 查询AI知识库文档分片列表
 	 * @param aiDocSlice AI知识库文档分片
 	 * @return AI知识库文档分片集合
