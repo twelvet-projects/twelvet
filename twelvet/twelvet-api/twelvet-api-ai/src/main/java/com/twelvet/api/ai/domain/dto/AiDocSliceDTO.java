@@ -36,7 +36,6 @@ public class AiDocSliceDTO {
 	 */
 	@NotBlank(message = "分片内容不允许为空")
 	@Schema(description = "分片内容")
-	@ExcelProperty(value = "分片内容")
 	private String content;
 
 	public Long getSliceId() {

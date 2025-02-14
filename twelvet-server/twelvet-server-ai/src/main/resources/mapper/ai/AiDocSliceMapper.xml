@@ -75,6 +75,7 @@
         update ai_doc_slice
         <trim prefix="SET" suffixOverrides=",">
             <if test="knowledgeId != null">knowledge_id = #{knowledgeId},</if>
+            <if test="vectorId != null">vector_id = #{vectorId},</if>
             <if test="docId != null">doc_id = #{docId},</if>
             <if test="sliceName != null">slice_name = #{sliceName},</if>
             <if test="content != null">content = #{content},</if>

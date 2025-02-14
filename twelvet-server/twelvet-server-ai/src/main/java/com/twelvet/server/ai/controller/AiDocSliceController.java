@@ -64,7 +64,7 @@ public class AiDocSliceController extends TWTController {
 	@Operation(summary = "修改AI知识库文档分片")
 	@PreAuthorize("@role.hasPermi('ai:slice:edit')")
 	@PutMapping
-	public JsonResult<String> pageQuery(@Validated AiDocSliceDTO aiDocSliceDTO) {
+	public JsonResult<String> pageQuery(@RequestBody @Validated AiDocSliceDTO aiDocSliceDTO) {
 		return json(aiDocSliceService.updateAiDocSlice(aiDocSliceDTO));
 	}
 
