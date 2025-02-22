@@ -29,8 +29,6 @@ import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.framework.utils.TUtils;
 import com.twelvet.server.ai.constant.AIDataSourceConstants;
 import com.twelvet.server.ai.constant.RAGConstants;
-import com.twelvet.server.ai.fun.MockWeatherService;
-import com.twelvet.server.ai.fun.vo.Request;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.mapper.AiKnowledgeMapper;
 import com.twelvet.server.ai.service.AIChatService;
@@ -342,12 +340,12 @@ public class AIChatServiceImpl implements AIChatService {
 			// 功能选择
 			.options(dashScopeChatOptions)
 			// 注册function
-			.function("mockWeatherService", "根据城市查询天气", Request.class, new MockWeatherService())
+			//.function("mockWeatherService", "根据城市查询天气", Request.class, new MockWeatherService())
 			.stream()
 			.chatResponse()
 			.map(chatResponse -> {
 				MessageVO messageVO = new MessageVO();
-				String content = chatResponse.getResult().getOutput().getContent();
+				String content = chatResponse.getResult().getOutput().getText();
 				messageVO.setMsgId(aiMsgId);
 				messageVO.setContent(content);
 				// 储存AI回复内容
@@ -421,7 +419,7 @@ public class AIChatServiceImpl implements AIChatService {
 				.chatResponse();
 
 			MessageVO messageVO = new MessageVO();
-			messageVO.setContent(Objects.requireNonNull(response).getResult().getOutput().getContent());
+			messageVO.setContent(Objects.requireNonNull(response).getResult().getOutput().getText());
 			return Flux.just(messageVO);
 
 		}
@@ -469,7 +467,7 @@ public class AIChatServiceImpl implements AIChatService {
 				.chatResponse();
 
 			InvoiceOCR convert = converter.convert(String.join("",
-					Objects.requireNonNull(Objects.requireNonNull(flux).getResult().getOutput().getContent())));
+					Objects.requireNonNull(Objects.requireNonNull(flux).getResult().getOutput().getText())));
 			MessageVO messageVO = new MessageVO();
 			messageVO.setContent(JacksonUtils.toJson(convert));
 			return Flux.just(messageVO);
