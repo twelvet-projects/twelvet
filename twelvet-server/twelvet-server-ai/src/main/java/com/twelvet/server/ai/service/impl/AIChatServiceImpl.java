@@ -340,7 +340,8 @@ public class AIChatServiceImpl implements AIChatService {
 			// 功能选择
 			.options(dashScopeChatOptions)
 			// 注册function
-			//.function("mockWeatherService", "根据城市查询天气", Request.class, new MockWeatherService())
+			// .function("mockWeatherService", "根据城市查询天气", Request.class, new
+			// MockWeatherService())
 			.stream()
 			.chatResponse()
 			.map(chatResponse -> {
