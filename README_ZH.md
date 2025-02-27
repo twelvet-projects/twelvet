@@ -130,13 +130,13 @@ com.twelvet
 
 ```shell
 # mvn twelvet
-cd ./twelvet && mvn clean && mvn install
+cd ./twelvet && mvn clean && mvn install -DskipTests
 # mvn twelvet-auth
-cd ../twelvet-auth && mvn clean && mvn install
+cd ../twelvet-auth && mvn clean && mvn install -DskipTests
 # mvn twelvet-gateway
-cd ../twelvet-gateway && mvn clean && mvn install
+cd ../twelvet-gateway && mvn clean && mvn install -DskipTests
 # mvn twelvet-server-system
-cd ../twelvet-server/twelvet-server-system && mvn clean && mvn install
+cd ../twelvet-server/twelvet-server-system && mvn clean && mvn install -DskipTests
 # 进入脚本目录
 cd ../../docker
 # 可执行权限
