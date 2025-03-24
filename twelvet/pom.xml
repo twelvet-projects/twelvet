@@ -53,7 +53,7 @@
         <dynamic-datasource.version>4.3.1</dynamic-datasource.version>
         <shardingsphere-jdbc.version>5.4.1</shardingsphere-jdbc.version>
 
-        <spring-boot-admin.version>3.4.2</spring-boot-admin.version>
+        <spring-boot-admin.version>3.4.5</spring-boot-admin.version>
         <mybatis.version>3.0.4</mybatis.version>
         <pagehelper.boot.version>2.1.0</pagehelper.boot.version>
         <commons.io.version>2.18.0</commons.io.version>
