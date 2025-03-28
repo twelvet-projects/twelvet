@@ -110,6 +110,12 @@
             <artifactId>spring-cloud-starter-stream-rocketmq</artifactId>
         </dependency>
 
+        <!--MCP 服务-->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-mcp-server-webmvc-spring-boot-starter</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
