@@ -2,6 +2,11 @@ server:
   port: 8085
 
 spring:
+  ai:
+    mcp:
+      client:
+        stdio:
+          #servers-configuration: classpath:/baidu-mcp-servers-config.json
   application:
     # 应用名称
     name: @artifactId@

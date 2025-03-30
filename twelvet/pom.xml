@@ -72,7 +72,7 @@
         <idempotent-spring-boot-starter.version>0.4.0</idempotent-spring-boot-starter.version>
         <sensitive-word.version>0.22.0</sensitive-word.version>
 
-        <spring-ai-bom.version>1.0.0-M6</spring-ai-bom.version>
+        <spring-ai-bom.version>1.0.0-SNAPSHOT</spring-ai-bom.version>
         <ai-alibaba.version>1.0.0-M6.1</ai-alibaba.version>
 
         <docker.plugin.version>0.32.0</docker.plugin.version>

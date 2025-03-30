@@ -95,7 +95,7 @@
         <!--PGSql Vector 向量数据库-->
         <dependency>
             <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-pgvector-store-spring-boot-starter</artifactId>
+            <artifactId>spring-ai-starter-vector-store-pgvector</artifactId>
         </dependency>
 
         <!--DOCX、PPTX、HTML...阅读器-->
@@ -110,10 +110,10 @@
             <artifactId>spring-cloud-starter-stream-rocketmq</artifactId>
         </dependency>
 
-        <!--MCP 服务-->
+        <!--MCP Client-->
         <dependency>
             <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-mcp-server-webmvc-spring-boot-starter</artifactId>
+            <artifactId>spring-ai-starter-mcp-client</artifactId>
         </dependency>
 
     </dependencies>
