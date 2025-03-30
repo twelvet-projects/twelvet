@@ -5,8 +5,9 @@ spring:
   ai:
     mcp:
       client:
+        enabled: false
         stdio:
-          #servers-configuration: classpath:/baidu-mcp-servers-config.json
+          servers-configuration: classpath:/baidu-mcp-servers-config.json
   application:
     # 应用名称
     name: @artifactId@
