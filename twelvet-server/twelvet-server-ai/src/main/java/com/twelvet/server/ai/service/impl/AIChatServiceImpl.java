@@ -33,6 +33,7 @@ import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.mapper.AiKnowledgeMapper;
 import com.twelvet.server.ai.service.AIChatService;
 import com.twelvet.server.ai.service.IAiChatHistoryService;
+import io.modelcontextprotocol.client.McpSyncClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.audio.transcription.AudioTranscriptionPrompt;
@@ -49,6 +50,7 @@ import org.springframework.ai.document.Document;
 import org.springframework.ai.image.ImageMessage;
 import org.springframework.ai.image.ImagePrompt;
 import org.springframework.ai.image.ImageResponse;
+import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
 import org.springframework.ai.model.Media;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
@@ -112,6 +114,8 @@ public class AIChatServiceImpl implements AIChatService {
 
 	private final SensitiveWordBs sensitiveWordBs;
 
+	private final List<McpSyncClient> mcpSyncClients;
+
 	/**
 	 * 多模态测试图片地址
 	 */
@@ -132,7 +136,7 @@ public class AIChatServiceImpl implements AIChatService {
 			IAiChatHistoryService aiChatHistoryService, SpeechSynthesisModel speechSynthesisModel,
 			AudioTranscriptionModel audioTranscriptionModel, SensitiveWordBs sensitiveWordBs,
 			DashScopeImageModel dashScopeImageModel, DashScopeAudioTranscriptionModel dashScopeAudioTranscriptionModel,
-			DashScopeSpeechSynthesisModel dashScopeSpeechSynthesisModel) {
+			DashScopeSpeechSynthesisModel dashScopeSpeechSynthesisModel, List<McpSyncClient> mcpSyncClients) {
 		this.dashScopeChatModel = dashScopeChatModel;
 		this.vectorStore = vectorStore;
 		this.aiKnowledgeMapper = aiKnowledgeMapper;
@@ -144,6 +148,7 @@ public class AIChatServiceImpl implements AIChatService {
 		this.dashScopeImageModel = dashScopeImageModel;
 		this.dashScopeAudioTranscriptionModel = dashScopeAudioTranscriptionModel;
 		this.dashScopeSpeechSynthesisModel = dashScopeSpeechSynthesisModel;
+		this.mcpSyncClients = mcpSyncClients;
 	}
 
 	/**
@@ -338,7 +343,8 @@ public class AIChatServiceImpl implements AIChatService {
 			.create(dashScopeChatModel)
 			.prompt(prompt)
 			// 功能选择
-			.options(dashScopeChatOptions)
+			// .options(dashScopeChatOptions)
+			.tools(new SyncMcpToolCallbackProvider(mcpSyncClients))
 			// 注册function
 			// .function("mockWeatherService", "根据城市查询天气", Request.class, new
 			// MockWeatherService())
