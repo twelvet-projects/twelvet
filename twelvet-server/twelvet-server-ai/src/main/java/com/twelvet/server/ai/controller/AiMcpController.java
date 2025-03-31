@@ -50,7 +50,7 @@ public class AiMcpController extends TWTController {
 	/**
 	 * 导出AI MCP服务列表
 	 */
-	@ResponseExcel(name = "AI MCP服务")
+	@ResponseExcel(name = "MCP服务")
 	@Operation(summary = "导出AI MCP服务列表")
 	@PreAuthorize("@role.hasPermi('ai:mcp:export')")
 	@Log(service = "AI MCP服务", businessType = BusinessType.EXPORT)
