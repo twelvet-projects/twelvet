@@ -35,7 +35,7 @@ public class AiMcp extends BaseEntity {
 	/** 描述 */
 	@Schema(description = "描述")
 	@ExcelProperty(value = "描述")
-	private String desc;
+	private String description;
 
 	/** 请求类型 */
 	@Schema(description = "请求类型")
@@ -82,12 +82,12 @@ public class AiMcp extends BaseEntity {
 		return name;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getDescription() {
+		return description;
 	}
 
 	public void setMcpType(ModelEnums.McpTypeEnums mcpType) {
@@ -142,7 +142,7 @@ public class AiMcp extends BaseEntity {
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("mcpId", getMcpId())
 			.append("name", getName())
-			.append("desc", getDesc())
+			.append("description", getDescription())
 			.append("mcpType", getMcpType())
 			.append("command", getCommand())
 			.append("args", getArgs())
