@@ -65,4 +65,60 @@ public class ModelEnums {
 
 	}
 
+	/**
+	 * AI MCP 类型枚举
+	 */
+	public enum McpTypeEnums {
+
+		STDIO("STDIO", "STDIO"), SSE("SSE", "SSE")
+
+		;
+
+		private final String code;
+
+		private final String desc;
+
+		McpTypeEnums(String code, String desc) {
+			this.code = code;
+			this.desc = desc;
+		}
+
+		public String getCode() {
+			return code;
+		}
+
+		public String getDesc() {
+			return desc;
+		}
+
+	}
+
+	/**
+	 * AI MCP 命令枚举
+	 */
+	public enum McpCommandEnums {
+
+		NPX("npx", "npx")
+
+		;
+
+		private final String code;
+
+		private final String desc;
+
+		McpCommandEnums(String code, String desc) {
+			this.code = code;
+			this.desc = desc;
+		}
+
+		public String getCode() {
+			return code;
+		}
+
+		public String getDesc() {
+			return desc;
+		}
+
+	}
+
 }
