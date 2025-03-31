@@ -146,12 +146,12 @@ DROP TABLE IF EXISTS `ai_mcp`;
 CREATE TABLE `ai_mcp`
 (
     `mcp_id`      bigint                                                        NOT NULL AUTO_INCREMENT COMMENT 'MCP ID',
-    `name`        varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT 'MCP服务名称',
+    `name`        varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT 'MCP服务名称',
     `desc`        varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT '描述',
-    `mcp_type`    varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT '请求类型',
-    `command`     varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT '命令',
-    `args`        varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT NULL COMMENT '参数',
-    `env`         varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '环境变量',
+    `mcp_type`    varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '请求类型',
+    `command`     varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '命令',
+    `args`        varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '参数',
+    `env`         varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT NULL COMMENT '环境变量',
     `status_flag` tinyint(1)                                                    NOT NULL DEFAULT 1 COMMENT '是否启用  1：启用，0：关闭',
     `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '创建者',
     `create_time` datetime                                                      NOT NULL COMMENT '创建时间',
