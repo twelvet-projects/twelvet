@@ -54,7 +54,7 @@ public class AITest {
 		List<Document> read = tikaDocumentReader.get();
 		read.forEach(document -> {
 			log.info("分析成功");
-			log.info(document.getContent());
+			log.info(document.getText());
 			log.info("文件名称：{}", document.getMetadata().get("source"));
 		});
 
