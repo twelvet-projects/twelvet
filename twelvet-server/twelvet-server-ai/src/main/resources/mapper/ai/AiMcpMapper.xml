@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twelvet.server.ai.mapper.AiMcpMapper">
+    
+    <resultMap type="AiMcp" id="AiMcpResult">
+        <result property="mcpId"    column="mcp_id"    />
+        <result property="name"    column="name"    />
+        <result property="desc"    column="desc"    />
+        <result property="mcpType"    column="mcp_type"    />
+        <result property="command"    column="command"    />
+        <result property="args"    column="args"    />
+        <result property="env"    column="env"    />
+        <result property="statusFlag"    column="status_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectAiMcpVo">
+        select mcp_id, name, desc, mcp_type, command, args, env, status_flag, create_by, create_time, update_by, update_time, del_flag from ai_mcp
+    </sql>
+
+    <select id="selectAiMcpList" parameterType="AiMcp" resultMap="AiMcpResult">
+        <include refid="selectAiMcpVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="desc != null  and desc != ''"> and desc = #{desc}</if>
+            <if test="mcpType != null  and mcpType != ''"> and mcp_type = #{mcpType}</if>
+            <if test="command != null  and command != ''"> and command = #{command}</if>
+            <if test="args != null  and args != ''"> and args = #{args}</if>
+            <if test="env != null  and env != ''"> and env = #{env}</if>
+            <if test="statusFlag != null "> and status_flag = #{statusFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectAiMcpByMcpId" parameterType="Long" resultMap="AiMcpResult">
+        <include refid="selectAiMcpVo"/>
+        where mcp_id = #{mcpId}
+    </select>
+        
+    <insert id="insertAiMcp" parameterType="AiMcp" useGeneratedKeys="true" keyProperty="mcpId">
+        insert into ai_mcp
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="desc != null">desc,</if>
+            <if test="mcpType != null">mcp_type,</if>
+            <if test="command != null">command,</if>
+            <if test="args != null">args,</if>
+            <if test="env != null and env != ''">env,</if>
+            <if test="statusFlag != null">status_flag,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null and updateBy != ''">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="delFlag != null">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="desc != null">#{desc},</if>
+            <if test="mcpType != null">#{mcpType},</if>
+            <if test="command != null">#{command},</if>
+            <if test="args != null">#{args},</if>
+            <if test="env != null and env != ''">#{env},</if>
+            <if test="statusFlag != null">#{statusFlag},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAiMcp" parameterType="AiMcp">
+        update ai_mcp
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="desc != null">desc = #{desc},</if>
+            <if test="mcpType != null">mcp_type = #{mcpType},</if>
+            <if test="command != null">command = #{command},</if>
+            <if test="args != null">args = #{args},</if>
+            <if test="env != null and env != ''">env = #{env},</if>
+            <if test="statusFlag != null">status_flag = #{statusFlag},</if>
+            <if test="createBy != null and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where mcp_id = #{mcpId}
+    </update>
+
+    <delete id="deleteAiMcpByMcpId" parameterType="Long">
+        delete from ai_mcp where mcp_id = #{mcpId}
+    </delete>
+
+    <delete id="deleteAiMcpByMcpIds" parameterType="String">
+        delete from ai_mcp where mcp_id in 
+        <foreach item="mcpId" collection="array" open="(" separator="," close=")">
+            #{mcpId}
+        </foreach>
+    </delete>
+</mapper>
