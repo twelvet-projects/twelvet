@@ -25,7 +25,7 @@ CREATE TABLE `ai_model`
     `create_time`    datetime                                                      NOT NULL COMMENT '创建时间',
     `update_by`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '更新者',
     `update_time`    datetime                                                      NOT NULL COMMENT '更新时间',
-    `del_flag`       tinyint(1)                                                    NOT NULL DEFAULT 0 COMMENT '是否删除 0：正常，0：删除',
+    `del_flag`       tinyint(1)                                                    NOT NULL DEFAULT 0 COMMENT '是否删除 0：正常，1：删除',
     PRIMARY KEY (`model_id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
@@ -51,7 +51,7 @@ CREATE TABLE `ai_knowledge`
     `create_time`    datetime                                                     NOT NULL COMMENT '创建时间',
     `update_by`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '更新者',
     `update_time`    datetime                                                     NOT NULL COMMENT '更新时间',
-    `del_flag`       tinyint(1)                                                   NOT NULL DEFAULT 0 COMMENT '是否删除 0：正常，0：删除',
+    `del_flag`       tinyint(1)                                                   NOT NULL DEFAULT 0 COMMENT '是否删除 0：正常，1：删除',
     PRIMARY KEY (`knowledge_id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
@@ -73,7 +73,7 @@ CREATE TABLE `ai_doc`
     `create_time`  datetime                                                      NOT NULL COMMENT '创建时间',
     `update_by`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '更新者',
     `update_time`  datetime                                                      NOT NULL COMMENT '更新时间',
-    `del_flag`     tinyint(1)                                                    NOT NULL DEFAULT 0 COMMENT '是否删除 0：正常，0：删除',
+    `del_flag`     tinyint(1)                                                    NOT NULL DEFAULT 0 COMMENT '是否删除 0：正常，1：删除',
     PRIMARY KEY (`doc_id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
@@ -93,7 +93,7 @@ CREATE TABLE `ai_doc_slice`
     `vector_id`    varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL DEFAULT 0 COMMENT '向量ID',
     `slice_name`   varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '分片名称',
     `content`      text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci         NOT NULL COMMENT '分片内容',
-    `del_flag`     tinyint(1)                                                    NOT NULL DEFAULT 0 COMMENT '是否删除 0：正常，0：删除',
+    `del_flag`     tinyint(1)                                                    NOT NULL DEFAULT 0 COMMENT '是否删除 0：正常，1：删除',
     PRIMARY KEY (`slice_id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
@@ -140,7 +140,29 @@ CREATE TABLE `ai_chat_history_content`
   ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of undo_log
+-- Table structure for ai_mcp
 -- ----------------------------
+DROP TABLE IF EXISTS `ai_mcp`;
+CREATE TABLE `ai_mcp`
+(
+    `mcp_id`      bigint                                                        NOT NULL AUTO_INCREMENT COMMENT 'MCP ID',
+    `name`        varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT 'MCP服务名称',
+    `desc`        varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT '描述',
+    `mcp_type`    varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT '请求类型',
+    `command`     varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT '命令',
+    `params`      varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT NULL COMMENT '参数',
+    `environment` varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '环境变量',
+    `enable_flag` tinyint(1)                                                    NOT NULL DEFAULT 1 COMMENT '是否启用  1：启用，0：关闭',
+    `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '创建者',
+    `create_time` datetime                                                      NOT NULL COMMENT '创建时间',
+    `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '更新者',
+    `update_time` datetime                                                      NOT NULL COMMENT '更新时间',
+    `del_flag`    tinyint(1)                                                    NOT NULL DEFAULT 0 COMMENT '是否删除 0：正常，1：删除',
+    PRIMARY KEY (`mcp_id`) USING BTREE
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT = 'AI MCP服务'
+  ROW_FORMAT = DYNAMIC;
 
 SET FOREIGN_KEY_CHECKS = 1;

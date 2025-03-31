@@ -53,8 +53,8 @@ public class AiModel extends BaseEntity {
 	@ExcelProperty(value = "模型请求地址")
 	private String baseUrl;
 
-	/** 是否删除 0：正常，0：删除 */
-	@Schema(description = "是否删除 0：正常，0：删除")
+	/** 是否删除 0：正常，1：删除 */
+	@Schema(description = "是否删除 0：正常，1：删除")
 	private Integer delFlag;
 
 	public void setModelId(Long modelId) {
