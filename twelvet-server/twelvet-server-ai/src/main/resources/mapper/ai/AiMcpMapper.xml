@@ -40,6 +40,7 @@
     <select id="selectAiMcpList" parameterType="AiMcp" resultMap="AiMcpResult">
         <include refid="selectAiMcpVo"/>
         <where>
+            del_flag = 0
             <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
             <if test="description != null  and description != ''">and description = #{description}</if>
             <if test="mcpType != null  and mcpType != ''">and mcp_type = #{mcpType}</if>
@@ -52,7 +53,7 @@
 
     <select id="selectAiMcpByMcpId" parameterType="Long" resultMap="AiMcpResult">
         <include refid="selectAiMcpVo"/>
-        where mcp_id = #{mcpId}
+        where mcp_id = #{mcpId} and del_flag = 0
     </select>
 
     <insert id="insertAiMcp" parameterType="AiMcp" useGeneratedKeys="true" keyProperty="mcpId">
@@ -103,17 +104,17 @@
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="delFlag != null">del_flag = #{delFlag},</if>
         </trim>
-        where mcp_id = #{mcpId}
+        where mcp_id = #{mcpId} and del_flag = 0
     </update>
 
     <delete id="deleteAiMcpByMcpId" parameterType="Long">
-        delete
-        from ai_mcp
+        update ai_mcp
+        set del_flag = 1
         where mcp_id = #{mcpId}
     </delete>
 
     <delete id="deleteAiMcpByMcpIds" parameterType="String">
-        delete from ai_mcp where mcp_id in
+        update ai_mcp set del_flag = 1 where mcp_id in
         <foreach item="mcpId" collection="array" open="(" separator="," close=")">
             #{mcpId}
         </foreach>
