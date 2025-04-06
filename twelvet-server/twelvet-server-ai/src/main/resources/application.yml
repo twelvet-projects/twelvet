@@ -2,12 +2,6 @@ server:
   port: 8085
 
 spring:
-  ai:
-    mcp:
-      client:
-        enabled: true
-        stdio:
-          servers-configuration: classpath:/amap-mcp.json
   application:
     # 应用名称
     name: @artifactId@
