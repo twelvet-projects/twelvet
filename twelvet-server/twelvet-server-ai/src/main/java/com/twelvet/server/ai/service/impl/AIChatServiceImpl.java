@@ -1,6 +1,7 @@
 package com.twelvet.server.ai.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.cloud.ai.dashscope.api.DashScopeSpeechSynthesisApi;
 import com.alibaba.cloud.ai.dashscope.audio.DashScopeAudioTranscriptionModel;
 import com.alibaba.cloud.ai.dashscope.audio.DashScopeAudioTranscriptionOptions;
@@ -14,10 +15,12 @@ import com.alibaba.cloud.ai.dashscope.chat.MessageFormat;
 import com.alibaba.cloud.ai.dashscope.image.DashScopeImageModel;
 import com.alibaba.cloud.ai.dashscope.image.DashScopeImageOptions;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.houbb.sensitive.word.bs.SensitiveWordBs;
 import com.github.yitter.idgen.YitIdHelper;
 import com.twelvet.api.ai.constant.RAGEnums;
 import com.twelvet.api.ai.domain.AiKnowledge;
+import com.twelvet.api.ai.domain.AiMcp;
 import com.twelvet.api.ai.domain.dto.*;
 import com.twelvet.api.ai.domain.ocr.InvoiceOCR;
 import com.twelvet.api.ai.domain.vo.AiChatHistoryVO;
@@ -31,9 +34,14 @@ import com.twelvet.server.ai.constant.AIDataSourceConstants;
 import com.twelvet.server.ai.constant.RAGConstants;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.mapper.AiKnowledgeMapper;
+import com.twelvet.server.ai.mapper.AiMcpMapper;
 import com.twelvet.server.ai.service.AIChatService;
 import com.twelvet.server.ai.service.IAiChatHistoryService;
+import io.modelcontextprotocol.client.McpClient;
 import io.modelcontextprotocol.client.McpSyncClient;
+import io.modelcontextprotocol.client.transport.ServerParameters;
+import io.modelcontextprotocol.client.transport.StdioClientTransport;
+import io.modelcontextprotocol.spec.McpSchema;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.audio.transcription.AudioTranscriptionPrompt;
@@ -63,6 +71,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.SignalType;
 
 import java.net.URI;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -116,6 +125,8 @@ public class AIChatServiceImpl implements AIChatService {
 
 	private final List<McpSyncClient> mcpSyncClients;
 
+	private final AiMcpMapper aiMcpMapper;
+
 	/**
 	 * 多模态测试图片地址
 	 */
@@ -132,11 +143,11 @@ public class AIChatServiceImpl implements AIChatService {
 	private final static String MULTI_VIDEO_FILE_URL = "https://static.twelvet.cn/ai/video.mp4";
 
 	public AIChatServiceImpl(DashScopeChatModel dashScopeChatModel, VectorStore vectorStore,
-			AiKnowledgeMapper aiKnowledgeMapper, AiDocSliceMapper aiDocSliceMapper,
-			IAiChatHistoryService aiChatHistoryService, SpeechSynthesisModel speechSynthesisModel,
-			AudioTranscriptionModel audioTranscriptionModel, SensitiveWordBs sensitiveWordBs,
-			DashScopeImageModel dashScopeImageModel, DashScopeAudioTranscriptionModel dashScopeAudioTranscriptionModel,
-			DashScopeSpeechSynthesisModel dashScopeSpeechSynthesisModel, List<McpSyncClient> mcpSyncClients) {
+                             AiKnowledgeMapper aiKnowledgeMapper, AiDocSliceMapper aiDocSliceMapper,
+                             IAiChatHistoryService aiChatHistoryService, SpeechSynthesisModel speechSynthesisModel,
+                             AudioTranscriptionModel audioTranscriptionModel, SensitiveWordBs sensitiveWordBs,
+                             DashScopeImageModel dashScopeImageModel, DashScopeAudioTranscriptionModel dashScopeAudioTranscriptionModel,
+                             DashScopeSpeechSynthesisModel dashScopeSpeechSynthesisModel, List<McpSyncClient> mcpSyncClients, AiMcpMapper aiMcpMapper) {
 		this.dashScopeChatModel = dashScopeChatModel;
 		this.vectorStore = vectorStore;
 		this.aiKnowledgeMapper = aiKnowledgeMapper;
@@ -149,7 +160,8 @@ public class AIChatServiceImpl implements AIChatService {
 		this.dashScopeAudioTranscriptionModel = dashScopeAudioTranscriptionModel;
 		this.dashScopeSpeechSynthesisModel = dashScopeSpeechSynthesisModel;
 		this.mcpSyncClients = mcpSyncClients;
-	}
+        this.aiMcpMapper = aiMcpMapper;
+    }
 
 	/**
 	 * 发起聊天
@@ -338,13 +350,55 @@ public class AIChatServiceImpl implements AIChatService {
 			dashScopeChatOptions.setEnableSearch(Boolean.TRUE);
 		}
 
+		List<McpSyncClient> custMcpSyncClients = new ArrayList<>();
+
+		AiMcp aiMcp = new AiMcp();
+		aiMcp.setStatusFlag(Boolean.TRUE);
+		List<AiMcp> aiMcpList = aiMcpMapper.selectAiMcpList(aiMcp);
+
+		for (AiMcp mcp : aiMcpList) {
+			String[] args = mcp.getArgs().split("\n");
+			String envStr = mcp.getEnv();
+			Map<String, String> envMap = new HashMap<>();
+			if (StrUtil.isNotBlank(envStr)) {
+				String[] envStrs = envStr.split("\n");
+				for (String str : envStrs) {
+					String[] v = str.split("=");
+					if (v.length != 2) {
+						throw new TWTException(String.format("MCP服务【%s】,环境变量配置错误", mcp.getName()));
+					}
+					envMap.put(v[0].trim(), v[1].trim());
+				}
+			}
+			// 启动参数
+			ServerParameters serverParameters = ServerParameters
+					.builder("D:\\nvm\\node\\npx.cmd")
+					.args(args)
+					.env(envMap)
+					.build();
+			// 基本信息
+			McpSchema.Implementation clientInfo = new McpSchema.Implementation(
+					String.format("%s-%s","twelvet-mcp-client", mcp.getName()),
+					"1.0.0");
+			// 转换器
+			StdioClientTransport stdioClientTransport = new StdioClientTransport(serverParameters);
+			McpSyncClient syncClient = McpClient.sync(stdioClientTransport)
+					.clientInfo(clientInfo)
+					.requestTimeout(Duration.ofSeconds(20))
+					.build();
+			// 初始化
+			syncClient.initialize();
+			// 加入Spring AI
+			custMcpSyncClients.add(syncClient);
+		}
+
 		return ChatClient
 			// 自定义使用不同的大模型
 			.create(dashScopeChatModel)
 			.prompt(prompt)
 			// 功能选择
 			// .options(dashScopeChatOptions)
-			.tools(new SyncMcpToolCallbackProvider(mcpSyncClients))
+			.tools(new SyncMcpToolCallbackProvider(custMcpSyncClients))
 			// 注册function
 			// .function("mockWeatherService", "根据城市查询天气", Request.class, new
 			// MockWeatherService())
