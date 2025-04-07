@@ -143,11 +143,12 @@ public class AIChatServiceImpl implements AIChatService {
 	private final static String MULTI_VIDEO_FILE_URL = "https://static.twelvet.cn/ai/video.mp4";
 
 	public AIChatServiceImpl(DashScopeChatModel dashScopeChatModel, VectorStore vectorStore,
-                             AiKnowledgeMapper aiKnowledgeMapper, AiDocSliceMapper aiDocSliceMapper,
-                             IAiChatHistoryService aiChatHistoryService, SpeechSynthesisModel speechSynthesisModel,
-                             AudioTranscriptionModel audioTranscriptionModel, SensitiveWordBs sensitiveWordBs,
-                             DashScopeImageModel dashScopeImageModel, DashScopeAudioTranscriptionModel dashScopeAudioTranscriptionModel,
-                             DashScopeSpeechSynthesisModel dashScopeSpeechSynthesisModel, List<McpSyncClient> mcpSyncClients, AiMcpMapper aiMcpMapper) {
+			AiKnowledgeMapper aiKnowledgeMapper, AiDocSliceMapper aiDocSliceMapper,
+			IAiChatHistoryService aiChatHistoryService, SpeechSynthesisModel speechSynthesisModel,
+			AudioTranscriptionModel audioTranscriptionModel, SensitiveWordBs sensitiveWordBs,
+			DashScopeImageModel dashScopeImageModel, DashScopeAudioTranscriptionModel dashScopeAudioTranscriptionModel,
+			DashScopeSpeechSynthesisModel dashScopeSpeechSynthesisModel, List<McpSyncClient> mcpSyncClients,
+			AiMcpMapper aiMcpMapper) {
 		this.dashScopeChatModel = dashScopeChatModel;
 		this.vectorStore = vectorStore;
 		this.aiKnowledgeMapper = aiKnowledgeMapper;
@@ -160,8 +161,8 @@ public class AIChatServiceImpl implements AIChatService {
 		this.dashScopeAudioTranscriptionModel = dashScopeAudioTranscriptionModel;
 		this.dashScopeSpeechSynthesisModel = dashScopeSpeechSynthesisModel;
 		this.mcpSyncClients = mcpSyncClients;
-        this.aiMcpMapper = aiMcpMapper;
-    }
+		this.aiMcpMapper = aiMcpMapper;
+	}
 
 	/**
 	 * 发起聊天
@@ -371,21 +372,19 @@ public class AIChatServiceImpl implements AIChatService {
 				}
 			}
 			// 启动参数
-			ServerParameters serverParameters = ServerParameters
-					.builder("D:\\nvm\\node\\npx.cmd")
-					.args(args)
-					.env(envMap)
-					.build();
+			ServerParameters serverParameters = ServerParameters.builder("D:\\nvm\\node\\npx.cmd")
+				.args(args)
+				.env(envMap)
+				.build();
 			// 基本信息
 			McpSchema.Implementation clientInfo = new McpSchema.Implementation(
-					String.format("%s-%s","twelvet-mcp-client", mcp.getName()),
-					"1.0.0");
+					String.format("%s-%s", "twelvet-mcp-client", mcp.getName()), "1.0.0");
 			// 转换器
 			StdioClientTransport stdioClientTransport = new StdioClientTransport(serverParameters);
 			McpSyncClient syncClient = McpClient.sync(stdioClientTransport)
-					.clientInfo(clientInfo)
-					.requestTimeout(Duration.ofSeconds(20))
-					.build();
+				.clientInfo(clientInfo)
+				.requestTimeout(Duration.ofSeconds(20))
+				.build();
 			// 初始化
 			syncClient.initialize();
 			// 加入Spring AI
