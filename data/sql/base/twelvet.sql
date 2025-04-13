@@ -731,7 +731,7 @@ INSERT INTO `sys_menu`
 VALUES (1132, 'AI知识库文档导出', 1127, 5, '#', '', '1', 'F', '0', '0', 'ai:doc:export', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
-VALUES (1139, 'AI知识库', 1125, 3, 'knowledge', 'ai/knowledge/index', '1', 'C', '0', '0', 'ai:knowledge:list', '#',
+VALUES (1139, 'AI大模型', 1125, 3, 'knowledge', 'ai/knowledge/index', '1', 'C', '0', '0', 'ai:knowledge:list', '#',
         'admin', '2018-03-01 00:00:00', 'admin', '2025-03-31 14:43:52', 'AI知识库菜单');
 INSERT INTO `sys_menu`
 VALUES (1140, 'AI知识库查询', 1139, 1, '#', '', '1', 'F', '0', '0', 'ai:knowledge:query', '#', 'admin',
