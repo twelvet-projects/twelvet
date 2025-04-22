@@ -6,6 +6,7 @@ import com.twelvet.framework.core.locale.constants.LocaleCacheConstants;
 import com.twelvet.framework.redis.service.RedisUtils;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.DateUtils;
+import com.twelvet.framework.utils.TUtils;
 import com.twelvet.server.system.mapper.I18nMapper;
 import com.twelvet.server.system.mapper.SysDictDataMapper;
 import com.twelvet.server.system.service.II18nService;
@@ -45,24 +46,34 @@ public class I18nServiceImpl implements II18nService, ApplicationRunner {
 	 */
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		String hashFormat = String.format("%s::%s", LocaleCacheConstants.LOCALE, LocaleCacheConstants.ZH_CN);
-		if (!RedisUtils.hashKey(hashFormat)) {
-			log.info("Detected i18n deficiency, initializing");
-			List<I18n> i18ns = i18nMapper.selectI18nList(new I18n());
-			for (I18n i18n : i18ns) {
-				String format = String.format("%s::%s:%s", LocaleCacheConstants.LOCALE, i18n.getType(), i18n.getCode());
-				RedisUtils.setCacheObject(format, i18n.getValue());
-			}
-			// 完成初始化标志
-			RedisUtils.setCacheObject(hashFormat, true);
-			log.info("i18n initialization complete");
-		}
+		initI18n();
+	}
 
-		// 处理i18n支持语言缓存
-		if (!RedisUtils.hashKey(LocaleCacheConstants.CACHE_DICT_CODE)) {
-			List<SysDictData> sysDictData = dictDataMapper.selectDictDataByType(LocaleCacheConstants.DICT_CODE);
-			RedisUtils.setCacheObject(LocaleCacheConstants.CACHE_DICT_CODE, sysDictData);
-		}
+	/**
+	 * 初始化国际化数据
+	 */
+	private void initI18n() {
+		TUtils.threadPoolExecutor.execute(() -> {
+			String hashFormat = String.format("%s::%s", LocaleCacheConstants.LOCALE, LocaleCacheConstants.ZH_CN);
+			if (!RedisUtils.hashKey(hashFormat)) {
+				log.info("Detected i18n deficiency, initializing");
+				List<I18n> i18ns = i18nMapper.selectI18nList(new I18n());
+				for (I18n i18n : i18ns) {
+					String format = String.format("%s::%s:%s", LocaleCacheConstants.LOCALE, i18n.getType(),
+							i18n.getCode());
+					RedisUtils.setCacheObject(format, i18n.getValue());
+				}
+				// 完成初始化标志
+				RedisUtils.setCacheObject(hashFormat, true);
+				log.info("i18n initialization complete");
+			}
+
+			// 处理i18n支持语言缓存
+			if (!RedisUtils.hashKey(LocaleCacheConstants.CACHE_DICT_CODE)) {
+				List<SysDictData> sysDictData = dictDataMapper.selectDictDataByType(LocaleCacheConstants.DICT_CODE);
+				RedisUtils.setCacheObject(LocaleCacheConstants.CACHE_DICT_CODE, sysDictData);
+			}
+		});
 	}
 
 	/**
