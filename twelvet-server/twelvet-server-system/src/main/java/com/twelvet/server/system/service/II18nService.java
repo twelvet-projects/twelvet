@@ -14,6 +14,12 @@ import java.util.List;
 public interface II18nService {
 
 	/**
+	 * 初始化国际化数据
+	 * @param flushFlag 是否强制刷新数据
+	 */
+	public void initI18n(Boolean flushFlag);
+
+	/**
 	 * 查询国际化
 	 * @param i18nId 国际化主键
 	 * @return 国际化
