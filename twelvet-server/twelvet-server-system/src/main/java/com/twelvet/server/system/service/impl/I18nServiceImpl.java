@@ -46,16 +46,18 @@ public class I18nServiceImpl implements II18nService, ApplicationRunner {
 	 */
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		initI18n();
+		initI18n(Boolean.FALSE);
 	}
 
 	/**
 	 * 初始化国际化数据
+	 * @param flushFlag 是否强制刷新数据
 	 */
-	private void initI18n() {
+	@Override
+	public void initI18n(Boolean flushFlag) {
 		TUtils.threadPoolExecutor.execute(() -> {
 			String hashFormat = String.format("%s::%s", LocaleCacheConstants.LOCALE, LocaleCacheConstants.ZH_CN);
-			if (!RedisUtils.hashKey(hashFormat)) {
+			if (flushFlag || !RedisUtils.hashKey(hashFormat)) {
 				log.info("Detected i18n deficiency, initializing");
 				List<I18n> i18ns = i18nMapper.selectI18nList(new I18n());
 				for (I18n i18n : i18ns) {
@@ -69,7 +71,7 @@ public class I18nServiceImpl implements II18nService, ApplicationRunner {
 			}
 
 			// 处理i18n支持语言缓存
-			if (!RedisUtils.hashKey(LocaleCacheConstants.CACHE_DICT_CODE)) {
+			if (flushFlag || !RedisUtils.hashKey(LocaleCacheConstants.CACHE_DICT_CODE)) {
 				List<SysDictData> sysDictData = dictDataMapper.selectDictDataByType(LocaleCacheConstants.DICT_CODE);
 				RedisUtils.setCacheObject(LocaleCacheConstants.CACHE_DICT_CODE, sysDictData);
 			}
