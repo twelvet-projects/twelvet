@@ -793,6 +793,9 @@ VALUES (1158, 'AI MCP服务删除', 1154, 4, '#', '', '1', 'F', '0', '0', 'ai:mc
 INSERT INTO `sys_menu`
 VALUES (1159, 'AI MCP服务导出', 1154, 5, '#', '', '1', 'F', '0', '0', 'ai:mcp:export', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2025-03-31 14:43:27', '');
+INSERT INTO `sys_menu`
+VALUES (1160, '初始化国际化数据', 1119, 6, '', NULL, '1', 'F', '0', '0', 'system:i18n:init', '#', 'admin',
+        '2025-04-24 22:10:53', '', NULL, '');
 
 -- ----------------------------
 -- Table structure for sys_oauth_client_details
