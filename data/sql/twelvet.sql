@@ -700,7 +700,9 @@ VALUES (1123, 'system.menu.system.i18n.remove', 1119, 4, '#', '', '1', 'F', '0',
 INSERT INTO `sys_menu`
 VALUES (1124, 'system.menu.system.i18n.export', 1119, 5, '#', '', '1', 'F', '0', '0', 'system:i18n:export', '#',
         'admin', '2018-03-01 00:00:00', 'admin', '2024-03-31 11:17:22', '');
-
+INSERT INTO `sys_menu`
+VALUES (1160, '初始化国际化数据', 1119, 6, '', NULL, '1', 'F', '0', '0', 'system:i18n:init', '#', 'admin',
+        '2025-04-24 22:10:53', '', NULL, '');
 
 
 -- ----------------------------
