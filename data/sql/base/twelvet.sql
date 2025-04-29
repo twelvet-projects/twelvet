@@ -240,6 +240,13 @@ VALUES (121, 1, '录入', 'INPUT', 'rag_source_type', NULL, NULL, 'N', 0, 'admin
 INSERT INTO `sys_dict_data`
 VALUES (122, 2, '上传', 'UPLOAD', 'rag_source_type', NULL, NULL, 'N', 0, 'admin', '2025-01-02 21:56:28', '', NULL,
         '上传的资料');
+INSERT INTO `sys_dict_data`
+VALUES (123, 1, 'STDIO', 'STDIO', 'ai_mcp_type', NULL, NULL, 'N', 0, 'admin', '2025-04-29 16:18:27', 'admin',
+        '2025-04-29 16:19:50', 'STDIO');
+INSERT INTO `sys_dict_data`
+VALUES (124, 2, 'SSE', 'SSE', 'ai_mcp_type', NULL, NULL, 'N', 0, 'admin', '2025-04-29 16:18:37', '', NULL, 'SSE');
+INSERT INTO `sys_dict_data`
+VALUES (125, 1, 'NPX', 'NPX', 'ai_mcp_command', NULL, NULL, 'N', 0, 'admin', '2025-04-29 16:19:00', '', NULL, 'NPX');
 
 -- ----------------------------
 -- Table structure for sys_dict_type
@@ -299,6 +306,13 @@ INSERT INTO `sys_dict_type`
 VALUES (106, '国际化', 'i18n', 0, 'admin', '2024-03-26 21:15:49', '', NULL, '国际化i18n');
 INSERT INTO `sys_dict_type`
 VALUES (107, 'RAG资源来源类型', 'rag_source_type', 0, 'admin', '2025-01-02 21:55:19', '', NULL, 'RAG资源来源类型');
+INSERT INTO `sys_dict_type`
+VALUES (108, 'AI MCP类型', 'ai_mcp_type', 0, 'admin', '2025-04-29 16:16:03', 'admin', '2025-04-29 16:17:25',
+        'AI MCP类型');
+INSERT INTO `sys_dict_type`
+VALUES (109, 'AI MCP命令类型', 'ai_mcp_command', 0, 'admin', '2025-04-29 16:16:30', 'admin', '2025-04-29 16:17:39',
+        'AI MCP命令类型');
+
 
 -- ----------------------------
 -- Table structure for sys_job_log
