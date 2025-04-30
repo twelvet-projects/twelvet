@@ -15,7 +15,6 @@ import com.alibaba.cloud.ai.dashscope.chat.MessageFormat;
 import com.alibaba.cloud.ai.dashscope.image.DashScopeImageModel;
 import com.alibaba.cloud.ai.dashscope.image.DashScopeImageOptions;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.houbb.sensitive.word.bs.SensitiveWordBs;
 import com.github.yitter.idgen.YitIdHelper;
 import com.twelvet.api.ai.constant.RAGEnums;
@@ -32,6 +31,8 @@ import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.framework.utils.TUtils;
 import com.twelvet.server.ai.constant.AIDataSourceConstants;
 import com.twelvet.server.ai.constant.RAGConstants;
+import com.twelvet.server.ai.fun.MockOrderService;
+import com.twelvet.server.ai.fun.MockWeatherService;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.mapper.AiKnowledgeMapper;
 import com.twelvet.server.ai.mapper.AiMcpMapper;
@@ -397,10 +398,10 @@ public class AIChatServiceImpl implements AIChatService {
 			.prompt(prompt)
 			// 功能选择
 			// .options(dashScopeChatOptions)
+			// MCP
 			.tools(new SyncMcpToolCallbackProvider(custMcpSyncClients))
-			// 注册function
-			// .function("mockWeatherService", "根据城市查询天气", Request.class, new
-			// MockWeatherService())
+			// 本地工具
+			.tools(new MockOrderService(), new MockWeatherService())
 			.stream()
 			.chatResponse()
 			.map(chatResponse -> {
