@@ -98,7 +98,7 @@ public class ModelEnums {
 	 */
 	public enum McpCommandEnums {
 
-		NPX("npx", "npx")
+		NPX("npx", "npx"), UVX("uvx", "uvx"), JAVA("java", "java")
 
 		;
 

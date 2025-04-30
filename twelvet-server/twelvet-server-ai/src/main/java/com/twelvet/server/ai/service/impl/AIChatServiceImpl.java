@@ -372,7 +372,7 @@ public class AIChatServiceImpl implements AIChatService {
 				}
 			}
 			// 启动参数
-			ServerParameters serverParameters = ServerParameters.builder("D:\\nvm\\node\\npx.cmd")
+			ServerParameters serverParameters = ServerParameters.builder(mcp.getCommand().getCode())
 				.args(args)
 				.env(envMap)
 				.build();
