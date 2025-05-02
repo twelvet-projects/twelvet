@@ -247,6 +247,10 @@ INSERT INTO `sys_dict_data`
 VALUES (124, 2, 'SSE', 'SSE', 'ai_mcp_type', NULL, NULL, 'N', 0, 'admin', '2025-04-29 16:18:37', '', NULL, 'SSE');
 INSERT INTO `sys_dict_data`
 VALUES (125, 1, 'NPX', 'NPX', 'ai_mcp_command', NULL, NULL, 'N', 0, 'admin', '2025-04-29 16:19:00', '', NULL, 'NPX');
+INSERT INTO `sys_dict_data`
+VALUES (126, 2, 'UVX', 'UVX', 'ai_mcp_command', NULL, NULL, 'N', 0, 'admin', '2025-04-29 17:50:34', '', NULL, 'UVX');
+INSERT INTO `sys_dict_data`
+VALUES (127, 3, 'JAVA', 'JAVA', 'ai_mcp_command', NULL, NULL, 'N', 0, 'admin', '2025-04-29 21:55:18', '', NULL, 'JAVA');
 
 -- ----------------------------
 -- Table structure for sys_dict_type
