@@ -198,7 +198,3 @@ Permits commercial use, but requires the preservation of the original author and
 2. Welcome to contribute [issue](https://github.com/twelvet-projects/twelvet/issues)，Please provide clear explanations
    of the issue, development environment, and steps to reproduce.
 
-## 🤝Thank You
-
-Thanks to jetbrains for the
-license[![jetbrains](https://cloud.twelvet.cn/jetbrains.png)](https://www.jetbrains.com?from=https://github.com/twelvet-projects/twelvet)
