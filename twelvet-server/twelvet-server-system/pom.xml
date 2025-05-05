@@ -116,6 +116,12 @@
             <artifactId>idempotent-spring-boot-starter</artifactId>
         </dependency>
 
+        <!-- 调度器 -->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-job</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

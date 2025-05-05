@@ -65,6 +65,7 @@
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <yitter-idgenerator.version>1.0.6</yitter-idgenerator.version>
         <just-auth.version>1.16.7</just-auth.version>
+        <xxl-job.version>3.1.0</xxl-job.version>
 
         <xss-spring-boot-starter.version>3.1.5.1</xss-spring-boot-starter.version>
         <excel-spring-boot-starter.version>3.4.0</excel-spring-boot-starter.version>
@@ -242,6 +243,13 @@
                 <version>${oss-spring-boot-starter.version}</version>
             </dependency>
 
+            <!--调度器-->
+            <dependency>
+                <groupId>com.xuxueli</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>${xxl-job.version}</version>
+            </dependency>
+
             <!--敏感词过滤工具-->
             <dependency>
                 <groupId>com.github.houbb</groupId>
@@ -323,6 +331,13 @@
             <dependency>
                 <groupId>com.twelvet</groupId>
                 <artifactId>twelvet-framework-swagger</artifactId>
+                <version>${twelvet.version}</version>
+            </dependency>
+
+            <!-- 调度器 -->
+            <dependency>
+                <groupId>com.twelvet</groupId>
+                <artifactId>twelvet-framework-job</artifactId>
                 <version>${twelvet.version}</version>
             </dependency>
 
