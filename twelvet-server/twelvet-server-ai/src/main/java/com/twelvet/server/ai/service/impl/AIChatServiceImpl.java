@@ -1,5 +1,6 @@
 package com.twelvet.server.ai.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.cloud.ai.dashscope.api.DashScopeSpeechSynthesisApi;
@@ -14,6 +15,11 @@ import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatOptions;
 import com.alibaba.cloud.ai.dashscope.chat.MessageFormat;
 import com.alibaba.cloud.ai.dashscope.image.DashScopeImageModel;
 import com.alibaba.cloud.ai.dashscope.image.DashScopeImageOptions;
+import com.alibaba.cloud.ai.dashscope.rerank.DashScopeRerankModel;
+import com.alibaba.cloud.ai.dashscope.rerank.DashScopeRerankOptions;
+import com.alibaba.cloud.ai.document.DocumentWithScore;
+import com.alibaba.cloud.ai.model.RerankRequest;
+import com.alibaba.cloud.ai.model.RerankResponse;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.github.houbb.sensitive.word.bs.SensitiveWordBs;
 import com.github.yitter.idgen.YitIdHelper;
@@ -122,6 +128,8 @@ public class AIChatServiceImpl implements AIChatService {
 
 	private final AudioTranscriptionModel audioTranscriptionModel;
 
+	private final DashScopeRerankModel dashScopeRerankModel;
+
 	private final SensitiveWordBs sensitiveWordBs;
 
 	private final List<McpSyncClient> mcpSyncClients;
@@ -148,8 +156,8 @@ public class AIChatServiceImpl implements AIChatService {
 			IAiChatHistoryService aiChatHistoryService, SpeechSynthesisModel speechSynthesisModel,
 			AudioTranscriptionModel audioTranscriptionModel, SensitiveWordBs sensitiveWordBs,
 			DashScopeImageModel dashScopeImageModel, DashScopeAudioTranscriptionModel dashScopeAudioTranscriptionModel,
-			DashScopeSpeechSynthesisModel dashScopeSpeechSynthesisModel, List<McpSyncClient> mcpSyncClients,
-			AiMcpMapper aiMcpMapper) {
+			DashScopeSpeechSynthesisModel dashScopeSpeechSynthesisModel, DashScopeRerankModel dashScopeRerankModel,
+			List<McpSyncClient> mcpSyncClients, AiMcpMapper aiMcpMapper) {
 		this.dashScopeChatModel = dashScopeChatModel;
 		this.vectorStore = vectorStore;
 		this.aiKnowledgeMapper = aiKnowledgeMapper;
@@ -161,6 +169,7 @@ public class AIChatServiceImpl implements AIChatService {
 		this.dashScopeImageModel = dashScopeImageModel;
 		this.dashScopeAudioTranscriptionModel = dashScopeAudioTranscriptionModel;
 		this.dashScopeSpeechSynthesisModel = dashScopeSpeechSynthesisModel;
+		this.dashScopeRerankModel = dashScopeRerankModel;
 		this.mcpSyncClients = mcpSyncClients;
 		this.aiMcpMapper = aiMcpMapper;
 	}
@@ -269,13 +278,26 @@ public class AIChatServiceImpl implements AIChatService {
 
 		CompletableFuture.allOf(vectorCompletableFuture, messagesCompletableFuture).join();
 
-		List<Document> docs = vectorCompletableFuture.join();
+		// 向量知识库
+		List<Document> vectorDocs = vectorCompletableFuture.join();
+		// 召回结果 重排
+		if (CollUtil.isNotEmpty(vectorDocs)) {
+			DashScopeRerankOptions scopeRerankOptions = DashScopeRerankOptions.builder()
+				.withModel("gte-rerank-v2")
+				.build();
+			RerankRequest rerankRequest = new RerankRequest(messageDTO.getContent(), vectorDocs, scopeRerankOptions);
+			RerankResponse rerankResponse = dashScopeRerankModel.call(rerankRequest);
+			List<DocumentWithScore> results = rerankResponse.getResults();
+			vectorDocs = results.stream().map(DocumentWithScore::getOutput).collect(Collectors.toList());
+		}
+
+		// 历史对话
 		List<Message> messages = messagesCompletableFuture.join();
 
-		if (CollectionUtil.isNotEmpty(docs)) {
+		if (CollectionUtil.isNotEmpty(vectorDocs)) {
 			// 获取切片ID
 			List<Long> sliceIdList = new ArrayList<>();
-			for (Document document : docs) {
+			for (Document document : vectorDocs) {
 				Map<String, Object> metadata = document.getMetadata();
 				// 储存命中次数
 				/*
@@ -289,7 +311,7 @@ public class AIChatServiceImpl implements AIChatService {
 
 			// 加入知识库内容
 			// 获取documents里的content
-			String documentContext = docs.stream()
+			String documentContext = vectorDocs.stream()
 				.map(Document::getText)
 				.collect(Collectors.joining(System.lineSeparator()));
 			// 创建系统提示词
