@@ -407,6 +407,10 @@ public class AIChatServiceImpl implements AIChatService {
 			McpSyncClient syncClient = McpClient.sync(stdioClientTransport)
 				.clientInfo(clientInfo)
 				.requestTimeout(Duration.ofSeconds(20))
+				// 日志
+				.loggingConsumer(notification -> {
+					log.info("Received log message: {}", notification.data());
+				})
 				.build();
 			// 初始化
 			syncClient.initialize();
