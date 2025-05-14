@@ -1,5 +1,6 @@
 package com.twelvet.server.ai;
 
+import com.dtflys.forest.springboot.annotation.ForestScan;
 import com.twelvet.framework.openfeign.annotation.EnableTWTFeignClients;
 import com.twelvet.framework.core.annotation.EnableTwelveTConfig;
 import com.twelvet.framework.security.annotation.EnableTWTResourceServer;
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @WebSite twelvet.cn
  * @Description: 启动程序
  */
+@ForestScan(value = { "com.twelvet.server.ai.client" })
 @EnableTwelveTSwagger2
 @EnableTWTResourceServer
 @MapperScan("com.twelvet.**.mapper")

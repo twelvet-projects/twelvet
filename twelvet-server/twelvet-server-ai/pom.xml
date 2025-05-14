@@ -116,6 +116,12 @@
             <artifactId>spring-ai-starter-mcp-client</artifactId>
         </dependency>
 
+        <!--注解式请求-->
+        <dependency>
+            <groupId>com.dtflys.forest</groupId>
+            <artifactId>forest-spring-boot3-starter</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

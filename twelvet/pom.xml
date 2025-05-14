@@ -66,6 +66,7 @@
         <yitter-idgenerator.version>1.0.6</yitter-idgenerator.version>
         <just-auth.version>1.16.7</just-auth.version>
         <xxl-job.version>3.1.0</xxl-job.version>
+        <forest.version>1.6.4</forest.version>
 
         <xss-spring-boot-starter.version>3.1.5.1</xss-spring-boot-starter.version>
         <excel-spring-boot-starter.version>3.4.0</excel-spring-boot-starter.version>
@@ -249,6 +250,14 @@
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job.version}</version>
             </dependency>
+
+            <!--注解式请求-->
+            <dependency>
+                <groupId>com.dtflys.forest</groupId>
+                <artifactId>forest-spring-boot3-starter</artifactId>
+                <version>${forest.version}</version>
+            </dependency>
+
 
             <!--敏感词过滤工具-->
             <dependency>

@@ -35,6 +35,7 @@ import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.framework.utils.TUtils;
+import com.twelvet.server.ai.client.AIClient;
 import com.twelvet.server.ai.constant.AIDataSourceConstants;
 import com.twelvet.server.ai.constant.RAGConstants;
 import com.twelvet.server.ai.fun.MockOrderService;
@@ -72,12 +73,20 @@ import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.ai.vectorstore.filter.Filter;
 import org.springframework.ai.vectorstore.filter.FilterExpressionBuilder;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.io.PathResource;
+import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
+import org.springframework.web.client.RestClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.SignalType;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URI;
+import java.nio.channels.Channels;
+import java.nio.channels.WritableByteChannel;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -136,6 +145,8 @@ public class AIChatServiceImpl implements AIChatService {
 
 	private final AiMcpMapper aiMcpMapper;
 
+	private final AIClient aiClient;
+
 	/**
 	 * 多模态测试图片地址
 	 */
@@ -157,7 +168,7 @@ public class AIChatServiceImpl implements AIChatService {
 			AudioTranscriptionModel audioTranscriptionModel, SensitiveWordBs sensitiveWordBs,
 			DashScopeImageModel dashScopeImageModel, DashScopeAudioTranscriptionModel dashScopeAudioTranscriptionModel,
 			DashScopeSpeechSynthesisModel dashScopeSpeechSynthesisModel, DashScopeRerankModel dashScopeRerankModel,
-			List<McpSyncClient> mcpSyncClients, AiMcpMapper aiMcpMapper) {
+			List<McpSyncClient> mcpSyncClients, AiMcpMapper aiMcpMapper, AIClient aiClient) {
 		this.dashScopeChatModel = dashScopeChatModel;
 		this.vectorStore = vectorStore;
 		this.aiKnowledgeMapper = aiKnowledgeMapper;
@@ -172,6 +183,7 @@ public class AIChatServiceImpl implements AIChatService {
 		this.dashScopeRerankModel = dashScopeRerankModel;
 		this.mcpSyncClients = mcpSyncClients;
 		this.aiMcpMapper = aiMcpMapper;
+		this.aiClient = aiClient;
 	}
 
 	/**
@@ -473,10 +485,10 @@ public class AIChatServiceImpl implements AIChatService {
 	 */
 	@Override
 	public Flux<MessageVO> multiChatStream(MessageDTO messageDTO) {
-
+		File file = null;
 		try {
 			UserMessage userMessage;
-			if (Boolean.TRUE) { // 图片
+			if (Boolean.FALSE) { // 图片
 				List<Media> mediaList = List
 					.of(new Media(MimeTypeUtils.IMAGE_JPEG, new URI(MULTI_IMAGE_FILE_URL).toURL()));
 				userMessage = new UserMessage(messageDTO.getContent(), mediaList);
@@ -485,8 +497,33 @@ public class AIChatServiceImpl implements AIChatService {
 			}
 			else { // 视频
 					// TODO 目前非真正的视频识别，以下实现不可用，官方例子为把视频切成图片进行识别
-				List<Media> mediaList = List
-					.of(new Media(MimeTypeUtils.IMAGE_JPEG, new URI(MULTI_VIDEO_FILE_URL).toURL()));
+
+				// 下载文件
+				String fileName = "video_temp.mp4";
+				file = aiClient.downloadFile(MULTI_VIDEO_FILE_URL,
+						"D:\\github\\twelvet\\twelvet\\twelvet-server\\twelvet-server-ai\\src\\main\\resources",
+						fileName, progress -> {
+							log.info("total bytes: ${}", progress.getTotalBytes()); // 文件大小
+							log.info("current bytes: ${}", progress.getCurrentBytes()); // 已下载字节数
+							log.info("progress: ${}", Math.round(progress.getRate() * 100) + "%"); // 已下载百分比
+							if (progress.isDone()) { // 是否下载完成
+								log.info("--------   Download Completed!   --------");
+							}
+						});
+
+				// ffmpeg进行切图
+				List<String> tempList = new ArrayList<>();
+
+				/*
+				 * String[] commandArray = messageDTO.getContent().split("\n");
+				 * ProcessBuilder pb = new ProcessBuilder(commandArray); Process process =
+				 * pb.start();
+				 */
+				List<Media> mediaList = new ArrayList<>();
+				for (String png : tempList) {
+					mediaList.add(new Media(MimeTypeUtils.IMAGE_PNG, new PathResource(png)));
+				}
+
 				userMessage = new UserMessage(messageDTO.getContent(), mediaList);
 				// 设置文件格式
 				userMessage.getMetadata().put(DashScopeChatModel.MESSAGE_FORMAT, MessageFormat.VIDEO);
@@ -513,6 +550,15 @@ public class AIChatServiceImpl implements AIChatService {
 		catch (Exception e) {
 			log.error("创建多模态提问失败", e);
 			throw new TWTException("创建多模态提问失败");
+		}
+		finally {
+			// 删除临时文件
+			if (Objects.nonNull(file) && file.exists()) {
+				boolean delete = file.delete();
+				if (!delete) {
+					log.error("临时文件删除失败");
+				}
+			}
 		}
 	}
 
