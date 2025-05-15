@@ -50,6 +50,9 @@ import io.modelcontextprotocol.client.McpSyncClient;
 import io.modelcontextprotocol.client.transport.ServerParameters;
 import io.modelcontextprotocol.client.transport.StdioClientTransport;
 import io.modelcontextprotocol.spec.McpSchema;
+import org.bytedeco.javacv.FFmpegFrameGrabber;
+import org.bytedeco.javacv.Frame;
+import org.bytedeco.javacv.Java2DFrameConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.audio.transcription.AudioTranscriptionPrompt;
@@ -74,19 +77,15 @@ import org.springframework.ai.vectorstore.filter.Filter;
 import org.springframework.ai.vectorstore.filter.FilterExpressionBuilder;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.PathResource;
-import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
-import org.springframework.web.client.RestClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.SignalType;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.URI;
-import java.nio.channels.Channels;
-import java.nio.channels.WritableByteChannel;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -486,6 +485,7 @@ public class AIChatServiceImpl implements AIChatService {
 	@Override
 	public Flux<MessageVO> multiChatStream(MessageDTO messageDTO) {
 		File file = null;
+		String filePath = "D:\\github\\twelvet\\twelvet\\twelvet-server\\twelvet-server-ai\\src\\main\\resources\\temp";
 		try {
 			UserMessage userMessage;
 			if (Boolean.FALSE) { // 图片
@@ -497,22 +497,73 @@ public class AIChatServiceImpl implements AIChatService {
 			}
 			else { // 视频
 					// TODO 目前非真正的视频识别，以下实现不可用，官方例子为把视频切成图片进行识别
+					// 创建File对象，表示目录
+				File directory = new File(filePath);
+
+				// 判断目录是否存在
+				if (!directory.exists()) {
+					// 如果目录不存在，则创建目录
+					// mkdirs()方法会创建多级目录，即使父目录不存在也会创建
+					boolean isCreated = directory.mkdirs();
+					if (isCreated) {
+						log.info("目录创建成功：{}", filePath);
+					}
+					else {
+						log.info("目录创建失败！");
+					}
+				}
+				else {
+					log.info("目录已存在：{}", filePath);
+				}
 
 				// 下载文件
 				String fileName = "video_temp.mp4";
-				file = aiClient.downloadFile(MULTI_VIDEO_FILE_URL,
-						"D:\\github\\twelvet\\twelvet\\twelvet-server\\twelvet-server-ai\\src\\main\\resources",
-						fileName, progress -> {
-							log.info("total bytes: ${}", progress.getTotalBytes()); // 文件大小
-							log.info("current bytes: ${}", progress.getCurrentBytes()); // 已下载字节数
-							log.info("progress: ${}", Math.round(progress.getRate() * 100) + "%"); // 已下载百分比
-							if (progress.isDone()) { // 是否下载完成
-								log.info("--------   Download Completed!   --------");
-							}
-						});
+				file = aiClient.downloadFile(MULTI_VIDEO_FILE_URL, filePath, fileName, progress -> {
+					log.info("total bytes: {}", progress.getTotalBytes()); // 文件大小
+					log.info("current bytes: {}", progress.getCurrentBytes()); // 已下载字节数
+					log.info("progress: {}", Math.round(progress.getRate() * 100) + "%"); // 已下载百分比
+					if (progress.isDone()) { // 是否下载完成
+						log.info("--------   Download Completed!   --------");
+					}
+				});
 
 				// ffmpeg进行切图
 				List<String> tempList = new ArrayList<>();
+
+				try (FFmpegFrameGrabber ff = new FFmpegFrameGrabber(file.getPath());
+						Java2DFrameConverter converter = new Java2DFrameConverter()) {
+					ff.start();
+					ff.setFormat("mp4");
+
+					int frameCount = 0; // 当前帧计数
+					int secondCount = 0; // 当前秒数计数
+					int frameRate = (int) ff.getFrameRate(); // 获取视频帧率
+
+					int length = ff.getLengthInFrames();
+					log.info("文件大小共: {}", length);
+					Frame frame;
+					for (int i = 1; i < length; i++) {
+						frame = ff.grabFrame();
+						if (frame.image == null) {
+							continue;
+						}
+						frameCount++;
+						if (frameCount % (1 * frameRate) == 0) { // 每一秒取图一张
+							BufferedImage image = converter.getBufferedImage(frame);
+							String path = filePath + "\\" + i + ".png";
+							File picFile = new File(path);
+							ImageIO.write(image, "png", picFile);
+							tempList.add(path);
+							log.info("成功剪辑画面：{}", i);
+							secondCount++;
+						}
+
+					}
+					ff.stop();
+				}
+				catch (Exception e) {
+					log.error(e.getMessage());
+				}
 
 				/*
 				 * String[] commandArray = messageDTO.getContent().split("\n");
@@ -521,6 +572,9 @@ public class AIChatServiceImpl implements AIChatService {
 				 */
 				List<Media> mediaList = new ArrayList<>();
 				for (String png : tempList) {
+					if (mediaList.size() > 10) { // 只要十张图片
+						break;
+					}
 					mediaList.add(new Media(MimeTypeUtils.IMAGE_PNG, new PathResource(png)));
 				}
 
@@ -535,16 +589,17 @@ public class AIChatServiceImpl implements AIChatService {
 				.withMultiModel(Boolean.TRUE)
 				.build());
 
-			ChatResponse response = ChatClient
+			return ChatClient
 				// 自定义使用不同的大模型
 				.create(dashScopeChatModel)
 				.prompt(prompt)
-				.call()
-				.chatResponse();
-
-			MessageVO messageVO = new MessageVO();
-			messageVO.setContent(Objects.requireNonNull(response).getResult().getOutput().getText());
-			return Flux.just(messageVO);
+				.stream()
+				.chatResponse()
+				.map(response -> {
+					MessageVO messageVO = new MessageVO();
+					messageVO.setContent(Objects.requireNonNull(response).getResult().getOutput().getText());
+					return messageVO;
+				});
 
 		}
 		catch (Exception e) {
@@ -557,6 +612,40 @@ public class AIChatServiceImpl implements AIChatService {
 				boolean delete = file.delete();
 				if (!delete) {
 					log.error("临时文件删除失败");
+				}
+				else {
+					// 创建File对象，表示目录，清理所有临时文件
+					File directory = new File(filePath);
+					if (directory.exists() && directory.isDirectory()) {
+						// 获取目录下的所有文件和子目录
+						File[] files = directory.listFiles();
+
+						// 遍历文件数组
+						if (files != null) {
+							for (File fileTemp : files) {
+								// 如果是文件，则删除
+								if (fileTemp.isFile()) {
+									if (fileTemp.delete()) {
+										log.info("Deleted file: {}", fileTemp.getName());
+									}
+									else {
+										log.info("Failed to delete file: {}", fileTemp.getName());
+									}
+								}
+							}
+						}
+						// 删除当前目录
+						if (directory.delete()) {
+							log.info("Deleted directory: {}", directory.getName());
+						}
+						else {
+							log.info("Failed to delete directory: {}", directory.getName());
+						}
+						;
+					}
+					else {
+						log.error("The specified directory does not exist.");
+					}
 				}
 			}
 		}

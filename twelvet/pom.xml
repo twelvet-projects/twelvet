@@ -67,6 +67,7 @@
         <just-auth.version>1.16.7</just-auth.version>
         <xxl-job.version>3.1.0</xxl-job.version>
         <forest.version>1.6.4</forest.version>
+        <javacv.version>1.5.11</javacv.version>
 
         <xss-spring-boot-starter.version>3.1.5.1</xss-spring-boot-starter.version>
         <excel-spring-boot-starter.version>3.4.0</excel-spring-boot-starter.version>
@@ -258,6 +259,12 @@
                 <version>${forest.version}</version>
             </dependency>
 
+            <!--JavaCV-->
+            <dependency>
+                <groupId>org.bytedeco</groupId>
+                <artifactId>javacv-platform</artifactId>
+                <version>${javacv.version}</version>
+            </dependency>
 
             <!--敏感词过滤工具-->
             <dependency>

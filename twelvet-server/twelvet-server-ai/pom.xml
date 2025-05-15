@@ -122,6 +122,12 @@
             <artifactId>forest-spring-boot3-starter</artifactId>
         </dependency>
 
+        <!--JavaCV-->
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacv-platform</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
