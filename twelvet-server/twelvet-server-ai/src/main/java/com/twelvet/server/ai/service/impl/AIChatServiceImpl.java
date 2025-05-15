@@ -485,7 +485,8 @@ public class AIChatServiceImpl implements AIChatService {
 	@Override
 	public Flux<MessageVO> multiChatStream(MessageDTO messageDTO) {
 		File file = null;
-		String filePath = "D:\\github\\twelvet\\twelvet\\twelvet-server\\twelvet-server-ai\\src\\main\\resources\\temp";
+		String TEMP_IMAGE_DIR = "twelvet_ai_temp";
+		String filePath = String.format("%s%s%s",System.getProperty("java.io.tmpdir") , File.separator, TEMP_IMAGE_DIR);
 		try {
 			UserMessage userMessage;
 			if (Boolean.FALSE) { // 图片
