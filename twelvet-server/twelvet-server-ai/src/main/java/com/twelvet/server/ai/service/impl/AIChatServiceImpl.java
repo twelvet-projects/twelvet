@@ -641,7 +641,6 @@ public class AIChatServiceImpl implements AIChatService {
 						else {
 							log.info("Failed to delete directory: {}", directory.getName());
 						}
-						;
 					}
 					else {
 						log.error("The specified directory does not exist.");
