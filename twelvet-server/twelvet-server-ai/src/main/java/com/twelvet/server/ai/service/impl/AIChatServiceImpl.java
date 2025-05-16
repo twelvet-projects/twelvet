@@ -50,9 +50,7 @@ import io.modelcontextprotocol.client.McpSyncClient;
 import io.modelcontextprotocol.client.transport.ServerParameters;
 import io.modelcontextprotocol.client.transport.StdioClientTransport;
 import io.modelcontextprotocol.spec.McpSchema;
-import org.bytedeco.javacv.FFmpegFrameGrabber;
-import org.bytedeco.javacv.Frame;
-import org.bytedeco.javacv.Java2DFrameConverter;
+import org.bytedeco.javacv.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.audio.transcription.AudioTranscriptionPrompt;
@@ -354,7 +352,6 @@ public class AIChatServiceImpl implements AIChatService {
 		}
 		else if (RAGEnums.ChatTypeEnums.IMAGES.equals(messageDTO.getChatType())) { // 图片提问
 			try {
-				// TODO 需要等待官方解决BUG
 				List<Media> mediaList = List
 					.of(new Media(MimeTypeUtils.IMAGE_PNG, new URI(MULTI_IMAGE_FILE_URL).toURL()));
 				UserMessage userMessage = new UserMessage(messageDTO.getContent(), mediaList);
@@ -486,7 +483,7 @@ public class AIChatServiceImpl implements AIChatService {
 	public Flux<MessageVO> multiChatStream(MessageDTO messageDTO) {
 		File file = null;
 		String TEMP_IMAGE_DIR = "twelvet_ai_temp";
-		String filePath = String.format("%s%s%s",System.getProperty("java.io.tmpdir") , File.separator, TEMP_IMAGE_DIR);
+		String filePath = String.format("%s%s", System.getProperty("java.io.tmpdir"), TEMP_IMAGE_DIR);
 		try {
 			UserMessage userMessage;
 			if (Boolean.FALSE) { // 图片
@@ -497,8 +494,12 @@ public class AIChatServiceImpl implements AIChatService {
 				userMessage.getMetadata().put(DashScopeChatModel.MESSAGE_FORMAT, MessageFormat.IMAGE);
 			}
 			else { // 视频
-					// TODO 目前非真正的视频识别，以下实现不可用，官方例子为把视频切成图片进行识别
+					// TODO 目前非真正的视频识别，官方例子为把视频切成图片进行识别
+					// 视频转为图片，取出视频声音进行多次的AI分析总结得到最终的评价
 					// 创建File对象，表示目录
+					// 开启日志
+				FFmpegLogCallback.set();
+
 				File directory = new File(filePath);
 
 				// 判断目录是否存在
@@ -517,6 +518,12 @@ public class AIChatServiceImpl implements AIChatService {
 					log.info("目录已存在：{}", filePath);
 				}
 
+				String mp3Path = String.format("%s%s%s", filePath, File.separator, "output_audio.acc");
+				/*
+				 * File mp3File = new File(mp3Path); boolean newFile =
+				 * mp3File.createNewFile(); if (!newFile) { log.error("创建音频文件失败"); }
+				 */
+
 				// 下载文件
 				String fileName = "video_temp.mp4";
 				file = aiClient.downloadFile(MULTI_VIDEO_FILE_URL, filePath, fileName, progress -> {
@@ -531,10 +538,25 @@ public class AIChatServiceImpl implements AIChatService {
 				// ffmpeg进行切图
 				List<String> tempList = new ArrayList<>();
 
-				try (FFmpegFrameGrabber ff = new FFmpegFrameGrabber(file.getPath());
-						Java2DFrameConverter converter = new Java2DFrameConverter()) {
-					ff.start();
-					ff.setFormat("mp4");
+				FFmpegFrameGrabber ff = new FFmpegFrameGrabber(file.getPath());
+				ff.start();
+				ff.setFormat("mp4");
+				try (Java2DFrameConverter converter = new Java2DFrameConverter();
+						FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(mp3Path, ff.getAudioChannels());) {
+
+					// 取出视频中的声音作为语音基于大模型转为文字后总结
+					// recorder.setFormat("aac");
+					recorder.setSampleRate(ff.getSampleRate());
+					recorder.setAudioCodec(ff.getAudioCodec());
+					recorder.setAudioQuality(0); // 最高质量
+					recorder.start();
+					Frame frameMp3 = null;
+					/*
+					 * while ((frameMp3 = ff.grabSamples()) != null) { if
+					 * (frameMp3.samples != null) { recorder.record(frameMp3); } }
+					 */
+
+					// 以下开始取视频图片
 
 					int frameCount = 0; // 当前帧计数
 					int secondCount = 0; // 当前秒数计数
@@ -545,6 +567,10 @@ public class AIChatServiceImpl implements AIChatService {
 					Frame frame;
 					for (int i = 1; i < length; i++) {
 						frame = ff.grabFrame();
+						// 写入音频
+						if (frame.samples != null) {
+							recorder.record(frame);
+						}
 						if (frame.image == null) {
 							continue;
 						}
@@ -560,10 +586,14 @@ public class AIChatServiceImpl implements AIChatService {
 						}
 
 					}
-					ff.stop();
 				}
 				catch (Exception e) {
-					log.error(e.getMessage());
+					log.error("拆解视频失败：", e);
+					throw new TWTException("解析失败");
+				}
+				finally {
+					ff.release();
+					ff.close();
 				}
 
 				/*
