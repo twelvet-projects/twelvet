@@ -17,6 +17,7 @@ import com.twelvet.framework.core.application.domain.JsonResult;
 import com.pig4cloud.plugin.excel.annotation.ResponseExcel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.twelvet.framework.jdbc.web.utils.PageUtils;
 
@@ -76,7 +77,7 @@ public class AiMcpController extends TWTController {
 	@PreAuthorize("@role.hasPermi('ai:mcp:add')")
 	@Log(service = "AI MCP服务", businessType = BusinessType.INSERT)
 	@PostMapping
-	public JsonResult<String> add(@RequestBody AiMcp aiMcp) {
+	public JsonResult<String> add(@Validated @RequestBody AiMcp aiMcp) {
 		return json(aiMcpService.insertAiMcp(aiMcp));
 	}
 
@@ -87,7 +88,7 @@ public class AiMcpController extends TWTController {
 	@PreAuthorize("@role.hasPermi('ai:mcp:edit')")
 	@Log(service = "AI MCP服务", businessType = BusinessType.UPDATE)
 	@PutMapping
-	public JsonResult<String> edit(@RequestBody AiMcp aiMcp) {
+	public JsonResult<String> edit(@Validated @RequestBody AiMcp aiMcp) {
 		return json(aiMcpService.updateAiMcp(aiMcp));
 	}
 

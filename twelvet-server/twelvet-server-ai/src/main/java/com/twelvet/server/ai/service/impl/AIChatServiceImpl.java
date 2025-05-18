@@ -23,6 +23,7 @@ import com.alibaba.cloud.ai.model.RerankResponse;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.github.houbb.sensitive.word.bs.SensitiveWordBs;
 import com.github.yitter.idgen.YitIdHelper;
+import com.twelvet.api.ai.constant.ModelEnums;
 import com.twelvet.api.ai.constant.RAGEnums;
 import com.twelvet.api.ai.domain.AiKnowledge;
 import com.twelvet.api.ai.domain.AiMcp;
@@ -47,8 +48,10 @@ import com.twelvet.server.ai.service.AIChatService;
 import com.twelvet.server.ai.service.IAiChatHistoryService;
 import io.modelcontextprotocol.client.McpClient;
 import io.modelcontextprotocol.client.McpSyncClient;
+import io.modelcontextprotocol.client.transport.HttpClientSseClientTransport;
 import io.modelcontextprotocol.client.transport.ServerParameters;
 import io.modelcontextprotocol.client.transport.StdioClientTransport;
+import io.modelcontextprotocol.spec.McpClientTransport;
 import io.modelcontextprotocol.spec.McpSchema;
 import org.bytedeco.javacv.*;
 import org.slf4j.Logger;
@@ -138,8 +141,6 @@ public class AIChatServiceImpl implements AIChatService {
 
 	private final SensitiveWordBs sensitiveWordBs;
 
-	private final List<McpSyncClient> mcpSyncClients;
-
 	private final AiMcpMapper aiMcpMapper;
 
 	private final AIClient aiClient;
@@ -165,7 +166,7 @@ public class AIChatServiceImpl implements AIChatService {
 			AudioTranscriptionModel audioTranscriptionModel, SensitiveWordBs sensitiveWordBs,
 			DashScopeImageModel dashScopeImageModel, DashScopeAudioTranscriptionModel dashScopeAudioTranscriptionModel,
 			DashScopeSpeechSynthesisModel dashScopeSpeechSynthesisModel, DashScopeRerankModel dashScopeRerankModel,
-			List<McpSyncClient> mcpSyncClients, AiMcpMapper aiMcpMapper, AIClient aiClient) {
+			AiMcpMapper aiMcpMapper, AIClient aiClient) {
 		this.dashScopeChatModel = dashScopeChatModel;
 		this.vectorStore = vectorStore;
 		this.aiKnowledgeMapper = aiKnowledgeMapper;
@@ -178,7 +179,6 @@ public class AIChatServiceImpl implements AIChatService {
 		this.dashScopeAudioTranscriptionModel = dashScopeAudioTranscriptionModel;
 		this.dashScopeSpeechSynthesisModel = dashScopeSpeechSynthesisModel;
 		this.dashScopeRerankModel = dashScopeRerankModel;
-		this.mcpSyncClients = mcpSyncClients;
 		this.aiMcpMapper = aiMcpMapper;
 		this.aiClient = aiClient;
 	}
@@ -382,50 +382,6 @@ public class AIChatServiceImpl implements AIChatService {
 			dashScopeChatOptions.setEnableSearch(Boolean.TRUE);
 		}
 
-		List<McpSyncClient> custMcpSyncClients = new ArrayList<>();
-
-		AiMcp aiMcp = new AiMcp();
-		aiMcp.setStatusFlag(Boolean.TRUE);
-		List<AiMcp> aiMcpList = aiMcpMapper.selectAiMcpList(aiMcp);
-
-		for (AiMcp mcp : aiMcpList) {
-			String[] args = mcp.getArgs().split("\n");
-			String envStr = mcp.getEnv();
-			Map<String, String> envMap = new HashMap<>();
-			if (StrUtil.isNotBlank(envStr)) {
-				String[] envStrs = envStr.split("\n");
-				for (String str : envStrs) {
-					String[] v = str.split("=");
-					if (v.length != 2) {
-						throw new TWTException(String.format("MCP服务【%s】,环境变量配置错误", mcp.getName()));
-					}
-					envMap.put(v[0].trim(), v[1].trim());
-				}
-			}
-			// 启动参数
-			ServerParameters serverParameters = ServerParameters.builder(mcp.getCommand().getCode())
-				.args(args)
-				.env(envMap)
-				.build();
-			// 基本信息
-			McpSchema.Implementation clientInfo = new McpSchema.Implementation(
-					String.format("%s-%s", "twelvet-mcp-client", mcp.getName()), "1.0.0");
-			// 转换器
-			StdioClientTransport stdioClientTransport = new StdioClientTransport(serverParameters);
-			McpSyncClient syncClient = McpClient.sync(stdioClientTransport)
-				.clientInfo(clientInfo)
-				.requestTimeout(Duration.ofSeconds(20))
-				// 日志
-				.loggingConsumer(notification -> {
-					log.info("Received log message: {}", notification.data());
-				})
-				.build();
-			// 初始化
-			syncClient.initialize();
-			// 加入Spring AI
-			custMcpSyncClients.add(syncClient);
-		}
-
 		return ChatClient
 			// 自定义使用不同的大模型
 			.create(dashScopeChatModel)
@@ -433,7 +389,7 @@ public class AIChatServiceImpl implements AIChatService {
 			// 功能选择
 			// .options(dashScopeChatOptions)
 			// MCP
-			.tools(new SyncMcpToolCallbackProvider(custMcpSyncClients))
+			.tools(loadingMCP())
 			// 本地工具
 			.tools(new MockOrderService(), new MockWeatherService())
 			.stream()
@@ -812,6 +768,66 @@ public class AIChatServiceImpl implements AIChatService {
 		AudioTranscriptionResponse response = audioTranscriptionModel.call(audioTranscriptionPrompt);
 
 		return response.getResult().getOutput();
+	}
+
+	/**
+	 * 加载MCP服务
+	 * @return List<McpSyncClient>
+	 */
+	private SyncMcpToolCallbackProvider loadingMCP() {
+		List<McpSyncClient> custMcpSyncClients = new ArrayList<>();
+		AiMcp aiMcp = new AiMcp();
+		aiMcp.setStatusFlag(Boolean.TRUE);
+		List<AiMcp> aiMcpList = aiMcpMapper.selectAiMcpList(aiMcp);
+		for (AiMcp mcp : aiMcpList) {
+			// 基本信息
+			McpSchema.Implementation clientInfo = new McpSchema.Implementation(
+					String.format("%s-%s", "twelvet-mcp-client", mcp.getName()), "1.0.0");
+
+			McpClientTransport ClientTransport;
+			ModelEnums.McpTypeEnums mcpType = mcp.getMcpType();
+			if (ModelEnums.McpTypeEnums.SSE.equals(mcpType)) { // SSE模式
+				ClientTransport = HttpClientSseClientTransport.builder(mcp.getSseBaseUrl())
+					.sseEndpoint(mcp.getSseEndpoint())
+					.build();
+			}
+			else { // STDIO模式
+				String[] args = mcp.getArgs().split("\n");
+				String envStr = mcp.getEnv();
+				Map<String, String> envMap = new HashMap<>();
+				if (StrUtil.isNotBlank(envStr)) {
+					String[] envStrs = envStr.split("\n");
+					for (String str : envStrs) {
+						String[] v = str.split("=");
+						if (v.length != 2) {
+							throw new TWTException(String.format("MCP服务【%s】,环境变量配置错误", mcp.getName()));
+						}
+						envMap.put(v[0].trim(), v[1].trim());
+					}
+				}
+				// 启动参数
+				ServerParameters serverParameters = ServerParameters.builder(mcp.getCommand().getCode())
+					.args(args)
+					.env(envMap)
+					.build();
+				// 转换器
+				ClientTransport = new StdioClientTransport(serverParameters);
+			}
+
+			McpSyncClient syncClient = McpClient.sync(ClientTransport)
+				.clientInfo(clientInfo)
+				.requestTimeout(Duration.ofSeconds(20))
+				// 日志
+				.loggingConsumer(notification -> {
+					log.info("Received log message: {}", notification.data());
+				})
+				.build();
+			// 初始化
+			syncClient.initialize();
+			// 加入Spring AI
+			custMcpSyncClients.add(syncClient);
+		}
+		return new SyncMcpToolCallbackProvider(custMcpSyncClients);
 	}
 
 }

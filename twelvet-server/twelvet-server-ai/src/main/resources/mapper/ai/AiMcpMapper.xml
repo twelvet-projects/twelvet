@@ -9,6 +9,8 @@
         <result property="name" column="name"/>
         <result property="description" column="description"/>
         <result property="mcpType" column="mcp_type"/>
+        <result property="sseBaseUrl" column="sse_base_url"/>
+        <result property="sseEndpoint" column="sse_endpoint"/>
         <result property="command" column="command"/>
         <result property="args" column="args"/>
         <result property="env" column="env"/>
@@ -26,6 +28,8 @@
                description,
                mcp_type,
                command,
+               sse_base_url,
+               sse_endpoint,
                args,
                env,
                status_flag,
@@ -44,6 +48,8 @@
             <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
             <if test="description != null  and description != ''">and description = #{description}</if>
             <if test="mcpType != null  and mcpType != ''">and mcp_type = #{mcpType}</if>
+            <if test="sseBaseUrl != null  and sseBaseUrl != ''">and sse_base_url = #{sseBaseUrl}</if>
+            <if test="sseEndpoint != null  and sseEndpoint != ''">and sse_endpoint = #{sseEndpoint}</if>
             <if test="command != null  and command != ''">and command = #{command}</if>
             <if test="args != null  and args != ''">and args = #{args}</if>
             <if test="env != null  and env != ''">and env = #{env}</if>
@@ -62,6 +68,8 @@
             <if test="name != null">name,</if>
             <if test="description != null">description,</if>
             <if test="mcpType != null">mcp_type,</if>
+            <if test="sseBaseUrl != null">sse_base_url,</if>
+            <if test="sseEndpoint != null">sse_endpoint,</if>
             <if test="command != null">command,</if>
             <if test="args != null">args,</if>
             <if test="env != null and env != ''">env,</if>
@@ -76,6 +84,8 @@
             <if test="name != null">#{name},</if>
             <if test="description != null">#{description},</if>
             <if test="mcpType != null">#{mcpType},</if>
+            <if test="sseBaseUrl != null">#{sseBaseUrl},</if>
+            <if test="sseEndpoint != null">#{sseEndpoint},</if>
             <if test="command != null">#{command},</if>
             <if test="args != null">#{args},</if>
             <if test="env != null and env != ''">#{env},</if>
@@ -94,6 +104,8 @@
             <if test="name != null">name = #{name},</if>
             <if test="description != null">description = #{description},</if>
             <if test="mcpType != null">mcp_type = #{mcpType},</if>
+            <if test="sseBaseUrl != null">sse_base_url = #{sseBaseUrl},</if>
+            <if test="sseEndpoint != null">sse_endpoint = #{sseEndpoint},</if>
             <if test="command != null">command = #{command},</if>
             <if test="args != null">args = #{args},</if>
             <if test="env != null and env != ''">env = #{env},</if>

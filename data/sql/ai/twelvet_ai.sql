@@ -145,19 +145,21 @@ CREATE TABLE `ai_chat_history_content`
 DROP TABLE IF EXISTS `ai_mcp`;
 CREATE TABLE `ai_mcp`
 (
-    `mcp_id`      bigint                                                        NOT NULL AUTO_INCREMENT COMMENT 'MCP ID',
-    `name`        varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT 'MCP服务名称',
-    `description` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT '描述',
-    `mcp_type`    varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '请求类型',
-    `command`     varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '命令',
-    `args`        varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '参数',
-    `env`         varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT NULL COMMENT '环境变量',
-    `status_flag` tinyint(1)                                                    NOT NULL DEFAULT 1 COMMENT '是否启用  1：启用，0：关闭',
-    `create_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '创建者',
-    `create_time` datetime                                                      NOT NULL COMMENT '创建时间',
-    `update_by`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '更新者',
-    `update_time` datetime                                                      NOT NULL COMMENT '更新时间',
-    `del_flag`    tinyint(1)                                                    NOT NULL DEFAULT 0 COMMENT '是否删除 0：正常，1：删除',
+    `mcp_id`       bigint                                                        NOT NULL AUTO_INCREMENT COMMENT 'MCP ID',
+    `name`         varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT 'MCP服务名称',
+    `description`  varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT '描述',
+    `mcp_type`     varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '请求类型',
+    `sse_base_url` varchar(125) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT NULL COMMENT 'sse基础访问地址',
+    `sse_endpoint` varchar(125) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT NULL COMMENT 'sse访问端点',
+    `command`      varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT '命令',
+    `args`         varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT NULL COMMENT '参数',
+    `env`          varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT NULL COMMENT '环境变量',
+    `status_flag`  tinyint(1)                                                    NOT NULL DEFAULT 1 COMMENT '是否启用  1：启用，0：关闭',
+    `create_by`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '创建者',
+    `create_time`  datetime                                                      NOT NULL COMMENT '创建时间',
+    `update_by`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '更新者',
+    `update_time`  datetime                                                      NOT NULL COMMENT '更新时间',
+    `del_flag`     tinyint(1)                                                    NOT NULL DEFAULT 0 COMMENT '是否删除 0：正常，1：删除',
     PRIMARY KEY (`mcp_id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1

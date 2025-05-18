@@ -1,6 +1,9 @@
 package com.twelvet.server.ai.service.impl;
 
+import cn.hutool.core.util.StrUtil;
+import com.twelvet.api.ai.constant.ModelEnums;
 import com.twelvet.api.ai.domain.AiMcp;
+import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.server.ai.mapper.AiMcpMapper;
 import com.twelvet.server.ai.service.IAiMcpService;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * AI MCP服务Service业务层处理
@@ -50,6 +54,7 @@ public class AiMcpServiceImpl implements IAiMcpService {
 	 */
 	@Override
 	public int insertAiMcp(AiMcp aiMcp) {
+		saveCheck(aiMcp);
 		LocalDateTime nowDate = LocalDateTime.now();
 		aiMcp.setCreateTime(nowDate);
 		aiMcp.setUpdateTime(nowDate);
@@ -66,6 +71,7 @@ public class AiMcpServiceImpl implements IAiMcpService {
 	 */
 	@Override
 	public int updateAiMcp(AiMcp aiMcp) {
+		saveCheck(aiMcp);
 		aiMcp.setUpdateTime(LocalDateTime.now());
 		String loginUsername = SecurityUtils.getUsername();
 		aiMcp.setCreateBy(loginUsername);
@@ -91,6 +97,29 @@ public class AiMcpServiceImpl implements IAiMcpService {
 	@Override
 	public int deleteAiMcpByMcpId(Long mcpId) {
 		return aiMcpMapper.deleteAiMcpByMcpId(mcpId);
+	}
+
+	/**
+	 * MCP服务参数检查
+	 * @param aiMcp AiMcp
+	 */
+	private void saveCheck(AiMcp aiMcp) {
+		if (ModelEnums.McpTypeEnums.SSE.equals(aiMcp.getMcpType())) {
+			if (StrUtil.isBlank(aiMcp.getSseEndpoint())) {
+				throw new TWTException("SSE请求端点不能为空");
+			}
+			else if (StrUtil.isBlank(aiMcp.getSseEndpoint())) {
+				throw new TWTException("SSE请求端点");
+			}
+		}
+		else {
+			if (Objects.isNull(aiMcp.getCommand())) {
+				throw new TWTException("命令不能为空");
+			}
+			else if (StrUtil.isBlank(aiMcp.getArgs())) {
+				throw new TWTException("参数不能为空");
+			}
+		}
 	}
 
 }
