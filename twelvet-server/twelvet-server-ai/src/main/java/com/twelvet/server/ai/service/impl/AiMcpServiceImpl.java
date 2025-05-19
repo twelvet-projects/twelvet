@@ -1,10 +1,13 @@
 package com.twelvet.server.ai.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.twelvet.api.ai.constant.ModelEnums;
 import com.twelvet.api.ai.domain.AiMcp;
 import com.twelvet.framework.core.exception.TWTException;
+import com.twelvet.framework.redis.service.RedisUtils;
 import com.twelvet.framework.security.utils.SecurityUtils;
+import com.twelvet.server.ai.constant.RAGConstants;
 import com.twelvet.server.ai.mapper.AiMcpMapper;
 import com.twelvet.server.ai.service.IAiMcpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,6 +123,12 @@ public class AiMcpServiceImpl implements IAiMcpService {
 				throw new TWTException("参数不能为空");
 			}
 		}
+		Boolean flag = aiMcpMapper.selectAiMcpExist(aiMcp.getName(), aiMcp.getMcpId());
+		if (flag) {
+			throw new TWTException("服务名称已存在");
+		}
+		// 通过后删除缓存
+		RedisUtils.deleteObject(RAGConstants.MCP_LIST_CACHE);
 	}
 
 }

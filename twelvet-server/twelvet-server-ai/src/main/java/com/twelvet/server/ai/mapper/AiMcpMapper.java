@@ -3,6 +3,7 @@ package com.twelvet.server.ai.mapper;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.twelvet.api.ai.domain.AiMcp;
 import com.twelvet.server.ai.constant.AIDataSourceConstants;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -29,6 +30,14 @@ public interface AiMcpMapper {
 	 * @return AI MCP服务集合
 	 */
 	public List<AiMcp> selectAiMcpList(AiMcp aiMcp);
+
+	/**
+	 * 查询AI MCP服务名称是否唯一
+	 * @param name 服务名称
+	 * @param mcpId mcpId
+	 * @return Boolean
+	 */
+	public Boolean selectAiMcpExist(@Param("name") String name, @Param("mcpId") Long mcpId);
 
 	/**
 	 * 新增AI MCP服务

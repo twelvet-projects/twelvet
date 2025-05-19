@@ -160,7 +160,8 @@ CREATE TABLE `ai_mcp`
     `update_by`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '更新者',
     `update_time`  datetime                                                      NOT NULL COMMENT '更新时间',
     `del_flag`     tinyint(1)                                                    NOT NULL DEFAULT 0 COMMENT '是否删除 0：正常，1：删除',
-    PRIMARY KEY (`mcp_id`) USING BTREE
+    PRIMARY KEY (`mcp_id`) USING BTREE,
+    UNIQUE INDEX `idx_name` (`name` ASC) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
   CHARACTER SET = utf8mb4

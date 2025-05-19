@@ -3,13 +3,16 @@ package com.twelvet.server.ai.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.cloud.ai.dashscope.api.DashScopeApi;
 import com.alibaba.cloud.ai.dashscope.api.DashScopeSpeechSynthesisApi;
 import com.alibaba.cloud.ai.dashscope.audio.DashScopeAudioTranscriptionModel;
 import com.alibaba.cloud.ai.dashscope.audio.DashScopeAudioTranscriptionOptions;
 import com.alibaba.cloud.ai.dashscope.audio.DashScopeSpeechSynthesisModel;
 import com.alibaba.cloud.ai.dashscope.audio.DashScopeSpeechSynthesisOptions;
-import com.alibaba.cloud.ai.dashscope.audio.synthesis.*;
-import com.alibaba.cloud.ai.dashscope.audio.transcription.AudioTranscriptionModel;
+import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisMessage;
+import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisOutput;
+import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisPrompt;
+import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisResponse;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatOptions;
 import com.alibaba.cloud.ai.dashscope.chat.MessageFormat;
@@ -27,11 +30,13 @@ import com.twelvet.api.ai.constant.ModelEnums;
 import com.twelvet.api.ai.constant.RAGEnums;
 import com.twelvet.api.ai.domain.AiKnowledge;
 import com.twelvet.api.ai.domain.AiMcp;
+import com.twelvet.api.ai.domain.AiModel;
 import com.twelvet.api.ai.domain.dto.*;
 import com.twelvet.api.ai.domain.ocr.InvoiceOCR;
 import com.twelvet.api.ai.domain.vo.AiChatHistoryVO;
 import com.twelvet.api.ai.domain.vo.MessageVO;
 import com.twelvet.framework.core.exception.TWTException;
+import com.twelvet.framework.redis.service.RedisUtils;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.JacksonUtils;
@@ -44,6 +49,7 @@ import com.twelvet.server.ai.fun.MockWeatherService;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.mapper.AiKnowledgeMapper;
 import com.twelvet.server.ai.mapper.AiMcpMapper;
+import com.twelvet.server.ai.mapper.AiModelMapper;
 import com.twelvet.server.ai.service.AIChatService;
 import com.twelvet.server.ai.service.IAiChatHistoryService;
 import io.modelcontextprotocol.client.McpClient;
@@ -54,6 +60,8 @@ import io.modelcontextprotocol.client.transport.StdioClientTransport;
 import io.modelcontextprotocol.spec.McpClientTransport;
 import io.modelcontextprotocol.spec.McpSchema;
 import org.bytedeco.javacv.*;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.audio.transcription.AudioTranscriptionPrompt;
@@ -62,6 +70,7 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.UserMessage;
+import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
@@ -91,6 +100,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -104,6 +114,56 @@ import java.util.stream.Collectors;
 public class AIChatServiceImpl implements AIChatService {
 
 	private final static Logger log = LoggerFactory.getLogger(AIChatServiceImpl.class);
+
+	/**
+	 * MCP服务列表
+	 */
+	private final static Map<String, McpSyncClient> MCP_SYNC_CLIENTS = new ConcurrentHashMap<>();
+
+	/**
+	 * RedissonClient
+	 */
+	private final RedissonClient redissonClient;
+
+	/**
+	 * 向量数据库
+	 */
+	private final VectorStore vectorStore;
+
+	/**
+	 * 模型配置mapper
+	 */
+	private final AiModelMapper aiModelMapper;
+
+	/**
+	 * 知识库mapper
+	 */
+	private final AiKnowledgeMapper aiKnowledgeMapper;
+
+	/**
+	 * 知识库切片mapper
+	 */
+	private final AiDocSliceMapper aiDocSliceMapper;
+
+	/**
+	 * 聊天历史服务
+	 */
+	private final IAiChatHistoryService aiChatHistoryService;
+
+	/**
+	 * MCP服务mapper
+	 */
+	private final AiMcpMapper aiMcpMapper;
+
+	/**
+	 * 注解是AI请求客户端
+	 */
+	private final AIClient aiClient;
+
+	/**
+	 * 敏感词检查
+	 */
+	private final SensitiveWordBs sensitiveWordBs;
 
 	/**
 	 * 文字model
@@ -125,25 +185,7 @@ public class AIChatServiceImpl implements AIChatService {
 	 */
 	private final DashScopeSpeechSynthesisModel dashScopeSpeechSynthesisModel;
 
-	private final VectorStore vectorStore;
-
-	private final AiKnowledgeMapper aiKnowledgeMapper;
-
-	private final AiDocSliceMapper aiDocSliceMapper;
-
-	private final IAiChatHistoryService aiChatHistoryService;
-
-	private final SpeechSynthesisModel speechSynthesisModel;
-
-	private final AudioTranscriptionModel audioTranscriptionModel;
-
 	private final DashScopeRerankModel dashScopeRerankModel;
-
-	private final SensitiveWordBs sensitiveWordBs;
-
-	private final AiMcpMapper aiMcpMapper;
-
-	private final AIClient aiClient;
 
 	/**
 	 * 多模态测试图片地址
@@ -160,27 +202,26 @@ public class AIChatServiceImpl implements AIChatService {
 	 */
 	private final static String MULTI_VIDEO_FILE_URL = "https://static.twelvet.cn/ai/video.mp4";
 
-	public AIChatServiceImpl(DashScopeChatModel dashScopeChatModel, VectorStore vectorStore,
-			AiKnowledgeMapper aiKnowledgeMapper, AiDocSliceMapper aiDocSliceMapper,
-			IAiChatHistoryService aiChatHistoryService, SpeechSynthesisModel speechSynthesisModel,
-			AudioTranscriptionModel audioTranscriptionModel, SensitiveWordBs sensitiveWordBs,
-			DashScopeImageModel dashScopeImageModel, DashScopeAudioTranscriptionModel dashScopeAudioTranscriptionModel,
-			DashScopeSpeechSynthesisModel dashScopeSpeechSynthesisModel, DashScopeRerankModel dashScopeRerankModel,
-			AiMcpMapper aiMcpMapper, AIClient aiClient) {
-		this.dashScopeChatModel = dashScopeChatModel;
+	public AIChatServiceImpl(AIClient aiClient, RedissonClient redissonClient, VectorStore vectorStore,
+			AiModelMapper aiModelMapper, AiKnowledgeMapper aiKnowledgeMapper, AiDocSliceMapper aiDocSliceMapper,
+			IAiChatHistoryService aiChatHistoryService, AiMcpMapper aiMcpMapper, SensitiveWordBs sensitiveWordBs,
+			DashScopeChatModel dashScopeChatModel, DashScopeImageModel dashScopeImageModel,
+			DashScopeAudioTranscriptionModel dashScopeAudioTranscriptionModel,
+			DashScopeSpeechSynthesisModel dashScopeSpeechSynthesisModel, DashScopeRerankModel dashScopeRerankModel) {
+		this.aiClient = aiClient;
+		this.redissonClient = redissonClient;
 		this.vectorStore = vectorStore;
+		this.aiModelMapper = aiModelMapper;
 		this.aiKnowledgeMapper = aiKnowledgeMapper;
 		this.aiDocSliceMapper = aiDocSliceMapper;
 		this.aiChatHistoryService = aiChatHistoryService;
-		this.speechSynthesisModel = speechSynthesisModel;
-		this.audioTranscriptionModel = audioTranscriptionModel;
+		this.aiMcpMapper = aiMcpMapper;
 		this.sensitiveWordBs = sensitiveWordBs;
+		this.dashScopeChatModel = dashScopeChatModel;
 		this.dashScopeImageModel = dashScopeImageModel;
 		this.dashScopeAudioTranscriptionModel = dashScopeAudioTranscriptionModel;
 		this.dashScopeSpeechSynthesisModel = dashScopeSpeechSynthesisModel;
 		this.dashScopeRerankModel = dashScopeRerankModel;
-		this.aiMcpMapper = aiMcpMapper;
-		this.aiClient = aiClient;
 	}
 
 	/**
@@ -285,7 +326,13 @@ public class AIChatServiceImpl implements AIChatService {
 			return vectorStore.similaritySearch(searchRequest);
 		}, TUtils.threadPoolExecutor);
 
-		CompletableFuture.allOf(vectorCompletableFuture, messagesCompletableFuture).join();
+		// 获取使用的模型信息
+		CompletableFuture<AiModel> aiModelCompletableFuture = CompletableFuture.supplyAsync(() -> {
+			AiModel aiModel = aiModelMapper.selectAiModelByModelId(1L);
+			return aiModel;
+		}, TUtils.threadPoolExecutor);
+
+		CompletableFuture.allOf(vectorCompletableFuture, messagesCompletableFuture, aiModelCompletableFuture).join();
 
 		// 向量知识库
 		List<Document> vectorDocs = vectorCompletableFuture.join();
@@ -370,21 +417,23 @@ public class AIChatServiceImpl implements AIChatService {
 
 		Prompt prompt = new Prompt(messages);
 
-		DashScopeChatOptions dashScopeChatOptions = DashScopeChatOptions.builder()
-			.withModel("qwen-max")
-			// 开启联网搜索会对function造成影响
-			.withEnableSearch(Boolean.FALSE)
-			// 关联注册方法
-			// .withFunction("mockWeatherService")
-			.build();
+		AiModel aiModel = aiModelCompletableFuture.join();
+		ChatModel chatModel;
+		if (true) {
+			DashScopeApi dashScopeApi = new DashScopeApi(aiModel.getBaseUrl(), aiModel.getApiKey(), null);
+			DashScopeChatOptions dashScopeChatOptions = DashScopeChatOptions.builder()
+				.withModel(aiModel.getModel())
+				.build();
 
-		if (Boolean.TRUE.equals(messageDTO.getInternetFlag())) { // 是否开启联网
-			dashScopeChatOptions.setEnableSearch(Boolean.TRUE);
+			if (Boolean.TRUE.equals(messageDTO.getInternetFlag())) { // 是否开启联网
+				dashScopeChatOptions.setEnableSearch(Boolean.TRUE);
+			}
+			chatModel = new DashScopeChatModel(dashScopeApi, dashScopeChatOptions);
 		}
 
 		return ChatClient
 			// 自定义使用不同的大模型
-			.create(dashScopeChatModel)
+			.create(chatModel)
 			.prompt(prompt)
 			// 功能选择
 			// .options(dashScopeChatOptions)
@@ -450,10 +499,10 @@ public class AIChatServiceImpl implements AIChatService {
 				userMessage.getMetadata().put(DashScopeChatModel.MESSAGE_FORMAT, MessageFormat.IMAGE);
 			}
 			else { // 视频
-					// TODO 目前非真正的视频识别，官方例子为把视频切成图片进行识别
-					// 视频转为图片，取出视频声音进行多次的AI分析总结得到最终的评价
-					// 创建File对象，表示目录
-					// 开启日志
+				// TODO 目前非真正的视频识别，官方例子为把视频切成图片进行识别
+				// 视频转为图片，取出视频声音进行多次的AI分析总结得到最终的评价
+				// 创建File对象，表示目录
+				// 开启日志
 				FFmpegLogCallback.set();
 
 				File directory = new File(filePath);
@@ -744,7 +793,7 @@ public class AIChatServiceImpl implements AIChatService {
 				dashScopeSpeechSynthesisOptions);
 
 		// TODO 采用的websocket请求，存在BUG关闭后无法再使用
-		SpeechSynthesisResponse response = speechSynthesisModel.call(speechSynthesisPrompt);
+		SpeechSynthesisResponse response = dashScopeSpeechSynthesisModel.call(speechSynthesisPrompt);
 
 		return response.getResult().getOutput();
 	}
@@ -765,7 +814,7 @@ public class AIChatServiceImpl implements AIChatService {
 				// TODO 不支持直接的文件流，只能上传到OSS传入地址的方式
 				sttDTO.getAudio().getResource(), dashScopeAudioTranscriptionOptions);
 
-		AudioTranscriptionResponse response = audioTranscriptionModel.call(audioTranscriptionPrompt);
+		AudioTranscriptionResponse response = dashScopeAudioTranscriptionModel.call(audioTranscriptionPrompt);
 
 		return response.getResult().getOutput();
 	}
@@ -775,59 +824,99 @@ public class AIChatServiceImpl implements AIChatService {
 	 * @return List<McpSyncClient>
 	 */
 	private SyncMcpToolCallbackProvider loadingMCP() {
-		List<McpSyncClient> custMcpSyncClients = new ArrayList<>();
-		AiMcp aiMcp = new AiMcp();
-		aiMcp.setStatusFlag(Boolean.TRUE);
-		List<AiMcp> aiMcpList = aiMcpMapper.selectAiMcpList(aiMcp);
-		for (AiMcp mcp : aiMcpList) {
-			// 基本信息
-			McpSchema.Implementation clientInfo = new McpSchema.Implementation(
-					String.format("%s-%s", "twelvet-mcp-client", mcp.getName()), "1.0.0");
-
-			McpClientTransport ClientTransport;
-			ModelEnums.McpTypeEnums mcpType = mcp.getMcpType();
-			if (ModelEnums.McpTypeEnums.SSE.equals(mcpType)) { // SSE模式
-				ClientTransport = HttpClientSseClientTransport.builder(mcp.getSseBaseUrl())
-					.sseEndpoint(mcp.getSseEndpoint())
-					.build();
+		// 防止并发初始化
+		RLock lock = redissonClient.getLock(RAGConstants.LOCK_INIT_AI_MCP);
+		lock.lock();
+		try {
+			List<AiMcp> aiMcpList = RedisUtils.getCacheObject(RAGConstants.MCP_LIST_CACHE);
+			if (CollUtil.isEmpty(aiMcpList)) { // 缓存没数据将从数据库获取
+				AiMcp aiMcp = new AiMcp();
+				aiMcp.setStatusFlag(Boolean.TRUE);
+				aiMcpList = aiMcpMapper.selectAiMcpList(aiMcp);
+				RedisUtils.setCacheObject(RAGConstants.MCP_LIST_CACHE, aiMcpList);
 			}
-			else { // STDIO模式
-				String[] args = mcp.getArgs().split("\n");
-				String envStr = mcp.getEnv();
-				Map<String, String> envMap = new HashMap<>();
-				if (StrUtil.isNotBlank(envStr)) {
-					String[] envStrs = envStr.split("\n");
-					for (String str : envStrs) {
-						String[] v = str.split("=");
-						if (v.length != 2) {
-							throw new TWTException(String.format("MCP服务【%s】,环境变量配置错误", mcp.getName()));
-						}
-						envMap.put(v[0].trim(), v[1].trim());
-					}
+			Map<String, String> dbMcpMap = aiMcpList.stream().collect(Collectors.toMap(AiMcp::getName, AiMcp::getName));
+			for (String mcpName : MCP_SYNC_CLIENTS.keySet()) { // 移除已经失效的MCP
+				Boolean checkMCPFlag = Boolean.FALSE;
+				if (!dbMcpMap.containsKey(mcpName)) { // 数据库已经不存在的需要关闭并移除
+					checkMCPFlag = Boolean.TRUE;
 				}
-				// 启动参数
-				ServerParameters serverParameters = ServerParameters.builder(mcp.getCommand().getCode())
-					.args(args)
-					.env(envMap)
-					.build();
-				// 转换器
-				ClientTransport = new StdioClientTransport(serverParameters);
+				else if (!MCP_SYNC_CLIENTS.get(mcpName).getClientInfo().version().equals(dbMcpMap.get(mcpName))) { // 版本不一致也需要重新初始化
+					// TODO 需要实现修改过参数重新进行初始化
+					// checkMCPFlag = Boolean.TRUE;
+				}
+
+				if (checkMCPFlag) {
+					// 移除
+					McpSyncClient removemMcpSyncClient = MCP_SYNC_CLIENTS.remove(mcpName);
+					// 关闭mcp
+					removemMcpSyncClient.close();
+					log.info("移除并关闭MCP：{}", removemMcpSyncClient.getClientInfo().name());
+				}
 			}
 
-			McpSyncClient syncClient = McpClient.sync(ClientTransport)
-				.clientInfo(clientInfo)
-				.requestTimeout(Duration.ofSeconds(20))
-				// 日志
-				.loggingConsumer(notification -> {
-					log.info("Received log message: {}", notification.data());
-				})
-				.build();
-			// 初始化
-			syncClient.initialize();
-			// 加入Spring AI
-			custMcpSyncClients.add(syncClient);
+			for (AiMcp mcp : aiMcpList) {
+				if (MCP_SYNC_CLIENTS.containsKey(mcp.getName())) { // 已经存在的
+					continue;
+				}
+				// 基本信息
+				McpSchema.Implementation clientInfo = new McpSchema.Implementation(mcp.getName(), "1.0.0");
+
+				McpClientTransport ClientTransport;
+				ModelEnums.McpTypeEnums mcpType = mcp.getMcpType();
+				if (ModelEnums.McpTypeEnums.SSE.equals(mcpType)) { // SSE模式
+					ClientTransport = HttpClientSseClientTransport.builder(mcp.getSseBaseUrl())
+						.sseEndpoint(mcp.getSseEndpoint())
+						.build();
+				}
+				else { // STDIO模式
+					String[] args = mcp.getArgs().split("\n");
+					String envStr = mcp.getEnv();
+					Map<String, String> envMap = new HashMap<>();
+					if (StrUtil.isNotBlank(envStr)) {
+						String[] envStrs = envStr.split("\n");
+						for (String str : envStrs) {
+							String[] v = str.split("=");
+							if (v.length != 2) {
+								throw new TWTException(String.format("MCP服务【%s】,环境变量配置错误", mcp.getName()));
+							}
+							envMap.put(v[0].trim(), v[1].trim());
+						}
+					}
+					// 启动参数
+					ServerParameters serverParameters = ServerParameters.builder(mcp.getCommand().getCode())
+						.args(args)
+						.env(envMap)
+						.build();
+					// 转换器
+					ClientTransport = new StdioClientTransport(serverParameters);
+				}
+
+				McpSyncClient syncClient = McpClient.sync(ClientTransport)
+					.clientInfo(clientInfo)
+					.requestTimeout(Duration.ofSeconds(20))
+					// 日志
+					.loggingConsumer(notification -> {
+						log.info("Received log message: {}", notification.data());
+					})
+					.build();
+				// 初始化
+				syncClient.initialize();
+
+				// 加入Spring AI
+				MCP_SYNC_CLIENTS.put(syncClient.getClientInfo().name(), syncClient);
+				log.info("成功初始化MCP：{}，工具列表：{}", syncClient.getClientInfo().name(), syncClient.listTools());
+			}
+
+			return new SyncMcpToolCallbackProvider(MCP_SYNC_CLIENTS.values().stream().toList());
 		}
-		return new SyncMcpToolCallbackProvider(custMcpSyncClients);
+		catch (Exception e) {
+			log.error("MCP初始化失败", e);
+			throw new TWTException("MCP初始化失败");
+		}
+		finally {
+			lock.unlock();
+		}
 	}
 
 }

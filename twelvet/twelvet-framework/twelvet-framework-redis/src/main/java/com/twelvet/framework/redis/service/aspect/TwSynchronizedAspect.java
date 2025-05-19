@@ -42,7 +42,7 @@ public class TwSynchronizedAspect {
 	}
 
 	/**
-	 * 执行钱锁定
+	 * 执行前锁定
 	 * @param point JoinPoint
 	 */
 	@Before("synchronizedPointCut()")

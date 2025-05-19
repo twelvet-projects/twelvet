@@ -22,4 +22,14 @@ public interface RAGConstants {
 			the user that you can't answer the question.
 			""";
 
+	/**
+	 * MCP工具缓存
+	 */
+	String MCP_LIST_CACHE = "ai:mcp:list";
+
+	/**
+	 * 初始化MCP锁
+	 */
+	String LOCK_INIT_AI_MCP = "lock_init_ai_mcp";
+
 }

@@ -57,6 +57,16 @@
         </where>
     </select>
 
+    <select id="selectAiMcpExist" resultType="Boolean">
+        select EXISTS (SELECT 1 FROM `ai_mcp`
+        <where>
+            del_flag = 0
+            <if test="mcpId != null ">and mcp_id != #{mcpId}</if>
+            <if test="name != null  and name != ''">and name =  #{name}</if>
+        </where>
+        )
+    </select>
+
     <select id="selectAiMcpByMcpId" parameterType="Long" resultMap="AiMcpResult">
         <include refid="selectAiMcpVo"/>
         where mcp_id = #{mcpId} and del_flag = 0
