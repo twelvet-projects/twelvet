@@ -499,10 +499,10 @@ public class AIChatServiceImpl implements AIChatService {
 				userMessage.getMetadata().put(DashScopeChatModel.MESSAGE_FORMAT, MessageFormat.IMAGE);
 			}
 			else { // 视频
-				// TODO 目前非真正的视频识别，官方例子为把视频切成图片进行识别
-				// 视频转为图片，取出视频声音进行多次的AI分析总结得到最终的评价
-				// 创建File对象，表示目录
-				// 开启日志
+					// TODO 目前非真正的视频识别，官方例子为把视频切成图片进行识别
+					// 视频转为图片，取出视频声音进行多次的AI分析总结得到最终的评价
+					// 创建File对象，表示目录
+					// 开启日志
 				FFmpegLogCallback.set();
 
 				File directory = new File(filePath);
