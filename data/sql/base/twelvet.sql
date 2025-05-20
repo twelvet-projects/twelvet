@@ -725,14 +725,14 @@ INSERT INTO `sys_menu`
 VALUES (1124, 'system.menu.system.i18n.export', 1119, 5, '#', '', '1', 'F', '0', '0', 'system:i18n:export', '#',
         'admin', '2018-03-01 00:00:00', 'admin', '2024-03-31 11:17:22', '');
 INSERT INTO `sys_menu`
-VALUES (1125, 'AI知识库', 0, 4, '/ai', NULL, '1', 'M', '0', '0', NULL, 'icon-ai', 'admin', '2024-10-26 18:50:42',
-        'admin', '2024-10-26 18:54:14', '');
+VALUES (1125, 'AI大模型', 0, 4, '/ai', NULL, '1', 'M', '0', '0', NULL, 'icon-ai', 'admin', '2024-10-26 18:50:42',
+        'admin', '2025-05-17 17:54:04', '');
 INSERT INTO `sys_menu`
 VALUES (1126, 'AI助手', 1125, 5, '/ai/chat', '/ai/chat', '1', 'C', '0', '0', 'ai:chat', 'icon-ai-chat', 'admin',
         '2024-10-26 19:15:17', 'admin', '2024-12-20 18:16:52', '');
 INSERT INTO `sys_menu`
-VALUES (1127, 'AI知识库文档', 1125, 4, 'doc', 'ai/doc/index', '1', 'C', '0', '0', 'ai:doc:list', '#', 'admin',
-        '2018-03-01 00:00:00', 'admin', '2025-03-31 14:43:59', 'AI知识库文档菜单');
+VALUES (1127, '知识库文档', 1125, 4, 'doc', 'ai/doc/index', '1', 'C', '0', '0', 'ai:doc:list', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2025-05-17 17:54:51', 'AI知识库文档菜单');
 INSERT INTO `sys_menu`
 VALUES (1128, 'AI知识库文档查询', 1127, 1, '#', '', '1', 'F', '0', '0', 'ai:doc:query', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
@@ -749,8 +749,8 @@ INSERT INTO `sys_menu`
 VALUES (1132, 'AI知识库文档导出', 1127, 5, '#', '', '1', 'F', '0', '0', 'ai:doc:export', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
-VALUES (1139, 'AI大模型', 1125, 3, 'knowledge', 'ai/knowledge/index', '1', 'C', '0', '0', 'ai:knowledge:list', '#',
-        'admin', '2018-03-01 00:00:00', 'admin', '2025-03-31 14:43:52', 'AI知识库菜单');
+VALUES (1139, '知识库', 1125, 3, 'knowledge', 'ai/knowledge/index', '1', 'C', '0', '0', 'ai:knowledge:list', '#',
+        'admin', '2018-03-01 00:00:00', 'admin', '2025-05-17 17:54:44', 'AI知识库菜单');
 INSERT INTO `sys_menu`
 VALUES (1140, 'AI知识库查询', 1139, 1, '#', '', '1', 'F', '0', '0', 'ai:knowledge:query', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
@@ -767,8 +767,8 @@ INSERT INTO `sys_menu`
 VALUES (1144, 'AI知识库导出', 1139, 5, '#', '', '1', 'F', '0', '0', 'ai:knowledge:export', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
-VALUES (1145, 'AI大模型', 1125, 1, 'model', 'ai/model/index', '1', 'C', '0', '0', 'ai:model:list', '#', 'admin',
-        '2018-03-01 00:00:00', 'admin', '2024-12-20 18:17:11', 'AI大模型菜单');
+VALUES (1145, '模型配置', 1125, 1, 'model', 'ai/model/index', '1', 'C', '0', '0', 'ai:model:list', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2025-05-17 17:54:15', 'AI大模型菜单');
 INSERT INTO `sys_menu`
 VALUES (1146, 'AI大模型查询', 1145, 1, '#', '', '1', 'F', '0', '0', 'system:model:query', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
@@ -794,8 +794,8 @@ INSERT INTO `sys_menu`
 VALUES (1153, 'AI知识库分片修改', 1127, 8, '', NULL, '1', 'F', '0', '0', 'ai:slice:edit', '#', 'admin',
         '2025-02-08 15:06:03', '', NULL, '');
 INSERT INTO `sys_menu`
-VALUES (1154, 'AI MCP服务', 1125, 2, 'mcp', 'ai/mcp/index', '1', 'C', '0', '0', 'ai:mcp:list', '#', 'admin',
-        '2018-03-01 00:00:00', 'admin', '2025-03-31 14:43:44', 'AI MCP服务菜单');
+VALUES (1154, 'AI MCP', 1125, 2, 'mcp', 'ai/mcp/index', '1', 'C', '0', '0', 'ai:mcp:list', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2025-05-17 17:54:32', 'AI MCP服务菜单');
 INSERT INTO `sys_menu`
 VALUES (1155, 'AI MCP服务查询', 1154, 1, '#', '', '1', 'F', '0', '0', 'ai:mcp:query', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2025-03-31 14:43:06', '');
