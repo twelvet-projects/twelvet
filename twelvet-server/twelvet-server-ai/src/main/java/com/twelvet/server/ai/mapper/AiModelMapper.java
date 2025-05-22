@@ -1,8 +1,6 @@
 package com.twelvet.server.ai.mapper;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.twelvet.api.ai.domain.AiModel;
-import com.twelvet.server.ai.constant.AIDataSourceConstants;
 
 import java.util.List;
 
@@ -13,7 +11,6 @@ import java.util.List;
  * @WebSite twelvet.cn
  * @date 2024-12-20
  */
-@DS(AIDataSourceConstants.DS_MASTER)
 public interface AiModelMapper {
 
 	/**

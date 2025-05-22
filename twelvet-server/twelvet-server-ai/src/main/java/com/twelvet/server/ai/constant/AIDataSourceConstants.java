@@ -13,8 +13,8 @@ public interface AIDataSourceConstants {
 	String DS_MASTER = "master";
 
 	/**
-	 * AI数据源（master）
+	 * 向量数据源（master）
 	 */
-	String DS_AI = "salve";
+	String DS_VECTOR = "vector";
 
 }

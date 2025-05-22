@@ -75,7 +75,7 @@
         <idempotent-spring-boot-starter.version>0.4.0</idempotent-spring-boot-starter.version>
         <sensitive-word.version>0.22.0</sensitive-word.version>
 
-        <spring-ai-bom.version>1.0.0-M7</spring-ai-bom.version>
+        <spring-ai-bom.version>1.0.0</spring-ai-bom.version>
         <ai-alibaba.version>1.0.0-M6.1</ai-alibaba.version>
 
         <docker.plugin.version>0.32.0</docker.plugin.version>
@@ -115,6 +115,13 @@
                 <scope>import</scope>
             </dependency>
 
+            <!--Alibaba AI-->
+            <dependency>
+                <groupId>com.alibaba.cloud.ai</groupId>
+                <artifactId>spring-ai-alibaba-core</artifactId>
+                <version>${ai-alibaba.version}</version>
+            </dependency>
+
             <!-- SpringCloud Alibaba 微服务 -->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
@@ -122,13 +129,6 @@
                 <version>${spring-cloud-alibaba-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-
-            <!--Alibaba AI-->
-            <dependency>
-                <groupId>com.alibaba.cloud.ai</groupId>
-                <artifactId>spring-ai-alibaba-starter</artifactId>
-                <version>${ai-alibaba.version}</version>
             </dependency>
 
             <!-- SpringBoot Admin -->

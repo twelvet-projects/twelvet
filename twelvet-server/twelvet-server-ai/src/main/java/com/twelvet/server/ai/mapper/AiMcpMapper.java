@@ -1,8 +1,6 @@
 package com.twelvet.server.ai.mapper;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.twelvet.api.ai.domain.AiMcp;
-import com.twelvet.server.ai.constant.AIDataSourceConstants;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -14,7 +12,6 @@ import java.util.List;
  * @WebSite twelvet.cn
  * @date 2025-03-31
  */
-@DS(AIDataSourceConstants.DS_MASTER)
 public interface AiMcpMapper {
 
 	/**

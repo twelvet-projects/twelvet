@@ -85,6 +85,7 @@ import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.ai.vectorstore.filter.Filter;
 import org.springframework.ai.vectorstore.filter.FilterExpressionBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.PathResource;
 import org.springframework.stereotype.Service;
@@ -123,69 +124,83 @@ public class AIChatServiceImpl implements AIChatService {
 	/**
 	 * RedissonClient
 	 */
-	private final RedissonClient redissonClient;
+	@Autowired(required = false)
+	private RedissonClient redissonClient;
 
 	/**
 	 * 向量数据库
 	 */
-	private final VectorStore vectorStore;
+	@Autowired(required = false)
+	private VectorStore vectorStore;
 
 	/**
 	 * 模型配置mapper
 	 */
-	private final AiModelMapper aiModelMapper;
+	@Autowired(required = false)
+	private AiModelMapper aiModelMapper;
 
 	/**
 	 * 知识库mapper
 	 */
-	private final AiKnowledgeMapper aiKnowledgeMapper;
+	@Autowired(required = false)
+	private AiKnowledgeMapper aiKnowledgeMapper;
 
 	/**
 	 * 知识库切片mapper
 	 */
-	private final AiDocSliceMapper aiDocSliceMapper;
+	@Autowired(required = false)
+	private AiDocSliceMapper aiDocSliceMapper;
 
 	/**
 	 * 聊天历史服务
 	 */
-	private final IAiChatHistoryService aiChatHistoryService;
+	@Autowired(required = false)
+	private IAiChatHistoryService aiChatHistoryService;
 
 	/**
 	 * MCP服务mapper
 	 */
-	private final AiMcpMapper aiMcpMapper;
+	@Autowired(required = false)
+	private AiMcpMapper aiMcpMapper;
 
 	/**
 	 * 注解是AI请求客户端
 	 */
-	private final AIClient aiClient;
+	@Autowired(required = false)
+	private AIClient aiClient;
 
 	/**
 	 * 敏感词检查
 	 */
-	private final SensitiveWordBs sensitiveWordBs;
+	@Autowired(required = false)
+	private SensitiveWordBs sensitiveWordBs;
 
 	/**
 	 * 文字model
 	 */
-	private final DashScopeChatModel dashScopeChatModel;
+	@Autowired(required = false)
+	private DashScopeChatModel dashScopeChatModel;
 
 	/**
 	 * 图像model
 	 */
-	private final DashScopeImageModel dashScopeImageModel;
+	@Autowired(required = false)
+	private DashScopeImageModel dashScopeImageModel;
 
 	/**
 	 * 语音转文字model
 	 */
-	private final DashScopeAudioTranscriptionModel dashScopeAudioTranscriptionModel;
+	@Autowired(required = false)
+	private DashScopeAudioTranscriptionModel dashScopeAudioTranscriptionModel;
 
 	/**
 	 * TTS model
 	 */
-	private final DashScopeSpeechSynthesisModel dashScopeSpeechSynthesisModel;
+	@Autowired(required = false)
+	private DashScopeSpeechSynthesisModel dashScopeSpeechSynthesisModel;
 
-	private final DashScopeRerankModel dashScopeRerankModel;
+	@Autowired(required = false)
+	private DashScopeRerankModel dashScopeRerankModel;
 
 	/**
 	 * 多模态测试图片地址
@@ -201,28 +216,6 @@ public class AIChatServiceImpl implements AIChatService {
 	 * 多模态测试视频地址
 	 */
 	private final static String MULTI_VIDEO_FILE_URL = "https://static.twelvet.cn/ai/video.mp4";
-
-	public AIChatServiceImpl(AIClient aiClient, RedissonClient redissonClient, VectorStore vectorStore,
-			AiModelMapper aiModelMapper, AiKnowledgeMapper aiKnowledgeMapper, AiDocSliceMapper aiDocSliceMapper,
-			IAiChatHistoryService aiChatHistoryService, AiMcpMapper aiMcpMapper, SensitiveWordBs sensitiveWordBs,
-			DashScopeChatModel dashScopeChatModel, DashScopeImageModel dashScopeImageModel,
-			DashScopeAudioTranscriptionModel dashScopeAudioTranscriptionModel,
-			DashScopeSpeechSynthesisModel dashScopeSpeechSynthesisModel, DashScopeRerankModel dashScopeRerankModel) {
-		this.aiClient = aiClient;
-		this.redissonClient = redissonClient;
-		this.vectorStore = vectorStore;
-		this.aiModelMapper = aiModelMapper;
-		this.aiKnowledgeMapper = aiKnowledgeMapper;
-		this.aiDocSliceMapper = aiDocSliceMapper;
-		this.aiChatHistoryService = aiChatHistoryService;
-		this.aiMcpMapper = aiMcpMapper;
-		this.sensitiveWordBs = sensitiveWordBs;
-		this.dashScopeChatModel = dashScopeChatModel;
-		this.dashScopeImageModel = dashScopeImageModel;
-		this.dashScopeAudioTranscriptionModel = dashScopeAudioTranscriptionModel;
-		this.dashScopeSpeechSynthesisModel = dashScopeSpeechSynthesisModel;
-		this.dashScopeRerankModel = dashScopeRerankModel;
-	}
 
 	/**
 	 * 发起聊天

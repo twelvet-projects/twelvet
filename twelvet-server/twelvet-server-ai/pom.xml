@@ -89,13 +89,19 @@
         <!--Alibaba AI-->
         <dependency>
             <groupId>com.alibaba.cloud.ai</groupId>
-            <artifactId>spring-ai-alibaba-starter</artifactId>
+            <artifactId>spring-ai-alibaba-core</artifactId>
+        </dependency>
+
+        <!--zhipuai-->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-zhipuai</artifactId>
         </dependency>
 
         <!--PGSql Vector 向量数据库-->
         <dependency>
             <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-starter-vector-store-pgvector</artifactId>
+            <artifactId>spring-ai-pgvector-store</artifactId>
         </dependency>
 
         <!--DOCX、PPTX、HTML...阅读器-->
