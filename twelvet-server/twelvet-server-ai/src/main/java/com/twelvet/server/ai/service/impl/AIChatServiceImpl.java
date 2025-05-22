@@ -59,6 +59,7 @@ import io.modelcontextprotocol.client.transport.ServerParameters;
 import io.modelcontextprotocol.client.transport.StdioClientTransport;
 import io.modelcontextprotocol.spec.McpClientTransport;
 import io.modelcontextprotocol.spec.McpSchema;
+import jodd.util.ArraysUtil;
 import org.bytedeco.javacv.*;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
@@ -81,6 +82,7 @@ import org.springframework.ai.image.ImagePrompt;
 import org.springframework.ai.image.ImageResponse;
 import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
 import org.springframework.ai.model.Media;
+import org.springframework.ai.tool.ToolCallback;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.ai.vectorstore.filter.Filter;
@@ -257,6 +259,8 @@ public class AIChatServiceImpl implements AIChatService {
 					searchAiChatHistoryDTO.setKnowledgeId(aiKnowledge.getKnowledgeId());
 					List<AiChatHistoryVO> aiChatHistoryList = aiChatHistoryService
 						.selectAiChatHistoryListByUserId(searchAiChatHistoryDTO);
+					// 反转对话
+					Collections.reverse(aiChatHistoryList);
 					for (AiChatHistoryVO aiChatHistoryVO : aiChatHistoryList) {
 						RAGEnums.UserTypeEnums createByType = aiChatHistoryVO.getCreateByType();
 						String content = aiChatHistoryVO.getContent();
@@ -816,7 +820,7 @@ public class AIChatServiceImpl implements AIChatService {
 	 * 加载MCP服务
 	 * @return List<McpSyncClient>
 	 */
-	private SyncMcpToolCallbackProvider loadingMCP() {
+	private ToolCallback[] loadingMCP() {
 		// 防止并发初始化
 		RLock lock = redissonClient.getLock(RAGConstants.LOCK_INIT_AI_MCP);
 		lock.lock();
@@ -901,7 +905,7 @@ public class AIChatServiceImpl implements AIChatService {
 				log.info("成功初始化MCP：{}，工具列表：{}", syncClient.getClientInfo().name(), syncClient.listTools());
 			}
 
-			return new SyncMcpToolCallbackProvider(MCP_SYNC_CLIENTS.values().stream().toList());
+			return new SyncMcpToolCallbackProvider(MCP_SYNC_CLIENTS.values().stream().toList()).getToolCallbacks();
 		}
 		catch (Exception e) {
 			log.error("MCP初始化失败", e);
