@@ -731,22 +731,22 @@ INSERT INTO `sys_menu`
 VALUES (1126, 'AI助手', 1125, 5, '/ai/chat', '/ai/chat', '1', 'C', '0', '0', 'ai:chat', 'icon-ai-chat', 'admin',
         '2024-10-26 19:15:17', 'admin', '2024-12-20 18:16:52', '');
 INSERT INTO `sys_menu`
-VALUES (1127, '知识库文档', 1125, 4, 'doc', 'ai/doc/index', '1', 'C', '0', '0', 'ai:doc:list', '#', 'admin',
-        '2018-03-01 00:00:00', 'admin', '2025-05-17 17:54:51', 'AI知识库文档菜单');
+VALUES (1127, '知识库切片', 1125, 4, 'doc', 'ai/doc/index', '1', 'C', '0', '0', 'ai:doc:list', '#', 'admin',
+        '2018-03-01 00:00:00', 'admin', '2025-05-17 17:54:51', 'AI知识库切片菜单');
 INSERT INTO `sys_menu`
-VALUES (1128, 'AI知识库文档查询', 1127, 1, '#', '', '1', 'F', '0', '0', 'ai:doc:query', '#', 'admin',
+VALUES (1128, 'AI知识库切片查询', 1127, 1, '#', '', '1', 'F', '0', '0', 'ai:doc:query', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
-VALUES (1129, 'AI知识库文档新增', 1127, 2, '#', '', '1', 'F', '0', '0', 'ai:doc:add', '#', 'admin',
+VALUES (1129, 'AI知识库切片新增', 1127, 2, '#', '', '1', 'F', '0', '0', 'ai:doc:add', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
-VALUES (1130, 'AI知识库文档修改', 1127, 3, '#', '', '1', 'F', '0', '0', 'ai:doc:edit', '#', 'admin',
+VALUES (1130, 'AI知识库切片修改', 1127, 3, '#', '', '1', 'F', '0', '0', 'ai:doc:edit', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
-VALUES (1131, 'AI知识库文档删除', 1127, 4, '#', '', '1', 'F', '0', '0', 'ai:doc:remove', '#', 'admin',
+VALUES (1131, 'AI知识库切片删除', 1127, 4, '#', '', '1', 'F', '0', '0', 'ai:doc:remove', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
-VALUES (1132, 'AI知识库文档导出', 1127, 5, '#', '', '1', 'F', '0', '0', 'ai:doc:export', '#', 'admin',
+VALUES (1132, 'AI知识库切片导出', 1127, 5, '#', '', '1', 'F', '0', '0', 'ai:doc:export', '#', 'admin',
         '2018-03-01 00:00:00', 'admin', '2018-03-01 00:00:00', '');
 INSERT INTO `sys_menu`
 VALUES (1139, '知识库', 1125, 3, 'knowledge', 'ai/knowledge/index', '1', 'C', '0', '0', 'ai:knowledge:list', '#',
