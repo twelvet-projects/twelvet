@@ -76,7 +76,7 @@
         <sensitive-word.version>0.22.0</sensitive-word.version>
 
         <spring-ai-bom.version>1.0.0</spring-ai-bom.version>
-        <ai-alibaba.version>1.0.0-M6.1</ai-alibaba.version>
+        <ai-alibaba.version>1.0.0.1</ai-alibaba.version>
 
         <docker.plugin.version>0.32.0</docker.plugin.version>
         <spring.checkstyle.plugin>0.0.39</spring.checkstyle.plugin>

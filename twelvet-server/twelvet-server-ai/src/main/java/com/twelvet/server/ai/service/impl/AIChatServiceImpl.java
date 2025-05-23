@@ -16,11 +16,13 @@ import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisResponse;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatOptions;
 import com.alibaba.cloud.ai.dashscope.chat.MessageFormat;
+import com.alibaba.cloud.ai.dashscope.common.DashScopeApiConstants;
 import com.alibaba.cloud.ai.dashscope.image.DashScopeImageModel;
 import com.alibaba.cloud.ai.dashscope.image.DashScopeImageOptions;
 import com.alibaba.cloud.ai.dashscope.rerank.DashScopeRerankModel;
 import com.alibaba.cloud.ai.dashscope.rerank.DashScopeRerankOptions;
 import com.alibaba.cloud.ai.document.DocumentWithScore;
+import com.alibaba.cloud.ai.model.RerankModel;
 import com.alibaba.cloud.ai.model.RerankRequest;
 import com.alibaba.cloud.ai.model.RerankResponse;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
@@ -75,13 +77,13 @@ import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
+import org.springframework.ai.content.Media;
 import org.springframework.ai.converter.BeanOutputConverter;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.image.ImageMessage;
 import org.springframework.ai.image.ImagePrompt;
 import org.springframework.ai.image.ImageResponse;
 import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
-import org.springframework.ai.model.Media;
 import org.springframework.ai.tool.ToolCallback;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
@@ -126,7 +128,7 @@ public class AIChatServiceImpl implements AIChatService {
 	/**
 	 * RedissonClient
 	 */
-	@Autowired(required = false)
+	@Autowired
 	private RedissonClient redissonClient;
 
 	/**
@@ -138,43 +140,43 @@ public class AIChatServiceImpl implements AIChatService {
 	/**
 	 * 模型配置mapper
 	 */
-	@Autowired(required = false)
+	@Autowired
 	private AiModelMapper aiModelMapper;
 
 	/**
 	 * 知识库mapper
 	 */
-	@Autowired(required = false)
+	@Autowired
 	private AiKnowledgeMapper aiKnowledgeMapper;
 
 	/**
 	 * 知识库切片mapper
 	 */
-	@Autowired(required = false)
+	@Autowired
 	private AiDocSliceMapper aiDocSliceMapper;
 
 	/**
 	 * 聊天历史服务
 	 */
-	@Autowired(required = false)
+	@Autowired
 	private IAiChatHistoryService aiChatHistoryService;
 
 	/**
 	 * MCP服务mapper
 	 */
-	@Autowired(required = false)
+	@Autowired
 	private AiMcpMapper aiMcpMapper;
 
 	/**
 	 * 注解是AI请求客户端
 	 */
-	@Autowired(required = false)
+	@Autowired
 	private AIClient aiClient;
 
 	/**
 	 * 敏感词检查
 	 */
-	@Autowired(required = false)
+	@Autowired
 	private SensitiveWordBs sensitiveWordBs;
 
 	/**
@@ -200,9 +202,6 @@ public class AIChatServiceImpl implements AIChatService {
 	 */
 	@Autowired(required = false)
 	private DashScopeSpeechSynthesisModel dashScopeSpeechSynthesisModel;
-
-	@Autowired(required = false)
-	private DashScopeRerankModel dashScopeRerankModel;
 
 	/**
 	 * 多模态测试图片地址
@@ -321,6 +320,7 @@ public class AIChatServiceImpl implements AIChatService {
 				.build();
 
 			return vectorStore.similaritySearch(searchRequest);
+
 		}, TUtils.threadPoolExecutor);
 
 		// 获取使用的模型信息
@@ -331,13 +331,19 @@ public class AIChatServiceImpl implements AIChatService {
 
 		CompletableFuture.allOf(vectorCompletableFuture, messagesCompletableFuture, aiModelCompletableFuture).join();
 
+		// 获取模型信息
+		AiModel aiModel = aiModelCompletableFuture.join();
+
 		// 向量知识库
 		List<Document> vectorDocs = vectorCompletableFuture.join();
 		// 召回结果 重排
 		if (CollUtil.isNotEmpty(vectorDocs)) {
+			DashScopeApi dashScopeApi = new DashScopeApi(aiModel.getBaseUrl(), aiModel.getApiKey(), null);
 			DashScopeRerankOptions scopeRerankOptions = DashScopeRerankOptions.builder()
 				.withModel("gte-rerank-v2")
 				.build();
+			RerankModel dashScopeRerankModel = new DashScopeRerankModel(dashScopeApi, scopeRerankOptions);
+
 			RerankRequest rerankRequest = new RerankRequest(messageDTO.getContent(), vectorDocs, scopeRerankOptions);
 			RerankResponse rerankResponse = dashScopeRerankModel.call(rerankRequest);
 			List<DocumentWithScore> results = rerankResponse.getResults();
@@ -397,10 +403,14 @@ public class AIChatServiceImpl implements AIChatService {
 		else if (RAGEnums.ChatTypeEnums.IMAGES.equals(messageDTO.getChatType())) { // 图片提问
 			try {
 				List<Media> mediaList = List
-					.of(new Media(MimeTypeUtils.IMAGE_PNG, new URI(MULTI_IMAGE_FILE_URL).toURL()));
-				UserMessage userMessage = new UserMessage(messageDTO.getContent(), mediaList);
-				// 设置文件格式
-				userMessage.getMetadata().put(DashScopeChatModel.MESSAGE_FORMAT, MessageFormat.IMAGE);
+					.of(new Media(MimeTypeUtils.IMAGE_PNG, new URI(MULTI_IMAGE_FILE_URL).toURL().toURI()));
+
+				UserMessage userMessage = UserMessage.builder()
+					.text(messageDTO.getContent())
+					.media(mediaList)
+					.metadata(new HashMap<>())
+					.build();
+				userMessage.getMetadata().put(DashScopeApiConstants.MESSAGE_FORMAT, MessageFormat.IMAGE);
 
 				messages.add(userMessage);
 			}
@@ -414,7 +424,6 @@ public class AIChatServiceImpl implements AIChatService {
 
 		Prompt prompt = new Prompt(messages);
 
-		AiModel aiModel = aiModelCompletableFuture.join();
 		ChatModel chatModel;
 		if (true) {
 			DashScopeApi dashScopeApi = new DashScopeApi(aiModel.getBaseUrl(), aiModel.getApiKey(), null);
@@ -425,7 +434,10 @@ public class AIChatServiceImpl implements AIChatService {
 			if (Boolean.TRUE.equals(messageDTO.getInternetFlag())) { // 是否开启联网
 				dashScopeChatOptions.setEnableSearch(Boolean.TRUE);
 			}
-			chatModel = new DashScopeChatModel(dashScopeApi, dashScopeChatOptions);
+			chatModel = DashScopeChatModel.builder()
+				.dashScopeApi(dashScopeApi)
+				.defaultOptions(dashScopeChatOptions)
+				.build();
 		}
 
 		return ChatClient
@@ -435,7 +447,7 @@ public class AIChatServiceImpl implements AIChatService {
 			// 功能选择
 			// .options(dashScopeChatOptions)
 			// MCP
-			.tools(loadingMCP())
+			.toolCallbacks(loadingMCP())
 			// 本地工具
 			.tools(new MockOrderService(), new MockWeatherService())
 			.stream()
@@ -490,10 +502,14 @@ public class AIChatServiceImpl implements AIChatService {
 			UserMessage userMessage;
 			if (Boolean.FALSE) { // 图片
 				List<Media> mediaList = List
-					.of(new Media(MimeTypeUtils.IMAGE_JPEG, new URI(MULTI_IMAGE_FILE_URL).toURL()));
-				userMessage = new UserMessage(messageDTO.getContent(), mediaList);
+					.of(new Media(MimeTypeUtils.IMAGE_JPEG, new URI(MULTI_IMAGE_FILE_URL).toURL().toURI()));
+				userMessage = UserMessage.builder()
+					.text(messageDTO.getContent())
+					.media(mediaList)
+					.metadata(new HashMap<>())
+					.build();
 				// 设置文件格式
-				userMessage.getMetadata().put(DashScopeChatModel.MESSAGE_FORMAT, MessageFormat.IMAGE);
+				userMessage.getMetadata().put(DashScopeApiConstants.MESSAGE_FORMAT, MessageFormat.IMAGE);
 			}
 			else { // 视频
 					// TODO 目前非真正的视频识别，官方例子为把视频切成图片进行识别
@@ -611,9 +627,13 @@ public class AIChatServiceImpl implements AIChatService {
 					mediaList.add(new Media(MimeTypeUtils.IMAGE_PNG, new PathResource(png)));
 				}
 
-				userMessage = new UserMessage(messageDTO.getContent(), mediaList);
+				userMessage = UserMessage.builder()
+					.text(messageDTO.getContent())
+					.media(mediaList)
+					.metadata(new HashMap<>())
+					.build();
 				// 设置文件格式
-				userMessage.getMetadata().put(DashScopeChatModel.MESSAGE_FORMAT, MessageFormat.VIDEO);
+				userMessage.getMetadata().put(DashScopeApiConstants.MESSAGE_FORMAT, MessageFormat.VIDEO);
 			}
 
 			Prompt prompt = new Prompt(userMessage, DashScopeChatOptions.builder()
@@ -702,10 +722,16 @@ public class AIChatServiceImpl implements AIChatService {
 					%s
 					""", converter.getFormat());
 
-			List<Media> mediaList = List.of(new Media(MimeTypeUtils.IMAGE_JPEG, new URI(OCR_IMAGE_FILE_URL).toURL()));
-			UserMessage userMessage = new UserMessage(ocrContent, mediaList);
+			List<Media> mediaList = List
+				.of(new Media(MimeTypeUtils.IMAGE_JPEG, new URI(OCR_IMAGE_FILE_URL).toURL().toURI()));
+
+			UserMessage userMessage = UserMessage.builder()
+				.text(messageDTO.getContent())
+				.media(mediaList)
+				.metadata(new HashMap<>())
+				.build();
 			// 设置文件格式
-			userMessage.getMetadata().put(DashScopeChatModel.MESSAGE_FORMAT, MessageFormat.IMAGE);
+			userMessage.getMetadata().put(DashScopeApiConstants.MESSAGE_FORMAT, MessageFormat.IMAGE);
 
 			Prompt prompt = new Prompt(userMessage, DashScopeChatOptions.builder()
 				// 选择支持图片识别的模型
