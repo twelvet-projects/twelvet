@@ -878,6 +878,8 @@ public class AIChatServiceImpl implements AIChatService {
 				}
 			}
 
+			// 获取操作系统
+			String osName = System.getProperty("os.name").toLowerCase();
 			for (AiMcp mcp : aiMcpList) {
 				if (MCP_SYNC_CLIENTS.containsKey(mcp.getName())) { // 已经存在的
 					continue;
@@ -906,9 +908,25 @@ public class AIChatServiceImpl implements AIChatService {
 							envMap.put(v[0].trim(), v[1].trim());
 						}
 					}
+
+					String code;
+					String[] finalArgs;
+					if (ModelEnums.McpCommandEnums.NPX.equals(mcp.getCommand()) && osName.contains("win")) { // windows下执行bat文件需要特殊处理
+						code = "cmd.exe";
+						// 创建新的参数，需要新增两个参数
+						finalArgs = new String[args.length + 2];
+						finalArgs[0] = "/c";
+						finalArgs[1] = mcp.getCommand().getCode();
+						System.arraycopy(args, 0, finalArgs, 2, args.length);
+					}
+					else {
+						code = mcp.getCommand().getCode();
+						finalArgs = args;
+					}
+
 					// 启动参数
-					ServerParameters serverParameters = ServerParameters.builder(mcp.getCommand().getCode())
-						.args(args)
+					ServerParameters serverParameters = ServerParameters.builder(code)
+						.args(finalArgs)
 						.env(envMap)
 						.build();
 					// 转换器
