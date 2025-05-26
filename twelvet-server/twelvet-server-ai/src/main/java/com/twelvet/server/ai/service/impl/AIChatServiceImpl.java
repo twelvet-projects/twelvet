@@ -126,6 +126,16 @@ public class AIChatServiceImpl implements AIChatService {
 	private final static Map<String, McpSyncClient> MCP_SYNC_CLIENTS = new ConcurrentHashMap<>();
 
 	/**
+	 * MCP需要特殊启动的windows命令
+	 */
+	private static final List<String> WIN_COMMAND = List.of(ModelEnums.McpCommandEnums.NPX.getCode());
+
+	/**
+	 * 获取当前操作系统
+	 */
+	private static final String OS_NAME = System.getProperty("os.name").toLowerCase();
+
+	/**
 	 * RedissonClient
 	 */
 	@Autowired
@@ -878,8 +888,6 @@ public class AIChatServiceImpl implements AIChatService {
 				}
 			}
 
-			// 获取操作系统
-			String osName = System.getProperty("os.name").toLowerCase();
 			for (AiMcp mcp : aiMcpList) {
 				if (MCP_SYNC_CLIENTS.containsKey(mcp.getName())) { // 已经存在的
 					continue;
@@ -895,7 +903,10 @@ public class AIChatServiceImpl implements AIChatService {
 						.build();
 				}
 				else { // STDIO模式
-					String[] args = mcp.getArgs().split("\n");
+					List<String> args = new ArrayList<>();
+					if (StrUtil.isNotBlank(mcp.getArgs())) {
+						args = Arrays.stream(mcp.getArgs().split("\n")).toList();
+					}
 					String envStr = mcp.getEnv();
 					Map<String, String> envMap = new HashMap<>();
 					if (StrUtil.isNotBlank(envStr)) {
@@ -909,26 +920,18 @@ public class AIChatServiceImpl implements AIChatService {
 						}
 					}
 
-					String code;
-					String[] finalArgs;
-					if (ModelEnums.McpCommandEnums.NPX.equals(mcp.getCommand()) && osName.contains("win")) { // windows下执行bat文件需要特殊处理
-						code = "cmd.exe";
-						// 创建新的参数，需要新增两个参数
-						finalArgs = new String[args.length + 2];
-						finalArgs[0] = "/c";
-						finalArgs[1] = mcp.getCommand().getCode();
-						System.arraycopy(args, 0, finalArgs, 2, args.length);
+					String command = mcp.getCommand().getCode();
+					ServerParameters serverParameters;
+					if (OS_NAME.contains("win") && WIN_COMMAND.contains(command)) { // windows下执行bat文件需要特殊处理
+						List<String> winArgs = new LinkedList<>(Arrays.asList("/c", command));
+						winArgs.addAll(args);
+						serverParameters = ServerParameters.builder("cmd.exe").args(winArgs).env(envMap).build();
 					}
 					else {
-						code = mcp.getCommand().getCode();
-						finalArgs = args;
+						// 启动参数
+						serverParameters = ServerParameters.builder(command).args(args).env(envMap).build();
 					}
 
-					// 启动参数
-					ServerParameters serverParameters = ServerParameters.builder(code)
-						.args(finalArgs)
-						.env(envMap)
-						.build();
 					// 转换器
 					ClientTransport = new StdioClientTransport(serverParameters);
 				}
