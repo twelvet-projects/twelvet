@@ -41,7 +41,7 @@ public class VectorStoreConfiguration {
 		jdbcTemplate.setDataSource(dataSource);
 
 		// TODO 需要动态注册
-		DashScopeApi dashScopeApi = new DashScopeApi(aiKey);
+		DashScopeApi dashScopeApi = DashScopeApi.builder().apiKey(aiKey).build();
 		EmbeddingModel embeddingModel = new DashScopeEmbeddingModel(dashScopeApi);
 		// TODO 需要动态注册
 		return PgVectorStore.builder(jdbcTemplate, embeddingModel)
