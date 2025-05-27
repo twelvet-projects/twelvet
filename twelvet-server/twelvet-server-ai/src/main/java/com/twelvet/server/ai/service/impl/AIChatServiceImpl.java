@@ -348,7 +348,10 @@ public class AIChatServiceImpl implements AIChatService {
 		List<Document> vectorDocs = vectorCompletableFuture.join();
 		// 召回结果 重排
 		if (CollUtil.isNotEmpty(vectorDocs)) {
-			DashScopeApi dashScopeApi = new DashScopeApi(aiModel.getBaseUrl(), aiModel.getApiKey(), null);
+			DashScopeApi dashScopeApi = DashScopeApi.builder()
+				.baseUrl(aiModel.getBaseUrl())
+				.apiKey(aiModel.getApiKey())
+				.build();
 			DashScopeRerankOptions scopeRerankOptions = DashScopeRerankOptions.builder()
 				.withModel("gte-rerank-v2")
 				.build();
@@ -436,7 +439,10 @@ public class AIChatServiceImpl implements AIChatService {
 
 		ChatModel chatModel;
 		if (true) {
-			DashScopeApi dashScopeApi = new DashScopeApi(aiModel.getBaseUrl(), aiModel.getApiKey(), null);
+			DashScopeApi dashScopeApi = DashScopeApi.builder()
+				.baseUrl(aiModel.getBaseUrl())
+				.apiKey(aiModel.getApiKey())
+				.build();
 			DashScopeChatOptions dashScopeChatOptions = DashScopeChatOptions.builder()
 				.withModel(aiModel.getModel())
 				.build();
@@ -816,10 +822,10 @@ public class AIChatServiceImpl implements AIChatService {
 
 		DashScopeSpeechSynthesisOptions dashScopeSpeechSynthesisOptions = DashScopeSpeechSynthesisOptions.builder()
 			// 不同模型可能不支持字级别音素边界
-			.withModel("sambert-zhimiao-emo-v1")
-			.withResponseFormat(DashScopeSpeechSynthesisApi.ResponseFormat.WAV)
-			.withEnableWordTimestamp(Boolean.TRUE)
-			.withEnablePhonemeTimestamp(Boolean.TRUE)
+			.model("sambert-zhimiao-emo-v1")
+			.responseFormat(DashScopeSpeechSynthesisApi.ResponseFormat.WAV)
+			.enableWordTimestamp(Boolean.TRUE)
+			.enablePhonemeTimestamp(Boolean.TRUE)
 			.build();
 
 		SpeechSynthesisPrompt speechSynthesisPrompt = new SpeechSynthesisPrompt(speechSynthesisMessage,
