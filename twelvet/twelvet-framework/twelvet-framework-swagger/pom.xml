@@ -30,7 +30,7 @@
         <!--网关 swagger 聚合依赖-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-gateway-server</artifactId>
+            <artifactId>spring-cloud-gateway-server-webflux</artifactId>
             <scope>provided</scope>
         </dependency>
 
