@@ -61,7 +61,6 @@ import io.modelcontextprotocol.client.transport.ServerParameters;
 import io.modelcontextprotocol.client.transport.StdioClientTransport;
 import io.modelcontextprotocol.spec.McpClientTransport;
 import io.modelcontextprotocol.spec.McpSchema;
-import jodd.util.ArraysUtil;
 import org.bytedeco.javacv.*;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
@@ -445,6 +444,8 @@ public class AIChatServiceImpl implements AIChatService {
 				.build();
 			DashScopeChatOptions dashScopeChatOptions = DashScopeChatOptions.builder()
 				.withModel(aiModel.getModel())
+					// TODO 临时解决工具调用BUG
+					.withIncrementalOutput(false)
 				.build();
 
 			if (Boolean.TRUE.equals(messageDTO.getInternetFlag())) { // 是否开启联网
@@ -456,6 +457,8 @@ public class AIChatServiceImpl implements AIChatService {
 				.build();
 		}
 
+		// TODO 临时解决工具调用BUG
+		StringBuffer sb = new StringBuffer();
 		return ChatClient
 			// 自定义使用不同的大模型
 			.create(chatModel)
@@ -465,12 +468,18 @@ public class AIChatServiceImpl implements AIChatService {
 			// MCP
 			.toolCallbacks(loadingMCP())
 			// 本地工具
-			.tools(new MockOrderService(), new MockWeatherService())
+			//.tools(new MockOrderService(), new MockWeatherService())
 			.stream()
 			.chatResponse()
 			.map(chatResponse -> {
 				MessageVO messageVO = new MessageVO();
-				String content = chatResponse.getResult().getOutput().getText();
+				//String content = chatResponse.getResult().getOutput().getText();
+
+				// TODO 临时解决工具调用BUG
+				String contentTemp = chatResponse.getResult().getOutput().getText();
+				String content = contentTemp.substring(sb.toString().length());
+				sb.append(content);
+
 				messageVO.setMsgId(aiMsgId);
 				messageVO.setContent(content);
 				// 储存AI回复内容
