@@ -12,7 +12,7 @@ public class ModelEnums {
 	/**
 	 * 模型供应商枚举
 	 */
-	public enum ModelSupplierEnums {
+	public enum ModelProviderEnums {
 
 		KNOWLEDGE_ID("knowledgeId", "知识库ID"), DOC_ID("docId", "文档ID"), SLICE_ID("sliceId", "切片ID"),
 
@@ -22,7 +22,7 @@ public class ModelEnums {
 
 		private final String desc;
 
-		ModelSupplierEnums(String code, String desc) {
+		ModelProviderEnums(String code, String desc) {
 			this.code = code;
 			this.desc = desc;
 		}
@@ -42,7 +42,8 @@ public class ModelEnums {
 	 */
 	public enum ModelTypeEnums {
 
-		USER("USER", "用户"), AI("AI", "AI")
+		LLM("llm", "大语言模型"), TTS("tts", "文字转语音模型"), STT("stt", "语音转文字模型"), EMBEDDING("embedding", "向量模型"),
+		RERANKER("reranker", "排序模型"), IMAGE("image", "图片模型"), VIDEO("video", "视频模型"),
 
 		;
 
