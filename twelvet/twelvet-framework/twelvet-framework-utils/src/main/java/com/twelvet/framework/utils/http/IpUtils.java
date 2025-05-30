@@ -65,12 +65,12 @@ public class IpUtils {
 		}
 
 		// 有些网络通过多层代理，那么获取到的ip就会有多个，一般都是通过逗号（,）分割开来，并且第一个ip为客户端的真实IP
-		if (StringUtils.isEmpty(ipAddresses)) {
+		if (StringUtils.isNotEmpty(ipAddresses)) {
 			ip = ipAddresses.split(",")[0];
 		}
 
 		// 还是不能获取到，最后再通过request.getRemoteAddr();获取
-		if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ipAddresses)) {
+		if (StringUtils.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ipAddresses)) {
 			ip = request.getRemoteAddr();
 		}
 		return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;

@@ -14,7 +14,7 @@ public class ModelEnums {
 	 */
 	public enum ModelProviderEnums {
 
-		KNOWLEDGE_ID("knowledgeId", "知识库ID"), DOC_ID("docId", "文档ID"), SLICE_ID("sliceId", "切片ID"),
+		DASHSCOPE("dashscope", "阿里云"),
 
 		;
 
