@@ -7,6 +7,8 @@ import com.twelvet.framework.security.constants.Oauth2GrantEnums;
 import com.twelvet.framework.security.support.service.TwUserDetailsService;
 import com.twelvet.framework.utils.http.ServletUtils;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -36,6 +38,8 @@ import java.util.function.Supplier;
  * @Description: 自定义处理校验(默认密码模式)
  */
 public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
+
+	private final static Logger log = LoggerFactory.getLogger(TWTDaoAuthenticationProvider.class);
 
 	/**
 	 * The plaintext password used to perform PasswordEncoder#matches(CharSequence,
@@ -82,14 +86,14 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 			return;
 		}
 		if (authentication.getCredentials() == null) {
-			this.logger.debug("Failed to authenticate since no credentials provided");
+			log.debug("Failed to authenticate since no credentials provided");
 			throw new BadCredentialsException(
 					I18nUtils.getLocale("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
 		}
 		String presentedPassword = authentication.getCredentials().toString();
 		// 检验密码是否正确
 		if (!this.passwordEncoder.matches(presentedPassword, userDetails.getPassword())) {
-			this.logger.debug("Failed to authenticate since password does not match stored value");
+			log.debug("Failed to authenticate since password does not match stored value");
 			throw new BadCredentialsException(this.messages
 				.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
 		}
@@ -145,7 +149,7 @@ public class TWTDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 			throw ex;
 		}
 		catch (Exception ex) {
-			this.logger.debug("Unknown login error thrown");
+			log.debug("Unknown login error thrown");
 			throw new InternalAuthenticationServiceException(ex.getMessage(), ex);
 		}
 	}

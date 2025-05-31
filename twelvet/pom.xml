@@ -44,10 +44,10 @@
 
         <spring-boot-dependencies.version>3.5.0</spring-boot-dependencies.version>
         <spring-cloud-dependencies.version>2025.0.0</spring-cloud-dependencies.version>
-        <spring-cloud-alibaba-dependencies.version>2023.0.3.2</spring-cloud-alibaba-dependencies.version>
+        <spring-cloud-alibaba-dependencies.version>2023.0.3.3</spring-cloud-alibaba-dependencies.version>
 
-        <swagger-core.version>2.2.26</swagger-core.version>
-        <springdoc.version>2.8.5</springdoc.version>
+        <swagger-core.version>2.2.32</swagger-core.version>
+        <springdoc.version>2.8.8</springdoc.version>
         <knife4j.version>3.0.3</knife4j.version>
 
         <dynamic-datasource.version>4.3.1</dynamic-datasource.version>
