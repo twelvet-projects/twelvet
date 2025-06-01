@@ -925,13 +925,11 @@ public class AIChatServiceImpl implements AIChatService {
 					String envStr = mcp.getEnv();
 					Map<String, String> envMap = new HashMap<>();
 					if (StrUtil.isNotBlank(envStr)) {
-						String[] envStrs = envStr.split("\n");
-						for (String str : envStrs) {
-							String[] v = str.split("=");
-							if (v.length != 2) {
-								throw new TWTException(String.format("MCP服务【%s】,环境变量配置错误", mcp.getName()));
-							}
-							envMap.put(v[0].trim(), v[1].trim());
+						try {
+							envMap = JacksonUtils.readMap(envStr, String.class, String.class);
+						}
+						catch (Exception e) {
+							throw new TWTException(String.format("MCP服务【%s】,环境变量配置错误", mcp.getName()));
 						}
 					}
 
