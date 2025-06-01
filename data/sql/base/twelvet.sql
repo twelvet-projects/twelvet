@@ -251,6 +251,30 @@ INSERT INTO `sys_dict_data`
 VALUES (126, 2, 'UVX', 'UVX', 'ai_mcp_command', NULL, NULL, 'N', 0, 'admin', '2025-04-29 17:50:34', '', NULL, 'UVX');
 INSERT INTO `sys_dict_data`
 VALUES (127, 3, 'JAVA', 'JAVA', 'ai_mcp_command', NULL, NULL, 'N', 0, 'admin', '2025-04-29 21:55:18', '', NULL, 'JAVA');
+INSERT INTO `sys_dict_data`
+VALUES (128, 1, '阿里百练', 'DASHSCOPE', 'ai_model_provider', NULL, NULL, 'N', 0, 'admin', '2025-05-31 15:31:22',
+        'admin', '2025-05-31 15:35:01', '阿里百练');
+INSERT INTO `sys_dict_data`
+VALUES (129, 1, '大语言模型', 'LLM', 'ai_model_type', NULL, NULL, 'N', 0, 'admin', '2025-05-31 15:31:41', '', NULL,
+        '大语言模型');
+INSERT INTO `sys_dict_data`
+VALUES (130, 2, '文字转语音模型', 'TTS', 'ai_model_type', NULL, NULL, 'N', 0, 'admin', '2025-05-31 15:31:52', '', NULL,
+        '文字转语音模型');
+INSERT INTO `sys_dict_data`
+VALUES (131, 3, '语音转文字模型', 'STT', 'ai_model_type', NULL, NULL, 'N', 0, 'admin', '2025-05-31 15:32:07', '', NULL,
+        '语音转文字模型');
+INSERT INTO `sys_dict_data`
+VALUES (132, 4, '向量模型', 'EMBEDDING', 'ai_model_type', NULL, NULL, 'N', 0, 'admin', '2025-05-31 15:32:23', '', NULL,
+        '向量模型');
+INSERT INTO `sys_dict_data`
+VALUES (133, 5, '图片模型', 'IMAGE', 'ai_model_type', NULL, NULL, 'N', 0, 'admin', '2025-05-31 15:32:35', '', NULL,
+        '图片模型');
+INSERT INTO `sys_dict_data`
+VALUES (134, 6, '视频模型', 'VIDEO', 'ai_model_type', NULL, NULL, 'N', 0, 'admin', '2025-05-31 15:32:46', '', NULL,
+        '视频模型');
+INSERT INTO `sys_dict_data`
+VALUES (135, 7, '排序模型', 'RERANKER', 'ai_model_type', NULL, NULL, 'N', 0, 'admin', '2025-05-31 15:32:55', '', NULL,
+        '排序模型');
 
 -- ----------------------------
 -- Table structure for sys_dict_type
@@ -316,6 +340,10 @@ VALUES (108, 'AI MCP类型', 'ai_mcp_type', 0, 'admin', '2025-04-29 16:16:03', '
 INSERT INTO `sys_dict_type`
 VALUES (109, 'AI MCP命令类型', 'ai_mcp_command', 0, 'admin', '2025-04-29 16:16:30', 'admin', '2025-04-29 16:17:39',
         'AI MCP命令类型');
+INSERT INTO `sys_dict_type`
+VALUES (110, 'AI模型供应商', 'ai_model_provider', 0, 'admin', '2025-05-31 15:12:13', '', NULL, 'AI模型供应商');
+INSERT INTO `sys_dict_type`
+VALUES (111, 'AI模型类型', 'ai_model_type', 0, 'admin', '2025-05-31 15:30:48', '', NULL, 'AI模型类型');
 
 
 -- ----------------------------
