@@ -110,12 +110,6 @@
             <artifactId>twelvet-api-auth</artifactId>
         </dependency>
 
-        <!--XSS-->
-        <dependency>
-            <groupId>net.dreamlu</groupId>
-            <artifactId>mica-xss</artifactId>
-        </dependency>
-
         <!--幂等-->
         <dependency>
             <groupId>com.pig4cloud.plugin</groupId>
