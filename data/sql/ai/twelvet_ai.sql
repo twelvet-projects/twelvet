@@ -14,24 +14,27 @@ USE `twelvet_ai`;
 DROP TABLE IF EXISTS `ai_model`;
 CREATE TABLE `ai_model`
 (
-    `model_id`       bigint(20)                                                    NOT NULL AUTO_INCREMENT COMMENT '模型ID',
+    `model_id`       bigint                                                        NOT NULL AUTO_INCREMENT COMMENT '模型ID',
     `model_supplier` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT '供应商，枚举：ModelEnums.ModelSupplierEnums',
     `model`          varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT '模型',
     `model_type`     varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT '模型类型，枚举：ModelEnums.ModelTypeEnums',
     `alias`          varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT '别名',
     `api_key`        varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT NULL COMMENT 'apiKey',
     `base_url`       varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '模型请求地址',
+    `temperature`    float                                                         NULL     DEFAULT NULL COMMENT '创意活跃度',
+    `top_p`          float                                                         NULL     DEFAULT NULL COMMENT '思维开放度',
+    `ext_param`      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT NULL COMMENT '特殊参数',
     `create_by`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '创建者',
     `create_time`    datetime                                                      NOT NULL COMMENT '创建时间',
     `update_by`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '更新者',
     `update_time`    datetime                                                      NOT NULL COMMENT '更新时间',
-    `del_flag`       tinyint(1)                                                    NOT NULL DEFAULT 0 COMMENT '是否删除 0：正常，1：删除',
+    `del_flag`       tinyint(1)                                                    NOT NULL DEFAULT 0 COMMENT '是否删除 0：正常，0：删除',
     PRIMARY KEY (`model_id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = 'AI大模型'
-  ROW_FORMAT = Dynamic;
+  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for ai_rag
