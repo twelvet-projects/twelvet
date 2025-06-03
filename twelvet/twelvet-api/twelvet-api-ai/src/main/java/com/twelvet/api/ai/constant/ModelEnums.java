@@ -14,7 +14,7 @@ public class ModelEnums {
 	 */
 	public enum ModelProviderEnums {
 
-		DASHSCOPE("dashscope", "阿里云"),
+		DASHSCOPE("dashscope", "阿里百练"),
 
 		;
 

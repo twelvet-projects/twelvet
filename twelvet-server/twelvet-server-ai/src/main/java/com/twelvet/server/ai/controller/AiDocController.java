@@ -12,6 +12,7 @@ import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.server.ai.service.IAiDocService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import net.dreamlu.mica.xss.core.XssCleanIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -84,6 +85,7 @@ public class AiDocController extends TWTController {
 	/**
 	 * 新增AI知识库文档
 	 */
+	@XssCleanIgnore
 	@Operation(summary = "新增AI知识库文档")
 	@PreAuthorize("@role.hasPermi('ai:doc:add')")
 	@Log(service = "AI知识库文档", businessType = BusinessType.INSERT)

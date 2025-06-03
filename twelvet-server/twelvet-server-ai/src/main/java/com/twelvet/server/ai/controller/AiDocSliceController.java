@@ -11,6 +11,7 @@ import com.twelvet.framework.log.enums.BusinessType;
 import com.twelvet.server.ai.service.IAiDocSliceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import net.dreamlu.mica.xss.core.XssCleanIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -61,6 +62,7 @@ public class AiDocSliceController extends TWTController {
 	/**
 	 * 修改AI知识库文档分片
 	 */
+	@XssCleanIgnore
 	@Operation(summary = "修改AI知识库文档分片")
 	@PreAuthorize("@role.hasPermi('ai:slice:edit')")
 	@PutMapping

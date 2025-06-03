@@ -444,6 +444,8 @@ public class AIChatServiceImpl implements AIChatService {
 				.build();
 			DashScopeChatOptions dashScopeChatOptions = DashScopeChatOptions.builder()
 				.withModel(aiModel.getModel())
+				.withTopP(aiModel.getTopP())
+				.withTemperature(aiModel.getTemperature())
 				// TODO 临时解决工具调用BUG
 				.withIncrementalOutput(false)
 				.build();

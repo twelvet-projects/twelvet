@@ -53,6 +53,21 @@ public class AiModel extends BaseEntity {
 	@ExcelProperty(value = "模型请求地址")
 	private String baseUrl;
 
+	/** 创意活跃度 */
+	@Schema(description = "创意活跃度")
+	@ExcelProperty(value = "创意活跃度")
+	private Double temperature;
+
+	/** 思维开放度 */
+	@Schema(description = "思维开放度")
+	@ExcelProperty(value = "思维开放度")
+	private Double topP;
+
+	/** 特殊参数 */
+	@Schema(description = "特殊参数")
+	@ExcelProperty(value = "特殊参数")
+	private String extParam;
+
 	/** 是否删除 0：正常，1：删除 */
 	@Schema(description = "是否删除 0：正常，1：删除")
 	private Integer delFlag;
@@ -113,6 +128,30 @@ public class AiModel extends BaseEntity {
 		return baseUrl;
 	}
 
+	public Double getTemperature() {
+		return temperature;
+	}
+
+	public void setTemperature(Double temperature) {
+		this.temperature = temperature;
+	}
+
+	public Double getTopP() {
+		return topP;
+	}
+
+	public void setTopP(Double topP) {
+		this.topP = topP;
+	}
+
+	public String getExtParam() {
+		return extParam;
+	}
+
+	public void setExtParam(String extParam) {
+		this.extParam = extParam;
+	}
+
 	public void setDelFlag(Integer delFlag) {
 		this.delFlag = delFlag;
 	}
@@ -130,6 +169,9 @@ public class AiModel extends BaseEntity {
 			.append("alias", getAlias())
 			.append("apiKey", getApiKey())
 			.append("baseUrl", getBaseUrl())
+			.append("temperature", getTemperature())
+			.append("topP", getTopP())
+			.append("extParam", getExtParam())
 			.append("createBy", getCreateBy())
 			.append("createTime", getCreateTime())
 			.append("updateBy", getUpdateBy())
