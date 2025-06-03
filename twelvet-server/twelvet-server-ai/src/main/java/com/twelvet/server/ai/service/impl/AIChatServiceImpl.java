@@ -446,8 +446,6 @@ public class AIChatServiceImpl implements AIChatService {
 				.withModel(aiModel.getModel())
 				.withTopP(aiModel.getTopP())
 				.withTemperature(aiModel.getTemperature())
-				// TODO 临时解决工具调用BUG
-				.withIncrementalOutput(false)
 				.build();
 
 			if (Boolean.TRUE.equals(messageDTO.getInternetFlag())) { // 是否开启联网
@@ -459,8 +457,6 @@ public class AIChatServiceImpl implements AIChatService {
 				.build();
 		}
 
-		// TODO 临时解决工具调用BUG
-		StringBuffer sb = new StringBuffer();
 		return ChatClient
 			// 自定义使用不同的大模型
 			.create(chatModel)
@@ -475,13 +471,7 @@ public class AIChatServiceImpl implements AIChatService {
 			.chatResponse()
 			.map(chatResponse -> {
 				MessageVO messageVO = new MessageVO();
-				// String content = chatResponse.getResult().getOutput().getText();
-
-				// TODO 临时解决工具调用BUG
-				String contentTemp = chatResponse.getResult().getOutput().getText();
-				String content = contentTemp.substring(sb.toString().length());
-				sb.append(content);
-
+				String content = chatResponse.getResult().getOutput().getText();
 				messageVO.setMsgId(aiMsgId);
 				messageVO.setContent(content);
 				// 储存AI回复内容
