@@ -114,8 +114,10 @@ public class ModelTest {
 
 		// Create the FactCheckingEvaluator
 		var factCheckingEvaluator = new FactCheckingEvaluator(builder, """
-				Document: {document}
-				Claim: {claim}
+					Evaluate whether or not the following claim is supported by the provided document.
+					Respond with "yes" if the claim is supported, or "no" if it is not.
+					Document: \\n {document}\\n
+					Claim: \\n {claim}
 				""");
 
 		// Example context and claim
