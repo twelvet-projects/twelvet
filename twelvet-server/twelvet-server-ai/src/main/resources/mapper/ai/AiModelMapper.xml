@@ -54,6 +54,7 @@
             <if test="topP != null">and top_p = #{topP}</if>
             <if test="extParam != null  and extParam != ''">and ext_param = #{extParam}</if>
         </where>
+        order by create_time desc
     </select>
 
     <select id="selectAiModelByModelId" parameterType="Long" resultMap="AiModelResult">
