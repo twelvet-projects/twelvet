@@ -55,6 +55,7 @@
             <if test="env != null  and env != ''">and env = #{env}</if>
             <if test="statusFlag != null ">and status_flag = #{statusFlag}</if>
         </where>
+        order by create_time desc
     </select>
 
     <select id="selectAiMcpExist" resultType="Boolean">
