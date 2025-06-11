@@ -47,7 +47,7 @@ import java.util.*;
  * @WebSite twelvet.cn
  * @Description: 统一登录管理
  */
-@Tag(description = "TWTTokenEndpoint", name = "OAuth2登录优化管理")
+@Tag(description = "TWTTokenEndpoint", name = "OAuth2登录管理")
 @RestController
 @RequestMapping("/token")
 public class TWTTokenEndpoint {

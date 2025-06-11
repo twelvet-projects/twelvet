@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
  *
  * @since 2025/1/16
  */
-@Tag(description = "Oauth2AuthController", name = "OAuth2登录优化管理")
+@Tag(description = "Oauth2AuthController", name = "OAuth2第三方登录管理")
 @RestController
 @RequestMapping("/login/oauth2")
 public class Oauth2AuthController extends TWTController {
