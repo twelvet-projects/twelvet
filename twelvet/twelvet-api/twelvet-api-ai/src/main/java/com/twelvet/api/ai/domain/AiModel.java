@@ -1,6 +1,7 @@
 package com.twelvet.api.ai.domain;
 
 import cn.idev.excel.annotation.ExcelProperty;
+import com.twelvet.api.ai.constant.ModelEnums;
 import com.twelvet.framework.core.application.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -23,10 +24,10 @@ public class AiModel extends BaseEntity {
 	@Schema(description = "模型ID")
 	private Long modelId;
 
-	/** 供应商，枚举：ModelEnums.ModelSupplierEnums */
-	@Schema(description = "供应商，枚举：ModelEnums.ModelSupplierEnums")
-	@ExcelProperty(value = "供应商，枚举：ModelEnums.ModelSupplierEnums")
-	private String modelSupplier;
+	/** 供应商，枚举：ModelEnums.ModelProviderEnums */
+	@Schema(description = "供应商，枚举：ModelEnums.ModelProviderEnums")
+	@ExcelProperty(value = "供应商，枚举：ModelEnums.ModelProviderEnums")
+	private ModelEnums.ModelProviderEnums modelSupplier;
 
 	/** 模型 */
 	@Schema(description = "模型")
@@ -36,7 +37,7 @@ public class AiModel extends BaseEntity {
 	/** 模型类型，枚举：ModelEnums.ModelTypeEnums */
 	@Schema(description = "模型类型，枚举：ModelEnums.ModelTypeEnums")
 	@ExcelProperty(value = "模型类型，枚举：ModelEnums.ModelTypeEnums")
-	private String modelType;
+	private ModelEnums.ModelTypeEnums modelType;
 
 	/** 别名 */
 	@Schema(description = "别名")
@@ -80,11 +81,11 @@ public class AiModel extends BaseEntity {
 		return modelId;
 	}
 
-	public void setModelSupplier(String modelSupplier) {
+	public void setModelSupplier(ModelEnums.ModelProviderEnums modelSupplier) {
 		this.modelSupplier = modelSupplier;
 	}
 
-	public String getModelSupplier() {
+	public ModelEnums.ModelProviderEnums getModelSupplier() {
 		return modelSupplier;
 	}
 
@@ -96,11 +97,11 @@ public class AiModel extends BaseEntity {
 		return model;
 	}
 
-	public void setModelType(String modelType) {
+	public void setModelType(ModelEnums.ModelTypeEnums modelType) {
 		this.modelType = modelType;
 	}
 
-	public String getModelType() {
+	public ModelEnums.ModelTypeEnums getModelType() {
 		return modelType;
 	}
 
