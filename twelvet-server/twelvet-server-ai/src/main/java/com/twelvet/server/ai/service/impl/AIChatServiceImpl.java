@@ -46,14 +46,13 @@ import com.twelvet.framework.utils.TUtils;
 import com.twelvet.server.ai.client.AIClient;
 import com.twelvet.server.ai.constant.AIDataSourceConstants;
 import com.twelvet.server.ai.constant.RAGConstants;
-import com.twelvet.server.ai.fun.MockOrderService;
-import com.twelvet.server.ai.fun.MockWeatherService;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.mapper.AiKnowledgeMapper;
 import com.twelvet.server.ai.mapper.AiMcpMapper;
 import com.twelvet.server.ai.mapper.AiModelMapper;
 import com.twelvet.server.ai.service.AIChatService;
 import com.twelvet.server.ai.service.IAiChatHistoryService;
+import com.twelvet.server.ai.utils.ModelUtils;
 import io.modelcontextprotocol.client.McpClient;
 import io.modelcontextprotocol.client.McpSyncClient;
 import io.modelcontextprotocol.client.transport.HttpClientSseClientTransport;
@@ -436,26 +435,7 @@ public class AIChatServiceImpl implements AIChatService {
 
 		Prompt prompt = new Prompt(messages);
 
-		ChatModel chatModel;
-		if (true) {
-			DashScopeApi dashScopeApi = DashScopeApi.builder()
-				.baseUrl(aiModel.getBaseUrl())
-				.apiKey(aiModel.getApiKey())
-				.build();
-			DashScopeChatOptions dashScopeChatOptions = DashScopeChatOptions.builder()
-				.withModel(aiModel.getModel())
-				.withTopP(aiModel.getTopP())
-				.withTemperature(aiModel.getTemperature())
-				.build();
-
-			if (Boolean.TRUE.equals(messageDTO.getInternetFlag())) { // 是否开启联网
-				dashScopeChatOptions.setEnableSearch(Boolean.TRUE);
-			}
-			chatModel = DashScopeChatModel.builder()
-				.dashScopeApi(dashScopeApi)
-				.defaultOptions(dashScopeChatOptions)
-				.build();
-		}
+		ChatModel chatModel = ModelUtils.modelServiceProviderSelector(aiModel.getModelSupplier()).getChatModel(aiModel);
 
 		return ChatClient
 			// 自定义使用不同的大模型

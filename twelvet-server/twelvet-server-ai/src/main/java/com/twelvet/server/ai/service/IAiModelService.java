@@ -1,6 +1,8 @@
 package com.twelvet.server.ai.service;
 
 import com.twelvet.api.ai.domain.AiModel;
+import com.twelvet.api.ai.domain.vo.AiModelVO;
+import com.twelvet.framework.core.application.page.TableDataInfo;
 
 import java.util.List;
 
@@ -26,6 +28,13 @@ public interface IAiModelService {
 	 * @return AI大模型集合
 	 */
 	public List<AiModel> selectAiModelList(AiModel aiModel);
+
+	/**
+	 * 查询AI大模型分页
+	 * @param aiModel AI大模型
+	 * @return AI大模型集合
+	 */
+	public TableDataInfo<AiModelVO> selectAiModelPage(AiModel aiModel);
 
 	/**
 	 * 新增AI大模型

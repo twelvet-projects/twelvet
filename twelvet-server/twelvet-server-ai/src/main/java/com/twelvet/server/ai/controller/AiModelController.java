@@ -3,6 +3,7 @@ package com.twelvet.server.ai.controller;
 import java.util.List;
 
 import com.twelvet.api.ai.domain.AiModel;
+import com.twelvet.api.ai.domain.vo.AiModelVO;
 import com.twelvet.server.ai.service.IAiModelService;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -44,10 +45,8 @@ public class AiModelController extends TWTController {
 	@Operation(summary = "查询AI大模型分页")
 	@PreAuthorize("@role.hasPermi('system:model:list')")
 	@GetMapping("/pageQuery")
-	public JsonResult<TableDataInfo<AiModel>> pageQuery(AiModel aiModel) {
-		PageUtils.startPage();
-		List<AiModel> list = aiModelService.selectAiModelList(aiModel);
-		return JsonResult.success(PageUtils.getDataTable(list));
+	public JsonResult<TableDataInfo<AiModelVO>> pageQuery(AiModel aiModel) {
+		return JsonResult.success(aiModelService.selectAiModelPage(aiModel));
 	}
 
 	/**

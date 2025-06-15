@@ -1,6 +1,10 @@
 package com.twelvet.server.ai.service.impl;
 
+import com.github.pagehelper.PageInfo;
 import com.twelvet.api.ai.domain.AiModel;
+import com.twelvet.api.ai.domain.vo.AiModelVO;
+import com.twelvet.framework.core.application.page.TableDataInfo;
+import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.server.ai.mapper.AiModelMapper;
 import com.twelvet.server.ai.service.IAiModelService;
@@ -43,6 +47,28 @@ public class AiModelServiceImpl implements IAiModelService {
 	@Override
 	public List<AiModel> selectAiModelList(AiModel aiModel) {
 		return aiModelMapper.selectAiModelList(aiModel);
+	}
+
+	/**
+	 * 查询AI大模型分页
+	 * @param aiModel AI大模型
+	 * @return AI大模型
+	 */
+	@Override
+	public TableDataInfo<AiModelVO> selectAiModelPage(AiModel aiModel) {
+		PageUtils.startPage();
+		List<AiModel> list = aiModelMapper.selectAiModelList(aiModel);
+		PageInfo<AiModel> pageInfo = new PageInfo<>(list);
+
+		return TableDataInfo.page(list.stream().map(model -> {
+			AiModelVO aiModelVO = new AiModelVO();
+			aiModelVO.setModelId(model.getModelId());
+			aiModelVO.setModelProviderName(model.getModelSupplier().getDesc());
+			aiModelVO.setModel(model.getModel());
+			aiModelVO.setModelTypeName(model.getModelType().getDesc());
+			aiModelVO.setAlias(model.getAlias());
+			return aiModelVO;
+		}).toList(), pageInfo.getTotal());
 	}
 
 	/**
