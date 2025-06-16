@@ -78,12 +78,12 @@ public class DashScopModelServiceImpl extends ModelService {
 	@Override
 	public RerankModel getRerankModel(AiModel aiModel) {
 		DashScopeApi dashScopeApi = DashScopeApi.builder()
-				.baseUrl(aiModel.getBaseUrl())
-				.apiKey(aiModel.getApiKey())
-				.build();
+			.baseUrl(aiModel.getBaseUrl())
+			.apiKey(aiModel.getApiKey())
+			.build();
 		DashScopeRerankOptions scopeRerankOptions = DashScopeRerankOptions.builder()
-				.withModel(aiModel.getModel())
-				.build();
+			.withModel(aiModel.getModel())
+			.build();
 		return new DashScopeRerankModel(dashScopeApi, scopeRerankOptions);
 	}
 
