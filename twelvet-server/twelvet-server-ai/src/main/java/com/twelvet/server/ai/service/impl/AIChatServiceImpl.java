@@ -50,6 +50,7 @@ import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.mapper.AiKnowledgeMapper;
 import com.twelvet.server.ai.mapper.AiMcpMapper;
 import com.twelvet.server.ai.mapper.AiModelMapper;
+import com.twelvet.server.ai.model.MCPService;
 import com.twelvet.server.ai.service.AIChatService;
 import com.twelvet.server.ai.service.IAiChatHistoryService;
 import com.twelvet.server.ai.utils.ModelUtils;
@@ -118,26 +119,8 @@ public class AIChatServiceImpl implements AIChatService {
 
 	private final static Logger log = LoggerFactory.getLogger(AIChatServiceImpl.class);
 
-	/**
-	 * MCP服务列表
-	 */
-	private final static Map<String, McpSyncClient> MCP_SYNC_CLIENTS = new ConcurrentHashMap<>();
-
-	/**
-	 * MCP需要特殊启动的windows命令
-	 */
-	private static final List<String> WIN_COMMAND = List.of(ModelEnums.McpCommandEnums.NPX.getCode());
-
-	/**
-	 * 获取当前操作系统
-	 */
-	private static final String OS_NAME = System.getProperty("os.name").toLowerCase();
-
-	/**
-	 * RedissonClient
-	 */
 	@Autowired
-	private RedissonClient redissonClient;
+	private MCPService mcpService;
 
 	/**
 	 * 向量数据库
@@ -333,29 +316,35 @@ public class AIChatServiceImpl implements AIChatService {
 
 		// 获取使用的模型信息
 		CompletableFuture<AiModel> aiModelCompletableFuture = CompletableFuture.supplyAsync(() -> {
+			// TODO 需要获取默认模型处理
 			AiModel aiModel = aiModelMapper.selectAiModelByModelId(1L);
 			return aiModel;
 		}, TUtils.threadPoolExecutor);
 
-		CompletableFuture.allOf(vectorCompletableFuture, messagesCompletableFuture, aiModelCompletableFuture).join();
+		// 获取使用的排序模型信息
+		CompletableFuture<AiModel> aiRerankModelCompletableFuture = CompletableFuture.supplyAsync(() -> {
+			// TODO 需要获取默认模型处理
+			AiModel aiModel = aiModelMapper.selectAiModelByModelId(3L);
+			return aiModel;
+		}, TUtils.threadPoolExecutor);
+
+		CompletableFuture
+			.allOf(vectorCompletableFuture, messagesCompletableFuture, aiModelCompletableFuture,
+					aiRerankModelCompletableFuture)
+			.join();
 
 		// 获取模型信息
 		AiModel aiModel = aiModelCompletableFuture.join();
+		AiModel rerankModel = aiRerankModelCompletableFuture.join();
 
 		// 向量知识库
 		List<Document> vectorDocs = vectorCompletableFuture.join();
 		// 召回结果 重排
 		if (CollUtil.isNotEmpty(vectorDocs)) {
-			DashScopeApi dashScopeApi = DashScopeApi.builder()
-				.baseUrl(aiModel.getBaseUrl())
-				.apiKey(aiModel.getApiKey())
-				.build();
-			DashScopeRerankOptions scopeRerankOptions = DashScopeRerankOptions.builder()
-				.withModel("gte-rerank-v2")
-				.build();
-			RerankModel dashScopeRerankModel = new DashScopeRerankModel(dashScopeApi, scopeRerankOptions);
+			RerankModel dashScopeRerankModel = ModelUtils.modelServiceProviderSelector(rerankModel.getModelSupplier())
+				.getRerankModel(rerankModel);
 
-			RerankRequest rerankRequest = new RerankRequest(messageDTO.getContent(), vectorDocs, scopeRerankOptions);
+			RerankRequest rerankRequest = new RerankRequest(messageDTO.getContent(), vectorDocs);
 			RerankResponse rerankResponse = dashScopeRerankModel.call(rerankRequest);
 			List<DocumentWithScore> results = rerankResponse.getResults();
 			vectorDocs = results.stream().map(DocumentWithScore::getOutput).collect(Collectors.toList());
@@ -444,7 +433,7 @@ public class AIChatServiceImpl implements AIChatService {
 			// 功能选择
 			// .options(dashScopeChatOptions)
 			// MCP
-			.toolCallbacks(loadingMCP())
+			.toolCallbacks(mcpService.loadingMCP())
 			// 本地工具
 			// .tools(new MockOrderService(), new MockWeatherService())
 			.stream()
@@ -837,115 +826,6 @@ public class AIChatServiceImpl implements AIChatService {
 		AudioTranscriptionResponse response = dashScopeAudioTranscriptionModel.call(audioTranscriptionPrompt);
 
 		return response.getResult().getOutput();
-	}
-
-	/**
-	 * 加载MCP服务
-	 * @return List<McpSyncClient>
-	 */
-	private ToolCallback[] loadingMCP() {
-		// 防止并发初始化
-		RLock lock = redissonClient.getLock(RAGConstants.LOCK_INIT_AI_MCP);
-		lock.lock();
-		try {
-			List<AiMcp> aiMcpList = RedisUtils.getCacheObject(RAGConstants.MCP_LIST_CACHE);
-			if (CollUtil.isEmpty(aiMcpList)) { // 缓存没数据将从数据库获取
-				AiMcp aiMcp = new AiMcp();
-				aiMcp.setStatusFlag(Boolean.TRUE);
-				aiMcpList = aiMcpMapper.selectAiMcpList(aiMcp);
-				RedisUtils.setCacheObject(RAGConstants.MCP_LIST_CACHE, aiMcpList);
-			}
-			Map<String, String> dbMcpMap = aiMcpList.stream().collect(Collectors.toMap(AiMcp::getName, AiMcp::getName));
-			for (String mcpName : MCP_SYNC_CLIENTS.keySet()) { // 移除已经失效的MCP
-				Boolean checkMCPFlag = Boolean.FALSE;
-				if (!dbMcpMap.containsKey(mcpName)) { // 数据库已经不存在的需要关闭并移除
-					checkMCPFlag = Boolean.TRUE;
-				}
-				else if (!MCP_SYNC_CLIENTS.get(mcpName).getClientInfo().version().equals(dbMcpMap.get(mcpName))) { // 版本不一致也需要重新初始化
-					// TODO 需要实现修改过参数重新进行初始化
-					// checkMCPFlag = Boolean.TRUE;
-				}
-
-				if (checkMCPFlag) {
-					// 移除
-					McpSyncClient removemMcpSyncClient = MCP_SYNC_CLIENTS.remove(mcpName);
-					// 关闭mcp
-					removemMcpSyncClient.close();
-					log.info("移除并关闭MCP：{}", removemMcpSyncClient.getClientInfo().name());
-				}
-			}
-
-			for (AiMcp mcp : aiMcpList) {
-				if (MCP_SYNC_CLIENTS.containsKey(mcp.getName())) { // 已经存在的
-					continue;
-				}
-				// 基本信息
-				McpSchema.Implementation clientInfo = new McpSchema.Implementation(mcp.getName(), "1.0.0");
-
-				McpClientTransport ClientTransport;
-				ModelEnums.McpTypeEnums mcpType = mcp.getMcpType();
-				if (ModelEnums.McpTypeEnums.SSE.equals(mcpType)) { // SSE模式
-					ClientTransport = HttpClientSseClientTransport.builder(mcp.getSseBaseUrl())
-						.sseEndpoint(mcp.getSseEndpoint())
-						.build();
-				}
-				else { // STDIO模式
-					List<String> args = new ArrayList<>();
-					if (StrUtil.isNotBlank(mcp.getArgs())) {
-						args = Arrays.stream(mcp.getArgs().split("\n")).toList();
-					}
-					String envStr = mcp.getEnv();
-					Map<String, String> envMap = new HashMap<>();
-					if (StrUtil.isNotBlank(envStr)) {
-						try {
-							envMap = JacksonUtils.readMap(envStr, String.class, String.class);
-						}
-						catch (Exception e) {
-							throw new TWTException(String.format("MCP服务【%s】,环境变量配置错误", mcp.getName()));
-						}
-					}
-
-					String command = mcp.getCommand().getCode();
-					ServerParameters serverParameters;
-					if (OS_NAME.contains("win") && WIN_COMMAND.contains(command)) { // windows下执行bat文件需要特殊处理
-						List<String> winArgs = new LinkedList<>(Arrays.asList("/c", command));
-						winArgs.addAll(args);
-						serverParameters = ServerParameters.builder("cmd.exe").args(winArgs).env(envMap).build();
-					}
-					else {
-						// 启动参数
-						serverParameters = ServerParameters.builder(command).args(args).env(envMap).build();
-					}
-
-					// 转换器
-					ClientTransport = new StdioClientTransport(serverParameters);
-				}
-
-				McpSyncClient syncClient = McpClient.sync(ClientTransport)
-					.clientInfo(clientInfo)
-					.requestTimeout(Duration.ofSeconds(20))
-					// 日志
-					.loggingConsumer(notification -> {
-						log.info("Received log message: {}", notification.data());
-					})
-					.build();
-				// 初始化
-				syncClient.initialize();
-
-				// 加入Spring AI
-				MCP_SYNC_CLIENTS.put(syncClient.getClientInfo().name(), syncClient);
-				log.info("成功初始化MCP：{}，工具列表：{}", syncClient.getClientInfo().name(), syncClient.listTools());
-			}
-
-			return new SyncMcpToolCallbackProvider(MCP_SYNC_CLIENTS.values().stream().toList()).getToolCallbacks();
-		}
-		catch (Exception e) {
-			log.error("MCP初始化失败", e);
-			throw new TWTException("MCP初始化失败");
-		}
-		finally {
-			lock.unlock();
-		}
 	}
 
 }
