@@ -18,6 +18,7 @@ CREATE TABLE `ai_model`
     `model_supplier` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT '供应商，枚举：ModelEnums.ModelSupplierEnums',
     `model`          varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT '模型',
     `model_type`     varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT '模型类型，枚举：ModelEnums.ModelTypeEnums',
+    `default_flag`   tinyint(1)                                                    NOT NULL DEFAULT 0 COMMENT '是否为同一类型模型的默认',
     `alias`          varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT '别名',
     `api_key`        varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL     DEFAULT NULL COMMENT 'apiKey',
     `base_url`       varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '模型请求地址',
@@ -35,7 +36,6 @@ CREATE TABLE `ai_model`
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT = 'AI大模型'
   ROW_FORMAT = DYNAMIC;
-
 -- ----------------------------
 -- Table structure for ai_rag
 -- ----------------------------
