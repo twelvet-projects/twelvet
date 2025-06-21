@@ -39,6 +39,11 @@ public class AiModel extends BaseEntity {
 	@ExcelProperty(value = "模型类型，枚举：ModelEnums.ModelTypeEnums")
 	private ModelEnums.ModelTypeEnums modelType;
 
+	/** 是否为同一类型模型的默认 */
+	@Schema(description = "是否为同一类型模型的默认")
+	@ExcelProperty(value = "是否为同一类型模型的默认")
+	private Boolean defaultFlag;
+
 	/** 别名 */
 	@Schema(description = "别名")
 	@ExcelProperty(value = "别名")
@@ -73,60 +78,68 @@ public class AiModel extends BaseEntity {
 	@Schema(description = "是否删除 0：正常，1：删除")
 	private Integer delFlag;
 
-	public void setModelId(Long modelId) {
-		this.modelId = modelId;
-	}
-
 	public Long getModelId() {
 		return modelId;
 	}
 
-	public void setModelSupplier(ModelEnums.ModelProviderEnums modelSupplier) {
-		this.modelSupplier = modelSupplier;
+	public void setModelId(Long modelId) {
+		this.modelId = modelId;
 	}
 
 	public ModelEnums.ModelProviderEnums getModelSupplier() {
 		return modelSupplier;
 	}
 
-	public void setModel(String model) {
-		this.model = model;
+	public void setModelSupplier(ModelEnums.ModelProviderEnums modelSupplier) {
+		this.modelSupplier = modelSupplier;
 	}
 
 	public String getModel() {
 		return model;
 	}
 
-	public void setModelType(ModelEnums.ModelTypeEnums modelType) {
-		this.modelType = modelType;
+	public void setModel(String model) {
+		this.model = model;
 	}
 
 	public ModelEnums.ModelTypeEnums getModelType() {
 		return modelType;
 	}
 
-	public void setAlias(String alias) {
-		this.alias = alias;
+	public void setModelType(ModelEnums.ModelTypeEnums modelType) {
+		this.modelType = modelType;
+	}
+
+	public Boolean getDefaultFlag() {
+		return defaultFlag;
+	}
+
+	public void setDefaultFlag(Boolean defaultFlag) {
+		this.defaultFlag = defaultFlag;
 	}
 
 	public String getAlias() {
 		return alias;
 	}
 
-	public void setApiKey(String apiKey) {
-		this.apiKey = apiKey;
+	public void setAlias(String alias) {
+		this.alias = alias;
 	}
 
 	public String getApiKey() {
 		return apiKey;
 	}
 
-	public void setBaseUrl(String baseUrl) {
-		this.baseUrl = baseUrl;
+	public void setApiKey(String apiKey) {
+		this.apiKey = apiKey;
 	}
 
 	public String getBaseUrl() {
 		return baseUrl;
+	}
+
+	public void setBaseUrl(String baseUrl) {
+		this.baseUrl = baseUrl;
 	}
 
 	public Double getTemperature() {
@@ -153,12 +166,12 @@ public class AiModel extends BaseEntity {
 		this.extParam = extParam;
 	}
 
-	public void setDelFlag(Integer delFlag) {
-		this.delFlag = delFlag;
-	}
-
 	public Integer getDelFlag() {
 		return delFlag;
+	}
+
+	public void setDelFlag(Integer delFlag) {
+		this.delFlag = delFlag;
 	}
 
 	@Override
@@ -167,6 +180,7 @@ public class AiModel extends BaseEntity {
 			.append("modelSupplier", getModelSupplier())
 			.append("model", getModel())
 			.append("modelType", getModelType())
+			.append("defaultFlag", getDefaultFlag())
 			.append("alias", getAlias())
 			.append("apiKey", getApiKey())
 			.append("baseUrl", getBaseUrl())
