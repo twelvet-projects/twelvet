@@ -3,6 +3,7 @@ package com.twelvet;
 import com.alibaba.cloud.ai.dashscope.api.DashScopeApi;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatOptions;
+import com.twelvet.api.ai.constant.ModelEnums;
 import com.twelvet.api.ai.domain.AiModel;
 import com.twelvet.server.ai.AiApplication;
 import com.twelvet.server.ai.mapper.AiModelMapper;
@@ -138,7 +139,7 @@ public class ModelTest {
 	 * @return ChatModel
 	 */
 	private ChatModel getChatModel() {
-		AiModel aiModel = aiModelMapper.selectAiModelByModelId(1L);
+		AiModel aiModel = aiModelMapper.selectAiModelByModelDefaultFlag(ModelEnums.ModelTypeEnums.LLM);
 
 		DashScopeApi dashScopeApi = DashScopeApi.builder()
 			.baseUrl(aiModel.getBaseUrl())
