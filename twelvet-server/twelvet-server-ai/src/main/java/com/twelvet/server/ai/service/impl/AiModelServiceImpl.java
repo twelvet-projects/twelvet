@@ -67,6 +67,7 @@ public class AiModelServiceImpl implements IAiModelService {
 			aiModelVO.setModel(model.getModel());
 			aiModelVO.setModelTypeName(model.getModelType().getDesc());
 			aiModelVO.setAlias(model.getAlias());
+			aiModelVO.setDefaultFlag(model.getDefaultFlag());
 			return aiModelVO;
 		}).toList(), pageInfo.getTotal());
 	}

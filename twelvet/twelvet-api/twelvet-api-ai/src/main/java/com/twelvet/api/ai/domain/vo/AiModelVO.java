@@ -47,6 +47,11 @@ public class AiModelVO implements Serializable {
 	@ExcelProperty(value = "别名")
 	private String alias;
 
+	/** 是否为同一类型模型的默认 */
+	@Schema(description = "是否为同一类型模型的默认")
+	@ExcelProperty(value = "是否为同一类型模型的默认")
+	private Boolean defaultFlag;
+
 	public Long getModelId() {
 		return modelId;
 	}
@@ -87,10 +92,23 @@ public class AiModelVO implements Serializable {
 		this.alias = alias;
 	}
 
-	@Override
-	public String toString() {
-		return "AiModelVO{" + "modelId=" + modelId + ", modelProviderName='" + modelProviderName + '\'' + ", model='"
-				+ model + '\'' + ", modelTypeName='" + modelTypeName + '\'' + ", alias='" + alias + '\'' + '}';
+	public Boolean getDefaultFlag() {
+		return defaultFlag;
 	}
 
+	public void setDefaultFlag(Boolean defaultFlag) {
+		this.defaultFlag = defaultFlag;
+	}
+
+	@Override
+	public String toString() {
+		return "AiModelVO{" +
+				"modelId=" + modelId +
+				", modelProviderName='" + modelProviderName + '\'' +
+				", model='" + model + '\'' +
+				", modelTypeName='" + modelTypeName + '\'' +
+				", alias='" + alias + '\'' +
+				", defaultFlag=" + defaultFlag +
+				'}';
+	}
 }
