@@ -102,13 +102,9 @@ public class AiModelVO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "AiModelVO{" +
-				"modelId=" + modelId +
-				", modelProviderName='" + modelProviderName + '\'' +
-				", model='" + model + '\'' +
-				", modelTypeName='" + modelTypeName + '\'' +
-				", alias='" + alias + '\'' +
-				", defaultFlag=" + defaultFlag +
-				'}';
+		return "AiModelVO{" + "modelId=" + modelId + ", modelProviderName='" + modelProviderName + '\'' + ", model='"
+				+ model + '\'' + ", modelTypeName='" + modelTypeName + '\'' + ", alias='" + alias + '\''
+				+ ", defaultFlag=" + defaultFlag + '}';
 	}
+
 }
