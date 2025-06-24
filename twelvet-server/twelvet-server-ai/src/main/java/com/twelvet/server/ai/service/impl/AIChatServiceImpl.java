@@ -316,16 +316,12 @@ public class AIChatServiceImpl implements AIChatService {
 
 		// 获取使用的模型信息
 		CompletableFuture<AiModel> aiModelCompletableFuture = CompletableFuture.supplyAsync(() -> {
-			// TODO 需要获取默认模型处理
-			AiModel aiModel = aiModelMapper.selectAiModelByModelId(1L);
-			return aiModel;
+			return aiModelMapper.selectAiModelByModelDefaultFlag(ModelEnums.ModelTypeEnums.LLM);
 		}, TUtils.threadPoolExecutor);
 
 		// 获取使用的排序模型信息
 		CompletableFuture<AiModel> aiRerankModelCompletableFuture = CompletableFuture.supplyAsync(() -> {
-			// TODO 需要获取默认模型处理
-			AiModel aiModel = aiModelMapper.selectAiModelByModelId(3L);
-			return aiModel;
+			return aiModelMapper.selectAiModelByModelDefaultFlag(ModelEnums.ModelTypeEnums.RERANKER);
 		}, TUtils.threadPoolExecutor);
 
 		CompletableFuture
