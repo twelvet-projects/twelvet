@@ -51,6 +51,13 @@ public interface IAiModelService {
 	public int updateAiModel(AiModel aiModel);
 
 	/**
+	 * 修改AI大模型默认状态
+	 * @param aiModel AI大模型
+	 * @return 结果
+	 */
+	public int changeStatus(AiModel aiModel);
+
+	/**
 	 * 批量删除AI大模型
 	 * @param modelIds 需要删除的AI大模型主键集合
 	 * @return 结果

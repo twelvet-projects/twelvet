@@ -103,6 +103,20 @@ public class AiModelServiceImpl implements IAiModelService {
 	}
 
 	/**
+	 * 修改AI大模型默认状态
+	 * @param aiModel AI大模型
+	 * @return 结果
+	 */
+	@Override
+	public int changeStatus(AiModel aiModel) {
+		aiModel.setUpdateTime(LocalDateTime.now());
+		String loginUsername = SecurityUtils.getUsername();
+		aiModel.setCreateBy(loginUsername);
+		aiModel.setUpdateBy(loginUsername);
+		return aiModelMapper.updateAiModel(aiModel);
+	}
+
+	/**
 	 * 批量删除AI大模型
 	 * @param modelIds 需要删除的AI大模型主键
 	 * @return 结果

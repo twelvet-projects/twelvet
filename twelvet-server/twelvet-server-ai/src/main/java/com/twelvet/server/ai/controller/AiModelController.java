@@ -94,6 +94,18 @@ public class AiModelController extends TWTController {
 	}
 
 	/**
+	 * 修改AI大模型默认状态
+	 */
+	@Operation(summary = "修改AI大模型默认状态")
+	@PreAuthorize("@role.hasPermi('system:model:status')")
+	@Log(service = "修改AI大模型默认状态", businessType = BusinessType.OTHER)
+	@PutMapping("changeStatus")
+	public JsonResult<String> changeStatus(@RequestBody AiModel aiModel) {
+		aiModelService.changeStatus(aiModel);
+		return JsonResult.success();
+	}
+
+	/**
 	 * 删除AI大模型
 	 */
 	@Operation(summary = "删除AI大模型")
