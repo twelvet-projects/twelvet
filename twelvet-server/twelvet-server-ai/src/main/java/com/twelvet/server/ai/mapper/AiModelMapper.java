@@ -63,4 +63,11 @@ public interface AiModelMapper {
 	 */
 	public int deleteAiModelByModelIds(Long[] modelIds);
 
+	/**
+	 * 取消指定类型AI大模型默认状态
+	 * @param modelTypeEnum AI大模型
+	 * @return 结果
+	 */
+	public int cancelStatus(ModelEnums.ModelTypeEnums modelTypeEnum);
+
 }

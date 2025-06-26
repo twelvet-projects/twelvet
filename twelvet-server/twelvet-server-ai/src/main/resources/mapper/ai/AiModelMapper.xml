@@ -142,4 +142,8 @@
             #{modelId}
         </foreach>
     </delete>
+
+    <update id="cancelStatus" parameterType="com.twelvet.api.ai.constant.ModelEnums">
+        update ai_model set default_flag = 0 where model_type = #{modelTypeEnum}
+    </update>
 </mapper>

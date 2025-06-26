@@ -109,6 +109,12 @@ public class AiModelServiceImpl implements IAiModelService {
 	 */
 	@Override
 	public int changeStatus(AiModel aiModel) {
+		if (aiModel.getDefaultFlag()) {
+			// 取消对应类似默认模型
+			AiModel aiModelDb = aiModelMapper.selectAiModelByModelId(aiModel.getModelId());
+			aiModelMapper.cancelStatus(aiModelDb.getModelType());
+		}
+
 		aiModel.setUpdateTime(LocalDateTime.now());
 		String loginUsername = SecurityUtils.getUsername();
 		aiModel.setCreateBy(loginUsername);
