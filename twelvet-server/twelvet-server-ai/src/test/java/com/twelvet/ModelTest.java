@@ -139,7 +139,7 @@ public class ModelTest {
 	 * @return ChatModel
 	 */
 	private ChatModel getChatModel() {
-		AiModel aiModel = aiModelMapper.selectAiModelByModelDefaultFlag(ModelEnums.ModelTypeEnums.LLM);
+		AiModel aiModel = aiModelMapper.selectAiModelByModelDefault(ModelEnums.ModelTypeEnums.LLM);
 
 		DashScopeApi dashScopeApi = DashScopeApi.builder()
 			.baseUrl(aiModel.getBaseUrl())

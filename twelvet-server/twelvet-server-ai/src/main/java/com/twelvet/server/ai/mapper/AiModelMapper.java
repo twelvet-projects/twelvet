@@ -19,7 +19,7 @@ public interface AiModelMapper {
 	 * @param modelTypeEnum 模型类型
 	 * @return AI大模型
 	 */
-	public AiModel selectAiModelByModelDefaultFlag(ModelEnums.ModelTypeEnums modelTypeEnum);
+	public AiModel selectAiModelByModelDefault(ModelEnums.ModelTypeEnums modelTypeEnum);
 
 	/**
 	 * 查询AI大模型

@@ -2,8 +2,6 @@ package com.twelvet.server.ai.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.StrUtil;
-import com.alibaba.cloud.ai.dashscope.api.DashScopeApi;
 import com.alibaba.cloud.ai.dashscope.api.DashScopeSpeechSynthesisApi;
 import com.alibaba.cloud.ai.dashscope.audio.DashScopeAudioTranscriptionModel;
 import com.alibaba.cloud.ai.dashscope.audio.DashScopeAudioTranscriptionOptions;
@@ -19,8 +17,6 @@ import com.alibaba.cloud.ai.dashscope.chat.MessageFormat;
 import com.alibaba.cloud.ai.dashscope.common.DashScopeApiConstants;
 import com.alibaba.cloud.ai.dashscope.image.DashScopeImageModel;
 import com.alibaba.cloud.ai.dashscope.image.DashScopeImageOptions;
-import com.alibaba.cloud.ai.dashscope.rerank.DashScopeRerankModel;
-import com.alibaba.cloud.ai.dashscope.rerank.DashScopeRerankOptions;
 import com.alibaba.cloud.ai.document.DocumentWithScore;
 import com.alibaba.cloud.ai.model.RerankModel;
 import com.alibaba.cloud.ai.model.RerankRequest;
@@ -31,14 +27,12 @@ import com.github.yitter.idgen.YitIdHelper;
 import com.twelvet.api.ai.constant.ModelEnums;
 import com.twelvet.api.ai.constant.RAGEnums;
 import com.twelvet.api.ai.domain.AiKnowledge;
-import com.twelvet.api.ai.domain.AiMcp;
 import com.twelvet.api.ai.domain.AiModel;
 import com.twelvet.api.ai.domain.dto.*;
 import com.twelvet.api.ai.domain.ocr.InvoiceOCR;
 import com.twelvet.api.ai.domain.vo.AiChatHistoryVO;
 import com.twelvet.api.ai.domain.vo.MessageVO;
 import com.twelvet.framework.core.exception.TWTException;
-import com.twelvet.framework.redis.service.RedisUtils;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.JacksonUtils;
@@ -54,16 +48,7 @@ import com.twelvet.server.ai.model.MCPService;
 import com.twelvet.server.ai.service.AIChatService;
 import com.twelvet.server.ai.service.IAiChatHistoryService;
 import com.twelvet.server.ai.utils.ModelUtils;
-import io.modelcontextprotocol.client.McpClient;
-import io.modelcontextprotocol.client.McpSyncClient;
-import io.modelcontextprotocol.client.transport.HttpClientSseClientTransport;
-import io.modelcontextprotocol.client.transport.ServerParameters;
-import io.modelcontextprotocol.client.transport.StdioClientTransport;
-import io.modelcontextprotocol.spec.McpClientTransport;
-import io.modelcontextprotocol.spec.McpSchema;
 import org.bytedeco.javacv.*;
-import org.redisson.api.RLock;
-import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.audio.transcription.AudioTranscriptionPrompt;
@@ -82,8 +67,6 @@ import org.springframework.ai.document.Document;
 import org.springframework.ai.image.ImageMessage;
 import org.springframework.ai.image.ImagePrompt;
 import org.springframework.ai.image.ImageResponse;
-import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
-import org.springframework.ai.tool.ToolCallback;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.ai.vectorstore.filter.Filter;
@@ -100,11 +83,9 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URI;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -316,12 +297,12 @@ public class AIChatServiceImpl implements AIChatService {
 
 		// 获取使用的模型信息
 		CompletableFuture<AiModel> aiModelCompletableFuture = CompletableFuture.supplyAsync(() -> {
-			return aiModelMapper.selectAiModelByModelDefaultFlag(ModelEnums.ModelTypeEnums.LLM);
+			return aiModelMapper.selectAiModelByModelDefault(ModelEnums.ModelTypeEnums.LLM);
 		}, TUtils.threadPoolExecutor);
 
 		// 获取使用的排序模型信息
 		CompletableFuture<AiModel> aiRerankModelCompletableFuture = CompletableFuture.supplyAsync(() -> {
-			return aiModelMapper.selectAiModelByModelDefaultFlag(ModelEnums.ModelTypeEnums.RERANKER);
+			return aiModelMapper.selectAiModelByModelDefault(ModelEnums.ModelTypeEnums.RERANKER);
 		}, TUtils.threadPoolExecutor);
 
 		CompletableFuture
@@ -337,7 +318,7 @@ public class AIChatServiceImpl implements AIChatService {
 		List<Document> vectorDocs = vectorCompletableFuture.join();
 		// 召回结果 重排
 		if (CollUtil.isNotEmpty(vectorDocs)) {
-			RerankModel dashScopeRerankModel = ModelUtils.modelServiceProviderSelector(rerankModel.getModelSupplier())
+			RerankModel dashScopeRerankModel = ModelUtils.modelServiceProviderSelector(rerankModel.getModelProvider())
 				.getRerankModel(rerankModel);
 
 			RerankRequest rerankRequest = new RerankRequest(messageDTO.getContent(), vectorDocs);
@@ -420,7 +401,7 @@ public class AIChatServiceImpl implements AIChatService {
 
 		Prompt prompt = new Prompt(messages);
 
-		ChatModel chatModel = ModelUtils.modelServiceProviderSelector(aiModel.getModelSupplier()).getChatModel(aiModel);
+		ChatModel chatModel = ModelUtils.modelServiceProviderSelector(aiModel.getModelProvider()).getChatModel(aiModel);
 
 		return ChatClient
 			// 自定义使用不同的大模型

@@ -6,7 +6,7 @@
 
     <resultMap type="AiModel" id="AiModelResult">
         <result property="modelId" column="model_id"/>
-        <result property="modelSupplier" column="model_supplier"/>
+        <result property="modelProvider" column="model_provider"/>
         <result property="model" column="model"/>
         <result property="modelType" column="model_type"/>
         <result property="defaultFlag" column="default_flag"/>
@@ -25,7 +25,7 @@
 
     <sql id="selectAiModelVo">
         select model_id,
-               model_supplier,
+               model_provider,
                model,
                model_type,
                default_flag,
@@ -46,7 +46,7 @@
     <select id="selectAiModelList" parameterType="AiModel" resultMap="AiModelResult">
         <include refid="selectAiModelVo"/>
         <where>
-            <if test="modelSupplier != null  and modelSupplier != ''">and model_supplier = #{modelSupplier}</if>
+            <if test="modelProvider != null  and modelProvider != ''">and model_provider = #{modelProvider}</if>
             <if test="model != null  and model != ''">and model = #{model}</if>
             <if test="modelType != null  and modelType != ''">and model_type = #{modelType}</if>
             <if test="defaultFlag != null">and default_flag = #{defaultFlag}</if>
@@ -65,7 +65,7 @@
         where model_id = #{modelId}
     </select>
 
-    <select id="selectAiModelByModelDefaultFlag" parameterType="com.twelvet.api.ai.constant.ModelEnums" resultMap="AiModelResult">
+    <select id="selectAiModelByModelDefault" parameterType="com.twelvet.api.ai.constant.ModelEnums" resultMap="AiModelResult">
         <include refid="selectAiModelVo"/>
         where model_type = #{modelTypeEnum} and default_flag = 1
     </select>
@@ -73,7 +73,7 @@
     <insert id="insertAiModel" parameterType="AiModel" useGeneratedKeys="true" keyProperty="modelId">
         insert into ai_model
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="modelSupplier != null">model_supplier,</if>
+            <if test="modelProvider != null">model_provider,</if>
             <if test="model != null">model,</if>
             <if test="modelType != null">model_type,</if>
             <if test="defaultFlag != null">default_flag,</if>
@@ -90,7 +90,7 @@
             <if test="delFlag != null">del_flag,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="modelSupplier != null">#{modelSupplier},</if>
+            <if test="modelProvider != null">#{modelProvider},</if>
             <if test="model != null">#{model},</if>
             <if test="modelType != null">#{modelType},</if>
             <if test="defaultFlag != null">#{defaultFlag},</if>
@@ -111,7 +111,7 @@
     <update id="updateAiModel" parameterType="AiModel">
         update ai_model
         <trim prefix="SET" suffixOverrides=",">
-            <if test="modelSupplier != null">model_supplier = #{modelSupplier},</if>
+            <if test="modelProvider != null">model_provider = #{modelProvider},</if>
             <if test="model != null">model = #{model},</if>
             <if test="modelType != null">model_type = #{modelType},</if>
             <if test="defaultFlag != null">default_flag = #{defaultFlag},</if>
