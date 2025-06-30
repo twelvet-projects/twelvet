@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS `ai_model`;
 CREATE TABLE `ai_model`
 (
     `model_id`       bigint                                                        NOT NULL AUTO_INCREMENT COMMENT '模型ID',
-    `model_supplier` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT '供应商，枚举：ModelEnums.ModelSupplierEnums',
+    `model_provider` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT '供应商，枚举：ModelEnums.ModelProviderEnums',
     `model`          varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT '模型',
     `model_type`     varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL     DEFAULT NULL COMMENT '模型类型，枚举：ModelEnums.ModelTypeEnums',
     `default_flag`   tinyint(1)                                                    NOT NULL DEFAULT 0 COMMENT '是否为同一类型模型的默认',

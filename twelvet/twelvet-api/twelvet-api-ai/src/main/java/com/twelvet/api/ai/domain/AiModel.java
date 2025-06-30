@@ -27,7 +27,7 @@ public class AiModel extends BaseEntity {
 	/** 供应商，枚举：ModelEnums.ModelProviderEnums */
 	@Schema(description = "供应商，枚举：ModelEnums.ModelProviderEnums")
 	@ExcelProperty(value = "供应商，枚举：ModelEnums.ModelProviderEnums")
-	private ModelEnums.ModelProviderEnums modelSupplier;
+	private ModelEnums.ModelProviderEnums modelProvider;
 
 	/** 模型 */
 	@Schema(description = "模型")
@@ -86,12 +86,12 @@ public class AiModel extends BaseEntity {
 		this.modelId = modelId;
 	}
 
-	public ModelEnums.ModelProviderEnums getModelSupplier() {
-		return modelSupplier;
+	public ModelEnums.ModelProviderEnums getModelProvider() {
+		return modelProvider;
 	}
 
-	public void setModelSupplier(ModelEnums.ModelProviderEnums modelSupplier) {
-		this.modelSupplier = modelSupplier;
+	public void setModelProvider(ModelEnums.ModelProviderEnums modelProvider) {
+		this.modelProvider = modelProvider;
 	}
 
 	public String getModel() {
@@ -177,7 +177,7 @@ public class AiModel extends BaseEntity {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("modelId", getModelId())
-			.append("modelSupplier", getModelSupplier())
+			.append("modelSupplier", getModelProvider())
 			.append("model", getModel())
 			.append("modelType", getModelType())
 			.append("defaultFlag", getDefaultFlag())
