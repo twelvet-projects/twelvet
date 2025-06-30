@@ -40,6 +40,7 @@ import com.twelvet.framework.utils.TUtils;
 import com.twelvet.server.ai.client.AIClient;
 import com.twelvet.server.ai.constant.AIDataSourceConstants;
 import com.twelvet.server.ai.constant.RAGConstants;
+import com.twelvet.server.ai.fun.MockSearchService;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.mapper.AiKnowledgeMapper;
 import com.twelvet.server.ai.mapper.AiMcpMapper;
@@ -412,7 +413,8 @@ public class AIChatServiceImpl implements AIChatService {
 			// MCP
 			.toolCallbacks(mcpService.loadingMCP())
 			// 本地工具
-			// .tools(new MockOrderService(), new MockWeatherService())
+			// .tools(new MockOrderService(), new MockWeatherService(), new
+			// MockSearchService())
 			.stream()
 			.chatResponse()
 			.map(chatResponse -> {
