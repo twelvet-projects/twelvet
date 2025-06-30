@@ -101,8 +101,7 @@ public class AiModelController extends TWTController {
 	@Log(service = "修改AI大模型默认状态", businessType = BusinessType.OTHER)
 	@PutMapping("changeStatus")
 	public JsonResult<String> changeStatus(@RequestBody AiModel aiModel) {
-		aiModelService.changeStatus(aiModel);
-		return JsonResult.success();
+		return json(aiModelService.changeStatus(aiModel));
 	}
 
 	/**

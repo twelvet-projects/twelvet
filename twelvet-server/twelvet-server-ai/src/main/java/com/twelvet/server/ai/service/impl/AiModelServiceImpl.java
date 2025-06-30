@@ -1,6 +1,7 @@
 package com.twelvet.server.ai.service.impl;
 
 import com.github.pagehelper.PageInfo;
+import com.twelvet.api.ai.constant.ModelEnums;
 import com.twelvet.api.ai.domain.AiModel;
 import com.twelvet.api.ai.domain.vo.AiModelVO;
 import com.twelvet.framework.core.application.page.TableDataInfo;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * AI大模型Service业务层处理
@@ -63,7 +65,7 @@ public class AiModelServiceImpl implements IAiModelService {
 		return TableDataInfo.page(list.stream().map(model -> {
 			AiModelVO aiModelVO = new AiModelVO();
 			aiModelVO.setModelId(model.getModelId());
-			aiModelVO.setModelProviderName(model.getModelSupplier().getDesc());
+			aiModelVO.setModelProviderName(model.getModelProvider().getDesc());
 			aiModelVO.setModel(model.getModel());
 			aiModelVO.setModelTypeName(model.getModelType().getDesc());
 			aiModelVO.setAlias(model.getAlias());
@@ -85,6 +87,16 @@ public class AiModelServiceImpl implements IAiModelService {
 		String loginUsername = SecurityUtils.getUsername();
 		aiModel.setCreateBy(loginUsername);
 		aiModel.setUpdateBy(loginUsername);
+
+		ModelEnums.ModelTypeEnums modelType = aiModel.getModelType();
+		AiModel aiModelDb = aiModelMapper.selectAiModelByModelDefault(modelType);
+		if (Objects.isNull(aiModelDb)) { // 是否设置为默认模型
+			aiModel.setDefaultFlag(Boolean.TRUE);
+		}
+		else {
+			aiModelDb.setDefaultFlag(Boolean.FALSE);
+		}
+
 		return aiModelMapper.insertAiModel(aiModel);
 	}
 
@@ -109,10 +121,11 @@ public class AiModelServiceImpl implements IAiModelService {
 	 */
 	@Override
 	public int changeStatus(AiModel aiModel) {
+		// 取消对应类似默认模型
+		AiModel aiModelDb = aiModelMapper.selectAiModelByModelId(aiModel.getModelId());
+		ModelEnums.ModelTypeEnums modelType = aiModelDb.getModelType();
 		if (aiModel.getDefaultFlag()) {
-			// 取消对应类似默认模型
-			AiModel aiModelDb = aiModelMapper.selectAiModelByModelId(aiModel.getModelId());
-			aiModelMapper.cancelStatus(aiModelDb.getModelType());
+			aiModelMapper.cancelStatus(modelType);
 		}
 
 		aiModel.setUpdateTime(LocalDateTime.now());

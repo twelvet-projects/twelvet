@@ -31,7 +31,7 @@ public abstract class ModelService implements Ordered {
 	 */
 	public ChatModel getChatModel(AiModel aiModel) {
 		throw new TWTException(
-				String.format("%s does not support this ChatModel", aiModel.getModelSupplier().getDesc()));
+				String.format("%s does not support this ChatModel", aiModel.getModelProvider().getDesc()));
 	}
 
 	/**
@@ -41,7 +41,7 @@ public abstract class ModelService implements Ordered {
 	 */
 	public EmbeddingModel getEmbeddingModel(AiModel aiModel) {
 		throw new TWTException(
-				String.format("%s does not support this EmbeddingModel", aiModel.getModelSupplier().getDesc()));
+				String.format("%s does not support this EmbeddingModel", aiModel.getModelProvider().getDesc()));
 	}
 
 	/**
@@ -51,7 +51,7 @@ public abstract class ModelService implements Ordered {
 	 */
 	public RerankModel getRerankModel(AiModel aiModel) {
 		throw new TWTException(
-				String.format("%s does not support this RerankModel", aiModel.getModelSupplier().getDesc()));
+				String.format("%s does not support this RerankModel", aiModel.getModelProvider().getDesc()));
 	}
 
 }
