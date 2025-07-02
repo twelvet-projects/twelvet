@@ -1,11 +1,14 @@
 package com.twelvet.server.ai.service;
 
 import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisOutput;
+import com.twelvet.api.ai.domain.AiChatHistory;
 import com.twelvet.api.ai.domain.dto.MessageDTO;
 import com.twelvet.api.ai.domain.dto.SttDTO;
 import com.twelvet.api.ai.domain.dto.TtsDTO;
 import com.twelvet.api.ai.domain.vo.MessageVO;
 import reactor.core.publisher.Flux;
+
+import java.util.List;
 
 /**
  * AI助手服务
@@ -22,6 +25,13 @@ public interface AIChatService {
 	 * @return 流式数据返回
 	 */
 	Flux<MessageVO> chatStream(MessageDTO messageDTO);
+
+	/**
+	 * 根据知识库ID获取聊天记录分页
+	 * @param aiChatHistory AiChatHistory
+	 * @return AiChatHistory
+	 */
+	List<AiChatHistory> chatHistoryPage(AiChatHistory aiChatHistory);
 
 	/**
 	 * 多模态回答用户问题

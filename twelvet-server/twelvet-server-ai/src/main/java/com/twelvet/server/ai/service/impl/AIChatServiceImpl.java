@@ -26,6 +26,7 @@ import com.github.houbb.sensitive.word.bs.SensitiveWordBs;
 import com.github.yitter.idgen.YitIdHelper;
 import com.twelvet.api.ai.constant.ModelEnums;
 import com.twelvet.api.ai.constant.RAGEnums;
+import com.twelvet.api.ai.domain.AiChatHistory;
 import com.twelvet.api.ai.domain.AiKnowledge;
 import com.twelvet.api.ai.domain.AiModel;
 import com.twelvet.api.ai.domain.dto.*;
@@ -41,10 +42,7 @@ import com.twelvet.server.ai.client.AIClient;
 import com.twelvet.server.ai.constant.AIDataSourceConstants;
 import com.twelvet.server.ai.constant.RAGConstants;
 import com.twelvet.server.ai.fun.MockSearchService;
-import com.twelvet.server.ai.mapper.AiDocSliceMapper;
-import com.twelvet.server.ai.mapper.AiKnowledgeMapper;
-import com.twelvet.server.ai.mapper.AiMcpMapper;
-import com.twelvet.server.ai.mapper.AiModelMapper;
+import com.twelvet.server.ai.mapper.*;
 import com.twelvet.server.ai.model.MCPService;
 import com.twelvet.server.ai.service.AIChatService;
 import com.twelvet.server.ai.service.IAiChatHistoryService;
@@ -133,6 +131,9 @@ public class AIChatServiceImpl implements AIChatService {
 	 */
 	@Autowired
 	private IAiChatHistoryService aiChatHistoryService;
+
+	@Autowired
+	private AiChatHistoryMapper aiChatHistoryMapper;
 
 	/**
 	 * MCP服务mapper
@@ -451,6 +452,19 @@ public class AIChatServiceImpl implements AIChatService {
 
 				}
 			});
+	}
+
+	/**
+	 * 根据知识库ID获取聊天记录分页
+	 * @param aiChatHistory AiChatHistory
+	 * @return AiChatHistory
+	 */
+	@Override
+	public List<AiChatHistory> chatHistoryPage(AiChatHistory aiChatHistory) {
+		// TODO 分页查询对应用户
+		Long userId = SecurityUtils.getLoginUser().getUserId();
+		aiChatHistory.setUserId(String.valueOf(userId));
+		return null;
 	}
 
 	/**
