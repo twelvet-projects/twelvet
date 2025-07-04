@@ -1,6 +1,13 @@
 [中文](https://github.com/twelvet-projects/twelvet/blob/master/README_ZH.md) | [English](https://github.com/twelvet-projects/twelvet/blob/master/README.md)
 # 🚀twelvet
 
+# 安全警告
+
+您选择的 JDK8 + Spring Boot 2 已被Spring官方停止维护，存在官方未修复的安全漏洞。 为保障系统安全，强烈建议选择 JDK17 + Spring Boot 3，获取最新安全更新和功能支持。
+
+继续使用过时版本可能导致安全风险，本团队不对由此产生的问题负责。 选择使用即表示已知悉并接受相关风险。
+
+
 # JDK >= 17
 
 [![AUR](https://img.shields.io/github/license/twelvet-projects/twelvet)](https://github.com/twelvet-projects/twelvet/blob/master/LICENSE)

@@ -2,6 +2,12 @@
 
 # 🚀twelvet
 
+# Security Warning
+
+The combination of JDK 8 + Spring Boot 2 that you have selected is no longer supported by Spring, and there are security vulnerabilities that remain unpatched. To ensure system security, it is strongly recommended to use JDK 17 + Spring Boot 3 to receive the latest security updates and feature support.
+
+Continuing to use outdated versions may lead to security risks, and our team is not responsible for any issues that arise as a result. By choosing to proceed, you acknowledge and accept the associated risks.
+
 # JDK >= 17
 
 [![AUR](https://img.shields.io/github/license/twelvet-projects/twelvet)](https://github.com/twelvet-projects/twelvet/blob/master/LICENSE)
