@@ -163,16 +163,10 @@ public class AiChatHistoryPageVO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "AiChatHistoryPageVO{" +
-				"chatHistoryId=" + chatHistoryId +
-				", msgId='" + msgId + '\'' +
-				", content='" + content + '\'' +
-				", userId='" + userId + '\'' +
-				", knowledgeId=" + knowledgeId +
-				", sendUserId='" + sendUserId + '\'' +
-				", sendUserName='" + sendUserName + '\'' +
-				", createByType=" + createByType +
-				", createTime=" + createTime +
-				'}';
+		return "AiChatHistoryPageVO{" + "chatHistoryId=" + chatHistoryId + ", msgId='" + msgId + '\'' + ", content='"
+				+ content + '\'' + ", userId='" + userId + '\'' + ", knowledgeId=" + knowledgeId + ", sendUserId='"
+				+ sendUserId + '\'' + ", sendUserName='" + sendUserName + '\'' + ", createByType=" + createByType
+				+ ", createTime=" + createTime + '}';
 	}
+
 }
