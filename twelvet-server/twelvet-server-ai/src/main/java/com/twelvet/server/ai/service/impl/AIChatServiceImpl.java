@@ -31,6 +31,7 @@ import com.twelvet.api.ai.domain.AiKnowledge;
 import com.twelvet.api.ai.domain.AiModel;
 import com.twelvet.api.ai.domain.dto.*;
 import com.twelvet.api.ai.domain.ocr.InvoiceOCR;
+import com.twelvet.api.ai.domain.vo.AiChatHistoryPageVO;
 import com.twelvet.api.ai.domain.vo.AiChatHistoryVO;
 import com.twelvet.api.ai.domain.vo.MessageVO;
 import com.twelvet.framework.core.exception.TWTException;
@@ -457,14 +458,14 @@ public class AIChatServiceImpl implements AIChatService {
 	/**
 	 * 根据知识库ID获取聊天记录分页
 	 * @param aiChatHistory AiChatHistory
-	 * @return AiChatHistory
+	 * @return AiChatHistoryPageVO
 	 */
 	@Override
-	public List<AiChatHistory> chatHistoryPage(AiChatHistory aiChatHistory) {
+	public List<AiChatHistoryPageVO> chatHistoryPage(AiChatHistory aiChatHistory) {
 		// TODO 分页查询对应用户
 		Long userId = SecurityUtils.getLoginUser().getUserId();
 		aiChatHistory.setUserId(String.valueOf(userId));
-		return null;
+		return aiChatHistoryMapper.selectKnowledgeAiChatHistoryListByUserId(aiChatHistory);
 	}
 
 	/**

@@ -29,6 +29,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         and ch.knowledge_id = #{knowledgeId}
         ORDER BY create_time desc LIMIT #{multiRound}
     </select>
+
+    <select id="selectKnowledgeAiChatHistoryListByUserId" parameterType="AiChatHistory" resultType="AiChatHistoryPageVO">
+        SELECT ch.chat_history_id,
+               ch.msg_id,
+               ch.user_id,
+               ch.knowledge_id,
+               ch.send_user_id,
+               ch.send_user_name,
+               ch.create_by_type,
+               ch.create_time,
+               chc.content
+        FROM ai_chat_history AS ch
+                 LEFT JOIN ai_chat_history_content AS chc ON chc.chat_history_id = ch.chat_history_id
+        WHERE ch.user_id = #{userId}
+          and ch.knowledge_id = #{knowledgeId}
+        ORDER BY create_time desc
+    </select>
         
     <insert id="insertAiChatHistory" parameterType="AiChatHistory" useGeneratedKeys="true" keyProperty="chatHistoryId">
         insert into ai_chat_history

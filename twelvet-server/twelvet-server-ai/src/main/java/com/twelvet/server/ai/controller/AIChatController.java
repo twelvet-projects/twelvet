@@ -7,6 +7,7 @@ import com.twelvet.api.ai.domain.dto.AiDocDTO;
 import com.twelvet.api.ai.domain.dto.MessageDTO;
 import com.twelvet.api.ai.domain.dto.SttDTO;
 import com.twelvet.api.ai.domain.dto.TtsDTO;
+import com.twelvet.api.ai.domain.vo.AiChatHistoryPageVO;
 import com.twelvet.api.ai.domain.vo.AiModelVO;
 import com.twelvet.api.ai.domain.vo.MessageVO;
 import com.twelvet.framework.core.application.domain.JsonResult;
@@ -62,10 +63,10 @@ public class AIChatController {
 	 */
 	@Operation(summary = "查询AI大模型分页")
 	@PreAuthorize("@role.hasPermi('ai:chat:history')")
-	@GetMapping("/chat/history/page")
-	public JsonResult<TableDataInfo<AiChatHistory>> chatHistoryPage(AiChatHistory aiChatHistory) {
+	@GetMapping("/history/page")
+	public JsonResult<TableDataInfo<AiChatHistoryPageVO>> chatHistoryPage(AiChatHistory aiChatHistory) {
 		PageUtils.startPage();
-		List<AiChatHistory> list = aiChatService.chatHistoryPage(aiChatHistory);
+		List<AiChatHistoryPageVO> list = aiChatService.chatHistoryPage(aiChatHistory);
 		return JsonResult.success(PageUtils.getDataTable(list));
 	}
 

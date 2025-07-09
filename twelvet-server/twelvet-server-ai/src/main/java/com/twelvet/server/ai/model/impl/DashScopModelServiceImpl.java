@@ -56,6 +56,11 @@ public class DashScopModelServiceImpl extends ModelService {
 		return DashScopeChatModel.builder().dashScopeApi(dashScopeApi).defaultOptions(dashScopeChatOptions).build();
 	}
 
+	@Override
+	public ChatModel getTTSModel(AiModel aiModel) {
+		return super.getTTSModel(aiModel);
+	}
+
 	/**
 	 * 获取项链模型
 	 * @param aiModel AiModel

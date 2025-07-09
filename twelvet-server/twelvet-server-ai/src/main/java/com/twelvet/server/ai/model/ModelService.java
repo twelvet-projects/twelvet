@@ -35,6 +35,16 @@ public abstract class ModelService implements Ordered {
 	}
 
 	/**
+	 * 获取文字转语音模型模型
+	 * @param aiModel AiModel
+	 * @return ChatModel
+	 */
+	public ChatModel getTTSModel(AiModel aiModel) {
+		throw new TWTException(
+				String.format("%s does not support this TTSModel", aiModel.getModelProvider().getDesc()));
+	}
+
+	/**
 	 * 获取向量模型
 	 * @param aiModel AiModel
 	 * @return ChatModel

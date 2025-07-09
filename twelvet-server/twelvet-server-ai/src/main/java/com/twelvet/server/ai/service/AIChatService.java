@@ -5,6 +5,7 @@ import com.twelvet.api.ai.domain.AiChatHistory;
 import com.twelvet.api.ai.domain.dto.MessageDTO;
 import com.twelvet.api.ai.domain.dto.SttDTO;
 import com.twelvet.api.ai.domain.dto.TtsDTO;
+import com.twelvet.api.ai.domain.vo.AiChatHistoryPageVO;
 import com.twelvet.api.ai.domain.vo.MessageVO;
 import reactor.core.publisher.Flux;
 
@@ -29,9 +30,9 @@ public interface AIChatService {
 	/**
 	 * 根据知识库ID获取聊天记录分页
 	 * @param aiChatHistory AiChatHistory
-	 * @return AiChatHistory
+	 * @return AiChatHistoryPageVO
 	 */
-	List<AiChatHistory> chatHistoryPage(AiChatHistory aiChatHistory);
+	List<AiChatHistoryPageVO> chatHistoryPage(AiChatHistory aiChatHistory);
 
 	/**
 	 * 多模态回答用户问题
