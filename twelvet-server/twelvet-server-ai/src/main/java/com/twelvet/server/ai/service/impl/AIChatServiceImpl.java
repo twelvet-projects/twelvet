@@ -2,15 +2,9 @@ package com.twelvet.server.ai.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
-import com.alibaba.cloud.ai.dashscope.api.DashScopeSpeechSynthesisApi;
 import com.alibaba.cloud.ai.dashscope.audio.DashScopeAudioTranscriptionModel;
 import com.alibaba.cloud.ai.dashscope.audio.DashScopeAudioTranscriptionOptions;
-import com.alibaba.cloud.ai.dashscope.audio.DashScopeSpeechSynthesisModel;
-import com.alibaba.cloud.ai.dashscope.audio.DashScopeSpeechSynthesisOptions;
-import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisMessage;
-import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisOutput;
-import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisPrompt;
-import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisResponse;
+import com.alibaba.cloud.ai.dashscope.audio.synthesis.*;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatOptions;
 import com.alibaba.cloud.ai.dashscope.chat.MessageFormat;
@@ -42,7 +36,6 @@ import com.twelvet.framework.utils.TUtils;
 import com.twelvet.server.ai.client.AIClient;
 import com.twelvet.server.ai.constant.AIDataSourceConstants;
 import com.twelvet.server.ai.constant.RAGConstants;
-import com.twelvet.server.ai.fun.MockSearchService;
 import com.twelvet.server.ai.mapper.*;
 import com.twelvet.server.ai.model.MCPService;
 import com.twelvet.server.ai.service.AIChatService;
@@ -171,12 +164,6 @@ public class AIChatServiceImpl implements AIChatService {
 	 */
 	@Autowired(required = false)
 	private DashScopeAudioTranscriptionModel dashScopeAudioTranscriptionModel;
-
-	/**
-	 * TTS model
-	 */
-	@Autowired(required = false)
-	private DashScopeSpeechSynthesisModel dashScopeSpeechSynthesisModel;
 
 	/**
 	 * 多模态测试图片地址
@@ -462,10 +449,12 @@ public class AIChatServiceImpl implements AIChatService {
 	 */
 	@Override
 	public List<AiChatHistoryPageVO> chatHistoryPage(AiChatHistory aiChatHistory) {
-		// TODO 分页查询对应用户
 		Long userId = SecurityUtils.getLoginUser().getUserId();
 		aiChatHistory.setUserId(String.valueOf(userId));
-		return aiChatHistoryMapper.selectKnowledgeAiChatHistoryListByUserId(aiChatHistory);
+		List<AiChatHistoryPageVO> aiChatHistoryPageVOS = aiChatHistoryMapper
+			.selectKnowledgeAiChatHistoryListByUserId(aiChatHistory);
+		CollectionUtil.reverse(aiChatHistoryPageVOS);
+		return aiChatHistoryPageVOS;
 	}
 
 	/**
@@ -782,18 +771,14 @@ public class AIChatServiceImpl implements AIChatService {
 	 */
 	@Override
 	public SpeechSynthesisOutput tts(TtsDTO ttsDTO) {
+		AiModel aiModel = aiModelMapper.selectAiModelByModelDefault(ModelEnums.ModelTypeEnums.TTS);
+		SpeechSynthesisModel dashScopeSpeechSynthesisModel = ModelUtils
+			.modelServiceProviderSelector(aiModel.getModelProvider())
+			.getDashScopeTTSModel(aiModel);
+
 		SpeechSynthesisMessage speechSynthesisMessage = new SpeechSynthesisMessage(ttsDTO.getContent());
 
-		DashScopeSpeechSynthesisOptions dashScopeSpeechSynthesisOptions = DashScopeSpeechSynthesisOptions.builder()
-			// 不同模型可能不支持字级别音素边界
-			.model("sambert-zhimiao-emo-v1")
-			.responseFormat(DashScopeSpeechSynthesisApi.ResponseFormat.WAV)
-			.enableWordTimestamp(Boolean.TRUE)
-			.enablePhonemeTimestamp(Boolean.TRUE)
-			.build();
-
-		SpeechSynthesisPrompt speechSynthesisPrompt = new SpeechSynthesisPrompt(speechSynthesisMessage,
-				dashScopeSpeechSynthesisOptions);
+		SpeechSynthesisPrompt speechSynthesisPrompt = new SpeechSynthesisPrompt(speechSynthesisMessage);
 
 		// TODO 采用的websocket请求，存在BUG关闭后无法再使用
 		SpeechSynthesisResponse response = dashScopeSpeechSynthesisModel.call(speechSynthesisPrompt);

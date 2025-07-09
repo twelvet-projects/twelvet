@@ -1,6 +1,10 @@
 package com.twelvet.server.ai.model.impl;
 
 import com.alibaba.cloud.ai.dashscope.api.DashScopeApi;
+import com.alibaba.cloud.ai.dashscope.api.DashScopeSpeechSynthesisApi;
+import com.alibaba.cloud.ai.dashscope.audio.DashScopeSpeechSynthesisModel;
+import com.alibaba.cloud.ai.dashscope.audio.DashScopeSpeechSynthesisOptions;
+import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisModel;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatOptions;
 import com.alibaba.cloud.ai.dashscope.embedding.DashScopeEmbeddingModel;
@@ -56,9 +60,26 @@ public class DashScopModelServiceImpl extends ModelService {
 		return DashScopeChatModel.builder().dashScopeApi(dashScopeApi).defaultOptions(dashScopeChatOptions).build();
 	}
 
+	/**
+	 * 获取阿里文字转语音模型模型
+	 * @param aiModel AiModel
+	 * @return SpeechSynthesisModel
+	 */
 	@Override
-	public ChatModel getTTSModel(AiModel aiModel) {
-		return super.getTTSModel(aiModel);
+	public SpeechSynthesisModel getDashScopeTTSModel(AiModel aiModel) {
+		DashScopeSpeechSynthesisOptions dashScopeSpeechSynthesisOptions = DashScopeSpeechSynthesisOptions.builder()
+			// 不同模型可能不支持字级别音素边界
+			.model(aiModel.getModel())
+			// TODO 以下参数需要进行自定义
+			.responseFormat(DashScopeSpeechSynthesisApi.ResponseFormat.WAV)
+			.enableWordTimestamp(Boolean.TRUE)
+			.enablePhonemeTimestamp(Boolean.TRUE)
+			.build();
+
+		DashScopeSpeechSynthesisApi dashScopeSpeechSynthesisApi = new DashScopeSpeechSynthesisApi(aiModel.getApiKey(),
+				null, aiModel.getBaseUrl());
+
+		return new DashScopeSpeechSynthesisModel(dashScopeSpeechSynthesisApi, dashScopeSpeechSynthesisOptions);
 	}
 
 	/**

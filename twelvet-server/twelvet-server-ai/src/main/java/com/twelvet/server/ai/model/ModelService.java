@@ -1,5 +1,6 @@
 package com.twelvet.server.ai.model;
 
+import com.alibaba.cloud.ai.dashscope.audio.synthesis.SpeechSynthesisModel;
 import com.alibaba.cloud.ai.model.RerankModel;
 import com.twelvet.api.ai.constant.ModelEnums;
 import com.twelvet.api.ai.domain.AiModel;
@@ -35,11 +36,11 @@ public abstract class ModelService implements Ordered {
 	}
 
 	/**
-	 * 获取文字转语音模型模型
+	 * 获取阿里文字转语音模型模型
 	 * @param aiModel AiModel
-	 * @return ChatModel
+	 * @return SpeechSynthesisModel
 	 */
-	public ChatModel getTTSModel(AiModel aiModel) {
+	public SpeechSynthesisModel getDashScopeTTSModel(AiModel aiModel) {
 		throw new TWTException(
 				String.format("%s does not support this TTSModel", aiModel.getModelProvider().getDesc()));
 	}
