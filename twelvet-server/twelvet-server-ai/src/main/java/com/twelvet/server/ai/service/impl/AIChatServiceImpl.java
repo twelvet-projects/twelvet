@@ -776,7 +776,6 @@ public class AIChatServiceImpl implements AIChatService {
 
 		SpeechSynthesisPrompt speechSynthesisPrompt = new SpeechSynthesisPrompt(speechSynthesisMessage);
 
-		// TODO 采用的websocket请求，存在BUG关闭后无法再使用
 		SpeechSynthesisResponse response = dashScopeSpeechSynthesisModel.call(speechSynthesisPrompt);
 
 		return response.getResult().getOutput();
