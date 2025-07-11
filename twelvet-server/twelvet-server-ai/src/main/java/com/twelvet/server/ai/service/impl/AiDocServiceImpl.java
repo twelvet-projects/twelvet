@@ -14,6 +14,7 @@ import com.twelvet.server.ai.mapper.AiKnowledgeMapper;
 import com.twelvet.server.ai.mq.RAGChannel;
 import com.twelvet.server.ai.mq.consumer.domain.dto.AiDocMqDTO;
 import com.twelvet.server.ai.service.IAiDocService;
+import com.twelvet.server.ai.utils.VectorStoreUtils;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.messaging.support.MessageBuilder;
@@ -36,17 +37,14 @@ public class AiDocServiceImpl implements IAiDocService {
 
 	private final AiDocSliceMapper aiDocSliceMapper;
 
-	private final VectorStore vectorStore;
-
 	private final StreamBridge streamBridge;
 
 	private final AiKnowledgeMapper aiKnowledgeMapper;
 
-	public AiDocServiceImpl(AiDocMapper aiDocMapper, AiDocSliceMapper aiDocSliceMapper, VectorStore vectorStore,
-			StreamBridge streamBridge, AiKnowledgeMapper aiKnowledgeMapper) {
+	public AiDocServiceImpl(AiDocMapper aiDocMapper, AiDocSliceMapper aiDocSliceMapper, StreamBridge streamBridge,
+			AiKnowledgeMapper aiKnowledgeMapper) {
 		this.aiDocMapper = aiDocMapper;
 		this.aiDocSliceMapper = aiDocSliceMapper;
-		this.vectorStore = vectorStore;
 		this.streamBridge = streamBridge;
 		this.aiKnowledgeMapper = aiKnowledgeMapper;
 	}
@@ -124,6 +122,7 @@ public class AiDocServiceImpl implements IAiDocService {
 	 */
 	@Override
 	public int deleteAiDocByDocIds(Long[] docIds) {
+		VectorStore vectorStore = VectorStoreUtils.getVectorStore();
 		int i = aiDocMapper.deleteAiDocByDocIds(docIds);
 
 		List<String> vectorIdList = aiDocSliceMapper.selectAiDocSliceVectorIdByDocIds(docIds);

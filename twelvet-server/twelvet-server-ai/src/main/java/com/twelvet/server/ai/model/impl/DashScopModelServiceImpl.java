@@ -89,9 +89,13 @@ public class DashScopModelServiceImpl extends ModelService {
 	 */
 	@Override
 	public EmbeddingModel getEmbeddingModel(AiModel aiModel) {
-		DashScopeApi dashScopeApi = DashScopeApi.builder().apiKey(aiModel.getApiKey()).build();
+		DashScopeApi dashScopeApi = DashScopeApi.builder()
+			.apiKey(aiModel.getApiKey())
+			.baseUrl(aiModel.getBaseUrl())
+			.build();
 		DashScopeEmbeddingOptions dashScopeEmbeddingOptions = DashScopeEmbeddingOptions.builder()
-			.withModel(aiModel.getModel())
+			.withModel(DashScopeApi.DEFAULT_EMBEDDING_MODEL)
+			.withTextType(DashScopeApi.DEFAULT_EMBEDDING_TEXT_TYPE)
 			.build();
 		return new DashScopeEmbeddingModel(dashScopeApi, MetadataMode.EMBED, dashScopeEmbeddingOptions);
 	}

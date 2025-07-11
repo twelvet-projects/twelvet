@@ -12,6 +12,7 @@ import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.mq.consumer.domain.AiDocMqVO;
 import com.twelvet.server.ai.mq.consumer.domain.dto.AiDocMqDTO;
 import com.twelvet.server.ai.mq.consumer.service.RAGMqTopicService;
+import com.twelvet.server.ai.utils.VectorStoreUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.document.Document;
@@ -43,12 +44,9 @@ public class RAGMqTopicServiceImpl implements RAGMqTopicService {
 
 	private final AiDocSliceMapper aiDocSliceMapper;
 
-	private final VectorStore vectorStore;
-
-	public RAGMqTopicServiceImpl(AiDocMapper aiDocMapper, AiDocSliceMapper aiDocSliceMapper, VectorStore vectorStore) {
+	public RAGMqTopicServiceImpl(AiDocMapper aiDocMapper, AiDocSliceMapper aiDocSliceMapper) {
 		this.aiDocMapper = aiDocMapper;
 		this.aiDocSliceMapper = aiDocSliceMapper;
-		this.vectorStore = vectorStore;
 	}
 
 	/**
@@ -58,6 +56,7 @@ public class RAGMqTopicServiceImpl implements RAGMqTopicService {
 	@Override
 	public void addRAGDocChannel(Message<AiDocMqDTO> message) {
 		AiDocMqDTO aiDocMqDTO = message.getPayload();
+		VectorStore vectorStore = VectorStoreUtils.getVectorStore();
 
 		LocalDateTime nowDate = LocalDateTime.now();
 		String username = aiDocMqDTO.getOperatorBy();

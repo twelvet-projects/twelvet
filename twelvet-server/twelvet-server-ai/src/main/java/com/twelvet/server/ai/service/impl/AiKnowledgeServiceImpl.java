@@ -7,6 +7,7 @@ import com.twelvet.server.ai.mapper.AiDocMapper;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.mapper.AiKnowledgeMapper;
 import com.twelvet.server.ai.service.IAiKnowledgeService;
+import com.twelvet.server.ai.utils.VectorStoreUtils;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Service;
 
@@ -29,14 +30,11 @@ public class AiKnowledgeServiceImpl implements IAiKnowledgeService {
 
 	private final AiDocSliceMapper aiDocSliceMapper;
 
-	private final VectorStore vectorStore;
-
 	public AiKnowledgeServiceImpl(AiKnowledgeMapper aiKnowledgeMapper, AiDocMapper aiDocMapper,
-			AiDocSliceMapper aiDocSliceMapper, VectorStore vectorStore) {
+			AiDocSliceMapper aiDocSliceMapper) {
 		this.aiKnowledgeMapper = aiKnowledgeMapper;
 		this.aiDocMapper = aiDocMapper;
 		this.aiDocSliceMapper = aiDocSliceMapper;
-		this.vectorStore = vectorStore;
 	}
 
 	/**
@@ -97,6 +95,7 @@ public class AiKnowledgeServiceImpl implements IAiKnowledgeService {
 	 */
 	@Override
 	public int deleteAiKnowledgeByKnowledgeIds(Long[] knowledgeIds) {
+		VectorStore vectorStore = VectorStoreUtils.getVectorStore();
 		int i = aiKnowledgeMapper.deleteAiKnowledgeByKnowledgeIds(knowledgeIds);
 
 		List<String> vectorIdList = aiDocSliceMapper.selectAiDocSliceVectorIdByKnowledgeIds(knowledgeIds);

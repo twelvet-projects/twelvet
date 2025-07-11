@@ -41,6 +41,7 @@ import com.twelvet.server.ai.model.MCPService;
 import com.twelvet.server.ai.service.AIChatService;
 import com.twelvet.server.ai.service.IAiChatHistoryService;
 import com.twelvet.server.ai.utils.ModelUtils;
+import com.twelvet.server.ai.utils.VectorStoreUtils;
 import org.bytedeco.javacv.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,12 +96,6 @@ public class AIChatServiceImpl implements AIChatService {
 
 	@Autowired
 	private MCPService mcpService;
-
-	/**
-	 * 向量数据库
-	 */
-	@Autowired(required = false)
-	private VectorStore vectorStore;
 
 	/**
 	 * 模型配置mapper
@@ -281,6 +276,7 @@ public class AIChatServiceImpl implements AIChatService {
 				.filterExpression(filter)
 				.build();
 
+			VectorStore vectorStore = VectorStoreUtils.getVectorStore();
 			return vectorStore.similaritySearch(searchRequest);
 
 		}, TUtils.threadPoolExecutor);

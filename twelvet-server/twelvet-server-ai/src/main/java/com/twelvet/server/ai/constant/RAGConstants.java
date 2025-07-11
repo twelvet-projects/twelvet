@@ -32,4 +32,14 @@ public interface RAGConstants {
 	 */
 	String LOCK_INIT_AI_MCP = "lock_init_ai_mcp";
 
+	/**
+	 * VectorStore创建锁
+	 */
+	String LOCK_INIT_VECTOR_STORE = "lock_init_vector_store";
+
+	/**
+	 * VectorStore全局刷新标识ID缓存key
+	 */
+	String VECTOR_STORE_REFRESH_ID_CACHE = "ai:vector_store:refresh_id";
+
 }

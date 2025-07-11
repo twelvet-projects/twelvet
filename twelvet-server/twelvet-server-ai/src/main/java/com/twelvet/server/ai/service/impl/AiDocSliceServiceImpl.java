@@ -7,6 +7,7 @@ import com.twelvet.api.ai.domain.dto.AiDocSliceDTO;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.server.ai.mapper.AiDocSliceMapper;
 import com.twelvet.server.ai.service.IAiDocSliceService;
+import com.twelvet.server.ai.utils.VectorStoreUtils;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Service;
@@ -25,11 +26,8 @@ public class AiDocSliceServiceImpl implements IAiDocSliceService {
 
 	private final AiDocSliceMapper aiDocSliceMapper;
 
-	private final VectorStore vectorStore;
-
-	public AiDocSliceServiceImpl(AiDocSliceMapper aiDocSliceMapper, VectorStore vectorStore) {
+	public AiDocSliceServiceImpl(AiDocSliceMapper aiDocSliceMapper) {
 		this.aiDocSliceMapper = aiDocSliceMapper;
-		this.vectorStore = vectorStore;
 	}
 
 	/**
@@ -59,6 +57,7 @@ public class AiDocSliceServiceImpl implements IAiDocSliceService {
 	 */
 	@Override
 	public int updateAiDocSlice(AiDocSliceDTO aiDocSliceDTO) {
+		VectorStore vectorStore = VectorStoreUtils.getVectorStore();
 		AiDocSlice aiDocSlice = aiDocSliceMapper.selectAiDocSliceBySliceId(aiDocSliceDTO.getSliceId());
 
 		if (Objects.isNull(aiDocSlice)) {

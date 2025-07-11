@@ -9,6 +9,7 @@ import com.twelvet.framework.jdbc.web.utils.PageUtils;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.server.ai.mapper.AiModelMapper;
 import com.twelvet.server.ai.service.IAiModelService;
+import com.twelvet.server.ai.utils.VectorStoreUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -92,6 +93,13 @@ public class AiModelServiceImpl implements IAiModelService {
 		AiModel aiModelDb = aiModelMapper.selectAiModelByModelDefault(modelType);
 		if (Objects.isNull(aiModelDb)) { // 是否设置为默认模型
 			aiModel.setDefaultFlag(Boolean.TRUE);
+			if (ModelEnums.ModelTypeEnums.EMBEDDING.equals(aiModel.getModelType())) { // 如果是向量模型需要重新刷新向量数据库
+				// 保存
+				int res = aiModelMapper.insertAiModel(aiModel);
+				// 刷新
+				VectorStoreUtils.refresh();
+				return res;
+			}
 		}
 		else {
 			aiModelDb.setDefaultFlag(Boolean.FALSE);
@@ -111,6 +119,16 @@ public class AiModelServiceImpl implements IAiModelService {
 		String loginUsername = SecurityUtils.getUsername();
 		aiModel.setCreateBy(loginUsername);
 		aiModel.setUpdateBy(loginUsername);
+		if (ModelEnums.ModelTypeEnums.EMBEDDING.equals(aiModel.getModelType())) { // 如果是向量模型需要重新刷新向量数据库
+			AiModel aiModelDb = aiModelMapper.selectAiModelByModelDefault(ModelEnums.ModelTypeEnums.EMBEDDING);
+			if (aiModelDb.getModelId().equals(aiModel.getModelId())) { // 如果修改的是默认的向量数据库
+				// 保存
+				int res = aiModelMapper.updateAiModel(aiModel);
+				// 刷新
+				VectorStoreUtils.refresh();
+				return res;
+			}
+		}
 		return aiModelMapper.updateAiModel(aiModel);
 	}
 
@@ -121,17 +139,24 @@ public class AiModelServiceImpl implements IAiModelService {
 	 */
 	@Override
 	public int changeStatus(AiModel aiModel) {
+		String loginUsername = SecurityUtils.getUsername();
 		// 取消对应类似默认模型
 		AiModel aiModelDb = aiModelMapper.selectAiModelByModelId(aiModel.getModelId());
 		ModelEnums.ModelTypeEnums modelType = aiModelDb.getModelType();
-		if (aiModel.getDefaultFlag()) {
-			aiModelMapper.cancelStatus(modelType);
-		}
-
 		aiModel.setUpdateTime(LocalDateTime.now());
-		String loginUsername = SecurityUtils.getUsername();
 		aiModel.setCreateBy(loginUsername);
 		aiModel.setUpdateBy(loginUsername);
+
+		if (aiModel.getDefaultFlag()) { // 设置默认模型
+			aiModelMapper.cancelStatus(modelType);
+			if (ModelEnums.ModelTypeEnums.EMBEDDING.equals(aiModel.getModelType())) { // 如果是向量模型需要重新刷新向量数据库
+				// 保存
+				int res = aiModelMapper.updateAiModel(aiModel);
+				// 刷新
+				VectorStoreUtils.refresh();
+				return res;
+			}
+		}
 		return aiModelMapper.updateAiModel(aiModel);
 	}
 
