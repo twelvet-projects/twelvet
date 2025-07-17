@@ -2,12 +2,11 @@ package com.twelvet.framework.datascope.aspect;
 
 import com.twelvet.api.system.domain.SysRole;
 import com.twelvet.framework.core.application.domain.BaseEntity;
-import com.twelvet.framework.datascope.annotation.SysDataScope;
+import com.twelvet.framework.datascope.annotation.MicroDataScope;
 import com.twelvet.framework.datascope.constant.DataScopeConstants;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.StrUtils;
-import com.twelvet.framework.utils.TUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
@@ -23,16 +22,16 @@ import java.util.Objects;
 /**
  * @author twelvet
  * @WebSite twelvet.cn
- * @Description: 系统数据过滤AOP
+ * @Description: 分布式数据权限
  */
 @Aspect
 @Component
-public class SysDataScopeAspect {
+public class MicroDataScopeAspect {
 
 	/**
 	 * 配置织入点
 	 */
-	@Pointcut("@annotation(com.twelvet.framework.datascope.annotation.SysDataScope)")
+	@Pointcut("@annotation(com.twelvet.framework.datascope.annotation.MicroDataScope)")
 	public void dataScopePointCut() {
 	}
 
@@ -43,7 +42,7 @@ public class SysDataScopeAspect {
 
 	protected void handleDataScope(final JoinPoint joinPoint) {
 		// 获得注解
-		SysDataScope controllerDataScope = getAnnotationLog(joinPoint);
+		MicroDataScope controllerDataScope = getAnnotationLog(joinPoint);
 		if (controllerDataScope == null) {
 			return;
 		}
@@ -110,13 +109,13 @@ public class SysDataScopeAspect {
 	 * @param joinPoint JoinPoint
 	 * @return 返回注解信息
 	 */
-	private SysDataScope getAnnotationLog(JoinPoint joinPoint) {
+	private MicroDataScope getAnnotationLog(JoinPoint joinPoint) {
 		Signature signature = joinPoint.getSignature();
 		MethodSignature methodSignature = (MethodSignature) signature;
 		Method method = methodSignature.getMethod();
 
 		if (Objects.nonNull(method)) {
-			return method.getAnnotation(SysDataScope.class);
+			return method.getAnnotation(MicroDataScope.class);
 		}
 		return null;
 	}
