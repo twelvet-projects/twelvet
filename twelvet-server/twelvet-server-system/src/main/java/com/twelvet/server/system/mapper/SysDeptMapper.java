@@ -1,9 +1,11 @@
 package com.twelvet.server.system.mapper;
 
 import com.twelvet.api.system.domain.SysDept;
+import com.twelvet.framework.datascope.annotation.SysDataScope;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author twelvet
@@ -11,6 +13,13 @@ import java.util.List;
  * @Description: 部门管理 数据层
  */
 public interface SysDeptMapper {
+
+	/**
+	 * 查询当前账号拥有的部门数据部门管理数据
+	 * @return 部门ID集合
+	 */
+	@SysDataScope(deptAlias = "d")
+	Set<Long> selectDeptIdListByUser();
 
 	/**
 	 * 查询部门管理数据

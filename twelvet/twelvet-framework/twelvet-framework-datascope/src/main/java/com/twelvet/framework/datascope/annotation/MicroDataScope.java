@@ -13,13 +13,13 @@ import java.lang.annotation.*;
 public @interface MicroDataScope {
 
 	/**
-	 * 部门的别名
+	 * 管理部门ID字段写法
 	 */
-	String deptAlias() default "";
+	String deptIdField() default "dept_id";
 
 	/**
-	 * 用户的别名
+	 * 管理用户ID字段写法
 	 */
-	String userAlias() default "";
+	String userIdField() default "user_id";
 
 }

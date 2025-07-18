@@ -4,6 +4,7 @@ import com.twelvet.api.system.domain.SysDept;
 import com.twelvet.api.system.domain.vo.TreeSelect;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author twelvet
@@ -101,5 +102,11 @@ public interface ISysDeptService {
 	 * @return 结果
 	 */
 	int deleteDeptById(Long deptId);
+
+	/**
+	 * 获取当前用户持有的权限列表
+	 * @return Set<Long>
+	 */
+	Set<Long> selectDeptIdListByUser();
 
 }

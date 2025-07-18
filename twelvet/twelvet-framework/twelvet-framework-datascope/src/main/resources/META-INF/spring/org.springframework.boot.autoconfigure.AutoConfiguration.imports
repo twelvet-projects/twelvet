@@ -1,1 +1,3 @@
 com.twelvet.framework.datascope.aspect.SysDataScopeAspect
+com.twelvet.framework.datascope.aspect.MicroDataScopeAspect
+com.twelvet.framework.datascope.service.impl.MicroDataScopeServiceImpl

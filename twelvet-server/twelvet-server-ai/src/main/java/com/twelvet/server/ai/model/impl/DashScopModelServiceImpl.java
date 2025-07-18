@@ -18,7 +18,7 @@ import com.twelvet.server.ai.model.ModelService;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.document.MetadataMode;
 import org.springframework.ai.embedding.EmbeddingModel;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * 阿里百练大模型服务
@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component;
  * @WebSite twelvet.cn
  * @date 2025-06-14
  */
-@Component
+@Service
 public class DashScopModelServiceImpl extends ModelService {
 
 	@Override

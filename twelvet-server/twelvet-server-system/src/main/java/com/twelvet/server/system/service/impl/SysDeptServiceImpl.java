@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -243,6 +244,15 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	@Override
 	public int deleteDeptById(Long deptId) {
 		return deptMapper.deleteDeptById(deptId);
+	}
+
+	/**
+	 * 获取当前用户持有的权限列表
+	 * @return Set<Long>
+	 */
+	@Override
+	public Set<Long> selectDeptIdListByUser() {
+		return deptMapper.selectDeptIdListByUser();
 	}
 
 	/**

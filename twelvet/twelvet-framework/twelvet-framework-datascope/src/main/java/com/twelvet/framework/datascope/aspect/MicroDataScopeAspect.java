@@ -1,9 +1,11 @@
 package com.twelvet.framework.datascope.aspect;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.twelvet.api.system.domain.SysRole;
 import com.twelvet.framework.core.application.domain.BaseEntity;
 import com.twelvet.framework.datascope.annotation.MicroDataScope;
 import com.twelvet.framework.datascope.constant.DataScopeConstants;
+import com.twelvet.framework.datascope.domain.vo.DataScopeVO;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.StrUtils;
@@ -14,10 +16,14 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.redisson.api.RedissonClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author twelvet
@@ -27,6 +33,9 @@ import java.util.Objects;
 @Aspect
 @Component
 public class MicroDataScopeAspect {
+
+	@Autowired
+	private RedissonClient redissonClient;
 
 	/**
 	 * 配置织入点
@@ -51,7 +60,8 @@ public class MicroDataScopeAspect {
 		if (StrUtils.isNotNull(loginUser)) {
 			// 如果是超级管理员，则不过滤数据
 			if (!SecurityUtils.isAdmin(loginUser.getUserId())) {
-				dataScopeFilter(joinPoint, loginUser, controllerDataScope.deptAlias(), controllerDataScope.userAlias());
+				dataScopeFilter(joinPoint, loginUser, controllerDataScope.deptIdField(),
+						controllerDataScope.userIdField());
 			}
 		}
 	}
@@ -60,39 +70,42 @@ public class MicroDataScopeAspect {
 	 * 数据范围过滤
 	 * @param joinPoint 切点
 	 * @param user 用户
-	 * @param deptAlias 部门别名
-	 * @param userAlias 用户别名
+	 * @param deptIdField 部门别名
+	 * @param userIdField 用户别名
 	 */
-	public static void dataScopeFilter(JoinPoint joinPoint, LoginUser user, String deptAlias, String userAlias) {
+	public static void dataScopeFilter(JoinPoint joinPoint, LoginUser user, String deptIdField, String userIdField) {
 		StringBuilder sqlString = new StringBuilder();
+		DataScopeVO dataScopeVO = new DataScopeVO();
+
+		// 包含所有角色ID
+		Set<Long> deptIdSet = dataScopeVO.getDeptIdSet();
+
+		// 是否已经使用了deptId
+		boolean deptFlag = Boolean.TRUE;
+		// 是否已经使用了userId
+		boolean userFlag = Boolean.TRUE;
+
+		// 默认没有权限查不出权限
+		String deptIdStr = "0";
+		if (CollectionUtil.isNotEmpty(deptIdSet)) {
+			deptIdStr = deptIdSet.stream().map(Object::toString).collect(Collectors.joining(","));
+		}
 
 		for (SysRole role : user.getRoles()) {
 			String dataScope = role.getDataScope();
-			if (DataScopeConstants.DATA_SCOPE_ALL.equals(dataScope)) {
+			if (DataScopeConstants.DATA_SCOPE_ALL.equals(dataScope)) { // 只要有一个可看所有数据跳出
 				sqlString = new StringBuilder();
 				break;
 			}
-			else if (DataScopeConstants.DATA_SCOPE_CUSTOM.equals(dataScope)) {
-				sqlString.append(
-						StrUtils.format(" OR {}.dept_id IN ( SELECT dept_id FROM sys_role_dept WHERE role_id = {} ) ",
-								deptAlias, role.getRoleId()));
+			else if (deptFlag && (DataScopeConstants.DATA_SCOPE_CUSTOM.equals(dataScope)
+					|| DataScopeConstants.DATA_SCOPE_DEPT.equals(dataScope)
+					|| DataScopeConstants.DATA_SCOPE_DEPT_AND_CHILD.equals(dataScope))) { // 只使用一次dept
+				deptFlag = Boolean.FALSE;
+				sqlString.append(StrUtils.format(" OR {} IN ( {} ) ", deptIdField, deptIdStr));
 			}
-			else if (DataScopeConstants.DATA_SCOPE_DEPT.equals(dataScope)) {
-				sqlString.append(StrUtils.format(" OR {}.dept_id = {} ", deptAlias, user.getDeptId()));
-			}
-			else if (DataScopeConstants.DATA_SCOPE_DEPT_AND_CHILD.equals(dataScope)) {
-				sqlString.append(StrUtils.format(
-						" OR {}.dept_id IN ( SELECT dept_id FROM sys_dept WHERE dept_id = {} or find_in_set( {} , ancestors ) )",
-						deptAlias, user.getDeptId(), user.getDeptId()));
-			}
-			else if (DataScopeConstants.DATA_SCOPE_SELF.equals(dataScope)) {
-				if (StringUtils.isNotBlank(userAlias)) {
-					sqlString.append(StrUtils.format(" OR {}.user_id = {} ", userAlias, user.getUserId()));
-				}
-				else {
-					// 数据权限为仅本人且没有userAlias别名不查询任何数据
-					sqlString.append(" OR 1=0 ");
-				}
+			else if (userFlag && DataScopeConstants.DATA_SCOPE_SELF.equals(dataScope)) { // 只使用一次user
+				userFlag = Boolean.FALSE;
+				sqlString.append(StrUtils.format(" OR {} = {} ", userIdField, user.getUserId()));
 			}
 		}
 
