@@ -8,6 +8,7 @@ import com.twelvet.framework.core.domain.R;
 import com.twelvet.framework.datascope.constant.DataScopeConstants;
 import com.twelvet.framework.datascope.service.MicroDataScopeService;
 import com.twelvet.framework.redis.service.RedisUtils;
+import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.StrUtils;
@@ -41,7 +42,7 @@ public class MicroDataScopeServiceImpl implements MicroDataScopeService {
 		LoginUser loginUser = SecurityUtils.getLoginUser();
 		Set<Long> permissionSet = new HashSet<>();
 
-		String cacheKey = String.format(DataScopeConstants.DATA_SCOPE_CACHE, loginUser.getUserId());
+		String cacheKey = String.format(CacheConstants.DATA_SCOPE_CACHE, loginUser.getUserId());
 
 		Set<Long> permissionSetCache = RedisUtils.getCacheObject(cacheKey);
 		if (Objects.nonNull(permissionSetCache)) { // 空数组也允许获取，取缓存权限

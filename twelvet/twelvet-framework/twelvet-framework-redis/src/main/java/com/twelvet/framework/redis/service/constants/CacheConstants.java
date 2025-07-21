@@ -32,4 +32,9 @@ public interface CacheConstants {
 	 */
 	String SYS_DICT_KEY = "sys_dict";
 
+	/**
+	 * 用户数据权限缓存
+	 */
+	String DATA_SCOPE_CACHE = "data_scope::%s";
+
 }

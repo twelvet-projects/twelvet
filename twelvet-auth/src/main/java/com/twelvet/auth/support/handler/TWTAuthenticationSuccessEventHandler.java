@@ -6,6 +6,8 @@ import com.twelvet.framework.core.constants.SecurityConstants;
 import com.twelvet.framework.log.event.SysLoginLogEvent;
 import com.twelvet.framework.log.utils.SysLogUtils;
 import com.twelvet.framework.log.vo.SysLogVO;
+import com.twelvet.framework.redis.service.RedisUtils;
+import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.http.IpUtils;
@@ -58,6 +60,11 @@ public class TWTAuthenticationSuccessEventHandler implements AuthenticationSucce
 		if (MapUtil.isNotEmpty(map)) {
 			// 发送异步日志事件
 			LoginUser userInfo = (LoginUser) map.get(SecurityConstants.DETAILS_USER);
+
+			// 清除权限列表
+			String cacheKey = String.format(CacheConstants.DATA_SCOPE_CACHE, userInfo.getUserId());
+			RedisUtils.deleteObject(cacheKey);
+
 			String username = userInfo.getName();
 			Long deptId = userInfo.getDeptId();
 			SysLoginInfo sysLoginInfo = new SysLoginInfo();
