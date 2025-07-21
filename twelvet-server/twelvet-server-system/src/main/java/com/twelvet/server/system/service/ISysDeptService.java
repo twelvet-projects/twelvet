@@ -105,8 +105,9 @@ public interface ISysDeptService {
 
 	/**
 	 * 获取当前用户持有的权限列表
+	 * @param sysDept SysDept
 	 * @return Set<Long>
 	 */
-	Set<Long> selectDeptIdListByUser();
+	Set<Long> selectDeptIdListByUser(SysDept sysDept);
 
 }

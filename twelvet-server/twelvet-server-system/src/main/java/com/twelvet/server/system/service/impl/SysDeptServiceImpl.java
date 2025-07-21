@@ -7,12 +7,10 @@ import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.datascope.annotation.SysDataScope;
 import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.framework.utils.TUtils;
 import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.StrUtils;
 import com.twelvet.server.system.mapper.SysDeptMapper;
 import com.twelvet.server.system.service.ISysDeptService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -248,11 +246,12 @@ public class SysDeptServiceImpl implements ISysDeptService {
 
 	/**
 	 * 获取当前用户持有的权限列表
+	 * @param sysDept SysDept
 	 * @return Set<Long>
 	 */
 	@Override
-	public Set<Long> selectDeptIdListByUser() {
-		return deptMapper.selectDeptIdListByUser();
+	public Set<Long> selectDeptIdListByUser(SysDept sysDept) {
+		return deptMapper.selectDeptIdListByUser(sysDept);
 	}
 
 	/**

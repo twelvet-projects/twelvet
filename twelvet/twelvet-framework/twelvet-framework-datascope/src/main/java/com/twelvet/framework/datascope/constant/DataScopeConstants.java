@@ -40,6 +40,6 @@ public interface DataScopeConstants {
 	/**
 	 * 用户数据权限缓存
 	 */
-	String DATA_SCOPE_CACHE = "data::scope::%S";
+	String DATA_SCOPE_CACHE = "data_scope::%s";
 
 }

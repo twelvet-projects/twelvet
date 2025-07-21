@@ -27,7 +27,7 @@
         from sys_dept d
     </sql>
 
-    <select id="selectDeptIdListByUser" resultType="Long">
+    <select id="selectDeptIdListByUser" parameterType="SysDept" resultType="Long">
         select d.dept_id from sys_dept as d
         where d.del_flag = '0'
         <!-- 数据范围过滤 -->

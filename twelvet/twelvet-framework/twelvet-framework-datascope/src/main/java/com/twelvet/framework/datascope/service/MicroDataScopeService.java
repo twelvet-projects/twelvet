@@ -9,4 +9,10 @@ import java.util.Set;
  */
 public interface MicroDataScopeService {
 
+	/**
+	 * 获取权限
+	 * @return Set<Long>
+	 */
+	Set<Long> getPermission();
+
 }

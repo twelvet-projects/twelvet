@@ -1,5 +1,6 @@
 package com.twelvet.api.system.feign.factory;
 
+import com.twelvet.api.system.domain.SysDept;
 import com.twelvet.api.system.feign.RemoteDeptService;
 import com.twelvet.framework.core.domain.R;
 import org.slf4j.Logger;

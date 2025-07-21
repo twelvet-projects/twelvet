@@ -6,6 +6,7 @@ import com.twelvet.framework.core.application.domain.BaseEntity;
 import com.twelvet.framework.datascope.annotation.MicroDataScope;
 import com.twelvet.framework.datascope.constant.DataScopeConstants;
 import com.twelvet.framework.datascope.domain.vo.DataScopeVO;
+import com.twelvet.framework.datascope.service.MicroDataScopeService;
 import com.twelvet.framework.security.domain.LoginUser;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.StrUtils;
@@ -16,7 +17,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 public class MicroDataScopeAspect {
 
 	@Autowired
-	private RedissonClient redissonClient;
+	private MicroDataScopeService microDataScopeService;
 
 	/**
 	 * 配置织入点

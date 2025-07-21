@@ -16,10 +16,11 @@ public interface SysDeptMapper {
 
 	/**
 	 * 查询当前账号拥有的部门数据部门管理数据
+	 * @param sysDept SysDept
 	 * @return 部门ID集合
 	 */
 	@SysDataScope(deptAlias = "d")
-	Set<Long> selectDeptIdListByUser();
+	Set<Long> selectDeptIdListByUser(SysDept sysDept);
 
 	/**
 	 * 查询部门管理数据

@@ -32,6 +32,7 @@ import java.util.Set;
  * @WebSite twelvet.cn
  * @Description: 部门管理api
  */
+@AuthIgnore
 @Hidden
 @Tag(description = "SysDeptApi", name = "部门管理api")
 @RestController
@@ -45,10 +46,15 @@ public class SysDeptApi extends TWTController {
 	 * 获取当前用户持有的权限列表
 	 * @return JsonResult<List < SysDept>>
 	 */
+	/**
+	 * 获取当前用户持有的权限列表
+	 * @return JsonResult<List < SysDept>>
+	 */
 	@Operation(summary = "获取当前用户持有的权限列表")
 	@GetMapping("/current/user/ids")
 	public R<Set<Long>> selectDeptIdListByUser() {
-		return R.ok(deptService.selectDeptIdListByUser());
+		SysDept sysDept = new SysDept();
+		return R.ok(deptService.selectDeptIdListByUser(sysDept));
 	}
 
 }
