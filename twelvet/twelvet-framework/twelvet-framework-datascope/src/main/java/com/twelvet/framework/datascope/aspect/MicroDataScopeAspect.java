@@ -73,12 +73,11 @@ public class MicroDataScopeAspect {
 	 * @param deptIdField 部门别名
 	 * @param userIdField 用户别名
 	 */
-	public static void dataScopeFilter(JoinPoint joinPoint, LoginUser user, String deptIdField, String userIdField) {
+	public void dataScopeFilter(JoinPoint joinPoint, LoginUser user, String deptIdField, String userIdField) {
 		StringBuilder sqlString = new StringBuilder();
-		DataScopeVO dataScopeVO = new DataScopeVO();
 
 		// 包含所有角色ID
-		Set<Long> deptIdSet = dataScopeVO.getDeptIdSet();
+		Set<Long> deptIdSet = microDataScopeService.getPermission();
 
 		// 是否已经使用了deptId
 		boolean deptFlag = Boolean.TRUE;
