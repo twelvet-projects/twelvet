@@ -5,6 +5,7 @@ import com.twelvet.api.system.domain.SysUser;
 import com.twelvet.api.system.domain.vo.TreeSelect;
 import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.core.exception.TWTException;
+import com.twelvet.framework.datascope.annotation.MicroDataScope;
 import com.twelvet.framework.datascope.annotation.SysDataScope;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.SpringContextHolder;
@@ -37,7 +38,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
 	 * @return 部门信息集合
 	 */
 	@Override
-	@SysDataScope(deptAlias = "d")
+	@MicroDataScope(deptIdField = "d.dept_id")
 	public List<SysDept> selectDeptList(SysDept dept) {
 		return deptMapper.selectDeptList(dept);
 	}

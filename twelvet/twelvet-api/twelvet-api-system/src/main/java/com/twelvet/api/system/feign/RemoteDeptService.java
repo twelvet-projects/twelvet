@@ -24,7 +24,7 @@ public interface RemoteDeptService {
 	 * 获取当前用户持有的权限列表
 	 * @return R<Set<Long>>
 	 */
-	@GetMapping(value = "/api/dept/current/user/ids", headers = SecurityConstants.HEADER_FROM_IN)
+	@GetMapping(value = "/api/dept/current/user/ids")
 	R<Set<Long>> selectDeptIdListByUser();
 
 }

@@ -32,7 +32,6 @@ import java.util.Set;
  * @WebSite twelvet.cn
  * @Description: 部门管理api
  */
-@AuthIgnore
 @Hidden
 @Tag(description = "SysDeptApi", name = "部门管理api")
 @RestController
