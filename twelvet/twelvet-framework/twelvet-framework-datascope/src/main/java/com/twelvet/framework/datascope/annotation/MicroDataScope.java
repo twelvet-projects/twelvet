@@ -18,8 +18,8 @@ public @interface MicroDataScope {
 	String deptIdField() default "dept_id";
 
 	/**
-	 * 管理用户ID字段写法
+	 * 用户ID字段写法
 	 */
-	String userIdField() default "user_id";
+	String userIdField() default "";
 
 }

@@ -6,12 +6,11 @@ import com.twelvet.api.system.domain.SysRoleMenu;
 import com.twelvet.api.system.domain.SysUser;
 import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.core.exception.TWTException;
-import com.twelvet.framework.datascope.annotation.SysDataScope;
+import com.twelvet.framework.datascope.annotation.MicroDataScope;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.StrUtils;
-import com.twelvet.framework.utils.TUtils;
 import com.twelvet.server.system.mapper.SysRoleDeptMapper;
 import com.twelvet.server.system.mapper.SysRoleMapper;
 import com.twelvet.server.system.mapper.SysRoleMenuMapper;
@@ -53,7 +52,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	 * @return 角色数据集合信息
 	 */
 	@Override
-	@SysDataScope(deptAlias = "d")
+	@MicroDataScope(deptIdField = "d.dept_id")
 	public List<SysRole> selectRoleList(SysRole role) {
 		return sysRoleMapper.selectRoleList(role);
 	}

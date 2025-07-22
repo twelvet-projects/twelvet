@@ -1,7 +1,7 @@
 package com.twelvet.server.system.mapper;
 
 import com.twelvet.api.system.domain.SysDept;
-import com.twelvet.framework.datascope.annotation.SysDataScope;
+import com.twelvet.framework.datascope.annotation.MicroDataScope;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public interface SysDeptMapper {
 	 * @param sysDept SysDept
 	 * @return 部门ID集合
 	 */
-	@SysDataScope(deptAlias = "d")
+	@MicroDataScope(deptIdField = "d.dept_id")
 	Set<Long> selectDeptIdListByUser(SysDept sysDept);
 
 	/**

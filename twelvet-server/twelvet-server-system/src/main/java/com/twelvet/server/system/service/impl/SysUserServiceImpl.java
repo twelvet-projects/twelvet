@@ -4,12 +4,11 @@ import cn.hutool.core.collection.CollUtil;
 import com.twelvet.api.system.domain.*;
 import com.twelvet.framework.core.constants.UserConstants;
 import com.twelvet.framework.core.exception.TWTException;
-import com.twelvet.framework.datascope.annotation.SysDataScope;
+import com.twelvet.framework.datascope.annotation.MicroDataScope;
 import com.twelvet.framework.redis.service.constants.CacheConstants;
 import com.twelvet.framework.security.utils.SecurityUtils;
 import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.utils.StrUtils;
-import com.twelvet.framework.utils.TUtils;
 import com.twelvet.server.system.mapper.*;
 import com.twelvet.server.system.service.ISysUserService;
 import org.apache.commons.lang3.StringUtils;
@@ -58,7 +57,7 @@ public class SysUserServiceImpl implements ISysUserService {
 	 * @return 用户信息集合信息
 	 */
 	@Override
-	@SysDataScope(deptAlias = "d", userAlias = "u")
+	@MicroDataScope(deptIdField = "d.dept_id", userIdField = "u.user_id")
 	public List<SysUser> selectUserList(SysUser user) {
 		return sysUserMapper.selectUserList(user);
 	}

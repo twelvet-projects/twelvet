@@ -104,7 +104,13 @@ public class MicroDataScopeAspect {
 			}
 			else if (userFlag && DataScopeConstants.DATA_SCOPE_SELF.equals(dataScope)) { // 只使用一次user
 				userFlag = Boolean.FALSE;
-				sqlString.append(StrUtils.format(" OR {} = {} ", userIdField, user.getUserId()));
+				if (StringUtils.isNotBlank(userIdField)) {
+					sqlString.append(StrUtils.format(" OR {} = {} ", userIdField, user.getUserId()));
+				}
+				else {
+					// 数据权限为仅本人且没有userAlias别名不查询任何数据
+					sqlString.append(" OR 1=0 ");
+				}
 			}
 		}
 
