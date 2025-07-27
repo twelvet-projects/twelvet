@@ -1,5 +1,6 @@
 package com.twelvet.framework.utils.http;
 
+import com.twelvet.framework.utils.StringUtils;
 import com.twelvet.framework.utils.TUtils;
 import com.twelvet.framework.utils.exception.TWTUtilsException;
 import org.slf4j.Logger;
