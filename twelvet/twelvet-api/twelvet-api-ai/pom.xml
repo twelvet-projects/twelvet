@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.twelvet</groupId>
         <artifactId>twelvet-api</artifactId>
-        <version>3.5.0</version>
+        <version>3.5.4</version>
     </parent>
 
     <artifactId>twelvet-api-ai</artifactId>
