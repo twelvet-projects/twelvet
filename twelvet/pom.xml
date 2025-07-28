@@ -364,6 +364,13 @@
                 <version>${twelvet.version}</version>
             </dependency>
 
+            <!-- snowflake -->
+            <dependency>
+                <groupId>com.twelvet</groupId>
+                <artifactId>twelvet-framework-snowflake</artifactId>
+                <version>${twelvet.version}</version>
+            </dependency>
+
             <!--system API-->
             <dependency>
                 <groupId>com.twelvet</groupId>

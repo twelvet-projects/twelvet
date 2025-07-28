@@ -1,10 +1,11 @@
-package com.twelvet.framework.core.config;
+package com.twelvet.framework.snowflake.config;
 
 import cn.hutool.core.net.NetUtil;
 import cn.hutool.core.util.StrUtil;
 import com.github.yitter.contract.IdGeneratorOptions;
 import com.github.yitter.idgen.YitIdHelper;
 import com.twelvet.framework.core.exception.TWTException;
+import com.twelvet.framework.redis.service.RedisUtils;
 import jakarta.annotation.PreDestroy;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
@@ -14,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.annotation.Order;
-import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -27,23 +27,19 @@ import java.util.concurrent.TimeUnit;
  * @WebSite twelvet.cn
  * @date 2024-12-13
  */
-@Order(0)
-@ConditionalOnProperty(prefix = "snowflake.enabled", name = "enabled", havingValue = "true", matchIfMissing = false)
+//@ConditionalOnProperty(prefix = "snowflake.enabled", name = "enabled", havingValue = "true", matchIfMissing = false)
 public class YitIdConfig implements CommandLineRunner {
 
 	private final static Logger log = LoggerFactory.getLogger(YitIdConfig.class);
 
 	@Autowired
-	private RedisTemplate<String, String> redisTemplate;
-
-	@Autowired
 	private RedissonClient redissonClient;
 
-	private static final String LOCK_ID_GENERATOR = "LOCK_ID_GENERATOR";
+	private static final String SNOWFLAKE_LOCK_ID_GENERATOR = "SNOWFLAKE_LOCK_ID_GENERATOR";
 
-	private static final String WORKER_ID_USED_KEY = "WORKER_ID_USED_KEY_";
+	private static final String SNOWFLAKE_WORKER_ID_USED_KEY = "SNOWFLAKE_WORKER_ID_USED_KEY_";
 
-	private static final String CACHE_WORKER_ID_PREFIX = "CACHE_WORKER_ID_";
+	private static final String SNOWFLAKE_CACHE_WORKER_ID_PREFIX = "SNOWFLAKE_CACHE_WORKER_ID_";
 
 	/**
 	 * 机器码位长，决定 WorkerId 的最大值，默认值6，取值范围 [1, 19]，实际上有些语言采用 无符号 ushort (uint16)
@@ -84,12 +80,12 @@ public class YitIdConfig implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		String ipAddress = getIpAddress();
 		log.info("{} 正在配置分布式ID工作机缓存...", ipAddress);
-		RLock lock = redissonClient.getLock(LOCK_ID_GENERATOR);
+		RLock lock = redissonClient.getLock(SNOWFLAKE_LOCK_ID_GENERATOR);
 		try {
 			lock.lock();
 			short workerId = getAvailableWorkerId();
-			String cacheKey = CACHE_WORKER_ID_PREFIX + ipAddress;
-			redisTemplate.opsForValue().set(cacheKey, String.valueOf(workerId), 240, TimeUnit.SECONDS);
+			String cacheKey = SNOWFLAKE_CACHE_WORKER_ID_PREFIX + ipAddress;
+			RedisUtils.setCacheObject(cacheKey, String.valueOf(workerId), 240, TimeUnit.SECONDS);
 			// 设置雪花算法的工作机 ID
 			IdGeneratorOptions options = new IdGeneratorOptions(workerId);
 			YitIdHelper.setIdGenerator(options);
@@ -122,10 +118,10 @@ public class YitIdConfig implements CommandLineRunner {
 	 */
 	private short getAvailableWorkerId() {
 		for (int i = 1; i <= MAX_WORKER_ID; i++) {
-			String workerIdUsedKey = WORKER_ID_USED_KEY + i;
-			if (Boolean.FALSE.equals(redisTemplate.hasKey(workerIdUsedKey))) {
+			String workerIdUsedKey = SNOWFLAKE_WORKER_ID_USED_KEY + i;
+			if (!RedisUtils.hasKey(workerIdUsedKey)) {
 				// 设置 worker ID 已使用, 360 秒后过期, 避免 worker ID 未释放
-				redisTemplate.opsForValue().set(workerIdUsedKey, "USED", 360, TimeUnit.SECONDS);
+				RedisUtils.setCacheObject(workerIdUsedKey, "USED", 360, TimeUnit.SECONDS);
 				return (short) i;
 			}
 		}
@@ -151,11 +147,10 @@ public class YitIdConfig implements CommandLineRunner {
 				}
 				else {
 					// 续期缓存
-					String cacheKey = CACHE_WORKER_ID_PREFIX + ipAddress;
-					redisTemplate.expire(cacheKey, 240, TimeUnit.SECONDS);
-					String workId = redisTemplate.opsForValue().get(cacheKey);
-					redisTemplate.expire(WORKER_ID_USED_KEY + workId, 360, TimeUnit.SECONDS);
-					log.info("{} 心跳任务执行成功,workId为{},续期完成", ipAddress, workId);
+					String cacheKey = SNOWFLAKE_CACHE_WORKER_ID_PREFIX + ipAddress;
+					RedisUtils.expire(cacheKey, 240, TimeUnit.SECONDS);
+					String workId = RedisUtils.getCacheObject(cacheKey);
+					RedisUtils.expire(SNOWFLAKE_WORKER_ID_USED_KEY + workId, 360, TimeUnit.SECONDS);
 				}
 			}
 			catch (Exception e) {
@@ -170,8 +165,8 @@ public class YitIdConfig implements CommandLineRunner {
 	 * @return boolean
 	 */
 	private boolean isValidWorkerId(String ipAddress) {
-		String cacheKey = CACHE_WORKER_ID_PREFIX + ipAddress;
-		return Boolean.TRUE.equals(redisTemplate.hasKey(cacheKey));
+		String cacheKey = SNOWFLAKE_CACHE_WORKER_ID_PREFIX + ipAddress;
+		return RedisUtils.hasKey(cacheKey);
 	}
 
 	/**
@@ -180,8 +175,8 @@ public class YitIdConfig implements CommandLineRunner {
 	 */
 	private void reconfigureWorkerId(String ipAddress) {
 		try {
-			String cacheKey = CACHE_WORKER_ID_PREFIX + ipAddress;
-			redisTemplate.delete(cacheKey);
+			String cacheKey = SNOWFLAKE_CACHE_WORKER_ID_PREFIX + ipAddress;
+			RedisUtils.deleteObject(cacheKey);
 			// 增加重试次数
 			reconfigureAttempts++;
 			run();
@@ -199,10 +194,10 @@ public class YitIdConfig implements CommandLineRunner {
 	@PreDestroy
 	public void shutdown() {
 		String ipAddress = getIpAddress();
-		String cacheKey = CACHE_WORKER_ID_PREFIX + ipAddress;
-		String workerUsedKey = WORKER_ID_USED_KEY + redisTemplate.opsForValue().get(cacheKey);
-		redisTemplate.delete(workerUsedKey);
-		redisTemplate.delete(cacheKey);
+		String cacheKey = SNOWFLAKE_CACHE_WORKER_ID_PREFIX + ipAddress;
+		String workerUsedKey = SNOWFLAKE_WORKER_ID_USED_KEY + RedisUtils.getCacheObject(cacheKey);
+		RedisUtils.deleteObject(workerUsedKey);
+		RedisUtils.deleteObject(cacheKey);
 		if (heartbeatExecutor != null) {
 			heartbeatExecutor.shutdown();
 		}

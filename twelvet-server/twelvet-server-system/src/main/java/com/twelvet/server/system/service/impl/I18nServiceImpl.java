@@ -5,7 +5,6 @@ import com.twelvet.api.system.domain.SysDictData;
 import com.twelvet.framework.core.locale.constants.LocaleCacheConstants;
 import com.twelvet.framework.redis.service.RedisUtils;
 import com.twelvet.framework.security.utils.SecurityUtils;
-import com.twelvet.framework.utils.DateUtils;
 import com.twelvet.framework.utils.TUtils;
 import com.twelvet.server.system.mapper.I18nMapper;
 import com.twelvet.server.system.mapper.SysDictDataMapper;
@@ -18,7 +17,6 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -57,7 +55,7 @@ public class I18nServiceImpl implements II18nService, ApplicationRunner {
 	public void initI18n(Boolean flushFlag) {
 		TUtils.threadPoolExecutor.execute(() -> {
 			String hashFormat = String.format("%s::%s", LocaleCacheConstants.LOCALE, LocaleCacheConstants.ZH_CN);
-			if (flushFlag || !RedisUtils.hashKey(hashFormat)) {
+			if (flushFlag || !RedisUtils.hasKey(hashFormat)) {
 				log.info("Detected i18n deficiency, initializing");
 				List<I18n> i18ns = i18nMapper.selectI18nList(new I18n());
 				for (I18n i18n : i18ns) {
@@ -71,7 +69,7 @@ public class I18nServiceImpl implements II18nService, ApplicationRunner {
 			}
 
 			// 处理i18n支持语言缓存
-			if (flushFlag || !RedisUtils.hashKey(LocaleCacheConstants.CACHE_DICT_CODE)) {
+			if (flushFlag || !RedisUtils.hasKey(LocaleCacheConstants.CACHE_DICT_CODE)) {
 				List<SysDictData> sysDictData = dictDataMapper.selectDictDataByType(LocaleCacheConstants.DICT_CODE);
 				RedisUtils.setCacheObject(LocaleCacheConstants.CACHE_DICT_CODE, sysDictData);
 			}

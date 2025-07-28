@@ -26,7 +26,7 @@ public class RedisUtils {
 	 * @param key 需要查询的key
 	 * @return 是否存在
 	 */
-	public static Boolean hashKey(final String key) {
+	public static Boolean hasKey(final String key) {
 		return redisTemplate.hasKey(key);
 	}
 

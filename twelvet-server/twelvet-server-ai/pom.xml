@@ -140,6 +140,12 @@
             <artifactId>javacv-platform</artifactId>
         </dependency>
 
+        <!--twelvet snowflake-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-snowflake</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

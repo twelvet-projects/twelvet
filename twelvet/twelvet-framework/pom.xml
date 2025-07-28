@@ -25,6 +25,7 @@
         <module>twelvet-framework-jdbc</module>
         <module>twelvet-framework-openfeign</module>
         <module>twelvet-framework-job</module>
+        <module>twelvet-framework-snowflake</module>
     </modules>
 
     <dependencies>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.twelvet</groupId>
+        <artifactId>twelvet-framework</artifactId>
+        <version>3.5.4</version>
+    </parent>
+
+    <artifactId>twelvet-framework-snowflake</artifactId>
+    <description>雪花算法ID分发器</description>
+
+    <dependencies>
+
+        <!--分布式雪花算法ID生成器-->
+        <dependency>
+            <groupId>com.github.yitter</groupId>
+            <artifactId>yitter-idgenerator</artifactId>
+        </dependency>
+
+        <!--twelvet core-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--twelvet Redis-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-redis</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+</project>

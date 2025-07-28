@@ -33,6 +33,11 @@ public interface RAGConstants {
 	String LOCK_INIT_AI_MCP = "lock_init_ai_mcp";
 
 	/**
+	 * MCP 版本缓存
+	 */
+	String AI_MCP_ID_CACHE = "ai_mcp_id::%s";
+
+	/**
 	 * VectorStore创建锁
 	 */
 	String LOCK_INIT_VECTOR_STORE = "lock_init_vector_store";
