@@ -27,7 +27,8 @@ import java.util.concurrent.TimeUnit;
  * @WebSite twelvet.cn
  * @date 2024-12-13
  */
-//@ConditionalOnProperty(prefix = "snowflake.enabled", name = "enabled", havingValue = "true", matchIfMissing = false)
+// @ConditionalOnProperty(prefix = "snowflake.enabled", name = "enabled", havingValue =
+// "true", matchIfMissing = false)
 public class YitIdConfig implements CommandLineRunner {
 
 	private final static Logger log = LoggerFactory.getLogger(YitIdConfig.class);
