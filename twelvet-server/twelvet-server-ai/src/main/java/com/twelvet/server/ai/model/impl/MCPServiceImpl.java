@@ -6,6 +6,7 @@ import com.twelvet.api.ai.constant.ModelEnums;
 import com.twelvet.api.ai.domain.AiMcp;
 import com.twelvet.framework.core.exception.TWTException;
 import com.twelvet.framework.redis.service.RedisUtils;
+import com.twelvet.framework.utils.IdUtils;
 import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.server.ai.constant.RAGConstants;
 import com.twelvet.server.ai.mapper.AiMcpMapper;
@@ -89,6 +90,13 @@ public class MCPServiceImpl implements MCPService {
 		RLock lock = redissonClient.getLock(RAGConstants.LOCK_INIT_AI_MCP);
 		lock.lock();
 		try {
+			// 是否需要重新保存ID缓存
+			boolean mcpIdFlag = Boolean.FALSE;
+			Map<String, String> mcpIdMap = RedisUtils.getCacheObject(RAGConstants.AI_MCP_ID_CACHE);
+			if (CollUtil.isEmpty(mcpIdMap)) {
+				mcpIdMap = new HashMap<>();
+			}
+
 			List<AiMcp> aiMcpList = RedisUtils.getCacheObject(RAGConstants.MCP_LIST_CACHE);
 			if (CollUtil.isEmpty(aiMcpList)) { // 缓存没数据将从数据库获取
 				AiMcp aiMcp = new AiMcp();
@@ -97,14 +105,26 @@ public class MCPServiceImpl implements MCPService {
 				RedisUtils.setCacheObject(RAGConstants.MCP_LIST_CACHE, aiMcpList);
 			}
 			Map<String, String> dbMcpMap = aiMcpList.stream().collect(Collectors.toMap(AiMcp::getName, AiMcp::getName));
+
+			// 检查是否存在缺失的ID，防止缓存被清理
+			for (Map.Entry<String, String> dbMcp : dbMcpMap.entrySet()) {
+				String dbMcpKey = dbMcp.getKey();
+				if (!mcpIdMap.containsKey(dbMcpKey)) {
+					mcpIdMap.put(dbMcpKey, IdUtils.fastSimpleUUID());
+					mcpIdFlag = Boolean.TRUE;
+				}
+			}
+
 			for (String mcpName : MCP_SYNC_CLIENTS.keySet()) { // 移除已经失效的MCP
 				Boolean checkMCPFlag = Boolean.FALSE;
 				if (!dbMcpMap.containsKey(mcpName)) { // 数据库已经不存在的需要关闭并移除
 					checkMCPFlag = Boolean.TRUE;
+					// 移除版本ID
+					mcpIdMap.remove(mcpName);
+					mcpIdFlag = Boolean.TRUE;
 				}
-				else if (!MCP_SYNC_CLIENTS.get(mcpName).getClientInfo().version().equals(dbMcpMap.get(mcpName))) { // 版本不一致也需要重新初始化
-					// TODO 需要实现修改过参数重新进行初始化
-					// checkMCPFlag = Boolean.TRUE;
+				else if (!MCP_SYNC_CLIENTS.get(mcpName).getClientInfo().version().equals(mcpIdMap.get(mcpName))) { // 版本不一致也需要重新初始化
+					checkMCPFlag = Boolean.TRUE;
 				}
 
 				if (checkMCPFlag) {
@@ -117,11 +137,12 @@ public class MCPServiceImpl implements MCPService {
 			}
 
 			for (AiMcp mcp : aiMcpList) {
-				if (MCP_SYNC_CLIENTS.containsKey(mcp.getName())) { // 已经存在的
+				String mcpName = mcp.getName();
+				if (MCP_SYNC_CLIENTS.containsKey(mcpName)) { // 已经存在的
 					continue;
 				}
 				// 基本信息
-				McpSchema.Implementation clientInfo = new McpSchema.Implementation(mcp.getName(), "1.0.0");
+				McpSchema.Implementation clientInfo = new McpSchema.Implementation(mcpName, mcpIdMap.get(mcpName));
 
 				McpClientTransport ClientTransport;
 				ModelEnums.McpTypeEnums mcpType = mcp.getMcpType();
@@ -142,7 +163,7 @@ public class MCPServiceImpl implements MCPService {
 							envMap = JacksonUtils.readMap(envStr, String.class, String.class);
 						}
 						catch (Exception e) {
-							throw new TWTException(String.format("MCP服务【%s】,环境变量配置错误", mcp.getName()));
+							throw new TWTException(String.format("MCP服务【%s】,环境变量配置错误", mcpName));
 						}
 					}
 
@@ -176,6 +197,10 @@ public class MCPServiceImpl implements MCPService {
 				// 加入Spring AI
 				MCP_SYNC_CLIENTS.put(syncClient.getClientInfo().name(), syncClient);
 				log.info("成功初始化MCP：{}，工具列表：{}", syncClient.getClientInfo().name(), syncClient.listTools());
+			}
+
+			if (mcpIdFlag) {
+				RedisUtils.setCacheObject(RAGConstants.AI_MCP_ID_CACHE, mcpIdMap);
 			}
 
 			return new SyncMcpToolCallbackProvider(MCP_SYNC_CLIENTS.values().stream().toList()).getToolCallbacks();
