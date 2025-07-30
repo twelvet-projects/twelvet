@@ -108,16 +108,20 @@ com.twelvet
 
 <table>
     <tr>
-        <td><img src="https://twelvet.cn/assets/images/twelvet/1.png"/></td>
-        <td><img src="https://twelvet.cn/assets/images/twelvet/2.png"/></td>
+        <td><img src="https://static.twelvet.cn/twelvet/1.jpg"/></td>
+        <td><img src="https://static.twelvet.cn/twelvet/2.jpg"/></td>
     </tr>
     <tr>
-        <td><img src="https://twelvet.cn/assets/images/twelvet/3.png"/></td>
-        <td><img src="https://twelvet.cn/assets/images/twelvet/4.png"/></td>
+        <td><img src="https://static.twelvet.cn/twelvet/3.jpg"/></td>
+        <td><img src="https://static.twelvet.cn/twelvet/4.jpg"/></td>
     </tr>
     <tr>
-        <td><img src="https://twelvet.cn/assets/images/twelvet/5.png"/></td>
-        <td><img src="https://twelvet.cn/assets/images/twelvet/6.png"/></td>
+        <td><img src="https://static.twelvet.cn/twelvet/5.jpg"/></td>
+        <td><img src="https://static.twelvet.cn/twelvet/6.jpg"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://static.twelvet.cn/twelvet/7.jpg"/></td>
+        <td><img src="https://static.twelvet.cn/twelvet/8.jpg"/></td>
     </tr>
 </table>
 
@@ -129,7 +133,7 @@ Demonstration address：[https://cloud.twelvet.cn](https://cloud.twelvet.cn)
 
 ## Architecture Diagram
 
-<img src="https://twelvet.cn/assets/images/twelvet/map.png"/>
+<img src="https://static.twelvet.cn/twelvet/framework.png"/>
 
 ## ✈️✈️✈️ Quickly start Microservices
 
