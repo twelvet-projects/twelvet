@@ -49,23 +49,26 @@ Official blog: https://twelvet.cn
 ~~~
 com.twelvet     
 ├── twelvet-ui              // Front-end Framework [80]
+├── twelvet                 // Public dependencies
+│      └── pom.xml                // Public dependencies
+│      └── twelvet-api             // Interface module
+│               └── twelvet-api-system                             // System interface
+│               └── twelvet-api-dfs                                // DFS interface
+│               └── twelvet-api-job                                // Scheduled task interface
+│               └── twelvet-api-ai                                 // AI interface
+│      └── twelvet-framework       // Core module
+│               └── twelvet-framework-core                         // Core module
+│               └── twelvet-framework-log                          // Logging
+│               └── twelvet-framework-datascope                    // Data permission
+│               └── twelvet-framework-jdbc                         // jdbc
+│               └── twelvet-framework-swagger                      // swagger document
+│               └── twelvet-framework-redis                        // Cache service
+│               └── twelvet-framework-snowflake                    // snowflake ID
+│               └── twelvet-framework-security                     // Security module
+│               └── twelvet-framework-utils                        // Tool module
 ├── twelvet-gateway         // Gateway module [88]
 ├── twelvet-nacos           // nacos [8848]
 ├── twelvet-auth            // Authentication Center [8888]
-├── twelvet-api             // Interface module
-│       └── twelvet-api-system                             // System interface
-│       └── twelvet-api-dfs                                // DFS interface
-│       └── twelvet-api-job                                // Scheduled task interface
-│       └── twelvet-api-ai                                  // AI interface
-├── twelvet-framework       // Core module
-│       └── twelvet-framework-core                         // Core module
-│       └── twelvet-framework-log                          // Logging
-│       └── twelvet-framework-datascope                    // Data permission
-│       └── twelvet-framework-jdbc                         // jdbc
-│       └── twelvet-framework-swagger                      // swagger document
-│       └── twelvet-framework-redis                        // Cache service
-│       └── twelvet-framework-security                     // Security module
-│       └── twelvet-framework-utils                        // Tool module
 ├── twelvet-server         // Business module
 │       └── twelvet-server-system                          // System module [8081]
 │       └── twelvet-server-job                             // Scheduled task [8082]
@@ -75,7 +78,6 @@ com.twelvet
 ├── twelvet-visual        // Graphic Management Module
 |       └── twelvet-visual-sentinel                        // sentinel [8101]
 │       └── twelvet-visual-monitor                         // Monitoring center [8102]
-├──pom.xml                // Public dependencies
 ~~~
 
 ## Built-in Functions

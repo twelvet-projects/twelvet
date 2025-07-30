@@ -43,23 +43,26 @@
 ~~~
 com.twelvet     
 ├── twelvet-ui              // 前端框架 [80]
+├── twelvet                 // 公共依赖
+│       └──pom.xml          // 公共pom
+│       └── twelvet-api             // 接口模块
+│              └── twelvet-api-system                             // 系统接口
+│              └── twelvet-api-dfs                                // DFS接口
+│              └── twelvet-api-job                                // 定时任务接口
+│              └── twelvet-api-ai                                 // AI接口
+│       └── twelvet-framework       // 核心模块
+│              └── twelvet-framework-core                         // 核心模块
+│              └── twelvet-framework-log                          // 日志记录
+│              └── twelvet-framework-datascope                    // 数据权限
+│              └── twelvet-framework-jdbc                         // jdbc
+│              └── twelvet-framework-swagger                      // swagger文档
+│              └── twelvet-framework-redis                        // 缓存服务
+│              └── twelvet-framework-snowflake                    // 雪花ID分发器
+│              └── twelvet-framework-security                     // 安全模块
+│              └── twelvet-framework-utils                        // 工具模块
 ├── twelvet-gateway         // 网关模块 [88]
 ├── twelvet-nacos           // nacos [8848]
 ├── twelvet-auth            // 认证中心 [8888]
-├── twelvet-api             // 接口模块
-│       └── twelvet-api-system                             // 系统接口
-│       └── twelvet-api-dfs                                // DFS接口
-│       └── twelvet-api-job                                // 定时任务接口
-│       └── twelvet-api-ai                                  // AI接口
-├── twelvet-framework       // 核心模块
-│       └── twelvet-framework-core                         // 核心模块
-│       └── twelvet-framework-log                          // 日志记录
-│       └── twelvet-framework-datascope                    // 数据权限
-│       └── twelvet-framework-jdbc                         // jdbc
-│       └── twelvet-framework-swagger                      // swagger文档
-│       └── twelvet-framework-redis                        // 缓存服务
-│       └── twelvet-framework-security                     // 安全模块
-│       └── twelvet-framework-utils                        // 工具模块
 ├── twelvet-server         // 业务模块
 │       └── twelvet-server-system                          // 系统模块 [8081]
 │       └── twelvet-server-job                             // 定时任务 [8082]
@@ -69,7 +72,6 @@ com.twelvet
 ├── twelvet-visual        // 图形化管理模块
 |       └── twelvet-visual-sentinel                        // sentinel [8101]
 │       └── twelvet-visual-monitor                         // 监控中心 [8102]
-├──pom.xml                // 公共依赖
 ~~~
 
 ## 内置功能
