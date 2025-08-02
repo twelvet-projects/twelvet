@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
  * @WebSite twelvet.cn
  * @Description: 缓存读取国际化信息
  */
-@SuppressWarnings(value = { "unchecked", "rawtypes" })
+@SuppressWarnings(value = { "unchecked"})
 @Primary
 public class MessageSourceConfig extends AbstractMessageSource implements ApplicationRunner {
 
@@ -80,24 +80,9 @@ public class MessageSourceConfig extends AbstractMessageSource implements Applic
 			cache.put(LocaleCacheConstants.CACHE_DICT_CODE, localeCacheList);
 		}
 		// 检测并使用默认语言
-		Locale useLocale = null;
-		if (localeCacheList != null) {
-			for (SysDictData localeCache : localeCacheList) {
-				String dictValue = localeCache.getDictValue();
-				if (localeCache.getDictValue().equalsIgnoreCase(locale.toString())) {
-					String[] dictValues = dictValue.split("_");
-					useLocale = new Locale(dictValues[0], dictValues[1]);
-					break;
-				}
-			}
-		}
-		if (Objects.isNull(useLocale)) {
-			// 默认中文
-			String[] dictValues = LocaleCacheConstants.ZH_CN.split("_");
-			useLocale = new Locale(dictValues[0], dictValues[1]);
-		}
+        Locale useLocale = getLocale(locale, localeCacheList);
 
-		String format = String.format("%s:%s:%s", LocaleCacheConstants.LOCALE, useLocale.toString(), code);
+        String format = String.format("%s:%s:%s", LocaleCacheConstants.LOCALE, useLocale.toString(), code);
 		String cacheMessage = (String) cache.getIfPresent(format);
 		if (StrUtils.isNotEmpty(cacheMessage)) {
 			return cacheMessage;
@@ -134,7 +119,25 @@ public class MessageSourceConfig extends AbstractMessageSource implements Applic
 
 	}
 
-	/**
+    private static Locale getLocale(Locale locale, List<SysDictData> localeCacheList) {
+        Locale useLocale = null;
+        for (SysDictData localeCache : localeCacheList) {
+            String dictValue = localeCache.getDictValue();
+            if (localeCache.getDictValue().equalsIgnoreCase(locale.toString())) {
+                String[] dictValues = dictValue.split("_");
+                useLocale = new Locale(dictValues[0], dictValues[1]);
+                break;
+            }
+        }
+        if (Objects.isNull(useLocale)) {
+			// 默认中文
+			String[] dictValues = LocaleCacheConstants.ZH_CN.split("_");
+			useLocale = new Locale(dictValues[0], dictValues[1]);
+		}
+        return useLocale;
+    }
+
+    /**
 	 * 模板应用
 	 * @param code the code of the message to resolve
 	 * @param locale the locale to resolve the code for (subclasses are encouraged to
