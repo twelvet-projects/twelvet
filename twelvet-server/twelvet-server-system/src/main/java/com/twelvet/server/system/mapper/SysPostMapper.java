@@ -57,7 +57,7 @@ public interface SysPostMapper {
 	 * @param userId 用户ID
 	 * @return 选中岗位ID列表
 	 */
-	List<Integer> selectPostListByUserId(Long userId);
+	List<Long> selectPostListByUserId(Long userId);
 
 	/**
 	 * 查询用户所属岗位组

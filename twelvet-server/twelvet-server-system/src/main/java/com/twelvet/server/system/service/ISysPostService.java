@@ -44,7 +44,7 @@ public interface ISysPostService {
 	 * @param userId 用户ID
 	 * @return 选中岗位ID列表
 	 */
-	List<Integer> selectPostListByUserId(Long userId);
+	List<Long> selectPostListByUserId(Long userId);
 
 	/**
 	 * 查询所有岗位
