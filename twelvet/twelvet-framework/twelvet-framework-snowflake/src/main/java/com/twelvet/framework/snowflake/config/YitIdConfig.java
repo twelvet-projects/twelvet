@@ -16,6 +16,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.annotation.Order;
 
+import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -199,9 +200,10 @@ public class YitIdConfig implements CommandLineRunner {
 		String workerUsedKey = SNOWFLAKE_WORKER_ID_USED_KEY + RedisUtils.getCacheObject(cacheKey);
 		RedisUtils.deleteObject(workerUsedKey);
 		RedisUtils.deleteObject(cacheKey);
-		if (heartbeatExecutor != null) {
+		if (Objects.nonNull(heartbeatExecutor)) {
 			heartbeatExecutor.shutdown();
 		}
+		log.info("{} 分布式ID相关信息已清除", ipAddress);
 	}
 
 }
