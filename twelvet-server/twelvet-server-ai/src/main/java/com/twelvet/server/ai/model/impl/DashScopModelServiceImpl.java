@@ -51,12 +51,6 @@ public class DashScopModelServiceImpl extends ModelService {
 			.withTopP(aiModel.getTopP())
 			.withTemperature(aiModel.getTemperature())
 			.build();
-
-		// TODO 需要更换入参进行控制
-		/*
-		 * if (Boolean.TRUE.equals(messageDTO.getInternetFlag())) { // 是否开启联网
-		 * dashScopeChatOptions.setEnableSearch(Boolean.TRUE); }
-		 */
 		return DashScopeChatModel.builder().dashScopeApi(dashScopeApi).defaultOptions(dashScopeChatOptions).build();
 	}
 
