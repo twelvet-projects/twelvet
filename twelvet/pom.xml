@@ -371,6 +371,13 @@
                 <version>${twelvet.version}</version>
             </dependency>
 
+            <!-- twelvet websocket -->
+            <dependency>
+                <groupId>com.twelvet</groupId>
+                <artifactId>twelvet-framework-websocket</artifactId>
+                <version>${twelvet.version}</version>
+            </dependency>
+
             <!--system API-->
             <dependency>
                 <groupId>com.twelvet</groupId>
