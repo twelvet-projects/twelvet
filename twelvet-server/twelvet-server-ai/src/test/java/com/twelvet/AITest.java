@@ -1,16 +1,12 @@
 package com.twelvet;
 
 import com.twelvet.api.ai.domain.dto.AiDocDTO;
-import com.twelvet.framework.utils.JacksonUtils;
 import com.twelvet.server.ai.AiApplication;
 import com.twelvet.server.ai.mq.RAGChannel;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.redisson.api.RAtomicLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.document.Document;
-import org.springframework.ai.reader.ExtractedTextFormatter;
 import org.springframework.ai.reader.tika.TikaDocumentReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
