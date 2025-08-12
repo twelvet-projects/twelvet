@@ -1,0 +1,3 @@
+com.twelvet.framework.websocket.config.WebSocketAutoConfiguration
+com.twelvet.framework.websocket.config.RedisMessageDistributorConfiguration
+com.twelvet.framework.websocket.config.LocalMessageDistributorConfiguration

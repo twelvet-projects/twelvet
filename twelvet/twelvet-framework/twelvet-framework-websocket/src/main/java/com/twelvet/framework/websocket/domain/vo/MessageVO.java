@@ -1,5 +1,7 @@
 package com.twelvet.framework.websocket.domain.vo;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,7 +13,10 @@ import java.util.List;
  * @WebSite twelvet.cn
  * @date 2025-08-11
  */
-public class MessageVO {
+public class MessageVO implements Serializable {
+
+	@Serial
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 是否需要广播消息。
