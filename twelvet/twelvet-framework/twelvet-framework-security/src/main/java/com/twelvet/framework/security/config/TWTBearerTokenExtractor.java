@@ -25,9 +25,15 @@ public class TWTBearerTokenExtractor implements BearerTokenResolver {
 	private static final Pattern authorizationPattern = Pattern.compile("^Bearer (?<token>[a-zA-Z0-9-:._~+/]+=*)$",
 			Pattern.CASE_INSENSITIVE);
 
+	/**
+	 * 是否允许从表单参数中获取token
+	 */
 	private boolean allowFormEncodedBodyParameter = false;
 
-	private boolean allowUriQueryParameter = false;
+	/**
+	 * 是否允许从query参数中获取token
+	 */
+	private boolean allowUriQueryParameter = true;
 
 	private String bearerTokenHeaderName = HttpHeaders.AUTHORIZATION;
 
@@ -52,15 +58,15 @@ public class TWTBearerTokenExtractor implements BearerTokenResolver {
 		final String authorizationHeaderToken = resolveFromAuthorizationHeader(request);
 		final String parameterToken = isParameterTokenSupportedForRequest(request)
 				? resolveFromRequestParameters(request) : null;
-		if (authorizationHeaderToken != null) {
-			if (parameterToken != null) {
+		if (StringUtils.isNotBlank(authorizationHeaderToken)) {
+			if (StringUtils.isNotBlank(parameterToken)) {
 				final BearerTokenError error = BearerTokenErrors
 					.invalidRequest("Found multiple bearer tokens in the request");
 				throw new OAuth2AuthenticationException(error);
 			}
 			return authorizationHeaderToken;
 		}
-		if (parameterToken != null && isParameterTokenEnabledForRequest(request)) {
+		if (StringUtils.isNotBlank(parameterToken) && isParameterTokenEnabledForRequest(request)) {
 			return parameterToken;
 		}
 		return null;
