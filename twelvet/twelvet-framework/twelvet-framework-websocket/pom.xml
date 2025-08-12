@@ -14,7 +14,7 @@
 
     <dependencies>
 
-        <!-- twelvet websocket-->
+        <!-- websocket-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
@@ -24,6 +24,13 @@
         <dependency>
             <groupId>com.twelvet</groupId>
             <artifactId>twelvet-framework-redis</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--twelvet Redis-->
+        <dependency>
+            <groupId>com.twelvet</groupId>
+            <artifactId>twelvet-framework-security</artifactId>
             <scope>provided</scope>
         </dependency>
 
