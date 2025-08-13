@@ -20,42 +20,39 @@ import org.springframework.web.socket.WebSocketSession;
 @Service
 public class AIJsonMessageHandler implements JsonMessageHandler<AIJsonWebSocketMessage> {
 
-    private final AIChatService aiChatService;
+	private final AIChatService aiChatService;
 
-    public AIJsonMessageHandler(AIChatService aiChatService) {
-        this.aiChatService = aiChatService;
-    }
+	public AIJsonMessageHandler(AIChatService aiChatService) {
+		this.aiChatService = aiChatService;
+	}
 
-    /**
-     * 处理用户发送的消息
-     *
-     * @param session 当前的 WebSocket 会话。
-     * @param message 接收到用户消息。
-     */
-    @Override
-    public void handle(WebSocketSession session, AIJsonWebSocketMessage message) {
-        SpeechSynthesisOutput tts = aiChatService.tts(message.getTts());
-        WebSocketMessageSender.send(session, JacksonUtils.toJson(tts));
-    }
+	/**
+	 * 处理用户发送的消息
+	 * @param session 当前的 WebSocket 会话。
+	 * @param message 接收到用户消息。
+	 */
+	@Override
+	public void handle(WebSocketSession session, AIJsonWebSocketMessage message) {
+		SpeechSynthesisOutput tts = aiChatService.tts(message.getTts());
+		WebSocketMessageSender.send(session, JacksonUtils.toJson(tts));
+	}
 
-    /**
-     * 获取此处理器处理的消息类型。
-     *
-     * @return 返回 {@link WebSocketMessageTypeEnums#PING} 的值。
-     */
-    @Override
-    public String type() {
-        return WebSocketMessageTypeEnums.AI.getValue();
-    }
+	/**
+	 * 获取此处理器处理的消息类型。
+	 * @return 返回 {@link WebSocketMessageTypeEnums#PING} 的值。
+	 */
+	@Override
+	public String type() {
+		return WebSocketMessageTypeEnums.AI.getValue();
+	}
 
-    /**
-     * 获取此处理器对应的消息 Class。
-     *
-     * @return 返回 {@link PingJsonWebSocketMessage} 的 Class 对象。
-     */
-    @Override
-    public Class<AIJsonWebSocketMessage> getMessageClass() {
-        return AIJsonWebSocketMessage.class;
-    }
+	/**
+	 * 获取此处理器对应的消息 Class。
+	 * @return 返回 {@link PingJsonWebSocketMessage} 的 Class 对象。
+	 */
+	@Override
+	public Class<AIJsonWebSocketMessage> getMessageClass() {
+		return AIJsonWebSocketMessage.class;
+	}
 
 }
