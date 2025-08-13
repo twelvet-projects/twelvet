@@ -4,7 +4,7 @@ import com.twelvet.framework.websocket.config.properties.WebSocketProperties;
 import com.twelvet.framework.websocket.holder.TwSessionKeyGenerator;
 import com.twelvet.framework.websocket.interceptor.UserAttributeHandshakeInterceptor;
 import com.twelvet.framework.websocket.handler.CustomPlanTextMessageHandler;
-import com.twelvet.framework.websocket.handler.CustomWebSocketHandler;
+import com.twelvet.framework.websocket.handler.CustomTextWebSocketHandler;
 import com.twelvet.framework.websocket.handler.PingJsonMessageHandler;
 import com.twelvet.framework.websocket.handler.PlanTextMessageHandler;
 import com.twelvet.framework.websocket.holder.MapSessionWebSocketHandlerDecorator;
@@ -74,12 +74,12 @@ public class WebSocketHandlerConfig {
 	@Bean
 	@ConditionalOnMissingBean({ TextWebSocketHandler.class, PlanTextMessageHandler.class })
 	public WebSocketHandler webSocketHandler1(@Autowired(required = false) SessionKeyGenerator sessionKeyGenerator) {
-		CustomWebSocketHandler customWebSocketHandler = new CustomWebSocketHandler();
+		CustomTextWebSocketHandler customTextWebSocketHandler = new CustomTextWebSocketHandler();
 		if (webSocketProperties.isMapSession()) {
-			return new MapSessionWebSocketHandlerDecorator(customWebSocketHandler, sessionKeyGenerator,
+			return new MapSessionWebSocketHandlerDecorator(customTextWebSocketHandler, sessionKeyGenerator,
 					webSocketProperties);
 		}
-		return customWebSocketHandler;
+		return customTextWebSocketHandler;
 	}
 
 	/**
@@ -93,12 +93,12 @@ public class WebSocketHandlerConfig {
 	@ConditionalOnMissingBean(TextWebSocketHandler.class)
 	public WebSocketHandler webSocketHandler2(@Autowired(required = false) SessionKeyGenerator sessionKeyGenerator,
 			PlanTextMessageHandler planTextMessageHandler) {
-		CustomWebSocketHandler customWebSocketHandler = new CustomWebSocketHandler(planTextMessageHandler);
+		CustomTextWebSocketHandler customTextWebSocketHandler = new CustomTextWebSocketHandler(planTextMessageHandler);
 		if (webSocketProperties.isMapSession()) {
-			return new MapSessionWebSocketHandlerDecorator(customWebSocketHandler, sessionKeyGenerator,
+			return new MapSessionWebSocketHandlerDecorator(customTextWebSocketHandler, sessionKeyGenerator,
 					webSocketProperties);
 		}
-		return customWebSocketHandler;
+		return customTextWebSocketHandler;
 	}
 
 	/**

@@ -1,5 +1,7 @@
 package com.twelvet.framework.websocket.message;
 
+import com.twelvet.framework.websocket.constants.enums.WebSocketMessageTypeEnums;
+
 /**
  * Pong JSON WebSocket 消息
  * <p>
@@ -15,7 +17,7 @@ public class PongJsonWebSocketMessage extends AbstractJsonWebSocketMessage {
 	 * 构造函数，创建一个 Pong 类型的 JSON WebSocket 消息。
 	 */
 	public PongJsonWebSocketMessage() {
-		super(WebSocketMessageTypeEnum.PONG.getValue());
+		super(WebSocketMessageTypeEnums.PONG.getValue());
 	}
 
 }

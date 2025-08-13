@@ -6,6 +6,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.Objects;
+
 /**
  * @author twelvet
  * @WebSite twelvet.cn
@@ -48,7 +50,7 @@ public class SecurityUtils {
 	 */
 	public static LoginUser getLoginUser() {
 		Authentication authentication = getAuthentication();
-		if (authentication == null) {
+		if (Objects.isNull(authentication)) {
 			throw new TWTException("获取用户信息主体失败");
 		}
 		return getLoginUser(authentication);

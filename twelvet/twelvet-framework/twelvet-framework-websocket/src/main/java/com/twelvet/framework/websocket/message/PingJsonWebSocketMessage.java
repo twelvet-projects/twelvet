@@ -1,5 +1,7 @@
 package com.twelvet.framework.websocket.message;
 
+import com.twelvet.framework.websocket.constants.enums.WebSocketMessageTypeEnums;
+
 /**
  * Ping JSON WebSocket 消息
  * <p>
@@ -15,7 +17,7 @@ public class PingJsonWebSocketMessage extends AbstractJsonWebSocketMessage {
 	 * 构造函数，创建一个 Ping 类型的 JSON WebSocket 消息。
 	 */
 	public PingJsonWebSocketMessage() {
-		super(WebSocketMessageTypeEnum.PING.getValue());
+		super(WebSocketMessageTypeEnums.PING.getValue());
 	}
 
 }

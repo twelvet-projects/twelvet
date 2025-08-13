@@ -1,18 +1,23 @@
 package com.twelvet.framework.websocket.config;
 
+import com.twelvet.framework.utils.SpringContextHolder;
 import com.twelvet.framework.websocket.config.properties.WebSocketProperties;
 import com.twelvet.framework.websocket.handler.JsonMessageHandler;
 import com.twelvet.framework.websocket.holder.JsonMessageHandlerHolder;
 import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.SockJsServiceRegistration;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistration;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * WebSocket 自动配置类
@@ -46,9 +51,28 @@ public class WebSocketAutoConfiguration {
 	@ConditionalOnMissingBean
 	public WebSocketConfigurer webSocketConfigurer(List<HandshakeInterceptor> handshakeInterceptor,
 			WebSocketHandler webSocketHandler) {
-		return registry -> registry.addHandler(webSocketHandler, webSocketProperties.getPath())
-			.setAllowedOrigins(webSocketProperties.getAllowOrigins())
-			.addInterceptors(handshakeInterceptor.toArray(new HandshakeInterceptor[0]));
+		return registry -> {
+			WebSocketHandlerRegistration registration = registry
+				.addHandler(webSocketHandler, this.webSocketProperties.getPath())
+				.addInterceptors(handshakeInterceptor.toArray(new HandshakeInterceptor[0]));
+
+			String[] allowedOrigins = this.webSocketProperties.getAllowedOrigins();
+			if (Objects.nonNull(allowedOrigins) && allowedOrigins.length > 0) {
+				registration.setAllowedOrigins(allowedOrigins);
+			}
+
+			String[] allowedOriginPatterns = this.webSocketProperties.getAllowedOriginPatterns();
+			if (Objects.nonNull(allowedOriginPatterns) && allowedOriginPatterns.length > 0) {
+				registration.setAllowedOriginPatterns(allowedOriginPatterns);
+			}
+
+			if (this.webSocketProperties.isWithSockjs()) {
+				SockJsServiceRegistration sockJsServiceRegistration = registration.withSockJS();
+				SockJsServiceConfigurer sockJsServiceConfigurer = SpringContextHolder
+					.getBean(SockJsServiceConfigurer.class);
+				sockJsServiceConfigurer.config(sockJsServiceRegistration);
+			}
+		};
 	}
 
 	/**

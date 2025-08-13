@@ -26,9 +26,9 @@ import java.util.Objects;
  * @author Hccake 2020/12/31
  * @version 1.0
  */
-public class CustomWebSocketHandler extends TextWebSocketHandler {
+public class CustomTextWebSocketHandler extends TextWebSocketHandler {
 
-	private final static Logger log = LoggerFactory.getLogger(CustomWebSocketHandler.class);
+	private final static Logger log = LoggerFactory.getLogger(CustomTextWebSocketHandler.class);
 
 	private static final ObjectMapper MAPPER = new ObjectMapper();
 
@@ -42,14 +42,14 @@ public class CustomWebSocketHandler extends TextWebSocketHandler {
 	/**
 	 * 构造函数，创建一个不带纯文本消息处理器的 {@code CustomWebSocketHandler} 实例。
 	 */
-	public CustomWebSocketHandler() {
+	public CustomTextWebSocketHandler() {
 	}
 
 	/**
 	 * 构造函数，创建一个带纯文本消息处理器的 {@code CustomWebSocketHandler} 实例。
 	 * @param planTextMessageHandler 用于处理非 JSON 格式的纯文本消息。
 	 */
-	public CustomWebSocketHandler(PlanTextMessageHandler planTextMessageHandler) {
+	public CustomTextWebSocketHandler(PlanTextMessageHandler planTextMessageHandler) {
 		this.planTextMessageHandler = planTextMessageHandler;
 	}
 

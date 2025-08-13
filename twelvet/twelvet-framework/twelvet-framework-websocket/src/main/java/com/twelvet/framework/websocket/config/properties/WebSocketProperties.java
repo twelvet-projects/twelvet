@@ -28,9 +28,14 @@ public class WebSocketProperties {
 	private String path = "/ws";
 
 	/**
-	 * 允许的跨域来源，默认为 "*"，表示允许所有来源。
+	 * 允许跨域的源
 	 */
-	private String allowOrigins = "*";
+	private String[] allowedOrigins;
+
+	/**
+	 * 允许跨域来源的匹配规则
+	 */
+	private String[] allowedOriginPatterns = new String[] { "*" };
 
 	/**
 	 * 是否支持部分消息传输，默认为 {@code false}。
@@ -49,6 +54,11 @@ public class WebSocketProperties {
 	 * </p>
 	 */
 	private boolean mapSession = true;
+
+	/**
+	 * 是否开启 sockJs 支持
+	 */
+	private boolean withSockjs = false;
 
 	/**
 	 * 消息分发器类型，默认为 "local"。
@@ -76,12 +86,20 @@ public class WebSocketProperties {
 		this.path = path;
 	}
 
-	public String getAllowOrigins() {
-		return allowOrigins;
+	public String[] getAllowedOrigins() {
+		return allowedOrigins;
 	}
 
-	public void setAllowOrigins(String allowOrigins) {
-		this.allowOrigins = allowOrigins;
+	public void setAllowedOrigins(String[] allowedOrigins) {
+		this.allowedOrigins = allowedOrigins;
+	}
+
+	public String[] getAllowedOriginPatterns() {
+		return allowedOriginPatterns;
+	}
+
+	public void setAllowedOriginPatterns(String[] allowedOriginPatterns) {
+		this.allowedOriginPatterns = allowedOriginPatterns;
 	}
 
 	public boolean isSupportPartialMessages() {
@@ -106,6 +124,14 @@ public class WebSocketProperties {
 
 	public void setMapSession(boolean mapSession) {
 		this.mapSession = mapSession;
+	}
+
+	public boolean isWithSockjs() {
+		return withSockjs;
+	}
+
+	public void setWithSockjs(boolean withSockjs) {
+		this.withSockjs = withSockjs;
 	}
 
 	public String getMessageDistributor() {

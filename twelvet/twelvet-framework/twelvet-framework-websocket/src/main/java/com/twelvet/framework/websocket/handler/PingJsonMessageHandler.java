@@ -4,7 +4,7 @@ import com.twelvet.framework.websocket.distribute.WebSocketMessageSender;
 import com.twelvet.framework.websocket.message.JsonWebSocketMessage;
 import com.twelvet.framework.websocket.message.PingJsonWebSocketMessage;
 import com.twelvet.framework.websocket.message.PongJsonWebSocketMessage;
-import com.twelvet.framework.websocket.message.WebSocketMessageTypeEnum;
+import com.twelvet.framework.websocket.constants.enums.WebSocketMessageTypeEnums;
 import org.springframework.web.socket.WebSocketSession;
 
 /**
@@ -34,11 +34,11 @@ public class PingJsonMessageHandler implements JsonMessageHandler<PingJsonWebSoc
 
 	/**
 	 * 获取此处理器处理的消息类型。
-	 * @return 返回 {@link WebSocketMessageTypeEnum#PING} 的值。
+	 * @return 返回 {@link WebSocketMessageTypeEnums#PING} 的值。
 	 */
 	@Override
 	public String type() {
-		return WebSocketMessageTypeEnum.PING.getValue();
+		return WebSocketMessageTypeEnums.PING.getValue();
 	}
 
 	/**
